@@ -1,0 +1,9 @@
+../../../data/menu.dat
+
+fteextensions.qc
+defs.qc
+tools.qc
+savegames.qc
+mainmenu.qc
+setting.qc
+main.qc

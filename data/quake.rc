@@ -1,0 +1,90 @@
+//
+// allow quake to run the mod
+//
+
+registered 1
+
+//
+// load the last saved configuration
+//
+
+exec config.cfg
+
+//
+// stuff command line statements
+//
+
+stuffcmds
+
+//
+// load up immediately
+//
+
+map start
+
+//
+// set TAoV defaults
+//
+
+r_drawviewmodel 1
+scr_conspeed 9999
+crosshair 0
+cl_bob 0
+cl_rollangle 0
+volume 0.5
+viewsize 110
+fov 105
+sbar_alpha_bg 0
+r_glsl_offsetmapping 0
+r_glsl_offsetmapping_reliefmapping 0
+sv_mintic 0.013
+sv_gameplayfix_stepdown 1
+// Fix for odd game speed 
+sys_clocktype 1
+//
+sv_gameplayfix_qwplayerphysics 0
+sv_nqplayerphysics 1
+sv_bigcoords 1
+// Fixes Vigil sliding on slopes
+sv_gameplayfix_easierwaterjump 0
+m_preset_chosen 1
+cl_lerp_maxinterval 0.3
+sv_autosave 0
+gl_blendsprites 1
+sensitivity 0
+v_gunkick 1
+con_notify_w 0
+con_stayhidden 1
+viewsize 110
+scr_fov_mode 5
+s_al_use_reverb 0
+cl_lerp_driftfrac 1
+seta m_preset_chosen 1
+r_portalrecursion 1 // set to 2 on skybox + water brushes
+snd_ignoregamespeed 1
+r_coronas_occlusion 1 // fix flicker corona effect
+
+// Fonts
+con_textfont "fonts/console"
+gl_font "fonts/taov"
+
+//
+// bind regular quake stuff
+//
+
+bind "TAB" "+showscores"
+bind "`" "toggleconsole"
+bind "F12" "screenshot"
+bind "PAUSE" "pause"
+bind "f1" "help"
+bind "f9" "quit"
+viewsize "100"
+
+// Aliases
+alias +block "+button3"
+alias -block "-button3"
+
+alias +flask "impulse 4"
+alias -flask "impulse 5"
+
+alias f_demoend "wait;map start";

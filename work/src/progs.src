@@ -1,0 +1,80 @@
+C:\games\taov\data\progs.dat
+
+fteextensions.qc
+defs.qc
+subs.qc
+main.qc
+misc/ani.qc
+misc/math.qc
+misc.qc
+misc/hpbar.qc
+damage.qc
+client.qc
+dummys.qc
+pickups.qc
+triggers.qc
+doors.qc
+ai.qc
+scenery.qc
+funcs.qc
+plats.qc
+misc/rotate.qc // hipnotic rotate brushes
+buttons.qc
+
+// spells monsters/players can use
+misc/spells.qc
+
+// vigil
+chars/player.qc
+
+// king / teleporter system
+chars/king.qc
+
+// monsters
+chars/dog.qc
+chars/knight.qc
+chars/baron.qc
+chars/hknight.qc
+chars/skeleton.qc
+chars/horror.qc
+chars/gaunt.qc
+chars/archg.qc
+chars/ghost.qc
+chars/ghost2.qc
+chars/wraith.qc
+chars/esquid.qc
+chars/grem.qc
+chars/ghoul.qc
+chars/archer.qc
+chars/bat.qc
+chars/zombie.qc
+chars/zombieb.qc
+chars/troglod.qc
+chars/medusahead.qc
+chars/dragon.qc
+chars/hydra.qc
+chars/needles.qc
+chars/merman.qc
+chars/ethskull.qc
+chars/l_wraith.qc
+chars/raven.qc
+chars/knight2.qc
+chars/werewolf.qc
+chars/golem.qc
+chars/spawnmonster.qc
+
+// non-playable characters
+chars/npcs.qc
+
+// bosses
+chars/boss1.qc
+chars/boss2.qc
+
+misc/impulses.qc
+misc/lightning.qc
+
+//CSQC extensions start here.
+#pragma sourcefile "csprogs.src"
+
+//MENUQC
+#pragma sourcefile "menuqc/progs.src"

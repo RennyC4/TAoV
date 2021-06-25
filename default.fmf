@@ -1,0 +1,8 @@
+//documentation on this file can be found at https://sourceforge.net/p/fteqw/code/HEAD/tree/trunk/specs/fte_manifests.txt
+
+FTEManifestVer 1
+game taov
+protocolname "taov"
+basegame data
+disablehomedir 1
+MAXVER FTE 5808

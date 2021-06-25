@@ -1,0 +1,8 @@
+C:\games\taov\data\csprogs.dat
+
+//CSQC extensions start here.
+csqc/csdefs.qc
+csqc/csqc_hud_vanilla.qc
+csqc/status_effects.qc
+csqc/camera.qc
+csqc/view.qc

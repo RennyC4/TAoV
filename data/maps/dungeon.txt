@@ -1,0 +1,59 @@
+Map Info
+
+========================
+Map Title:		Dungeon
+
+Release Date:		02/01/05
+
+Files:			taov_blitz2.bsp
+			taov_blitz2.txt
+
+Author:			Tom "Blitz" Hanrahan
+
+Email:			teh_blitz@comcast.net
+
+Homepage:		http://blitz.circa1984.com OR http://home.comcast.net/~teh_blitz/blitz
+
+
+Description:		Quake/Custom Engine SP
+
+Singleplayer:		Yes -- this map should be distributed with RenegadeC's Ascension of Vigil MOD. IF you got it 			somewhere else, not included with his mod, then contact me and I will show you where you can 			download the game to play the map
+
+Coop:			No
+
+Difficulty Settings: 	N/A
+
+Editor Used:		GTKRadiant 1.5.0 Jan19.2005 build
+
+Utilities Used:		Tyrlite v0.94
+			TreeQBSP 1.76-tyr3
+			rvis+
+			TexMex
+
+Textures:		Quake/Custom
+
+Known Bugs:		None
+
+Build Time:		Not sure.
+
+
+Notes & Thanks
+========================
+
+Thanks to RenegadeC, DCMad, SPoG, #terrafusion, func_msg, and #qc.
+
+Also, thank you to all the girls I loved. So many. So so many.
+
+	
+
+Copyright
+=======================
+
+Do not use this map without the author's permission. Contact information is provided if you need to get a hold of me. If I see this map elsewhere, there will be trouble. With a capital T. Right here in River City.
+
+
+
+-EOF-
+
+ 
+			

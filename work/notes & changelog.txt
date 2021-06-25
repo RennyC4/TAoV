@@ -1,0 +1,1340 @@
+* Demo files need to be created with slowdown & level ups disabled *
+* Don't use WRBrushes for Map02*
+* Clip brushes need a slight edge curve at the top to stop wall running on them, works for wall grab as well
+* Vigil has MOVETYPE_STEP/WALK changes defined in a specific place that updates every frame - player.qc (slope sliding)
+
+TODO: Make beginning intro text for the story into HD quality
+TODO: Tutorial messages need a timer (2 seconds) before they can be skipped instead of instant
+TODO: Update readme.txt
+TODO: Ask khraethor about boss progress
+
+Deathmatch: Perfect Guard isn't applying to Vigil properly, sound plays, so does the effect, doesn't apply to the player - Fixed? Needs testing.
+Deathmatch: Vigi's Final stab first hit should push player back without a guard break - Needs testing (set first hit to knockback 6)
+
+Block button doesn't work on load games? Button 3 engine issue it seems. Switch to input_button: engine issue confirmed.
+
+=====
+HP Max Ups
+=====
+
+Map02 - Behind the wall (spawnflag 0)
+Castle - Hidden on the ledge above the ghoul section (spawnflag 1)
+Castle2 - Hidden behind the pillar at the start(spawnflag 2)
+Cavern - In the water section (spawnflag 4)
+Outerwall - Up the tower section (spawnflag 8)
+Grand Cathedral - On top of the ledge near the baron (spawnflag 16)
+
+==========
+Transition Rooms
+==========
+
+Transit 1 = Castle.bsp to Castle2.bsp
+Transit 2 = Castle.bsp to Dungeon.bsp
+Transit 3 = Castle.bsp to Outerwall.bsp
+Transit 4 = Castle.bsp to Tower.bsp
+Transit 5 = Dungeon.bsp to Cavern.bsp
+Transit 6 = Outerwall.bsp to GCathedrl.bsp
+Transit 7 = GCathedrl.bsp to Skyway.bsp
+Transit 8 = Cavern.bsp to Aqueduct.bsp
+
+// ===============
+// Long-Term goals
+// ===============
+
+Cool Idea: Relic that turns PG + Counter into PG + Purge :)
+knave.wad has a lot of bookshelves - Long library
+TODO: Do something with the dark room in Cavern.bsp
+TODO: Expand dungeon.bsp's vertical tunnel section (this map is short!)
+TODO: Add monster_medusaboss
+	- Killing monster_medusa (optional boss) will stop monster_medusahead from spawning
+TODO: Boss3 - Whatever it is, Narcissus? Guard Captain corrupted form.
+TODO: Add traps (So far: Boulders, chandeliers, damage pits)
+TODO: Split Spin Slash & Flaming Head Smash relics up
+
+// ==========
+// Changelog (Fixes/Changes):
+// ==========
+
+FIXME: Fixed regression on level display load game menu
+FIXME: (Reki) Crash on "Load Game" with no save games present
+TODO: HD console background
+TODO: Big wraiths have pain frame resistance conditions now
+FIXME: Camera shake on final hit of Vigil's charge spin attack
+FIXME: Possible camera shake on Uppercut Slice
+FIXME: STAT_ARMOR removed for STAT_LEVEL in CSQC
+TODO: Fix Vigil's level on HUD
+FIXME: Tweaked sword icons drop shadow slightly
+TODO: CSQC_hud_vanilla.qc clean up
+FIXME: Broken status working as intended
+FIXME: AI range check if Vigil is in the air
+FIXME: Player_pain function no longer removes 'noblock' timer when Broken status is on Vigil
+TODO: Using checkground(); to stop monsters from floating in the air during their stand frames
+TODO: Monster fuzzy logic when stuck / trying to get to Vigil
+FIXME: Noblock flag being set on Vigil and not the 'owner'
+TODO: More death related fixes / clean ups
+TODO: Fix up death more so that Vigil's health shows 0 on death
+FIXME: Self.th_death(); called at the end of Killed();
+FIXME: Vigil's deadflag & solid state is immediately set on death
+TODO: Lowered Flying/Diving (whatever) Swallow from 5000g to 4000g
+FIXME: Fixed issue with screen shake on regular attacks after performing cyclone crush
+FIXME: Added Stone Golem to spawn_monster entity. Cnt 27
+FIXME: Renamed "Golem" to "Stone Golem"
+FIXME: Called monster_removeslide(); on more Corrupt Commander frames
+FIXME: Rain ambiance plays near the courtyard balcony when Vigil is on it
+FIXME: Etheral Skull now no longer attackable during his death sequence
+FIXME: Camera going into the wall on the entrance to the dungeon
+FIXME: Vigil will do normal attacks after a grab if performed quickly enough
+FIXME: Medusa heads now carry spawnflags over properly from their spawner
+FIXME: Efxflash now rotates
+FIXME: Randomized Golem's rock particles forward velocity
+FIXME: Golem's rock particles on pain frames now spawn at his chest
+FIXME: Efxflash.mdl skin texture was supposed to be pure white
+FIXME: Monsters drop gold more frequently, from 25% up to 35%
+TODO: Silver key is hidden in the Cavern map
+TODO: Updated relics.bsp, forgot Cube of Knowledge
+FIXME: player_fire(); now only checks if Vigil's grab flag is on/off instead of the timer
+FIXME: Gold's owner is no longer set to world, breaking spawn_color_glow
+FIXME: Gold uses checkground();
+FIXME: Smoother alpha effects on mana/health/gold pickups
+FIXME: Checkground(); replaces slope-sliding issues
+FIXME: MORE gold pickup averages
+FIXME: Removed "Let it be done" text on teleport selection
+FIXME: Grab attacks vs attack logic changes
+FIXME: Low health indicator is now at 25% (1/4th of max health)
+TODO: Increased gold pickups, again.
+TODO: Fix weird characters on the in-game menu
+FIXME: Guard dialogue typeo (thanks Qmaster)
+FIXME: Castle.bsp improved camera styles
+FIXME: Halved health of the ending boulder in map01 to smash
+FIXME: Fullbright pixels on keg.mdl
+FIXME: Screen shake added to Cyclone Crush's "tennis smash" hit
+FIXME: Pushed back some clip brushes in village.bsp
+FIXME: Nerfed Merman's poison spit from 5 seconds to 3
+FIXME: Horror's can't attack until after 3 seconds from Vigil being knocked down
+FIXME: Vigil won't execute his double punch-combo on grab if enemy dies from the first hit
+FIXME: Vigil will no longer auto-whiff on his second grab punch if the enemy dies from the first punch
+FIXME: Added nojump_finished timer, fixes accidently jumping out of grabs by the user
+TODO: Implement screenshake on guard breaks, big hitting attacks, and certain pain situations
+FIXME: Grab -> Jump weirdness corrected
+TODO: Vigil is color modded yellow during Perfect Guard
+TODO: Vigil goes slightly translucent when Perfect Guard is active (Ghostly effect)
+FIXME: FireMelee ignoring Perfect Guard buff in certain rare instances
+FIXME: Gold scaling increased slightly
+TODO: Add blue flame torches
+TODO: All maps are now phong shaded
+FIXME: Vigil's first air combo attack now sets inair flag to 33 to fix slight animation issue
+FIXME: Fix 'wavy flags'
+FIXME: Can't gold farm in the village level if Vigil has enough gold to warp back to the castle
+FIXME: Vigil starts with his flask at 10 HP, instead of 35
+FIXME: Arch Gouls pain frame lasts twice as long (0.1 -> 0.2)
+FIXME: Gold drop calculation changes (buff)
+FIXME: Barrels have 10 health in both SP and MP now
+FIXME: Sorrowful Spirit can no longer heal itself if Vigil's mana pool is empty
+TODO: Add Sorrowful Spirit enemy
+FIXME: Status hit notification sound ONLY plays when a new status effect hits Vigil
+TODO: Found a better "Status Hit" notification sound
+FIXME: Purge damage increased from 30 * sword level to 33 * sword level
+FIXME: Fixed purge damage calculation
+TODO: Remove "camloose" out of the codebase as it's outdated and no longer used
+FIXME: Camera style 5 now acts exactly like the selectable static camera as intended
+FIXME: Flaming head smash particles are disabled in multiplayer to reduce lag
+TODO: Update deathmatch maps
+FIXME: Fixed barrel respawning in deathmatch
+FIXME: Barrels respawn after 120s in DM, down from 180s
+FIXME: Ice Field spells alpha effects are rendered correctly
+TODO: Re-enable flask system in deathmatch multiplayer
+TODO: Small notification sound when a status effect hits Vigil
+FIXME: Diving swallow's X origin test to break out on 'stuck' situtations occurs twice as fast
+FIXME: Mana potions in multiplayer can be picked up more than once
+TODO: More advanced animation changes on Vigil's idle frames
+FIXME: Fixed 'Vigil Dancing' when spamming the Flask key whilst moving
+FIXME: All monsters now break out after 1 second instead of varied
+FIXME: Fixed Vigils reset break out timer on grabs
+FIXME: Purge is now 100 + (30 * sword level), up from 20 * sword level
+FIXME: Vigil breaks out of grabs 1.5 seconds, upped from 1
+FIXME: Werewolf now howls less
+FIXME: Werewolf howling animation is slightly faster
+FIXME: Grabbing timing changes
+FIXME: Werewolves give 77 EXP down from 88
+FIXME: Status effects are turned off on death as not to cause conflicts
+FIXME: Poison can bring Vigil's health to 0, causing weird issues
+FIXME: Broken can maybe activate 1 second after the status is put on Vigil
+FIXME: Block removes 'red shadows'
+FIXME: Broken_tick_finished changes and additions to stop broken from affecting instantly
+FIXME: Broken status disabled on active purge
+FIXME: Major damage attacks (like Purge) can cause half-health triggers on monsters not to fire
+FIXED: Conditional statement in FireMelee(); concerning Vigil rarely getting hit even with Perfect Guard buff active
+FIXME: Rumble sounds now play correctly in the Cursed Caverns
+TODO: Updated Grand Cathedral picture in teleporter room
+FIXME: Glow coloir entities now check if theirs owner health is < 0 to remove themselves
+FIXME: Berserk timer is removed on monsters death to clear the red glow
+FIXME: Lowered Green Dragon's Exp from 88 to 71
+FIXME: Lowered Merman's health from 300 to 125
+FIXME: Merman's melee damage reduced
+FIXME: Merman's poison spit time reduced from 15 to 5
+FIXME: Monster_removeslide(); now ignores MOVETYPE_TOSS (Merman fix)
+FIXME: Fixed health potions removing themselves when Vigil's flask is empty
+FIXME: Ledge grab now checks attack_finished on Vigil
+FIXME: Monster_removeslide(); is no longer ran on flying enemies
+FIXME: Moved cameras default Z position down again
+FIXME: MenuQC reports Vigil's correct level in Save/Load game menu
+FIXME: Auto-Blocking glitch in player_pain();
+FIXME: Vigil's idle pose is reset after pain functions are ran
+FIXME: Auto-Blocking glitch caused by player_pain fixed
+FIXME: Set MOVETYPE_WALK on Vigil's falling frames to avoid slow descent issue
+FIXME: Block_finished is cleared on player_move();
+FIXME: Purge damage increases with sword upgrades
+FIXME: monster_removeslide(); now uses FL_ONGROUND or checkbottom();
+TODO: Removed forced cl_maxfps command since TAoV now properly works over 60 fps
+FIXME: Camera style change time set to 0 on telecam flag
+TODO: Reki added additional CSQC camera smoothing
+FIXME: Made grabbing more reliable by not relying on traceline in certain instances
+FIXME: Vigil breaks out of grabbing after a second has passed (enemy broke out)
+TODO: Camera improvements (smoothness) with camera style switches, massive thanks to Reki!
+FIXME: Vigil's mini cyclone / prop up is now unblockable
+FIXME: Grab improvements on enemies when Vigil is walking at 45 degree angles
+FIXME: Untied Vigil's walking animation frame playback speed from how fast he thinks, this allows grabbing to run once a frame properly making it more reliable
+TODO: Pressing magic during a grab allows Vigil to prop up enemies in the air and short-hop at them for easy air comboing
+FIXME: Hell Knight's / Corrupt Commander's reflected lightning now damages them again
+FIXME: Blocking removes any short purge cool down, attacking removes any short perfect guard cool down
+FIXME: Vigil can no longer Purge while being struck in-between hits
+TODO: Spells have their scroll bars reworking again - thanks xaGe
+TODO: Added Purge mechanic
+FIXME: Knight Lv2's gibs are properly flagged for 'short blood trail' particles
+FIXME: Knight Lv 2's gibs now have the guts.mdl integrated properly
+FIXME: Wavy flag texture shader uses rgbGen LightingDiffuse now
+FIXME: Chandelier fix when it hits the ground and doesn't play it's crash routine
+FIXME: Vigil can't fly into the sky using a ledge grab + round house kick
+FIXME: Character event zooming is slightly smoother
+FIXME: Halved volume of soul candles on/off sound
+TODO: Added spawnflag 1 to trigger_teledoor, allows 'trigger_camstyle' with 'zoom' on teleport destination to instantly set the camera Y (zoom) axis
+FIXME: Vigil's camera zooms no longer interfere with the trigger based event zooms
+FIXME: Notarget ON with flying creatures turns off their velocity
+TODO: Vigil can now jump out of grabbing someone
+TODO: Implement chandelier scenery with usable triggers / spawnflag 1 to disable dynamic light
+TODO: Added camera zoom in / out on trigger_camstyle using 'zoom' field
+TODO: Bats can be targetted by triggers to wake up and attack
+FIXME: AI navigation is slightly better
+FIXME: Vigil's uppercut loses it's double jump delay when "Battle Lore" relic is obtained
+FIXME: Ledge grabs no longer remove Vigil's double jump
+FIXME: Added jump.wav to wall/ledge jump + brief speed line effect
+TODO: Vigil can now jump the opposite direction while ledge grabbing
+FIXME: Vigil faces enemies direction on flying swallow execution frame
+FIXME: Lowered Ethereal's skull damage from 32 to 28
+FIXME: Monsters using ai_fly(); no longer ignore 'no target'
+FIXME: Ethereal skulls 'bump attack' no longer ignore perfect guard
+FIXME: Jump frame 2 physics adjustment
+TODO: More block fixes + ledges underneath Vigil breaking stuff
+TODO: Partial rewrite of blocking to use tracebox
+TODO: Tweaked+better in-air player control
+FIXME: Short-Hop flag is reset only when Vigil lands on the ground
+FIXME: monster_removeslide called on Werewolf howl animation
+FIXME: "Locked Door" text fixed
+FIXME: Forward + Block in 'safe zone' areas has Vigil roll properly
+FIXME: More logic fixes to blocking button down/release
+FIXME: Up/Down/Left/Right keys are disabled when Vigil grabs an enemy properly
+FIXME: Block release sound now checks the 'flypain' flag
+FIXME: FL_ONGROUND is removed on Vigil's mid-air blocking routine
+FIXME: Blocking now uses engine 'checkbottom' in addition to 'onground' flag
+FIXME: Releasing block 'sound' now checks if Vigil's pain_finished timer is over
+FIXME: Monsters no longer set .enemy on Vigil grabbing them, only when damaged
+FIXME: Vigil can hover in the air when blocking on platforms that fall beneath him
+FIXME: Block button fixes from impulse to engine button conversion
+FIXME: Baron's ground smash effect now renders full bright
+FIXME: Nerfed 'Hell Knights' lightning damage from 11 to 8
+FIXME: Relocated player_grab from PlayerPreThink to Vigil's actual walking animation routine
+TODO: Convert blocking from an alias/impulse to a button
+TODO: Blocking is allowed in 'safe zone' areas but round house kicks are not
+FIXME: Grabbing is more reliable for players who aren't the host
+FIXME: Can't block cancel out of pain frames in deathmatch
+FIXME: Deathmatch crash related to player grabs
+TODO: Redid parm management
+FIXME: Vigil cannot take damage during his flying swallow attack
+FIXME: Lowered Vol'Brand level 2 upgrade price (8500 down to 7000)
+FIXME: Fixed developer 1 cheat impulse so Vigil's max level cannot go over 99
+FIXME: Removed 8-bit parm encodes off Vigil's health & mana
+FIXME: Updated haze particles
+FIXME: Candle2 now have a random start frame
+FIXME: Ungroup candle2.mdls frames
+FIXME: Animated waterfalls now have a random start frame
+FIXME: Ungroup waterfall.mdl's frames
+FIXME: Eternal Dragon's Fire Beam attack charge effects up are much more visible
+FIXME: Removed outdated references to 'framerate' in game code
+TODO: Medusa heads track Vigils Y origin and adjust accordingly
+FIXME: Skeletons no longer randomly jump forward with notarget on after being aware of Vigil
+FIXME: Shortened church key text
+FIXME: Vigil's dummy entity gets set to MOVETYPE_NONE on developer 2 mode
+TODO: Trigger_skyroom supports r_portalrecursion 2 when spawnflag is set
+FIXME: Snake statue no longer runs droptofloor();
+TODO: Update FTEQuake to 5808
+FIXME: Keys are locked temporarily on start.bsp to fix the closemenu command + menuQC FTE crash
+TODO: Vol'Brand's blade is now always rendered at full bright
+TODO: Map01 (Wilderness) fixes / changes
+FIXME: Spawn_monster entity now carries over spawnflags properly
+TODO: New effects for Perfect Guard
+TODO: Remove 'sprites.qc' as it's outdated by ani.qc
+FIXME: Buff bat speed from 75 to 85
+FIXME: Bats only track Z/Y axis when in front of the player to stop weird tracking behavior
+FIXME: Fixed rare issue where ledge grab and wall grab 'fight' each other with certain level geometry
+TODO: More visible bats
+FIXME: Vigil now faces the correct way instantly when hit by the firebeam spell
+FIXME: Added timer to mana potion pickup
+FIXME: Touching a health/mana potion but not picking it up will still set off its targets
+TODO: Bats model sized increased + fullbright wings for visibility
+TODO: Perfect guards block particles are colormodded to blue
+TODO: Perfect guards block sprite is colormodded to blue
+FIXME: Default Bat speed is halved (150 to 75)
+TODO: Upgrade to FTEQuake v5800
+FIXME: More Werewolf adjustments
+FIXME: Awareness 3 on monsters is now Z aware by 250qU
+FIXME: Gold pickups drop shadow is now correct
+FIXME: Werewolfs always go into pain frames when they're hit while howling
+FIXME: Werewolfs melee hit frame comes out slightly slower
+FIXME: MenuQC now loads the "console" font packed with the game
+FIXME: Electic Squid & Firebeam now have their targets face their attackers direction
+FIXME: I-Frames on Vigil's Cyclone Crush "tennis smash"
+FIXME: Remove framerate==0 check on releasing block button to prevent rare button stuck issue
+TODO: Flag textures now flap in the wind
+FIXME: Glowing dynamic lights assigned to entities now update faster
+FIXME: Berserk/Enrage now gives off dynamic light once again
+TODO: More camera improvements
+TODO: Improve monster name display on HUD
+FIXME: Bats adhere to NOTARGET
+FIXME: Fixed a damage underflow bug that would cause Vigil to have his health insta-refilled instead of dying
+FIXME: Camera will zoom out to unstuck itself instead of sitting still until Vigil touches the ground
+FIXME: Added visible check for awareness 3
+FIXME: Nerfed Bat's damage
+FIXME: Air Combo attack_finished slightly increased to prevent skipping one of his air combo kicks
+FIXME: Vigil's run attack is now executed exactly on frame to fix rare bug where he faces the wrong way
+TODO: Reposition all text for the new font
+TODO: Add new fonts for better presentation
+TODO: Spell casting requirements are now shown on the HUD
+FIXME / TEMP: Removed MOVETYPE_FOLLOW off Vigil's blade and converted it to origin+angle+frame updates
+FIXME: Modified gfx.cfg / quake.rc to stop setting certain default graphic settings
+TODO: Improve the games ambient sound effects with higher quality replacements
+FIXME: Broken Status now calls T_Damage as opposed to setting player_pain on Vigil
+FIXME: Vigil can't backflp out of being hit by lightning storm / firebeam
+FIXME: Fixed T_Damage not calling th_pain properly, needs testing
+TODO: Vigil's head smash no longer resets Z velocity to zero
+FIXME: More Vigil health checks to stop a rare (but very cool) zombie state
+FIXME: Noblock timer being positive stops Vigil from executing his spin attack
+FIXME: Skeleton now fires his melee routine on the correct frame
+FIXME: Skeleton's attack collision fixed
+FIXME: Vigil's th_pain frames are now called correctly on lightning storm + other spells
+FIXME: Vigil can no longer block or spin attack out of being hit by lightning storm / ice field / firebeam
+TODO: Update FTE compiler to the latest version
+TODO: Recompile maps with flat background clip brushes
+FIXME: Firebeam's "Muzzle" graphics are now removed properly off Troglodyte
+TODO: MenuQC by Reki added
+FIXME: Vigil can't spam spin attack while stuck in ice field to reduce damage
+FIXME: Only Player 1 (the host) can interact with warp shrines
+FIXME: I-Frames added to delayed Uppercut Slice beginning frame
+FIXME: Vigil's delayed Uppercut Slice now has him lock into it's first animation frame
+FIXME: Fixed "Cyberpunk 2077" T-Posing on weird Wall Running situations
+FIXME: Short-Hop now sets 'inair' flag to 16 to stop odd animation glitch mid-air
+FIXME: Changed a few clip brushes into {clip2
+FIXME: Castle2, removed a barrel / moved one to prevent issues
+FIXME: Archer arrows ignore clip brushes
+TODO: Spin slash is now unblockable, you can use it as a mid-air opener now
+FIXME: Re-adjusted the collision for double jumps attack (spin slash)
+TODO: Vigil's regular double jump can now hurt enemies once
+TODO: Vigil can now once again combo spin slash into uppercut slice
+FIXME: Remove 'ceil' from frametime check for Vigil's "in-air" counter
+FIXME: Double Jump now checks if Vigil's "in-air" counter is over 10
+FIXME: Skyroom cvar resetting on map change is now done by CSQC
+FIXME: Re-inforced Wall Jumps to check for pain timers to prevent small issues
+FIXME: Re-inforce MOVETYPE_WALK on Vigil's backflip
+TODO: Allow Vigil to double jump when falling off ledges, not just by jumping
+FIXME: Set MOVETYPE_WALK on Double Jump
+TODO: Improve Ghosts
+FIXME: Blocked attacks can no longer apply status effects
+TODO: Add skybox to Wild Lands
+FIXME: Notarget improvements
+FIXME: Perfect Guard / Non-visible icon over Vigil is now updated properly
+FIXME: Buffed lightning storm versus Vigil and he now behaves correctly when hit by it
+TODO: Add chip damage on blocked guard breakers
+TODO: xaGe added {clip2 for 'fake' clip brushes to work with wall grab
+FIXME: Fixed bug with broken status locking Vigil into his $fflip8 frame
+FIXME: Vigil can't block cancel out of broken status effect
+FIXME: Trigger_walk disables status effects
+FIXME: Vigil's wall grab can no longer grab the sky
+TODO: Rewrite the menu selection for shrines and send the results to CSQC
+FIXME: Disable HUD in developer 2
+TODO: Convert Teleport Shrine locations into bitwise operators
+FIXME: Vigil can no longer do his Final Stab from a forward roll while in the air
+FIXME: Vigil cannot Perfect Guard for 0.5 seconds after being hit
+TODO: Add + Fix trigger_skyroom
+TODO: Update FTEQuake from SVN 5729 5790
+FIXME: Dynamic Light entity is now marked as makestatic(); when there's no targetname
+FIXME: Minor bug with Soul Candle not removing itself properly
+TODO: Add trigger_skyroom, "target" string sets up the values for the skyroom
+TODO: Add Grand Cathedral music
+FIXME: Candelabra's Z position is now correct
+TODO: Replaced the music in "Castle Entrance"
+TODO: Rebalanced Horror to telegraph it's fireball attack, less spammy as well
+FIXME: Vigil's double round house kick finisher on his grab attacks cannot no longer be block cancelled, but has i-frames now
+TODO: Allow camera changes in multiplayer between classic / dynamic
+TODO: Changing options in the menus will now use the more stylistic centerprint with descriptions
+TODO: Add Turbo Mode replacing "Music" option in the games menu
+TODO: Brighten characters a tad in low lighting
+TODO: Soul Candle improvements
+FIXME: Vigil's 'forward flip' get-up behavior is similar to his normal getting up behavior where he can move/block before it ends
+FIXME: Fixed super rare bug where if Vigil grabs an enemy during perfect guard and idles he'll be invunerable
+TODO: Archers arrows are drawn full bright
+TODO: Allow Vigil to block after a double jump
+TODO: Allow Vigil to block during pain frames / stun-lock
+TODO: Remove armor upgrades lowering Vigil's stun-lock time
+FIXME: Fixed archers so their arrows now hit Vigil and can be perfect guarded
+FIXME: Low health sound shouldn't occur on level changes (use framecount > 10 condition)
+FIXME: Ghouls check if they're on ground before continuing their melee animations
+FIXME: Nerf Werewolves just a tad (Damage down from 20, status broken from 10 seconds to 8)
+FIXME: Fixed drop shadow on current flask number
+FIXME: Fixed drop shadow on numerical values for armor and sword
+TODO: Drop shadow on armor icon
+TODO: Drop shadow on spell icon
+TODO: Drop shadow on gold counter
+TODO: Drop shadow on level introduction text
+TODO: "Strikes" sign and combo counter have drop shadows
+TODO: Add low health sound indicator
+FIXME: Minor adjustments to Vigil's first strike during an air combo to prevent it from rarely being skipped - Needs testing
+FIXME: Monsters with 'ignore air combos' on cannot be 'popped' up high
+TODO: Support for monsters using Spawnflag 64 to ignore clip brushes
+TODO: Implement more dynamic shadow lights
+FIXME: Fix super-rare bug where Vigil grabs someone immediately after blocking but does his counter attack instead of grab attacks
+FIXME: Potions are now drawn full bright
+FIXME: Zombies / Zombie Bosses can only throw magic after 1 second have passed
+TODO: Drop shadows on item pickup text
+FIXME: Minor NOTARGET fix
+FIXME: Nerfed Medusa Head damage (20 -> 13)
+FIXME: Back flip mid-air recovery now uses I-Frames
+FIXME: Golem won't use his stomp attack mid-air, switches to his default
+FIXME: Lowered Raven's poison time & random chance value
+FIXME: Lowered Zombie Boss's Blind Status from 12 to 10
+FIXME: Lowered damage on Zombie's magic
+TODO: Dynamic shadows are now cast inside the castle by the beginning candles
+FIXME: Health flask checks 'idle_count' to see if player is standing still
+TODO: Ghosts are now rendered correctly
+FIXME: Gremlins leap attack can no longer poison
+TODO: Vigil switches block frames on attacks properly
+FIXME: Player is forced into a block frame on Perfect Guard
+TODO: "Press Attack to Begin" now flashes in and out of existence on demo/intro loop
+FIXME: Vigil introduction dummy is fixed
+TODO: Fancier effects on title screen
+FIXME: Slight delay on title screen before you're allowed to progress
+FIXME: Remove "Water Breathing" relic in deathmatch mode
+FIXME: Remove "Cube of Knowledge" relic in deathmatch mode
+FIXME: Proper health / mana in deathmatch mode
+TODO: Disable flask in deathmatch mode
+TODO: HUD changes on deathmatch mode
+TODO: Health bars over Vigil appear in Coop Multiplayer
+TODO: Add casual (easy) mode
+FIXME: Poison doesn't ignore god mode
+TODO: Vigil can short-hop by buffering his jump button during his running attack
+FIXME: Ghouls no longer melee while airborne
+FIXME: Blindness status renders correctly on camera style changes
+FIXME: Vigil's charge attack now has I-Frames
+FIXME: Removed Velocity getting reset to zero on NOCLIP monsters during pain frames (handle this in the monsters pain function)
+FIXME: Lowered damage on ghoul, slightly bumped poison time
+FIXME: Lowered Ethereal Skull backup on pain
+FIXME: Wraiths 'back up' when damaged now to prevent stun-locking
+FIXME: Lisa shouldn't be giving attacks for free when you leave the conversation
+TODO: Add SFX and special FX for potion drinking
+FIXME: Perfect Guard SFX not playing when reflecting Hell Knights lightning back at him
+TODO: Add SFX for blind status
+FIXME: PG doesn't remove status effects any longer. Too OP.
+TODO: Health pickups now require to be fully depleted before they're removed
+TODO: Monsters can now set status effects on Vigil (random chance, which type)
+TODO: Status effects are removed on death
+TODO: Poison status now has a sound associated with it's status
+TODO: Broken status now has a 'bone crunch/snap" sound
+TODO: Perfect Guard removes all debuffs off Vigil
+TODO: Vigil's head HUD icon is now yellow when Perfect Guard is on
+FIXME: Code clean up regarding Perfect Guard
+FIXME: Fixed Perfect Guard not removing enrage status
+TODO: Health Flask on HUD has ! printed over it when you're able to cure inflicted status effects
+TODO: AI will now attempt to close in on drinking players
+TODO: Lowered Merman's projectile damage to 1 but now inflicts poison status
+FIXME: More zombie balance changes
+TODO: Vigil can drink his health flask which removes status effects faster
+FIXME: Gave zombies "self.th_melee" commands for their magic to fire it at close range as well
+FIXME: Increase regen speed of drinking
+TODO: Drinking Health Flask lowers Poison status time
+FIXME: Normal Zombies have a 25% chance of inflicting "Blind" status for 3 seconds
+FIXME: Zombie have a 50% of inflicting "Blind" status for 5 seconds
+FIXME: Main TAoV Menu can only be used by the host / player 1
+FIXME: Max HP Up potions are now applied to all players in multiplayer
+FIXME: Knights now properly join the battle with Stained Glass Knight
+FIXME: Added clip brush in Boss01 on the balcony so the knights can't get stuck up there preventing you from beating the battle
+FIXME: SGK wasn't giving EXP and other subroutines weren't fired on his death
+FIXME: Fixed tshrine_castle for now to make the Wizard teleport you back to the castle
+FIXME: Fix bug with Priest leaving his cash display on screen
+FIXME: Enraged monsters can now be damaged, damage is 50% off however
+FIXME: Outer Wall has 1 more potion and they all give more
+FIXME: Potions give more in cavern
+FIXME: Added a Mana + Health potion in Decaying Dungeon
+FIXME: Added a potion + they give more in Castle Courtyard
+FIXME: More potions in Castle + Gives more
+FIXME: Wildlands potions give more
+FIXME: More potions / larger quantity given in Map02
+FIXME: Removed one knight during the end of Map01
+FIXME: Added another potion in Map01
+FIXME: Drinking/Tired time are now removed after the first hit so 1.5x damage doesn't stack accidently
+FIXME: Drinking speed is faster (Regen)
+FIXME: Vigil now takes 1.5x damage up from 1.25x damage when tired/drinking
+TODO: Implement preliminaries for the new Health Flask system
+TODO: All HP Max Up bottles now use a combination of Bitwise Operators & Spawnflags (Save on Parms)
+FIXME: Adjust Vigil's stick time to getting smacked against walls
+TODO: All game progression flags are now saved in Bitwise Operators (Save on Parms)
+FIXME: Remove stupid mistake of using EF_NODEPTHTEST on Vigil's 3D Head HUD icon
+FIXME: Remove the planks covering the 'big fall' section in Map02 on return trip
+FIXME: Reposition Vigil's level on the HUD
+TODO: HUD Upgrades (3D model support) - Big Thanks to Reki for help!
+TODO: Compile Map02 without WRBrushes until @Spoike#6502 fixes the issue
+TODO: Improve Vigil's sword shader
+TODO: Remove random check to see if a monster should throw an attack or not
+FIXME: Critical crash error with buying Vol'Brand upgrades
+TODO: Implement Stained Glass Knight
+FIXME: Adjusted (Lowered) prices of upgrading Vigil's armor
+FIXME: Adjusted (Lowered) prices of upgrading Vigil's sword
+FIXME: Firebeam is now inescapable
+TODO: Colormod effects when Vigil gets hit by magic
+FIXME: Tweaked Vigil's reaction to being hit by lightning storm
+FIXME: Fixed crash when Vigil grabbed an Arch Ghoul and he breaks free
+FIXME: Radius of Ice Field has been increased to match the model more
+TODO: Twister can now be Perfect Guarded
+TODO: Ice Field can now be Perfect Guarded
+TODO: Fireball can now be Perfect Guarded
+TODO: Mappers can set how much mana / health potions give when dropped by barrels
+TODO: Barrels can now drop mana / health potions
+FIXME: Cart scenery is now non-solid
+FIXME: Slight game slowdown when Vigil is guard broken
+FIXME: Lowered Gremlin & Dog's leap attack Z origin
+FIXME: Removed infront(); check for AI melee attacks
+FIXME: Relaxed 'infront' checks on the AI's melee
+TODO: Small 'slow down' on large hits to emphasize bigger attacks
+TODO: Rebalance underwater monsters for new Vigil damage value
+FIXME: Vigil now does 100 damage per swing underwater, fixes Merman HP bar issue
+FIXME: Rebalance multi-hit attacks as Vigil can be comboed mid-air now
+TODO: Update Map02
+TODO: Add new monsters (Werewolf & Golem)
+FIXME: Vigil can now be combo'd after being popped up in the air by enemies
+FIXME: Ice Field spell is now rendered in full bright
+FIXME: Remove the air combo auto tracking on Y axis, depreciated - Requires testing!
+FIXME: Ignore air combos on monsters no longer ignore ground physics either
+FIXME: Vigil's Y Velocity is reset to zero on air combos
+FIXME: Boulder+Planks weren't removed on return trip to Mountain Side
+TODO: Vigil now hits func_fall platforms + soft ground after the big fall in Mountain Side
+FIXME: MOVETYPE_WALK set during Vigil's big landing frames
+TODO: Knights in the first mini boss fight now jump off the cliff
+FIXME: AI Improvements with navigation and removal of a field
+FIXME: Cleaned up all compiler warnings
+FIXME: Camera shaking entities are now properly working again
+FIXME: All music_track# entities are now functional again
+FIXME: Vigil dies in a funny manner on trigger_hurt
+FIXME: Vigil's counter attack now has the ignoreair flag on
+FIXME: Relics & Spell books now remove themselves in deathmatch mode
+FIXME: Massive optimizations to network traffic & visual effects between players for smoother netplay
+TODO: Haze particles are now optimized on lava textures properly
+TODO: Vigil's .enemy field is now updated properly on the person who attempted to harm him
+TODO: Func_swing with an attack_finished # will now rotate, stop, rotate the other way, and stop
+TODO: Trigger_multiple/once now has support for player/monster only spawnflags or both
+FIXME: Fixed sliding issues with the Gaunt when casting magic and being pushed by velocity
+FIXME: Vigil's counter attack now re-orients Vigil's turn angle at his last attacker (less chance of missed counter attack hits)
+TODO: Slightly lower Vigil's arm stab shadows with avelocity, update it's origin to Vigil's per frame
+FIXME: Vigil can no longer block / dodge out of 'big fall' recovery frames
+TODO: Smarter AI navigation / Less 'walk on the spot' issues from intelligent movetogoal(); switches
+FIXME: Death menu keys are locked for a second so you don't accidently choose the wrong option
+FIXME: Centerprints are cleared on map starts
+FIXME: Removed tired_finished timer on head smash recovery and replaced it with it's own field
+FIXME: Changed all instances back to self.th_magic(); in the AI to fix Gaunt + other issues
+TODO: AI now cancel's blocking immediately if Vigil is tired / recovering
+TODO: Added tired_finished timer to head smash's recovery animation, AI will now attempt to punish player for failed/missed head smashes
+TODO: AI will now always run after Vigil when his back is turned or he's tired
+FIXME: Better locking of Y angles on AI to prevent spamming turn angles when close to player
+FIXME: Corrected grab frame on Baron ($pain4 was meant to be $painb4)
+FIXME: Increased radius from 1 to 5 for backwards jumping if too close to Vigil
+FIXME: AI will lock it's turn angle temporarily when close enough to the players X axis
+FIXME: AI will no longer run towards the player on axis X if close enough to the player but will attempt to match his Y axis (up/down)
+FIXME: AI had a bug in it's blocking code that led to erratic ugly movement with walkmove();
+FIXME: Fix Electric Squid
+TODO: Scrapped the AI Walking routine and completely rewrote it without movetogoal(); / ideal_yaw
+FIXME: Hell Knights now respect their magic attack distance
+TODO: Improved the AI walking routine (movetogoal) using FL_PARTIALGROUND and TraceBox
+FIXME: Zombie AI improved, they now understand their magic has limited range
+FIXME: Zombie AI improved, they only heal boss zombies when close enough otherwise they move to get close
+FIXME: Grabbing cool down is reduced by half
+TODO: Improve grabbing mechanics to be more reliable on slopes
+FIXME: Blocking monsters no longer 'block' attacking monsters
+FIXME: Improved logic for AI's combat routines to prevent possible overflows
+FIXME: Fog values recorrected in Wild Lands
+TODO: Add Half-Health triggers to entities
+TODO: Monsters now setup their max_health automatically when woken up
+FIXME: Drop volume on whispering barriers by half
+TODO: Implement spawn_monster entity
+FIXME: Two monsters can now awaketarget each other to wake one another up without crashing in a loop
+TODO: Map02 boss encounter is now spiced up a tad and starts slightly differently
+TODO: Monsters can now trigger up to 9 targets 'awaketarget' to 'awaketarget9' when activated
+FIXME: Logic error in wakeup(); function closed to prevent endless loop crash
+FIXME: Vigil's ledge grab now reinforces it's MOVETYPE_FLY and zeroing velocity better to avoid a rare bug
+FIXME: Update the transit maps: Have the candles at a proper lighting level on the foreground, and fix the camera position so it's centered better
+FIXME: 'inair' / 'bigfall' flag is reset to zero on Vigil's spin kick
+TODO: Add Perfect Guard to relics.bsp
+TODO: Merman's acid spit now has it's dissolve sound in place
+FIXME: Bats now call FireMelee(); instead of T_Damage(); fixing any odd issues
+FIXME: Bats now do 16 damage per hit, up from 8
+FIXME: Vigil's proper angles are now reinforced during his running attack
+TODO: Add full mana visual indicator with sound effect
+FIXME: Ethereal Skull now does 32 damage, up from 25
+FIXME: Raven's now give 20 EXP up from 14
+FIXME: Lesser Wraiths now give 67 EXP up from 51
+FIXME: Bats now give 18 EXP up from 10
+FIXME: Bats no longer reset velocity forcefully on Vigil
+FIXME: Medusa heads give 25 EXP up from 13
+FIXME: Skeleton's EXP given raised from 27 to 50
+FIXME: 'inair' flag is reset to 0 on Vigil's Uppercut slice
+TODO: Medusa heads now fade into existence
+TODO: Medusa Head is twice as big, hit box increased as well
+TODO: Rename church.bsp to boss1.bsp
+FIXME: Soul Candle will now shut off 1 second while in lit areas
+FIXME: Relics needs it's own unrestricted parm (remove encode/decode)
+TODO: Add Soul Candle relic
+FIXME: Adjust haze lava particles to reduce smoke drawn and keep FPS up
+FIXME: Gaunt shoots his 3x Fireballs out slightly slower
+FIXME: Ghouls now give more EXP, 43 up from 27
+FIXME: Electric Squid gives more EXP, 66 up from 45
+FIXME: Gaunt now gives more EXP, 68 up from 58
+FIXME: Call monster_removeslide(); on blocking frames for enemies that block
+FIXME: Firebeam's muzzle is removed when it's owner has been grabbed
+TODO: Add transition rooms to the castle
+TODO: info_player_start with spawnflag 2 disables the camera completely
+FIXME: Fireball no longer endlessly cycles through every enemy entity per-frame eating CPU time like crazy
+FIXME: Dynamic light removed from zombies magic attacks, too harsh on FPS in certain circumstances
+FIXME: Vigil cannot perform his charge attack after quickly pressing the jump button to make it go further
+TODO: Vigil cannot change levels when enemies have engaged him, unless it's the teleporter/boss room
+FIXME: Zombie's dark ball magic spell can now be perfect guarded
+FIXME: Merman's acid spit can now be perfect guarded
+FIXME: Merman's acid spit now hits Vigil
+FIXME: Lowered hit sphere on Zombie's dark ball magic attack
+FIXME: Merman's health should be changed as soon as he jumps out of the water
+FIXME: Added kill trigger on the boulder ambush in the caverns to stop camera shaking near the teleporter door
+FIXME: Remove sword off Vigil's main model to prevent flicker
+FIXME: Change dungeon's music_track to trigger_music
+FIXME: Green Dragon's now give 81 EXP (Up from 61)
+FIXME: Removed dynamic light off Fireball spell as it causes FPS drops too harshly
+FIXME: Vigil's head smash is blockable even with perfect guard on
+TODO: Vigil's Charge attack final hit is now unblockable, damage nerfed (30 down to 22)
+FIXME: Adjust minimum lighting level for monsters / players (from -23 to -33)
+FIXME: Hell Knights can now be juggled after death
+FIXME: Enraged monsters no longer add +15 EXP points
+FIXME: Increase 'nohit' timer on head smash as to disallow multiple hits
+FIXME: Round experience gains upwards to full numbers only
+TODO: Add Normal+Gloss maps to armored foes (Knight, Knight Lv2, Hell Knights)
+FIXME: Fullbright pixels on curtain.mdl
+FIXME: Trigger_music no longer stuffcmd's the music 4 times on map load
+FIXME: Priest in the church is now lit correctly
+TODO: Improve Normal+Gloss maps on Vigil and fix his 'stone' sword
+FIXME: Players arm stab shadows no longer overflow past frame 11
+TODO: Developer 1 now shows how much EXP is given per kill
+TODO: Enemies give diminishing returns when Vigil levels up (EXP - Vigil's Level, caps at 1 EXP)
+TODO: Add drop shadows to HUD numbers
+FIXME: Vigil no longer flies into the ceiling infinitely when hit by a medusa head while ledge grabbing
+TODO: Add Knight Level 2 (Corrupted Captain)
+FIXME: Bats now use EF_FULLBRIGHT
+FIXME: Traceline increased on Vigil's "knocked far" routine to prevent stuck in-wall problems
+TODO: Medusa Heads with 'lip' flag on will now be rendered over any objects
+FIXME: Speed Line graphics now spawn at Vigil's origin when he's in air, fixes odd speed lines on head smash attack
+TODO: Medusa heads now render in full bright only
+FIXME: Medusa Spawner obeys cnt2 spawn time properly now
+FIXME: Slight Church improvements
+FIXME: Push torch back from camera in Map02 near the first staircase (framerate hit on low GPUs)
+FIXME: Extended the length of the traceline when Vigil gets smacked into a wall (prevents getting permastuck)
+FIXME: Vigil's backflip now sets MOVETYPE_WALK fixing a rare bug
+FIXME: trigger_safezone disables Vigil running when safezone is enabled
+FIXME: Hell Knights now ALWAYS Enrage for 8 seconds like the first battle (Up from 4)
+TODO: Enraged monsters now automatically add 15+ Experience points
+FIXME: Stop players / monsters from going pitch-black (qc custom lighting)
+FIXME: Charge up particles/graphics for Gaunt weren't displaying properly
+FIXME: Corrected logic for health / mana display (fixed '99' bug?)
+TODO: Nerf how much EXP monster_needles gives
+FIXME: Vigil during the intro sequence matches his updated look properly
+FIXME: Guards walking around no longer ignore clip brushes
+FIXME: Vigil's max mana is no longer ignored on mana pickups & mana gains in general (fixes flashing number on hud)
+FIXME: Removed Blood effects from haze.cfg (particle scripts) and defaulted to FTEs
+TODO: Remove grind spot: Baron first battle
+FIXME: Fix infinite gold bartender hint bug
+TODO: Vigil's MAX Mana is now displayed on the HUD
+TODO: Re-enabled the setsize(); hack on player/vigil entity to help with rotating brushes vs SOLID_TRIGGER entities
+TODO: Update FTEQuake Engine to 5595
+FIXME: Triggers can now run their targets 1-9 before killtarget is done
+FIXME: Vigil's "InAir" counter for animation switching to his jump/falling animation increased from 16 to 32
+FIXME: Return to map02 from village should open the door
+TODO: Remove grind spot: Zombie + Zombie boss battle before reaching the Village
+FIXME: Trigger_music with a targetname can no longer be activated by touch
+FIXME: Map01 changes to stop Vigil from jumping on top of where the mini-boss is
+TODO: Target support upped from 4 to 9
+TODO: Remove grind spot: Hell Knight / Corrupt Commander first battle
+FIXME: Hell Knights with Spawnflag 2 always enrage
+TODO: Store max_mana in parm
+FIXME: Vigil gains +4 HP per level up (Up from 3)
+FIXME: Max mana is now +3 per level up
+FIXME: Lightning Storm damage per hit bumped by +1
+FIXME: Lightning Spell is 50 mana, down from 65
+TODO: Decrease Lightning Storm's attack duration
+TODO: Vigil's starting mana pool lowered from 50 to 20
+FIXME: Lightning storm now subtracts the proper mana (65)
+TODO: Vigil takes 1.25x damage when tired
+FIXME: nodrop flag added to trigger_teledoor
+FIXME: Trigger_teledoor runs droptofloor(); on Vigil
+FIXME: Windows in Castle2.bsp rain coming through the windows
+FIXME: Chillo reported Gremlins stuck in barrier in map02 - actually fixed now
+FIXME: Lightning damage slightly nerfed on Dragons
+TODO: Knocking enemeis into Pits / Water / Lava / Slime rewards EXP
+FIXME: Vigil's player_move now runs touchtriggers();
+FIXME: Vigil's Y Velocity (Foreground & Background) movement is halted when monsters block his air strikes
+FIXME: Church theme song now plays on save game load
+FIXME: Vigil's current experience is now saved between maps (big OOPS!)
+TODO: Church is now set to SafeZone ON
+FIXME: TeleDoors now stop velocity on usage and force Vigil's player_move(); to execute (stops odd situations)
+TODO: Priest now shows experience / next level
+FIXME: Adjust Cameras BBOX - again
+FIXME: Revise the gold calculation system
+TODO: Add explanation on first gold pickup of how the gold system works
+TODO: Add forward momentum when Vigil's counter attack is performed (Helps hit target)
+FIXME: Fixed +6 Max HP on level ups to +3 as intended
+FIXME: Blacksmith is now non-solid like all other village NPCs
+FIXME: Collision sphere for headsmash upped from 40 to 50
+TODO: Converted airuppercut(); in player.qc to use FireMelee(); instead of it's own damage routine
+TODO: Diving Swallow now gores enemies in half (when applicable)
+FIXME: Jump kicks & Spin jump have more accurate collision spheres
+TODO: FireMelee(); upgraded to allow up/down (Z Axis) collision origins
+FIXME: Developer 2 now sets proper viewsize
+FIXME: Particle scripts are now loaded by CSQC
+TODO: Lightning entity swaps between TE_LIGHTNING1 and TE_LIGHTNING2 now
+TODO: Add back .owner hack to monsters, fixes rare 'stuck' issues when two entities are inside each others BBOX
+FIXME: Twisters direction is now more random, as they tended to fly off towards the left moreso
+TODO: Twister spell spawns 6 Tornados (up from 4)
+FIXME: Improve Twister's visuals with EF_ADDITIVE flag
+FIXME: Spell charging particles no longer fly off to the worlds coordinates before removal
+FIXME: Ice Spells charge particles no longer go off coordinates
+FIXME: Eternal Dragon's boulders now hit Vigil, also code majorly optimized using FireMelee
+FIXME: attackedname string also records when attack is blocked
+FIXME: Cut in half models now give off blood in their models
+FIXME: Gremlin may possibly get stuck in barrier in Map02
+FIXME: Map02's soft-lock issue
+FIXME: Blocking turns off Vigil's sword shadows
+FIXME: In-air / Big air (Hard landing) variables are turned off when Vigil is swimming
+FIXME: Ledge grab+hoist removes Vigil's 'bigfall' and 'inair' variable
+TODO: Perfect Guard & Enrage/Berserk buffs now give off glows
+FIXME: Vigil Uppercut Slice now scales with sword level
+FIXME: Head Smash now scales with sword level
+FIXME: Flaming Head Smash now scales with sword level
+FIXME: Spin attack now scales with sword level
+FIXME: Camera is '-5 -5 -5', '+5 +5 +5' bounding box
+TODO: Add "First level up" text box
+FIXME: Diving Swallow now scales with players sword level (+10 Damage per sword level)
+FIXME: Fixed issue in dungeon.bsp where trigger_barrier gets activated twice
+FIXME: Ghosts can no longer drain Vigil's health when perfect guard buff or god mode is on
+FIXME: Change traceline to tracebox concerning the camera vertical check
+TODO: Diving swallow locked behind Lisa's paywall
+TODO: Preliminary Bartender hint system implemented
+FIXME: Fixed the HUD displaying proper values to CSQC
+TODO: Show MAX HP on HUD
+FIXME: Ugly water fountain in the village, improve it
+TODO: Implement pouch system
+FIXME: Entity bench is now non-solid
+FIXME: Fireball refinements
+FIXME: Remove block sparks a bit sooner so more can appear at once
+TODO: Reevaluate monsters blocking AI and rewrite it to be improved for incoming aerial attacks
+TODO: Added a limiter for block spark particles to prevent data overflows - currently 25
+TODO: Monsters that can block now check if Vigil's aircombo_finished is active
+TODO: Vigil's mid-air normal jump kicks now hits as long as it's animation is played
+FIXME: Lock Vigil's keys temporarily on map change to prevent accidental movement before map load
+FIXME: Fireball spell no longer gets removed early on low framerates
+FIXME: Monsters dead bodies can no longer get stuck in the air and float
+FIXME: Monsters no longer float in the air during their standing animations when not active
+TODO: Nerf HP Max UP from +10 HP to +5 HP
+FIXME: Boulder at the end of the wilderness level now uses ltime for nextthink
+FIXME: Fixed fullbrights on statue5.mdl
+FIXME: Adjust shadows transparencies due to EF_FULLBRIGHT flags being used now
+TODO: Upgrade func_fall
+FIXME: Timing fix on red shadows for Vigil's Final Stab
+TODO: Add func_swing for proper rotation on bmodel/brush entities
+FIXME: Perfect guard sound effect is now ATTN_NONE so all players hear it
+FIXME: Gold / Mana / Health can now be picked up by all players individually before removal
+FIXME: 'gamecfg' for Vigil's spawn point is now ignored in deathmatch
+FIXME: Monsters now obey clip brushes using 'hitcontentsmaski'
+FIXME: trigger_music is now a stuffcmd, fixing multiplayerSim
+FIXME: trigger_fog is now a stuffcmd instead of localcmd, fixing multiplayer
+FIXME: v_cshift is now a stuffcmd for local players
+FIXME: Hell Knights + Other monsters 'traceline' attacks now hit SOLID_TRIGGER entities
+FIXME: func_barriers warp all other players to the activators location
+FIXME: Rewrite gold pickups to work in cooperative play
+FIXME: Vigil's swim noise only plays once per animation cycle
+FIXME: mushroom's no longer have fullbright pixels on their skin
+FIXME: Barrels no longer have fullbright pixels on their skin
+FIXME: monster_ghost no longer is forced an awareness setting as they're now all compatible
+TODO: Improve MOVETYPE_NOCLIP monsters velocity at staying closer to the player
+TODO: Vigil's swim speed increased
+FIXME: NOCLIP monsters that enter water that are attacked by Vigil will die in 1 hit
+FIXME: Maleviolent ghosts now have a slower HP drain
+FIXME: Ethereal Skull will now be properly knocked back instead of having it randomly cancel out
+FIXME: MOVETYPE_NOCLIP monsters no longer remove in water
+FIXME: Zombies "dark magic" projectiles are now slower
+FIXME: Merman's jumping physics and behavior revised
+FIXME: Wizards teleportation fee is now lower
+FIXME: Merman's "On Land" health is set back up as soon as his jump animation is called
+FIXME: Ethereal Skulls flame no longer has problems tracking his origin
+TODO: Make monster AI HuntTarget(); think faster
+TODO: Add developer support for console command 'notarget'
+FIXME: Toned down particle spawns to prevent "WARNING: datagram overflowed for Vigil"
+FIXME: Vigil's jump sound moved to CHAN_AUTO
+FIXME: npc_priests collision box is now SOLID_NOT
+FIXME: Accurate collision BBOX on bats for WRBrushes
+TODO: Vigil's cyclone crush ender now does 20 damage, up from 13
+FIXME: Spelling error in "Moutain Side".
+FIXME: Raised Vigil's spawn point in teleporter.bsp to prevent odd stuck in ground issue
+TODO: Switch particle system to FTE's enhanced default ones
+FIXME: Gold bounding boxes are now accurate, makes picking it up easier
+FIXME: Gold pickups now no longer display "+0"
+FIXME: Fireball's hit sound is now CHAN_AUTO from CHAN_BODY
+FIXME: Console notifications are now properly set in menu.bsp
+FIXME: Sound device changed to directsound instead of OpenAL since somehow ATTN_NONE+Reverb glitch reared it's ugly head once more on Negke's computer
+FIXME (By request: negke) settings.cfg is only executed once on load up instead of every map change
+TODO: Add swim sounds to Vigil
+FIXME: Vigil's forward flip angles are set to zero when playing
+FIXME: Archer arrows don't hit Vigil when he stands still (MOVETYPE_TRIGGER -> MOVETYPE_SLIDEBOX)
+FIXME: Nerf lightning storm required mana to 65 from 45
+FIXME: Electric Squids no longer shoot lightning at Vigil when perfect guard buff is activated
+FIXME: Spin attack can now hit Medusa heads
+FIXME: Fixed inverted thumb left thumbstick movement on Up/Down direction for Xinput gamepads
+FIXME: Perfect block cooldown was broken, now fixed.
+FIXME: Removed 'vlen velocity' check on gremlin and dog jump attacks, 
+FIXME: Enraged monsters no longer block
+FIXME: Removed Vigil's "One Hit Unblockable" buff on Perfect Guard in favor of "All attacks are unblockable"
+TODO: Give Ethereal Skull a cool death
+TODO: Add HP Max Up sign and code it's behavior
+FIXME: Bats animate too fast on new model when flying
+FIXME: Firebeam hits on enemies tells the camera to track the monster being hit, like it used to
+TODO: Allow the camera to change it's tracking entity to other entities beside the player
+FIXME: Vigil is now invulnerable while casting firebeam
+TODO: Move the HP Max Up elixer in Boss2.bsp and hide it elsewhere
+FIXME: Add EF_NODEPTHTEST + EF_FULLBRIGHT to signs over Vigil's head
+FIXME: Fixed a super rare bug where if Vigil has his charge attack held down and is killed and unleashes it, he lands with full health
+TODO: Medusa's fade out of existence when they've reached their life span
+FIXME: Baron resets DAMAGE_AIM in his run/walk frames
+TODO: Add Slow-Motion effect always when Eternal Dragon rises from the lava and his neck is outstretched
+FIXME: Boss 2's melee attacks are set to angle_y to always blow Vigil backwards properly
+FIXME: Spinattack now sets the enemies knockback to zero again
+TODO: Add Lesser Wraiths
+TODO: Add monster_crow
+TODO: Implement monster_ethskull
+FIXME: FTE no longer captures the mouse, not needed for TAoV
+TODO: Improve speed / hits / visuals on Vigil's flurry stabs
+TODO: Reorganize all func_ entities into their own .qc file
+FIXME: Buff boss2's health
+TODO: Vigil's headsmash attack now spawns particles
+TODO: func_barriers appear during boss / mini-boss battles and are visible
+TODO: Vigil's particles on blocking now look excellent. Thanks to progs_dump and rubicon2
+FIXME: inslime.wav no longer loops inside the .wav file
+FIXME: Wall running and dropping into water would have Vigils left/right keys locked
+FIXME: Wall jumping into water would lock Vigil's Left/Right key until you stood on ground
+TODO: Move all of Vigil specific .floats into defs.qc
+FIXME: Level Up sign over Vigil will no longer spin when his Z angles change
+FIXME: Vigil's X angles are no longer taken into account when ledge grabbing and will always fire the same regardless
+FIXME: Vigil's X angles weren't being properly set while swimming due to precision issues
+FIXME: Vigil no longer drowns on 'fly pain' sequences
+TODO: monster_pain always returns velocity '0 0 0' when struck
+FIXME: Vigil's "running" flag needs to be shut off while swimming
+FIXME: Perfected Vigil's counter attack hit sphere after testing it a bunch
+FIXME: Slight delay on skeletons attack animation, armor level 1 on Vigil makes it too tough to get out of
+FIXME: Certain attacks (Corrupt Commanders lightning or anything calling T_Damage directly) would still kill Vigil with his Perfect Guard buff active
+FIXME: Needles should set knockback of 4 on Vigil regardless
+FIXME: Vigil's angle X is reset upon his 'get up' frames being played
+FIXME: Sound effect when Vigil's headsmash connects was being cut short
+FIXME: Grab attacks on skeleton / merman always go into pain frames
+FIXME: Enemies will now randomly decide (25% chance) to backup now if Vigil is facing them instead of all the time, making them more aggressive
+TODO: The blood model shouldn't just 'drop' but angle itself downward with it's velocity
+FIXME: Electric Squid will no longer attack swimming players
+FIXME: Can no longer drown with god mode enabled
+FIXME: Vigil can stand in mid-air if the ground beneath his feet move while standing, fixed with TraceBox
+FIXME: Vigils "knockback" flag now resets to zero on idle frames
+FIXME: Camera style 5 had an inverted X angle tracking issue
+FIXME: Fireball spells launched from monsters ignore other monsters
+FIXME: Electric Squids no longer short-hop
+FIXME: Eternal Dragon's melee attack was broken if Vigil was out of 'sight' of his origin point
+TODO/FIXME: trigger_pit now supports 'pitplacement' vector to allow mappers to define where Vigil respawns when trigger_pit is touched, otherwise default behavior when not defined
+FIXME: Eternal Dragon now randomizes between melee and firebeam when you get him angry, removes firebeam only loop exploit
+FIXME: Adjusted hitbox on Vigil's counter attack so it hits 'inside' him more
+TODO: Fix Medusa heads, you can now set how long they fly until removed / .effects works for EF_NODEPTHTEST
+FIXME: Fireballs hit another monster and remove themselves if their 'owner' flag is a monster
+FIXME: Bats flying backwards
+FIXME: v_cshift values are always reset on map load
+TODO: Finish (Not finalize of course, for now) cavern.bsp, and the 2nd boss + relic room for it.
+TODO: misc_camshake entity added for camera shaking effects set by mappers
+TODO: add monster_needles (typically an underwater creature)
+FIXME: Soft-lock fixed in teleporter room by running off the very sides of the stairs causing Vigil to infinitely walk into the wall
+FIXME: Proper bounding box for monster_dog, quake's default was used and is really bad
+FIXME: Lava/Slime damage no longer hurts Vigil when GOD MODE is enabled
+TODO: func_barrier, trigger_music, ambience_heartbeat are now removed on map re-entry for boss room, and gold..
+FIXME: Wall Running no longer allows Vigil to grab walls without the wall grabbing relic
+FIXME: Proper check on close_check(); short hops for Vigil's attack_finished > time flag
+FIXME: AI no longer launches attacks when Vigil is entering 'fly pain' animations
+TODO: Screen tints red when Vigil is near death (3rd of his health gone)
+TODO: Fire Beam can now be PG'd
+TODO: Add 'target2' through 'target4'
+FIXME: Ghouls shouldn't back-hop
+TODO: Update transporter for Cursed Caverns
+TODO: Update & Fix up misc_boulder
+FIXME: Clear 'mashattack' flag on first attack animation
+FIXME: Water physics wasn't obeying frametime - d'oh!
+TODO: Add "Camera Style" 5, strict tracking of Vigil - Fixed up
+TODO: Add Vigil's non-HD fixed skin over the model
+TODO: Vigil's forward flip (get up animation from knock down) now plays the jump sound
+FIXME: Increased cooldown from perfect guard from 1s to 2s to stop PG block spam
+FIXME: Pressing block again with perfect guard buff active no longer causes DAMAGE_AIM to set
+FIXME: Stop "v_cshift" command running every frame, only when needed
+FIXME: Bats only fly at Vigil when his origin is under theirs
+TODO: add close_check(); for AI to allow them to backward dash if Vigil is too close, or melee depending on the monster
+TODO: Allow arch ghoul to be grabbed
+FIXME: v_cshift used in place of weapon model for 'seizure' effects
+FIXME: Vigil's uppercut slice can't be spammed by landing on the ground and relaunching it over and over
+FIXME: Vigil's final air kick is unblockable and damaged buffed
+FIXME: Fixed Vigil's maximum health not being saved between map changes (parm11 stores Vigil's owners .max_health)
+FIXME: All Vigil's grab atttacks are unblockable
+FIXME: Increase 'grabbed' frame from 0.5 to 1 second
+FIXME: Perfect Guard now buffs Vigil's first melee attack to become unblockable for an opener
+FIXME: Knights running attack now block breaks
+FIXME: Enraged monsters can now be damaged but their pain frames will no longer play
+FIXME: Perfect Guard causes brief slowdown on execution
+FIXME: Add 0.5 second cooldown on grabbing enemies, no more block cancelling to spam grab enemies to death
+TODO: Add "Perfect Guard"
+FIXME: Rare occurance where spin attack doesn't move vigil mid-air
+TODO: Add dynamic light to fireball
+TODO: Add HP Max UP item
+TODO: Colormod manipulation system is in, allows easy colormod usage on Vigil with smooth transitions
+FIXME: Camera's Z check upwards extended by 8 Quake units to keep it from clipping into the roof
+FIXME: Skeletons require a certain amount of bashes before going into pain frames
+FIXME: AI Improvements on their melee attack/blocking during CombatThink(); Enemies will now melee if Vigil is in air as well as blocking if they possess a .th_block();
+FIXME: Dragon's attack hitbox is larger
+FIXME: Remove block causing monsters to become stun and thrown back
+FIXME: Barrel 'gibs' now properly match model
+FIXME: All relic models now 'bounce'
+TODO: Add vines detail models to areas
+TODO: info_notnull is now added
+TODO: Knights randomly change their stand animation when idle
+FIXME: Fireballs now target the closest enemy Vigil is facing
+FIXME: Knight.mdl by Chillo matches TAoV's frame setup properly
+FIXME: Zombie.mdl by Chillo now matches TAoV's frame setup properly
+FIXME: Vigil can no longer backflip out mid-air during his pain1 and pain2 animation frames
+FIXME: Vigil's double jump is no longer reset on backflip
+FIXME: Hard nerf Vigil's backflip distance as to align with his charge attacks distance to allow an easy & powerful counter attack
+FIXME: Fireball no longer ignores 'idle' enemies but their overall range is cut by 3/4's
+FIXME: Run 'stopmusic' command on demo playback
+FIXME: The player_checkledge(); function is no longer ran while Vigil's head smash is in effect leading to odd behavior
+FIXME: Relics now give off purple/pinkish particles/glow
+FIXME: Removed camera stopping when hitting walls
+FIXME: Vigil's Diving Swallow & Flaming Head Smash attacks have better properties for visual effects
+FIXME: Guard has some strange language when talking about the subterranean depths
+FIXME: Vigil's head smash radius is now equal to his flaming head smash *Slight Buff*
+TODO: Add particle blood
+FIXME: Revise EXP table on all monster deaths
+FIXME: Regular Zombies give WAY too much EXP
+FIXME: Holding swim button down while ledge grabbing no longer allows Vigil to fly up a tad
+FIXME: Vigil no longer sinks like a rock with MOVETYPE_STEP changes (pointcontents check and moved to WALK entity again)
+FIXME: Vigil sinks faster in water
+FIXME: Dragon's don't remove themselves when in lava
+TODO: Revise Baron, gave him an invunerable jump and slightly better AI to attack more instead of block
+FIXME: AI will now attack when Vigil is inside their BBOX
+TODO: Menu.bsp updated
+TODO: Allow baron to cancel his block into an attack if the player is close
+FIXME: Vigil's grab attacks are better at hitting their target (Distance forward reduced, bounding box bigger)
+FIXME: Vigil's air smash shouldn't be executed off super tiny drops
+TODO: Vigil's "tatsu" now has soft shadows trailing
+TODO: Vigil's Final Stab now uses tracebox + velocity for movement to allow it to operate over clip brushes
+FIXME: Gremlin needs it's owner removed before jumping attack as well
+FIXME: Increase the head smashes hit sphere slightly (25 -> 32)
+TODO: Improve the death screen
+FIXME: Adhere to 3 digit limit for health on Vigil's death
+FIXME: Dog needs to remove .owner flag before jumping as its .touch function isn't calle
+FIXME: Spin attack in-air physics re-adjusted to fix sequence breaking / abuse (way OP distance!)
+FIXME: Vigil's mana display (CSQC) has a glitch where mana displays 99 instead of the correct value at times
+FIXME: Vigil's spin attack has invunerability frames
+FIXME: Vigil slid across the ground when he hit the ground during his 'twist' frames during rare occurances
+TODO: Electric squid should give off dlight when firing and target struck / same with hell knight
+FIXME: Pressing magic menu on the same frame Vigil falls off an edge allows him to glide stupidly
+TODO: Gold glows, fix up other glows by having them spawn higher off the ground to light up the area around object properly
+FIXME: Enforce waterstyle 3, fixes water being wrong on save game loading
+FIXME: trigger_music (point entity) version removes itself from the game world after one use unless CNT is set to 1
+TODO: castle.bsp cool entrance where the lights come on
+FIXME: Vigil story introduction dummy is no longer slightly sinked into the floor
+TODO: Pick ups give off subtle colored light
+TODO: Fully working dynamic music using point (targetname) & brush entities (touch)
+FIXME: Improve "Cyclone Crush" bought screen
+FIXME: Remove enemy velocity on Vigil's grab and set his movetype to STEP
+FIXME: Nerf final attack in Vigil's forward attack moveset
+TODO: Speed up MOVETYPE_WALK/STEP Switches, move from Player_Move(); to PlayerPreThink();
+FIXME: Slope sliding FIX is in for Vigil - Needs extensive testing between MOVETYPE_WALK/STEP switching
+FIXME: Vigil can now cancel his stabs into his forward final attack (spin into launcher) by holding forward at the end of the animation
+FIXME: Have "closemenu" command executed at the beginning of start.bsp to stop the quake menu from opening after demo playback	
+FIXME: Ghoul monster needs to monster_removeslide(); on majority of frames to prevent sliding
+TODO: Relic & Magic spell pickups are majorly enhanced
+TODO: Merge HD_Assets.pk3 into pak0.pk3
+FIXME: Introduction story now has "Press Attack to Begin" sign
+FIXME: Initalize gfx.cfg on start.bsp, fixes wrong graphics on demo playback
+FIXME: Moved the selected spell icon up a few pixels for asthetic reasons
+FIXME: npc_wizard should only show his 'teleport' price after he's unlocked
+FIXME: Only allow sprint(); functions to work on the options menu
+FIXME: Soft Shadows & Red Shadows can exist at the same time now
+TODO: Shop Keepers now show their prices on screen
+FIXME: Reset roll angle back to zero if it's turned on
+FIXME: Ledge grab should cancel "Big Fall" counter
+FIXME: Priest's blessing didn't show any feedback
+TODO: Archers can now be cut in half
+TODO: Vigil's graphical star on his sword now spins/moves/slight alpha effects
+FIXME: monster_removeslide(); function called to stop monsters velocity_x when on the ground in situations
+TODO: Revise Vigil's MOVETYPE_NONE's into TOSSES so he can't get stuck in moving platforms under weird circumstances
+TODO: Revise sparks on block
+TODO: Revise monster pain knockback
+FIXME: Vigil's flaming headsmash no longer triggers "big fall" animation on landing
+FIXME: Have the smooth camera entity set it's X and Z origin to Vigil's origin on teleporter doors
+TODO: # of Strikes should use CSQC and Hud_DrawLargeValue(); for niceness
+TODO: TODO: Hud now displays which selected spell you're currently on
+TODO: Visual detail upgrade on Fireballs
+FIXME: Vigil's 3rd forward attack is now more effective at hitting targets (Radius size & Knockback revised)
+FIXME: Decreased jump forward distance in Vigil's forward attacks
+FIXME: "Possessed Knight" is now "Corrupted Knight"
+FIXME: Increase knights swing radius by 5, stops him from wildly swinging and hitting thin air repeatedly
+TODO: Re-do blood effects
+FIXME: Stop reporting players gold through sprint();
+TODO: Client side QuakeC integration
+TODO: Gold, Armor/Sword level displayed
+TODO: Monsters show their names on-screen when damaged
+TODO: Land/Air based monsters remove themselves when in water
+FIXME: Map02's Hell Knight area - Ground needs to be redone due to BSP decompiler errors
+TODO: Vigil's Charge attack has red shadows trailing
+FIXME: func_destroy needs to ignore air combo physics
+FIXME: Buff lightning storm - too weak
+FIXME: Ask spike about why camera shake doesn't work - fixed!
+FIXME: Spawn hidden entity and have the camera track it for super smoother X view movements
+TODO: Vigil now braces for impact for large drops
+FIXME: Vigil's 'in air' timer now added, no longer switches animations on small stair cases/slopes
+TODO: Buff Diving / Flying swallow damage (25 to 35)
+FIXME: Mappers can now set Vigil's yaw (angle_y) on spawn instead of being forced left/right
+FIXME: Trigger_fog could rarely but surely lock up players movement keys, forgot to finish command with \n
+FIXME: Mash Attack flag gets stuck on forward roll making Vigil perform his forward stab even when he's not supposed to
+TODO: Add Prydon's water drop VFX/Sound and put a reflective water pool in the beginning of map02.bsp
+FIXME: Fireballs need EF_DIMLIGHT set
+FIXME: Rain drop sprite sheet needs EF_ADDITIVE flag on
+TODO: Add subtle HDR lighting/effects
+FIXME: Turn off mouse sensitivity
+FIXME: Make Vigil's 3rd strike sound/hit slightly more powerful and allow the animation to play out a tad smoother.
+FIXME: Vigil's speedlines needed EF_ADDITIVE
+TODO: Remove sprite shadows for FTE shadow blobs
+TODO: Improve visual effect on Vigil's roundhouse kick
+FIXME: Water particle fountain is too darn blue. Lighten it up
+TODO: Door2 entity can now be triggered to switch states to rise/lower when activated
+TODO: Add God Mode (Will be removed on final game release)
+TODO: Allow item pick ups to fire triggers / activators
+FIXME: func_fall now allows enemy monsters to activate it
+TODO: monster_dragon needs to be implemented
+        - Done. Needs SFX. Finito.
+FIXME: Vigil's 3rd kick in his air combo's last frame doesn't last long enough and is sometimes even skipped(!)
+TODO: Monsters can now be set to "Ignore Air Combo" and cannot be lifted into the air on strikes
+TODO: Remove Foreground detail in map01 that blocks the camera (trees are a mess of decompiled BSP issues)
+TODO: Fix Map02's ground as walkmove(); fails when it shouldn't.
+	- Test. Fixed.
+FIXME: Vigil should only drown when his head is underwater, not his waist.
+	- Water level 2 doesn't exist. Waiting on Spike's input.
+	- Fixed, issue due to view_offs being read by the engine
+FIXME: Trigger_fog needs to update faster as the player can 'psyche' it out.
+TODO: npc_wizards prices increase by Vigils level
+TODO: Remove "easy" difficulty. Get good.
+FIXME: Look into smoothing the camera out.
+TODO: Hell Knights can turn to face Vigil using infront(); check before firing lightning
+TODO: Add functioning HP Bars from Wazats Conquest mod
+TODO: Vigil's Final Stab now hits twice but is shorter range, damage is the same and has better collision.
+TODO: Vigil's Final Stab should be moved forward by walkmove(); so it fails on the edge of cliffs
+TODO: Dropped gold now adds Vigil's combo # divided by 2 to the formula. Bigger combos mean more gold dropped.
+FIXME: Unlock Vigil's Uppercut slice move in deathmatch
+TODO: Lower func_plat 'height' by 20 in Map02
+FIXME: Vigil did his "Get up in a cool way animation" and I backflipped out of it.
+FIXME: Lightning storm needs EF_NODEPTHTEST;
+FIXME: Vigil's diving swallow hit effect now has no depth test applied
+FIXME: Vigil's uppercut slice is now tied into his double jump relic
+FIXME: Nerf Z velocity on Vigil's roundhouse kick when in mid-air (can be abused to skip content)
+FIXME: Nerf recovery frames on Vigil's head smash
+TODO: Remove popaov, outdated until revived (if it is)
+FIXME: Monsters cannot block "air combos" in progress ending them early
+TODO: Revise and improve the introduction story text
+TODO: Align Vigil's Y axis better when enemies are air-borne
+TODO: "Battle Mode" should load "Menu_load", text needs to be changed to "Load Game" (xaGe :))
+TODO: "Load" menu graphics are still oddly Quakes; change to TAoV
+TODO: Add "Record Progress" to Priest
+FIXME: Auto-Saves are disabled, saving is done manually but preferbly at the village church
+FIXME: FOV / Viewsize is enforced to specific values
+FIXME: Remove Vigil's Y Velocity on his spin kick
+TODO: Improve transport rooms menus
+TODO: Improve all conversations with NPCs and how they look
+FIXME: Add information that Vigil lost EXP to next level and half his gold on death
+FIXME: Vigil's second grab punch is sometimes skipped
+TODO: Add teleporter room to game
+	- Remove Left/Right door, add camera change when leaving
+TODO: Add Trigger_Transport
+TODO: Village.bsp sets 'dragonvale' skybox
+FIXME: Map02 has a few 'tweaks' needed. Zombie encounter is somewhat broken, breakable rock wall bursts into wood chunks, and some ambience is needed
+FIXME: iced.mdl suffers from the one pixel fill glitch
+TODO: Vigil's Cyclone Crush (Down, Forward + Attack) move is now locked and must be bought from npc_lisa
+FIXME: Vigil's walk speed was reduced in an earlier build due to internal changes, speed back up
+FIXME: Hell Knights lightning cannot hit Vigil due to .owner issues
+FIXME: Tighten up Vigil's ledge grab and hoisting
+TODO: Fix up & work on Castle.BSP
+FIXME: Slightly improved animation key frame timing on Vigil's grab punches
+FIXME: Cart object needs to be solid
+FIXME: Monsters need to make Vigil their 'owner' on wakeup
+FIXME: Lower Knight & Hell Knights 'Block Frequency' on normal & easy skill since they can block during 'pain' frames now
+FIXME: 'Save' value on damage calculations initialized to zero before calc is done fixing OHKO issues
+FIXME: Nerf range and longevity of Zombies homing dark magic
+TODO: Have Fireballs homing in take account on Vigils infront(target) so they don't wrap around and hit targets behind him
+FIXME: sv_gamespeed is reset back to 1 on map load, fixes slowmo effect remaining at bad times
+FIXME: Investigate why Vigil's grab is acting up
+	   - Removed .owner and returned .owner on traceline checks
+FIXME: Statues can no longer be 'jumped up", FL_ONGROUND no longer tampered with
+FIXME: Knights have BlockCancel(); on certain frames of pain animation
+FIXME: Vigil's pain1 and pain2 animations didn't have a pain_finished flag set
+FIXME: When Vigil is hit in mid-air if knockdown is under 1 he now falls down instead of going into his pain1/2 animations
+TODO: Increase volume of music_track0, and Wildlands
+TODO: Add content slime support
+FIXME: Lava emits lava splash particles on water entry
+FIXME: Typo fixed in func_destroy
+TODO: Add 'explode into meaty chunks' into func_destroy
+TODO: Find a monster_boss2 model, and begin preliminary work - model handled by khreathor
+TODO: Add more scenery objects
+TODO: Add trigger_changemap
+FIXME: Dead enemies can no longer be put in a state of being 'alive' by triggers, thanks ish
+FIXME: Allow Hell Knight & Baron to block cancel their pain frames
+FIXME: Allow Vigil to cancel out of his 'stabs' into his air launcher attack
+FIXME: Vigil looks funny when you dodge into a trigger_walk
+TODO: Decompile and fix Map01 to link back and forth with Map02
+TODO: Link Map02 to village.bsp
+TODO: Map02 needs it's elevator shaft re-worked as to be wall-climbable
+FIXME: Slightly more realistic 'entering water' physics
+TODO: Add Relic 6 (Underwater breathing amulet)
+FIXME: Vigil's standing animations slow down underwater
+FIXME: Add sound effect when standing in lava
+FIXME: Vigil starts drowning after a set time
+FIXME: Vigil spawns bubbles underwater
+FIXME: Water Splash on water entry
+FIXME: Barrels turning non-solid on sword swipes
+FIXME: Headsmash no longer needs classname "breakable" checks to deal more damage 
+FIXME: Change Vigil 'smacked into wall' behavior to be a tad more realistic with bounce-back
+FIXME: Vigil can now be hit by plats/trains from above and they'll no longer wreck his bounding box
+FIXME: Prevent ledge grab from grabbing plats/trains
+FIXME: Reset Vigils bounding box after a plat has 'entered inside him'
+		- REMOVED
+FIXME: Allow user to change sv_gamespeed cvar properly
+TODO: Work on Vigil's "Restart / Warp to Town" routine on death
+FIXME: Holding block while standing in lava allows Vigil to revive himself yet still be dead
+FIXME: Vigil should take lava damage even when not submerged
+	   - Needs a test map. Works fine, false report.
+FIXME: Medusa's need shadows
+FIXME: Players charge attack while entering water causes funny conditions
+FIXME: Buff Vigil's charge up attack
+FIXME: Smooth out Medusa head up/down velocities
+FIXME: Fix Vigil head smash attack into water
+FIXME: Fix item_gold();
+TODO: Add func_button
+TODO: Allow mappers to add centerprint messages
+TODO: Combo counter is taken off priority for more important messages
+TODO: Add medusahead_spawner
+TODO: Remove func_bossdoor();
+FIXME: trigger_camstyle 4 was glitched on level save/load
+FIXME: Grass.mdl suffers from 1 pixel fill bug (grass is rendered black)
+FIXME: Vigil can slide when knocked down
+FIXME: Vigil slides at times when grabbing an opponent
+FIXME: added entity 'candle'
+FIXME: small wall torch entity has been moved back to flame.mdl
+FIXME: Cursor is acting up - makevectors(vigil.angles)
+FIXME: Magic menu is acting up - makevectors(vigil.angles)
+FIXME: monster_bat was broken, was exploding itself on wakeup
+FIXME: Trigger_walk isn't triggering trigger_jump on Vigil
+TODO: Test pain system underwater
+FIXME: Holding block and dodging into water will allow vigil to hold his block underwater, fixed.
+FIXME: Funky water physics, Vigil can now swim.
+FIXME: Slight buff to Vigil's first swing, speed up
+FIXME: ambience_heartbeat is broken
+FIXME: Vigils spells are no longer increasing the combo counter
+	   - Fixed
+TODO: Interpolate camera Z tracking so when Vigil climbs stairs it doesn't look so choppy
+	- Spawn entity that follows Vigil by NOCLIP and have the camera track that?
+	- MOVETYPE_WALK seems to have smoothed it out enough
+FIXME: Vigil's Wallrun Diving Swallow attack breaks out too early/easily
+FIXME: Improve speedlines to appear behind Vigil
+FIXME: Remove old references to 'darkplaces' flag and '.wav' music
+TODO: Fix Vigil getting stuck in his corkscrew hurt frames
+TODO: Redesign the boss1 level so you're unable to get behind him. He should be solid.
+	- Started, now to remove the janky animations
+TODO: Bosses 'melee' attack should match bosses Y angle
+TODO: Have Relics/Spell Books remove themselves on world spawn when already owned.
+FIXME: efxflash.mdl suffered from 1 pixel fill glitch, fixed
+TODO: Buff Vigil's Dodge I-Frames
+FIXME: Even with Vigil's Vol'Brand maxed out the Blacksmith keeps offering to upgrade it more but can't.
+FIXME: Vigil slides super fast down hills when magic menu activated
+	- Fixed by setting velocity '0 0 0'
+	- Magic menu now has it's origin updated to Vigil's position
+TODO: func_door added, func_plat added
+	- func_door needs adjusting
+	- func_plat needs fixing
+	- func_train, func_plat, func_rotate, func_EVERYTHING working correctly.
+TODO: Have the player turn around to face a fireball by the fireballs X origin rather than its angles?
+TODO: Update CastleE's last part, round out rough edges before that area on the hill slope (ew).
+TODO: Spell book pickups
+TODO: Fix Vigil's sword shadows to match up properly
+TODO: Give conversation to NPC guards
+	- Done
+FIXME: Vigil's wall jump kick would trigger his backflip routine too easily
+FIXME: Changing from Title screen to introduction sequence was broken
+FIXME: No more "Screen Flash" when slow-mo turns on
+FIXME: Improve the gold dropping formula so farming low level monsters for the same gold amount as
+	   higher level monsters cannot occur.
+	    - Doing it by a 'max gold' drop variable that monsters are given via QuakeC (Changable by mapper)
+	    - Re-evaluated, tougher monsters give higher amount of EXP which is tied into how much gold is dropped
+	      according to Vigil's level. This means you can grind the same amount of gold at your appropriate level.
+FIXME: Every player should have their own combos counted for themselves
+FIXME: Remove Vigil's velocity (set to '0 0 0') on dodge rolls, fixing the sliding dodge issue
+TODO: Remove relics from Vigil as they are put in place and the world is built
+	  - Removed Relics, user can enter relics.bsp to get them back
+FIXME: Lower Boss1's Health - he's too powerful for such an early stage of the game
+FIXME: Vigil switches directions on a new forward + attack command. Pressing Back + Attack should make you turn around, not keep attacking
+in the same direction. These attacks are weaker, thus leaving you more open.
+	- Fixed
+FIXME: Troglod's animation and other stuff looks hilariously wrong and bad, he also requires better AI.
+	- He also leaves the firebeam cone infront of him :\
+	- Animation fixed
+FIXME: Killed Ghost then went into flying swallow attack, since ghost died and no longer existed
+	   Vigil shot right into the screen, fell into a cliff and died
+	  - Fixed
+TODO: Pressing attack during a forward roll will allow vigil to cancel into the final stab attack immediately
+	- Done, love it.
+FIXME: Zombie's darkball energy attack is suffering the same problem Fireballs had in later DP versions
+	- Fixed
+
+-----
+
+FIXME: Angle graphic error with mauve's code for tilting on slopes
+	- Fixed
+FIXME: Circular shadows appearing on walls and above Vigil during his spin jump
+	- Fixed
+FIXME: Found out why Fireballs aren't homing in and dying super fast in latest DPs :(
+	- Fixed
+TODO: 3 More stabs per button mashing for a total of 6 stabs, otherwise default to 3
+	- Done
+TODO: Reanimate the final third attack on standing attacks to a huge stab (ala DMC3)
+	- Done.
+TODO: Reanimate the Lightning Storm frames, make them more interesting and less lame.
+	- Done
+
+-----
+
+FIXME: Vigil's headsmash can become stuck in weird geometry locations concerning slopes
+	- Fixed, used test X origin code from swallow attacks to test for test Z on headsmash
+FIXME: Add a 3 second limit before Vigil cancels out of the Off-The-Wall Diving Swallow, he can become perma-stuck
+	- Maybe a oldorigin test will work, or a before test check if his X (left/right) origin changes.
+	- Added code that tests oldorigin, test if this works
+	- Fixed by test X origin
+FIXME: Final blow of the mid air kicks should send a player flying down with the proper animation in deathmatch
+	- Fixed
+FIXME: Turn ignore air flag on vigils stabs as he can raise into the air otherwise in weird gameplay situations.
+	- Fixed
+FIXME: Castle2's candle/torch graphics need reposition due to upgraded model by Chillo
+	- Fixed
+FIXME: Track down Troglod's sounds and model, they disappeared?!
+	- Fixed
+FIXME: Shorten the final bridge in tower, BY A LOT (Possibly remove outer ledge)
+	- Fixed
+INVESTIGATE: Vigil cannot be hit by the Hell Knights lightning attack during his charge spin, I doubt it as
+he isn't set to invunerable in the gamecode but we'll see.
+	- Tested, false bug report.
+FIXME: Remove .wav references in music playing code, delete .wav music in PAK file
+	- 10 megs reduction :O
+	- .wav QuakeC removed
+FIXME: Grass is displaying realtime lighting, this can cause framerates to drop dramatically when any realtime
+lighting occurs.
+	- Fixed, grass is no longer makestatic();
+
+-----
+
+FIXME: Aircombo count is set to 7 by roundhouse kick, change to 9 as it's being shared. Otherwise it hasn't caused
+a problem as far as I can see.
+	UPDATE: Clops found if you try to follow up with a diving swallow attack in an unconnect spin kick,
+	Vigil will switch to the final airkick strike.
+	 - FIXED
+FIXME: Shorten the spin kick, it hits too far and looks silly
+	 - FIXED
+FIXME: Dodge attacks can enter weird angles, while in a dodge left go of block and use the arrow keys.
+	- Fixed, had to hack it into client.qc as I have no idea what was moving him normally.
+	- Fixed, above fixed messed up menu causing arrow keys to stop functioning. Whoops!
+TODO: Make Relics look better
+	- Added, thanks Chillo
+TODO: Blocking manuvers/dodges
+	- Added
+FIXME: Slopes and dodging act funny, Vigil turns around oddly
+	- Fixed.
+FIXME: Turn block off when invunerability is on
+	- Fixed.
+FIXME: Vigil can do manuvers off walls with a wall jump on, looks retarded
+	- Fixed.
+FIXME: Make the midair combo kicks mashable.
+	- Fixed.
+FIXME: Solve camera issues, apparently moving the level to 0 horiztonal makes the camera act better
+	- Fixed. Thanks FrikaC.
+FIXME: A player can hold down jump while wall jumping and Vigil will automatically do the spin slash double
+jump technique, it must require a double tap.
+	- Fixed. Never test button conditions with timers!
+FIXME: Mash keys should also check if the user is pressing forward, also apply it to standing still combo attack
+	- Fixed.
+FIXME: 3rd standing slice should hit inside Vigil also, recommending using the stabbing attacks collision
+	- Fixed.
+FIXME: Vigil's spin slash (Double jump) radius is too large, hits people too far downwards
+	- Fixed, was 50 now 35.
+FIXME: Deathmatch bug where players can move themselves around even in pain frames:
+	- Added self.pain_finished, check if it works...
+FIXME: Don't allow block control during slowdown time, it's useless and only makes the sound effect which
+is weird
+	- Fixed.
+
+// ========================
+// Good to know information
+// ========================
+
+Triggers are disabled in the "boss1" map after SGK's been defeated
+done in multi_touch();
+
+useful debug fte command:
+watchpoint_ssqc
+apropos/find (same thing)
+
+Y angle of 0 is LEFT in TAoV
+Y angle of 90 is facing the camera (South) in TAoV
+Y angle of 180 is facing RIGHT in TAoV
+Y angle of 270 is opposite facing the camera (North) in TAoV
+
+<Lardarse> random*4
+<Lardarse> 1-4 is a 4 sided dice
+<Lardarse> ceil(random*4) is 1-4
+<Lardarse> ceil(random*4 + 1) is 2-5
+<Lardarse> ceil(random*4 - 1) is 0-3
+
+// Attack types, game can determine what kind of attack the player launched and
+// what to do if a monster/player was hit by it!
+// 0 = Regular
+// 1 = Wind
+// 2 = Fire
+// 3 = Ice
+// 4 = Lightning
+// 5 = Sliced in half
+
+float IT_PROGRESS1 = 1; // Reached Village / Update death menu
+float IT_PROGRESS2 = 2; // Cyclone Crush bought
+float IT_PROGRESS3 = 8; // Rock smashed in Map01 (Wilderness)
+float IT_PROGRESS4 = 16; // Diving Swallow bought
+float IT_PROGRESS5 = 32; // Vigil reached the Castle
