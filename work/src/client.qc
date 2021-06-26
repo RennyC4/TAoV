@@ -647,6 +647,7 @@ void() PlayerPreThink =
 			}
 			else if (world.model == "maps/menu.bsp")
 			{
+				stuffcmd(self, "wf\n");
 				stuffcmd(self, "viewsize 110\n");
 				stuffcmd(self, "stopmusic\n");	
 			}
@@ -1071,6 +1072,7 @@ void() PlayerPostThink =
 		if (title1_finished > time)
 			return;
 		self.cnt = TRUE;
+		stuffcmd(self, "wf\n");
 		sound (self, CHAN_VOICE, "misc/title2.wav", 1, ATTN_NONE);
 		title1_finished = time + 1.5;	
 	}
