@@ -2225,4 +2225,3 @@ const float DRAWFLAG_MIPMAP = 0x100; // only for R_BeginPolygon
 #define STAT_SHRINEHUD 56
 
 #define STAT_LEVEL 57
-#define STAT_LOCKKEY_CENTERPRINT 58
