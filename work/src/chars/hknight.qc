@@ -333,6 +333,8 @@ void() HellKnight_Lightning =
 		temp.alpha = 0.75;
 		temp.think = SUB_Remove;
 		temp.nextthink = time + 0.1;
+		temp.angles_y = -90; // face screen
+		temp.angles_z = random()*360; // random rotate
 		setmodel (temp, "progs/lsprite.spr");
 		setsize (temp, '0 0 0', '0 0 0');		
 		setorigin (temp, trace_ent.origin);
@@ -371,6 +373,8 @@ void() HellKnight_Lightning =
 			temp2.alpha = 0.75;
 			temp2.think = SUB_Remove;
 			temp2.nextthink = time + 0.1;
+			temp2.angles_y = -90; // face screen
+			temp2.angles_z = random()*360; // random rotate
 			setmodel (temp2, "progs/lsprite.spr");
 			setsize (temp2, '0 0 0', '0 0 0');		
 			setorigin (temp2, self.origin);

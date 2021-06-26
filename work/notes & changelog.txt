@@ -55,6 +55,7 @@ TODO: Split Spin Slash & Flaming Head Smash relics up
 // Changelog (Fixes/Changes):
 // ==========
 
+TODO: Screen transition effects on title screen -> menu ("wf")
 FIXME: Fixed regression on level display load game menu
 FIXME: (Reki) Crash on "Load Game" with no save games present
 TODO: HD console background

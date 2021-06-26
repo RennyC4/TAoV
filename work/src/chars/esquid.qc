@@ -214,6 +214,8 @@ void() lit_think =
 
 						temp.effects = EF_MUZZLEFLASH | EF_ADDITIVE;
 						temp.alpha = 0.75;
+						temp.angles_y = -90; // face screen
+						temp.angles_z = random()*360; // random rotate
 						setmodel (temp, "progs/lsprite.spr");
 						setsize (temp, '0 0 0', '0 0 0');	
 						setorigin (temp, head.origin);
