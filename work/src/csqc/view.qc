@@ -2,6 +2,7 @@
 
 .string message;
 entity head, gold, key1, potion;
+float pause_frame;
 
 void(vector pos, string str, float alph, vector med, vector color) Sbar_DrawString =
 {
@@ -811,7 +812,7 @@ void(vector pos) DrawShrineHud =
 
 //float(string key, optional float assumevalue) serverkeyfloat = #0:serverkeyfloat; /*
 //		Version of serverkey that returns the value as a float (which avoids tempstrings). */
-		
+
 float(float evtype, float scanx, float chary, float devid) CSQC_InputEvent =
 {
 	if (isdemo() < 1)
@@ -823,13 +824,13 @@ float(float evtype, float scanx, float chary, float devid) CSQC_InputEvent =
 		// Unpause game if attack or jump is pressed & clear centerprint
 		//
 		float pausestate = serverkeyfloat(SERVERKEY_PAUSESTATE);
-	
+
 		if (pausestate > 0)
-		{
+		{			
 			switch (evtype)
 			{
 				case IE_KEYDOWN:
-				if (getkeybind(scanx) == "+attack" || getkeybind(scanx) == "+jump" || getkeybind(scanx) == "pause")
+				if (getkeybind(scanx) == "+attack" || getkeybind(scanx) == "+jump" || getkeybind(scanx) == "pause" && pause_frame > 100)
 				{
 					//
 					// Stop pause and pass a blank centerprint to clear the screen
@@ -914,10 +915,12 @@ void() SUB_Remove = {remove(self);return;};
 //
 // Main Loop
 //
+
 float loaded_settings;
 .float mode;
 float IT_RELIC7 = 64; // cube of knowledge
 float blindness_fade;
+
 void(float width, float height, float menushown) CSQC_UpdateView =
 {
 	clearscene();												//wipe entity lists. reset view properties to their defaults.
@@ -928,6 +931,13 @@ void(float width, float height, float menushown) CSQC_UpdateView =
 	local vector twodcoord, twodcoord2;
 	local string h;
 	
+	// Read game pause state
+	float pausestate = serverkeyfloat(SERVERKEY_PAUSESTATE);
+	if (pausestate > 0)
+		pause_frame = pause_frame + 1;
+	else
+		pause_frame = 0;
+
 	//
 	// HACK - Fix menu opening after attract mode has finished playing
 	//
@@ -943,7 +953,7 @@ void(float width, float height, float menushown) CSQC_UpdateView =
 			localcmd ("exec haze.cfg\n"); // Fix wrong graphics on particles on demo playback
 			localcmd ("stopmusic\n"); // Stop music playback on demo
 		}
-			
+
 		if (world.model != "maps/intro.bsp")
 			local vector pos = [(width - stringwidth("", TRUE, '321 28.5 0'))/3.5, (height - 18)/1.15];
 		else

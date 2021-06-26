@@ -42,6 +42,47 @@ void(float n) frameskip =
 	}
 };
 
+
+//
+// Used by CSQC to resend all the data, fixes save game loading
+//
+void() CSEv_GrabCSQCValues =
+{
+	//
+	//CSQC Setup
+	//
+	clientstat(STAT_GOLD, EV_FLOAT, gold);
+	clientstat(STAT_SWORD, EV_FLOAT, swordlevel);
+	clientstat(STAT_ARMOR2, EV_FLOAT, armorlevel);
+	clientstat(STAT_MONSTER, EV_STRING, displayname);
+	clientstat(STAT_SPELL, EV_FLOAT, currentspell);
+	clientstat(STAT_COMBO, EV_FLOAT, combo);
+	clientstat(STAT_PRICE, EV_FLOAT, display_price);
+	globalstat(STAT_RELIC, EV_FLOAT, "relics");
+	clientstat(STAT_PERFECTGUARD, EV_FLOAT, perfectguard_buff);
+	clientstat(STAT_POUCH, EV_FLOAT, pouch);
+	clientstat(STAT_MAXHEALTH, EV_FLOAT, max_health);
+	clientstat(STAT_MANA, EV_FLOAT, mana);
+	clientstat(STAT_MAXMANA, EV_FLOAT, max_mana);
+	clientstat(STAT_EXP, EV_FLOAT, experience);
+	globalstat(STAT_KEYS, EV_FLOAT, "keys");
+	clientstat(STAT_FLASK, EV_FLOAT, hflask_amt);
+	clientstat(STAT_FLASK_MAX, EV_FLOAT, hflask_max_amt);
+	
+	clientstat(STAT_STATUS_BLIND, EV_FLOAT, status_blind_finished);
+	clientstat(STAT_STATUS_POISON, EV_FLOAT, status_poison_finished);
+	clientstat(STAT_STATUS_BROKEN, EV_FLOAT, status_broken_finished);
+
+	clientstat(STAT_ORIGINX, EV_FLOAT, vigil_x);
+	clientstat(STAT_ORIGINY, EV_FLOAT, vigil_y);
+	clientstat(STAT_ORIGINZ, EV_FLOAT, vigil_z);
+
+	clientstat(STAT_CURRENTSHRINE, EV_FLOAT, currentshrine);
+	globalstat(STAT_SHRINEHUD, EV_FLOAT, "shrineHUD_on");
+	
+	clientstat(STAT_LEVEL, EV_FLOAT, level);
+};
+
 float framecount, developer, difficulty, deathmatch, coop;
 
 void() main = {};
@@ -254,80 +295,8 @@ void() worldspawn =
 	deathmatch = cvar("deathmatch");
 	coop = cvar("coop");
 	
-	//
 	//CSQC Setup
-	//
-
-	clientstat(STAT_GOLD, EV_FLOAT, gold);
-	clientstat(STAT_SWORD, EV_FLOAT, swordlevel);
-	clientstat(STAT_ARMOR2, EV_FLOAT, armorlevel);
-	clientstat(STAT_MONSTER, EV_STRING, displayname);
-	clientstat(STAT_SPELL, EV_FLOAT, currentspell);
-	clientstat(STAT_COMBO, EV_FLOAT, combo);
-	clientstat(STAT_PRICE, EV_FLOAT, display_price);
-	globalstat(STAT_RELIC, EV_FLOAT, "relics");
-	clientstat(STAT_PERFECTGUARD, EV_FLOAT, perfectguard_buff);
-	clientstat(STAT_POUCH, EV_FLOAT, pouch);
-	clientstat(STAT_MAXHEALTH, EV_FLOAT, max_health);
-	clientstat(STAT_MANA, EV_FLOAT, mana);
-	clientstat(STAT_MAXMANA, EV_FLOAT, max_mana);
-	clientstat(STAT_EXP, EV_FLOAT, experience);
-	globalstat(STAT_KEYS, EV_FLOAT, "keys");
-	clientstat(STAT_FLASK, EV_FLOAT, hflask_amt);
-	clientstat(STAT_FLASK_MAX, EV_FLOAT, hflask_max_amt);
-
-	clientstat(STAT_STATUS_BLIND, EV_FLOAT, status_blind_finished);
-	clientstat(STAT_STATUS_POISON, EV_FLOAT, status_poison_finished);
-	clientstat(STAT_STATUS_BROKEN, EV_FLOAT, status_broken_finished);
-
-	clientstat(STAT_ORIGINX, EV_FLOAT, vigil_x);
-	clientstat(STAT_ORIGINY, EV_FLOAT, vigil_y);
-	clientstat(STAT_ORIGINZ, EV_FLOAT, vigil_z);
-
-	clientstat(STAT_CURRENTSHRINE, EV_FLOAT, currentshrine);
-	globalstat(STAT_SHRINEHUD, EV_FLOAT, "shrineHUD_on");
-
-	clientstat(STAT_LEVEL, EV_FLOAT, level);
-};
-
-//
-// Used by CSQC to resend all the data, fixes save game loading
-//
-void() CSEv_GrabCSQCValues =
-{
-	//
-	//CSQC Setup
-	//
-	clientstat(STAT_GOLD, EV_FLOAT, gold);
-	clientstat(STAT_SWORD, EV_FLOAT, swordlevel);
-	clientstat(STAT_ARMOR2, EV_FLOAT, armorlevel);
-	clientstat(STAT_MONSTER, EV_STRING, displayname);
-	clientstat(STAT_SPELL, EV_FLOAT, currentspell);
-	clientstat(STAT_COMBO, EV_FLOAT, combo);
-	clientstat(STAT_PRICE, EV_FLOAT, display_price);
-	globalstat(STAT_RELIC, EV_FLOAT, "relics");
-	clientstat(STAT_PERFECTGUARD, EV_FLOAT, perfectguard_buff);
-	clientstat(STAT_POUCH, EV_FLOAT, pouch);
-	clientstat(STAT_MAXHEALTH, EV_FLOAT, max_health);
-	clientstat(STAT_MANA, EV_FLOAT, mana);
-	clientstat(STAT_MAXMANA, EV_FLOAT, max_mana);
-	clientstat(STAT_EXP, EV_FLOAT, experience);
-	globalstat(STAT_KEYS, EV_FLOAT, "keys");
-	clientstat(STAT_FLASK, EV_FLOAT, hflask_amt);
-	clientstat(STAT_FLASK_MAX, EV_FLOAT, hflask_max_amt);
-	
-	clientstat(STAT_STATUS_BLIND, EV_FLOAT, status_blind_finished);
-	clientstat(STAT_STATUS_POISON, EV_FLOAT, status_poison_finished);
-	clientstat(STAT_STATUS_BROKEN, EV_FLOAT, status_broken_finished);
-
-	clientstat(STAT_ORIGINX, EV_FLOAT, vigil_x);
-	clientstat(STAT_ORIGINY, EV_FLOAT, vigil_y);
-	clientstat(STAT_ORIGINZ, EV_FLOAT, vigil_z);
-
-	clientstat(STAT_CURRENTSHRINE, EV_FLOAT, currentshrine);
-	globalstat(STAT_SHRINEHUD, EV_FLOAT, "shrineHUD_on");
-	
-	clientstat(STAT_LEVEL, EV_FLOAT, level);
+	CSEv_GrabCSQCValues();
 };
 
 float(float f) fixbyte =

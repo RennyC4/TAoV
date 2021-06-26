@@ -821,6 +821,7 @@ float IT_BOSS4 = 8;
 //=======================
 
 float	CONST_BIGHITSLOW		= 1; // Time * frametime, game freeze on big hits
+float	CONST_KEYLOCK_MESSAGE	= 2; // Lock centerprint messages, called before setpause();
 
 const float BUTTON0 = 1 << 0;
 const float BUTTON1 = 1 << 1;

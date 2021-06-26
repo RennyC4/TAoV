@@ -638,6 +638,7 @@ void() PlayerPreThink =
 			msg_entity = self;
 			WriteByte(MSG_ONE, 5);
 			WriteEntity(MSG_ONE, self.lock_view);
+
 			if (world.model == "maps/start.bsp")
 			{
 				stuffcmd(self, "gamecfg 0\n"); // reset warps

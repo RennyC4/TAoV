@@ -2225,5 +2225,4 @@ const float DRAWFLAG_MIPMAP = 0x100; // only for R_BeginPolygon
 #define STAT_SHRINEHUD 56
 
 #define STAT_LEVEL 57
-
-const float PFLAGS_FULLDYNAMIC = 128;	/* When set in self.pflags, enables fully-customised dynamic lights. Custom rtlight information is not otherwise used. */
+#define STAT_LOCKKEY_CENTERPRINT 58

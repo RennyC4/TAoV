@@ -296,7 +296,7 @@ void(entity targ, entity inflictor, entity attacker, float damage, float statusr
 		// Only play notification sound when debuff doesn't exist
 		if ((targ.owner.status_poison_finished < time && attacker.status_poison_finished > time) || (targ.owner.status_blind_finished < time && attacker.status_blind_finished > time) || (targ.owner.status_broken_finished < time && attacker.status_broken_finished > time))
 			sound (targ.owner, CHAN_AUTO, "player/statushit.wav", 1, ATTN_NORM);
-			
+
 		targ.owner.status_poison_finished = attacker.status_poison_finished;
 		targ.owner.status_blind_finished = attacker.status_blind_finished;
 		targ.owner.status_broken_finished = attacker.status_broken_finished;
