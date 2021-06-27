@@ -2972,6 +2972,21 @@ void() player_fire =
 
 void() player_bigfall1	=[	$pain2,	player_move	]
 {
+	local entity effect;
+	
+	makevectors (self.angles);
+
+	effect = spawn();
+	setorigin(effect, self.origin - v_up * 18);
+	setmodel(effect, "progs/dust.spr");	
+	effect.solid = SOLID_NOT;
+	effect.owner = self;
+	effect.drawonlytoclient = self.owner; // reduce network traffic
+	effect.movetype = MOVETYPE_NOCLIP;
+		
+	effect.think = dust_think;
+	effect.nextthink = time + 0.01;
+
 	PainSound();
 	self.nextthink = time + 0.5;
 };
@@ -4980,6 +4995,21 @@ void() player_jumpatk2	=[	$jumpatk2,	player_jumpatk2	]
 
 	if (self.onground == TRUE)
 	{
+		local entity effect;
+	
+		makevectors (self.angles);
+
+		effect = spawn();
+		setorigin(effect, self.origin - v_up * 22);
+		setmodel(effect, "progs/dust.spr");	
+		effect.solid = SOLID_NOT;
+		effect.owner = self;
+		effect.drawonlytoclient = self.owner; // reduce network traffic
+		effect.movetype = MOVETYPE_NOCLIP;
+		
+		effect.think = dust_think;
+		effect.nextthink = time + 0.01;
+	
 		jumpatk_grounded();
 		player_jumpatk3();
 		self.owner.camshake_finished = time + 0.2;

@@ -1697,6 +1697,20 @@ void() monster_death =
 
 	if (vlen(self.velocity) < 1 || self.flags & FL_ONGROUND || self.flags & FL_PARTIALGROUND || self.origin == self.oldorigin)
 	{
+		local entity effect;
+	
+		makevectors (self.angles);
+
+		effect = spawn();
+		setorigin(effect, self.origin);
+		setmodel(effect, "progs/dust.spr");	
+		effect.solid = SOLID_NOT;
+		effect.owner = self;
+		effect.movetype = MOVETYPE_NOCLIP;
+
+		effect.think = dust_think;
+		effect.nextthink = time;
+
 		if (self.classname == "horror")
 		{
 			sound (self, CHAN_AUTO, "horror/crunch.wav", 1, ATTN_NORM);

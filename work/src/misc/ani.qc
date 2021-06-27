@@ -152,6 +152,10 @@ void() divingshit_think =
 // dust cloud animation / movement on vigils feet
 void() dust_think =
 {
+	// Used for when a monster dies and hits the floor
+	if (self.owner.flags & FL_MONSTER)
+		droptofloor();
+
 	// move the dust cloud in the opposite direction the owner is facing
 	if (self.owner.angles_y == 0) // facing left
 		self.velocity_x = -200;

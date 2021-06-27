@@ -3,7 +3,6 @@
 * Clip brushes need a slight edge curve at the top to stop wall running on them, works for wall grab as well
 * Vigil has MOVETYPE_STEP/WALK changes defined in a specific place that updates every frame - player.qc (slope sliding)
 
-TODO: Tutorial messages need a timer (2 seconds) before they can be skipped instead of instant
 TODO: Update readme.txt
 TODO: Ask khraethor about boss progress
 
