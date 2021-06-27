@@ -4,7 +4,7 @@ void Savegame_back(float key, float ascii, menuElement *element)
 {
 	if (key != K_MOUSE1)
 		return;
-	
+
 	over_element = blank_element;
 	current_menu = MENU_Main;
 }

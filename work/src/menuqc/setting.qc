@@ -313,7 +313,6 @@ void msaa_toggle(float key, float ascii, menuElement *element) {
 				light_b.fvalue = 0;
 				localcmd("r_bloom 0\n");
 			}
-			
 			localcmd(sprintf("%s %g\n","vid_multisample",element.fvalue*2));
 		}
 	}
@@ -323,7 +322,7 @@ void Settings_back(float key, float ascii, menuElement *element)
 {
 	if (key != K_MOUSE1)
 		return;
-	
+
 	over_element = blank_element;
 	current_menu = MENU_Main;
 }
@@ -331,8 +330,7 @@ void Settings_back(float key, float ascii, menuElement *element)
 string autocvar_gl_texturemode;
 
 void Settings_Create()
-{
-
+{	
 	MENU_Sett_Video = createMenu();
 	local float yoff = -108;
 	

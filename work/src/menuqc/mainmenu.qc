@@ -1,12 +1,3 @@
-
-
-
-
-
-
-
-
-
 void() MainMenu_goto
 {
 	current_menu = MENU_Main;
@@ -36,7 +27,6 @@ void MainMenu_restart(float key, float ascii, menuElement *element)
 		menuIsOn = 0;
 		setkeydest(KEY_GAME);
 		setcursormode(FALSE,"");
-		
 		localcmd("map start\n");
 	}
 }
@@ -73,4 +63,3 @@ void MainMenu_settings(float key, float ascii, menuElement *element)
 		over_element = current_menu.default_element;
 	}
 }
-

@@ -1,5 +1,3 @@
-
-
 void m_init()
 {
 	blank_menu = memalloc(sizeof(menuElement));
@@ -59,7 +57,7 @@ void m_init()
 	
 	Settings_Create();
 	Savegame_Create();
-	
+
 	current_menu = MENU_Main;
 	
 	FONT_MENU = loadfont("", "fonts/console", "32", -1, 0, 0);
@@ -378,8 +376,7 @@ void drawMenu(menuScreen *menu)
 	}
 }
 
-
-/// FETCH INPUTS FROM OS
+// FETCH INPUTS FROM OS
 float Menu_InputEvent(float evtype, float scanx, float chary, float devid)
 {
 	menuElement *oldsel_element = selected_element;
@@ -460,7 +457,6 @@ float Menu_InputEvent(float evtype, float scanx, float chary, float devid)
 					over_element = over_element.east;
 					localsound("misc/menu1", 4, 1);
 				
-				
 				} break;
 				
 			case K_DOWNARROW:
@@ -506,7 +502,10 @@ float Menu_InputEvent(float evtype, float scanx, float chary, float devid)
 		if (M_INPUT_KEYBOARD)
 		{
 			if (scanx == K_ENTER)
+			{
 				scanx = K_MOUSE1;
+				localsound("misc/menu2", 4, 1);
+			}
 		}
 	
 		if (over_element.keyup) {
@@ -527,20 +526,24 @@ float Menu_InputEvent(float evtype, float scanx, float chary, float devid)
 	return FALSE;
 }
 
-
+float first_open;
 void m_toggle (float flWantmode)
 {
 	if (time < 2)
 		return;
-	
+
+	first_open = TRUE;
+
 	menuIsOn = flWantmode;
 	
 	setcursormode(TRUE,"cursor");
 	setkeydest(KEY_MENU);
-	
+
+	localsound("misc/menu2", 4, 1);
 	MainMenu_goto();
 }
 
+float closemenu_sound;
 void m_draw(vector scrsz)
 {
 	frametime = time - lastframe;
@@ -550,21 +553,31 @@ void m_draw(vector scrsz)
 	if (mInputMode == M_INPUT_MOUSE)
 		over_element = blank_element;
 	
-	if (menuIsOn) {
+	if (menuIsOn)
+	{
+		closemenu_sound = FALSE;
+		if (current_menu == MENU_Main)
+		{
+			drawpic ('336 76', "progs/demosign2.png", '170 81', '0 0 0', 1, 0); // shadow
+			drawpic ('335 75', "progs/demosign2.png", '170 81', '2 2 2', 1, 0);
+		}
+		
 		drawfont = FONT_MENU;
 		
-		
 		drawfill('0 0', scrsz, '0 0 0', 0.65);
-		
 		drawMenu(current_menu);
 		
 		if (current_menu.draw)
 			current_menu.draw();
-		
-		
+
 		drawfont = FONT_DEFAULT;
 		
 		clearscene();
 		renderscene();
+	}
+	else if (closemenu_sound == FALSE && first_open == TRUE)
+	{
+		closemenu_sound = TRUE;
+		localsound("misc/menu3", 4, 1);
 	}
 }
