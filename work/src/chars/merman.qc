@@ -243,6 +243,7 @@ void() Fire_MermanSpit =
 	missile.velocity = normalize(self.enemy.origin - self.origin);
 	missile.velocity = missile.velocity * 300;
 	missile.angles = vectoyaw(missile.velocity);
+	missile.angles_y = self.owner.angles_y;
 	
 	missile.touch = MermanSpitTouch;
 

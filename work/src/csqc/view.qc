@@ -830,7 +830,7 @@ float(float evtype, float scanx, float chary, float devid) CSQC_InputEvent =
 			switch (evtype)
 			{
 				case IE_KEYDOWN:
-				if (getkeybind(scanx) == "+attack" || getkeybind(scanx) == "+jump" || getkeybind(scanx) == "pause" && pause_frame > 100)
+				if (getkeybind(scanx) == "+attack" || getkeybind(scanx) == "+jump" || getkeybind(scanx) == "pause" && pause_frame >= 75)
 				{
 					//
 					// Stop pause and pass a blank centerprint to clear the screen

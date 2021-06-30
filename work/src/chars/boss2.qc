@@ -217,7 +217,6 @@ void() boss_rockdrop10 = [$shockc10, boss_idle1] {};
 
 void() Boss2Melee =
 {
-	self.angles_y = 0;
 	FireMelee(40,0,3,100,5,0,1, FALSE,0,0);
 	remove(self);
 	return;
@@ -238,11 +237,12 @@ void() boss_attack6 = [$attack6, boss_attack7]
 	setmodel (h, string_null);
 	setsize (h, '0 0 0', '0 0 0');
 	setorigin (h, self.origin + v_up * 100 + v_forward * 125);
+	h.owner = self;
 	h.movetype = MOVETYPE_NOCLIP;
+	h.classname = "Boss2Melee";
 	h.solid = SOLID_NOT;
 	h.flags = FL_MONSTER; // Do not allow Boss to be hit by his own melee!
-	h.owner = self;
-	h.angles_y = self.angles_y;
+	h.angles = '0 0 0';
 	h.think = Boss2Melee;
 	h.nextthink = time;
 	

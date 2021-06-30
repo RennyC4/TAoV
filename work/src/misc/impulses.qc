@@ -309,7 +309,7 @@ void() CheckImpulseButtons =
 					self.char.movetype = MOVETYPE_WALK; // fix flying vigil from ledge grab -> kick
 					self.char.think = player_kick1;
 					self.char.inair = self.char.bigfall = 0; // remove any big fall flags
-					self.attack_finished = time + 0.6;
+					self.attack_finished = time + 1;
 					self.char.nextthink = time;
 					self.char.aircombo_count = 9; // can only do it once in air
 				}

@@ -2562,13 +2562,13 @@
 // entity 16
 {
 "classname" "light_flame_brazier_tall"
-"origin" "-263 -71 -799"
+"origin" "-263 -71 -797"
 "light" "150"
 }
 // entity 17
 {
 "classname" "light_flame_brazier_tall"
-"origin" "-121 -71 -799"
+"origin" "-121 -71 -797"
 "light" "150"
 }
 // entity 18
@@ -3002,12 +3002,12 @@
 // entity 63
 {
 "classname" "barrel"
-"origin" "-328 64 -800"
+"origin" "-328 64 -798"
 }
 // entity 64
 {
 "classname" "barrel"
-"origin" "-360 -24 -800"
+"origin" "-360 -24 -798"
 }
 // entity 65
 {

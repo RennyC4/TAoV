@@ -11,9 +11,6 @@
 void() needles_die =
 {
 	local entity effect;
-
-	sound (self, CHAN_BODY, "needles/die.wav", 1, ATTN_NORM);
-	
 	if (self.cnt < 50)
 	{
 		if (self.cnt == 1) // run once
@@ -28,6 +25,7 @@ void() needles_die =
 		WriteCoord (MSG_BROADCAST, self.origin_x);
 		WriteCoord (MSG_BROADCAST, self.origin_y);
 		WriteCoord (MSG_BROADCAST, self.origin_z);
+		sound (self, CHAN_BODY, "needles/die.wav", 1, ATTN_NORM);
 		remove(self);
 		return;
 	}

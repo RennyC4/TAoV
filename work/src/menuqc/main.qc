@@ -433,6 +433,7 @@ float Menu_InputEvent(float evtype, float scanx, float chary, float devid)
 		
 		switch (scanx) {
 			case K_ESCAPE: {
+				localsound("misc/menu3", 4, 1);
 				menuIsOn = 0;
 				setkeydest(KEY_GAME);
 				setcursormode(FALSE,"");
@@ -526,13 +527,10 @@ float Menu_InputEvent(float evtype, float scanx, float chary, float devid)
 	return FALSE;
 }
 
-float first_open;
 void m_toggle (float flWantmode)
 {
 	if (time < 2)
 		return;
-
-	first_open = TRUE;
 
 	menuIsOn = flWantmode;
 	
@@ -543,7 +541,6 @@ void m_toggle (float flWantmode)
 	MainMenu_goto();
 }
 
-float closemenu_sound;
 void m_draw(vector scrsz)
 {
 	frametime = time - lastframe;
@@ -555,7 +552,6 @@ void m_draw(vector scrsz)
 	
 	if (menuIsOn)
 	{
-		closemenu_sound = FALSE;
 		if (current_menu == MENU_Main)
 		{
 			drawpic ('336 76', "progs/demosign2.png", '170 81', '0 0 0', 1, 0); // shadow
@@ -574,10 +570,5 @@ void m_draw(vector scrsz)
 		
 		clearscene();
 		renderscene();
-	}
-	else if (closemenu_sound == FALSE && first_open == TRUE)
-	{
-		closemenu_sound = TRUE;
-		localsound("misc/menu3", 4, 1);
 	}
 }

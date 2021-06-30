@@ -1746,7 +1746,10 @@ void() enemy_start =
 		dprint ("\n");
 	}
 	if (self.movetype == MOVETYPE_STEP && self.nodrop == 0 && !self.flags & FL_SWIM)
+	{
+		self.origin_z = self.origin_z + 1; // raise then drop
 		droptofloor();
+	}
 
 	self.use = wakeup; // monsters can be woken up by triggers
 	self.netname = "solid"; // this netname allows to become solid

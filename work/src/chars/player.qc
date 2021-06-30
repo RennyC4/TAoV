@@ -172,7 +172,7 @@ void() Setup_Dummy =
 	dummy.netname = "solid";
 	dummy.speed = 120; // Maintained by client.qc
 	dummy.view_ofs = '0 0 28'; // Set at eye level for Vigil not to drown
-
+	
 	if (cvar("developer") > 1)
 		dummy.movetype = MOVETYPE_NONE;
 	else
@@ -1020,24 +1020,43 @@ void() SpellBubble =
 void() player_checkledge =
 {
 	local float ledgegrab_ok = FALSE; // TRUE if can ledge grab
+	local float test;
 	local entity oself, grab;
 	local vector source, x;
 	
-	//makevectors(self.char.angles);
-	
-	// FIXME: Add it so Vigil's X angle is always 0 when doing tracelines	
-	x = self.char.angles;
+	// Remove angles X and Z on traces
 	x_x = 0;
+	x_y = self.char.angles_y;
+	x_z = 0;
+
+	// Remove turning angle on traces
+	if (x_y == 45 || x_y == -45)
+		x_y = 0;
+	if (x_y == 225 || x_y == -225)
+		x_y = 180;
+
 	makevectors(x);
-	// FIXED
 	
 	source = self.char.origin;
-	
+
 	traceline (source, source + v_forward*20 + v_up*45, FALSE, self);
 
+	// Debugging
+	/*
+	WriteByte (MSG_BROADCAST, SVC_TEMPENTITY);
+	WriteByte (MSG_BROADCAST, TE_LIGHTNING1);
+	WriteEntity (MSG_BROADCAST, self);
+	WriteCoord (MSG_BROADCAST, source_x);
+	WriteCoord (MSG_BROADCAST, source_y);
+	WriteCoord (MSG_BROADCAST, source_z);
+	WriteCoord (MSG_BROADCAST, trace_endpos_x);
+	WriteCoord (MSG_BROADCAST, trace_endpos_y);
+	WriteCoord (MSG_BROADCAST, trace_endpos_z);
+	*/
+	
 	grab = spawn();
 	grab.owner = self.char;
-	grab.movetype = MOVETYPE_TOSS;
+	grab.movetype = MOVETYPE_STEP; // Was TOSS
 	grab.solid = SOLID_TRIGGER;
 	grab.classname = "ledgegrab";
 	grab.drawonlytoclient = self; // reduce network traffic
@@ -1048,14 +1067,23 @@ void() player_checkledge =
 
 	setmodel (grab, string_null);
 	setsize(grab, '1 1 1', '-1 -1 -1'); // Fixes Vigil grabbing onto func_plat/train
-	grab.origin_y = self.char.origin_y;
 	
+	grab.origin_y = self.char.origin_y;
+
 	oself = self;
 	self = grab;
 
 	droptofloor();
 
-	if (walkmove(0,0))
+	local vector dest = trace_endpos;
+	tracebox (source, '-1 -1 -1', '1 1 1', dest, TRUE, self);
+
+	if (trace_fraction == 1) // Hit nothing
+		test = TRUE;
+	else
+		test = FALSE;
+
+	if (test)
 	{
 		// use Z checking if it's okay for Vigil to grab, try to keep his hands near the ledge as close as possible...
 		if (self.origin_z > self.owner.origin_z + 30 && self.origin_z < self.owner.origin_z + 45)
@@ -1304,10 +1332,9 @@ void() player_think =
 	// Vigil's Ledge Grabbing routine ran under these circumstances
 	//
 
-	if ((self.keyflags & (KEY_LEFT) && self.char.angles_y == 0) || (self.keyflags & (KEY_RIGHT) && self.char.angles_y == 180)
-	&& self.ledgegrab == FALSE && self.char.angles_x == 0 && self.char.onground == FALSE || self.wallgrab == TRUE)
+	if (self.keyflags & (KEY_LEFT) || (self.keyflags & (KEY_RIGHT)) && self.ledgegrab == FALSE && self.char.onground == FALSE || self.wallgrab == TRUE)
 	{
-		if (self.char.health > 0 && self.char.aircombo_count < 5 && self.attack_finished < time)
+		if (self.char.health > 0 && self.char.aircombo_count < 5 && self.attack_finished < time && self.char.block_finished < time)
 		{
 			if (relics & IT_RELIC1 || self.char.swimming)
 				player_checkledge();
@@ -3259,10 +3286,15 @@ void() player_counter1	=[	$counter1,	player_counter2	]
 	// Face enemy direction properly first
 	if (self.enemy)
 	{
-		if (self.origin_x < self.enemy.origin_x)
-			self.angles_y = 0;
-		else
+		if (self.enemy.classname == "Boss2Melee") // Hacky, but it works
 			self.angles_y = 180;
+		else
+		{
+			if (self.origin_x < self.enemy.origin_x)
+				self.angles_y = 0;
+			else
+				self.angles_y = 180;
+		}
 	}
 
 	player_yell(1);

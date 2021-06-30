@@ -415,7 +415,6 @@ void() priest_chat =
 				{
 					self.enemy.owner.display_price = 0;
 					localcmd("menu_save\n");
-					sound (self, CHAN_AUTO, "misc/menu2.wav", 1, ATTN_NORM);
 				}
 				if (self.cnt2 == 2)
 				{
@@ -686,7 +685,7 @@ void() lisa_chat =
 					{
 						if (!(game_progress & IT_PROGRESS2))
 						{
-							centerprint (self.enemy.owner, "/P^bYou've learned Cyclone Crush!^b\n\n\n^1Perform this attack by pressing DOWN, FORWARD + ATTACK\n\n\n\n^3Press ATTACK or JUMP to resume ...\n");
+							centerprint (self.enemy.owner, "/P^bYou've learned Cyclone Crush!^b\n\n===========================\n\n^1Perform this attack by pressing DOWN, FORWARD + ATTACK\n\n\n\n^3Press ATTACK or JUMP to resume ...\n");
 							setpause (1);
 
 							if (!(game_progress & IT_PROGRESS2)) // Cyclone Attack
@@ -703,7 +702,7 @@ void() lisa_chat =
 						}
 						else if (!(game_progress & IT_PROGRESS4))
 						{
-							centerprint (self.enemy.owner, "/P^bYou've learned Diving Swallow!^b\n\n\n^1Perform this attack by performing Vigil's Roundhouse kick against an enemy while airborne then quickly follow up with an ATTACK button press\n\n\n\n^3Press ATTACK or JUMP to resume ...\n");
+							centerprint (self.enemy.owner, "/P^bYou've learned Diving Swallow!^b\n\n===========================\n\n^1Perform this attack by performing Vigil's Roundhouse kick against an enemy while airborne then quickly follow up with an ATTACK button press\n\n\n\n^3Press ATTACK or JUMP to resume ...\n");
 							setpause (1);
 
 							if (!(game_progress & IT_PROGRESS4)) // Diving Swallow Attack

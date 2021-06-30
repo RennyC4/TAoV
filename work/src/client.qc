@@ -1095,6 +1095,7 @@ void() PlayerPostThink =
 				title1_finished = time + 1.5;	
 				self.cnt = TRUE;
 				sound (self, CHAN_VOICE, "misc/title2.wav", 1, ATTN_NONE);
+				stuffcmd(self, "wf\n");
 			}
 		}
 		else
