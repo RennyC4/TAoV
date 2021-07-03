@@ -1017,7 +1017,88 @@ void() SpellBubble =
 // ledge grabbing checking
 //*
 
+
 void() player_checkledge =
+{
+	local float ledgegrab_ok = FALSE; // TRUE if can ledge grab
+	local float test;
+	local entity oself, grab;
+	local vector source, x;
+	
+	// Remove angles X and Z on traces
+	x_x = 0;
+	x_y = self.char.angles_y;
+	x_z = 0;
+
+	// Remove turning angle on traces
+	if (x_y == 45 || x_y == -45)
+		x_y = 0;
+	if (x_y == 225 || x_y == -225)
+		x_y = 180;
+
+	makevectors(x);
+	
+	source = self.char.origin;
+	
+	traceline (source, source + v_forward*20 + v_up*45, FALSE, self);
+
+	grab = spawn();
+	grab.owner = self.char;
+	grab.movetype = MOVETYPE_TOSS;
+	grab.solid = SOLID_TRIGGER;
+	grab.classname = "ledgegrab";
+	grab.drawonlytoclient = self; // reduce network traffic
+
+	grab.origin_x = trace_endpos_x;
+	grab.origin_y = trace_endpos_y;
+	grab.origin_z = trace_endpos_z;
+
+	setmodel (grab, string_null);
+	setsize(grab, '1 1 1', '-1 -1 -1'); // Fixes Vigil grabbing onto func_plat/train
+	grab.origin_y = self.char.origin_y;
+	
+	oself = self;
+	self = grab;
+
+	droptofloor();
+
+	if (walkmove(0,0))
+	{
+		// use Z checking if it's okay for Vigil to grab, try to keep his hands near the ledge as close as possible...
+		if (self.origin_z > self.owner.origin_z + 30 && self.origin_z < self.owner.origin_z + 45)
+			ledgegrab_ok = TRUE;
+	}
+	else
+		ledgegrab_ok = FALSE;
+
+	self = oself;
+
+	if (ledgegrab_ok == TRUE)
+	{
+		self.wallrun = FALSE;
+		self.wallgrab = FALSE; // must be removed!
+		self.char.inair = self.char.bigfall = 0; // remove BIG FALL
+		self.char.djump_spincnt = 4; // Must be set 4 and above, fix a minor bug preventing blocking while ledge grabbing
+		self.ledgegrab = TRUE;
+		self.doublejump = TRUE; // bug fix: make sure player cannot double jump stuck himself
+		self.char.running = FALSE;
+		self.char.movetype = MOVETYPE_FLY; // Lock Vigil
+		self.char.velocity = '0 0 0';
+		self.char.attack_finished = time + 0.5;
+		self.char.angles_x = 0; // must be reset to 0 incase of double jump
+		self.softshadow_time = time;
+		self.char.aircombo_count = 0;
+		self.char.think = player_ledgegrab1;
+		self.char.nextthink = time; // right away
+		sound (self, CHAN_WEAPON, "player/ledge.wav", 1, ATTN_NORM);
+	}
+	if (grab != world)
+		remove(grab);
+	return;
+};
+
+// Unused, needs a few fixes
+void() new_player_checkledge =
 {
 	local float ledgegrab_ok = FALSE; // TRUE if can ledge grab
 	local float test;
