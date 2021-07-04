@@ -1415,7 +1415,7 @@ void() player_think =
 
 	if (self.keyflags & (KEY_LEFT) || (self.keyflags & (KEY_RIGHT)) && self.ledgegrab == FALSE && self.char.onground == FALSE || self.wallgrab == TRUE)
 	{
-		if (self.char.health > 0 && self.char.aircombo_count < 5 && self.attack_finished < time && self.char.block_finished < time)
+		if (self.char.health > 0 && self.char.aircombo_count < 5 && self.attack_finished < time && self.char.block_finished < time && self.char.pain_finished < time)
 		{
 			if (relics & IT_RELIC1 || self.char.swimming)
 				player_checkledge();
