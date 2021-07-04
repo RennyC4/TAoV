@@ -5107,9 +5107,7 @@ void() player_jumpatk2	=[	$jumpatk2,	player_jumpatk2	]
 	setorigin(testx, self.origin);
 
 	if (self.onground == TRUE)
-	{
-		local entity effect;
-	
+	{	
 		makevectors (self.angles);
 
 		effect = spawn();
