@@ -529,16 +529,24 @@ float Menu_InputEvent(float evtype, float scanx, float chary, float devid)
 
 void m_toggle (float flWantmode)
 {
-	if (time < 2)
-		return;
-
+	
+	if (menuIsOn != flWantmode)
+		localsound("misc/menu2", 4, 1);
+	
 	menuIsOn = flWantmode;
 	
-	setcursormode(TRUE,"cursor");
-	setkeydest(KEY_MENU);
-
-	localsound("misc/menu2", 4, 1);
-	MainMenu_goto();
+	
+	if (flWantmode)
+	{
+		MainMenu_goto();
+		setkeydest(KEY_MENU);
+		setcursormode(TRUE, "cursor");
+	}
+	else
+	{
+		setkeydest(KEY_GAME);
+		setcursormode(FALSE, "cursor");
+	}
 }
 
 void m_draw(vector scrsz)
