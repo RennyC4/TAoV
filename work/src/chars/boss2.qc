@@ -237,11 +237,10 @@ void() boss_attack6 = [$attack6, boss_attack7]
 	setsize (h, '0 0 0', '0 0 0');
 	setorigin (h, self.origin + v_up * 100 + v_forward * 125);
 	h.owner = self;
-	h.flags = FL_BOSS;
+	h.flags = FL_BOSS | FL_MONSTER; // Do not allow Boss to be hit by his own melee!
 	h.movetype = MOVETYPE_NOCLIP;
 	h.classname = "Boss2Melee";
 	h.solid = SOLID_NOT;
-	h.flags = FL_MONSTER; // Do not allow Boss to be hit by his own melee!
 	h.angles = '0 0 0';
 	h.think = Boss2Melee;
 	h.nextthink = time;
@@ -270,11 +269,10 @@ void() boss_attack18 = [$attack18, boss_attack19]
 	setsize (h, '0 0 0', '0 0 0');
 	setorigin (h, self.origin + v_up * 100 + v_forward * 125);
 	h.owner = self;
-	h.flags = FL_BOSS;
+	h.flags = FL_BOSS | FL_MONSTER; // Do not allow Boss to be hit by his own melee!
 	h.movetype = MOVETYPE_NOCLIP;
 	h.classname = "Boss2Melee";
 	h.solid = SOLID_NOT;
-	h.flags = FL_MONSTER; // Do not allow Boss to be hit by his own melee!
 	h.angles = '0 0 0';
 	h.think = Boss2Melee;
 	h.nextthink = time;
