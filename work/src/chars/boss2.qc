@@ -219,7 +219,6 @@ void() Boss2Melee =
 {
 	FireMelee(40,0,3,100,5,0,1, FALSE,0,0);
 	remove(self);
-	return;
 };
 
 void() boss_attack1 = [$attack1, boss_attack2] {frameskip(0.08);};
@@ -238,6 +237,7 @@ void() boss_attack6 = [$attack6, boss_attack7]
 	setsize (h, '0 0 0', '0 0 0');
 	setorigin (h, self.origin + v_up * 100 + v_forward * 125);
 	h.owner = self;
+	h.flags = FL_BOSS;
 	h.movetype = MOVETYPE_NOCLIP;
 	h.classname = "Boss2Melee";
 	h.solid = SOLID_NOT;
@@ -245,7 +245,7 @@ void() boss_attack6 = [$attack6, boss_attack7]
 	h.angles = '0 0 0';
 	h.think = Boss2Melee;
 	h.nextthink = time;
-	
+
 	frameskip(0.08);
 };
 void() boss_attack7 = [$attack7, boss_attack8] {frameskip(0.08);};
@@ -268,15 +268,17 @@ void() boss_attack18 = [$attack18, boss_attack19]
 	h = spawn();
 	setmodel (h, string_null);
 	setsize (h, '0 0 0', '0 0 0');
-	setorigin (h, self.origin + v_up * 200 + v_forward * 200);
-	h.movetype = MOVETYPE_NOCLIP;
-	h.solid = SOLID_NOT;
-	h.flags = FL_MONSTER; // Do not allow Lava Giant to be hit!
+	setorigin (h, self.origin + v_up * 100 + v_forward * 125);
 	h.owner = self;
-	h.angles_y = self.angles_y;
+	h.flags = FL_BOSS;
+	h.movetype = MOVETYPE_NOCLIP;
+	h.classname = "Boss2Melee";
+	h.solid = SOLID_NOT;
+	h.flags = FL_MONSTER; // Do not allow Boss to be hit by his own melee!
+	h.angles = '0 0 0';
 	h.think = Boss2Melee;
 	h.nextthink = time;
-	
+
 	frameskip(0.08);
 };
 void() boss_attack19 = [$attack19, boss_attack20] {frameskip(0.08);};
@@ -403,7 +405,7 @@ void() boulder_thinker =
 	else
 	{
 		self.flags = self.flags | FL_MONSTER; // Don't hit boss
-		FireMelee(22,0,1,35,0,0,1,FALSE,0,0);
+		FireMelee(18,0,1,35,0,0,1,FALSE,0,0);
 		if (self.flags & FL_ONGROUND)
 			self.mode = 1;
 	}

@@ -931,7 +931,7 @@ void(float damg, float dist, float knokback, float rsize, float snd, float flsh,
 							self.attack_type = 0;
 					}
 
-					if (self.classname == "player" && head.solid != SOLID_BSP && head.classname != "breakable")
+					if (self.classname == "player" && head.solid != SOLID_BSP && (head.classname != "breakable" && !head.flags & FL_MONSTER))
 						self.enemy = head; // record which entity vigil hit
 
 					self.attackedname = head.classname; // record on every strike

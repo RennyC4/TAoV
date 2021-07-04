@@ -3,7 +3,7 @@
 * Vigil has MOVETYPE_STEP/WALK changes defined in a specific place that updates every frame - player.qc (slope sliding)
 
 !!!!!!!
-* WRBrushes breaks water brushes for now.
+* WRBrushes breaks water brushes for now with FTE past 5808
 	- Do not use in cavern.bsp
 !!!!!!!
 

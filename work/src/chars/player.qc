@@ -2740,7 +2740,7 @@ void() player_fire =
 	if (self.char.counter_finished > time && self.char.onground == TRUE)
 	{
 		self.char.takedamage = DAMAGE_NO;
-		self.char.block_finished = time - 1;
+		self.char.block_finished = time;
 		self.char.dodge_finished = time;
 		self.char.think = player_counter1;
 		self.swordshadow_time = time + 0.7; // sword shadow
@@ -3367,7 +3367,7 @@ void() player_counter1	=[	$counter1,	player_counter2	]
 	// Face enemy direction properly first
 	if (self.enemy)
 	{
-		if (self.enemy.classname == "Boss2Melee") // Hacky, but it works
+		if (self.enemy.classname == "Boss2Melee")
 			self.angles_y = 180;
 		else
 		{
