@@ -844,7 +844,6 @@ void() wizard_chat =
 							cvar_set("gamecfg", "99");
 							changelevel("teleporter");
 							centerprint (self.enemy.owner, "");
-							sound (self.enemy.owner, CHAN_AUTO, "misc/levelup2.wav", 1, ATTN_NORM);
 							self.enemy.owner.gold = self.enemy.owner.gold - aprice; // remove gold
 							self.mode = 0; // Not chatting anymore
 							self.cnt = 0; // reset default topic
