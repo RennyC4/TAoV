@@ -101,10 +101,11 @@ void() ArcherArrowThink =
 					// block
 					if (head.classname == "player")
 					{
-						if (self.angles_y > 90 && self.angles_y < 270) // Attacker facing right
-							head.angles_y = 0; // Block victim faces left
+						if (head.origin_x < self.origin_x)
+							head.angles_y = 0;
 						else
-							head.angles_y = 180; // Block victim faces right
+							head.angles_y = 180;
+				
 						head.effects = EF_MUZZLEFLASH; // create light on melee impact
 						head.think = player_block;
 						head.nextthink = time + 0.1;
@@ -120,6 +121,11 @@ void() ArcherArrowThink =
 			}
 			else // Perfect Block
 			{
+				if (head.origin_x < self.origin_x)
+					head.angles_y = 0;
+				else
+					head.angles_y = 180;
+
 				PerfectGuard(head);
 				remove(self);
 				return;
