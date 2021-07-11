@@ -702,7 +702,7 @@ void() func_swing_use =
 		}
 		self.mode = self.mode + 0.01;
 	}
-	self.solid = SOLID_NOT; // Temporary until ericw/spike fixes rotation collision with WRBrushes
+	//self.solid = SOLID_NOT; // Temporary until ericw/spike fixes rotation collision with WRBrushes
 
 	self.think = func_swing_use;
 	self.nextthink = self.ltime + 0.01;
