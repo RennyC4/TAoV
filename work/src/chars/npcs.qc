@@ -11,16 +11,15 @@ void() npc_default =
 	local vector view;
 	local entity y;
 
-	MakeSolidList();
-
 	if (!self.enemy)
 	{
 		y = find(world, classname, "player");
 		while(y)
 		{
-			if (y.classname == "player" && range(y) < RANGE_NEAR)
+			if (y.classname == "player" && range(y) < RANGE_NEAR && !y.owner.conversation && !y.enemy)
 			{
 				self.enemy = y;
+				y.enemy = self;
 				self.enemy.owner.safezone = TRUE;
 			}
 			y = find(y, classname, "player");
@@ -29,6 +28,7 @@ void() npc_default =
 		//
 		// NPC is standing around
 		//
+
 		if (self.state < time && self.fixangle == FALSE)
 		{
 			if (random() < 0.5)
@@ -103,43 +103,45 @@ void() npc_default =
 		self.frame = 0;
 		self.npcmove_mode = 0;
 		self.npcmove_finished = time;
-		if (range(self.enemy) < RANGE_NEAR)
+		if (self.enemy.enemy == self)
 		{
-			view = vectoangles(self.enemy.origin - self.origin);
-			self.angles_y = view_y;
-			self.fixangle = TRUE;
-			if ((self.enemy.owner.button0 && self.pain_finished < time) || self.mode == 1)
+			if (range(self.enemy) < RANGE_NEAR)
 			{
-				if (self.enemy.owner.button0 && self.mode == 0)
+				view = vectoangles(self.enemy.origin - self.origin);
+				self.angles_y = view_y;
+				self.fixangle = TRUE;
+				if ((self.enemy.owner.button0 && self.pain_finished < time) || self.mode == 1)
 				{
-					self.cnt = 0; // reset default topic
-					self.selection = TRUE;
-					sound (self, CHAN_AUTO, "misc/menu2.wav", 1, ATTN_NORM);
+					if (self.enemy.owner.button0 && self.mode == 0)
+					{
+						self.cnt = 0; // reset default topic
+						self.selection = TRUE;
+						sound (self, CHAN_AUTO, "misc/menu2.wav", 1, ATTN_NORM);
+					}
+					if (self.npc_talk)
+					{
+						self.mode = 1;
+						self.npc_talk();
+					}
 				}
+			}
+			else
+			{
+				self.mode = 0; // Not chatting anymore
 				if (self.npc_talk)
-				{
-					self.mode = 1;
 					self.npc_talk();
+				if (self.fixangle == TRUE)
+				{
+					self.angles_y = self.score; // self.score holds snap back angle
+					self.fixangle = FALSE;
 				}
+				self.enemy.owner.conversation = FALSE;
+				self.enemy.owner.safezone = FALSE;
+				self.enemy = self.enemy.enemy = world;
 			}
-		}
-		else
-		{
-			self.mode = 0; // Not chatting anymore
-			if (self.npc_talk)
-				self.npc_talk();
-			if (self.fixangle == TRUE)
-			{
-				self.angles_y = self.score; // self.score holds snap back angle
-				self.fixangle = FALSE;
-			}
-			self.enemy.owner.conversation = FALSE;
-			self.enemy.owner.safezone = FALSE;
-			self.enemy = world;
 		}
 	}
 
-	UnmakeSolidList();
 	frameskip(0.01);
 };
 
@@ -289,6 +291,7 @@ void() blacksmith_chat =
 					centerprint (self.enemy.owner, "\n");
 					self.pain_finished = time + 1; // Won't talk to user again for a second
 					sound (self, CHAN_AUTO, "misc/menu2.wav", 1, ATTN_NORM);
+					self.enemy = self.enemy.enemy = world;
 				}
 			}
  			self.selection = TRUE;
@@ -439,6 +442,7 @@ void() priest_chat =
 					centerprint (self.enemy.owner, "\n");
 					self.pain_finished = time + 1; // Won't talk to user again for a second
 					sound (self, CHAN_AUTO, "misc/menu2.wav", 1, ATTN_NORM);
+					self.enemy = self.enemy.enemy = world;
 				}
 			}
 			self.selection = TRUE;
@@ -566,6 +570,7 @@ void() guard_chat =
 					centerprint (self.enemy.owner, "\n");
 					self.pain_finished = time + 1; // Won't talk to user again for a second
 					sound (self, CHAN_AUTO, "misc/menu2.wav", 1, ATTN_NORM);
+					self.enemy = self.enemy.enemy = world;
 				}
 			}
 			self.selection = TRUE;
@@ -731,6 +736,7 @@ void() lisa_chat =
 					centerprint (self.enemy.owner, "\n");
 					self.pain_finished = time + 1; // Won't talk to user again for a second
 					sound (self, CHAN_AUTO, "misc/menu2.wav", 1, ATTN_NORM);
+					self.enemy = self.enemy.enemy = world;
 				}
 			}
  			self.selection = TRUE;
@@ -875,6 +881,7 @@ void() wizard_chat =
 					centerprint (self.enemy.owner, "\n");
 					self.pain_finished = time + 1; // Won't talk to user again for a second
 					sound (self, CHAN_AUTO, "misc/menu2.wav", 1, ATTN_NORM);
+					self.enemy = self.enemy.enemy = world;
 				}
 			}
  			self.selection = TRUE;
@@ -1025,6 +1032,7 @@ void() bartender_chat =
 					centerprint (self.enemy.owner, "\n");
 					self.pain_finished = time + 1; // Won't talk to user again for a second
 					sound (self, CHAN_AUTO, "misc/menu2.wav", 1, ATTN_NORM);
+					self.enemy = self.enemy.enemy = world;
 				}
 			}
  			self.selection = TRUE;

@@ -406,7 +406,46 @@
 }
 // entity 13
 {
-"classname" "monster_hell_knight"
-"origin" "368 96 48"
-"awareness" "4"
+"classname" "npc_guard"
+"origin" "320 112 48"
+}
+// entity 14
+{
+"classname" "npc_guard"
+"origin" "400 96 48"
+}
+// entity 15
+{
+"classname" "npc_guard"
+"origin" "512 136 48"
+}
+// entity 16
+{
+"classname" "npc_guard"
+"origin" "360 16 48"
+}
+// entity 17
+{
+"classname" "npc_guard"
+"origin" "304 -16 40"
+}
+// entity 18
+{
+"classname" "npc_guard"
+"origin" "256 32 40"
+}
+// entity 19
+{
+"classname" "npc_guard"
+"origin" "416 144 40"
+}
+// entity 20
+{
+"classname" "npc_guard"
+"origin" "464 -16 40"
+}
+// entity 21
+{
+"classname" "npc_lisa"
+"origin" "384 48 56"
 }
