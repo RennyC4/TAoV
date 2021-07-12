@@ -155,7 +155,13 @@ void() boss_idle1 = [0, boss_idle1]
 				}
 			}
 		}
+		if (self.enemy.health <= 0)
+		{
+			self.enemy = world;
+			self.solid = SOLID_NOT;
+		}
 	}
+	
 	if (self.stand_finished < time)
 	{
 		self.walkframe = self.walkframe + 1;
@@ -317,7 +323,7 @@ void() boss_fbeam1 = [$shockb1, boss_fbeam2]
 {
 	if (self.beams_shot < 20)
 	{
-		Firebeam(3, 90, 120);
+		Firebeam(3, 90, 90);
 		self.beams_shot = self.beams_shot + 1;
 		boss_rockdrop();
 		shake_camera(0.1);
@@ -403,7 +409,7 @@ void() boulder_thinker =
 	else
 	{
 		self.flags = self.flags | FL_MONSTER; // Don't hit boss
-		FireMelee(18,0,1,35,0,0,1,FALSE,0,0);
+		FireMelee(8,0,1,35,0,0,1,FALSE,0,0);
 		if (self.flags & FL_ONGROUND)
 			self.mode = 1;
 	}
