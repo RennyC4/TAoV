@@ -64,6 +64,7 @@ r_portalrecursion 1 // set to 2 on skybox + water brushes
 snd_ignoregamespeed 1
 r_coronas_occlusion 1 // fix flicker corona effect
 r_sprite_backfacing 1 // oriented sprite fix
+r_keepimages 1 // skybox fix
 
 // Fonts
 con_textfont "fonts/console"

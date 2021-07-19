@@ -6788,7 +6788,7 @@
 }
 // entity 52
 {
-"origin" "-2752 -272 -1520"
+"origin" "-2752 -240 -1512"
 "classname" "monster_zombie_boss"
 "target" "crypt_count"
 "spawnflags" "2"
