@@ -5940,11 +5940,12 @@ void() player_die2	=[	$pain4,	player_die2	]
 	if (self.swimming) // sink slower when hit than in normal air
 		self.velocity_z = self.velocity_z / 1.55;
 	self.angles_x = 0;
-	if (self.onground == TRUE)
+	if (self.onground == TRUE || self.origin == self.oldorigin)
 	{
 		player_die3();
 		self.dead_lockkey_finished = time + 1; // don't allow key presses until menu is up for a second
 	}
+	self.oldorigin = self.origin;
 };
 
 void() player_die3	=[	$pain5,	player_die3 ] 

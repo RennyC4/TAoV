@@ -158,7 +158,8 @@ void() boss_idle1 = [0, boss_idle1]
 		if (self.enemy.health <= 0)
 		{
 			self.enemy = world;
-			self.solid = SOLID_NOT;
+			//ASDF: Not a bug, but something to check if the last fix fails
+			//self.solid = SOLID_NOT;
 		}
 	}
 	
