@@ -348,6 +348,8 @@ void() StatusEffects =
 			self.nospinatk_finished = time + 1; // don't allow spin attack
 			self.nobackflip_finished = time + 1; // don't allow backflip
 			sound (self.char, CHAN_AUTO, "player/broken.wav", 1, ATTN_NORM);
+			if (self.char.perfectguard_buff < time) // remove i-frame stuff
+				self.char.takedamage = DAMAGE_AIM;
 			T_Damage (self.char, self, self, 0, 0); // do the annoying magic
 			self.broken_tick_finished = time + 1 + ceil(random()*4 + 1);
 		}
