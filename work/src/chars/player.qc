@@ -7540,6 +7540,10 @@ void() player_purge1	=[	$attacka4,	player_purge2	]
 	self.takedamage = DAMAGE_NO;
 	self.owner.noblock_finished = time + 1;
 	self.owner.attack_finished = time + 1;
+
+	// Freeze timer is longer by default on purge, so it's okay to overwrite other active freeze timers
+	freeze_finished = time + (6 * frametime);
+
 	frameskip(1);
 };
 

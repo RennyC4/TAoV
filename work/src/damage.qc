@@ -822,9 +822,6 @@ void(float damg, float dist, float knokback, float rsize, float snd, float flsh,
 						head.think = player_purge1; // Do something cool
 						head.nextthink = time;
 
-						if (freeze_finished < time) // don't interefere with level up/etc
-							freeze_finished = time + (CONST_BIGHITSLOW * frametime);
-
 						return;
 					}
 
