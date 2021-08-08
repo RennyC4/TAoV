@@ -7438,6 +7438,8 @@ void() dodgeb1_move =
 	tracebox (self.origin, VEC_HULL_MIN, VEC_HULL_MAX, self.origin, 1, self);
 	if (trace_startsolid)
 		self.lowceil = TRUE;
+	else
+		self.lowceil = FALSE;
 
 	if (self.angles_y == 0 || self.angles_y == 360)
 		self.velocity_x = 175;
