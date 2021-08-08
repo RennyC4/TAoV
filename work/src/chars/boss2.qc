@@ -59,7 +59,8 @@ void() boss_deaththink =
 	}
 	else
 	{
-		self.enemy.owner.screenflash_finished = time + 0.5;
+		if (self.enemy.owner)
+			self.enemy.owner.screenflash_finished = time + 0.5;
 
 		effect = spawn();
 		setorigin(effect, self.origin);
@@ -89,7 +90,7 @@ void() boss_deaththink =
 };
 
 //
-//	Boss 1st Form
+//	Boss
 //
 
 void() boss_face =
@@ -225,6 +226,20 @@ void() boss_rockdrop10 = [$shockc10, boss_idle1] {};
 void() Boss2Melee =
 {
 	FireMelee(40,0,3,100,5,0,1, FALSE,0,0);
+	
+	self.char.enemy = self.enemy;
+	
+	// Damage boss from purge attacks
+	// '.char' refers to the Eternal Dragon itself as .owner is used for other means
+	local float calc = self.char.health - self.health;
+	local string s = ftos(calc);
+
+	if (calc > 0 && calc != self.char.health)
+		self.char.health = self.char.health - calc;
+
+	if (self.char.health < 1)
+		Killed (self.char, self.enemy);
+
 	remove(self);
 };
 
@@ -243,10 +258,11 @@ void() boss_attack6 = [$attack6, boss_attack7]
 	setmodel (h, string_null);
 	setsize (h, '0 0 0', '0 0 0');
 	setorigin (h, self.origin + v_up * 100 + v_forward * 125);
-	h.owner = self;
+	h.char = self;
 	h.flags = FL_BOSS | FL_MONSTER; // Do not allow Boss to be hit by his own melee!
 	h.movetype = MOVETYPE_NOCLIP;
 	h.classname = "Boss2Melee";
+	h.health = self.health; // store eternal dragon's health
 	h.solid = SOLID_NOT;
 	h.angles = '0 0 0';
 	h.think = Boss2Melee;
@@ -275,10 +291,11 @@ void() boss_attack18 = [$attack18, boss_attack19]
 	setmodel (h, string_null);
 	setsize (h, '0 0 0', '0 0 0');
 	setorigin (h, self.origin + v_up * 100 + v_forward * 125);
-	h.owner = self;
+	h.char = self;
 	h.flags = FL_BOSS | FL_MONSTER; // Do not allow Boss to be hit by his own melee!
 	h.movetype = MOVETYPE_NOCLIP;
 	h.classname = "Boss2Melee";
+	h.health = self.health; // store eternal dragon's health
 	h.solid = SOLID_NOT;
 	h.angles = '0 0 0';
 	h.think = Boss2Melee;

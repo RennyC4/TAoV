@@ -246,11 +246,12 @@ void() CheckImpulseButtons =
 	//
 
 	if (self.button3)
-	//if (input_buttons & BUTTON3)
 	{
 		if (self.FL_BLKPRESSED == FALSE)
 		{
 			if (self.forcewalk_finished > time)
+				return;
+			if (self.purge_toggle == TRUE)
 				return;
 			if (pointcontents(self.char.origin) == CONTENT_WATER || pointcontents(self.owner.origin) == CONTENT_LAVA || pointcontents(self.owner.origin) == CONTENT_SLIME)
 				return;

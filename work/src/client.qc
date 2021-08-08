@@ -950,6 +950,7 @@ void() PlayerPreThink =
 		//self.status_poison_finished = time + 3;
 		//self.status_blind_finished = time + 3;
 		//self.status_broken_finished = time + 3;
+		//self.char.purge_finished = time + 3;
 
 		if (self.forcewalk_finished < time && (self.status_blind_finished > time || self.status_poison_finished > time || self.status_broken_finished > time))
 			StatusEffects();

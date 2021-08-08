@@ -7474,7 +7474,6 @@ void() player_dodgeb9	    =[	$dodgeb9,	player_block		 	]
 		self.owner.mashattack = FALSE;
 		self.owner.attack_finished = time + 0.7;
 		self.owner.combo_finished = time + 0.7;
-		self.owner.mashattack = FALSE;
 		return;
 	}
 	frameskip(0.05);

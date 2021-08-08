@@ -815,7 +815,7 @@ void(float damg, float dist, float knokback, float rsize, float snd, float flsh,
 						head.owner.screenflash_finished = time + 0.1;
 						self.damage_type = 5; // cut in half
 
-						local float purge_dmg = 100 + (33 * head.owner.swordlevel);						
+						local float purge_dmg = 100 + (33 * head.owner.swordlevel);
 						T_Damage (self, head, head, purge_dmg, 0);
 
 						head.owner.speedline_time = time + 0.35;
