@@ -7453,7 +7453,10 @@ void() player_dodgeb9	    =[	$dodgeb9,	player_block		 	]
 {
 	if (self.perfectguard_buff < time)
 		self.takedamage = DAMAGE_AIM;
-	if (self.owner.mashattack == TRUE && self.onground)
+		
+	tracebox (self.origin, VEC_HULL_MIN, VEC_HULL_MAX, self.origin, 1, self);
+
+	if (self.owner.mashattack == TRUE && self.onground && !trace_startsolid)
 	{
 		self.swing_count = 0;
 		self.think = player_fstab2;
