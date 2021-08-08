@@ -607,6 +607,7 @@ nosave .string music; // no save, so that it plays music on savegame load
 float turbo_mode; // Turbo mode boolean, saved in parms
 .float camera_forcezoom_finished; // if true, camera will force zoom out to help it get unstuck
 .float ftspin_count;
+.float lowceil;
 
 // Perfect Guard
 .float perfectblock; // timer

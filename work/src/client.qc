@@ -671,6 +671,9 @@ void() PlayerPreThink =
 		self.vigil_y = self.char.origin_y;
 		self.vigil_z = self.char.origin_z;
 		
+		//if (self.char.lowceil)
+		//	bprint ("Low Ceiling Flag On\n");
+		
 		//
 		//	Full Mana visual indicator
 		//
@@ -770,7 +773,8 @@ void() PlayerPreThink =
 		// HACK: Quake/FTE engine will not check SOLID_TRIGGER entities for .push,
 		//		 causes issues where plats will go through Vigil and set his bbox to null
 		//
-		if (self.char.mins != VEC_HULL_MIN && self.char.maxs != VEC_HULL_MAX)
+
+		if (self.char.absmin != VEC_HULL_MIN && self.char.absmax != VEC_HULL_MAX && self.char.dodge_finished < time && self.char.lowceil == FALSE)
 			setsize(self.char, VEC_HULL_MIN, VEC_HULL_MAX);
 	
 		CheckImpulseButtons();

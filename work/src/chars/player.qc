@@ -1255,7 +1255,7 @@ void() player_think =
 		makevectors (self.char.angles);
 		touchtriggers (self.char, self.char.origin + v_forward * 1);
 		self.char.takedamage = DAMAGE_NO; // cannot be hit while controls are locked
-		self.char.block_finished = time - 1; // fixes bug when vigil dodges into a trigger_walk
+		self.char.block_finished = time; // fixes bug when vigil dodges into a trigger_walk
 	}
 
 	//
@@ -1435,7 +1435,7 @@ void() player_think =
 	if (self.button0 && self.button2 && self.safezone == FALSE && self.attack_finished < time && self.char.tired_finished < time
 	&& self.ledgegrab == FALSE && self.wallgrab == FALSE && self.char.deadflag != DEAD_DEAD && self.char.movetype != MOVETYPE_FLY
 	&& self.wallrun == FALSE && self.forcewalk_finished < time && self.char.fly_time < time && self.char.guardbreak_finished < time
-	&& self.char.dodge_finished < time && !self.char.swimming && self.char.health > 0 && self.nospinatk_finished < time)
+	&& self.char.dodge_finished < time && !self.char.swimming && self.char.health > 0 && self.nospinatk_finished < time && self.char.lowceil == FALSE)
 	{
 		if (!self.char.flypain)
 		{
@@ -1467,7 +1467,7 @@ void() player_think =
 	}
 
 	if (self.button0 && self.char.tired_finished < time && self.char.deadflag != DEAD_DEAD && self.forcewalk_finished < time
-	&& self.char.fly_time < time && self.safezone == FALSE && self.char.guardbreak_finished < time && self.char.health > 0)
+	&& self.char.fly_time < time && self.safezone == FALSE && self.char.guardbreak_finished < time && self.char.health > 0 && self.char.lowceil == FALSE)
 	{
 		// Get out of turning angles
 		if (self.char.angles_y == 45 || self.char.angles_y == -45)
@@ -1508,7 +1508,7 @@ void() player_think =
 
 	if ((self.keyflags & (KEY_LEFT) && self.char.angles_y == 0) || (self.keyflags & (KEY_RIGHT) && self.char.angles_y == 180)
 	&& self.magicmenu == FALSE && self.char.tired_finished < time && self.char.deadflag != DEAD_DEAD && self.char.grabbed == FALSE
-	&& self.char.invunerability_finished < time && self.safezone == FALSE && self.char.dodge_finished < time && !self.char.swimming && self.char.health > 0)
+	&& self.char.invunerability_finished < time && self.safezone == FALSE && self.char.dodge_finished < time && !self.char.swimming && self.char.health > 0 && self.char.lowceil == FALSE)
 	{
 		// Double tap dash attack - Begin
 		if (self.dbltime == 0)
@@ -1967,7 +1967,7 @@ void() player_think =
 		}
 		else if (self.keyflags & KEY_RIGHT) // Check facing direction also
 		{
-			if (self.char.angles_y == 0) // Backwards Hand Spring
+			if (self.char.angles_y == 0 && self.char.lowceil == FALSE) // Backwards Hand Spring
 			{
 				self.char.movetype = MOVETYPE_WALK; // Apply velocity
 				self.char.angles_y = 0; // angle bug fix
@@ -2005,15 +2005,30 @@ void() player_think =
 				self.mashattack = FALSE;
 				self.char.nextthink = time;
 			}
-			else // Backwards Hand Spring
+			else
 			{
-				self.char.movetype = MOVETYPE_WALK; // Apply velocity
-				self.char.angles_y = 180; // angle bug fix
-				self.char.dodge_finished = time + 0.6;
-				self.softshadow_time = time + 0.5;
-				self.char.velocity_time = time + 0.6;
-				self.char.think = player_dodgea1;
-				self.char.nextthink = time;
+				if (self.char.lowceil == FALSE) // Backwards Hand Spring
+				{
+					self.char.movetype = MOVETYPE_WALK; // Apply velocity
+					self.char.angles_y = 180; // angle bug fix
+					self.char.dodge_finished = time + 0.6;
+					self.softshadow_time = time + 0.5;
+					self.char.velocity_time = time + 0.6;
+					self.char.think = player_dodgea1;
+					self.char.nextthink = time;
+				}
+				else
+				{
+					self.char.movetype = MOVETYPE_WALK; // Apply velocity
+					self.attack_finished = time + 0.5;
+					self.char.angles_y = 0; // angle bug fix
+					self.char.dodge_finished = time + 0.5;
+					self.softshadow_time = time + 0.5;
+					self.char.velocity_time = time + 0.4;
+					self.char.think = player_dodgeb1;
+					self.mashattack = FALSE;
+					self.char.nextthink = time;
+				}
 			}
 			self.char.velocity = '0 0 0'; // BUG FIX: sliding while dodging under rare circumstances
 		}
@@ -2593,16 +2608,6 @@ void() player_move = [0, player_move]
 		self.owner.noblock_finished = time;
 	self.spin_finished = FALSE;
 	self.fstab_cnt = 0;
-
-	/* // FIXME: May be causing Zombie Vigil?
-	if (self.deadflag != DEAD_NO)
-	{
-		self.health = self.max_health;
-		self.takedamage = DAMAGE_AIM; // Give health, now allow him to take damage
-		self.owner.mana = 0;
-		self.deadflag = DEAD_NO;
-	}
-	*/
 	
 	self.runatk_speed = 0;
 	self.owner.wallgrab = FALSE;
@@ -2629,7 +2634,8 @@ void() player_move = [0, player_move]
 		self.owner.button2_buffer = FALSE; // Reset short hop flag
 
 	self.owner.button3 = self.owner.FL_BLKPRESSED = FALSE; // Reset block button flag
-	self.block_finished = time - 1; // auto-block fix
+	self.block_finished = time; // auto-block fix
+	self.lowceil = FALSE; // remove low ceiling flag
 };
 
 //*
@@ -6127,7 +6133,7 @@ void() player_block1	=[	$block1,	player_block1	]
 	{
 		if (self.perfectguard_buff < time)
 			self.takedamage = DAMAGE_AIM;
-		self.block_finished = time - 1;
+		self.block_finished = time;
 		player_move();
 		return;
 	}
@@ -6149,7 +6155,7 @@ void() player_block2	=[	$block2,	player_block2	]
 	{
 		if (self.perfectguard_buff < time)
 			self.takedamage = DAMAGE_AIM;
-		self.block_finished = time - 1;
+		self.block_finished = time;
 		player_move();
 		return;
 	}
@@ -6157,12 +6163,25 @@ void() player_block2	=[	$block2,	player_block2	]
 		self.angles_x = 0;
 	if (self.angles_y == 360) // lame bug fix
 		self.angles_y = 0;
-	if (self.block_finished < time)
+
+	tracebox (self.origin, VEC_HULL_MIN, VEC_HULL_MAX, self.origin, 1, self);
+	if (trace_startsolid)
+	{
+		self.lowceil = TRUE;
+		self.takedamage = DAMAGE_NO;
+		self.block_finished = time + 999;
+	}
+	else
+	{
+		self.lowceil = FALSE;
+		if (self.perfectguard_buff < time)
+			self.takedamage = DAMAGE_AIM;
+	}
+
+	if (self.block_finished < time && self.lowceil == FALSE)
 		player_move();
 	if (self.onground == FALSE)
 		player_block3();
-	if (self.perfectguard_buff < time)
-		self.takedamage = DAMAGE_AIM;
 };
 
 void() player_block3	=[	$block3,	player_block3	] 
@@ -6171,7 +6190,7 @@ void() player_block3	=[	$block3,	player_block3	]
 	{
 		if (self.perfectguard_buff < time)
 			self.takedamage = DAMAGE_AIM;
-		self.block_finished = time - 1;
+		self.block_finished = time;
 		player_move();
 		return;
 	}
@@ -6228,7 +6247,7 @@ void() player_blockbrk_movement =
 			effect.nextthink = time + 0.01;
 		}
 	}
-	self.block_finished = time - 1;
+	self.block_finished = time;
 	self.owner.noblock_finished = time + 0.2;
 	self.guardbreak_finished = time + 0.2;
 
@@ -6261,12 +6280,22 @@ void() player_blockbrk5	=[	$blockbrk4,	player_block		] {};
 
 void() player_block =
 {
+	tracebox (self.origin, VEC_HULL_MIN, VEC_HULL_MAX, self.origin, 1, self);
+	if (trace_startsolid)
+	{
+		self.takedamage = DAMAGE_NO;
+		self.lowceil = TRUE;
+		player_block2();
+		return;
+	}
+
 	if (self.onground == TRUE)
 	{
+		self.lowceil = FALSE;
 		if (random() < 0.5)
 			player_block1();
 		else
-			player_block2();
+			player_block2(); // crouching block
 	}
 	else
 		player_block3();
@@ -7403,7 +7432,9 @@ void() player_dodgea11	    =[	$dodgea11,	player_block		 	]
 // Forward Roll
 //
 void() dodgeb1_move = 
-{
+{	
+	setsize(self, VEC_HULL_MIN, '16 16 12');
+
 	if (self.angles_y == 0 || self.angles_y == 360)
 		self.velocity_x = 175;
 	else
@@ -7439,8 +7470,8 @@ void() player_dodgeb9	    =[	$dodgeb9,	player_block		 	]
 //
 // Dodging up and down
 //
-void() DodgeUp = {self.velocity_y = 175 / 2;};
-void() DodgeDown = {self.velocity_y = -175 / 2;};
+void() DodgeUp = {setsize(self, VEC_HULL_MIN, '16 16 12');self.velocity_y = 175 / 2;};
+void() DodgeDown = {setsize(self, VEC_HULL_MIN, '16 16 12');self.velocity_y = -175 / 2;};
 
 void() player_dodgec1	    =[	$dodgec1,	player_dodgec2		 	] {player_yell(0);DodgeDown();frameskip(0.05);self.takedamage = DAMAGE_NO;};
 void() player_dodgec2	    =[	$dodgec2,	player_dodgec3		 	] {DodgeDown();frameskip(0.05);sound (self, CHAN_AUTO, "player/skid.wav", 1, ATTN_NORM);};

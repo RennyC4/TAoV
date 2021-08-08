@@ -346,20 +346,21 @@ void() CheckImpulseButtons =
 					}
 				}
 				self.char.nextthink = time;
-				sound (self, CHAN_BODY, "player/motion2.wav", 1, ATTN_NORM);
+				if (self.char.lowceil == FALSE)
+					sound (self, CHAN_BODY, "player/motion2.wav", 1, ATTN_NORM);
 			}
 		}
 		self.FL_BLKPRESSED = TRUE;
 	}
 	else
 	{
-		if (self.attack_finished < time && self.FL_BLKPRESSED && self.char.dodge_finished < time && self.char.pain_finished < time && !self.char.flypain)
+		if (self.attack_finished < time && self.FL_BLKPRESSED && self.char.dodge_finished < time && self.char.pain_finished < time && !self.char.flypain && self.char.lowceil == FALSE)
 			sound (self, CHAN_BODY, "player/motion1.wav", 1, ATTN_NORM);
 
 		self.FL_BLKPRESSED = FALSE;
 		self.button3 = FALSE;
 
-		if (self.char.block_finished > time)
+		if (self.char.block_finished > time && self.char.lowceil == FALSE)
 			self.char.block_finished = time;
 	}
 
