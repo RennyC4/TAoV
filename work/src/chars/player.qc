@@ -7435,6 +7435,10 @@ void() dodgeb1_move =
 {	
 	setsize(self, VEC_HULL_MIN, '16 16 12');
 
+	tracebox (self.origin, VEC_HULL_MIN, VEC_HULL_MAX, self.origin, 1, self);
+	if (trace_startsolid)
+		self.lowceil = TRUE;
+
 	if (self.angles_y == 0 || self.angles_y == 360)
 		self.velocity_x = 175;
 	else
@@ -7473,8 +7477,25 @@ void() player_dodgeb9	    =[	$dodgeb9,	player_block		 	]
 //
 // Dodging up and down
 //
-void() DodgeUp = {setsize(self, VEC_HULL_MIN, '16 16 12');self.velocity_y = 175 / 2;};
-void() DodgeDown = {setsize(self, VEC_HULL_MIN, '16 16 12');self.velocity_y = -175 / 2;};
+void() DodgeUp = 
+{
+	tracebox (self.origin, VEC_HULL_MIN, VEC_HULL_MAX, self.origin, 1, self);
+	if (trace_startsolid)
+		self.lowceil = TRUE;
+
+	setsize(self, VEC_HULL_MIN, '16 16 12');
+	self.velocity_y = 175 / 2;
+};
+
+void() DodgeDown = 
+{
+	tracebox (self.origin, VEC_HULL_MIN, VEC_HULL_MAX, self.origin, 1, self);
+	if (trace_startsolid)
+		self.lowceil = TRUE;
+
+	setsize(self, VEC_HULL_MIN, '16 16 12');
+	self.velocity_y = -175 / 2;
+};
 
 void() player_dodgec1	    =[	$dodgec1,	player_dodgec2		 	] {player_yell(0);DodgeDown();frameskip(0.05);self.takedamage = DAMAGE_NO;};
 void() player_dodgec2	    =[	$dodgec2,	player_dodgec3		 	] {DodgeDown();frameskip(0.05);sound (self, CHAN_AUTO, "player/skid.wav", 1, ATTN_NORM);};

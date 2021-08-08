@@ -80,7 +80,7 @@ void() InitCamera =
 	// Camera angle calculations first
 	//
 
-	if (cvar("scratch3") == 0 || self.purge_toggle == TRUE) // dynamic camera
+	if (cvar("scratch3") == 0) // dynamic camera
 	{
 		if (self.camerastyle == 5)
 			self.angles_y = view_y; // Only Y tracking necessary
@@ -178,8 +178,13 @@ void() InitCamera =
 		view_x = (ot_x / 2) + view_x; // dividing by 2 made the camera smoother..
 
 	// note: if this line is removed, camera will raise up slowly on certain camstyles
-	if (self.camerastyle == 0 || self.camerastyle == 3 || self.camerastyle == 5)
-		view_z = ot_z + view_z + (80 * frametime);
+	if (self.goalentity.lowceil == FALSE)
+	{
+		if (self.camerastyle == 0 || self.camerastyle == 3 || self.camerastyle == 5)
+			view_z = ot_z + view_z + (80 * frametime);
+	}
+	else // low ceiling situation
+		view_z = self.goalentity.origin_z - 16;
 
 	//
 	// Camera zooming in and out is done here
@@ -257,8 +262,8 @@ void() InitCamera =
 
 	if (self.telecam == TRUE)
 	{
-		view_x = self.char.origin_x;
-		view_z = self.char.origin_z;
+		view_x = self.goalentity.origin_x;
+		view_z = self.goalentity.origin_z;
 		self.stylechange_time = 0; // remove slow Y turn
 
 		if (self.force_final_campos == FALSE)
@@ -275,8 +280,8 @@ void() InitCamera =
 				view_y = self.new_zoom_y; // force to final zoom position
 		}
 		
-		self.smooth_x_camera.origin_x = self.char.origin_x;
-		self.smooth_x_camera.origin_z = self.char.origin_z;
+		self.smooth_x_camera.origin_x = self.goalentity.origin_x;
+		self.smooth_x_camera.origin_z = self.goalentity.origin_z;
 
 		self.telecam = self.force_final_campos = FALSE;
 	}
