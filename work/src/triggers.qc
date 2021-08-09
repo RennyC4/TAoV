@@ -632,10 +632,9 @@ void() pit_touch =
 
 	if (other.classname == "player")
 	{
-		if (self.pitplacement != '0 0 0') // move Vigil to where the trigger pit tells him
-		{
+		other.nobackflip_finished = time + 999; // don't allow backflip
+		if (self.pitplacement != '0 0 0') // warp Vigil to where the trigger pit tells him
 			setorigin (other, self.pitplacement);
-		}
 		else
 		{
 			if (other.invunerability_finished > time)
