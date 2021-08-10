@@ -821,6 +821,7 @@ void(float damg, float dist, float knokback, float rsize, float snd, float flsh,
 						head.owner.speedline_time = time + 0.35;
 						head.think = player_purge1; // Do something cool
 						head.nextthink = time;
+						head.owner.combo = head.owner.combo + 1; // raise combo counter
 
 						return;
 					}
