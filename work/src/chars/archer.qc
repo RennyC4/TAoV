@@ -73,7 +73,7 @@ void() ArcherArrowThink =
 	head = searchradius(self.origin, 5);
 	while (head)
 	{
-		if (head.takedamage && self.owner != head && self.owner.enemy == head)
+		if (head.takedamage && self.owner != head && self.owner.enemy == head && head.perfectguard_buff < time)
 		{
 			if (head.perfectblock < time)
 			{

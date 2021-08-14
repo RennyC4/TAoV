@@ -5842,9 +5842,10 @@ void() player_pain =
 .float deathmenu;
 
 void() player_die3;
-void() player_die1	=[	$pain3,	player_die2	] {self.angles_x = 0;};
+void() player_die1	=[	$pain3,	player_die2	] {self.angles_x = 0;self.movetype = MOVETYPE_WALK;};
 void() player_die2	=[	$pain4,	player_die2	]
 {
+	self.movetype = MOVETYPE_WALK;
 	if (self.swimming) // sink slower when hit than in normal air
 		self.velocity_z = self.velocity_z / 1.55;
 	self.angles_x = 0;
@@ -5859,6 +5860,7 @@ void() player_die2	=[	$pain4,	player_die2	]
 void() player_die3	=[	$pain5,	player_die3 ] 
 {
 	self.deadflag = DEAD_DEAD; // Enforce
+	self.movetype = MOVETYPE_WALK;
 	model_tilt();
 
 	if (coop)
