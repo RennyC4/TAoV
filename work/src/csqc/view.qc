@@ -981,7 +981,7 @@ void(float width, float height, float menushown) CSQC_UpdateView =
 				localcmd("sensitivity 0;crosshair 0;exec gfx.cfg;exec haze.cfg\n");
 			
 			if (cvar("developer") == 2)
-				localcmd("viewsize 111\n");
+				localcmd("viewsize 110\n");
 
 			loaded_settings = TRUE;
 		}

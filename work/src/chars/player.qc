@@ -173,7 +173,7 @@ void() Setup_Dummy =
 	dummy.speed = 120; // Maintained by client.qc
 	dummy.view_ofs = '0 0 28'; // Set at eye level for Vigil not to drown
 	
-	if (cvar("developer") > 1)
+	if (cvar("developer") == 2)
 		dummy.movetype = MOVETYPE_NONE;
 	else
 		dummy.movetype = MOVETYPE_WALK;

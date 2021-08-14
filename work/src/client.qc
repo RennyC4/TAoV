@@ -607,7 +607,7 @@ void() PlayerPreThink =
 		stuffcmd (self, "music sound/music/track17.ogg\n");
 	}
 	
-	if (cvar("developer") > 1)
+	if (cvar("developer") == 2)
 		return;
 		
 	//
@@ -786,26 +786,29 @@ void() PlayerPreThink =
 		if (self.impulse != 0)
 			self.impulse = 0;
 
-		if (freeze_finished > time)
+		if (cvar("developer") < 2) // Attract demo recording mode
 		{
-			if (turbo_mode)
-				localcmd ("sv_gamespeed 0.25\n");
-			else
-				localcmd ("sv_gamespeed 0.1\n");
-
-			if (self.freeze_done != FALSE)
-				self.freeze_done = FALSE;
-		}
-		else
-		{
-			if (self.freeze_done == FALSE)
+			if (freeze_finished > time)
 			{
 				if (turbo_mode)
-					localcmd ("sv_gamespeed 1.25\n");
+					localcmd ("sv_gamespeed 0.25\n");
 				else
-					localcmd ("sv_gamespeed 1\n");
-				if (self.freeze_done != TRUE)
-					self.freeze_done = TRUE;
+					localcmd ("sv_gamespeed 0.1\n");
+
+				if (self.freeze_done != FALSE)
+					self.freeze_done = FALSE;
+			}
+			else
+			{
+				if (self.freeze_done == FALSE)
+				{
+					if (turbo_mode)
+						localcmd ("sv_gamespeed 1.25\n");
+					else
+						localcmd ("sv_gamespeed 1\n");
+					if (self.freeze_done != TRUE)
+						self.freeze_done = TRUE;
+				}
 			}
 		}
 
@@ -1033,7 +1036,7 @@ void() PlayerPostThink =
 	// game
 	local vector tree;
 
-	if (cvar("developer") > 1)
+	if (cvar("developer") == 2)
 		return;
 
 	// FrikaC: keyflag control system begin
@@ -1260,6 +1263,9 @@ void() SetLevel =
 	local float NextLevelExp;
 	local float num;
 
+	if (cvar("developer") == 3)
+		return;
+
 	if (self.owner.level < 99) // 99 is max
 	{
 		NextLevelExp = self.owner.level + 18 * self.owner.level;
@@ -1294,6 +1300,8 @@ void(float amount) GiveExperience =
 	local entity temp;
 	
 	if (self.enemy.classname != "player" || deathmatch == TRUE)
+		return;
+	if (cvar("developer") == 3)
 		return;
 		
 	temp = self;

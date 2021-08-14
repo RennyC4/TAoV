@@ -353,7 +353,7 @@ void() FindTarget =
 {
 	local entity player, monster;
 
-	if (self.awareness == 4 || self.enemy || cvar("developer") > 1)
+	if (self.awareness == 4 || self.enemy || cvar("developer") == 2)
 		return;
 	if (self.enemy.owner.flags & FL_NOTARGET)
 		return;

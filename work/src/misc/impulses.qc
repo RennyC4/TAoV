@@ -379,7 +379,7 @@ void() CheckImpulseButtons =
 		bprint ("Vigils Level: ", s, "\n");
 	}
 	
-	if (cvar("developer") != 1)
+	if (cvar("developer") == 2)
 			return;
 
 	if (self.impulse == 6 && self.level < 99)

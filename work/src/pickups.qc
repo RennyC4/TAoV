@@ -581,9 +581,12 @@ void() item_key_touch =
 
 	if (self.cnt == 0)
 	{
-		centerprint (other.owner, "/P^bChurch Key^b\n\n===========================\n\nYou found a key labelled ''Church''.\n\n\n^3Press ATTACK or JUMP to resume ...");
-		setpause(1);
-		keys = keys | IT_KEY1;
+		if (cvar("developer") != 3) // Demo / Attract recording mode
+		{
+			centerprint (other.owner, "/P^bChurch Key^b\n\n===========================\n\nYou found a key labelled ''Church''.\n\n\n^3Press ATTACK or JUMP to resume ...");
+			setpause(1);
+			keys = keys | IT_KEY1;
+		}
 	}
 	else if (self.cnt == 1)
 	{
@@ -724,27 +727,29 @@ void() relic_touch =
 	if (other.classname != "player" || other.health <= 0)
 		return;
 
-	if (self.items & IT_RELIC1)
-		centerprint (other.owner, "/P^bIron Grip Obtained!^b\n\n===========================\n\n\n^1Grab and hoist up ledges\n\n\nPerformed by jumping towards a ledge and using UP direction to climb,\nto let go and fall press DOWN or BLOCK\n\n\n\n^3Press ATTACK or JUMP to resume ...");
-	else if (self.items & IT_RELIC2)
-		centerprint (other.owner, "/P^bAscending Feather Obtained!^b\n\n===========================\n\n\n^1Perform a double jump\n\n\nPerformed by pressing JUMP again in mid-air\n\nYou may now perform Vigil's Uppercut Slice (UP + ATTACK in MID-AIR)\n\n\n\n^3Press ATTACK or JUMP to Resume ...");
-	else if (self.items & IT_RELIC3)
-		centerprint (other.owner, "/P^bBattle Accretion Obtained!^b\n\n===========================\n\n\n^1Unlocks powerful attacks when ascending feather relic is also obtained\n\n\nPerform by UP + ATTACK in mid-air and then DOWN + ATTACK\n\nDouble Jump is also enhanced\n\n\n\n^3Press ATTACK or JUMP to resume ...");
-	else if (self.items & IT_RELIC4)
-		centerprint (other.owner, "/P^bSkewer Clutch Obtained!^b\n\n===========================\n\n\n^1Grab and jump off walls\n\n\nPerformed by JUMPING or being in MID-AIR and HOLDING the DIRECTION towards a flat wall\nPress ATTACK during a WALL GRAB to jump kick off the wall into enemies\n\n\n\n^3Press ATTACK or JUMP to resume ...");
-	else if (self.items & IT_RELIC5)
-		centerprint (other.owner, "/P^bSpider Boots Obtained!^b\n\n===========================\n\n\n^1Run across walls\n\n\nPerformed by pressing UP against a FLAT back wall and FORWARD direction while RUNNING\n\n\n\n^3Press ATTACK or JUMP to resume ...");
-	else if (self.items & IT_RELIC6)
-		centerprint (other.owner, "/P^bWater Breathing Amulet Obtained!^b\n\n===========================\n\n\n^1Breathe underwater forever\n\n\n\n^3Press ATTACK or JUMP to resume ...");
-	else if (self.items & IT_RELIC7)
-		centerprint (other.owner, "/P^bCube of Knowledge Obtained!^b\n\n===========================\n\n\n^1Shows enemies name\n\n\n\n^3Press ATTACK or JUMP to resume ...");
-	else if (self.items & IT_RELIC8)
-		centerprint (other.owner, "/P^bPerfect Guard Obtained!^b\n\n===========================\n\n\n^1Blocking an attack JUST before it connects allows you to perform a PERFECT GUARD which grants temporary invunerability as well as unblockable attacks, enemies are stunned and their enhancements are negated\n\n\n\n^3Press ATTACK or JUMP to resume ...");
-	else if (self.items & IT_RELIC9)
-		centerprint (other.owner, "/P^bSoul Candle Obtained!^b\n\n===========================\n\n\n^1Automatically lights up pitch black areas\n\n\n\n^3Press ATTACK or JUMP to resume ...");
+	if (cvar("developer") != 3) // Demo / Attract recording mode
+	{
+		if (self.items & IT_RELIC1)
+			centerprint (other.owner, "/P^bIron Grip Obtained!^b\n\n===========================\n\n\n^1Grab and hoist up ledges\n\n\nPerformed by jumping towards a ledge and using UP direction to climb,\nto let go and fall press DOWN or BLOCK\n\n\n\n^3Press ATTACK or JUMP to resume ...");
+		else if (self.items & IT_RELIC2)
+			centerprint (other.owner, "/P^bAscending Feather Obtained!^b\n\n===========================\n\n\n^1Perform a double jump\n\n\nPerformed by pressing JUMP again in mid-air\n\nYou may now perform Vigil's Uppercut Slice (UP + ATTACK in MID-AIR)\n\n\n\n^3Press ATTACK or JUMP to Resume ...");
+		else if (self.items & IT_RELIC3)
+			centerprint (other.owner, "/P^bBattle Accretion Obtained!^b\n\n===========================\n\n\n^1Unlocks powerful attacks when ascending feather relic is also obtained\n\n\nPerform by UP + ATTACK in mid-air and then DOWN + ATTACK\n\nDouble Jump is also enhanced\n\n\n\n^3Press ATTACK or JUMP to resume ...");
+		else if (self.items & IT_RELIC4)
+			centerprint (other.owner, "/P^bSkewer Clutch Obtained!^b\n\n===========================\n\n\n^1Grab and jump off walls\n\n\nPerformed by JUMPING or being in MID-AIR and HOLDING the DIRECTION towards a flat wall\nPress ATTACK during a WALL GRAB to jump kick off the wall into enemies\n\n\n\n^3Press ATTACK or JUMP to resume ...");
+		else if (self.items & IT_RELIC5)
+			centerprint (other.owner, "/P^bSpider Boots Obtained!^b\n\n===========================\n\n\n^1Run across walls\n\n\nPerformed by pressing UP against a FLAT back wall and FORWARD direction while RUNNING\n\n\n\n^3Press ATTACK or JUMP to resume ...");
+		else if (self.items & IT_RELIC6)
+			centerprint (other.owner, "/P^bWater Breathing Amulet Obtained!^b\n\n===========================\n\n\n^1Breathe underwater forever\n\n\n\n^3Press ATTACK or JUMP to resume ...");
+		else if (self.items & IT_RELIC7)
+			centerprint (other.owner, "/P^bCube of Knowledge Obtained!^b\n\n===========================\n\n\n^1Shows enemies name\n\n\n\n^3Press ATTACK or JUMP to resume ...");
+		else if (self.items & IT_RELIC8)
+			centerprint (other.owner, "/P^bPerfect Guard Obtained!^b\n\n===========================\n\n\n^1Blocking an attack JUST before it connects allows you to perform a PERFECT GUARD which grants temporary invunerability as well as unblockable attacks, enemies are stunned and their enhancements are negated\n\n\n\n^3Press ATTACK or JUMP to resume ...");
+		else if (self.items & IT_RELIC9)
+			centerprint (other.owner, "/P^bSoul Candle Obtained!^b\n\n===========================\n\n\n^1Automatically lights up pitch black areas\n\n\n\n^3Press ATTACK or JUMP to resume ...");
 
-	setpause(1); // pause game on pickup
-	
+		setpause(1); // pause game on pickup
+	}
 	sound (self, CHAN_BODY, "misc/relic.wav", 1, ATTN_NORM);
 
 	SUB_UseTargets(); // fire any activators
@@ -938,17 +943,19 @@ void() spellbook_touch =
 	if (other.classname != "player" || other.health <= 0)
 		return;
 
-	if (self.items & IT_SPELL1)
-		centerprint (other.owner, "/P^bLightning Storm Obtained!^b\n\n===========================\n\n^1Press the MAGIC button to select your spell with UP and DOWN\nPress MAGIC again to cast the selected spell\nPress JUMP or BLOCK to cancel out\n\n\n\n^3Press ATTACK or JUMP to resume...");
-	else if (self.items & IT_SPELL2)
-		centerprint (other.owner, "/P^bIce Field Obtained!^b\n\n===========================\n\n^1Press the MAGIC button to select your spell with UP and DOWN\nPress MAGIC again to cast the selected spell\nPress JUMP or BLOCK to cancel out\n\n\n\n^3Press ATTACK or JUMP to resume...");
-	else if (self.items & IT_SPELL3)
-		centerprint (other.owner, "/P^bFire Beam Obtained!^b\n\n===========================\n\n^1Press the MAGIC button to select your spell with UP and DOWN\nPress MAGIC again to cast the selected spell\nPress JUMP or BLOCK to cancel out\n\n\n\n^3Press ATTACK or JUMP to resume...");
-	else if (self.items & IT_SPELL4)
-		centerprint (other.owner, "/P^bTwister Obtained!^b\n\n===========================\n\n^1Press the MAGIC button to select your spell with UP and DOWN\nPress MAGIC again to cast the selected spell\nPress JUMP or BLOCK to cancel out\n\n\n\n^3Press ATTACK or JUMP to resume...");
+	if (cvar("developer") != 3) // Demo / Attract recording mode
+	{
+		if (self.items & IT_SPELL1)
+			centerprint (other.owner, "/P^bLightning Storm Obtained!^b\n\n===========================\n\n^1Press the MAGIC button to select your spell with UP and DOWN\nPress MAGIC again to cast the selected spell\nPress JUMP or BLOCK to cancel out\n\n\n\n^3Press ATTACK or JUMP to resume...");
+		else if (self.items & IT_SPELL2)
+			centerprint (other.owner, "/P^bIce Field Obtained!^b\n\n===========================\n\n^1Press the MAGIC button to select your spell with UP and DOWN\nPress MAGIC again to cast the selected spell\nPress JUMP or BLOCK to cancel out\n\n\n\n^3Press ATTACK or JUMP to resume...");
+		else if (self.items & IT_SPELL3)
+			centerprint (other.owner, "/P^bFire Beam Obtained!^b\n\n===========================\n\n^1Press the MAGIC button to select your spell with UP and DOWN\nPress MAGIC again to cast the selected spell\nPress JUMP or BLOCK to cancel out\n\n\n\n^3Press ATTACK or JUMP to resume...");
+		else if (self.items & IT_SPELL4)
+			centerprint (other.owner, "/P^bTwister Obtained!^b\n\n===========================\n\n^1Press the MAGIC button to select your spell with UP and DOWN\nPress MAGIC again to cast the selected spell\nPress JUMP or BLOCK to cancel out\n\n\n\n^3Press ATTACK or JUMP to resume...");
 
-	setpause(1);
-
+		setpause(1);
+	}
 	sound (self, CHAN_BODY, "misc/spellbook.wav", 1, ATTN_NORM);
 	SUB_UseTargets(); // fire any activators
 
@@ -1139,9 +1146,9 @@ void() gold_touch =
 	//
 	
 	sound (other, CHAN_AUTO, "misc/pickup.wav", 1, ATTN_NORM);
-	
+
 	// Display first pick up message
-	if (other.owner.gold == 0 && players == 1)
+	if (other.owner.gold == 0 && players == 1 && cvar("developer") != 3)
 	{
 		centerprint (other.owner, "/P^bAcquired Gold^b\n\nGold can be used to buy upgrades & more\n\n===========================\n\n\n^1The higher number of strikes Vigil is able to chain together allows for more gold to be given when picked up!\n\n\n^3Press ATTACK or JUMP to resume ...");
 		setpause(1);
