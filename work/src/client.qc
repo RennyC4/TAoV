@@ -1089,13 +1089,14 @@ void() PlayerPostThink =
 	}
 
 	//* graphical menu *
-	if (world.model == "maps/menu.bsp")
+	if (world.model == "maps/menu.bsp" || world.model == "maps/start.bsp")
 	{
 		if (self.angles_x != 0)
 			self.angles_x = 0;
 		self.fixangle = TRUE; // Fixes weird angle left overs from intro.bsp
 
-		MenuCommands();
+		if (world.model == "maps/menu.bsp")
+			MenuCommands();
 	}
 
 	//* camera targetting code for intro.bsp *
