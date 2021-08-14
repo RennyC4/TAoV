@@ -1090,7 +1090,13 @@ void() PlayerPostThink =
 
 	//* graphical menu *
 	if (world.model == "maps/menu.bsp")
+	{
+		if (self.angles_x != 0)
+			self.angles_x = 0;
+		self.fixangle = TRUE; // Fixes weird angle left overs from intro.bsp
+
 		MenuCommands();
+	}
 
 	//* camera targetting code for intro.bsp *
 	local vector view;

@@ -803,6 +803,10 @@ GRAPHICAL MENU INTERFACE
 
 void() MenuCommands =
 {
+	if (self.angles_x != 0)
+		self.angles_x = 0;
+	self.fixangle = TRUE;
+
 	local entity y, h;
 	h = world;
 
