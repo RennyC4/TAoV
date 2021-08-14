@@ -2622,6 +2622,8 @@ void() player_fire =
 		return;
 	if (self.char.angles_x != 0)
 		self.char.angles_x = 0;
+	if (self.purge_toggle) // Don't allow an attack to break out during purge animation
+		return;
 
 	if (self.attack_finished > time)
 	{
