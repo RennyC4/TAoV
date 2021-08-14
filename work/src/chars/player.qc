@@ -2526,6 +2526,7 @@ void() player_move = [0, player_move]
 	self.dodge_finished = time;
 	self.ftspin_count = 0;
 	self.knockback = 0; // reset his knockback! important
+	self.sword_spincnt = 0; // reset sword 'spin' animation stuff (cyclone crush etc)
 
 	if (self.flags & FL_ONGROUND && self.owner.button2_buffer)
 		self.owner.button2_buffer = FALSE; // Reset short hop flag
@@ -3453,7 +3454,7 @@ void() spinattack_particle = // white particles to spin around vigil
 	parti.attack_finished = time + 0.5;
 	parti.drawonlytoclient = self.owner.owner; // reduce network traffic
 	parti.think = spinattack_particle_think;
-	parti.nextthink = time + 0.01;
+	parti.nextthink = time;
 };
 
 void() player_spinatk1	=[	$spin1,	player_spinatk2	] {frameskip(0.08);sound (self, CHAN_VOICE, "player/spinatk.wav", 1, ATTN_NORM);spinattack_particle();};
