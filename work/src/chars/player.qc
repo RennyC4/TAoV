@@ -2284,7 +2284,7 @@ void() player_move = [0, player_move]
 {
 	local vector source;
 	local float onefoot = FALSE;
-
+	
 	if (self.deadflag == DEAD_DEAD) // Zombie Vigil fix
 		return;
 

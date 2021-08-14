@@ -645,19 +645,31 @@ void() AnimateHead =
 	local float blind = getstatf(STAT_STATUS_BLIND);
 	local float poison = getstatf(STAT_STATUS_POISON);
 	local float pg = getstatf(STAT_PERFECTGUARD);
+	local float hp = getstatf(STAT_HEALTH);
 
-	if (pg > time)
-		head.colormod = '2 2 1';
-	else if (blind > time)	
-		head.colormod = '0.25 0.25 0.25';
-	else if (poison > time)
-		head.colormod = '0 1 0';
+	if (hp != 9999) // Not dead
+	{
+		head.origin = '0 0 -5';
+
+		if (pg > time)
+			head.colormod = '2 2 1';
+		else if (blind > time)	
+			head.colormod = '0.25 0.25 0.25';
+		else if (poison > time)
+			head.colormod = '0 1 0';
+		else
+			head.colormod = '1 1 1';
+
+		head.angles_x = sin(cltime*0.65)*8;
+		head.angles_y = 180 + sin(cltime*0.45)*25;
+	}
 	else
-		head.colormod = '1 1 1';
-
-    head.origin = '0 0 -5';
-    head.angles_x = sin(cltime*0.65)*8;
-    head.angles_y = 180 + sin(cltime*0.45)*25;
+	{
+	    head.origin = '0 0 -2';
+		head.colormod = '.5 0 0';
+		head.angles_y = 180;
+		head.angles_x = -60;
+	}
 };
  
 float Draw_Head_Once;
