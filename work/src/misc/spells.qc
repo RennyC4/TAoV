@@ -107,7 +107,7 @@ void() FireBallHomeIn =
 	head = searchradius(self.origin, 25);
 	while (head)
 	{
-		if (head.takedamage && self.owner != head && self.enemy == head)
+		if (head.takedamage && self.owner != head && self.enemy == head && head.perfectguard_buff < time)
 		{
 			effect = spawn();
 			setorigin(effect, head.origin + v_up * 14);

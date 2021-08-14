@@ -123,59 +123,63 @@ void() grem_leap14	=[	$jump14,		grem_leap15	] {grem_leap_attack();frameskip(0.05
 void() grem_leap15	=[	$jump15,		grem_leap16	] {grem_leap_attack();frameskip(0.05);};
 void() grem_leap16	=[	$jump16,		grem_run1	] {grem_leap_attack();frameskip(0.05);};
 
-void() grem_atk1  	=[	$attk1,		grem_atk2	] {};
-void() grem_atk2  	=[	$attk2,		grem_atk3	] {};
-void() grem_atk3  	=[	$attk3,		grem_atk4	] {};
-void() grem_atk4  	=[	$attk4,		grem_atk5	] {};
-void() grem_atk5  	=[	$attk5,		grem_atk6	] {};
-void() grem_atk6  	=[	$attk6,		grem_atk7	] {};
+void() grem_atk1  	=[	$attk1,		grem_atk2	] {monster_removeslide();};
+void() grem_atk2  	=[	$attk2,		grem_atk3	] {monster_removeslide();};
+void() grem_atk3  	=[	$attk3,		grem_atk4	] {monster_removeslide();};
+void() grem_atk4  	=[	$attk4,		grem_atk5	] {monster_removeslide();};
+void() grem_atk5  	=[	$attk5,		grem_atk6	] {monster_removeslide();};
+void() grem_atk6  	=[	$attk6,		grem_atk7	] {monster_removeslide();};
 void() grem_atk7  	=[	$attk7,		grem_atk8	] 
 {
+	monster_removeslide();
 	self.status_poison_finished = time + 5;
 	FireMelee(13,25,0,30,5,0,0,FALSE,0,0.1);
 };
-void() grem_atk8  	=[	$attk8,		grem_atk9	] {};
-void() grem_atk9  	=[	$attk9,		grem_atk10	] {};
-void() grem_atk10  	=[	$attk10,		grem_atk11	] {};
-void() grem_atk11  	=[	$attk11,		grem_run1	] {};
+void() grem_atk8  	=[	$attk8,		grem_atk9	] {monster_removeslide();};
+void() grem_atk9  	=[	$attk9,		grem_atk10	] {monster_removeslide();};
+void() grem_atk10  	=[	$attk10,		grem_atk11	] {monster_removeslide();};
+void() grem_atk11  	=[	$attk11,		grem_run1	] {monster_removeslide();};
 
-void() grem_maul1  	=[	$maul1,		grem_maul2	] {frameskip(0.5);};
-void() grem_maul2  	=[	$maul2,		grem_maul3	] {frameskip(0.5);};
-void() grem_maul3  	=[	$maul3,		grem_maul4	] {};
+void() grem_maul1  	=[	$maul1,		grem_maul2	] {frameskip(0.5);monster_removeslide();};
+void() grem_maul2  	=[	$maul2,		grem_maul3	] {frameskip(0.5);monster_removeslide();};
+void() grem_maul3  	=[	$maul3,		grem_maul4	] {monster_removeslide();};
 void() grem_maul4  	=[	$maul4,		grem_maul5	] 
 {
+	monster_removeslide();
 	self.status_poison_finished = time + 5;
 	FireMelee(8,25,0,30,5,0,0,FALSE,0,0.1);
 };
-void() grem_maul5  	=[	$maul5,		grem_maul6	] {};
-void() grem_maul6  	=[	$maul6,		grem_maul7	] {};
-void() grem_maul7  	=[	$maul7,		grem_maul8	] {};
+void() grem_maul5  	=[	$maul5,		grem_maul6	] {monster_removeslide();};
+void() grem_maul6  	=[	$maul6,		grem_maul7	] {monster_removeslide();};
+void() grem_maul7  	=[	$maul7,		grem_maul8	] {monster_removeslide();};
 void() grem_maul8  	=[	$maul8,		grem_maul9	] 
 {
+	monster_removeslide();
 	self.status_poison_finished = time + 5;
 	FireMelee(6,25,0,30,5,0,0,FALSE,0,0.1);
 };
 void() grem_maul9  	=[	$maul9,		grem_maul10	] {};
-void() grem_maul10  	=[	$maul10,		grem_maul11	] {};
-void() grem_maul11  	=[	$maul11,		grem_maul12	] {};
-void() grem_maul12  	=[	$maul12,		grem_maul13	] {};
-void() grem_maul13  	=[	$maul13,		grem_run1	] {};
+void() grem_maul10  	=[	$maul10,		grem_maul11	] {monster_removeslide();};
+void() grem_maul11  	=[	$maul11,		grem_maul12	] {monster_removeslide();};
+void() grem_maul12  	=[	$maul12,		grem_maul13	] {monster_removeslide();};
+void() grem_maul13  	=[	$maul13,		grem_run1	] {monster_removeslide();};
 
-void() grem_lunge1  	=[	$lunge1,		grem_lunge2	] {};
-void() grem_lunge2  	=[	$lunge2,		grem_lunge3	] {};
-void() grem_lunge3  	=[	$lunge3,		grem_lunge4	] {};
-void() grem_lunge4  	=[	$lunge4,		grem_lunge5	] {};
-void() grem_lunge5  	=[	$lunge5,		grem_lunge6	] {};
-void() grem_lunge6  	=[	$lunge6,		grem_lunge7	] {};
-void() grem_lunge7  	=[	$lunge7,		grem_lunge8	] {};
+void() grem_lunge1  	=[	$lunge1,		grem_lunge2	] {monster_removeslide();};
+void() grem_lunge2  	=[	$lunge2,		grem_lunge3	] {monster_removeslide();};
+void() grem_lunge3  	=[	$lunge3,		grem_lunge4	] {monster_removeslide();};
+void() grem_lunge4  	=[	$lunge4,		grem_lunge5	] {monster_removeslide();};
+void() grem_lunge5  	=[	$lunge5,		grem_lunge6	] {monster_removeslide();};
+void() grem_lunge6  	=[	$lunge6,		grem_lunge7	] {monster_removeslide();};
+void() grem_lunge7  	=[	$lunge7,		grem_lunge8	] {monster_removeslide();};
 void() grem_lunge8  	=[	$lunge8,		grem_lunge9	] 
 {
+	monster_removeslide();
 	self.status_poison_finished = time + 5;
 	FireMelee(22,25,1,30,5,0,0,FALSE,0,0.1);
 };
-void() grem_lunge9  	=[	$lunge9,		grem_lunge10	] {};
-void() grem_lunge10  	=[	$lunge10,		grem_lunge11      ] {};
-void() grem_lunge11  	=[	$lunge11,		grem_run1	      ] {};
+void() grem_lunge9  	=[	$lunge9,		grem_lunge10	] {monster_removeslide();};
+void() grem_lunge10  	=[	$lunge10,		grem_lunge11      ] {monster_removeslide();};
+void() grem_lunge11  	=[	$lunge11,		grem_run1	      ] {monster_removeslide();};
 
 void() grem_melee =
 {
