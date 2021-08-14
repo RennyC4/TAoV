@@ -397,7 +397,7 @@ void() LightningThink =
 	head = searchradius(org, 70);
 	while (head)
 	{
-		if (head.takedamage && self.owner != head
+		if (head.takedamage && head.perfectguard_buff < time && self.owner != head
 		&& ((coop == TRUE && head.classname != "player" && self.owner.classname == "player" || self.owner.flags & FL_MONSTER) || (coop == FALSE))) // coop
 		{
 			if (self.owner.flags & FL_MONSTER && !head.flags & FL_MONSTER || !self.owner.flags & FL_MONSTER) // fix monsters pretending to hit each other
@@ -600,7 +600,7 @@ void() icefield_think =
 	head = searchradius(self.origin, (self.cnt2 * 1.5));
 	while (head)
 	{
-		if (self.owner != head && head.takedamage && head.iced_time < time && visible(head)
+		if (self.owner != head && head.takedamage && head.iced_time < time && visible(head) && head.perfectguard_buff < time
 		&& ((coop == TRUE && head.classname != "player" && self.owner.classname == "player" || self.owner.flags & FL_MONSTER) || (coop == FALSE))) // coop
 		{
 			if (self.owner.flags & FL_MONSTER && !head.flags & FL_MONSTER || !self.owner.flags & FL_MONSTER) // fix monsters pretending to hit each other
@@ -801,7 +801,7 @@ void() firebeam_think =
 		head = searchradius(self.origin, 50);
 		while (head)
 		{
-			if (head != self && visible(head) && head.takedamage && self.owner != head && head.deadflag != DEAD_DEAD
+			if (head != self && visible(head) && head.perfectguard_buff < time && head.takedamage && self.owner != head && head.deadflag != DEAD_DEAD
 			&& ((coop == TRUE && head.classname != "player" && self.owner.classname == "player" || self.owner.flags & FL_MONSTER) || (coop == FALSE))) // coop
 			{
 				if (self.owner.flags & FL_MONSTER && !head.flags & FL_MONSTER || !self.owner.flags & FL_MONSTER) // fix monsters pretending to hit each other
@@ -1043,7 +1043,7 @@ void() TwisterThink =
 	head = searchradius(self.origin, 50);
 	while (head)
 	{
-		if (head.takedamage && self.owner != head && self.mode == 1 && head.twister_damage_finished < time && head.health > 0
+		if (head.takedamage && self.owner != head && self.mode == 1 && head.twister_damage_finished < time && head.health > 0 && head.perfectguard_buff < time
 		&& ((coop == TRUE && head.classname != "player" && self.owner.classname == "player" || self.owner.flags & FL_MONSTER) || (coop == FALSE))) // coop
 		{
 			if (self.owner.flags & FL_MONSTER && !head.flags & FL_MONSTER || !self.owner.flags & FL_MONSTER) // fix monsters pretending to hit each other
