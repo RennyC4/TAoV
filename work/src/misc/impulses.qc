@@ -21,7 +21,7 @@ void() CheckImpulseButtons =
 	if (self.impulse == 1 && self.safezone == FALSE && self.char.flags & FL_ONGROUND && self.attack_finished < time
 	&& self.char.pain_finished < time && self.char.tired_finished < time
 	&& self.char.invunerability_finished < time && self.forcewalk_finished < time && self.char.block_finished < time
-	&& self.char.dodge_finished < time && !self.char.swimming && self.char.inair == 0)
+	&& self.char.dodge_finished < time && !self.char.swimming && self.char.inair == 0 && self.char.deadflag != DEAD_DEAD)
 	{
 		if (self.char.grabbed == TRUE)
 		{
@@ -193,6 +193,8 @@ void() CheckImpulseButtons =
 			return;
 		if (self.char.bigfall_recovery_finished > time)
 			return;
+		if (self.char.deadflag == DEAD_DEAD)
+			return;
 		if (self.keyflags & (KEY_UP | KEY_DOWN | KEY_LEFT | KEY_RIGHT))
 			return; // Fixes Vigil dancing when spamming flask key whilst moving
 
@@ -264,6 +266,8 @@ void() CheckImpulseButtons =
 			if (deathmatch && self.char.pain_finished > time) // Deathmatch rules
 				return;
 			if (self.noblock_finished > time)
+				return;
+			if (self.char.deadflag == DEAD_DEAD)
 				return;
 			
 			self.softshadow_time = time;

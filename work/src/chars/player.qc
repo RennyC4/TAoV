@@ -1621,7 +1621,7 @@ void() player_think =
 	// Vigil's Jumping
 	//
 
-	if (self.char.onground == TRUE && self.char.deadflag != DEAD_DEAD && /*self.char.grabbed == FALSE &&*/ self.char.health > 0)
+	if (self.char.onground == TRUE && self.char.deadflag != DEAD_DEAD && self.char.health > 0)
 	{
 		self.char.aircombo_count = 0;
 		if (self.button2 && self.char.pain_finished < time && self.attack_finished < time && self.char.block_finished < time
@@ -5912,13 +5912,19 @@ void() player_die3	=[	$pain5,	player_die3 ]
 				if (self.owner.keyflags & KEY_UP)
 				{
 					if (self.menu_declick == FALSE)
+					{
 						self.deathmenu = self.deathmenu - 1;
+						localsound("misc/menu1", 4, 1);
+					}
 				}
 				
 				if (self.owner.keyflags & KEY_DOWN)
 				{
 					if (self.menu_declick == FALSE)
+					{
 						self.deathmenu = self.deathmenu + 1;
+						localsound("misc/menu1", 4, 1);
+					}
 				}
 
 				if (self.owner.keyflags & KEY_UP || self.owner.keyflags & KEY_DOWN)
@@ -5994,9 +6000,10 @@ void() player_die =
 	if (self.angles_y == 225 || self.angles_y == -225)
 		self.angles_y = 180;
 
+	players_dead = players_dead + 1;
+
 	self.movetype = MOVETYPE_WALK;   // set proper movetype on death
 
-	players_dead = players_dead + 1;
 	self.takedamage = DAMAGE_NO;
 	self.deadflag = DEAD_DEAD;
 	self.solid = SOLID_NOT;
@@ -6808,7 +6815,7 @@ void() player_ledgegrab1	=[	$ledgeg1,	player_ledgegrab1 	]
 	self.velocity = '0 0 0';
 
 	if (self.attack_finished < time)
-	{                                         // fix for user pressing more then 2 directions causing odd annoying glitch
+	{   // fix for user pressing more then 2 directions causing odd annoying glitch
 		if (self.owner.keyflags & KEY_UP && (!(self.owner.keyflags & KEY_LEFT || self.owner.keyflags & KEY_RIGHT))) // hoist yourself up
 		{
 			self.inair = self.bigfall = 0;

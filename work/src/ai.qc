@@ -1486,6 +1486,15 @@ void(float dist) ai_swim =
 		return;
 	}
 
+	if (self.enemy.owner.flags & FL_NOTARGET)
+	{
+		if (self.th_stand)
+			self.think = self.th_stand;
+		self.nextthink = time;
+		self.velocity = '0 0 0';
+		return;
+	}
+
 	if (self.origin_x < self.enemy.origin_x)
 		self.angles_y = 0;
 	else

@@ -1,9 +1,10 @@
-* Demo files need to be created with slowdown & level ups disabled *
 * Clip brushes need a slight edge curve at the top to stop wall running on them, works for wall grab as well
 * Vigil has MOVETYPE_STEP/WALK changes defined in a specific place that updates every frame - player.qc (slope sliding)
 
 TODO: Update readme.txt
 TODO: Ask khraethor about boss progress
+
+TODO: Attract Demo recording mode. Disable slowdown, level ups, and text messages. Developer 3.
 
 Deathmatch: Perfect Guard isn't applying to Vigil properly, sound plays, so does the effect, doesn't apply to the player - Fixed? Needs testing.
 Deathmatch: Vigi's Final stab first hit should push player back without a guard break - Needs testing (set first hit to knockback 6)

@@ -632,7 +632,7 @@ void() pit_touch =
 
 	if (other.classname == "player")
 	{
-		other.nobackflip_finished = time + 999; // don't allow backflip
+		other.owner.nobackflip_finished = time + 999; // don't allow backflip
 		if (self.pitplacement != '0 0 0') // warp Vigil to where the trigger pit tells him
 			setorigin (other, self.pitplacement);
 		else

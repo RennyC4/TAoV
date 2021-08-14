@@ -218,6 +218,10 @@ void(vector pos) DrawHPBar =
 	local float maxhp = getstatf(STAT_MAXHEALTH);
 	local float hp = getstatf(STAT_HEALTH);
 	
+	// HP gets set to 9999 on Vigil's death, so we'll show the user 0.
+	if (hp == 9999)
+		hp = 0;
+	
 	//drawfill('0 0', '256 256', 1, 1);
 	
     //

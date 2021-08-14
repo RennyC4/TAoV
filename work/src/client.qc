@@ -1013,7 +1013,7 @@ void() PlayerPreThink =
 		if (self.char.health > 0)
 			self.health = self.char.health;
 		else
-			self.health = 0; // Don't rotate camera on death
+			self.health = 9999; // Anything under 1 will stop the death menu from working with keys (keyflags are disabled engine-wise)
 
 		InitCamera(); // Main game camera
 	}
