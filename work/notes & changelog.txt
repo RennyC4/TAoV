@@ -4,7 +4,10 @@
 TODO: Update readme.txt
 TODO: Ask khraethor about boss progress
 
-TODO: Attract Demo recording mode. Disable slowdown, level ups, and text messages. Developer 3.
+FIXME:
+Demo3 - Wrong Sky texture (rain)
+Demo4 - Outdated text stuff
+Demo5 - Plays music
 
 Deathmatch: Perfect Guard isn't applying to Vigil properly, sound plays, so does the effect, doesn't apply to the player - Fixed? Needs testing.
 Deathmatch: Vigi's Final stab first hit should push player back without a guard break - Needs testing (set first hit to knockback 6)

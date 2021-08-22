@@ -453,6 +453,12 @@ void() musicchange_use =
 {
 	local entity y;
 	
+	if (cvar("developer") == 3)
+	{
+		remove(self);
+		return;
+	}
+	
 	// Boss defeated, boss music triggers perma-removed
 	if (bosses == IT_BOSS2 && world.model == "maps/boss2.bsp")
 	{
@@ -479,6 +485,12 @@ void() musicchange_use =
 
 void() musicchange_touch =
 {	
+	if (cvar("developer") == 3)
+	{
+		remove(self);
+		return;
+	}
+	
 	if (other.classname != "player")
 		return;
 	if (other.music == "sound/music/track9.ogg" || other.music == "sound/music/track16.ogg") // Don't turn off boss music

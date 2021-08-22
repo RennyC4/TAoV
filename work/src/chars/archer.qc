@@ -91,6 +91,8 @@ void() ArcherArrowThink =
 					effect = spawn();
 					setorigin(effect, head.origin);
 					setmodel(effect, "progs/block.spr");
+					effect.angles_y = -90;
+					effect.angles_z = random()*360;
 					effect.effects = EF_NODEPTHTEST;
 					effect.movetype = MOVETYPE_NONE;
 					effect.think = fx_think;

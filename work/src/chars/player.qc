@@ -286,9 +286,12 @@ void(entity plyr) PerfectGuard	=
 	effect = spawn();
 	setorigin(effect, plyr.origin);
 	setmodel(effect, "progs/block.spr");
+	effect.angles_y = -90;
+	effect.angles_z = random()*360;
+	effect.avelocity = '0 0 800';
 	effect.colormod = '-255 -255 9999';
 	effect.effects = EF_NODEPTHTEST;
-	effect.movetype = MOVETYPE_NONE;
+	effect.movetype = MOVETYPE_NOCLIP;
 	effect.owner = plyr;
 	effect.think = perfectguard_fx_think;
 	effect.nextthink = time;
@@ -4863,6 +4866,8 @@ void() player_jumpatk2	=[	$jumpatk2,	player_jumpatk2	]
 				effect = spawn();
 				setorigin(effect, head.origin);
 				setmodel(effect, "progs/block.spr");
+				effect.angles_y = -90;
+				effect.angles_z = random()*360;
 				effect.effects = EF_NODEPTHTEST;
 				effect.movetype = MOVETYPE_NOCLIP;
 				effect.think = fx_think;
