@@ -288,11 +288,12 @@ void(entity plyr) PerfectGuard	=
 	setmodel(effect, "progs/block.spr");
 	effect.angles_y = -90;
 	effect.angles_z = random()*360;
-	effect.avelocity = '0 0 800';
+	effect.avelocity = '0 0 1500';
 	effect.colormod = '-255 -255 9999';
-	effect.effects = EF_NODEPTHTEST;
+	effect.effects = EF_NODEPTHTEST | EF_ADDITIVE;
 	effect.movetype = MOVETYPE_NOCLIP;
 	effect.owner = plyr;
+	effect.alpha = 1;
 	effect.think = perfectguard_fx_think;
 	effect.nextthink = time;
 	effect.solid = SOLID_NOT;

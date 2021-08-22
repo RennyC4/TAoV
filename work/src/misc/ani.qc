@@ -67,9 +67,12 @@ void() perfectguard_fx_think =
 			remove(self);
 			return;
 		}
-		self.pain_finished = time + 0.1;
+		if (self.frame == 2)
+			self.pain_finished = time + 0.4;
+		else
+			self.pain_finished = time + 0.05;
 	}
-
+	self.alpha = self.alpha - 0.02;
 	self.scale = self.scale + 0.1;
 	frameskip(0.01);
 };
