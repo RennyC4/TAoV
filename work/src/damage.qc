@@ -1000,7 +1000,12 @@ void(float damg, float dist, float knokback, float rsize, float snd, float flsh,
 					{
 						local float i;
 						if (!coop && !deathmatch)
-							self.block_sparks = 4;
+						{
+							if (head.perfectblock < time)
+								self.block_sparks = 4;
+							else
+								self.block_sparks = 8;
+						}
 						else
 							self.block_sparks = 2; // multiplayer optimization
 						i = -0.25*self.block_sparks + random()*0.5*self.block_sparks;
