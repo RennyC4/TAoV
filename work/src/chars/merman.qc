@@ -300,7 +300,7 @@ void() merman_pain =
 {
 	self.cnt = self.cnt + 1;
 	monster_removeslide();
-	if (self.cnt > 2 || self.grab_finished > time || self.enemy.grabbed)
+	if (self.cnt > 2 || self.grab_finished > time || self.enemy.grabbed || self.enemy.perfectguard_buff > time)
 	{
 		sound (self, CHAN_VOICE, "merman/pain.wav", 1, ATTN_NORM);
 		merman_pain1();

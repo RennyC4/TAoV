@@ -1103,6 +1103,7 @@ void(float damg, float dist, float knokback, float rsize, float snd, float flsh,
 							else
 								self.velocity_x = 80;
 
+							PerfectGuard(head); // Call PG before pain, for conditional checks on monsters self.th_pain status
 							if (self.th_pain) // stun em
 							{
 								self.knockback = 0; // reset knockback, don't hold it!
@@ -1110,7 +1111,6 @@ void(float damg, float dist, float knokback, float rsize, float snd, float flsh,
 									self.paincount = self.paincount - 1; // counteract
 								self.th_pain();
 							}
-							PerfectGuard(head);
 						}
 					}
 

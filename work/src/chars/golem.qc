@@ -325,11 +325,10 @@ void() golem_pain =
 		golem_particle();
 	self.oldhealth = self.health;
 	
-	if (self.pain_finished < time)
+	if (self.pain_finished < time || self.enemy.perfectguard_buff > time)
 	{
-		if (self.paincount > 4 || random() < 0.10)
+		if (self.paincount > 4 || random() < 0.10 || self.enemy.perfectguard_buff > time)
 		{
-			// sound
 			golem_pain1();
 			self.paincount = 0;
 			self.pain_finished = time + 5;

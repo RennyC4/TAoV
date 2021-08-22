@@ -148,10 +148,10 @@ void() wraith_pain =
 {
 	self.alpha = 1;
 
-	if (self.health < self.max_health / 2 && self.pain_finished < time)
+	if (self.health < self.max_health / 2 && self.pain_finished < time || self.enemy.perfectguard_buff > time)
 	{
 		self.pain_finished = time + 0.3;
-		if (random() < 0.5)
+		if (random() < 0.5 && self.enemy.perfectguard_buff < time)
 			return;
 
 		wraith_pain1();

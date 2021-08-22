@@ -107,7 +107,7 @@ void() skel_pain =
 	skel_particle();
 	sound (self, CHAN_BODY, "skeleton/smash.wav", 1, ATTN_NORM);
 
-	if (self.paincount > 1 || self.grab_finished > time || self.enemy.grabbed)
+	if (self.paincount > 1 || self.grab_finished > time || self.enemy.grabbed || self.enemy.perfectguard_buff > time)
 	{
 		skel_pain1();
 		self.paincount = 0;

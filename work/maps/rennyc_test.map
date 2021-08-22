@@ -394,8 +394,8 @@
 }
 // entity 9
 {
-"classname" "monster_knight"
-"origin" "352 -48 48"
+"classname" "monster_wraith"
+"origin" "352 -48 128"
 "angle" "180"
 }
 // entity 10
@@ -403,4 +403,10 @@
 "classname" "item_relic"
 "origin" "-484 44 84"
 "cnt" "3"
+}
+// entity 11
+{
+"classname" "item_relic"
+"origin" "428 20 44"
+"cnt" "7"
 }
