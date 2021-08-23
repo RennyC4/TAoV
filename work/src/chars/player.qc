@@ -256,6 +256,16 @@ void() Setup_Dummy =
 
 void(entity plyr) PerfectGuard	=
 {
+	makevectors(plyr.angles);
+
+	local vector x = plyr.origin + v_forward * 30 + v_up * 12;
+
+	WriteByte (MSG_BROADCAST, SVC_TEMPENTITY);
+	WriteByte (MSG_BROADCAST, TE_TAREXPLOSION);
+	WriteCoord (MSG_BROADCAST, x_x);
+	WriteCoord (MSG_BROADCAST, x_y);
+	WriteCoord (MSG_BROADCAST, x_z);
+
 	plyr.owner.camshake_finished = time + 0.1;
 	if (plyr.flags & FL_ONGROUND)
 	{
