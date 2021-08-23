@@ -884,7 +884,7 @@ void(float damg, float dist, float knokback, float rsize, float snd, float flsh,
 						local	vector	vel;
 						vel = normalize(dir + v_up*crandom() + v_right*crandom());
 						vel = vel * 200;
-						particle (head.origin, vel*0.4, 69, 8);
+						particle (head.origin, vel*0.4, 79, 16);
 					}
 					
 					if (self.classname == "player") // put mana on the dummy players owner, increase combo meter

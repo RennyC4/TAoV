@@ -1,3 +1,5 @@
+#pragma warning disable F314 // disable Implicit cast from float to vector
+
 void m_init()
 {
 	blank_menu = memalloc(sizeof(menuElement));

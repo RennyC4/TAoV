@@ -1146,4 +1146,5 @@ void() CSQC_WorldLoaded  =
 	// Ask SSQC for values to send, fixes 0 display on HUD elements
 	sendevent("GrabCSQCValues", "");
 	cvar_set("skyroom", "");
+	cvar_set("sv_gamespeed", "1"); // Fixes loaded save files from in-progress slowdown events
 };
