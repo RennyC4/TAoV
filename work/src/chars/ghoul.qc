@@ -45,7 +45,7 @@ void() ghoul_rise12	=[	$rise12,	ghoul_rise13 ] {particle(self.origin - v_up*16, 
 void() ghoul_rise13	=[	$rise13,	ghoul_rise14 ] {particle(self.origin - v_up*16, '0 0 0', 18, 25);};
 void() ghoul_rise14	=[	$rise14,	ghoul_rise15 ] {particle(self.origin - v_up*16, '0 0 0', 18, 25);};
 void() ghoul_rise15	=[	$rise15,	ghoul_rise16 ] {particle(self.origin - v_up*16, '0 0 0', 18, 25);};
-void() ghoul_rise16	=[	$rise16,	ghoul_stand1 ] {self.th_stand = ghoul_stand1;particle(self.origin - v_up*16, '0 0 0', 18, 25);spawn_shadow();};
+void() ghoul_rise16	=[	$rise16,	ghoul_stand1 ] {self.th_stand = ghoul_stand1;particle(self.origin - v_up*16, '0 0 0', 18, 25);};
 
 void() ghoul_walk1	=[	$walk1,	ghoul_walk2	] {self.takedamage = DAMAGE_AIM;ai_walk(2);monster_removeslide();};
 void() ghoul_walk2	=[	$walk2,	ghoul_walk3	] {ai_walk(2);monster_removeslide();};

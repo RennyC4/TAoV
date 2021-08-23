@@ -448,6 +448,6 @@ void() monster_troglod =
 	self.th_pain = troglod_pain;
 	self.th_die = troglod_die;
 
-	spawn_shadow();
+	//spawn_shadow();
 	enemy_start();
 };

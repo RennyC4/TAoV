@@ -349,6 +349,6 @@ void() monster_werewolf =
 	self.th_die = werewolf_die;
 	self.ignoreaircombo = TRUE; // Aircombos do not raise werewolf off ground
 	
-	spawn_shadow();
+	//spawn_shadow();
 	enemy_start();
 };

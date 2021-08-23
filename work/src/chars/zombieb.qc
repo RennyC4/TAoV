@@ -266,6 +266,6 @@ void() monster_zombie_boss =
 	self.th_magic = zombie_boss_missile;
 	self.th_melee = zombie_boss_missile;
 	
-	spawn_shadow();
+	//spawn_shadow();
 	enemy_start();
 };

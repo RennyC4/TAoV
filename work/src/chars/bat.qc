@@ -163,5 +163,5 @@ void() monster_bat =
 	self.think = bat_think;
 	self.nextthink = time + 0.1;
 	self.th_die = bat_die;
-	spawn_shadow();
+	//spawn_shadow();
 };

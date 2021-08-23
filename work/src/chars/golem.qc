@@ -265,7 +265,7 @@ void() golem_particle =
 	spark = spawn ();
 	spark.angles_y = random() * 360;
 	makevectors (spark.angles);
-	spark.velocity = v_forward * 50 + random()*50;
+	spark.velocity = v_forward * (50 + random()*50);
 	spark.velocity_z = 150;
 	spark.owner = self;
 	spark.movetype = MOVETYPE_TOSS;
@@ -497,6 +497,6 @@ void() monster_golem =
 	self.ignoreaircombo = TRUE; // Aircombos do not raise golem off ground
 	self.noblood = TRUE;
 	
-	spawn_shadow();
+	//spawn_shadow();
 	enemy_start();
 };

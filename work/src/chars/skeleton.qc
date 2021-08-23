@@ -316,6 +316,6 @@ void() monster_skeleton =
 	self.th_grab = skel_grabbed1;
 	self.th_jump = skel_jump1;
 
-	spawn_shadow();
+	//spawn_shadow();
 	enemy_start();
 };

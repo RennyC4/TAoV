@@ -2308,7 +2308,7 @@ void() player_move = [0, player_move]
 		player_tired1();
 	if (!self.shadow) // sprite shadow, drawn under Vigil
 	{
-		spawn_shadow();
+		//spawn_shadow();
 		self.shadow = TRUE;
 	}
 

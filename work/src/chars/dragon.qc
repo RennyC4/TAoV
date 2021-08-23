@@ -186,6 +186,6 @@ void() monster_dragon =
 	self.th_die = dragon_die;
 	self.ignoreaircombo = TRUE; // Aircombos do not raise Dragon off ground
 	
-	spawn_shadow();
+	//spawn_shadow();
 	enemy_start();
 };

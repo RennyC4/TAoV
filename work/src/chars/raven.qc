@@ -398,7 +398,7 @@ void() monster_raven =
 	self.th_pain = raven_pain;
 	self.th_die = raven_die;
 	
-	spawn_shadow();
+	//spawn_shadow();
 	enemy_start();
 	if (self.nodrop == FALSE)
 	{

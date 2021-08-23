@@ -1078,7 +1078,7 @@ void() npc_bsmith =
 	self.nextthink = time + 0.1;
 
 	droptofloor();
-	spawn_shadow();
+	//spawn_shadow();
 };
 
 void() npc_priest =
@@ -1111,7 +1111,7 @@ void() npc_priest =
 	self.nextthink = time + 0.1;
 
 	droptofloor();
-	spawn_shadow();
+	//spawn_shadow();
 };
 
 void() npc_guard =
@@ -1146,7 +1146,7 @@ void() npc_guard =
 	self.nextthink = time + 0.1;
 
 	droptofloor();
-	spawn_shadow();
+	//spawn_shadow();
 };
 
 void() npc_wizard =
@@ -1179,7 +1179,7 @@ void() npc_wizard =
 	self.nextthink = time + 0.1;
 
 	droptofloor();
-	spawn_shadow();
+	//spawn_shadow();
 };
 
 void() npc_lisa =
@@ -1212,7 +1212,7 @@ void() npc_lisa =
 	self.nextthink = time + 0.1;
 
 	droptofloor();
-	spawn_shadow();
+	//spawn_shadow();
 };
 
 void() npc_bartender =
@@ -1245,5 +1245,5 @@ void() npc_bartender =
 	self.nextthink = time + 0.1;
 
 	droptofloor();
-	spawn_shadow();
+	//spawn_shadow();
 };

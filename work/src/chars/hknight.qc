@@ -544,6 +544,6 @@ void() monster_hell_knight =
 			self.ai_blockfreq = 0.20; // 20% skill 2
 	}
 
-	spawn_shadow();
+	//spawn_shadow();
 	enemy_start();
 };

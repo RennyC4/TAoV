@@ -185,6 +185,6 @@ void() monster_hydra =
 	self.th_pain = hydra_pain;
 	self.th_die = hydra_die;
 	
-	spawn_shadow();
+	//spawn_shadow();
 	enemy_start();
 };

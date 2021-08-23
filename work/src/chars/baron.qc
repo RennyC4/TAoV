@@ -394,6 +394,6 @@ void() monster_baron =
 			self.ai_blockfreq = 0.5; // 50% skill 2
 	}
 
-	spawn_shadow();
+	//spawn_shadow();
 	enemy_start();
 };

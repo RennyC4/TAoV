@@ -325,6 +325,6 @@ void() monster_knight =
 			self.ai_blockfreq = 0.7;  // 10% skill 2
 	}
 
-	spawn_shadow();
+	//spawn_shadow();
 	enemy_start();
 };

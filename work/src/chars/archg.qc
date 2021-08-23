@@ -319,6 +319,6 @@ void() monster_archghoul =
 
 	self.th_magic = archg_magic;
 
-	spawn_shadow();
+	//spawn_shadow();
 	enemy_start();
 };

@@ -353,6 +353,6 @@ void() monster_gremlin =
 	self.th_missile = grem_leap1;
 	self.th_melee = grem_melee;
 	
-	spawn_shadow();
+	//spawn_shadow();
 	enemy_start();
 };

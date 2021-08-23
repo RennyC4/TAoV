@@ -362,6 +362,6 @@ void() monster_esquid =
 
 	self.th_missile = esquid_lightning;
 
-	spawn_shadow();
+	//spawn_shadow();
 	enemy_start();
 };

@@ -331,6 +331,6 @@ void() monster_knight2 =
 			self.ai_blockfreq = 0.85;
 	}
 
-	spawn_shadow();
+	//spawn_shadow();
 	enemy_start();
 };

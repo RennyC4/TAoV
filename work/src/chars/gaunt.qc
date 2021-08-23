@@ -462,6 +462,6 @@ void() monster_gaunt =
 	self.th_magic = gaunt_magic;
 	self.experience = 77;
 
-	spawn_shadow();
+	//spawn_shadow();
 	enemy_start();
 };

@@ -237,7 +237,7 @@ void() monster_dog =
 	self.th_melee = dog_atta1;
 	self.th_missile = dog_leap1;
 	self.th_jump = dog_jump;
-	spawn_shadow();
+	//spawn_shadow();
 
 	enemy_start();
 };

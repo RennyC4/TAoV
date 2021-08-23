@@ -398,6 +398,6 @@ void() monster_archer =
 			self.awareness = 3;
 	}
 
-	spawn_shadow();
+	//spawn_shadow();
 	enemy_start();
 };

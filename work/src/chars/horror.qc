@@ -139,7 +139,7 @@ void() monster_horror =
 	self.th_pain = horror_pain;
 	self.th_die = horror_die;
 
-	spawn_shadow();
+	//spawn_shadow();
 	enemy_start();
 };
 

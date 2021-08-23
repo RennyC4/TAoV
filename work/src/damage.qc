@@ -565,7 +565,7 @@ void(vector org, entity own) ThrowBloodSplat =
 	splat.solid = SOLID_NOT;
 
 	//dir = normalize(dir);
-	splat.velocity = 0 * (450 + 50*random());
+	//splat.velocity = 0 * (450 + 50*random());
 	splat.velocity_x = splat.velocity_x + crandom()*40;
 	splat.velocity_y = splat.velocity_y + crandom()*40;
 	splat.velocity_z = splat.velocity_z + 120 + 50*random();

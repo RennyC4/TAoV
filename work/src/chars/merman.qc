@@ -244,7 +244,7 @@ void() Fire_MermanSpit =
 	makevectors (self.angles);
 	missile.velocity = normalize(self.enemy.origin - self.origin);
 	missile.velocity = missile.velocity * 300;
-	missile.angles = vectoyaw(missile.velocity);
+	missile.angles = vectoangles(missile.velocity);
 	missile.angles_y = self.owner.angles_y;
 	
 	missile.touch = MermanSpitTouch;
@@ -453,6 +453,6 @@ void() monster_merman =
 	self.th_jump = merman_jump1;
 	self.th_swim = merman_swim;
 	
-	spawn_shadow();
+	//spawn_shadow();
 	enemy_start();
 };

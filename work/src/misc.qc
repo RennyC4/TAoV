@@ -420,6 +420,7 @@ void() BecomeFlame =
 	spawn_embers();
 };
 
+/*
 // Shadows have been disabled as FTE handles shadow blobs
 // in-game engine and are done a lot nicer.
 
@@ -477,7 +478,6 @@ void() shadow_think =
 
 void() spawn_shadow =
 {
-	return 0; // disabled
 	local entity s;
 
 	s = spawn();
@@ -493,6 +493,7 @@ void() spawn_shadow =
 	s.angles_x = 90;
 	s.nextthink = time + 0.01;
 };
+*/
 
 //
 // Silly little function to fix music_track# entities playing properly
