@@ -4,6 +4,8 @@
 TODO: Update readme.txt
 TODO: Ask khraethor about boss progress
 
+TODO: Long range archers should turn to short range up close
+
 FIXME:
 Demo3 - Wrong Sky texture (rain)
 Demo4 - Outdated text stuff

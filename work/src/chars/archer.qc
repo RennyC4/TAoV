@@ -103,7 +103,7 @@ void() ArcherArrowThink =
 					// block
 					if (head.classname == "player")
 					{
-						if (head.origin_x < self.origin_x)
+						if (head.origin_x < self.owner.origin_x)
 							head.angles_y = 0;
 						else
 							head.angles_y = 180;
