@@ -7414,7 +7414,7 @@ void() DodgeUp =
 		self.lowceil = TRUE;
 
 	setsize(self, VEC_HULL_MIN, '16 16 12');
-	self.velocity_y = 175 / 2;
+	self.velocity_y = 175 / 1.35;
 };
 
 void() DodgeDown = 
@@ -7424,7 +7424,7 @@ void() DodgeDown =
 		self.lowceil = TRUE;
 
 	setsize(self, VEC_HULL_MIN, '16 16 12');
-	self.velocity_y = -175 / 2;
+	self.velocity_y = -175 / 1.35;
 };
 
 void() player_dodgec1	    =[	$dodgec1,	player_dodgec2		 	] {player_yell(0);DodgeDown();frameskip(0.05);self.takedamage = DAMAGE_NO;};
