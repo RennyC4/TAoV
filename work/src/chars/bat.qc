@@ -104,6 +104,9 @@ void() bat_die =
 {
 	local entity effect;
 
+	sound (self, CHAN_AUTO, "bat/die.wav", 1, ATTN_NORM);
+	sound (self, CHAN_AUTO, "spells/fhit.wav", 1, ATTN_NORM);
+
 	GiveExperience(self.experience);
 	effect = spawn();
 	setorigin(effect, self.origin + v_up * 14);
@@ -112,8 +115,6 @@ void() bat_die =
 	effect.think = firesprite_think;
 	effect.nextthink = time;
 	effect.solid = SOLID_NOT;
-	sound (self, CHAN_VOICE, "bat/die.wav", 1, ATTN_NORM);
-	sound (self, CHAN_BODY, "spells/fhit.wav", 1, ATTN_NORM);
 	remove(self);
 };
 

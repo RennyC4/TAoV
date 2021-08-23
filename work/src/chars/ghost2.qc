@@ -18,11 +18,11 @@ void() ghost2_think =
 	while (targ)
 	{
 		if (targ.classname == "player" && visible(targ) && targ.health > 1
-		&& targ.invunerability_finished < time && targ.takedamage != DAMAGE_NO)
+		&& targ.invunerability_finished < time && targ.takedamage != DAMAGE_NO && !self.enemy.owner.flags & FL_NOTARGET)
 		{
 			self.enemy = targ;
 			disto = vlen(self.enemy.origin - self.origin);
-			if (self.attack_finished < time && !targ.owner.flags & FL_GODMODE && targ.perfectguard_buff < time)
+			if (self.attack_finished < time && !targ.owner.flags & FL_GODMODE && targ.perfectguard_buff < time && !self.enemy.owner.flags & FL_NOTARGET)
 			{
 				if (difficulty < 2)
 					draindelay = disto / 1000;
