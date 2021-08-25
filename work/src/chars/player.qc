@@ -5671,10 +5671,10 @@ void() player_pain =
 	self.owner.wallrun = FALSE;
 	self.grabbed = FALSE;
 	self.idle_count = 0; // reset pose
-	self.colormod = '2 1 1'; // flash red fast
 
 	if (self.owner.status_broken_finished < time)
 	{
+		self.colormod = '2 1 1'; // flash red fast
 		if (self.block_finished > time)
 			self.block_finished = time;
 		if (self.owner.noblock_finished > time)
