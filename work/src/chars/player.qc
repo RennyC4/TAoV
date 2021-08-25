@@ -5671,6 +5671,7 @@ void() player_pain =
 	self.owner.wallrun = FALSE;
 	self.grabbed = FALSE;
 	self.idle_count = 0; // reset pose
+	self.colormod = '2 1 1'; // flash red fast
 
 	if (self.owner.status_broken_finished < time)
 	{
