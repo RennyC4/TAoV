@@ -539,9 +539,9 @@ void() monster_hell_knight =
 	if (!self.ai_blockfreq) // frequency on how much the enemy blocks
 	{
 		if (difficulty < 2)
-			self.ai_blockfreq = 0.10; // 3% skill 1
+			self.ai_blockfreq = 0.1; // 10% skill 1
 		else
-			self.ai_blockfreq = 0.20; // 20% skill 2
+			self.ai_blockfreq = 0.2; // 20% skill 2
 	}
 
 	//spawn_shadow();

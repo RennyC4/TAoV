@@ -320,9 +320,9 @@ void() monster_knight =
 	if (!self.ai_blockfreq) // frequency on how much the enemy blocks
 	{
 		if (difficulty < 2)
-			self.ai_blockfreq = 0.03; // 3% skill 1
+			self.ai_blockfreq = 0.07;
 		else
-			self.ai_blockfreq = 0.7;  // 10% skill 2
+			self.ai_blockfreq = 0.7;
 	}
 
 	//spawn_shadow();

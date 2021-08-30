@@ -136,33 +136,27 @@ just like it says, monster gets angry and becomes more powerful temporary and fa
 */
 void() enrage_think =
 {
-	if (self.owner.berserk_finished < time) // no longer mad
-	{
-		if (self.owner.colormod_x > 1)
-			self.owner.colormod_x = self.owner.colormod_x - (0.06 * 100) * frametime;
-		else
-			self.owner.colormod_x = 1;
-		if (self.owner.colormod_y > 1)
-			self.owner.colormod_y = self.owner.colormod_y - (0.06 * 100) * frametime;
-		else
-			self.owner.colormod_y = 1;
-
-		if (self.owner.colormod_z > 1)
-			self.owner.colormod_z = self.owner.colormod_z - (0.06 * 100) * frametime;
-		else
-			self.owner.colormod_z = 1;
-	}
-	else
-		self.owner.nextthink = self.owner.nextthink = time / 1.25; // think faster
+	// Colormod removal is done through startframe now
 	
+	if (self.owner.berserk_finished > time)
+	{
+		if (self.pain_finished < time)
+		{
+			self.owner.nextthink = self.owner.nextthink = time / 1.25; // think & move faster
+			self.pain_finished = time + 0.1;
+		}
+	}
+
 	// Remove enrage entity under these conditions
-	if (self.owner.health < 1 || !self.owner)
+	if (self.owner.health < 1 || !self.owner || self.owner.berserk_finished < time)
 	{
 		self.owner.colormod = '1 1 1';
 		remove(self);
 		return;
 	}
-	frameskip(0.1);
+	setorigin (self, self.owner.origin + v_up * 50);
+	
+	frameskip(0.01);
 };
 
 void() enrage =
@@ -173,16 +167,17 @@ void() enrage =
 	enrager.owner = self;
 	enrager.movetype = MOVETYPE_NOCLIP;
 	enrager.solid = SOLID_NOT;
+	enrager.effects = EF_NODEPTHTEST;
 	enrager.classname = "enrager";
-	setmodel (enrager, "progs/null.spr");
+	setmodel (enrager, "progs/enrage.spr");
 	setsize (enrager, '0 0 0', '0 0 0');
-	setorigin (enrager, self.origin);
+	setorigin (enrager, self.origin + v_up * 50);
 
 	// Give off RT Light
 	spawn_color_glow(3, 0, 0, 70, self);
 	
 	enrager.think = enrage_think;
-	enrager.nextthink = time + 0.1;
+	enrager.nextthink = time;
 	sound (enrager, CHAN_VOICE, "spells/enrage.wav", 1, ATTN_NORM);
 };
 
@@ -1609,7 +1604,8 @@ void() wakeup =
 void(entity attacker) monster_pain =
 {
 	// Color flash on pain
-	self.colormod = '3 1 1';
+	if (self.block_finished < time)
+		self.colormod = '3 1 1';
 
 	// Ignore air combo flag is on the monster
 	// My enemy isn't on the ground, otherwise physics are ran
