@@ -260,6 +260,14 @@ void() archer_fireb17 	=[	$shootb17,	archer_fireb18	]
 };
 void() archer_fireb18 	=[	$shootb18,	archer_move1	] {};
 
+// archer decides what type of firing animation to play on how far Vigil is
+void() archer_fire_decide =
+{
+	if (range(self.enemy) == RANGE_FAR)
+		archer_fireb1();
+	else
+		archer_fire1();
+};
 
 void() archer_pain1 	=[	$pain1,	archer_pain2	] {monster_removeslide();};
 void() archer_pain2 	=[	$pain2,	archer_pain3	] {monster_removeslide();};
@@ -387,17 +395,14 @@ void() monster_archer =
 	self.th_pain = archer_pain;
 	self.th_die = archer_die;
 
-	self.th_melee = archer_fire1;
+	self.th_melee = archer_fire_decide;
 
 	if (self.mode == 0)
-		self.th_missile = archer_fire1;
+		self.th_missile = archer_fire_decide;
 	else
 	{
-		self.th_missile = archer_fireb1;
-		if (!self.awareness)
-			self.awareness = 3;
+		self.th_missile = archer_fire_decide;
+		self.awareness = 3;
 	}
-
-	//spawn_shadow();
 	enemy_start();
 };
