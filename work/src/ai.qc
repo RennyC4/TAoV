@@ -1407,6 +1407,17 @@ void(float dist) ai_walk =
 		}
 		self.oldorigin = self.origin;
 		
+		// Traceline check if something breakable is blocking my path and I can smash it
+		MakeSolidList();
+		makevectors(self.angles);
+		traceline (self.origin, self.origin + v_forward*64 - v_up*24, FALSE, self);
+		if (trace_ent.classname == "breakable")
+		{
+			if (self.th_melee)
+				self.th_melee();
+		}
+		UnmakeSolidList();
+		
 		// Only 'navigate stupidly' when I can't see Vigil
 		if (!visible(self.enemy))
 		{

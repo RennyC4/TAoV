@@ -215,7 +215,7 @@ void() baron_smash8 	=[	$smack8,	baron_smash9	]
 	head = searchradius(self.origin, 60);
 	while (head)
 	{
-		if (head.takedamage && head != self && !head.flags & FL_MONSTER && head.onground == TRUE)
+		if ((head.takedamage && head != self && !head.flags & FL_MONSTER && head.onground == TRUE) || head.classname == "breakable")
 		{
 			head.knockback = 2; // pop Vigil in the air
 			self.status_broken_finished = time + 10;
