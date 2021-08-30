@@ -512,6 +512,7 @@ void() StartFrame =
 		if (!v.flags & FL_MONSTER && !v.classname == "player")
 			continue;
 
+		// Color flash on pain removal
 		if (v.flags & FL_MONSTER && v.colormod != '1 1 1 ' && v.berserk_finished < time)
 			v.colormod = '1 1 1';
 

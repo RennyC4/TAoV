@@ -1608,7 +1608,7 @@ void() wakeup =
 
 void(entity attacker) monster_pain =
 {
-	// Bleh
+	// Color flash on pain
 	self.colormod = '3 1 1';
 
 	// Ignore air combo flag is on the monster
