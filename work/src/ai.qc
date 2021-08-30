@@ -1608,6 +1608,9 @@ void() wakeup =
 
 void(entity attacker) monster_pain =
 {
+	// Bleh
+	self.colormod = '3 1 1';
+
 	// Ignore air combo flag is on the monster
 	// My enemy isn't on the ground, otherwise physics are ran
 	if (self.ignoreaircombo && !self.enemy.onground)
@@ -1694,8 +1697,6 @@ void(entity attacker) monster_pain =
 		self.velocity_z = -500;
 	}
 	self.knockback = FALSE;
-
-
 };
 
 //
