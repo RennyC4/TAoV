@@ -3387,9 +3387,7 @@ void() spinattack =
 					head.knockback = 0;
 					head.damage_type = 5; // cut in half
 
-					local float damg_calc;
-					damg_calc = 25;
-					damg_calc = damg_calc + ceil(self.owner.swordlevel * 10);
+					local float damg_calc = 25 + ceil(self.owner.swordlevel * 7.5);
 
 					if (deathmatch == FALSE)
 						T_Damage (head, self, self, damg_calc, 0);
