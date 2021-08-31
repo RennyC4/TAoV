@@ -396,13 +396,7 @@ void() monster_archer =
 	self.th_die = archer_die;
 
 	self.th_melee = archer_fire_decide;
+	self.th_missile = archer_fire_decide;
 
-	if (self.mode == 0)
-		self.th_missile = archer_fire_decide;
-	else
-	{
-		self.th_missile = archer_fire_decide;
-		self.awareness = 2;
-	}
 	enemy_start();
 };

@@ -181,6 +181,7 @@ void() worldspawn =
 		precache_model ("progs/cursor3.spr");
 		precache_model ("progs/enrage.spr");
 		precache_model ("progs/twisti.spr");
+		precache_model ("progs/smoke.spr");
 
 		//
 		// Sounds

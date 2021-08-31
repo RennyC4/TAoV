@@ -154,7 +154,7 @@ void() enrage_think =
 		remove(self);
 		return;
 	}
-	setorigin (self, self.owner.origin + v_up * 50);
+	setorigin (self, self.owner.origin + v_up * 72);
 	
 	frameskip(0.01);
 };
@@ -171,7 +171,7 @@ void() enrage =
 	enrager.classname = "enrager";
 	setmodel (enrager, "progs/enrage.spr");
 	setsize (enrager, '0 0 0', '0 0 0');
-	setorigin (enrager, self.origin + v_up * 50);
+	setorigin (enrager, self.origin + v_up * 72);
 
 	// Give off RT Light
 	spawn_color_glow(3, 0, 0, 70, self);
@@ -1237,6 +1237,12 @@ void(float dist) ai_walk =
 		return;
 	}
 	
+	// Long range archer permission to fire + other archer stuff
+	if (self.classname == "archer")
+		self.forceface_finished = time + 100; // archers ALWAYS look at the player exactly
+	if (self.classname == "archer" && self.mode == 1) // mode 1 archers do not have to see their target to hit them...
+		CombatThink();
+
 	//
 	// Zombie has a special condition to check on the health of any near by Zombie boss monster and heal them!
 	//
@@ -1300,8 +1306,6 @@ void(float dist) ai_walk =
 				self.angles_y = 180;
 		}
 	}
-	if (self.classname == "archer")
-		self.forceface_finished = time + 100; // archers ALWAYS look at the player exactly
 
 	// barons / electric squids / troglod / dragons never stand still
 	// and neither do any other enemies if the player is vunerable!
@@ -1456,8 +1460,6 @@ void(float dist) ai_walk =
 	}
 
 	if (visible(self.enemy))
-		CombatThink();
-	if (self.classname == "archer" && self.mode == 1) // mode 1 archers do not have to see their target to hit them...
 		CombatThink();
 };
 
