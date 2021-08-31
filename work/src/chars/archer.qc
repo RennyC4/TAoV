@@ -402,7 +402,7 @@ void() monster_archer =
 	else
 	{
 		self.th_missile = archer_fire_decide;
-		self.awareness = 3;
+		self.awareness = 2;
 	}
 	enemy_start();
 };
