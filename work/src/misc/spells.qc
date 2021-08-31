@@ -148,7 +148,11 @@ void() FireBallHomeIn =
 				if (head.perfectblock > time)
 				{
 					if (head.owner) // Reward mana
+					{
 						head.owner.mana = head.owner.mana + 10;
+						if (head.owner.mana > head.owner.max_mana)
+							head.owner.mana = head.owner.max_mana;
+					}
 					PerfectGuard(head);
 					remove(self);
 					return;
@@ -428,7 +432,11 @@ void() LightningThink =
 					if (head.perfectblock > time)
 					{
 						if (head.owner) // Reward mana
+						{
 							head.owner.mana = head.owner.mana + 50;
+							if (head.owner.mana > head.owner.max_mana)
+								head.owner.mana = head.owner.max_mana;
+						}
 						PerfectGuard(head);
 						remove(self);
 						return;
@@ -614,8 +622,11 @@ void() icefield_think =
 					if (head.perfectblock > time)
 					{
 						if (head.owner) // Reward mana
+						{
 							head.owner.mana = head.owner.mana + 30;
-
+							if (head.owner.mana > head.owner.max_mana)
+								head.owner.mana = head.owner.max_mana;
+						}
 						PerfectGuard(head);
 						self.pain_finished = time; // disappear now
 					}
@@ -816,8 +827,11 @@ void() firebeam_think =
 					if (head.perfectblock > time)
 					{
 						if (head.owner) // Reward mana
+						{
 							head.owner.mana = head.owner.mana + 100;
-
+							if (head.owner.mana > head.owner.max_mana)
+								head.owner.mana = head.owner.max_mana;
+						}
 						PerfectGuard(head);
 					}
 					else
@@ -1066,8 +1080,11 @@ void() TwisterThink =
 				if (head.perfectblock > time)
 				{
 					if (head.owner) // Reward mana
+					{
 						head.owner.mana = head.owner.mana + 13;
-
+						if (head.owner.mana > head.owner.max_mana)
+							head.owner.mana = head.owner.max_mana;
+					}
 					PerfectGuard(head);
 					self.attack_finished = time; // twister dies off
 				}
