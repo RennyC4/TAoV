@@ -147,6 +147,8 @@ void() FireBallHomeIn =
 			{
 				if (head.perfectblock > time)
 				{
+					if (head.owner) // Reward mana
+						head.owner.mana = head.owner.mana + 10;
 					PerfectGuard(head);
 					remove(self);
 					return;
@@ -425,6 +427,8 @@ void() LightningThink =
 
 					if (head.perfectblock > time)
 					{
+						if (head.owner) // Reward mana
+							head.owner.mana = head.owner.mana + 50;
 						PerfectGuard(head);
 						remove(self);
 						return;
@@ -609,6 +613,9 @@ void() icefield_think =
 				{
 					if (head.perfectblock > time)
 					{
+						if (head.owner) // Reward mana
+							head.owner.mana = head.owner.mana + 30;
+
 						PerfectGuard(head);
 						self.pain_finished = time; // disappear now
 					}
@@ -807,7 +814,12 @@ void() firebeam_think =
 				if (self.owner.flags & FL_MONSTER && !head.flags & FL_MONSTER || !self.owner.flags & FL_MONSTER) // fix monsters pretending to hit each other
 				{
 					if (head.perfectblock > time)
+					{
+						if (head.owner) // Reward mana
+							head.owner.mana = head.owner.mana + 100;
+
 						PerfectGuard(head);
+					}
 					else
 					{
 						effect = spawn();
@@ -1053,6 +1065,9 @@ void() TwisterThink =
 
 				if (head.perfectblock > time)
 				{
+					if (head.owner) // Reward mana
+						head.owner.mana = head.owner.mana + 13;
+
 					PerfectGuard(head);
 					self.attack_finished = time; // twister dies off
 				}

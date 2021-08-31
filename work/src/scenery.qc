@@ -218,7 +218,7 @@ void() waterdrop =
 
 void() particlesmoke =
 {
-	particle(self.origin,'0 0 0',3,14);
+	//particle(self.origin,'0 0 0',3,14);
 	if (self.attack_finished < time)
 		remove(self);
 
@@ -230,10 +230,10 @@ void() create_smoke =
 	local entity smoke;
 
 	smoke = spawn();
-	setmodel (smoke, "progs/null.spr");
-	smoke.movetype = 	MOVETYPE_NOCLIP;
+	setmodel (smoke, "progs/smoke.spr");
+	smoke.movetype = MOVETYPE_NOCLIP;
 	smoke.solid	= SOLID_NOT;
-	setorigin(smoke, self.origin - v_right*8);
+	setorigin(smoke, self.origin);
 
 	smoke.velocity_z = smoke.velocity_z + 50 + random()*100;
 	smoke.attack_finished = time + 0.2 + random()*0.6;
