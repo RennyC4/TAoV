@@ -299,9 +299,13 @@ If I missed you, please inform me!
 xaGe - 2nd in command pretty much, provided lots of feedback and help with the overall
 project immensely
 
+Chillo for support and ideas, deathmatch testing, and keeping me sane, and his awesome
+modeling / texture / skin work / sound effects. Wow he's done a lot. Creator of the Vigil
+player model (Old and new!), Merman monster and so forth
+
 Reki - Client-side QuakeC (CSQC) help the for HUD, smoother camera, and a big help for the MenuQC
 
-MTrop - Fixed taunt2.wav for too much "sssss" on my voice
+MTrop - Fixed taunt2.wav too much "sssss" on my voice
 
 Sock - Used his book.mdl
 
@@ -309,38 +313,37 @@ Spirit - Sunset skybox used in Wild Lands
 
 Wazat - Helped with the armor pickup code so each player in multiplayer is able to
 grab it, a great balancing issue. Armor was removed but his code was then applied to
-gold & other pick ups. I also used his HP Bars from his Conquest mod.
+gold & other pick ups. I also used his HP Bars from his Conquest mod. Miss you dude.
 
 DCMad - He helped with his suggestions on the mod and supported it greatly, also
 is the author of the castle level before I hacked/revised it to pieces and then
 finally turning it into a deathmatch arena (Arena2.bsp).
 
-bl1tz for Mapping / sound effects / awesome music work, he created all of dungeon.bsp
-along with most the original music you hear in this game
+Bl1tz for mapping / sound effects / awesome music work, he created all of dungeon.bsp
+along with most the original music you hear in this game. He hates lighting his maps,
+but I suppose the glass is always half full in others minds.
 
 Authors of rubicon2 (czg/metlslime) for their sparks model and code, I used it for effects
-when attacks are blocked
+when attacks are blocked.
 
 RPG for helping with graphic decisions / mapping / helping the mod along and being
-on the TAoV team originally. He created the first 2 areas of the game.
+on the TAoV team originally. He created the first 2 areas of the game. He disappeared.
 
 speeds - Mapping, general support, bug reporting and more
 
-Evilbastard & Mindcrime, they made the Nehahra models that are used within the mod
+Evilbastard & Mindcrime, they made the Nehahra models that are used within the mod such
+as the damned Baron!
 
 Special thanks to Gokuma for helping with the sound from guardian heroes for the spell
-charging up; it fits nicely, and thanks Treasure for making the spell charging sfx
+charging up; it fits nicely, and thanks Treasure for making the spell charging sfx. This
+is a person I communicated with over ICQ, he was awesome. I wish him well, if he's AMOGUS.
 
-LordHavoc for helping with me code-wise with searchradius(); which replaces findradius();
-
-KingClops - Testing TAoV and giving feedback on glitches and suggestions
+LORDHavoc for helping with me code-wise with searchradius(); which replaces findradius();
 
 FrikaC for the frame skipping code to keep things in sync, blacksmiths skin, camera fix
-and more
+and more. Sensei.
 
-Id software for Quake ofcourse, without them The Ascension of Vigil would not exist!
-
-mankrip / for testing / support
+iD software for Quake ofcourse, without them The Ascension of Vigil would not exist!
 
 Haze & jedilamma - New particle scripts that TAoV uses
 
@@ -351,10 +354,6 @@ dumptruck_ds & Joshua Skelton - Updated and more powerful misc_model functions a
 some various things/ideas used from progs_dump to move things along
 
 law56ker - Support, suggestions, and reporting bugs
-
-Chillo for support and ideas, deathmatch testing, and keeping me sane, and his awesome
-modeling / texture / skin work / sound effects. Wow he's done a lot. Creator of the Vigil
-player model (Old and new!), Merman monster and so forth
 
 Tomaz for the new font (conchars) replacement that's actually readable and straight
 compared to the old one
@@ -378,7 +377,7 @@ Preach - Models like horror.mdl / embers / vines / waterfalls / fences
 Redfield - A plethora of awesome models such as his raven, bats, bat swarm, various detail model
 decorations and more ..
 
-ericw - His latest vis/light/qbsp tools were used to compile all game levels
+ericw - His latest vis/light/qbsp tools were used to compile all game levels.
 
 Khurasan - Great Fighter font
 https://www.fontspace.com/great-fighter-font-f39648

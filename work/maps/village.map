@@ -8966,7 +8966,7 @@
 // entity 194
 {
 "classname" "fence"
-"origin" "1764 1264 -4008"
+"origin" "1764 1272 -4008"
 "angle" "-0"
 "skin" "2"
 "frame" "1"
