@@ -154,7 +154,7 @@ void() enrage_think =
 		remove(self);
 		return;
 	}
-	setorigin (self, self.owner.origin + v_up * 72);
+	setorigin (self, self.owner.origin + v_up * 64);
 	
 	frameskip(0.01);
 };
@@ -171,7 +171,7 @@ void() enrage =
 	enrager.classname = "enrager";
 	setmodel (enrager, "progs/enrage.spr");
 	setsize (enrager, '0 0 0', '0 0 0');
-	setorigin (enrager, self.origin + v_up * 72);
+	setorigin (enrager, self.origin + v_up * 64);
 
 	// Give off RT Light
 	spawn_color_glow(3, 0, 0, 70, self);
