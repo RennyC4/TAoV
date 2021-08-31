@@ -3464,6 +3464,7 @@ void() spinattack_particle = // white particles to spin around vigil
 	setorigin(parti, self.origin);
 	setorigin (parti, self.origin - v_up * 32);
 	parti.avelocity = '0 500 0';
+	setmodel (parti, "progs/twisti.spr");
 	parti.angles_y = random()*360;
 	parti.attack_finished = time + 0.5;
 	parti.drawonlytoclient = self.owner.owner; // reduce network traffic

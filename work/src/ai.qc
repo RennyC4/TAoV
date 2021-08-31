@@ -1605,7 +1605,7 @@ void(entity attacker) monster_pain =
 {
 	// Color flash on pain
 	if (self.block_finished < time)
-		self.colormod = '3 1 1';
+		self.colormod = '5 1 1';
 
 	// Ignore air combo flag is on the monster
 	// My enemy isn't on the ground, otherwise physics are ran
