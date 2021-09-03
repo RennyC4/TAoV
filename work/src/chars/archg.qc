@@ -298,9 +298,9 @@ void() monster_archghoul =
 	self.movetype = MOVETYPE_STEP;
 	setmodel (self, "progs/archg.mdl");
 	if (difficulty < 2)
-		self.health = 225; // regular health
+		self.health = 277; // regular health
 	else
-		self.health = 338; // hard health (50% tougher)
+		self.health = 415; // hard health (50% tougher)
 	self.netname = "solid";
 	self.takedamage = DAMAGE_AIM;
 	self.solid = SOLID_NOT;
