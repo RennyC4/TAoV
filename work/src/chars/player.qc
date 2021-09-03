@@ -5222,7 +5222,9 @@ void() player_airkick15		=[	$airkick15,	player_airkick16 	]
 
 	if (self.flags & FL_ONGROUND)
 		self.flags = self.flags - FL_ONGROUND;
-	FireMelee(10,25,7,25,6,1,1,TRUE,24,0);
+		
+	FireMelee(10,25,7,30,6,1,1,TRUE,24,0);
+	
 	if (self.owner.bighit_freeze > time) // check if attack landed, needs to be called after FireMelee();
 	{
 		if (freeze_finished < time) // don't interefere with level up/etc

@@ -4,6 +4,11 @@
 TODO: Update readme.txt
 TODO: Ask khraethor about boss progress
 
+TODO: Add 'blow back' on Vigil spin attack hit (Add a counter to the monster +1 spin attack hit, if it's >2 BLOWBACK, reset back to 0)
+	  Needs to reset back to 0 on first spin attack hit as well
+
+FIXME: Archer in Wild Lands starts firing at the player coming out of the castle gate and can hit him!?
+
 FIXME:
 Demo3 - Wrong Sky texture (rain)
 Demo4 - Outdated text stuff
