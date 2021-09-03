@@ -367,19 +367,9 @@ void() monster_archer =
 	setmodel (self, "progs/archer.mdl");
 
 	if (difficulty < 2)
-	{
-		if (self.mode == 0)
-			self.health = 75; // regular health
-		else
-			self.health = 25; // regular health
-	}
+		self.health = 75; // regular health
 	else
-	{
-		if (self.mode == 0)
-			self.health = 113; // hard health (50% tougher)
-		else
-			self.health = 45;
-	}
+		self.health = 113; // hard health (50% tougher)
 
 	self.netname = "solid";
 	self.takedamage = DAMAGE_AIM;

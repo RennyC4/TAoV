@@ -3119,7 +3119,7 @@
 "classname" "monster_archer"
 "angle" "90"
 "mode" "1"
-"targetname" "rush"
+"targetname" "rush_archer"
 "origin" "2688 -640 368"
 "_phong" "1"
 }
@@ -3128,7 +3128,7 @@
 "classname" "monster_archer"
 "angle" "90"
 "mode" "1"
-"targetname" "rush"
+"targetname" "rush_archer"
 "origin" "3088 -640 368"
 "_phong" "1"
 }
@@ -3886,6 +3886,7 @@
 "classname" "trigger_once"
 "target" "rush"
 "_phong" "1"
+"target2" "rush_archer"
 // brush 0
 {
 ( 3200 -176 640 ) ( 3200 -768 640 ) ( 3200 -768 160 ) trigger [ 0 1 0 0 ] [ 0 0 -1 0 ] 0 1 1
@@ -6487,4 +6488,18 @@
 "classname" "ambience_rain"
 "origin" "1928 -248 240"
 "_phong" "1"
+}
+// entity 243
+{
+"classname" "trigger_once"
+"target" "rush_archer"
+// brush 0
+{
+( 2336 -184 640 ) ( 2336 -768 640 ) ( 2336 -768 144 ) trigger [ 0 -1 0 0 ] [ 0 0 -1 0 ] 0 1 1
+( 2336 -768 640 ) ( 2352 -768 640 ) ( 2352 -768 144 ) trigger [ 1 0 0 0 ] [ 0 0 -1 0 ] 0 1 1
+( 2352 -768 144 ) ( 2352 -184 144 ) ( 2336 -184 144 ) trigger [ -1 0 0 0 ] [ 0 -1 0 0 ] 0 1 1
+( 2336 -184 640 ) ( 2352 -184 640 ) ( 2352 -768 640 ) trigger [ 1 0 0 0 ] [ 0 -1 0 0 ] 0 1 1
+( 2352 -184 144 ) ( 2352 -184 640 ) ( 2336 -184 640 ) trigger [ -1 0 0 0 ] [ 0 0 -1 0 ] 0 1 1
+( 2352 -768 640 ) ( 2352 -184 640 ) ( 2352 -184 144 ) trigger [ 0 1 0 0 ] [ 0 0 -1 0 ] 0 1 1
+}
 }
