@@ -3384,7 +3384,7 @@ void() spinattack =
 
 					if (head.health > 0)
 						self.owner.mana = self.owner.mana - 15;
-					if (self.frame >= $spin8) // blow back
+					if (self.frame >= $spin8) // full blow back
 						head.knockback = 3;
 					else
 						head.knockback = 0;
@@ -3424,6 +3424,11 @@ void() spinattack =
 						ThrowBloodSplat(head.origin, head);
 						ThrowBloodSplat(head.origin, head);
 					}
+
+					if (self.frame >= $spin8) // minor blow back
+						head.knockback = 1;
+					else
+						head.knockback = 0;
 
 					sound (self, CHAN_WEAPON, "player/swordhit.wav", 1, ATTN_NORM);
 					if (deathmatch == FALSE)
