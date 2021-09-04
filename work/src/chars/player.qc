@@ -608,7 +608,7 @@ void() manashadows_think =
 	if (self.alpha > 0)
 	{
 		self.alpha = self.alpha - 0.0080;
-		self.scale = self.scale + 0.01;
+		self.scale = self.scale + 0.005;
 	}
 	else
 	{
@@ -3384,7 +3384,10 @@ void() spinattack =
 
 					if (head.health > 0)
 						self.owner.mana = self.owner.mana - 15;
-					head.knockback = 0;
+					if (self.frame >= $spin8) // blow back
+						head.knockback = 3;
+					else
+						head.knockback = 0;
 					head.damage_type = 5; // cut in half
 
 					local float damg_calc = 25 + ceil(self.owner.swordlevel * 7.5);
