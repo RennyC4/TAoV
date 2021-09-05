@@ -1061,7 +1061,7 @@ void(float damg, float dist, float knokback, float rsize, float snd, float flsh,
 					if (head.classname == "player")
 					{
 						head.enemy = self; // Update who attacked Vigil last
-						if (head.perfectguard_buff < time)
+						if (head.perfectblock < time && head.perfectguard_buff < time)
 							head.knockback = knokback; // For guard breaking
 						else
 							head.knockback = 0;
