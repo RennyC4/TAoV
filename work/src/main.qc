@@ -515,10 +515,25 @@ void() StartFrame =
 		if (!v.flags & FL_MONSTER && !v.classname == "player")
 			continue;
 
-		// Color flash on pain removal
-		if (v.flags & FL_MONSTER && v.colormod != '1 1 1 ' && v.berserk_finished < time)
-			v.colormod = '1 1 1';
+		// Colormod smooth removal on monsters
+		//if (v.flags & FL_MONSTER && v.colormod != '1 1 1' && v.berserk_finished < time)
+		{
+			if (v.colormod_x > 1)
+				v.colormod_x = v.colormod_x - (0.03 * 100) * frametime;
+			else
+				v.colormod_x = 1;
 
+			if (v.colormod_y > 1)
+				v.colormod_y = v.colormod_y - (0.03 * 100) * frametime;
+			else
+				v.colormod_y = 1;
+
+			if (v.colormod_z > 1)
+				v.colormod_z = v.colormod_z - (0.03 * 100) * frametime;
+			else
+				v.colormod_z = 1;
+		}
+		
 		local vector x;
 		x = getlight(v.origin);
 
