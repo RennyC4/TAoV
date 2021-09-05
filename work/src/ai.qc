@@ -1290,6 +1290,7 @@ void(float dist) ai_walk =
 
 	if (self.classname == "esquid") // electric squid rotates as it moves
 		self.angles_y = self.angles_y + 30;
+
 	else if (self.flags & FL_ONGROUND) // look in the players direction
 	{
 		if (self.forceface_finished > time)
@@ -1375,14 +1376,6 @@ void(float dist) ai_walk =
 		}
 	}
 
-	// Electric Squid gets it's own movement function
-	if (self.classname == "esquid")
-	{
-		CombatThink();
-		movetogoal(dist);
-		return;
-	}
-
 	if (self.ai_reattack == FALSE)
 	{
 		// Fuzzy logic to wiggle if the AI gets stuck / Trying to get to Vigil
@@ -1417,9 +1410,11 @@ void(float dist) ai_walk =
 		}
 		UnmakeSolidList();
 		
-		// Only 'navigate stupidly' when I can't see Vigil
-		if (!visible(self.enemy))
+		// Only 'navigate stupidly' when I can't see Vigil or I'm an electric squid
+		if (!visible(self.enemy) || self.classname == "esquid")
 		{
+			if (self.classname == "esquid")
+				CombatThink();
 			movetogoal(dist);
 			return;
 		}
@@ -1607,7 +1602,7 @@ void(entity attacker) monster_pain =
 {
 	// Color flash on pain
 	if (self.block_finished < time)
-		self.colormod = '2 1 1';
+		self.colormod = '3 1 1';
 
 	// Ignore air combo flag is on the monster
 	// My enemy isn't on the ground, otherwise physics are ran

@@ -211,6 +211,8 @@ void(float hight) Darkball =
 	setmodel (missile, "progs/darkball.mdl");
 	setsize (missile, '0 0 0', '0 0 0');		
 	setorigin (missile, self.origin + v_forward*8 + v_up*hight);
+	
+	self.colormod = '4 0 4';
 };
 
 void()  zombie_atta1	=[	$atta1,		zombie_atta2	] {};

@@ -69,7 +69,7 @@ void()	troglod_firebolt7	=[	$casta7,		troglod_firebolt8	] {ai_forceface();};
 void()	troglod_firebolt8	=[	$casta8,		troglod_firebolt9	] {ai_forceface();};
 void()	troglod_firebolt9	=[	$casta9,		troglod_firebolt10	] {ai_forceface();};
 void()	troglod_firebolt10	=[	$casta10,		troglod_firebolt11	] {ai_forceface();};
-void()	troglod_firebolt11	=[	$casta11,		troglod_firebolt12	] {Fireball(13,15);ai_forceface();};
+void()	troglod_firebolt11	=[	$casta11,		troglod_firebolt12	] {self.colormod = '3 2 1';Fireball(13,15);ai_forceface();};
 void()	troglod_firebolt12	=[	$casta12,		troglod_firebolt13	] {ai_forceface();};
 void()	troglod_firebolt13	=[	$casta13,		troglod_firebolt14	] {ai_forceface();};
 void()	troglod_firebolt14	=[	$casta14,		troglod_firebolt15	] {ai_forceface();};
@@ -85,9 +85,9 @@ void()	troglod_fireball7	=[	$casta7,		troglod_fireball8	] {ai_forceface();};
 void()	troglod_fireball8	=[	$casta8,		troglod_fireball9	] {ai_forceface();};
 void()	troglod_fireball9	=[	$casta9,		troglod_fireball10	] {ai_forceface();};
 void()	troglod_fireball10	=[	$casta10,		troglod_fireball11	] {ai_forceface();};
-void()	troglod_fireball11	=[	$casta11,		troglod_fireball12	] {Fireball(13,15);ai_forceface();};
-void()	troglod_fireball12	=[	$casta12,		troglod_fireball13	] {Fireball(13,15);ai_forceface();};
-void()	troglod_fireball13	=[	$casta13,		troglod_fireball14	] {Fireball(13,15);ai_forceface();};
+void()	troglod_fireball11	=[	$casta11,		troglod_fireball12	] {self.colormod = '3 2 1';Fireball(13,15);ai_forceface();};
+void()	troglod_fireball12	=[	$casta12,		troglod_fireball13	] {self.colormod = '3 2 1';Fireball(13,15);ai_forceface();};
+void()	troglod_fireball13	=[	$casta13,		troglod_fireball14	] {self.colormod = '3 2 1';Fireball(13,15);ai_forceface();};
 void()	troglod_fireball14	=[	$casta14,		troglod_fireball15	] {ai_forceface();};
 void()	troglod_fireball15	=[	$casta15,		troglod_run1    	] {ai_forceface();};
 
@@ -104,6 +104,7 @@ void() troglod_lightning6		=[	$castb6,	troglod_lightning6		]
 	else
 		LightningStorm();
 	self.lcount = self.lcount + 1; // count up till end
+	self.colormod = '5 5 5';
 	ai_forceface();
 };
 
@@ -185,7 +186,7 @@ void() troglod_icefield8	=[	$castb3,	troglod_icefield9	] {};
 void() troglod_icefield9	=[	$casta9,	troglod_icefield10	] {self.angles_x = -20;};
 void() troglod_icefield10	=[	$casta9,	troglod_icefield11	] {self.angles_x = -40;};
 void() troglod_icefield11	=[	$casta10,	troglod_icefield12	] {self.angles_x = -60;};
-void() troglod_icefield12	=[	$casta11,	troglod_icefield13	] {self.angles_x = -80;IceField_Projectile();};
+void() troglod_icefield12	=[	$casta11,	troglod_icefield13	] {self.angles_x = -80;self.colormod = '1 1 10';IceField_Projectile();};
 void() troglod_icefield13	=[	$casta12,	troglod_icefield14	] {self.angles_x = -60;};
 void() troglod_icefield14	=[	$casta13,	troglod_icefield15	] {self.angles_x = -40;};
 void() troglod_icefield15	=[	$casta14,	troglod_icefield16	] {self.angles_x = -20;};
@@ -255,6 +256,7 @@ void()	troglod_firebeam13	=[	$casta11,		troglod_firebeam14	]
 {
 	if (self.beams_shot < 30)
 	{
+		self.colormod = '5 0 0';
 		Firebeam(2, 12, 0);
 		self.beams_shot = self.beams_shot + 1;
 	}
@@ -270,6 +272,7 @@ void()	troglod_firebeam14	=[	$casta12,		troglod_firebeam15	]
 {
 	if (self.beams_shot < 30)
 	{
+		self.colormod = '5 0 0';
 		Firebeam(1, 12, 0);
 		self.beams_shot = self.beams_shot + 1;
 	}
@@ -283,6 +286,7 @@ void()	troglod_firebeam15	=[	$casta13,		troglod_firebeam13	]
 {
 	if (self.beams_shot < 30)
 	{
+		self.colormod = '5 0 0';
 		Firebeam (1, 15, 0);
 		self.beams_shot = self.beams_shot + 1;
 	}
@@ -430,9 +434,9 @@ void() monster_troglod =
 	setmodel (self, "progs/troglod.mdl");
 	setsize(self, VEC_HULL_MIN, VEC_HULL_MAX);
 	if (difficulty < 2)
-		self.health = 266; // regular health
+		self.health = 333; // regular health
 	else
-		self.health = 399; // hard health (50% tougher)
+		self.health = 499; // hard health (50% tougher)
 	self.mana = 200; // mana, 200 is max for troglod
 
 	self.netname = "solid";

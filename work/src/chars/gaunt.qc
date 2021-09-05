@@ -217,7 +217,7 @@ void()	gaunt_firebolt3		=[	$firebolt3,		gaunt_firebolt4	 ] {monster_removeslide(
 void()	gaunt_firebolt4		=[	$firebolt4,		gaunt_firebolt5	 ] {monster_removeslide();};
 void()	gaunt_firebolt5		=[	$firebolt5,		gaunt_firebolt6	 ] {monster_removeslide();};
 void()	gaunt_firebolt6		=[	$firebolt6,		gaunt_firebolt7	 ] {monster_removeslide();};
-void()	gaunt_firebolt7		=[	$firebolt7,		gaunt_firebolt8	 ] {Fireball(16,15);monster_removeslide();};
+void()	gaunt_firebolt7		=[	$firebolt7,		gaunt_firebolt8	 ] {self.colormod = '3 2 1';Fireball(16,15);monster_removeslide();};
 void()	gaunt_firebolt8		=[	$firebolt8,		gaunt_firebolt9	 ] {monster_removeslide();};
 void()	gaunt_firebolt9		=[	$firebolt9,		gaunt_firebolt10 ] {monster_removeslide();};
 void()	gaunt_firebolt10	=[	$firebolt10,		gaunt_run1	 ] {monster_removeslide();};
@@ -232,11 +232,11 @@ void()	gaunt_fireball7	=[	$fireball7,		gaunt_fireball8	] {monster_removeslide();
 void()	gaunt_fireball8	=[	$fireball8,		gaunt_fireball9	] {monster_removeslide();};
 void()	gaunt_fireball9	=[	$fireball9,		gaunt_fireball10	] {monster_removeslide();};
 void()	gaunt_fireball10	=[	$fireball10,	gaunt_fireball11	] {monster_removeslide();};
-void()	gaunt_fireball11	=[	$fireball11,	gaunt_fireball12	] {Fireball(9,15);monster_removeslide();};
+void()	gaunt_fireball11	=[	$fireball11,	gaunt_fireball12	] {self.colormod = '3 2 1';Fireball(9,15);monster_removeslide();};
 void()	gaunt_fireball12	=[	$fireball12,	gaunt_fireball13	] {monster_removeslide();};
-void()	gaunt_fireball13	=[	$fireball13,	gaunt_fireball14	] {Fireball(9,15);monster_removeslide();};
+void()	gaunt_fireball13	=[	$fireball13,	gaunt_fireball14	] {self.colormod = '3 2 1';Fireball(9,15);monster_removeslide();};
 void()	gaunt_fireball14	=[	$fireball14,	gaunt_fireball15	] {monster_removeslide();};
-void()	gaunt_fireball15	=[	$fireball15,	gaunt_run1  	] {Fireball(9,15);monster_removeslide();};
+void()	gaunt_fireball15	=[	$fireball15,	gaunt_run1  	] {self.colormod = '3 2 1';Fireball(9,15);monster_removeslide();};
 
 void()	gaunt_firebeam1	=[	$shoot1,		gaunt_firebeam2	] 
 {
@@ -273,6 +273,7 @@ void()	gaunt_firebeam13	=[	$beam1,		gaunt_firebeam14	]
 	monster_removeslide();
 	if (self.beams_shot < 30)
 	{
+		self.colormod = '5 0 0';
 		Firebeam(2, 12, 0);
 		self.beams_shot = self.beams_shot + 1;
 	}
@@ -289,6 +290,7 @@ void()	gaunt_firebeam14	=[	$beam2,		gaunt_firebeam15	]
 	monster_removeslide();
 	if (self.beams_shot < 30)
 	{
+		self.colormod = '5 0 0';
 		Firebeam(1, 12, 0);
 		self.beams_shot = self.beams_shot + 1;
 	}
@@ -302,6 +304,7 @@ void()	gaunt_firebeam15	=[	$beam3,		gaunt_firebeam13	]
 	monster_removeslide();
 	if (self.beams_shot < 30)
 	{
+		self.colormod = '5 0 0';
 		Firebeam (1,15, 0);
 		self.beams_shot = self.beams_shot + 1;
 	}

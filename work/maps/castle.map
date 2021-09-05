@@ -7139,7 +7139,7 @@
 // entity 144
 {
 "classname" "monster_esquid"
-"origin" "-5856 -280 1904"
+"origin" "-5856 -280 1912"
 "angle" "180"
 "_phong" "1"
 }

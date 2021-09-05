@@ -1109,7 +1109,9 @@ void(float damg, float dist, float knokback, float rsize, float snd, float flsh,
 								self.knockback = 0; // reset knockback, don't hold it!
 								if (self.paincount > 0)
 									self.paincount = self.paincount - 1; // counteract
-								self.th_pain();
+								if (self.th_pain)
+									self.th_pain();
+								self.colormod = '5 5 0'; // melee monsters get a colormod effect
 							}
 						}
 					}

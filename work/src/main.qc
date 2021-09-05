@@ -516,7 +516,7 @@ void() StartFrame =
 			continue;
 
 		// Colormod smooth removal on monsters
-		//if (v.flags & FL_MONSTER && v.colormod != '1 1 1' && v.berserk_finished < time)
+		if (v.flags & FL_MONSTER && v.colormod != '1 1 1' && v.berserk_finished < time)
 		{
 			if (v.colormod_x > 1)
 				v.colormod_x = v.colormod_x - (0.03 * 100) * frametime;

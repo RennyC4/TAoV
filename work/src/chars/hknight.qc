@@ -309,6 +309,7 @@ void() HellKnight_Lightning =
 	r = random();
 	makevectors (self.angles);
 
+	self.colormod = '1 1 5';
 	sound (self, CHAN_WEAPON, "spells/thunder.wav", 1, ATTN_NORM);
 
 	MakeSolidList();

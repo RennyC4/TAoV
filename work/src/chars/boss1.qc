@@ -201,9 +201,15 @@ void() sgk_magic1	=[	69,	sgk_magic1	]
 	self.colormod = '3 2 1';
 
 	if (self.cnt2 == 4)
+	{
+		self.colormod = '3 2 1';
 		Fireball(7,26); // damage, height
+	}
 	if (self.cnt2 == 8)
+	{
+		self.colormod = '3 2 1';
 		Fireball(7,26); // damage, height
+	}
 
 	else if (self.cnt2 >= 12)
 	{

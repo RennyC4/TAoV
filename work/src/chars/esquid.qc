@@ -267,6 +267,7 @@ void() lit_think =
 						}
 						head.knockback = 0;
 						sound (self, CHAN_WEAPON, "esquid/attack.wav", 1, ATTN_NORM);
+						self.owner.colormod = '1 1 10';
 					}
 				}
 				head = head.chain;

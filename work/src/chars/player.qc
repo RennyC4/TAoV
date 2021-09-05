@@ -5683,7 +5683,7 @@ void() player_pain =
 
 	if (self.owner.status_broken_finished < time)
 	{
-		self.colormod = '2 1 1'; // flash red fast
+		self.colormod = '3 1 1'; // flash red
 		if (self.block_finished > time)
 			self.block_finished = time;
 		if (self.owner.noblock_finished > time)

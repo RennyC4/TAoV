@@ -121,8 +121,8 @@ void() archg_fireball1	=[	$castb1,	archg_fireball2		] {spawn_magicfog();};
 void() archg_fireball2	=[	$castb2,	archg_fireball3		] {};
 void() archg_fireball3	=[	$castb3,	archg_fireball4		] {};
 void() archg_fireball4	=[	$castb4,	archg_fireball5		] {};
-void() archg_fireball5	=[	$castb5,	archg_fireball6		] {Fireball(11,7);};
-void() archg_fireball6	=[	$castb6,	archg_fireball7		] {Fireball(11,3);};
+void() archg_fireball5	=[	$castb5,	archg_fireball6		] {self.colormod = '3 2 1';Fireball(11,7);};
+void() archg_fireball6	=[	$castb6,	archg_fireball7		] {self.colormod = '3 2 1';Fireball(11,3);};
 void() archg_fireball7	=[	$castb7,	archg_fireball8		] {};
 void() archg_fireball8	=[	$castb8,	archg_fireball9		] {};
 void() archg_fireball9	=[	$castb9,	archg_walk1 		] {};
@@ -142,6 +142,7 @@ void() archg_lightning8		=[	$cast8,	archg_lightning8		]
 	else
 		LightningStorm();
 	self.lcount = self.lcount + 1; // count up till end
+	self.colormod = '5 5 5';
 };
 
 void() archg_lightning9		=[	$cast9,	archg_lightning10		] {};
@@ -175,7 +176,7 @@ void() archg_icefield7		=[	$cast7,	archg_icefield8		] {};
 void() archg_icefield8		=[	$cast8,	archg_icefield9		] {};
 void() archg_icefield9		=[	$cast9,	archg_icefield10		] {};
 void() archg_icefield10		=[	$cast10,	archg_icefield11		] {};
-void() archg_icefield11		=[	$cast11,	archg_walk1		      ] {IceField();};
+void() archg_icefield11		=[	$cast11,	archg_walk1		      ] {self.colormod = '1 1 10';IceField();};
 
 void() archg_magic =
 {

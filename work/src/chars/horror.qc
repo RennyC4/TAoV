@@ -35,6 +35,7 @@ void() horror_fireball2	=[	$attack2,	horror_fireball3	] {};
 void() horror_fireball3	=[	$attack3,	horror_fireball4	] {};
 void() horror_fireball4	=[	$attack4,	horror_fireball5	]
 {
+	self.colormod = '3 2 1';
 	Fireball(9,8); // damage, height
 };
 void() horror_fireball5	=[	$attack5,	horror_fireball6	] {};
