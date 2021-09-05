@@ -4,8 +4,6 @@
 TODO: Update readme.txt
 TODO: Ask khraethor about boss progress
 
-FIXME: Vigil is getting knocked back even when PG'ing an attack with knockback
-
 FIXME:
 Demo3 - Wrong Sky texture (rain)
 Demo4 - Outdated text stuff
