@@ -42,7 +42,6 @@ $frame cast13 cast14 cast15 cast16
 void() werewolf_stand;
 void()	werewolf_howl	=[	$idle1,	werewolf_howl	] 
 {
-	self.lip = FALSE;
 	// Used to set walkframe to zero on new animation
 	if (self.count == FALSE)
 	{
@@ -71,7 +70,6 @@ void()	werewolf_howl	=[	$idle1,	werewolf_howl	]
 
 void()	werewolf_stand	=[	$idle1,	werewolf_stand	] 
 {
-	self.lip = FALSE;
 	// Only turn back on when you're on the ground
 	if (self.flags & FL_ONGROUND)
 		self.ignoreaircombo = TRUE;
@@ -94,7 +92,6 @@ void()	werewolf_stand	=[	$idle1,	werewolf_stand	]
 
 void()	werewolf_walk	=[	$walk1,		werewolf_walk	] 
 {
-	self.lip = FALSE;
 	self.count = FALSE;
 	if (self.walkframe >= 12)
 		self.walkframe = 0;
@@ -124,7 +121,6 @@ void()	werewolf_walk	=[	$walk1,		werewolf_walk	]
 
 void()	werewolf_run	=[	$run1,		werewolf_run	] 
 {
-	self.lip = FALSE;
 	self.count = FALSE;
 	if (self.walkframe >= 12)
 		self.walkframe = 0;
@@ -151,7 +147,6 @@ void()	werewolf_run	=[	$run1,		werewolf_run	]
 
 void()	werewolf_atk	=[	$melee1,		werewolf_atk	] 
 {
-	self.lip = FALSE;
 	// Used to set walkframe to zero on new animation
 	if (self.count == FALSE)
 	{
@@ -206,12 +201,7 @@ void()	werewolf_atk	=[	$melee1,		werewolf_atk	]
 void()	werewolf_paina =[	$paina1,	werewolf_paina	] 
 {
 	monster_removeslide();
-	// Flash red once
-	if (!self.lip)
-	{
-		monster_pain(self.enemy);
-		self.lip = TRUE;
-	}
+
 	if (self.count == FALSE)
 	{
 		self.walkframe = 0;
@@ -231,13 +221,6 @@ void()	werewolf_paina =[	$paina1,	werewolf_paina	]
 void()	werewolf_painb =[	$painb1,	werewolf_painb	] 
 {
 	monster_removeslide();
-
-	// Flash red once
-	if (!self.lip)
-	{
-		monster_pain(self.enemy);
-		self.lip = TRUE;
-	}
 	
 	if (self.count == FALSE)
 	{
@@ -258,6 +241,8 @@ void()	werewolf_painb =[	$painb1,	werewolf_painb	]
 // logic to decide which pain animation to play
 void() werewolf_pain_decide =
 {
+	monster_pain(self.enemy);
+
 	monster_removeslide();
 	sound (self, CHAN_VOICE, "werewolf/pain.wav", 1, ATTN_NORM);
 

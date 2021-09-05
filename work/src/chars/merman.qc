@@ -299,6 +299,7 @@ void()	merman_pain6	=[	$pain6, 	merman_idle		] {monster_removeslide();};
 void() merman_pain = 
 {
 	self.cnt = self.cnt + 1;
+	monster_pain(self.enemy);
 	monster_removeslide();
 	if (self.cnt > 2 || self.grab_finished > time || self.enemy.grabbed || self.enemy.perfectguard_buff > time)
 	{
@@ -306,7 +307,6 @@ void() merman_pain =
 		merman_pain1();
 		self.cnt = 0;
 	}
-	monster_pain(self.enemy);
 	frameskip(0.1);
 };
 

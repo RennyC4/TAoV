@@ -362,6 +362,7 @@ void() boss_fbeam6 = [$shockb6, boss_fbeam1] {frameskip(0.03);};
 
 void() boss_pain =
 {
+	self.colormod = '5 1 1';
 	self.cnt2 = self.cnt2 + 1;
 	if (self.attack_finished > time)
 	{
