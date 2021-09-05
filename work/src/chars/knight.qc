@@ -320,7 +320,7 @@ void() monster_knight =
 	if (!self.ai_blockfreq) // frequency on how much the enemy blocks
 	{
 		if (difficulty < 2)
-			self.ai_blockfreq = 0.07;
+			self.ai_blockfreq = 0.045;
 		else
 			self.ai_blockfreq = 0.7;
 	}

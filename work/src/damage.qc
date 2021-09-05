@@ -445,7 +445,7 @@ void(entity targ, entity inflictor, entity attacker, float damage, float statusr
 	}
 
 	//
-	// player stuff here
+	// player - run physics and pain animation
 	//
 
 	if (self.classname == "player")
@@ -1061,7 +1061,7 @@ void(float damg, float dist, float knokback, float rsize, float snd, float flsh,
 					if (head.classname == "player")
 					{
 						head.enemy = self; // Update who attacked Vigil last
-						if (head.perfectblock < time)
+						if (head.perfectguard_buff < time)
 							head.knockback = knokback; // For guard breaking
 						else
 							head.knockback = 0;
@@ -1071,7 +1071,7 @@ void(float damg, float dist, float knokback, float rsize, float snd, float flsh,
 						{
 							// Set the knockback, deal the damage, then have the player run his animation in proper order
 							local float chip_d = floor(damg / 3); // Guard breaks have chip damage
-							head.knockback = 0;
+							self.knockback = head.knockback = 0; // turn off knockback before block break routine is ran
 							T_Damage (head, self, self, chip_d, statusrand);
 							head.owner.camshake_finished = time + 0.2;
 							head.think = player_blockbrk1;
@@ -1115,7 +1115,7 @@ void(float damg, float dist, float knokback, float rsize, float snd, float flsh,
 					}
 
 					//
-					// Air Comboing physics, Y Axis adjustment is done in player.qc
+					// Air Comboing physics
 					//
 
 					if (!self.flags & FL_ONGROUND)
@@ -1133,7 +1133,7 @@ void(float damg, float dist, float knokback, float rsize, float snd, float flsh,
 							if (ignoreair == FALSE)
 							{
 								self.velocity_x = head.velocity_x;
-								self.velocity_z = 0;
+								self.velocity_z = 0; // reset Z velocity first
 								self.velocity_z = head.velocity_z = self.velocity_z + 150; // raise vigil/monsters in the air after each successful air hit
 							}
 							self.velocity_y = 0; // remove Vigil's foreground / background movement

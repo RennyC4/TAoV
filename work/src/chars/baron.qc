@@ -70,10 +70,12 @@ void() baron_swing1;
 void() baron_run1;
 void()	baron_block1	=[	$draw5,	baron_block1	] 
 {
+	monster_removeslide();
+
+	if (self.flags & FL_ONGROUND)
+		self.flags = self.flags - (self.flags & FL_ONGROUND);
 	if (!self.enemy.owner)
 		return;
-
-	monster_removeslide();
 
 	if (self.origin_x < self.enemy.origin_x)
 		self.angles_y = 0;

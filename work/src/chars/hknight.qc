@@ -316,7 +316,7 @@ void() HellKnight_Lightning =
 	org = self.origin + '0 0 20' + v_forward * 35;
 	traceline (org, org + v_forward * 350, FALSE, self);
 
-	if (trace_ent.health > 0 && trace_ent.takedamage)
+	if (trace_ent.health > 0 && trace_ent.takedamage && trace_ent.classname == "player")
 	{
 		temp = spawn ();
 		temp.movetype = MOVETYPE_NONE;
@@ -340,6 +340,11 @@ void() HellKnight_Lightning =
 		setorigin (temp, trace_ent.origin);
 		spawn_color_glow(0, 0, 5, 100, temp);
 		
+		if (self.angles_y > 90 && self.angles_y < 270) // Attacker facing right
+			trace_ent.angles_y = 0; // victim faces left
+		else
+			trace_ent.angles_y = 180; // victim faces right
+		
 		if (trace_ent.perfectblock < time)
 		{
 			if (trace_ent.block_finished < time)
@@ -347,15 +352,8 @@ void() HellKnight_Lightning =
 				trace_ent.knockback = 0;
 				T_Damage (trace_ent, self, self, 8, 0);
 			}
-			else if (trace_ent.classname == "player") // blocked
-			{
-				if (self.angles_y > 90 && self.angles_y < 270) // Attacker facing right
-					trace_ent.angles_y = 0; // Block victim faces left
-				else
-					trace_ent.angles_y = 180; // Block victim faces right
-			}
 		}
-		else if (trace_ent.classname == "player") // perfect blocked
+		else // perfect guard
 		{
 			local entity temp2;
 			temp2 = spawn ();
@@ -400,7 +398,7 @@ void() HellKnight_Lightning =
 	else
 	{
 		temp = spawn ();
-		temp.movetype = MOVETYPE_NONE;
+		temp.movetype = MOVETYPE_NOCLIP;
 		//temp.solid = SOLID_TRIGGER;
 		temp.solid = SOLID_NOT;
 		temp.classname = "sprite";
