@@ -126,7 +126,10 @@ void() bat_touch =
 		return;
 
 	if (other.takedamage && other.classname == "player" && other.health > 0)
+	{
+		other.knockback = 1;
 		FireMelee(12,0,1,25,0,0,0,TRUE,0,0);
+	}
 
 	effect = spawn();
 	setorigin(effect, self.origin + v_up * 14);

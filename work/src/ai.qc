@@ -1632,15 +1632,16 @@ void(entity attacker) monster_pain =
 	{
 		self.velocity = '0 0 0';
 		self.velocity_z = 300;
-		if (self.angles_y == 0)
-			self.velocity_x = -100;
-		else
+		//if (self.angles_y == 0)
+		if (self.angles_y > 90 && self.angles_y < 270)
 			self.velocity_x = 100;
+		else
+			self.velocity_x = -100;
 	}
 	else if (self.knockback == 2)
 	{
 		self.velocity = '0 0 0';
-		if (self.ignoreaircombo)
+		if (self.ignoreaircombo) // heavy weight enemy
 			self.velocity_z = 212;
 		else
 			self.velocity_z = 425;
@@ -1650,18 +1651,20 @@ void(entity attacker) monster_pain =
 		self.velocity = '0 0 0';
 		setorigin(self, self.origin);
 		self.velocity_z = 300;
-		if (self.angles_y == 0)
-			self.velocity_x = -300;
-		else
+		//if (self.angles_y == 0)
+		if (self.angles_y > 90 && self.angles_y < 270)
 			self.velocity_x = 300;
+		else
+			self.velocity_x = -300;
 	}
 	else if (self.knockback == 4)
 	{
 		self.velocity_z = 200;
-		if (self.angles_y == 0)
-			self.velocity_x = -50;
-		else
+		//if (self.angles_y == 0)
+		if (self.angles_y > 90 && self.angles_y < 270)
 			self.velocity_x = 50;
+		else
+			self.velocity_x = -50;
 		self.paincount = 2;
 	}
 	else if (self.knockback == 5)
@@ -1669,20 +1672,22 @@ void(entity attacker) monster_pain =
 		self.velocity = '0 0 0';
 		self.velocity_z = 350;
 
-		if (self.angles_y == 0)
-			self.velocity_x = -200;
-		else
+		//if (self.angles_y == 0)
+		if (self.angles_y > 90 && self.angles_y < 270)
 			self.velocity_x = 200;
+		else
+			self.velocity_x = -200;
 	}
 	else if (self.knockback == 6)
 	{
 		self.velocity = '0 0 0';
 		self.velocity_z = 0;
 
-		if (self.angles_y == 0)
-			self.velocity_x = -400;
-		else
+		//if (self.angles_y == 0)
+		if (self.angles_y > 90 && self.angles_y < 270)
 			self.velocity_x = 400;
+		else
+			self.velocity_x = -400;
 	}
 	else if (self.knockback == 7)
 	{
