@@ -75,6 +75,11 @@ void() ArcherArrowThink =
 	{
 		if (head.takedamage && self.owner != head && self.owner.enemy == head && head.perfectguard_buff < time)
 		{
+			if (head.origin_x < self.owner.origin_x)
+				head.angles_y = 0;
+			else
+				head.angles_y = 180;
+
 			if (head.perfectblock < time)
 			{
 				if (head.block_finished < time) // Do damage
@@ -103,11 +108,6 @@ void() ArcherArrowThink =
 					// block
 					if (head.classname == "player")
 					{
-						if (head.origin_x < self.owner.origin_x)
-							head.angles_y = 0;
-						else
-							head.angles_y = 180;
-				
 						head.effects = EF_MUZZLEFLASH; // create light on melee impact
 						head.think = player_block;
 						head.nextthink = time + 0.1;
@@ -123,11 +123,6 @@ void() ArcherArrowThink =
 			}
 			else // Perfect Block
 			{
-				if (head.origin_x < self.origin_x)
-					head.angles_y = 0;
-				else
-					head.angles_y = 180;
-
 				PerfectGuard(head);
 				remove(self);
 				return;

@@ -530,10 +530,20 @@ void() StartFrame =
 				else
 					v.colormod_y = 1;
 
-				if (v.colormod_z > 1)
-					v.colormod_z = v.colormod_z - (0.03 * 100) * frametime;
+				if (v.classname == "ethskull") // z = blue
+				{
+					if (v.colormod_z > 3)
+						v.colormod_z = v.colormod_z - (0.03 * 100) * frametime;
+					else
+						v.colormod_z = 3;
+				}
 				else
-					v.colormod_z = 1;
+				{
+					if (v.colormod_z > 1)
+						v.colormod_z = v.colormod_z - (0.03 * 100) * frametime;
+					else
+						v.colormod_z = 1;
+				}
 			}
 			else if (v.colormod != '3 1 1') // berserk/enrage on, reset to those colours
 			{
