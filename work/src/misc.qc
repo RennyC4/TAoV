@@ -788,6 +788,83 @@ void() intro_text =
 	self.effects = EF_NODEPTHTEST;
 };
 
+
+/*QUAKED sign_attack_down (0 1 0) (-10 -10 -10) (10 10 10)
+A sign saying "Attack!" with an arrow pointing down
+* Can be switch on/off by targetting
+*/
+
+void() sign_attack_down_think =
+{
+	if (self.mode)
+	{
+		if (self.alpha < 1)
+		{
+			self.alpha = self.alpha + 0.005;
+			setmodel (self, "progs/sign_atk.spr");
+		}
+		else
+		{
+			self.alpha = 1;
+			if (self.pain_finished < time && self.alpha == 1) // blink the sign
+			{
+				if (!self.lip)
+				{
+					setmodel (self, "progs/null.spr");
+					self.lip = TRUE;
+				}
+				else
+				{
+					setmodel (self, "progs/sign_atk.spr");
+					self.lip = FALSE;
+				}
+				self.pain_finished = time + 0.4;
+			}
+		}
+	}
+	else
+	{
+		if (self.alpha > 0)
+			self.alpha = self.alpha - 0.005;
+		else
+		{
+			self.alpha = 0;
+			setmodel (self, "progs/null.spr");
+		}
+	}
+	
+	frameskip(0.01);
+};
+
+void() sign_attack_down_use =
+{
+	if (!self.mode)
+		self.mode = TRUE;
+	else
+	{
+		setmodel (self, "progs/sign_atk.spr");
+		self.mode = FALSE;
+		self.lip = FALSE;
+	}
+};
+
+void() sign_attack_down =
+{
+	precache_model("progs/null.spr");
+	precache_model("progs/sign_atk.spr");
+	setmodel (self, "progs/null.spr");
+	self.movetype = MOVETYPE_NOCLIP;
+	self.solid = SOLID_NOT;
+	self.effects = EF_NODEPTHTEST | EF_ADDITIVE;
+	self.think = sign_attack_down_think;
+	self.nextthink = time + 0.1;
+	self.use = sign_attack_down_use;
+	self.mode = 0;
+	self.alpha = 0;
+	self.lip = FALSE;
+	self.scale = .5;
+};
+
 /*
 ==============================================================================
 

@@ -12390,6 +12390,7 @@
 "classname" "func_destroy_map01"
 "health" "55"
 "_phong" "1"
+"target" "attack_sign"
 // brush 0
 {
 ( -3920 -160 64 ) ( -3912 -256 184 ) ( -3912 -304 144 ) rpgrocks1_rpg8 [ 0 1 0 -189.366 ] [ 0 0 -1 0 ] 0 1 1
@@ -13882,6 +13883,7 @@
 "target" "barrier"
 "target2" "normalmusic"
 "_phong" "1"
+"target3" "attack_sign"
 }
 // entity 177
 {
@@ -13947,4 +13949,10 @@
 "spawnflags" "64"
 "awareness" "3"
 "_phong" "1"
+}
+// entity 185
+{
+"origin" "-3840 -232 216"
+"classname" "sign_attack_down"
+"targetname" "attack_sign"
 }
