@@ -789,6 +789,82 @@ void() intro_text =
 };
 
 
+/*QUAKED sign_roll_right (0 1 0) (-10 -10 -10) (10 10 10)
+A sign saying "Roll" with an arrow pointing right
+* Can be switch on/off by targetting
+*/
+
+void() sign_roll_right_think =
+{
+	if (self.mode)
+	{
+		if (self.alpha < 1)
+		{
+			self.alpha = self.alpha + 0.005;
+			setmodel (self, "progs/sign_rol.spr");
+		}
+		else
+		{
+			self.alpha = 1;
+			if (self.pain_finished < time && self.alpha == 1) // blink the sign
+			{
+				if (!self.lip)
+				{
+					setmodel (self, "progs/null.spr");
+					self.lip = TRUE;
+				}
+				else
+				{
+					setmodel (self, "progs/sign_rol.spr");
+					self.lip = FALSE;
+				}
+				self.pain_finished = time + 0.4;
+			}
+		}
+	}
+	else
+	{
+		if (self.alpha > 0)
+			self.alpha = self.alpha - 0.005;
+		else
+		{
+			self.alpha = 0;
+			setmodel (self, "progs/null.spr");
+		}
+	}
+	
+	frameskip(0.01);
+};
+
+void() sign_roll_right_use =
+{
+	if (!self.mode)
+		self.mode = TRUE;
+	else
+	{
+		setmodel (self, "progs/sign_rol.spr");
+		self.mode = FALSE;
+		self.lip = FALSE;
+	}
+};
+
+void() sign_roll_right =
+{
+	precache_model("progs/null.spr");
+	precache_model("progs/sign_rol.spr");
+	setmodel (self, "progs/null.spr");
+	self.movetype = MOVETYPE_NOCLIP;
+	self.solid = SOLID_NOT;
+	self.effects = EF_NODEPTHTEST | EF_ADDITIVE;
+	self.think = sign_roll_right_think;
+	self.nextthink = time + 0.1;
+	self.use = sign_roll_right_use;
+	self.mode = 0;
+	self.alpha = 0;
+	self.lip = FALSE;
+	self.scale = .5;
+};
+
 /*QUAKED sign_attack_down (0 1 0) (-10 -10 -10) (10 10 10)
 A sign saying "Attack!" with an arrow pointing down
 * Can be switch on/off by targetting
