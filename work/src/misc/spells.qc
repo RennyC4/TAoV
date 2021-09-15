@@ -133,6 +133,8 @@ void() FireBallHomeIn =
 						T_Damage (head, self, self.owner, self.mode * 2, 0);
 					else if (head.classname == "golem") // golems are resistant
 						T_Damage (head, self, self.owner, self.mode / 3, 0);
+					else if (head.classname == "sgknight") // SGK is very resistant
+						T_Damage (head, self, self.owner, self.mode / 4, 0);
 					else
 					{
 						if (head.classname == "player")
@@ -451,8 +453,10 @@ void() LightningThink =
 				if (self.owner.classname == "player")
 				{
 					head.knockback = 0;
-					if (head.classname == "dragon" || head.classname == "sgknight") // monster weaknesses
+					if (head.classname == "dragon")
 						T_Damage (head, self, self.owner, 5, 0);
+					else if (head.classname == "sgknight")
+						T_Damage (head, self, self.owner, 4, 0);					
 					else
 						T_Damage (head, self, self.owner, 3, 0);
 				}
