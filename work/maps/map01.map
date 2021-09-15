@@ -12471,7 +12471,7 @@
 {
 "origin" "-3190 -274 64"
 "classname" "item_health"
-"cnt" "35"
+"cnt" "50"
 "_phong" "1"
 }
 // entity 154
@@ -13931,7 +13931,7 @@
 {
 "origin" "-1954 -254 40"
 "classname" "item_health"
-"cnt" "10"
+"cnt" "25"
 "_phong" "1"
 }
 // entity 183

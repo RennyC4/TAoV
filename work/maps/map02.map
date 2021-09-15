@@ -7014,7 +7014,7 @@
 }
 // entity 65
 {
-"cnt" "25"
+"cnt" "35"
 "origin" "3394 -486 264"
 "classname" "item_health"
 "_phong" "1"
@@ -16043,7 +16043,7 @@
 {
 "classname" "barrel"
 "origin" "-952 -256 664"
-"cnt" "22"
+"cnt" "30"
 "spawnflags" "1"
 "_phong" "1"
 }
@@ -16159,7 +16159,7 @@
 }
 // entity 441
 {
-"cnt" "20"
+"cnt" "30"
 "origin" "306 -146 616"
 "classname" "item_health"
 "_phong" "1"
