@@ -1143,7 +1143,7 @@ void(float dist) ai_fly =
 				return;
 
 			if (trace_ent.solid == SOLID_BSP)
-				self.velocity_z = 0 + (dist * 4); // stay off ground
+				self.velocity_z = (dist * 4); // stay off ground
 		}
 		else
 		{
@@ -1399,15 +1399,34 @@ void(float dist) ai_walk =
 		}
 		self.oldorigin = self.origin;
 		
+		//
 		// Traceline check if something breakable is blocking my path and I can smash it
+		//
+		
 		MakeSolidList();
 		makevectors(self.angles);
-		traceline (self.origin, self.origin + v_forward*64 - v_up*24, FALSE, self);
+		
+		traceline (self.origin, self.origin + v_forward*64 - v_up*24, FALSE, self); // center
 		if (trace_ent.classname == "breakable")
 		{
 			if (self.th_melee)
 				self.th_melee();
 		}
+		
+		traceline (self.origin, self.origin + v_forward*64 - v_up*24 - v_right * 16, FALSE, self); // left
+		if (trace_ent.classname == "breakable")
+		{
+			if (self.th_melee)
+				self.th_melee();
+		}
+
+		traceline (self.origin, self.origin + v_forward*64 - v_up*24 + v_right * 16, FALSE, self); // right
+		if (trace_ent.classname == "breakable")
+		{
+			if (self.th_melee)
+				self.th_melee();
+		}
+
 		UnmakeSolidList();
 		
 		// Only 'navigate stupidly' when I can't see Vigil or I'm an electric squid
