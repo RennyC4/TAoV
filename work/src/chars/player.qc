@@ -5883,17 +5883,12 @@ void() player_die2	=[	$pain4,	player_die2	]
 	self.oldorigin = self.origin;
 };
 
-.float death_tilt_once;
 void() player_die3	=[	$pain5,	player_die3 ] 
 {
 	self.deadflag = DEAD_DEAD; // Enforce
 	self.movetype = MOVETYPE_WALK;
 
-	if (!self.death_tilt_once)
-	{
-		model_tilt();
-		self.death_tilt_once = TRUE;
-	}
+	model_tilt();
 
 	if (coop)
 	{

@@ -246,12 +246,7 @@ void() model_tilt =
 	local vector l1, l2;
 	local vector v, k;
 
-	if (self.classname == "player" && self.onground == FALSE)
-	{
-		self.angles_x = 0;
-		return;
-	}
-
+	self.angles_x = 0;
 	makevectors(self.angles);
 
 	v1 = self.origin + v_forward * 16;
