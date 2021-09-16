@@ -1204,7 +1204,7 @@ void() fire_buster_think =
 		effect = spawn();
 		setorigin(effect, self.origin);
 		setmodel(effect, "progs/firecolm.mdl");
-		effect.movetype = MOVETYPE_NOCLIP;
+		effect.movetype = MOVETYPE_NONE; // Fixes PG making me fly off
 		effect.angles_y = -90;
 		effect.scale = 1;
 		effect.solid = SOLID_NOT;
