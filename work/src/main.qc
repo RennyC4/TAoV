@@ -506,7 +506,8 @@ void() StartFrame =
 	}
 	
 	//
-	// Custom Lighting - Stops Monsters / Players from going pitch black
+	// Custom Lighting - Stops monsters / players from going pitch black
+	// + colormod shifting + soul candle relic
 	//
 	
 	for (entity v = world; (v=nextent(v));)
