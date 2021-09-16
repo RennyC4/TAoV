@@ -205,7 +205,6 @@ void() worldspawn =
 		precache_sound ("player/wrun1.wav");
 		precache_sound ("player/wrun2.wav");
 		precache_sound ("player/swrdwall.wav");
-		precache_sound ("player/shwing.wav");
 		precache_sound ("player/skid.wav");
 		precache_sound ("player/sipflask.wav");
 		precache_sound ("player/flaskmag.wav");

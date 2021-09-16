@@ -228,6 +228,76 @@ void() sgk_magic1	=[	69,	sgk_magic1	]
 	frameskip (0.1);
 };
 
+// magic attack 2 (fire buster)
+void() sgk_magic2	=[	69,	sgk_magic2	] 
+{
+	local entity effect;
+
+	ai_forceface();
+	self.count = FALSE;
+	self.colormod = '5 1 1';
+
+	// Find a player entity, place entity at player location
+	if (self.combo_finished < time)
+	{
+		if (self.enemy.deadflag != DEAD_DEAD && !self.enemy.flypain)
+		{
+			effect = spawn();
+			setorigin(effect, self.enemy.origin);
+			setmodel(effect, "progs/block.spr");
+			effect.angles_y = -90;
+			effect.angles_x = 90;
+			effect.angles_z = random()*360;
+			effect.colormod = '255 0 0';
+			effect.effects = EF_NODEPTHTEST;
+			effect.movetype = MOVETYPE_NOCLIP;
+			effect.solid = SOLID_NOT;
+			effect.owner = self;
+			effect.alpha = 1;
+			effect.scale = 10;
+			effect.avelocity = '0 100 0';
+			setsize (effect, '0 0 0', '0 0 0');
+
+			effect.think = fire_buster_think;
+			effect.nextthink = time;
+		}
+		self.combo_finished = time + 0.75; // set lower to have these spawn faster (difficulty)
+	}
+
+	if (self.cnt2 >= 50 || !self.flags & FL_ONGROUND || self.enemy.flypain) // break out of the spell
+	{
+		self.colormod = '0 0 0';
+		self.walkframe = 0;
+		self.mode = 0; // Break out after magic is done
+		self.think = sgk_think;
+		frameskip (0.1);
+		return;
+	}
+	else
+		self.frame = 69; // Temporary, needs casting frames
+	
+	monster_removeslide();
+	self.cnt2 = self.cnt2 + 1;
+	frameskip (0.1);
+};
+
+// Decide which magic to cast
+void() boss1_magic =
+{
+	self.cnt2 = 0; // reset magic use counter
+
+	if (self.health > self.max_health / 2)
+		self.think = sgk_magic1;
+	else
+	{
+		if (random() < 0.35)
+			self.think = sgk_magic1;
+		else
+			self.think = sgk_magic2;
+	}
+	frameskip(0.1);
+};
+
 //
 // End walk routine
 //
@@ -367,10 +437,7 @@ void() sgk_think =
 	if (self.mode == 2) // Attacking
 		self.th_melee();
 	else if (self.mode == 4) // Casting
-	{
-		self.cnt2 = 0;
 		self.th_magic();
-	}
 	else
 		self.think = sgk_think; // Very important to keep !
 
@@ -555,6 +622,8 @@ void() monster_boss1 =
 	precache_sound ("knight/sword1.wav");
 	precache_sound ("sgk/pain.wav");
 	precache_sound ("misc/explode.wav");
+	precache_sound ("spells/flame.wav");
+	precache_model ("progs/firecolm.mdl");
 
 	self.movetype = MOVETYPE_NOCLIP; // Don't move until activated
 	setmodel (self, "progs/s_knight.mdl");
@@ -576,7 +645,7 @@ void() monster_boss1 =
 	self.th_die = boss1_death;
 	self.th_pain = boss1_pain;
 	self.th_melee = sgk_attack1;
-	self.th_magic = sgk_magic1;
+	self.th_magic = boss1_magic;
 
 	self.use = boss1_awake; // Wake up trigger
 	self.experience = 999999; // instant level up

@@ -6358,7 +6358,7 @@ void() player_magicd1	=[	$magicd1,	player_magicd2	]
 };
 void() player_magicd2	=[	$magicd2,	player_magicd3	] {};
 void() player_magicd3	=[	$magicd3,	player_magicd4	] {};
-void() player_magicd4	=[	$magicd4,	player_magicd5	] {sound (self, CHAN_BODY, "player/shwing.wav", 1, ATTN_NORM);};
+void() player_magicd4	=[	$magicd4,	player_magicd5	] {sound (self, CHAN_BODY, "player/wallgrab.wav", 1, ATTN_NORM);};
 void() player_magicd5	=[	$magicd5,	player_magicd6	] 
 {
 	local entity effect;

@@ -997,6 +997,10 @@ void(float damg, float hight, float fwd) Firebeam =
 
 // TWISTER
 
+
+
+
+
 void() TwisterThink =
 {
 	local entity head, effect;
@@ -1160,4 +1164,64 @@ void() Twister =
 		self.owner.attack_finished = time + 1;
 	else
 		missile.owner.attack_finished = time + 1;
+};
+
+
+
+
+// FIRE BUSTER
+
+
+
+
+void() fire_buster_explode =
+{
+	if (self.frame < 19)
+	{
+		if (self.frame == 1) // Fire once
+			FireMelee(25,0,2,25,99,1,1,TRUE,12,0);
+		self.frame = self.frame + 1;
+	}
+	else
+	{
+		remove(self);
+		return;
+	}
+	frameskip (0.02);
+};
+
+void() fire_buster_think =
+{
+	local entity effect;
+
+	droptofloor();
+
+	if (self.scale > 0)
+		self.scale = self.scale - 0.15;
+	else
+	{
+		// Explode in spot!
+		effect = spawn();
+		setorigin(effect, self.origin);
+		setmodel(effect, "progs/firecolm.mdl");
+		effect.movetype = MOVETYPE_NOCLIP;
+		effect.angles_y = -90;
+		effect.scale = 1;
+		effect.solid = SOLID_NOT;
+		effect.owner = self.owner;
+		effect.flags = FL_MONSTER; // Don't hit owner
+		effect.effects = EF_ADDITIVE | EF_FULLBRIGHT;
+		effect.alpha = 0.7;
+		effect.frame = 1;
+		setsize (effect, '0 0 0', '0 0 0');
+
+		sound (self, CHAN_WEAPON, "spells/flame.wav", 1, ATTN_NORM);
+
+		effect.think = fire_buster_explode;
+		effect.nextthink = time;
+		
+		remove(self);
+		return;
+	}
+	frameskip (0.01);
 };
