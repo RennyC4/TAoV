@@ -1195,7 +1195,7 @@ void() fire_buster_think =
 	local entity effect;
 
 	droptofloor();
-
+	self.angles_z = self.angles_z + 2;
 	if (self.scale > 0)
 		self.scale = self.scale - 0.15;
 	else

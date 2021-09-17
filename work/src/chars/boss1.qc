@@ -257,7 +257,7 @@ void() sgk_magic2	=[	69,	sgk_magic2	]
 			effect.owner = self;
 			effect.alpha = 1;
 			effect.scale = 10;
-			effect.avelocity = '0 100 0';
+			//effect.avelocity = '0 100 0';
 			setsize (effect, '0 0 0', '0 0 0');
 
 			effect.think = fire_buster_think;
@@ -484,6 +484,12 @@ void() boss1_particle =
 
 void() boss1_pain =
 {
+	// Face player properly before physics are ran
+	if (self.enemy.angles_y > 90 && self.enemy.angles_y < 270)
+		self.angles_y = 0;
+	else
+		self.angles_y = 180;
+
 	if (self.health != self.oldhealth)
 		boss1_particle();
 
