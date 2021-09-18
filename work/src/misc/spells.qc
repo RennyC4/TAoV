@@ -1196,6 +1196,12 @@ void() fire_buster_think =
 
 	droptofloor();
 	self.angles_z = self.angles_z + 2;
+
+	if (self.alpha < 1)
+		self.alpha = self.alpha + 0.01;
+	else
+		self.alpha = 1;
+
 	if (self.scale > 0)
 		self.scale = self.scale - 0.15;
 	else

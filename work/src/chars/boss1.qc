@@ -249,13 +249,13 @@ void() sgk_magic2	=[	69,	sgk_magic2	]
 			effect.angles_x = 90;
 			effect.angles_z = random()*360;
 			effect.colormod = '255 0 0';
-			effect.effects = EF_NODEPTHTEST;
+			effect.effects = EF_NODEPTHTEST | EF_ADDITIVE;
 			effect.movetype = MOVETYPE_NOCLIP;
 			effect.classname = "firebuster";
 			effect.health = 0; // can't be purged
 			effect.solid = SOLID_NOT;
 			effect.owner = self;
-			effect.alpha = 1;
+			effect.alpha = 0;
 			effect.scale = 10;
 			//effect.avelocity = '0 100 0';
 			setsize (effect, '0 0 0', '0 0 0');
