@@ -5221,8 +5221,43 @@ void() player_airkick12b	=[	$airkick12,	player_airkick13 	] {frameskip(0.05);}
 
 void() player_airkick13		=[	$airkick13,	player_airkick14 	] {frameskip(0.1);sound (self, CHAN_VOICE, "player/yell1.wav", 1, ATTN_NORM);sound (self, CHAN_AUTO, "player/sword.wav", 1, ATTN_NORM);self.velocity_y = 0;};
 void() player_airkick14		=[	$airkick14,	player_airkick15 	] {frameskip(0.1);};
+
+void() windspiral_think =
+{
+	if (self.scale < 5)
+		self.scale = self.scale + 0.1;
+	if (self.alpha > 0)
+		self.alpha = self.alpha - 0.015;
+	else
+	{
+		remove(self);
+		return;
+	}
+	self.angles_y = self.angles_y + 10;
+	frameskip (0.01);
+};
+
 void() player_airkick15		=[	$airkick15,	player_airkick16 	] 
 {
+	local entity effect;
+	
+	makevectors (self.angles);
+
+	effect = spawn();
+	setorigin(effect, self.origin + v_forward * 32);
+	setmodel(effect, "progs/windsprl.mdl");
+	effect.angles_y = random()*360;
+	effect.effects = EF_ADDITIVE;
+	effect.movetype = MOVETYPE_NOCLIP;
+	effect.classname = "windspiral_effect";
+	effect.solid = SOLID_NOT;
+	effect.owner = self;
+	effect.alpha = 1;
+	setsize (effect, '0 0 0', '0 0 0');
+
+	effect.think = windspiral_think;
+	effect.nextthink = time;	
+
 	self.owner.camshake_finished = time + 0.2;
 	self.owner.shadow_time = time + 0.05; // red shadow
 	self.velocity = '0 0 0';

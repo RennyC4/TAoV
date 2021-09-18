@@ -149,6 +149,7 @@ void() worldspawn =
 		precache_model ("progs/blooddrop.mdl");
 		precache_model ("progs/bloodsplat.mdl");
 		precache_model ("progs/embers.mdl");
+		precache_model ("progs/windsprl.mdl");
 
 		//
 		// 2D Sprites
