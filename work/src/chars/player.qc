@@ -5256,7 +5256,8 @@ void() player_airkick15		=[	$airkick15,	player_airkick16 	]
 	setsize (effect, '0 0 0', '0 0 0');
 
 	effect.think = windspiral_think;
-	effect.nextthink = time;	
+	effect.nextthink = time;
+	sound (self, CHAN_AUTO, "player/woosh.wav", 1, ATTN_NORM);
 
 	self.owner.camshake_finished = time + 0.2;
 	self.owner.shadow_time = time + 0.05; // red shadow
