@@ -484,12 +484,6 @@ void() boss1_particle =
 
 void() boss1_pain =
 {
-	// Face player properly before physics are ran
-	if (self.enemy.angles_y > 90 && self.enemy.angles_y < 270)
-		self.angles_y = 0;
-	else
-		self.angles_y = 180;
-
 	if (self.health != self.oldhealth)
 		boss1_particle();
 

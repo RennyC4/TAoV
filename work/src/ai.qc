@@ -1619,6 +1619,12 @@ void() wakeup =
 
 void(entity attacker) monster_pain =
 {
+	// Face player properly before physics are ran
+	if (attacker.angles_y > 90 && attacker.angles_y < 270)
+		self.angles_y = 0;
+	else
+		self.angles_y = 180;
+
 	// Color flash on pain
 	if (self.block_finished < time)
 		self.colormod = '3 1 1';
