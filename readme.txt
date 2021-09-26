@@ -375,7 +375,7 @@ BloodShot from Quake 1.5 - Allowed me permission to use his DrawLevelName(); CSQ
 Preach - Models like horror.mdl / embers / vines / waterfalls / fences
 
 Redfield - A plethora of awesome models such as his raven, bats, bat swarm, various detail model
-decorations and more ..
+decorations and more .. all Raven Keep models used were made by him with permission
 
 ericw - His latest vis/light/qbsp tools were used to compile all game levels.
 

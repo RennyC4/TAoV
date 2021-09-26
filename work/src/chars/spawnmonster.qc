@@ -50,13 +50,15 @@ void() spawn_monster_use =
 	//
 	// Setup the monster spawn and teleport effect
 	//
-	
-	// TODO: Add Silent mode with spawnflag
-	WriteByte (MSG_BROADCAST, SVC_TEMPENTITY);
-	WriteByte (MSG_BROADCAST, TE_TELEPORT);
-	WriteCoord (MSG_BROADCAST, self.origin_x);
-	WriteCoord (MSG_BROADCAST, self.origin_y);
-	WriteCoord (MSG_BROADCAST, self.origin_z);
+
+	if (!self.spawnflags & 1) // Silent teleport with spawnflag 1
+	{
+		WriteByte (MSG_BROADCAST, SVC_TEMPENTITY);
+		WriteByte (MSG_BROADCAST, TE_TELEPORT);
+		WriteCoord (MSG_BROADCAST, self.origin_x);
+		WriteCoord (MSG_BROADCAST, self.origin_y);
+		WriteCoord (MSG_BROADCAST, self.origin_z);
+	}
 
 	monster = spawn();
 	setorigin (monster, self.origin);
@@ -93,7 +95,8 @@ void() spawn_monster_use =
 	monster.awaketarget8 = self.awaketarget8;
 	monster.awaketarget9 = self.awaketarget9;
 
-	sound (self, CHAN_VOICE, "misc/teleport.wav", 1, ATTN_NORM);
+	if (!self.spawnflags & 1)
+		sound (self, CHAN_VOICE, "misc/teleport.wav", 1, ATTN_NORM);
 	
 	//
 	// Spawn Corrupted Knight

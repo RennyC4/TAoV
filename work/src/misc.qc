@@ -155,14 +155,12 @@ void() misc_model_think =
 
 void() misc_model =
 {
-	if (self.mdl)
-		self.model = self.mdl;
     precache_model(self.model);
     setmodel(self, self.model);
 
-    if (!self.frame)
-        self.frame = self.first_frame;
-
+    if (self.first_frame)
+		self.frame = self.first_frame;
+	
     // Only animate if given a frame range
     if (!self.last_frame)
         return;
@@ -171,8 +169,8 @@ void() misc_model =
     if (!self.speed)
         self.speed = 10 / 60;
 
-    self.nextthink = time + self.speed;
-    self.think = misc_model_think;
+	self.nextthink = time + self.speed;
+	self.think = misc_model_think;
 };
 
 /*
@@ -259,6 +257,13 @@ void() model_tilt =
 
 	v = l1 - l2;
 	k = vectoangles(v);
+
+	// Tilt cap
+	if (k_x > 100 && k_x < 335)
+		k_x = 335;
+	else if (k_x > 20)
+		k_x = 20;
+
 	self.angles_x = k_x;
 };
 

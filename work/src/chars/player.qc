@@ -5247,7 +5247,7 @@ void() player_airkick15		=[	$airkick15,	player_airkick16 	]
 	setorigin(effect, self.origin + v_forward * 32);
 	setmodel(effect, "progs/windsprl.mdl");
 	effect.angles_y = random()*360;
-	effect.effects = EF_ADDITIVE;
+	effect.effects = EF_ADDITIVE | EF_FULLBRIGHT;
 	effect.movetype = MOVETYPE_NOCLIP;
 	effect.classname = "windspiral_effect";
 	effect.solid = SOLID_NOT;
