@@ -258,12 +258,6 @@ void() model_tilt =
 	v = l1 - l2;
 	k = vectoangles(v);
 
-	// Tilt cap
-	if (k_x > 100 && k_x < 335)
-		k_x = 335;
-	else if (k_x > 20)
-		k_x = 20;
-
 	self.angles_x = k_x;
 };
 

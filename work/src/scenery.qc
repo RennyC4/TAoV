@@ -359,11 +359,10 @@ void() dlight_lightning_think =
 {
 	if (self.cnt == FALSE)
 	{
-		setmodel (self, "progs/null.spr");
-		self.light_lev = 500;
+		self.light_lev = 1000;
 		self.cnt = TRUE; // FLASH
 		self.pflags = PFLAGS_FULLDYNAMIC;
-		self.nextthink = time + 0.1;
+		self.nextthink = time + random();
 	}
 	else
 	{
@@ -377,7 +376,7 @@ void() dlight_lightning_think =
 
 void() dlight_lightning =
 {
-	self.model = string_null;
+	setmodel (self, "progs/null.spr");
 	self.classname = "dlight_lightning";
 	self.movetype = MOVETYPE_NOCLIP;
 	self.solid = SOLID_NOT;
@@ -919,6 +918,25 @@ void() tree2 =
 	droptofloor();
 };
 
+
+/*QUAKED tree3 (0 1 0) (-1 -29 -22) (47 28 31)
+Tree entity to decorate maps
+drops to floor automatically
+*/
+void() tree3 =
+{
+	precache_model ("progs/tree3.mdl");
+	setmodel (self, "progs/tree3.mdl");
+
+	self.movetype = MOVETYPE_NONE;
+	self.solid = SOLID_SLIDEBOX;
+	self.takedamage = DAMAGE_NO;
+	self.classname = "tree3";
+	self.touch = onground_touch;
+	setsize(self, '-17 -29 -16', '25 38 105');
+	droptofloor();
+};
+
 /*QUAKED flag (0 1 0) (-7 -6 -7) (7 23 98)
 A flag that flaps in the breeze, not solid
 */
@@ -1445,7 +1463,7 @@ void() light_flame_small_purple =
 };
 
 /*QUAKED grass (0 1 0) (-8 -8 -8) (8 8 8)
-Place a patch of tall grass somewhere
+Tall grass patch
 */
 void() grass =
 {
@@ -1454,6 +1472,58 @@ void() grass =
 	setsize (self, '0 0 0', '0 0 0');
 	self.effects = EF_NOSHADOW; // No realtime lighting
 	droptofloor();
+	model_tilt();
+};
+
+/*QUAKED grass2 (0 1 0) (-8 -8 -8) (8 8 8)
+Swaying grass clump
+*/
+void() grass2_think = 
+{
+	if (self.frame < 30)
+		self.frame = self.frame + 1;
+	else
+		self.frame = 0;
+	frameskip(0.1);
+};
+
+void() grass2 =
+{
+	precache_model ("progs/grass2.mdl");
+	setmodel (self, "progs/grass2.mdl");
+	setsize (self, '-15 -19 -16', '14 16 7');
+	self.effects = EF_NOSHADOW; // No realtime lighting
+	self.angles_y = random()*360;
+	self.frame = random()*30;
+	self.think = grass2_think;
+	self.nextthink = time;
+	droptofloor();
+	model_tilt();
+};
+
+/*QUAKED grass3 (0 1 0) (-8 -8 -8) (8 8 8)
+Swaying grass clump
+*/
+void() grass3_think = 
+{
+	if (self.frame < 30)
+		self.frame = self.frame + 1;
+	else
+		self.frame = 0;
+	frameskip(0.1);
+};
+
+void() grass3 =
+{
+	precache_model ("progs/grass3.mdl");
+	setmodel (self, "progs/grass3.mdl");
+	setsize (self, '-15 -19 -16', '14 16 7');
+	self.effects = EF_NOSHADOW; // No realtime lighting
+	self.frame = random()*30;
+	self.think = grass3_think;
+	self.nextthink = time;
+	droptofloor();
+	model_tilt();
 };
 
 void() ThrowRubble =

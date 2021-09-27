@@ -2311,6 +2311,9 @@ void() player_move = [0, player_move]
 		//spawn_shadow();
 		self.shadow = TRUE;
 	}
+	// Reset X+Z angles
+	if (!self.swimming)
+		self.angles_x = self.angles_z = 0;
 
 	if (self.owner.magicmenu == FALSE)
 	{
@@ -2519,11 +2522,9 @@ void() player_move = [0, player_move]
 		self.owner.noblock_finished = time;
 	self.spin_finished = FALSE;
 	self.fstab_cnt = 0;
-	
+
 	self.runatk_speed = 0;
 	self.owner.wallgrab = FALSE;
-	if (!self.swimming)
-		self.angles_x = self.angles_z = 0;
 	if (self.owner.zoom_mode != 0 && self.grabbed == FALSE && self.running == FALSE && self.owner.camera_forcezoom_finished < time)
 		self.owner.zoom_mode = 0; // No more zoom
 	
@@ -5247,7 +5248,7 @@ void() player_airkick15		=[	$airkick15,	player_airkick16 	]
 	setorigin(effect, self.origin + v_forward * 32);
 	setmodel(effect, "progs/windsprl.mdl");
 	effect.angles_y = random()*360;
-	effect.effects = EF_ADDITIVE | EF_FULLBRIGHT;
+	effect.effects = EF_ADDITIVE | EF_FULLBRIGHT | EF_NODEPTHTEST;
 	effect.movetype = MOVETYPE_NOCLIP;
 	effect.classname = "windspiral_effect";
 	effect.solid = SOLID_NOT;
@@ -6236,6 +6237,10 @@ void() player_blockbrk1	=[	$blockbrk1,	player_blockbrk2	]
 {
 	if (freeze_finished < time) // don't interefere with level up/etc
 		freeze_finished = time + (CONST_BIGHITSLOW * frametime);
+
+	// Chip Damage block fix - insurance
+	if (self.health < 1)
+		Killed(self, self);
 
 	self.movetype = MOVETYPE_WALK;
 	self.aircombo_count = 0; // reset combo count, fixes animation glitch as well
@@ -7458,9 +7463,11 @@ void() DodgeUp =
 {
 	tracebox (self.origin, VEC_HULL_MIN, VEC_HULL_MAX, self.origin, 1, self);
 	if (trace_startsolid)
+	{
 		self.lowceil = TRUE;
+		setsize(self, VEC_HULL_MIN, '16 16 12');
+	}
 
-	setsize(self, VEC_HULL_MIN, '16 16 12');
 	self.velocity_y = 175 / 1.35;
 };
 
@@ -7468,9 +7475,10 @@ void() DodgeDown =
 {
 	tracebox (self.origin, VEC_HULL_MIN, VEC_HULL_MAX, self.origin, 1, self);
 	if (trace_startsolid)
+	{
 		self.lowceil = TRUE;
-
-	setsize(self, VEC_HULL_MIN, '16 16 12');
+		setsize(self, VEC_HULL_MIN, '16 16 12');
+	}
 	self.velocity_y = -175 / 1.35;
 };
 

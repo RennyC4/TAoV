@@ -1075,7 +1075,8 @@ void(float damg, float dist, float knokback, float rsize, float snd, float flsh,
 							self.knockback = head.knockback = 0; // turn off knockback before block break routine is ran
 							T_Damage (head, self, self, chip_d, statusrand);
 							head.owner.camshake_finished = time + 0.2;
-							head.think = player_blockbrk1;
+							if (head.health > 0) // Don't override death routine
+								head.think = player_blockbrk1;
 						}
 						else
 						{

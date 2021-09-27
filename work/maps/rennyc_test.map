@@ -401,6 +401,10 @@
 // entity 10
 {
 "origin" "352 -16 80"
-"classname" "test_obj1"
-"targetname" "signtest"
+"classname" "grass2"
+}
+// entity 11
+{
+"origin" "472 -44 24"
+"classname" "grass3"
 }

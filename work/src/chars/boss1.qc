@@ -257,7 +257,6 @@ void() sgk_magic2	=[	69,	sgk_magic2	]
 			effect.owner = self;
 			effect.alpha = 0;
 			effect.scale = 10;
-			//effect.avelocity = '0 100 0';
 			setsize (effect, '0 0 0', '0 0 0');
 
 			effect.think = fire_buster_think;
