@@ -821,9 +821,12 @@ void() PlayerPreThink =
 		if (pointcontents(self.char.origin) == CONTENT_WATER || pointcontents(self.char.origin) == CONTENT_LAVA || pointcontents(self.char.origin) == CONTENT_SLIME)
 		{
 			self.char.movetype = MOVETYPE_WALK; // Needed otherwise odd problems occur
-			if (self.char.velocity_z < 0 && !self.char.swimming) // First entered water
+			//if (self.char.velocity_z < 0 && !self.char.swimming) // First entered water
+			
+			if (!self.char.swimming) // First entered water
 			{
 				// Fixes not allowing Left/Right movement in water
+				self.char.aircombo_count = 0;
 				self.ledgegrab = FALSE;
 				self.walljump = FALSE;
 				self.wallrun = FALSE;
