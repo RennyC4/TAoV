@@ -1179,7 +1179,7 @@ void() fire_buster_explode =
 	if (self.frame < 19)
 	{
 		if (self.frame == 1) // Fire once
-			FireMelee(35,0,2,25,99,1,1,FALSE,12,0);
+			FireMelee(42,0,2,25,99,1,1,FALSE,12,0);
 		self.frame = self.frame + 1;
 	}
 	else

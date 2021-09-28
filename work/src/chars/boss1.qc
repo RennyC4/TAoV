@@ -165,12 +165,12 @@ void() sgk_attack1	=[	$attack_1_01,	sgk_attack1	]
 	if (self.walkframe == 7) // First swing
 	{
 		sound (self, CHAN_WEAPON, "knight/sword1.wav", 1, ATTN_NORM);
-		FireMelee(8,10,0,50,0,0,0,FALSE,0,0);
+		FireMelee(12,10,0,50,0,0,0,FALSE,0,0);
 	}
 	if (self.walkframe == 15) // Second swing
 	{
 		sound (self, CHAN_WEAPON, "player/twoosh.wav", 1, ATTN_NORM);
-		FireMelee(16,10,3,50,5,0,0,FALSE,0,0);
+		FireMelee(24,10,3,50,5,0,0,FALSE,0,0);
 	}
 
 	self.frame = $attack_1_01 + self.walkframe;
