@@ -156,6 +156,34 @@ void() waterfall =
 	self.nextthink = time;
 };
 
+/*QUAKED fire (0 1 0) (-1 -1 -1) (1 1 1)
+Placable fire effect, two sizes using frame 0 and 1
+*/
+void() firefx_think =
+{
+	if (self.skin < 19)
+		self.skin = self.skin + 1;
+	else
+		self.skin = 0;
+	frameskip (0.05);
+};
+
+void() firefx =
+{
+	precache_model ("progs/fire_fx.mdl");
+	setmodel (self, "progs/fire_fx.mdl");
+
+	self.movetype = MOVETYPE_NOCLIP;
+	self.solid = SOLID_NOT;
+	self.takedamage = DAMAGE_NO;
+	self.classname = "fire_fx";
+	setsize(self, '0 0 0', '0 0 0');
+	setorigin (self, self.origin);
+	self.skin = random()*19;
+	self.think = firefx_think;
+	self.nextthink = time;
+};
+
 void() waterdrop_fallthink =
 {
 	if (self.velocity_z == 0)

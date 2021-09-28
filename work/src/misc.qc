@@ -165,6 +165,16 @@ void() misc_model =
     if (!self.last_frame)
         return;
 
+	// Randomize start from between first/last frame
+	if (self.spawnflags & 1)
+	{
+		self.frame = self.first_frame;
+		local float diff;
+		diff = self.last_frame - self.first_frame;
+
+		self.frame = self.frame + ceil(random()*diff);
+	}
+	
     // Default animation speed to 10 fps
     if (!self.speed)
         self.speed = 10 / 60;

@@ -14240,3 +14240,46 @@
 "classname" "grass3"
 "origin" "4464 992 -3968"
 }
+// entity 472
+{
+"classname" "misc_model"
+"origin" "1320 1200 -4008"
+"first_frame" "0"
+"last_frame" "39"
+"model" "progs/flower.mdl"
+"angle" "120"
+}
+// entity 473
+{
+"classname" "misc_model"
+"origin" "584 1240 -4008"
+"first_frame" "0"
+"last_frame" "39"
+"model" "progs/flower.mdl"
+}
+// entity 474
+{
+"classname" "misc_model"
+"origin" "3400 1128 -3848"
+"first_frame" "0"
+"last_frame" "39"
+"model" "progs/flower.mdl"
+"angle" "300"
+}
+// entity 475
+{
+"classname" "misc_model"
+"origin" "4248 616 -3976"
+"first_frame" "0"
+"last_frame" "39"
+"model" "progs/flower.mdl"
+}
+// entity 476
+{
+"classname" "misc_model"
+"origin" "4504 448 -3976"
+"first_frame" "0"
+"last_frame" "39"
+"model" "progs/flower.mdl"
+"angle" "300"
+}
