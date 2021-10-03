@@ -1088,13 +1088,10 @@ void(float damg, float dist, float knokback, float rsize, float snd, float flsh,
 							local float chip_d = floor(damg / 3); // Guard breaks have chip damage
 							self.knockback = head.knockback = 0; // Knockback movement is done by $blockbrk1
 							head.owner.camshake_finished = time + 0.2;
-							// ASDF
 							T_Damage (head, self, self, chip_d, statusrand);
 							
 							if (head.health > 0) // Don't override death routine						
 								head.think = player_blockbrk1;
-							else
-								return;
 						}
 						else
 						{
