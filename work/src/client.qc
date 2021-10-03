@@ -1224,7 +1224,6 @@ void() PutClientInServer =
 void() DisplayLevelThink =
 {
 	local vector x;
-	//makevectors(self.owner.angles);
 
 	x = self.owner.angles;
 	x_z = 0;

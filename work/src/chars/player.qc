@@ -2862,7 +2862,7 @@ void() player_fire =
 	{
 		if (self.wallgrab == FALSE)
 		{
-			if (self.keyflags & KEY_DOWN && self.char.inair > 15)
+			if (self.keyflags & KEY_DOWN && self.char.inair > 15 && (self.char.frame != $airkick15 && self.char.frame != $airkick16 && self.char.frame != $airkick17))
 			{
 				if ((relics & IT_RELIC3 || deathmatch) && (self.char.aircombo_count == 4 || self.char.frame == $djump))
 				{
@@ -2870,8 +2870,7 @@ void() player_fire =
 					self = self.char;
 					player_yell(1);
 					self = oself;
-					self.char.aircombo_count = 6; // prevent Y movement, deal more damage on headsmash
-					self.attack_finished = time + 999;
+					self.char.aircombo_count = 6; // Deal more damage on headsmash
 					self.noblock_finished = time + 999;
 					self.swordshadow_time = time + 1; // sword shadow
 					self.char.think = player_jatkspecial1;
@@ -2882,14 +2881,14 @@ void() player_fire =
 					self = self.char;
 					player_yell(1);
 					self = oself;
-					self.char.aircombo_count = 5; // prevent Y movement
+					self.char.aircombo_count = 5; // Normal head smash
 					sound (self.char, CHAN_WEAPON, "player/fast.wav", 1, ATTN_NORM);
-					self.attack_finished = time + 999;
 					self.char.think = player_jumpatk1;
 					self.noblock_finished = time + 999;
 					if (self.char.velocity_z > -250)
 						self.char.velocity_z = self.char.velocity_z - 250;
 				}
+				self.attack_finished = time + 999;
 				self.aircombo_finished = time + 999;
 			}
 			else if (self.keyflags & KEY_UP)
@@ -2926,12 +2925,12 @@ void() player_fire =
 				}
 			}
 
-			if (self.aircombo_finished > time)
+			if (self.aircombo_finished > time) // Air combo / attacks
 			{
 				self.mashattack = TRUE;
 				return;
 			}
-			else // Air combo starter
+			else			
 			{
 				if (self.backflip_finished < time)
 				{
@@ -2968,21 +2967,21 @@ void() player_fire =
 					{
 						self.char.aircombo_count = 5;
 						self.softshadow_time = time + 0.35;
-						self.aircombo_finished = time + 0.35;
+						self.aircombo_finished = time + 0.4;
 						self.char.think = player_airkick1;
 					}
 					else if (self.char.aircombo_count == 5)
 					{
 						self.char.aircombo_count = 6;
 						self.softshadow_time = time + 0.35;
-						self.aircombo_finished = time + 0.35;
+						self.aircombo_finished = time + 0.4;
 						self.char.think = player_airkick7;
 					}
 					else if (self.char.aircombo_count == 6)
 					{
 						self.char.aircombo_count = 7;
 						self.softshadow_time = time + 0.35;
-						self.aircombo_finished = time + 0.35;
+						self.aircombo_finished = time + 0.4;
 						self.char.think = player_airkick11;
 					}
 					else if (self.char.aircombo_count == 7)
@@ -5156,7 +5155,7 @@ void() player_airkick4		=[	$airkick4,	player_airkick5 	] {FireMelee(3,25,1,25,1,
 void() player_airkick5		=[	$airkick5,	player_airkick6 	] {frameskip(0.08);};
 void() player_airkick6		=[	$airkick6,	player_airkick6 	] 
 {
-	if (self.onground == TRUE)
+	if (self.onground == TRUE || self.swimming)
 	{
 		player_move();
 		return;
@@ -5180,7 +5179,7 @@ void() player_airkick8		=[	$airkick8,	player_airkick9 	] {FireMelee(3,25,1,25,1,
 void() player_airkick9		=[	$airkick9,	player_airkick10 	] {frameskip(0.1);};
 void() player_airkick10		=[	$airkick10,	player_airkick10	] 
 {
-	if (self.onground == TRUE)
+	if (self.onground == TRUE || self.swimming)
 	{
 		player_move();
 		return;
@@ -5202,7 +5201,7 @@ void() player_airkick12b;
 void() player_airkick11		=[	$airkick11,	player_airkick12 	] {FireMelee(3,25,1,25,1,0,0,FALSE,24,0);sound (self, CHAN_VOICE, "player/yell2.wav", 1, ATTN_NORM);frameskip(0.2);sound (self, CHAN_AUTO, "player/motion1.wav", 1, ATTN_NORM);self.velocity_y = 0;};
 void() player_airkick12		=[	$airkick12,	player_airkick12 	] 
 {
-	if (self.onground == TRUE)
+	if (self.onground == TRUE || self.swimming)
 	{
 		player_move();
 		return;
@@ -5269,7 +5268,7 @@ void() player_airkick15		=[	$airkick15,	player_airkick16 	]
 		self.flags = self.flags - FL_ONGROUND;
 		
 	FireMelee(10,25,7,30,6,1,1,TRUE,24,0);
-	
+
 	if (self.owner.bighit_freeze > time) // check if attack landed, needs to be called after FireMelee();
 	{
 		if (freeze_finished < time) // don't interefere with level up/etc
