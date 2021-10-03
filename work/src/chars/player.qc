@@ -5904,10 +5904,9 @@ void() player_pain =
 .float deathmenu;
 
 void() player_die3;
-void() player_die1	=[	$pain3,	player_die2	] {self.angles_x = 0;self.movetype = MOVETYPE_WALK;};
+void() player_die1	=[	$pain3,	player_die2	] {};
 void() player_die2	=[	$pain4,	player_die2	]
 {
-	self.movetype = MOVETYPE_WALK;
 	if (self.swimming) // sink slower when hit than in normal air
 		self.velocity_z = self.velocity_z / 1.55;
 	self.angles_x = 0;
@@ -6081,15 +6080,8 @@ void() player_die =
 	self.pain_finished = time + 999;
 	self.flypain = TRUE;
 
-	self.velocity = '0 0 0';
 	sound (self, CHAN_VOICE, "player/death.wav", 1, ATTN_NONE);
 
-	if (self.pitdeath == FALSE)
-	{
-		self.flags = self.flags - (self.flags & FL_ONGROUND);
-		self.velocity = self.velocity + 9 * v_forward * 8;
-		self.velocity = self.velocity + 90 * '0 0 3';
-	}
 	self.dead_lockkey_finished = time + 999; // don't allow key presses until Vigil hit the ground on death
 	player_die1();
 };
@@ -6236,10 +6228,6 @@ void() player_blockbrk1	=[	$blockbrk1,	player_blockbrk2	]
 {
 	if (freeze_finished < time) // don't interefere with level up/etc
 		freeze_finished = time + (CONST_BIGHITSLOW * frametime);
-
-	// Chip Damage block fix - insurance
-	if (self.health < 1)
-		Killed(self, self);
 
 	self.movetype = MOVETYPE_WALK;
 	self.aircombo_count = 0; // reset combo count, fixes animation glitch as well

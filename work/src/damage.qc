@@ -170,7 +170,15 @@ void(entity targ, entity attacker) Killed =
 	}
 
 	if (self.th_die)
+	{
+		if (self.classname == "player") // Vigil should always be thrown back on death
+		{
+			if (!self.knockback)
+				self.knockback = 1;
+			player_damage_physics(self);
+		}
 		self.th_die();
+	}
 
 	makevectors(self.angles);
 
@@ -275,7 +283,6 @@ void(entity targ, entity inflictor, entity attacker, float damage, float statusr
 	// save damage based on the players armor level
 	if (targ.owner.armorlevel > 0 && targ.classname == "player")
 		save = ceil(targ.owner.armorlevel * (damage / 5));
-
 
 	if (save >= damage && damage > 0)
 	{
@@ -426,6 +433,13 @@ void(entity targ, entity inflictor, entity attacker, float damage, float statusr
 	if (targ.health < 1)
 	{
 		attacker.ai_reattack = FALSE;
+
+		oldself = self;
+		self = targ;
+		if (self.classname == "player")
+			player_damage_physics(attacker);
+		self = oldself;
+
 		Killed (targ, attacker);
 		return;
 	}
@@ -1072,11 +1086,15 @@ void(float damg, float dist, float knokback, float rsize, float snd, float flsh,
 						{
 							// Set the knockback, deal the damage, then have the player run his animation in proper order
 							local float chip_d = floor(damg / 3); // Guard breaks have chip damage
-							self.knockback = head.knockback = 0; // turn off knockback before block break routine is ran
-							T_Damage (head, self, self, chip_d, statusrand);
+							self.knockback = head.knockback = 0; // Knockback movement is done by $blockbrk1
 							head.owner.camshake_finished = time + 0.2;
-							if (head.health > 0) // Don't override death routine
+							// ASDF
+							T_Damage (head, self, self, chip_d, statusrand);
+							
+							if (head.health > 0) // Don't override death routine						
 								head.think = player_blockbrk1;
+							else
+								return;
 						}
 						else
 						{
