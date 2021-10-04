@@ -841,16 +841,48 @@ void() trigger_safezone =
 	self.touch = safezonetrigger_touch;
 };
 
+.float trigger_spincut_finished;
 void() spincut_touch =
 {
-	if (!relics & IT_RELIC3)
+	// Frame 136 = Head Smash
+	// Frame 241 = $djump
+
+	if (other.classname != "player")
 		return;
 
-	if (other.classname == "player" && other.djump_spincnt >= 2)// && other.block_finished < time)
+	if (other.velocity_z > 0 && other.frame == 241 && other.djump_spincnt >= 2) // Going up
 	{
 		other.djump_spincnt = 2;
 		other.velocity_z = self.speed;
 	}
+
+	if (other.velocity_z < 0)
+	{
+		if (other.frame != 136) // Not head smashing
+			other.velocity_z = other.velocity_z / 1.15;
+		else
+			other.velocity_z = other.velocity_z / 1.05;
+	}
+	other.velocity_y = other.velocity_y / 1.15;
+	other.velocity_x = other.velocity_x / 1.15;
+
+	other.owner.trigger_spincut_finished = time + 0.2; // special
+};
+
+void() trigger_spincut_think =
+{
+	if (relics & IT_RELIC3)
+	{
+		self.solid = SOLID_TRIGGER;
+		self.touch = spincut_touch;
+	}
+	else
+	{
+		self.touch = SUB_Null;
+		self.solid = SOLID_BSP;
+	}
+
+	self.nextthink = self.ltime + 1;
 };
 
 /*QUAKED trigger_spincut (.5 .5 .5) ?
@@ -861,5 +893,6 @@ void() trigger_spincut =
 	InitTrigger ();
 	if (!self.speed)
 		self.speed = 50;
-	self.touch = spincut_touch;
+	self.think = trigger_spincut_think;
+	self.nextthink = self.ltime + 0.1;
 };

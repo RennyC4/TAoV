@@ -1328,7 +1328,7 @@ void() player_think =
 
 	if (self.keyflags & (KEY_LEFT) || (self.keyflags & (KEY_RIGHT)) && self.ledgegrab == FALSE && self.char.onground == FALSE || self.wallgrab == TRUE)
 	{
-		if (self.char.health > 0 && self.char.aircombo_count < 5 && self.attack_finished < time && self.char.block_finished < time && self.char.pain_finished < time)
+		if (self.char.health > 0 && self.char.aircombo_count < 5 && self.attack_finished < time && self.char.block_finished < time && self.char.pain_finished < time && self.trigger_spincut_finished < time)
 		{
 			if (relics & IT_RELIC1 || self.char.swimming)
 				player_checkledge();
@@ -1346,7 +1346,7 @@ void() player_think =
 	if (self.button0 && self.button2 && self.safezone == FALSE && self.attack_finished < time && self.char.tired_finished < time
 	&& self.ledgegrab == FALSE && self.wallgrab == FALSE && self.char.deadflag != DEAD_DEAD && self.char.movetype != MOVETYPE_FLY
 	&& self.wallrun == FALSE && self.forcewalk_finished < time && self.char.fly_time < time && self.char.guardbreak_finished < time
-	&& self.char.dodge_finished < time && !self.char.swimming && self.char.health > 0 && self.nospinatk_finished < time && self.char.lowceil == FALSE)
+	&& self.char.dodge_finished < time && !self.char.swimming && self.char.health > 0 && self.nospinatk_finished < time && self.char.lowceil == FALSE && self.trigger_spincut_finished < time)
 	{
 		if (!self.char.flypain)
 		{
@@ -2081,7 +2081,7 @@ void() wallgrab_check =
 	makevectors(self.angles);
 
 	// wall grab
-	if (self.angles_y == 0 || self.angles_y == 180 && self.wallgrab == FALSE && self.owner.ledgegrab == FALSE
+	if (self.angles_y == 0 || self.angles_y == 180 && self.wallgrab == FALSE && self.owner.ledgegrab == FALSE && self.owner.trigger_spincut_finished < time
 	&& self.onground == FALSE && ((self.frame == $jump1 || self.frame == $jump2) || self.frame == $djump))
 	{
 		traceline (source, source + v_forward*25 + v_up*22, FALSE, self);
@@ -2640,6 +2640,8 @@ void() player_fire =
 	if (self.char.angles_x != 0)
 		self.char.angles_x = 0;
 	if (self.purge_toggle) // Don't allow an attack to break out during purge animation
+		return;
+	if (self.trigger_spincut_finished > time)
 		return;
 
 	if (self.attack_finished > time)
@@ -5710,9 +5712,9 @@ void() player_pain =
 	// clear some stuff up on getting hurt
 	self.owner.purge_toggle = FALSE;
 	self.owner.goalentity = self; // reset camera back to Vigil
-	self.owner.walljump = FALSE;
+	self.owner.walljump = self.walljump = FALSE;
 	self.owner.shadow_time = time;
-	self.owner.ledgegrab = FALSE;
+	self.owner.ledgegrab = self.ledgegrab = FALSE;
 	self.owner.swordshadow_time = time; // disable sword shadow
 	self.owner.wallrun = FALSE;
 	self.grabbed = FALSE;

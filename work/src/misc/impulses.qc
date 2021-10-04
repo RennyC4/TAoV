@@ -299,7 +299,7 @@ void() CheckImpulseButtons =
 
 			// round house kick can now be put into an air combo
 			if ((self.keyflags & (KEY_LEFT) && self.char.angles_y == 0) || (self.keyflags & (KEY_RIGHT) && self.char.angles_y == 180) 
-			&& self.char.aircombo_count != 9 && self.char.aircombo_count != 8 && self.wallgrab == FALSE && self.safezone == FALSE)
+			&& self.char.aircombo_count != 9 && self.char.aircombo_count != 8 && self.wallgrab == FALSE && self.safezone == FALSE && self.trigger_spincut_finished < time)
 			{
 				if (self.attack_finished < time)
 				{
@@ -323,7 +323,7 @@ void() CheckImpulseButtons =
 			{
 				self.swordshadow_time = time; // sword shadow remove
 				self.shadow_time = time;
-				self.char.djump_spincnt = 1; // reset double jump?
+				self.char.djump_spincnt = 1; // reset double jump, do not allow it to be used again however
 				self.char.swing_count = 0; // reset sword swing
 				self.char.idle_count = 0; // reset pose
 				self.attack_finished = time;

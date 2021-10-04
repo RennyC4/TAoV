@@ -35,15 +35,9 @@ Transit 8 = Cavern.bsp to Aqueduct.bsp
 // Long-Term goals
 // ===============
 
-Cool Idea: Relic that turns PG + Counter into PG + Purge :)
 knave.wad has a lot of bookshelves - Long library
-TODO: Do something with the dark room in Cavern.bsp
-TODO: Expand dungeon.bsp's vertical tunnel section (this map is short!)
 TODO: Add monster_medusaboss
 	- Killing monster_medusa (optional boss) will stop monster_medusahead from spawning
-TODO: Boss3 - Whatever it is, Narcissus? Guard Captain corrupted form.
-TODO: Add traps (So far: Boulders, chandeliers, damage pits)
-TODO: Split Spin Slash & Flaming Head Smash relics up
 
 // ==========
 // Changelog (Fixes/Changes):
