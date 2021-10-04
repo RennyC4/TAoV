@@ -589,7 +589,7 @@ float SPELL_TWISTER = 8;
 .float camshake_finished;
 .float camchangetarget_finished; // allows the camera to briefly change targets away from the player
 .float telecam; // boolean to teleport camera to player position right away
-.float noaircontrol_finished;
+.float ledgegrab_finished; // if set, vigil cannot move in mid-air and the jump button is disabled
 .float guardbreak_finished; // guard breaking
 .float ignoreaircombo; // if TRUE monster isn't raised by Air Combo strikes from Vigil
 .string displayname; // Monsters display name in the bottom right corner (CSQC)

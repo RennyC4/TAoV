@@ -76,8 +76,8 @@ void() medusa_think =
 	// Do damage
 	local entity head = searchradius(self.origin, 17);
 	while (head)
-	{
-		if (head.takedamage && head.classname == "player" && head.health > 0 && self.cnt == FALSE && !head.flypain && head.frame != 241) // 241 = double jump
+	{   // Frame241 = double jump
+		if (head.takedamage && head.classname == "player" && head.health > 0 && self.cnt == FALSE && !head.flypain && head.frame != 241 && !head.owner.flags & FL_NOTARGET)
 		{
 			// spawn a hit sprite
 			effect = spawn();

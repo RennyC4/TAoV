@@ -849,11 +849,30 @@ void() spincut_touch =
 
 	if (other.classname != "player")
 		return;
+	if (other.owner.ledgegrab)
+		return;
+	if (other.owner.wallgrab)
+		return;
+
+	other.owner.wallgrab = FALSE;
+	other.owner.ledgegrab = FALSE;
+	other.owner.walljump = FALSE;
 
 	if (other.velocity_z > 0 && other.frame == 241 && other.djump_spincnt >= 2) // Going up
 	{
-		other.djump_spincnt = 2;
-		other.velocity_z = self.speed;
+		if (relics & IT_RELIC3) // Spin Cut relic only
+		{
+			other.djump_spincnt = 2;
+			other.velocity_z = self.speed;
+		}
+
+		if (self.pain_finished < time)
+		{
+			if (!self.spawnflags) // Default green
+				particle(other.origin, '0 0 0', 62, 50);
+			sound (other, CHAN_AUTO, self.noise, 1, ATTN_NORM);
+			self.pain_finished = time + self.cnt;
+		}
 	}
 
 	if (other.velocity_z < 0)
@@ -862,6 +881,11 @@ void() spincut_touch =
 			other.velocity_z = other.velocity_z / 1.15;
 		else
 			other.velocity_z = other.velocity_z / 1.05;
+		if (relics & IT_RELIC3 && other.frame != 241)
+			other.owner.doublejump = FALSE; // Re-allow Double Jump
+
+		other.owner.attack_finished = time;
+		other.aircombo_count = 0;
 	}
 	other.velocity_y = other.velocity_y / 1.15;
 	other.velocity_x = other.velocity_x / 1.15;
@@ -869,30 +893,24 @@ void() spincut_touch =
 	other.owner.trigger_spincut_finished = time + 0.2; // special
 };
 
-void() trigger_spincut_think =
-{
-	if (relics & IT_RELIC3)
-	{
-		self.solid = SOLID_TRIGGER;
-		self.touch = spincut_touch;
-	}
-	else
-	{
-		self.touch = SUB_Null;
-		self.solid = SOLID_BSP;
-	}
-
-	self.nextthink = self.ltime + 1;
-};
-
 /*QUAKED trigger_spincut (.5 .5 .5) ?
 Spincut relic activated lift concerning progression
+.speed - How fast Vigil ascends
+.noise - Sound to play while ascending
+.cnt - How often to play the sound
 */
 void() trigger_spincut =
 {
 	InitTrigger ();
 	if (!self.speed)
-		self.speed = 50;
-	self.think = trigger_spincut_think;
-	self.nextthink = self.ltime + 0.1;
+		self.speed = 200;
+	if (!self.noise)
+		self.noise = "misc/bushhit.wav";
+	if (!self.cnt)
+		self.cnt = 0.2;
+
+	precache_sound (self.noise);
+
+	self.solid = SOLID_TRIGGER;
+	self.touch = spincut_touch;
 };

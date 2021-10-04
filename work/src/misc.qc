@@ -705,7 +705,10 @@ void() misc_title1_think =
 			self.mode = 2;
 			self.speed = 0;
 			if (title1_finished < time)
+			{
 				sound (self, CHAN_AUTO, "misc/title.wav", 1, ATTN_NONE);
+				sound (self, CHAN_AUTO, "misc/titlesay.wav", 1, ATTN_NONE);
+			}
 		}
 	}
 	frameskip(0.01);
@@ -714,6 +717,7 @@ void() misc_title1_think =
 void() misc_title1 =
 {
 	precache_sound ("misc/title.wav"); // precache this in here for ram saving
+	precache_sound ("misc/titlesay.wav"); // precache this in here for ram saving
 	precache_sound ("misc/title2.wav"); // precache this in here for ram saving
 	setmodel (self, "progs/title.spr");
 	self.mode = 0;

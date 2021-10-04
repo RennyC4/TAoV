@@ -830,7 +830,7 @@ void() PlayerPreThink =
 				self.ledgegrab = FALSE;
 				self.walljump = FALSE;
 				self.wallrun = FALSE;
-				self.noaircontrol_finished = time;
+				self.ledgegrab_finished = time;
 				self.attack_finished = time;
 				
 				self.char.velocity_x = self.char.velocity_x / 4 * (frametime * 100);

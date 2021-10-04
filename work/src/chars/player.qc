@@ -1328,7 +1328,7 @@ void() player_think =
 
 	if (self.keyflags & (KEY_LEFT) || (self.keyflags & (KEY_RIGHT)) && self.ledgegrab == FALSE && self.char.onground == FALSE || self.wallgrab == TRUE)
 	{
-		if (self.char.health > 0 && self.char.aircombo_count < 5 && self.attack_finished < time && self.char.block_finished < time && self.char.pain_finished < time && self.trigger_spincut_finished < time)
+		if (self.char.health > 0 && self.char.aircombo_count < 5 && self.attack_finished < time && self.char.block_finished < time && self.char.pain_finished < time)
 		{
 			if (relics & IT_RELIC1 || self.char.swimming)
 				player_checkledge();
@@ -1481,7 +1481,7 @@ void() player_think =
 	{
 		if (self.button2)
 		{
-			if (self.forcewalk_finished < time && self.char.fly_time < time && self.char.guardbreak_finished < time)
+			if (self.forcewalk_finished < time && self.char.fly_time < time && self.char.guardbreak_finished < time && self.ledgegrab_finished < time)
 			{
 				if (self.backflip_finished < time && self.char.deadflag != DEAD_DEAD && !self.char.swimming)
 				{
@@ -1524,9 +1524,9 @@ void() player_think =
 
 	if (self.char.onground == FALSE && !self.char.flypain && self.attack_finished < time && self.backflip_finished < time
 	&& self.wallgrab == FALSE && self.char.deadflag != DEAD_DEAD && self.char.movetype != MOVETYPE_FLY
-	&& self.wallrun == FALSE && self.ledgegrab == FALSE && self.noaircontrol_finished < time && self.char.fly_time < time
+	&& self.ledgegrab == FALSE && self.ledgegrab_finished < time && self.char.fly_time < time
 	&& self.char.guardbreak_finished < time && self.char.dodge_finished < time && self.char.health > 0 && self.char.grabbed == FALSE
-	&& self.magicmenu == FALSE && self.char.tired_finished < time)
+	&& self.magicmenu == FALSE && self.char.tired_finished < time && self.wallrun == FALSE)
 	{
 		if (self.keyflags & (KEY_LEFT | KEY_RIGHT))
 		{
@@ -1557,7 +1557,7 @@ void() player_think =
 					self.char.angles_y = 0;
 			}
 		}
-		else if (self.char.aircombo_count < 1 && self.button2_buffer == FALSE)
+		else if (self.char.aircombo_count < 1 && self.button2_buffer == FALSE) // Slight mid-air friction
 		{
 			if (self.char.velocity_x != 0)
 			{
@@ -1603,7 +1603,7 @@ void() player_think =
 		}
 		else
 		{
-			if (self.char.velocity_y != 0)
+			if (self.char.velocity_y != 0) // Slight mid-air friction
 			{
 				if (self.char.velocity_y > 0)
 					self.char.velocity_y = self.char.velocity_y - 325 * frametime;
@@ -1640,7 +1640,7 @@ void() player_think =
 		self.char.aircombo_count = 0;
 		if (self.button2 && self.char.pain_finished < time && self.attack_finished < time && self.char.block_finished < time
 		&& self.char.tired_finished < time && self.forcewalk_finished < time && self.conversation == FALSE &&
-		self.char.guardbreak_finished < time && self.char.dodge_finished < time && self.nojump_finished < time)
+		self.char.guardbreak_finished < time && self.char.dodge_finished < time && self.nojump_finished < time && self.ledgegrab_finished < time)
 		{
 			if (self.FL_JMPPRESSED == FALSE)
 			{
@@ -2053,15 +2053,16 @@ void() wallrunning_check =
 
 		if (trace_plane_normal_z == FALSE)
 		{
-			self.owner.wallrun = TRUE;
 			if (direct == 1)
 			{
+				self.owner.wallrun = TRUE;
 				self.angles_y = 180;
 				self.wallrun_height = 150;
 				self.think = player_wallrun_right1;
 			}
 			else if (direct == 2)
 			{
+				self.owner.wallrun = TRUE;
 				self.angles_y = 0;
 				self.wallrun_height = 150;
 				self.think = player_wallrun_left1;
@@ -2509,7 +2510,7 @@ void() player_move = [0, player_move]
 		self.owner.wallrun = FALSE;
 		self.owner.attack_finished = time; // only reset attack finish time on ground, this is to prevent cheap air combos
 		self.owner.walljump = FALSE;
-		self.owner.noaircontrol_finished = time;
+		self.owner.ledgegrab_finished = time;
 		self.djump_spincnt = 0; // remove double jump flag
 	}
 	self.owner.purge_toggle = FALSE;
@@ -5094,7 +5095,7 @@ void() airuppercut =
 	FireMelee(7,8,0,40,5,0,0,FALSE,20,0);
 
 	if (self.owner.walljump == TRUE)
-      		self.owner.walljump = FALSE;
+   		self.owner.walljump = FALSE;
 
 	self.velocity = '0 0 0';
 	self.velocity_z = 150;
@@ -5712,11 +5713,14 @@ void() player_pain =
 	// clear some stuff up on getting hurt
 	self.owner.purge_toggle = FALSE;
 	self.owner.goalentity = self; // reset camera back to Vigil
-	self.owner.walljump = self.walljump = FALSE;
 	self.owner.shadow_time = time;
+
+	self.owner.walljump = self.walljump = FALSE;
 	self.owner.ledgegrab = self.ledgegrab = FALSE;
+	self.owner.wallgrab = self.wallgrab = FALSE;
+	self.owner.wallrun = self.wallrun = FALSE;
+	
 	self.owner.swordshadow_time = time; // disable sword shadow
-	self.owner.wallrun = FALSE;
 	self.grabbed = FALSE;
 	self.idle_count = 0; // reset pose
 
@@ -6842,7 +6846,7 @@ void() player_ledgeclimb6	=[	$ledgec6,	player_move 		]
 {
 	player_ledgehoist();
 	self.velocity = '0 0 0';
-	self.owner.noaircontrol_finished = time + 9999;
+	self.owner.ledgegrab_finished = time + 9999; // Disallow mid-air movement + disable jump button
 	self.owner.ledgegrab = FALSE;
 };
 
