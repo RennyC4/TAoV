@@ -2510,6 +2510,7 @@ void() player_move = [0, player_move]
 		self.owner.attack_finished = time; // only reset attack finish time on ground, this is to prevent cheap air combos
 		self.owner.walljump = FALSE;
 		self.owner.noaircontrol_finished = time;
+		self.djump_spincnt = 0; // remove double jump flag
 	}
 	self.owner.purge_toggle = FALSE;
 	self.pain_finished = time;
@@ -6906,6 +6907,7 @@ void() player_doublejump1	=[	$djump,	player_doublejump1	]
 	{
 		if (self.djump_spincnt > 4)
 		{
+			self.djump_spincnt = 1; // (kind of) remove double jump flag - concerns trigger_spincut as well
 			self.angles_x = 0; // remove spin
 			player_move();
 			return;
@@ -6915,6 +6917,7 @@ void() player_doublejump1	=[	$djump,	player_doublejump1	]
 	{
 		if (self.djump_spincnt > 1)
 		{
+			self.djump_spincnt = 1; // (kind of) remove double jump flag - concerns trigger_spincut as well
 			self.angles_x = 0; // remove spin
 			player_move();
 			return;

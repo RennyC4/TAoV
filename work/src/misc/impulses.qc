@@ -323,6 +323,7 @@ void() CheckImpulseButtons =
 			{
 				self.swordshadow_time = time; // sword shadow remove
 				self.shadow_time = time;
+				self.char.djump_spincnt = 1; // reset double jump?
 				self.char.swing_count = 0; // reset sword swing
 				self.char.idle_count = 0; // reset pose
 				self.attack_finished = time;

@@ -840,3 +840,26 @@ void() trigger_safezone =
 	self.model = "";
 	self.touch = safezonetrigger_touch;
 };
+
+void() spincut_touch =
+{
+	if (!relics & IT_RELIC3)
+		return;
+
+	if (other.classname == "player" && other.djump_spincnt >= 2)// && other.block_finished < time)
+	{
+		other.djump_spincnt = 2;
+		other.velocity_z = self.speed;
+	}
+};
+
+/*QUAKED trigger_spincut (.5 .5 .5) ?
+Spincut relic activated lift concerning progression
+*/
+void() trigger_spincut =
+{
+	InitTrigger ();
+	if (!self.speed)
+		self.speed = 50;
+	self.touch = spincut_touch;
+};
