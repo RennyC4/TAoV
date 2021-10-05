@@ -1080,6 +1080,8 @@ void() PlayerPostThink =
 		stuffcmd (self, "viewsize 110\n");
 	if (cvar("fov") != 105)
 		stuffcmd (self, "fov 105\n");
+	if (cvar("chase_active") != 0)
+		stuffcmd (self, "chase_active 0\n");
 	if (cvar("scr_fov_mode") != 5)
 		stuffcmd (self, "scr_fov_mode 5\n");
 			
