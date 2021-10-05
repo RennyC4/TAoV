@@ -706,7 +706,7 @@ void() misc_title1_think =
 			self.speed = 0;
 			if (title1_finished < time)
 			{
-				sound (self, CHAN_AUTO, "misc/title.wav", 1, ATTN_NONE);
+				sound (self, CHAN_AUTO, "misc/title.wav", 0.85, ATTN_NONE);
 				sound (self, CHAN_AUTO, "misc/titlesay.wav", 1, ATTN_NONE);
 			}
 		}
