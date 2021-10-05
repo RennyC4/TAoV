@@ -65,6 +65,104 @@ void(float r, float g, float b, float light, entity spawner) spawn_color_glow =
 	glowy.nextthink = time + 0.1;
 };
 
+//
+// Display Signs over Vigil
+//
+
+void() DisplaySignThink =
+{
+	local vector x;
+
+	x = self.owner.angles;
+	x_z = 0;
+	makevectors(x);
+
+	if (self.mode == 0)
+	{
+		if (self.attack_finished > time)
+			self.angles_z = self.angles_z + 1500 * frametime;
+		else
+		{
+			if (self.angles_z != 0)
+			{
+				self.mode = 1;
+				self.attack_finished = time + 1;
+				self.angles_z = 0;
+			}
+		}
+	}
+	else if (self.mode == 1)
+	{
+		if (self.attack_finished < time)
+		{
+			self.angles_z = self.angles_z - 1500 * frametime;
+			self.velocity_y = -150;
+	        if (self.alpha > 0.1)
+			{
+				self.effects = EF_NODEPTHTEST | EF_FULLBRIGHT | EF_ADDITIVE;
+				self.alpha = self.alpha - 0.01;
+			}
+			else
+			{
+				remove(self);
+				return;	
+			}
+		}
+	}
+
+	if (self.mode == 0 || self.attack_finished > time)
+	{
+		self.origin_x = self.owner.origin_x;
+		self.origin_y = self.owner.origin_y;		
+		self.origin_z = self.owner.origin_z + 48;
+	}
+	frameskip(0.01);
+};
+
+void(entity targ) DisplayArmor =
+{
+	local entity armoru;
+
+	armoru = spawn();
+	setorigin(armoru, targ.origin + v_up*48);
+	setmodel(armoru, "progs/armorup.spr");
+	setsize(armoru, '0 0 0', '0 0 0');
+	armoru.solid = SOLID_NOT;
+	armoru.owner = targ;
+	armoru.takedamage = DAMAGE_NO;
+	armoru.classname = "armorsign";
+	armoru.movetype = MOVETYPE_NOCLIP;
+	armoru.angles_y = -90; // ?
+	armoru.alpha = 1;
+	armoru.attack_finished = time + 1;
+	armoru.fixangle = TRUE;
+	armoru.effects = EF_NODEPTHTEST | EF_FULLBRIGHT;
+	armoru.think = DisplaySignThink;
+	armoru.nextthink = time;
+};
+
+void(entity targ) DisplaySword =
+{
+	local entity swordu;
+
+	swordu = spawn();
+	setorigin(swordu, targ.origin + v_up*48);
+	setmodel(swordu, "progs/volup.spr");
+	setsize(swordu, '0 0 0', '0 0 0');
+	swordu.solid = SOLID_NOT;
+	swordu.owner = targ;
+	swordu.takedamage = DAMAGE_NO;
+	swordu.classname = "swordsign";
+	swordu.movetype = MOVETYPE_NOCLIP;
+	swordu.angles_y = -90; // ?
+	swordu.alpha = 1;
+	swordu.attack_finished = time + 1;
+	swordu.fixangle = TRUE;
+	swordu.effects = EF_NODEPTHTEST | EF_FULLBRIGHT | EF_ADDITIVE;
+	swordu.think = DisplaySignThink;
+	swordu.nextthink = time;
+};
+
 float title1_finished;
 
 // Called from QuakeC

@@ -1235,7 +1235,10 @@ void() DisplayLevelThink =
 		remove(self);
 		return;
 	}
-	setorigin(self, self.owner.origin + v_up * 48);
+	
+	self.origin_x = self.owner.origin_x;
+	self.origin_y = self.owner.origin_y;
+	self.origin_z = self.owner.origin_z + 48;
 	frameskip(0.01);
 };
 
@@ -1252,7 +1255,7 @@ void() DisplayLevel =
 	levelu.takedamage = DAMAGE_NO;
 	levelu.classname = "levelsign";
 	levelu.movetype = MOVETYPE_NOCLIP;
-	levelu.angles_y = -90; // ?
+	levelu.angles_y = -90;
 	levelu.angles_x = -90;
 	levelu.fixangle = TRUE;
 	levelu.effects = EF_NODEPTHTEST | EF_FULLBRIGHT;
