@@ -823,7 +823,7 @@ void() firebeam_think =
 	if (self.frame == 0)
 	{
 		MakeSolidList();
-		head = searchradius(self.origin, 50);
+		head = searchradius(self.origin - v_up*20, 50);
 		while (head)
 		{
 			if (head != self && visible(head) && head.perfectguard_buff < time && head.takedamage && self.owner != head && head.deadflag != DEAD_DEAD

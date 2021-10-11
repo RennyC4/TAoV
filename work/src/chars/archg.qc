@@ -77,16 +77,20 @@ void() archg_charge15	=[	$bow15,	archg_charge15	]
 		setmodel(effect, "progs/grounded.mdl");
 		effect.solid = SOLID_NOT;
 		setsize (effect, '-21 -21 -16', '22 23 31');
-		effect.movetype = MOVETYPE_FLY;
+		effect.movetype = MOVETYPE_NOCLIP;
 		effect.think = effect_think;
-		effect.alpha = 0.2;
+		effect.effects = EF_FULLBRIGHT | EF_ADDITIVE;
+		effect.alpha = 0.75;
 		effect.nextthink = time + 0.1;
 
 		sound (self, CHAN_BODY, "gaunt/charge.wav", 1, ATTN_NORM);
 		self.mana = self.mana + 6;
 	}
 	else
+	{
+		self.mana = 200;
 		archg_charge16();
+	}
 };
 
 

@@ -337,16 +337,20 @@ void()	gaunt_charge9	=[	$pray1,		gaunt_charge9	]
 		setmodel(effect, "progs/grounded.mdl");
 		effect.solid = SOLID_NOT;
 		setsize (effect, '-21 -21 -16', '22 23 31');
-		effect.movetype = MOVETYPE_FLY;
+		effect.movetype = MOVETYPE_NOCLIP;
 		effect.think = effect_think;
-		effect.alpha = 0.2;
+		effect.effects = EF_FULLBRIGHT | EF_ADDITIVE;
+		effect.alpha = 0.75;
 		effect.nextthink = time + 0.1;
 
 		sound (self, CHAN_BODY, "gaunt/charge.wav", 1, ATTN_NORM);
 		self.mana = self.mana + 3;
 	}
 	else
+	{
+		self.mana = 150; // cap
 		gaunt_charge10();
+	}
 };
 
 void()	gaunt_charge10	=[	$kneel8,		gaunt_charge11	] {monster_removeslide();};
@@ -372,7 +376,6 @@ void() gaunt_magic =
 	{
 		gaunt_firebolt1();
 		self.mana = 0;
-		return;
 	}
 
 	if (random() < 0.4 && self.mana > 9)
@@ -390,6 +393,8 @@ void() gaunt_magic =
 		gaunt_firebeam1(); // firebeam spell
 		self.mana = self.mana - 75;
 	}
+	else
+		gaunt_charge1();
 };
 
 /*QUAKED monster_gaunt (1 0 0) (-16 -16 -24) (16 16 32)

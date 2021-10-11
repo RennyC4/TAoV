@@ -683,37 +683,7 @@ void() PlayerPreThink =
 		
 		//if (self.char.lowceil)
 		//	bprint ("Low Ceiling Flag On\n");
-		
-		//
-		//	Spell Absorption visual indicator
-		//
 
-		if (self.absorb_finished > time && self.fullmana_display_timer < time)
-		{
-			local entity manashadow;
-
-			manashadow = spawn();
-			manashadow.owner = self.char;
-			manashadow.classname = "manashadow";
-			manashadow.movetype = MOVETYPE_NOCLIP;
-			manashadow.solid = SOLID_NOT;
-			manashadow.scale = 1;
-			manashadow.alpha = 0.75;
-			manashadow.colormod = '218 0 218';
-			manashadow.drawonlytoclient = self; // reduce network traffic
-			manashadow.effects = EF_ADDITIVE | EF_FULLBRIGHT | EF_NODEPTHTEST;
-			setmodel (manashadow, "progs/plyr.mdl");
-
-			manashadow.frame = self.char.frame;
-			manashadow.angles = self.char.angles;
-			setorigin(manashadow, self.char.origin);
-
-			manashadow.think = manashadows_think;
-			manashadow.nextthink = time;
-
-			self.fullmana_display_timer = time + 3.5; // Display once
-			sound (self, CHAN_AUTO, "spells/absorb.wav", 1, ATTN_NORM);
-		}
 		
 		//
 		//	Full Mana visual indicator
@@ -746,7 +716,7 @@ void() PlayerPreThink =
 					manashadow.think = manashadows_think;
 					manashadow.nextthink = time;
 
-					self.fullmana_display_timer = time + 1; // cooldown
+					self.fullmana_display_timer = time + 0.5; // cooldown
 					sound (self, CHAN_AUTO, "player/fullmp.wav", 1, ATTN_NORM);
 				}
 				self.fullmana_display = TRUE; // Only do this once
@@ -755,6 +725,37 @@ void() PlayerPreThink =
 		else if (self.fullmana_display == TRUE)
 			self.fullmana_display = FALSE;
 	
+		//
+		//	Spell Absorption visual indicator
+		//
+
+		if (self.absorb_finished > time && self.fullmana_display_timer < time)
+		{
+			local entity manashadow;
+
+			manashadow = spawn();
+			manashadow.owner = self.char;
+			manashadow.classname = "manashadow";
+			manashadow.movetype = MOVETYPE_NOCLIP;
+			manashadow.solid = SOLID_NOT;
+			manashadow.scale = 1;
+			manashadow.alpha = 0.75;
+			manashadow.colormod = '218 0 218'; // purple
+			manashadow.drawonlytoclient = self; // reduce network traffic
+			manashadow.effects = EF_ADDITIVE | EF_FULLBRIGHT | EF_NODEPTHTEST;
+			setmodel (manashadow, "progs/plyr.mdl");
+
+			manashadow.frame = self.char.frame;
+			manashadow.angles = self.char.angles;
+			setorigin(manashadow, self.char.origin);
+
+			manashadow.think = manashadows_think;
+			manashadow.nextthink = time;
+
+			self.fullmana_display_timer = time + 3.5; // Display once as the display timer is normally 3 seconds
+			sound (self, CHAN_AUTO, "spells/absorb.wav", 1, ATTN_NORM);
+		}
+
 		//
 		// ColorMod Rainbow for HP Max Up bottles and slowly reverting Vigil's colormod to default when changed
 		//

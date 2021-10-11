@@ -762,18 +762,20 @@ void() CombatThink =
 		}
 		else if (self.ai_attack == 2)
 		{
-			if (self.classname == "gaunt" && self.classname == "archg" && self.classname == "troglod")
+			if (self.classname == "gaunt" || self.classname == "archg" || self.classname == "troglod")
 			{
 				if (h < 0.5)
 				{
 					if (self.th_magic)
-						self.th_magic();
+						self.think = self.th_magic;
+						//self.th_magic();
 				}
 			}
 			else if (h < 0.02) // used to be 0.08
 			{
 				if (self.th_magic)
-					self.th_magic();
+					self.think = self.th_magic;
+					//self.th_magic();
 			}
 		}
 		self.ai_reattack = FALSE;
@@ -864,7 +866,8 @@ void() CombatThink =
 				if (h < 0.5)
 				{
 					if (self.th_magic)
-						self.th_magic();
+						//self.th_magic();
+						self.think = self.th_magic;
 				}
 			}
 			else if (h < 0.1)
@@ -875,18 +878,21 @@ void() CombatThink =
 					r3 = vlen (self.origin - self.enemy.origin);
 					
 					// Take into account of range for magic
-					if ((self.classname == "zombieboss" || self.classname == "zombie"))
+					if (self.classname == "zombieboss" || self.classname == "zombie")
 					{
 						if (r3 <= 275)
-							self.th_magic();
+							self.think = self.th_magic;
+							//self.th_magic();
 					}
 					else if (self.classname == "hellknight")
 					{
 						if (r3 <= 350)
-							self.th_magic();
+							self.think = self.th_magic;
+							//self.th_magic();
 					}
 					else
-						self.th_magic();
+						self.think = self.th_magic;
+						//self.th_magic();
 				}
 				self.ai_attack = 2;
 			}
