@@ -465,6 +465,12 @@ void(float screenwidth, float screenheight) DrawPerfectGuard =
 	drawpic (pos2, "progs/perfgrd.png", '122 40.5', '1 1 1', 1, DRAWFLAG_NORMAL);
 };
 
+void(float screenwidth, float screenheight) DrawAbsorption =
+{
+	local vector pos2 = [(screenwidth - stringwidth("", TRUE, '122 40.5 0'))/1.275, (screenheight - 18)/3.6];
+	drawpic (pos2, "progs/absorb.png", '122 40.5', '1 1 1', 1, DRAWFLAG_NORMAL);
+};
+
 //
 // Reki's Code to draw 3D Objects properly on the HUD
 //
@@ -1122,6 +1128,10 @@ void(float width, float height, float menushown) CSQC_UpdateView =
 		local float pg = getstatf(STAT_PERFECTGUARD);
 		if (pg > time)
 			DrawPerfectGuard(width, height);			// Draws the Perfect Guard sign
+
+		local float absorb = getstatf(STAT_ABSORB);
+		if (absorb > time)
+			DrawAbsorption(width, height);				// Draws the Absorbtion sign
 
 		local float relics = getstatf(STAT_RELIC);
 		if (relics & IT_RELIC7) 

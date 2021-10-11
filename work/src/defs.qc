@@ -614,6 +614,9 @@ float turbo_mode; // Turbo mode boolean, saved in parms
 .float perfectblock_cooldown;
 .float perfectguard_buff; // timer, when on Vigil is a TAKEDAMAGE_NO; entity
 
+// Spell absorbtion
+.float absorb_finished;
+
 // Purge
 .float purge_finished;
 .float purge_cooldown;
@@ -729,6 +732,7 @@ float FL_BOSS = 8192; // entity is a boss monster
 #define STAT_SHRINEHUD 56
 
 #define STAT_LEVEL 57
+#define STAT_ABSORB 58
 
 //
 

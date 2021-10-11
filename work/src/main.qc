@@ -81,6 +81,7 @@ void() CSEv_GrabCSQCValues =
 	globalstat(STAT_SHRINEHUD, EV_FLOAT, "shrineHUD_on");
 	
 	clientstat(STAT_LEVEL, EV_FLOAT, level);
+	clientstat(STAT_ABSORB, EV_FLOAT, absorb_finished);
 };
 
 float framecount, developer, difficulty, deathmatch, coop;

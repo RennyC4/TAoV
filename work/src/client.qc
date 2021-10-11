@@ -671,6 +671,11 @@ void() PlayerPreThink =
 
 	if (self.char != world)
 	{
+		// HUD Test stuff
+		//self.absorb_finished = time + 1;
+		//self.perfectguard_buff = time + 1;
+		//self.combo = 999;
+	
 		// Send Vigil's origin to CSQC for Blind status mainly
 		self.vigil_x = self.char.origin_x;
 		self.vigil_y = self.char.origin_y;

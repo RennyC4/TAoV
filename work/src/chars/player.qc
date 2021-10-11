@@ -5280,7 +5280,7 @@ void() player_airkick15		=[	$airkick15,	player_airkick16 	]
 	}
 	frameskip(0.2);
 };
-void() player_airkick16		=[	$airkick16,	player_airkick17 	] {frameskip(0.1);};
+void() player_airkick16		=[	$airkick16,	player_airkick17 	] {};
 void() player_airkick17		=[	$airkick17,	player_move	 	] {};
 
 //*

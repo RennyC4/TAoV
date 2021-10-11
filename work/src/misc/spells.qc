@@ -152,6 +152,7 @@ void() FireBallHomeIn =
 					if (head.owner) // Reward mana
 					{
 						head.owner.mana = head.owner.mana + 10;
+						head.owner.absorb_finished = time + 3;
 						if (head.owner.mana > head.owner.max_mana)
 							head.owner.mana = head.owner.max_mana;
 					}
@@ -436,6 +437,7 @@ void() LightningThink =
 						if (head.owner) // Reward mana
 						{
 							head.owner.mana = head.owner.mana + 50;
+							head.owner.absorb_finished = time + 3;
 							if (head.owner.mana > head.owner.max_mana)
 								head.owner.mana = head.owner.max_mana;
 						}
@@ -628,6 +630,7 @@ void() icefield_think =
 						if (head.owner) // Reward mana
 						{
 							head.owner.mana = head.owner.mana + 30;
+							head.owner.absorb_finished = time + 3;
 							if (head.owner.mana > head.owner.max_mana)
 								head.owner.mana = head.owner.max_mana;
 						}
@@ -833,6 +836,7 @@ void() firebeam_think =
 						if (head.owner) // Reward mana
 						{
 							head.owner.mana = head.owner.mana + 100;
+							head.owner.absorb_finished = time + 3;
 							if (head.owner.mana > head.owner.max_mana)
 								head.owner.mana = head.owner.max_mana;
 						}
@@ -1090,6 +1094,7 @@ void() TwisterThink =
 					if (head.owner) // Reward mana
 					{
 						head.owner.mana = head.owner.mana + 13;
+						head.owner.absorb_finished = time + 3;
 						if (head.owner.mana > head.owner.max_mana)
 							head.owner.mana = head.owner.max_mana;
 					}
