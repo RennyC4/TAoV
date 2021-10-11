@@ -264,6 +264,7 @@ void() worldspawn =
 		precache_sound ("spells/iceyair.wav");
 		precache_sound ("spells/twister.wav");
 		precache_sound ("spells/enrage.wav");
+		precache_sound ("spells/absorb.wav");
 		precache_sound ("weapons/lhit.wav");
 		precache_sound ("misc/pickup.wav");
 		precache_sound ("misc/fireout.wav");

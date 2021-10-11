@@ -712,7 +712,7 @@ void() PlayerPreThink =
 			manashadow.nextthink = time;
 
 			self.fullmana_display_timer = time + 3.5; // Display once
-			sound (self, CHAN_BODY, "player/fullmp.wav", 1, ATTN_NORM);
+			sound (self, CHAN_AUTO, "spells/absorb.wav", 1, ATTN_NORM);
 		}
 		
 		//
@@ -747,7 +747,7 @@ void() PlayerPreThink =
 					manashadow.nextthink = time;
 
 					self.fullmana_display_timer = time + 1; // cooldown
-					sound (self, CHAN_BODY, "player/fullmp.wav", 1, ATTN_NORM);
+					sound (self, CHAN_AUTO, "player/fullmp.wav", 1, ATTN_NORM);
 				}
 				self.fullmana_display = TRUE; // Only do this once
 			}
