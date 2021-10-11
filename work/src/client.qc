@@ -685,6 +685,37 @@ void() PlayerPreThink =
 		//	bprint ("Low Ceiling Flag On\n");
 		
 		//
+		//	Spell Absorption visual indicator
+		//
+
+		if (self.absorb_finished > time && self.fullmana_display_timer < time)
+		{
+			local entity manashadow;
+
+			manashadow = spawn();
+			manashadow.owner = self.char;
+			manashadow.classname = "manashadow";
+			manashadow.movetype = MOVETYPE_NOCLIP;
+			manashadow.solid = SOLID_NOT;
+			manashadow.scale = 1;
+			manashadow.alpha = 0.75;
+			manashadow.colormod = '218 0 218';
+			manashadow.drawonlytoclient = self; // reduce network traffic
+			manashadow.effects = EF_ADDITIVE | EF_FULLBRIGHT | EF_NODEPTHTEST;
+			setmodel (manashadow, "progs/plyr.mdl");
+
+			manashadow.frame = self.char.frame;
+			manashadow.angles = self.char.angles;
+			setorigin(manashadow, self.char.origin);
+
+			manashadow.think = manashadows_think;
+			manashadow.nextthink = time;
+
+			self.fullmana_display_timer = time + 3.5; // Display once
+			sound (self, CHAN_BODY, "player/fullmp.wav", 1, ATTN_NORM);
+		}
+		
+		//
 		//	Full Mana visual indicator
 		//
 
