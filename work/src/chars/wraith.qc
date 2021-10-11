@@ -73,51 +73,51 @@ void() wraith_walk12	=[	$walk12,	wraith_walk1		]
 	ai_fly(16);
 };
 
-void() wraith_smash1	=[	$smash1,	wraith_smash2		] {frameskip(0.08);};
-void() wraith_smash2	=[	$smash2,	wraith_smash3		] {frameskip(0.08);};
-void() wraith_smash3	=[	$smash3,	wraith_smash4		] {frameskip(0.08);};
-void() wraith_smash4	=[	$smash4,	wraith_smash5		] {frameskip(0.08);};
-void() wraith_smash5	=[	$smash5,	wraith_smash6		] {frameskip(0.08);};
-void() wraith_smash6	=[	$smash6,	wraith_smash7		] {frameskip(0.08);};
-void() wraith_smash7	=[	$smash7,	wraith_smash8		] {frameskip(0.08);};
-void() wraith_smash8	=[	$smash8,	wraith_smash9		] {frameskip(0.08);};
-void() wraith_smash9	=[	$smash9,	wraith_smash10		] {FireMelee(36,35,2,50,5,0,1,FALSE,0,0);frameskip(0.08);};
-void() wraith_smash10	=[	$smash10,	wraith_smash11		] {frameskip(0.08);};
-void() wraith_smash11	=[	$smash11,	wraith_smash12		] {frameskip(0.08);};
-void() wraith_smash12	=[	$smash12,	wraith_walk1		] {frameskip(0.08);};
+void() wraith_smash1	=[	$smash1,	wraith_smash2		] {frameskip(0.08);ai_forceface();};
+void() wraith_smash2	=[	$smash2,	wraith_smash3		] {frameskip(0.08);ai_forceface();};
+void() wraith_smash3	=[	$smash3,	wraith_smash4		] {frameskip(0.08);ai_forceface();};
+void() wraith_smash4	=[	$smash4,	wraith_smash5		] {frameskip(0.08);ai_forceface();};
+void() wraith_smash5	=[	$smash5,	wraith_smash6		] {frameskip(0.08);ai_forceface();};
+void() wraith_smash6	=[	$smash6,	wraith_smash7		] {frameskip(0.08);ai_forceface();};
+void() wraith_smash7	=[	$smash7,	wraith_smash8		] {frameskip(0.08);ai_forceface();};
+void() wraith_smash8	=[	$smash8,	wraith_smash9		] {frameskip(0.08);ai_forceface();};
+void() wraith_smash9	=[	$smash9,	wraith_smash10		] {FireMelee(36,35,2,50,5,0,1,FALSE,0,0);frameskip(0.08);ai_forceface();};
+void() wraith_smash10	=[	$smash10,	wraith_smash11		] {frameskip(0.08);ai_forceface();};
+void() wraith_smash11	=[	$smash11,	wraith_smash12		] {frameskip(0.08);ai_forceface();};
+void() wraith_smash12	=[	$smash12,	wraith_walk1		] {frameskip(0.08);ai_forceface();};
 
-void() wraith_strike1	=[	$astrike1,	wraith_strike2		] {frameskip(0.08);};
-void() wraith_strike2	=[	$astrike2,	wraith_strike3		] {frameskip(0.08);};
-void() wraith_strike3	=[	$astrike3,	wraith_strike4		] {frameskip(0.08);};
-void() wraith_strike4	=[	$astrike4,	wraith_strike5		] {frameskip(0.08);};
-void() wraith_strike5	=[	$astrike5,	wraith_strike6		] {FireMelee(36,35,3,50,5,0,1,FALSE,0,0);frameskip(0.08);};
-void() wraith_strike6	=[	$astrike6,	wraith_strike7		] {frameskip(0.08);};
-void() wraith_strike7	=[	$astrike7,	wraith_strike8		] {frameskip(0.08);};
-void() wraith_strike8	=[	$astrike8,	wraith_strike9		] {frameskip(0.08);};
-void() wraith_strike9	=[	$astrike9,	wraith_walk1		] {frameskip(0.08);};
+void() wraith_strike1	=[	$astrike1,	wraith_strike2		] {frameskip(0.08);ai_forceface();};
+void() wraith_strike2	=[	$astrike2,	wraith_strike3		] {frameskip(0.08);ai_forceface();};
+void() wraith_strike3	=[	$astrike3,	wraith_strike4		] {frameskip(0.08);ai_forceface();};
+void() wraith_strike4	=[	$astrike4,	wraith_strike5		] {frameskip(0.08);ai_forceface();};
+void() wraith_strike5	=[	$astrike5,	wraith_strike6		] {FireMelee(36,35,3,50,5,0,1,FALSE,0,0);frameskip(0.08);ai_forceface();};
+void() wraith_strike6	=[	$astrike6,	wraith_strike7		] {frameskip(0.08);ai_forceface();};
+void() wraith_strike7	=[	$astrike7,	wraith_strike8		] {frameskip(0.08);ai_forceface();};
+void() wraith_strike8	=[	$astrike8,	wraith_strike9		] {frameskip(0.08);ai_forceface();};
+void() wraith_strike9	=[	$astrike9,	wraith_walk1		] {frameskip(0.08);ai_forceface();};
 
-void() wraith_cstrike1	=[	$cstrike1,	wraith_cstrike2		] {frameskip(0.08);};
-void() wraith_cstrike2	=[	$cstrike2,	wraith_cstrike3		] {frameskip(0.08);};
-void() wraith_cstrike3	=[	$cstrike3,	wraith_cstrike4		] {frameskip(0.08);};
-void() wraith_cstrike4	=[	$cstrike4,	wraith_cstrike5		] {frameskip(0.08);};
-void() wraith_cstrike5	=[	$cstrike5,	wraith_cstrike6		] {frameskip(0.08);};
-void() wraith_cstrike6	=[	$cstrike6,	wraith_cstrike7		] {FireMelee(36,35,3,50,5,0,1,FALSE,0,0);frameskip(0.08);};
-void() wraith_cstrike7	=[	$cstrike7,	wraith_cstrike8		] {frameskip(0.08);};
-void() wraith_cstrike8	=[	$cstrike8,	wraith_cstrike9		] {frameskip(0.08);};
-void() wraith_cstrike9	=[	$cstrike9,	wraith_walk1		] {frameskip(0.08);};
+void() wraith_cstrike1	=[	$cstrike1,	wraith_cstrike2		] {frameskip(0.08);ai_forceface();};
+void() wraith_cstrike2	=[	$cstrike2,	wraith_cstrike3		] {frameskip(0.08);ai_forceface();};
+void() wraith_cstrike3	=[	$cstrike3,	wraith_cstrike4		] {frameskip(0.08);ai_forceface();};
+void() wraith_cstrike4	=[	$cstrike4,	wraith_cstrike5		] {frameskip(0.08);ai_forceface();};
+void() wraith_cstrike5	=[	$cstrike5,	wraith_cstrike6		] {frameskip(0.08);ai_forceface();};
+void() wraith_cstrike6	=[	$cstrike6,	wraith_cstrike7		] {FireMelee(36,35,3,50,5,0,1,FALSE,0,0);frameskip(0.08);ai_forceface();};
+void() wraith_cstrike7	=[	$cstrike7,	wraith_cstrike8		] {frameskip(0.08);ai_forceface();};
+void() wraith_cstrike8	=[	$cstrike8,	wraith_cstrike9		] {frameskip(0.08);ai_forceface();};
+void() wraith_cstrike9	=[	$cstrike9,	wraith_walk1		] {frameskip(0.08);ai_forceface();};
 
-void() wraith_magic1	=[	$magic1,	wraith_magic2		] {frameskip(0.08);};
-void() wraith_magic2	=[	$magic2,	wraith_magic3		] {frameskip(0.08);};
-void() wraith_magic3	=[	$magic3,	wraith_magic4		] {frameskip(0.08);};
-void() wraith_magic4	=[	$magic4,	wraith_magic5		] {frameskip(0.08);};
-void() wraith_magic5	=[	$magic5,	wraith_magic6		] {frameskip(0.08);};
-void() wraith_magic6	=[	$magic6,	wraith_magic7		] {FireMelee(36,35,3,50,5,0,1,FALSE,0,0);frameskip(0.08);};
-void() wraith_magic7	=[	$magic7,	wraith_magic8		] {frameskip(0.08);};
-void() wraith_magic8	=[	$magic8,	wraith_magic9		] {frameskip(0.08);};
-void() wraith_magic9	=[	$magic9,	wraith_magic10		] {frameskip(0.08);};
-void() wraith_magic10	=[	$magic10,	wraith_magic11		] {frameskip(0.08);};
-void() wraith_magic11	=[	$magic11,	wraith_magic12		] {frameskip(0.08);};
-void() wraith_magic12	=[	$magic12,	wraith_walk1		] {frameskip(0.08);};
+void() wraith_magic1	=[	$magic1,	wraith_magic2		] {frameskip(0.08);ai_forceface();};
+void() wraith_magic2	=[	$magic2,	wraith_magic3		] {frameskip(0.08);ai_forceface();};
+void() wraith_magic3	=[	$magic3,	wraith_magic4		] {frameskip(0.08);ai_forceface();};
+void() wraith_magic4	=[	$magic4,	wraith_magic5		] {frameskip(0.08);ai_forceface();};
+void() wraith_magic5	=[	$magic5,	wraith_magic6		] {frameskip(0.08);ai_forceface();};
+void() wraith_magic6	=[	$magic6,	wraith_magic7		] {FireMelee(36,35,3,50,5,0,1,FALSE,0,0);frameskip(0.08);ai_forceface();};
+void() wraith_magic7	=[	$magic7,	wraith_magic8		] {frameskip(0.08);ai_forceface();};
+void() wraith_magic8	=[	$magic8,	wraith_magic9		] {frameskip(0.08);ai_forceface();};
+void() wraith_magic9	=[	$magic9,	wraith_magic10		] {frameskip(0.08);ai_forceface();};
+void() wraith_magic10	=[	$magic10,	wraith_magic11		] {frameskip(0.08);ai_forceface();};
+void() wraith_magic11	=[	$magic11,	wraith_magic12		] {frameskip(0.08);ai_forceface();};
+void() wraith_magic12	=[	$magic12,	wraith_walk1		] {frameskip(0.08);ai_forceface();};
 
 void() wraith_melee =
 {
@@ -187,7 +187,7 @@ void() wraith_death12	=[	$death12,	wraith_death12		]
 void() WraithSwordTouch =
 {
 	if (other.solid == SOLID_BSP)
-		sound (self, CHAN_BODY, "player/shwing.wav", 1, ATTN_NORM);
+		sound (self, CHAN_BODY, "player/wallgrab.wav", 1, ATTN_NORM);
 };
 
 void() ThrowWraithSword =

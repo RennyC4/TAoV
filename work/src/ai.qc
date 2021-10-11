@@ -154,7 +154,11 @@ void() enrage_think =
 		remove(self);
 		return;
 	}
-	setorigin (self, self.owner.origin + v_up * 64);
+	self.origin_x = self.owner.origin_x;
+	self.origin_y = self.owner.origin_y;
+	self.origin_z = self.owner.origin_z + 64;
+	
+	//setorigin (self, self.owner.origin + v_up * 64);
 	
 	frameskip(0.01);
 };

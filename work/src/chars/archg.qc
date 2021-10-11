@@ -214,6 +214,12 @@ void() archg_magic =
 		archg_icefield1(); // icefield
 		self.mana = self.mana - 25;
 	}
+	else
+	{
+		archg_charge1();
+		return;
+	}
+	
 };
 
 void() archg_pain1	=[	$castb9,	archg_walk1		] {monster_removeslide();frameskip(0.2);};
