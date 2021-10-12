@@ -35,10 +35,19 @@ void(entity attackerb) player_damage_physics =
 		self.velocity = '0 0 0';
 		self.velocity_z = 300;
 
+		if (attackerb.angles_y > 90 && attackerb.angles_y < 270)
+			self.velocity_x = -100;
+		else
+			self.velocity_x = 100;
+
+		// Old physics logic
+		/*
 		if (attackerb.angles_y == 0)
 			self.velocity_x = 100;
 		else
 			self.velocity_x = -100;
+		*/
+		
 		if (deathmatch == FALSE)
 			self.paincount = 2;
 	}
@@ -56,10 +65,20 @@ void(entity attackerb) player_damage_physics =
 	{
 		self.velocity = '0 0 0';
 		self.velocity_z = 300;
+
+		if (attackerb.angles_y > 90 && attackerb.angles_y < 270)
+			self.velocity_x = -300;
+		else
+			self.velocity_x = 300;
+
+		// Old physics logic
+		/*
 		if (attackerb.angles_y == 0)
 			self.velocity_x = 300;
 		else
 			self.velocity_x = -300;
+		*/
+		
 		if (self.flags & FL_ONGROUND)
 			self.flags = self.flags - FL_ONGROUND;
 		if (deathmatch == FALSE)
@@ -74,10 +93,19 @@ void(entity attackerb) player_damage_physics =
 		else
 			self.velocity_z = 100;
 
+		if (attackerb.angles_y > 90 && attackerb.angles_y < 270)
+			self.velocity_x = -50;
+		else
+			self.velocity_x = 50;
+
+		// Old physics logic
+		/*
 		if (attackerb.angles_y == 0)
 			self.velocity_x = 50;
 		else
 			self.velocity_x = -50;
+		*/
+		
 		if (self.flags & FL_ONGROUND)
 			self.flags = self.flags - FL_ONGROUND;
 		if (deathmatch == FALSE)
@@ -87,10 +115,20 @@ void(entity attackerb) player_damage_physics =
 	{
 		self.velocity = '0 0 0';
 		self.velocity_z = 350;
+		
+		if (attackerb.angles_y > 90 && attackerb.angles_y < 270)
+			self.velocity_x = -200;
+		else
+			self.velocity_x = 200;
+			
+		// Old physics logic
+		/*
 		if (attackerb.angles_y == 0)
 			self.velocity_x = 200;
 		else
 			self.velocity_x = -200;
+		*/
+		
 		if (self.flags & FL_ONGROUND)
 			self.flags = self.flags - FL_ONGROUND;
 		if (deathmatch == FALSE)
@@ -101,10 +139,19 @@ void(entity attackerb) player_damage_physics =
 		self.velocity = '0 0 0';
 		self.velocity_z = 0;
 
+		if (attackerb.angles_y > 90 && attackerb.angles_y < 270)
+			self.velocity_x = -400;
+		else
+			self.velocity_x = 400;
+
+		// Old physics logic
+		/*
 		if (attackerb.angles_y == 0)
 			self.velocity_x = 400;
 		else
 			self.velocity_x = -400;
+		*/
+
 		if (self.flags & FL_ONGROUND)
 			self.flags = self.flags - FL_ONGROUND;
 	}
