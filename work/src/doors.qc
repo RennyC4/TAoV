@@ -276,7 +276,6 @@ door_touch
 Prints messages and opens key doors
 ================
 */
-.float centerprint_priority_finished;
 void() door_touch =
 {
 	if (other.classname != "player")
@@ -287,10 +286,7 @@ void() door_touch =
 	self.owner.attack_finished = time + 2;
 
 	if (self.owner.message != "")
-	{
-			other.owner.centerprint_priority_finished = time + 1;
 			centerprint (other.owner, self.message);
-	}
 
 	if (self.spawnflags & 8) // Church/Gold key
 	{

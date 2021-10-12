@@ -143,40 +143,40 @@ void(vector pos) DrawCurrentSelectedSpell =
 		drawpic (pos + '1 1', "progs/spell1_s.png", '32 32 0', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
 		drawpic (pos, "progs/spell1_s.png", '32 32 0', '1 1 1', 1, DRAWFLAG_NORMAL);
 		// Draw Mana Cost
-		drawstring (pos + '25 17', "10", '8 8', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
-		drawstring (pos + '24 16', "10", '8 8', '.25 .25 1', 1, DRAWFLAG_NORMAL);
+		drawstring (pos + '25 17', "10 mp", '8 8', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
+		drawstring (pos + '24 16', "10 mp", '8 8', '.25 .25 1', 1, DRAWFLAG_NORMAL);
 	}
 	else if (selected_spell == 1)
 	{
 		drawpic (pos + '1 1', "progs/spell2_s.png", '32 32 0', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
 		drawpic (pos, "progs/spell2_s.png", '32 32 0', '1 1 1', 1, DRAWFLAG_NORMAL);
 		// Draw Mana Cost
-		drawstring (pos + '25 17', "50", '8 8', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
-		drawstring (pos + '24 16', "50", '8 8', '.25 .25 1', 1, DRAWFLAG_NORMAL);
+		drawstring (pos + '25 17', "50 mp", '8 8', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
+		drawstring (pos + '24 16', "50 mp", '8 8', '.25 .25 1', 1, DRAWFLAG_NORMAL);
 	}
 	else if (selected_spell == 2)
 	{
 		drawpic (pos + '1 1', "progs/spell3_s.png", '32 32 0', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
 		drawpic (pos, "progs/spell3_s.png", '32 32 0', '1 1 1', 1, DRAWFLAG_NORMAL);
 		// Draw Mana Cost
-		drawstring (pos + '25 17', "30", '8 8', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
-		drawstring (pos + '24 16', "30", '8 8', '.25 .25 1', 1, DRAWFLAG_NORMAL);
+		drawstring (pos + '25 17', "30 mp", '8 8', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
+		drawstring (pos + '24 16', "30 mp", '8 8', '.25 .25 1', 1, DRAWFLAG_NORMAL);
 	}
 	else if (selected_spell == 4)
 	{
 		drawpic (pos + '1 1', "progs/spell4_s.png", '32 32 0', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
 		drawpic (pos, "progs/spell4_s.png", '32 32 0', '1 1 1', 1, DRAWFLAG_NORMAL);
 		// Draw Mana Cost
-		drawstring (pos + '25 17', "100", '8 8', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
-		drawstring (pos + '24 16', "100", '8 8', '.25 .25 1', 1, DRAWFLAG_NORMAL);
+		drawstring (pos + '25 17', "100 mp", '8 8', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
+		drawstring (pos + '24 16', "100 mp", '8 8', '.25 .25 1', 1, DRAWFLAG_NORMAL);
 	}
 	else if (selected_spell == 8)
 	{
 		drawpic (pos + '1 1', "progs/spell5_s.png", '32 32 0', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
 		drawpic (pos, "progs/spell5_s.png", '32 32 0', '1 1 1', 1, DRAWFLAG_NORMAL);
 		// Draw Mana Cost
-		drawstring (pos + '25 17', "75", '8 8', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
-		drawstring (pos + '24 16', "75", '8 8', '.25 .25 1', 1, DRAWFLAG_NORMAL);
+		drawstring (pos + '25 17', "75 mp", '8 8', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
+		drawstring (pos + '24 16', "75 mp", '8 8', '.25 .25 1', 1, DRAWFLAG_NORMAL);
 	}
 };
 
@@ -228,7 +228,7 @@ void(vector pos) DrawHPBar =
     // HP Text
     //
     local string hp_str = sprintf("^xf44%d", hp);
-    local string maxhp_str = sprintf("/^xd55%d", maxhp);
+    local string maxhp_str = sprintf("/^xd55%d hp", maxhp);
     local float max_width = 58;
     local float scale = min(max_width/(stringwidth(hp_str,TRUE,'13 13') + stringwidth(hp_str,TRUE,'10 10')),1);
     
@@ -309,7 +309,7 @@ void(vector pos) DrawMPBar =
 	textpos_y += 3;
 	
 	// Max mp
-	local string str = sprintf("/^x55d%d", maxmp);
+	local string str = sprintf("/^x55d%d mp", maxmp);
 	drawstring (textpos + '1 1', str, '10 10', '0 0 0', 0.6, DRAWFLAG_NORMAL);
 	drawstring (textpos, str, '10 10', '1 1 1', 1, DRAWFLAG_NORMAL);
 	
@@ -456,6 +456,56 @@ void(float screenwidth, float screenheight) DrawComboCounter =
 		Hud_DrawLargeValue_Red(pos, h, 25);
 		drawpic (pos2 + '1 1', "progs/strikes.png", '122 40.5', '0 0 0', 1, DRAWFLAG_NORMAL); // Shadow
 		drawpic (pos2, "progs/strikes.png", '122 40.5', '1 1 1', 1, DRAWFLAG_NORMAL);
+	}
+	
+	local float msg = getstatf(STAT_COMBOMSG);
+	if (msg > 0 && h == 0)
+	{
+		if (msg == 1)
+		{
+			drawpic (pos2 + '1 1', "progs/cmbomsg1.png", '196 40.5', '0 0 0', 1, DRAWFLAG_NORMAL); // Shadow
+			drawpic (pos2, "progs/cmbomsg1.png", '196 40.5', '1 1 1', 1, DRAWFLAG_NORMAL);
+		}
+		if (msg == 2)
+		{
+			drawpic (pos2 + '1 1', "progs/cmbomsg2.png", '196 40.5', '0 0 0', 1, DRAWFLAG_NORMAL); // Shadow
+			drawpic (pos2, "progs/cmbomsg2.png", '196 40.5', '1 1 1', 1, DRAWFLAG_NORMAL);
+		}
+		if (msg == 3)
+		{
+			drawpic (pos2 + '1 1', "progs/cmbomsg3.png", '196 40.5', '0 0 0', 1, DRAWFLAG_NORMAL); // Shadow
+			drawpic (pos2, "progs/cmbomsg3.png", '196 40.5', '1 1 1', 1, DRAWFLAG_NORMAL);
+		}
+		if (msg == 4)
+		{
+			drawpic (pos2 + '1 1', "progs/cmbomsg4.png", '196 40.5', '0 0 0', 1, DRAWFLAG_NORMAL); // Shadow
+			drawpic (pos2, "progs/cmbomsg4.png", '196 40.5', '1 1 1', 1, DRAWFLAG_NORMAL);
+		}
+		if (msg == 5) // Bigger message, move back a tad
+		{
+			drawpic (pos2 + '26 1', "progs/cmbomsg5.png", '196 40.5', '0 0 0', 1, DRAWFLAG_NORMAL); // Shadow
+			drawpic (pos2 - '25 0', "progs/cmbomsg5.png", '196 40.5', '1 1 1', 1, DRAWFLAG_NORMAL);
+		}
+		if (msg == 6)
+		{
+			drawpic (pos2 + '1 1', "progs/cmbomsg6.png", '196 40.5', '0 0 0', 1, DRAWFLAG_NORMAL); // Shadow
+			drawpic (pos2, "progs/cmbomsg6.png", '196 40.5', '1 1 1', 1, DRAWFLAG_NORMAL);
+		}
+		if (msg == 7)
+		{
+			drawpic (pos2 + '1 1', "progs/cmbomsg7.png", '196 40.5', '0 0 0', 1, DRAWFLAG_NORMAL); // Shadow
+			drawpic (pos2, "progs/cmbomsg7.png", '196 40.5', '1 1 1', 1, DRAWFLAG_NORMAL);
+		}
+		if (msg == 8)
+		{
+			drawpic (pos2 + '1 1', "progs/cmbomsg8.png", '196 40.5', '0 0 0', 1, DRAWFLAG_NORMAL); // Shadow
+			drawpic (pos2, "progs/cmbomsg8.png", '196 40.5', '1 1 1', 1, DRAWFLAG_NORMAL);
+		}
+		if (msg == 9)
+		{
+			drawpic (pos2 + '1 1', "progs/cmbomsg9.png", '196 40.5', '0 0 0', 1, DRAWFLAG_NORMAL); // Shadow
+			drawpic (pos2, "progs/cmbomsg9.png", '196 40.5', '1 1 1', 1, DRAWFLAG_NORMAL);
+		}
 	}
 };
 

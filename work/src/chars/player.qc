@@ -791,15 +791,11 @@ void() LegShadow =
 //
 
 .float combocompare1, combocompare2, combocompare3;
-.float combometer_finished, combostep;
+.float combometer_finished, combostep, combo_message_finished;
+
 void() ComboMeter = // called from playerpostthink
 {
 	local string h;
-
-	//if (cvar("scratch2") == 1)
-	//	return;
-	if (self.centerprint_priority_finished > time)
-		return;
 	
 	if (self.combometer_finished < time)
 	{
@@ -824,71 +820,70 @@ void() ComboMeter = // called from playerpostthink
 		self.combocompare1 = self.combo;
 
 		//
-		// Congrats messages on combos - DISABLED
+		// Congrats messages on combos
 		//
 
 		if (self.combocompare1 > 0 && self.combocompare1 == self.combocompare2 && self.combocompare2 == self.combocompare3)
 		{
 			self.last_combo = self.combo; // record and store it
-			self.combo = self.combostep = self.combocompare1 = self.combocompare2 = self.combocompare3 = 0;
-			
-			/*
-			if (deathmatch == FALSE)
-			{
 
-				// Congrats messages to the player
-				if (self.combo > 3 && self.combo < 7)
-					centerprint (self, "                     Not bad!");
-				else if (self.combo > 7 && self.combo < 10)
-					centerprint (self, "                     Nicely done!");
-				else if (self.combo > 9 && self.combo < 15)
-					centerprint (self, "                     Great strikes!");
-				else if (self.combo > 14 && self.combo < 20)
-					centerprint (self, "                     Amazing display!");
-				else if (self.combo > 19 && self.combo < 30)
-					centerprint (self, "                     Spectacular effort!");
-				else if (self.combo > 29 && self.combo < 50)
-					centerprint (self, "                     Unstoppable skills!");
-				else if (self.combo > 49 && self.combo < 75)
-					centerprint (self, "                     Legendary force!");
-				else if (self.combo > 74 && self.combo < 99)
-					centerprint (self, "                     Fearsome talents!");
-				else if (self.combo > 98)
-					centerprint (self, "                     God-like warrior!");
-				else
-					centerprint (self, "");
-				self.combo = self.combostep = self.combocompare1 = self.combocompare2 = self.combocompare3 = 0;
+			// Congrats messages to the player
+			if (self.combo > 3 && self.combo < 7)
+			{
+				self.combo_message = 1;
+				localsound("misc/combomsg1", 4, 1);
+			}
+			else if (self.combo > 7 && self.combo < 10)
+			{
+				self.combo_message = 2;
+				localsound("misc/combomsg2", 4, 1);
+			}
+			else if (self.combo > 9 && self.combo < 15)
+			{
+				self.combo_message = 3;
+				localsound("misc/combomsg3", 4, 1);
+			}
+			else if (self.combo > 14 && self.combo < 20)
+			{
+				self.combo_message = 4;
+				localsound("misc/combomsg4", 4, 1);
+			}
+			else if (self.combo > 19 && self.combo < 30)
+			{
+				self.combo_message = 5;
+				localsound("misc/combomsg5", 4, 1);
+			}
+			else if (self.combo > 29 && self.combo < 50)
+			{
+				self.combo_message = 6;
+				localsound("misc/combomsg6", 4, 1);
+			}
+			else if (self.combo > 49 && self.combo < 75)
+			{
+				self.combo_message = 7;
+				localsound("misc/combomsg7", 4, 1);
+			}
+			else if (self.combo > 74 && self.combo < 99)
+			{
+				self.combo_message = 8;
+				localsound("misc/combomsg8", 4, 1);
+			}
+			else if (self.combo > 98)
+			{
+				self.combo_message = 9;
+				localsound("misc/combomsg9", 4, 1);
 			}
 			else
-			{
-				// Congrats deathmatch messages to the player
-				if (self.combo > 3 && self.combo < 7)
-					centerprint (self, "                     Try harder!");
-				else if (self.combo > 7 && self.combo < 10)
-					centerprint (self, "                     Skillful!");
-				else if (self.combo > 9 && self.combo < 15)
-					centerprint (self, "                     You showed them!");
-				else if (self.combo > 14 && self.combo < 20)
-					centerprint (self, "                     Victory is yours!");
-				else if (self.combo > 19 && self.combo < 30)
-					centerprint (self, "                     Keep it up!");
-				else if (self.combo > 29 && self.combo < 50)
-					centerprint (self, "                     Nobody can stop you!");
-				else if (self.combo > 49 && self.combo < 75)
-					centerprint (self, "                     Legendary force!");
-				else if (self.combo > 74 && self.combo < 99)
-					centerprint (self, "                     Simply fearsome!");
-				else if (self.combo > 98)
-					centerprint (self, "                     God amongst others!");
-				else
-					centerprint (self, "");
+				self.combo_message = 0;
 
-				self.combo = self.combostep = self.combocompare1 = self.combocompare2 = self.combocompare3 = 0;
-			}
-			*/
+			self.combo = self.combostep = self.combocompare1 = self.combocompare2 = self.combocompare3 = 0;
+			if (self.combo_message != 0)
+				self.combo_message_finished = time + 3;
 		}
 		self.combometer_finished = time + 1;
 	}
+	if (self.combo_message_finished < time)
+		self.combo_message = 0;
 };
 
 void() invunerable_field_think =

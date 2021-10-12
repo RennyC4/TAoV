@@ -733,6 +733,7 @@ float FL_BOSS = 8192; // entity is a boss monster
 
 #define STAT_LEVEL 57
 #define STAT_ABSORB 58
+#define STAT_COMBOMSG 59
 
 //
 
@@ -814,6 +815,10 @@ float IT_BOSS1 = 1024; // Weird results with anything lower
 float IT_BOSS2 = 2;
 float IT_BOSS3 = 4;
 float IT_BOSS4 = 8;
+
+// CSQC Combo congrats display messages
+.float combo_message;
+.float combo_message_finished;
 
 // Status Effect Behaviors
 .float poison_tick_finished;

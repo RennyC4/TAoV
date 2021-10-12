@@ -884,6 +884,11 @@ void() intro_dummy =
 	droptofloor();
 };
 
+void() intro_text_think =
+{
+	localsound("misc/introsay", 4, 1);
+};
+
 // introduction text that tells the games story
 void() intro_text =
 {
@@ -892,6 +897,8 @@ void() intro_text =
 	self.solid = SOLID_NOT;
 	self.velocity_z = 5; // move upward slowly
 	self.effects = EF_NODEPTHTEST;
+	self.think = intro_text_think;
+	self.nextthink = time + 3; // narrator speak time
 };
 
 

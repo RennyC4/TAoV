@@ -664,7 +664,7 @@ void() relic_touch =
 		else if (self.items & IT_RELIC7)
 			centerprint (other.owner, "/P^bCube of Knowledge Obtained!^b\n\n===========================\n\n\n^1Shows enemies name\n\n\n\n^3Press ATTACK or JUMP to resume ...");
 		else if (self.items & IT_RELIC8)
-			centerprint (other.owner, "/P^bPerfect Guard Obtained!^b\n\n===========================\n\n\n^1Blocking an attack JUST before it connects allows you to perform a PERFECT GUARD which grants temporary invunerability as well as unblockable attacks, enemies are stunned and their enhancements are negated\n\n\n\n^3Press ATTACK or JUMP to resume ...");
+			centerprint (other.owner, "/P^bPerfect Guard Obtained!^b\n\n===========================\n\n\n^1Blocking an attack before it connects grants temporary invunerability as well as unblockable attacks, enemies are knocked back and any enhancements are negated\n\nPerfect Guarding a magic spell will absorb the mana cost and add it to Vigils MP\n\n\n\n^3Press ATTACK or JUMP to resume ...");
 		else if (self.items & IT_RELIC9)
 			centerprint (other.owner, "/P^bSoul Candle Obtained!^b\n\n===========================\n\n\n^1Automatically lights up pitch black areas\n\n\n\n^3Press ATTACK or JUMP to resume ...");
 
