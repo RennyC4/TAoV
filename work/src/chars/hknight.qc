@@ -392,6 +392,10 @@ void() HellKnight_Lightning =
 
 			trace_ent.knockback = 0;
 			T_Damage (self, trace_ent, trace_ent, 24, 0);
+			trace_ent.owner.mana = trace_ent.owner.mana + 5;
+			trace_ent.owner.absorb_finished = time + 3;
+			if (trace_ent.owner.mana > trace_ent.owner.max_mana)
+				trace_ent.owner.mana = trace_ent.owner.max_mana;
 			PerfectGuard(trace_ent);
 		}
 		sound (trace_ent, CHAN_BODY, "weapons/lhit.wav", 1, ATTN_NORM);
