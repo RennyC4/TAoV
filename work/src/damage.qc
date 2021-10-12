@@ -192,7 +192,7 @@ void(entity targ, entity attacker) Killed =
 			WriteByte (MSG_ALL, SVC_KILLEDMONSTER);
 		}
 		if (random() < 0.35) // 35% chance of gold drop
-			drop_gold();
+			drop_gold(self);
 		self.bump_kills = TRUE; // kill counter was bumped, do not do it again!
 	}
 

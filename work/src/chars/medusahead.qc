@@ -157,6 +157,7 @@ void() medusa_spawn =
 	medusa.th_die = medusa_die;
 	medusa.angles = self.angles;
 	medusa.experience = 25;
+	self.maxgold = 50;
 	medusa.spawnflags = self.spawnflags; // carry over spawnflags
 	
 	if (self.lip)

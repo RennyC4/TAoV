@@ -1090,6 +1090,15 @@ void() gold_touch =
 			self.cnt = 1 + random()*11; // give cheap change after reaching teleporter price
 	}
 
+	// Cap gold by maxgold amount set
+	if (self.cnt > self.maxgold && self.maxgold > 0)
+	{
+		if (other.owner.last_combo > 0)
+			self.cnt = self.maxgold + ceil(other.owner.last_combo / 2);
+		else
+			self.cnt = self.maxgold;
+	}
+
 	other.owner.last_combo = 0; // remove calculation
 
 	other.owner.gold = other.owner.gold + self.cnt; // give the gold
@@ -1133,10 +1142,11 @@ void() drop_gold =
 	goldg.effects = EF_FULLBRIGHT;
 	goldg.alpha = 1;
 	goldg.flags = FL_ITEM;
+	goldg.owner = self;
+	goldg.maxgold = self.maxgold;
 	goldg.frame = 1; // spin
 	goldg.touch = gold_touch;
 	goldg.avelocity = '300 -80 500';
-	goldg.owner = self;
 	goldg.think = gold_think;
 
 	// Give off RT Light
@@ -1149,6 +1159,9 @@ void() drop_gold =
 	goldg.SendFlags |= 16; // send classname
 	
 	goldg.nextthink = time + 0.1;
+
+	//local string h = ftos(goldg.maxgold);
+	//bprint ("Owner: ", goldg.owner.classname, "\n", "Gold: ", h, "\n");
 };
 
 void() item_gold =

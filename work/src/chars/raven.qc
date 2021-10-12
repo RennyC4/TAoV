@@ -391,6 +391,7 @@ void() monster_raven =
 	self.netname = "solid";
 	setsize (self, '-16 -16 -24', '16 16 24');
 	self.experience = 20;
+	self.maxgold = 45;
 
 	self.th_stand = raven_idle;
 	self.th_misc = raven_misc;

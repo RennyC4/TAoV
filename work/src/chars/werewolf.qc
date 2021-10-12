@@ -342,6 +342,7 @@ void() monster_werewolf =
 	self.classname = "werewolf";
 	self.displayname = "Werewolf";
 	self.experience = 77;
+	self.maxgold = 300;
 
 	self.th_stand = werewolf_stand;
 	self.th_walk = werewolf_walk;

@@ -178,7 +178,8 @@ void() monster_hydra =
 	self.displayname = "Hydra";
 	self.flags = self.flags | FL_MONSTER | FL_SWIM;
 	self.experience = 25;
-	
+	self.maxgold = 115;
+
 	self.th_stand = hydra_idle;
 	self.th_walk = hydra_move;
 	self.th_melee = hydra_attack;

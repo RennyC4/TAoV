@@ -373,6 +373,7 @@ void() monster_archer =
 	self.displayname = "Archer";
 	setsize(self, VEC_HULL_MIN, VEC_HULL_MAX);
 	self.experience = 19; // how much exp to give on death
+	self.maxgold = 50;
 
 	self.th_stand = archer_stand1;
 	self.th_run = archer_move1;

@@ -441,7 +441,8 @@ void() monster_zombie =
 	self.classname = "zombie";
 	self.displayname = "Zombie";
 	self.experience = 32;
-	
+	self.maxgold = 125;
+
 	self.th_stand = zombie_stand1;
 	self.th_run = zombie_run1;
 	self.th_pain = zombie_pain;

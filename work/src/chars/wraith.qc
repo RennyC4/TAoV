@@ -273,6 +273,7 @@ void() monster_wraith =
 	self.displayname = "Wraith";
 	setsize (self, VEC_HULL2_MIN, VEC_HULL2_MAX);
 	self.experience = 100;
+	self.maxgold = 444;
 
 	self.effects = EF_NODEPTHTEST;
 	self.alpha = 0.2;

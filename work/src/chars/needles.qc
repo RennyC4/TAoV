@@ -14,7 +14,7 @@ void() needles_die =
 	if (self.cnt < 50)
 	{
 		if (self.cnt == 1) // run once
-			GiveExperience(20);
+			GiveExperience(self.experience);
 		self.scale = self.scale + 0.1;
 		self.cnt = self.cnt + 1;
 	}
@@ -104,7 +104,9 @@ void() monster_needles =
 	if (!self.scale)
 		self.scale = 1;
 	self.flags = self.flags | FL_MONSTER;
-	
+	self.experience = 20;
+	self.maxgold = 88;
+
 	self.th_die = needles_die;
 	self.think = needles_think;
 	self.nextthink = time + 0.1;

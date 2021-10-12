@@ -228,6 +228,7 @@ void() monster_dog =
 	self.classname = "dog";
 	self.displayname = "Hunting Hound";
 	self.experience = 10;
+	self.maxgold = 50;
 	
 	self.th_stand = dog_stand1;
 	self.th_walk = dog_walk1;

@@ -133,6 +133,7 @@ void() monster_horror =
 	self.classname = "horror";
 	self.displayname = "Horror";
 	self.experience = 31;
+	self.maxgold = 166;
 
 	self.th_stand = horror_stand1;
 	self.th_run = horror_run1;

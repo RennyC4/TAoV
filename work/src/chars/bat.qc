@@ -159,6 +159,7 @@ void() monster_bat =
 	self.use = bat_use;
 	setsize(self, '-6 -6 7', '6 4 16');
 	self.experience = 18;
+	self.maxgold = 10;
 
 	if (!self.speed)
 		self.speed = 85;

@@ -343,6 +343,7 @@ void() monster_gremlin =
 	self.displayname = "Gremlin";
 	setsize(self, VEC_HULL_MIN, VEC_HULL_MAX);
 	self.experience = 22;
+	self.maxgold = 90;
 
 	self.th_stand = grem_stand1;
 	self.th_run = grem_run1;

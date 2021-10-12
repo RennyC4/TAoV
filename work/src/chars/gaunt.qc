@@ -469,6 +469,7 @@ void() monster_gaunt =
 	self.th_melee = gaunt_finger1;
 	self.th_magic = gaunt_magic;
 	self.experience = 77;
+	self.maxgold = 130;
 
 	//spawn_shadow();
 	enemy_start();

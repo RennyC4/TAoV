@@ -132,6 +132,7 @@ void() monster_ghost2 =
 	self.takedamage = DAMAGE_AIM;
 	self.solid = SOLID_NOT;
 	self.experience = 21;
+	self.maxgold = 20;
 	self.color = '0 0 0';
 	self.flags = FL_MONSTER;
 	self.classname = "ghost2";

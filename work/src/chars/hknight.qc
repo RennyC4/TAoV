@@ -533,6 +533,7 @@ void() monster_hell_knight =
 	self.th_jump = hellknight_jump;
 	self.th_grab = hellknight_grabbed1;
 	self.experience = 67;
+	self.maxgold = 200;
 
 	self.th_block = hellknight_block1;
 	if (!self.ai_blockfreq) // frequency on how much the enemy blocks

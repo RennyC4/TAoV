@@ -264,6 +264,7 @@ void() monster_lesserwraith =
 	self.displayname = "Lesser Wraith";
 	setsize (self, VEC_HULL_MIN, VEC_HULL_MAX);
 	self.experience = 67;
+	self.maxgold = 200;
 
 	self.alpha = 0.2;
 	self.effects = EF_NODEPTHTEST;

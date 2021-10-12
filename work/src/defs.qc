@@ -522,6 +522,7 @@ entity frameskip_ent;
 .float experience; // rpg stats
 .float level;      // rpg stats
 .float gold;	   // rpg stats
+.float maxgold;    // max gold monster can drop
 .float mana;	   // mana pool
 .float max_mana;   // max mana allowed
 .string attackedname; // monsters know what they attacked by the classname of what they hit
