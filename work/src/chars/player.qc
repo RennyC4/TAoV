@@ -1776,7 +1776,7 @@ void() player_think =
 	// Part of the Wall/Ledge Grabbing is done here, specifically the code to make Vigil jump in the other direction of the wall/ledge
 	//
 
-	if (self.wallgrab == TRUE || (self.ledgegrab == TRUE && self.char.frame >= $ledgeg1 && self.char.frame <= $ledgeg8))
+	if (!self.char.swimming && (self.wallgrab == TRUE || (self.ledgegrab == TRUE && self.char.frame >= $ledgeg1 && self.char.frame <= $ledgeg8)))
 	{
 		self.walljump = FALSE;
 		self.doublejump = FALSE;
