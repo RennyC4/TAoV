@@ -898,7 +898,7 @@ void() intro_text =
 	self.velocity_z = 5; // move upward slowly
 	self.effects = EF_NODEPTHTEST;
 	self.think = intro_text_think;
-	self.nextthink = time + 3; // narrator speak time
+	self.nextthink = time + 6; // narrator speak time
 };
 
 
