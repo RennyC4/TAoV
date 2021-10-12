@@ -252,10 +252,10 @@ void() lit_think =
 						}
 						else // perfect block sends lightning back
 						{
-							trace_ent.owner.mana = trace_ent.owner.mana + 30;
-							trace_ent.owner.absorb_finished = time + 3;
-							if (trace_ent.owner.mana > trace_ent.owner.max_mana)
-								trace_ent.owner.mana = trace_ent.owner.max_mana;
+							head.owner.mana = head.owner.mana + 30;
+							head.owner.absorb_finished = time + 3;
+							if (head.owner.mana > head.owner.max_mana)
+								head.owner.mana = head.owner.max_mana;
 				
 							PerfectGuard(head);
 
