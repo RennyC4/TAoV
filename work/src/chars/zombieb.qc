@@ -257,7 +257,7 @@ void() monster_zombie_boss =
 	self.classname = "zombieboss";
 	self.displayname = "Greater Zombie";
 	self.experience = 56;
-	self.maxgold = 250;
+	self.maxgold = 175;
 
 	self.th_stand = zombie_boss_stand1;
 	self.th_run = zombie_boss_run1;

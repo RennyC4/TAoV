@@ -459,7 +459,7 @@ void(float screenwidth, float screenheight) DrawComboCounter =
 	}
 	
 	local float msg = getstatf(STAT_COMBOMSG);
-	if (msg > 0 && h == 0)
+	if (msg > 0 && h < 2)
 	{
 		if (msg == 1)
 			drawpic (pos2, "progs/cmbomsg1.png", '196 40.5', '1 1 1', 1, DRAWFLAG_NORMAL);

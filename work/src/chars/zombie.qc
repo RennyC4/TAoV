@@ -104,6 +104,10 @@ void() DarkBallThink =
 			{
 				if (head.classname == "player" && head.perfectblock > time)
 				{
+					head.owner.mana = head.owner.mana + 10;
+					head.owner.absorb_finished = time + 3;
+					if (head.owner.mana > head.owner.max_mana)
+						head.owner.mana = head.owner.max_mana;
 					PerfectGuard(head);
 					remove(self);
 					return;
@@ -113,15 +117,11 @@ void() DarkBallThink =
 					local float r = random();
 					if (self.owner.classname == "zombieboss")
 					{
-//						if (r < 0.50)
-//							head.owner.status_blind_finished = time + 12;
 						self.owner.status_blind_finished = time + 10;
 						T_Damage (head, self.owner, self.owner, 7, 0.5);
 					}
 					else
 					{
-//						if (r < 0.15)
-//							head.owner.status_blind_finished = time + 6;
 						self.owner.status_blind_finished = time + 6;
 						T_Damage (head, self.owner, self.owner, 3, 0.15);
 					}
@@ -441,7 +441,7 @@ void() monster_zombie =
 	self.classname = "zombie";
 	self.displayname = "Zombie";
 	self.experience = 32;
-	self.maxgold = 125;
+	self.maxgold = 100;
 
 	self.th_stand = zombie_stand1;
 	self.th_run = zombie_run1;
