@@ -6574,11 +6574,8 @@ void() divingswallow_hit =
 					else
 						T_Damage (head, self, self, 8, 0);
 					
-					if (self.owner.bighit_freeze > time) // check if attack landed, needs to be called after FireMelee();
-					{
-						if (freeze_finished < time) // don't interefere with level up/etc
-							freeze_finished = time + (CONST_BIGHITSLOW * frametime);
-					}
+					// Freeze timer is longer by default on swallow hit, so it's okay to overwrite other active freeze timers
+					freeze_finished = time + (6 * frametime);
 
 					if (deathmatch == FALSE)
 						self.owner.mana = self.owner.mana + 3;	

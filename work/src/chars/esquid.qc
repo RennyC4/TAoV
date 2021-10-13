@@ -355,7 +355,7 @@ void() monster_esquid =
 		self.health = 247; // hard health (50% tougher)
 		
 	self.experience = 66;
-	self.maxgold = 180;
+	self.maxgold = 141;
 
 	self.netname = "solid";
 	self.takedamage = DAMAGE_YES;

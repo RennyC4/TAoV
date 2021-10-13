@@ -120,9 +120,6 @@ void(vector pos) DrawArmorStatus =
 void(vector pos) DrawMonsterNameDisplay =
 {
 	local string display = getstats(STAT_MONSTER);
-	//local string display_final = strcat("^&F0", display);
-	//local vector pos = [(screenwidth - stringwidth(display_final, TRUE, '8 8 0'))/1.01, (screenheight - 18)/1];
-	//local vector pos = [(screenwidth - stringwidth(display, TRUE, '8 8 0'))/1, (screenheight - 18)/1];
 
 	pos_x = 3;
 	pos_y = 460;

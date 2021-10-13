@@ -440,7 +440,7 @@ void() monster_merman =
 	self.classname = "merman";
 	self.displayname = "Merman";
 	self.experience = 44;
-	self.maxgold = 155;
+	self.maxgold = 88;
 
 	self.th_stand = merman_idle;
 	self.th_walk = merman_walk;

@@ -123,7 +123,7 @@ void() DarkBallThink =
 					else
 					{
 						self.owner.status_blind_finished = time + 6;
-						T_Damage (head, self.owner, self.owner, 3, 0.15);
+						T_Damage (head, self.owner, self.owner, 3, 0.25);
 					}
 				}
 				head.colormod = '7 0 7';

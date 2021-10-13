@@ -662,7 +662,10 @@ void() relic_touch =
 		else if (self.items & IT_RELIC6)
 			centerprint (other.owner, "/P^bWater Breathing Amulet Obtained!^b\n\n===========================\n\n\n^1Breathe underwater forever\n\n\n\n^3Press ATTACK or JUMP to resume ...");
 		else if (self.items & IT_RELIC7)
+		{
+			other.owner.displayname = ""; // Don't display on first grab
 			centerprint (other.owner, "/P^bCube of Knowledge Obtained!^b\n\n===========================\n\n\n^1Shows enemies name\n\n\n\n^3Press ATTACK or JUMP to resume ...");
+		}
 		else if (self.items & IT_RELIC8)
 			centerprint (other.owner, "/P^bPerfect Guard Obtained!^b\n\n===========================\n\n\n^1Blocking an attack before it connects grants temporary invunerability as well as unblockable attacks, enemies are knocked back and any enhancements are negated\n\nPerfect Guarding a magic spell will absorb the mana cost and add it to Vigils MP\n\n\n\n^3Press ATTACK or JUMP to resume ...");
 		else if (self.items & IT_RELIC9)

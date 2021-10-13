@@ -688,12 +688,12 @@ void() lisa_chat =
 				{
 					if (self.enemy.owner.gold >= aprice)
 					{
-						if (!(game_progress & IT_PROGRESS2))
+						if (!game_progress & IT_PROGRESS2)
 						{
 							centerprint (self.enemy.owner, "/P^bYou've learned Cyclone Crush!^b\n\n===========================\n\n^1Perform this attack by pressing DOWN, FORWARD + ATTACK\n\n\n\n^3Press ATTACK or JUMP to resume ...\n");
 							setpause (1);
 
-							if (!(game_progress & IT_PROGRESS2)) // Cyclone Attack
+							if (!game_progress & IT_PROGRESS2) // Cyclone Attack
 								game_progress = game_progress | IT_PROGRESS2; // Add it (True)
 
 							self.enemy.owner.display_price = 0;
@@ -705,12 +705,12 @@ void() lisa_chat =
 							self.enemy.owner.conversation = FALSE;
 							self.pain_finished = time + 1; // Won't talk to user again for a second
 						}
-						else if (!(game_progress & IT_PROGRESS4))
+						else if (!game_progress & IT_PROGRESS4)
 						{
 							centerprint (self.enemy.owner, "/P^bYou've learned Diving Swallow!^b\n\n===========================\n\n^1Perform this attack by performing Vigil's Roundhouse kick against an enemy while airborne then quickly follow up with an ATTACK button press\n\n\n\n^3Press ATTACK or JUMP to resume ...\n");
 							setpause (1);
 
-							if (!(game_progress & IT_PROGRESS4)) // Diving Swallow Attack
+							if (!game_progress & IT_PROGRESS4) // Diving Swallow Attack
 								game_progress = game_progress | IT_PROGRESS4; // Add it (True)
 
 							self.enemy.owner.display_price = 0;
@@ -916,7 +916,7 @@ void() bartender_chat =
 		self.enemy.owner.conversation = TRUE;
 
 		if (self.cnt == 0)
-			aprice = self.enemy.owner.display_price = 125 * ceil(self.enemy.owner.level / 1.9);
+			aprice = self.enemy.owner.display_price = 25 * ceil(self.enemy.owner.level / 1.9);
 		else if (self.cnt == 1)
 			aprice = self.enemy.owner.display_price = 500;
 		else

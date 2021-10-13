@@ -254,9 +254,9 @@ void() monster_lesserwraith =
 	self.movetype = MOVETYPE_NOCLIP;
 	setmodel (self, "progs/lwraith.mdl");
 	if (difficulty < 2)
-		self.health = 88; // regular health
+		self.health = 115; // regular health
 	else
-		self.health = 132; // hard health (50% tougher)
+		self.health = 172; // hard health (50% tougher)
 	self.netname = "solid";
 	self.takedamage = DAMAGE_AIM;
 	self.solid = SOLID_NOT;
@@ -264,7 +264,7 @@ void() monster_lesserwraith =
 	self.displayname = "Lesser Wraith";
 	setsize (self, VEC_HULL_MIN, VEC_HULL_MAX);
 	self.experience = 67;
-	self.maxgold = 200;
+	self.maxgold = 168;
 
 	self.alpha = 0.2;
 	self.effects = EF_NODEPTHTEST;

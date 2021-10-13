@@ -596,6 +596,8 @@ void() PlayerWaterPhysics;
 
 void() PlayerPreThink = 
 {
+	local entity manashadow;
+
 	//local string s = ftos(input_buttons);
 	//bprint (s, "\n");
 
@@ -697,8 +699,6 @@ void() PlayerPreThink =
 			{
 				if (self.fullmana_display_timer < time)
 				{
-					local entity manashadow;
-
 					manashadow = spawn();
 					manashadow.owner = self.char;
 					manashadow.classname = "manashadow";
@@ -733,8 +733,6 @@ void() PlayerPreThink =
 
 		if (self.absorb_finished > time && self.absorb_display_timer < time)
 		{
-			local entity manashadow;
-
 			self.fullmana_display = FALSE; // Allow it to remind the player again
 			
 			manashadow = spawn();

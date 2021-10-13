@@ -178,7 +178,7 @@ void() monster_dragon =
 	self.classname = "dragon";
 	self.displayname = "Green Dragon";
 	self.experience = 70;
-	self.maxgold = 300;
+	self.maxgold = 221;
 
 	self.th_stand = dragon_stand;
 	self.th_walk = dragon_walk;

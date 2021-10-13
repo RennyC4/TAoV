@@ -306,7 +306,7 @@ void() monster_skeleton =
 	self.classname = "skeleton";
 	self.displayname = "Skeleton";
 	self.experience = 50;
-	self.maxgold = 200;
+	self.maxgold = 177;
 
 	self.th_stand = skel_stand1;
 	self.th_run = skel_run1;

@@ -225,7 +225,7 @@ void() monster_ghoul =
 	self.displayname = "Ghoul";
 	setsize(self, VEC_HULL_MIN, VEC_HULL_MAX);
 	self.experience = 43;
-	self.maxgold = 90;
+	self.maxgold = 85;
 
 	self.th_stand = ghoul_rise1;
 	self.th_run = ghoul_walk1;
