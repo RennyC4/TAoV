@@ -592,6 +592,7 @@ void() PlayerWaterPhysics;
 .float fullmana_display; // boolean to have an effect not spammed
 .float fullmana_display_timer;
 .float absorb_display_timer;
+.float inwater_finished;
 
 void() PlayerPreThink = 
 {
@@ -858,12 +859,13 @@ void() PlayerPreThink =
 		
 		// We use pointcontents due to MOVETYPE_STEP changes on Vigil
 		// causing 'waterlevel' not to update, that only happens on MOVETYPE_WALK entities
-		if (pointcontents(self.char.origin) == CONTENT_WATER || pointcontents(self.char.origin) == CONTENT_LAVA || pointcontents(self.char.origin) == CONTENT_SLIME)
+		if ((pointcontents(self.char.origin) == CONTENT_WATER || pointcontents(self.char.origin) == CONTENT_LAVA || pointcontents(self.char.origin) == CONTENT_SLIME))
 		{
 			self.char.movetype = MOVETYPE_WALK; // Needed otherwise odd problems occur
 			
 			if (!self.char.swimming) // First entered water
 			{
+				self.inwater_finished = time + 0.6;
 				// Fixes not allowing Left/Right movement in water
 				self.char.aircombo_count = 0;
 				self.ledgegrab = FALSE;

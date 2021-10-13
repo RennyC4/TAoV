@@ -461,12 +461,12 @@ void() PlayerWaterPhysics =
 		return;
 	}
 		
-	if (self.button2 && self.ledgegrab == FALSE) // Player actively swimming up
+	if (self.button2 && self.ledgegrab == FALSE && self.inwater_finished < time) // Player actively swimming up
 	{
 		if (self.char.velocity_z < 100)
-				self.char.velocity_z = self.char.velocity_z + 2.5 * (frametime * 100);
+			self.char.velocity_z = self.char.velocity_z + 7 * (frametime * 100);
 		else
-				self.char.velocity_z = 100;
+			self.char.velocity_z = 100;
 	}
 	else
 	{
