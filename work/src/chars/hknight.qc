@@ -397,6 +397,7 @@ void() HellKnight_Lightning =
 			if (trace_ent.owner.mana > trace_ent.owner.max_mana)
 				trace_ent.owner.mana = trace_ent.owner.max_mana;
 			PerfectGuard(trace_ent);
+			trace_ent.owner.combo = trace_ent.owner.combo + 1; // raise combo counter
 		}
 		sound (trace_ent, CHAN_BODY, "weapons/lhit.wav", 1, ATTN_NORM);
 	}

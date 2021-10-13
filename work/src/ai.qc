@@ -1300,7 +1300,6 @@ void(float dist) ai_walk =
 
 	if (self.classname == "esquid") // electric squid rotates as it moves
 		self.angles_y = self.angles_y + 30;
-
 	else if (self.flags & FL_ONGROUND) // look in the players direction
 	{
 		if (self.forceface_finished > time)
