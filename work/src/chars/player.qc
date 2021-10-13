@@ -873,15 +873,14 @@ void() ComboMeter = // called from playerpostthink
 				self.combo_message = 9;
 				localsound("misc/combomsg9", 4, 1);
 			}
-			else
-				self.combo_message = 0;
 
 			self.combo = self.combostep = self.combocompare1 = self.combocompare2 = self.combocompare3 = 0;
-			if (self.combo_message != 0)
-				self.combo_message_finished = time + 3;
+			self.combo_message_finished = time + 3;
 		}
 		self.combometer_finished = time + 1;
 	}
+	if (self.combo_message_finished < time)
+		self.combo_message = 0;
 };
 
 void() invunerable_field_think =

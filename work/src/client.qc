@@ -591,6 +591,7 @@ void() PlayerWaterPhysics;
 .float neardeath_tint; // boolean if the screen gets tinted red near death
 .float fullmana_display; // boolean to have an effect not spammed
 .float fullmana_display_timer;
+.float absorb_display_timer;
 
 void() PlayerPreThink = 
 {
@@ -729,10 +730,12 @@ void() PlayerPreThink =
 		//	Spell Absorption visual indicator
 		//
 
-		if (self.absorb_finished > time && self.fullmana_display_timer < time)
+		if (self.absorb_finished > time && self.absorb_display_timer < time)
 		{
 			local entity manashadow;
 
+			self.fullmana_display = FALSE; // Allow it to remind the player again
+			
 			manashadow = spawn();
 			manashadow.owner = self.char;
 			manashadow.classname = "manashadow";
@@ -752,7 +755,7 @@ void() PlayerPreThink =
 			manashadow.think = manashadows_think;
 			manashadow.nextthink = time;
 
-			self.fullmana_display_timer = time + 3.5; // Display once as the display timer is normally 3 seconds
+			self.absorb_display_timer = time + 3.5; // Display once as the display timer is normally 3 seconds
 			sound (self, CHAN_AUTO, "spells/absorb.wav", 1, ATTN_NORM);
 		}
 
@@ -858,7 +861,6 @@ void() PlayerPreThink =
 		if (pointcontents(self.char.origin) == CONTENT_WATER || pointcontents(self.char.origin) == CONTENT_LAVA || pointcontents(self.char.origin) == CONTENT_SLIME)
 		{
 			self.char.movetype = MOVETYPE_WALK; // Needed otherwise odd problems occur
-			//if (self.char.velocity_z < 0 && !self.char.swimming) // First entered water
 			
 			if (!self.char.swimming) // First entered water
 			{
