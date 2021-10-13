@@ -882,8 +882,6 @@ void() ComboMeter = // called from playerpostthink
 		}
 		self.combometer_finished = time + 1;
 	}
-	if (self.combo_message_finished < time)
-		self.combo_message = 0;
 };
 
 void() invunerable_field_think =
