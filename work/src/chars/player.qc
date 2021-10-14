@@ -5429,13 +5429,13 @@ void() player_knockedup1    =[	$walled1,	player_knockedup1 ]
 	if (self.swimming) // sink slower when hit than in normal air
 	{
 		self.velocity_z = self.velocity_z / 1.05;
-		self.inwater_pain = self.inwater_pain + 1;
-		if (self.inwater_pain > 14)
+		if (self.inwater_pain > 300)
 		{
 			self.inwater_pain = 0;
 			player_move();
 			return;
 		}
+		self.inwater_pain = self.inwater_pain + 1;
 	}
 	
 	if (self.onground == TRUE)
@@ -5716,6 +5716,7 @@ void() player_pain =
 	self.owner.purge_toggle = FALSE;
 	self.owner.goalentity = self; // reset camera back to Vigil
 	self.owner.shadow_time = time;
+	self.inwater_pain = 0;
 
 	self.owner.walljump = self.walljump = FALSE;
 	self.owner.ledgegrab = self.ledgegrab = FALSE;

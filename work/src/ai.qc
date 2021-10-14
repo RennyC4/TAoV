@@ -706,7 +706,7 @@ void() CombatThink =
 			}
 		}
 	}
-	
+
 	if (self.flags & FL_ONGROUND)
 	{
 		self.flags = self.flags - FL_ONGROUND;
@@ -717,30 +717,28 @@ void() CombatThink =
 	// Flying / Swimming Monsters attack
 	//
 
-	if (self.classname == "merman" && self.flags & FL_SWIM && pointcontents(self.origin) == CONTENT_WATER)
+	if (self.flags & FL_SWIM && pointcontents(self.origin) == CONTENT_WATER)
 	{
-		if (random() < 0.40)
+		if (self.classname == "merman")
 		{
-			if (self.th_missile)
-				self.th_missile();
-		}
-		return;
-	}
-
-	if (self.movetype == MOVETYPE_FLY || self.movetype == MOVETYPE_NOCLIP || (self.flags & FL_SWIM && pointcontents(self.origin) == CONTENT_WATER))
-	{
-		if (r <= RANGE_MELEE || r <= RANGE_CLOSE)
-		{
-			if (self.th_melee)
-				self.th_melee();
-		}
-		else
-		{
-			if (random() < 0.1)
+			if (random() < 0.3)
 			{
 				if (self.th_missile)
 					self.th_missile();
 			}
+		}
+		else
+		{
+			if (self.th_melee && r <= RANGE_CLOSE)
+					self.th_melee();
+			else
+			{
+				if (random() < 0.3)
+				{
+					if (self.th_missile)
+						self.th_missile();
+				}
+			}		
 		}
 		return;
 	}
@@ -1546,12 +1544,14 @@ void(float dist) ai_swim =
 			}
 		}
 	}
-	
+
 	if (self.enemy.flypain)
 	{
 		self.velocity = '0 0 0';
 		return;
 	}
+
+	CombatThink();
 	
 	if (!pointcontents(self.origin) == CONTENT_WATER)
 	{
@@ -1586,8 +1586,6 @@ void(float dist) ai_swim =
 
 		if (trace_ent.solid == SOLID_BSP)
 			self.velocity_z = self.velocity_z + dist * 4; // stay off ground
-			
-		CombatThink();
 	}
 	else
 		self.velocity = '0 0 0';
