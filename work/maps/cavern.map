@@ -6463,7 +6463,7 @@
 // entity 156
 {
 "classname" "statue"
-"origin" "-2848 -316 105"
+"origin" "-2848 -316 121"
 "angle" "90"
 "_phong" "1"
 }
