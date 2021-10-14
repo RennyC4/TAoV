@@ -84,7 +84,7 @@ void(entity attackerb) player_damage_physics =
 		if (deathmatch == FALSE)
 			self.paincount = 2;
 	}
-	else if (self.knockback == 4)
+	else if (self.knockback == 4) // Only knock down pain state to be used underwater
 	{
 		self.velocity = '0 0 0';
 

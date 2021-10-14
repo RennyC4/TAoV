@@ -5407,6 +5407,7 @@ void() player_hit4	=[	$pain4,	player_hit4	]
 	setorigin(testz, self.origin);
 };
 
+.float inwater_pain;
 void() player_knockedup1    =[	$walled1,	player_knockedup1 ] 
 {
 	self.inair = self.bigfall = 0; // remove BIG FALL
@@ -5426,7 +5427,16 @@ void() player_knockedup1    =[	$walled1,	player_knockedup1 ]
 		}
 	}
 	if (self.swimming) // sink slower when hit than in normal air
+	{
 		self.velocity_z = self.velocity_z / 1.05;
+		self.inwater_pain = self.inwater_pain + 1;
+		if (self.inwater_pain > 14)
+		{
+			self.inwater_pain = 0;
+			player_move();
+			return;
+		}
+	}
 	
 	if (self.onground == TRUE)
 	{

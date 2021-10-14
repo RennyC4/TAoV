@@ -211,7 +211,7 @@ void() archer_arrow =
 		setorigin (missile, self.origin + v_up * 48);
 };
 
-void() archer_fire1 	=[	$shoot1,	archer_fire2	] {ai_forceface();};
+void() archer_fire1 	=[	$shoot1,	archer_fire2	] {self.mode = 0;ai_forceface();};
 void() archer_fire2 	=[	$shoot2,	archer_fire3	] {ai_forceface();};
 void() archer_fire3 	=[	$shoot3,	archer_fire4	] {ai_forceface();};
 void() archer_fire4 	=[	$shoot4,	archer_fire5	] {ai_forceface();};
@@ -232,7 +232,7 @@ void() archer_fire14 	=[	$shoot14,	archer_fire15	]
 void() archer_fire15 	=[	$shoot15,	archer_fire16	] {};
 void() archer_fire16 	=[	$shoot16,	archer_move1	] {};
 
-void() archer_fireb1 	=[	$shootb1,	archer_fireb2	] {ai_forceface();};
+void() archer_fireb1 	=[	$shootb1,	archer_fireb2	] {self.mode = 1;ai_forceface();};
 void() archer_fireb2 	=[	$shootb2,	archer_fireb3	] {ai_forceface();};
 void() archer_fireb3 	=[	$shootb3,	archer_fireb4	] {ai_forceface();};
 void() archer_fireb4 	=[	$shootb4,	archer_fireb5	] {ai_forceface();};
