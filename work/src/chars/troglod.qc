@@ -445,7 +445,7 @@ void() monster_troglod =
 	self.classname = "troglod";
 	self.displayname = "Troglodyte";
 	self.experience = 175;
-	self.maxgold = 500;
+	self.maxgold = 400;
 
 	self.th_stand = troglod_stand1;
 	self.th_run = troglod_run1;

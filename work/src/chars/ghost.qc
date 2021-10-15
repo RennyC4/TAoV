@@ -134,7 +134,7 @@ void() monster_ghost =
 	self.color = '0 0 0';
 	self.flags = FL_MONSTER;
 	self.classname = "ghost";
-	self.displayname = "Maleviolent Spirit";
+	self.displayname = "Malevolent Spirit";
 	setsize (self, VEC_HULL_MIN, VEC_HULL_MAX);
 	self.noblood = TRUE;
 	self.th_stand = ghost_think;
@@ -166,7 +166,7 @@ void() spawn_ghost =
 	ghost.takedamage = DAMAGE_AIM;
 	ghost.solid = SOLID_NOT;
 	ghost.classname = "ghost2";
-	self.displayname = "Maleviolent Spirit";
+	self.displayname = "Malevolent Spirit";
 	setsize (ghost, VEC_HULL_MIN, VEC_HULL_MAX);
 	ghost.noblood = TRUE;
 	ghost.th_stand = ghost_think;

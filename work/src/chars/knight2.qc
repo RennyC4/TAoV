@@ -332,7 +332,7 @@ void() monster_knight2 =
 	self.th_die = knight2_die;
 	self.th_jump = knight2_jump;
 	self.experience = 80; // how much exp to give on death
-	self.maxgold = 300;
+	self.maxgold = 220;
 
 	self.th_block = knight2_block1;
 	if (!self.ai_blockfreq) // frequency on how much the enemy blocks

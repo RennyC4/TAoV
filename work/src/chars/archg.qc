@@ -320,7 +320,7 @@ void() monster_archghoul =
 	setsize(self, VEC_HULL_MIN, VEC_HULL_MAX);
 	self.mana = 200; // mana, 200 is max for arch ghouls
 	self.experience = 150;
-	self.maxgold = 444;
+	self.maxgold = 333;
 
 	self.th_stand = archg_stand1;
 	self.th_walk = archg_walk1;

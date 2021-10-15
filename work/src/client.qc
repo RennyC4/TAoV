@@ -675,13 +675,6 @@ void() PlayerPreThink =
 
 	if (self.char != world)
 	{
-		//local float b = random()*5 * 0.1;
-	
-		// HUD Test stuff
-		//self.absorb_finished = time + 1;
-		//self.perfectguard_buff = time + 1;
-		//self.combo = 999;
-	
 		// Send Vigil's origin to CSQC for Blind status mainly
 		self.vigil_x = self.char.origin_x;
 		self.vigil_y = self.char.origin_y;
@@ -690,7 +683,6 @@ void() PlayerPreThink =
 		//if (self.char.lowceil)
 		//	bprint ("Low Ceiling Flag On\n");
 
-		
 		//
 		//	Full Mana visual indicator
 		//

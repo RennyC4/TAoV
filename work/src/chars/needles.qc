@@ -105,7 +105,7 @@ void() monster_needles =
 		self.scale = 1;
 	self.flags = self.flags | FL_MONSTER;
 	self.experience = 20;
-	self.maxgold = 88;
+	self.maxgold = 76;
 
 	self.th_die = needles_die;
 	self.think = needles_think;

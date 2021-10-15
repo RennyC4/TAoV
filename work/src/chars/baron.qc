@@ -383,7 +383,7 @@ void() monster_baron =
 	self.displayname = "Baron";
 	setsize(self, VEC_HULL_MIN, VEC_HULL_MAX);
 	self.experience = 105;
-	self.maxgold = 800;
+	self.maxgold = 345;
 
 	self.th_stand = baron_idle1;
 	self.th_misc = baron_sight1;

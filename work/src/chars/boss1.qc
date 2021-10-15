@@ -190,7 +190,15 @@ void() sgk_attack1	=[	$attack_1_01,	sgk_attack1	]
 			self.nextthink = time + 0.150;
 	}
 	else
-		frameskip(0.05);
+	{
+		if (self.walkframe < 3 || (self.walkframe > 12 && self.walkframe < 14))
+		{
+			local float b = random()*5 * 0.1;  // stagger melee frames
+			frameskip(0.085 + b);
+		}
+		else
+			frameskip(0.05);
+	}
 };
 
 // magic attack 1 (fireball)

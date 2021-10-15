@@ -486,7 +486,7 @@ void() monster_golem =
 	self.classname = "golem";
 	self.displayname = "Stone Golem";
 	self.experience = 44;
-	self.maxgold = 150;
+	self.maxgold = 125;
 
 	self.th_stand = golem_stand;
 	self.th_walk = golem_walk;

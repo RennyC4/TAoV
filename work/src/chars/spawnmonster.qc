@@ -144,6 +144,7 @@ void() spawn_monster_use =
 		monster.th_die = knight_die;
 		monster.th_jump = knight_jump;
 		monster.experience = 18; // how much exp to give on death
+		monster.maxgold = 100;
 
 		monster.th_block = knight_block1;
 		if (!monster.ai_blockfreq) // frequency on how much the enemy blocks
@@ -183,6 +184,7 @@ void() spawn_monster_use =
 		monster.classname = "dog";
 		monster.displayname = "Hunting Hound";
 		monster.experience = 10;
+		monster.maxgold = 50;
 	
 		monster.th_stand = dog_stand1;
 		monster.th_walk = dog_walk1;
@@ -240,6 +242,7 @@ void() spawn_monster_use =
 		monster.th_jump = hellknight_jump;
 		monster.th_grab = hellknight_grabbed1;
 		monster.experience = 67;
+		monster.maxgold = 200;
 
 		monster.th_block = hellknight_block1;
 		if (!monster.ai_blockfreq) // frequency on how much the enemy blocks
@@ -284,6 +287,7 @@ void() spawn_monster_use =
 		monster.displayname = "Baron";
 		setsize(monster, VEC_HULL_MIN, VEC_HULL_MAX);
 		monster.experience = 105;
+		monster.maxgold = 345;
 
 		monster.th_stand = baron_idle1;
 		monster.th_misc = baron_sight1;
@@ -330,6 +334,7 @@ void() spawn_monster_use =
 		monster.classname = "skeleton";
 		monster.displayname = "Skeleton";
 		monster.experience = 50;
+		monster.maxgold = 166;
 
 		monster.th_stand = skel_stand1;
 		monster.th_run = skel_run1;
@@ -367,6 +372,7 @@ void() spawn_monster_use =
 		monster.classname = "horror";
 		monster.displayname = "Horror";
 		monster.experience = 31;
+		monster.maxgold = 130;
 
 		monster.th_stand = horror_stand1;
 		monster.th_run = horror_run1;
@@ -434,6 +440,7 @@ void() spawn_monster_use =
 		monster.th_melee = gaunt_finger1;
 		monster.th_magic = gaunt_magic;
 		monster.experience = 77;
+		monster.maxgold = 166;
 	}
 	
 	//
@@ -462,6 +469,7 @@ void() spawn_monster_use =
 		setsize(monster, VEC_HULL_MIN, VEC_HULL_MAX);
 		monster.mana = 200; // mana, 200 is max for arch ghouls
 		monster.experience = 150;
+		monster.maxgold = 333;
 
 		monster.th_stand = archg_stand1;
 		monster.th_walk = archg_walk1;
@@ -474,7 +482,7 @@ void() spawn_monster_use =
 	}
 	
 	//
-	// Spawn Ghost / Maleviolent Spirit
+	// Spawn Ghost / Malevolent Spirit
 	//
 	
 	if (self.cnt == 8)
@@ -492,9 +500,10 @@ void() spawn_monster_use =
 		monster.takedamage = DAMAGE_AIM;
 		monster.solid = SOLID_NOT;
 		monster.experience = 21;
+		monster.maxgold = 20;
 		monster.flags = FL_MONSTER;
 		monster.classname = "ghost";
-		monster.displayname = "Maleviolent Spirit";
+		monster.displayname = "Malevolent Spirit";
 		setsize (monster, VEC_HULL_MIN, VEC_HULL_MAX);
 		monster.noblood = TRUE;
 		monster.th_stand = ghost_think;
@@ -535,6 +544,7 @@ void() spawn_monster_use =
 		monster.displayname = "Wraith";
 		setsize (monster, VEC_HULL2_MIN, VEC_HULL2_MAX);
 		monster.experience = 100;
+		monster.maxgold = 360;
 
 		monster.effects = EF_NODEPTHTEST;
 		monster.alpha = 0.2;
@@ -572,6 +582,7 @@ void() spawn_monster_use =
 			monster.health = 247; // hard health (50% tougher)
 			
 		monster.experience = 66;
+		monster.maxgold = 141;
 
 		monster.netname = "solid";
 		monster.takedamage = DAMAGE_YES;
@@ -622,6 +633,7 @@ void() spawn_monster_use =
 		monster.displayname = "Gremlin";
 		setsize(monster, VEC_HULL_MIN, VEC_HULL_MAX);
 		monster.experience = 22;
+		monster.maxgold = 90;
 
 		monster.th_stand = grem_stand1;
 		monster.th_run = grem_run1;
@@ -659,6 +671,7 @@ void() spawn_monster_use =
 		monster.displayname = "Ghoul";
 		setsize(monster, VEC_HULL_MIN, VEC_HULL_MAX);
 		monster.experience = 43;
+		monster.maxgold = 85;
 
 		monster.th_stand = ghoul_rise1;
 		monster.th_run = ghoul_walk1;
@@ -712,6 +725,7 @@ void() spawn_monster_use =
 		monster.displayname = "Archer";
 		setsize(monster, VEC_HULL_MIN, VEC_HULL_MAX);
 		monster.experience = 19; // how much exp to give on death
+		monster.maxgold = 70;
 
 		monster.th_stand = archer_stand1;
 		monster.th_run = archer_move1;
@@ -763,6 +777,7 @@ void() spawn_monster_use =
 		monster.classname = "zombie";
 		monster.displayname = "Zombie";
 		monster.experience = 32;
+		monster.maxgold = 110;
 		
 		monster.th_stand = zombie_stand1;
 		monster.th_run = zombie_run1;
@@ -808,6 +823,7 @@ void() spawn_monster_use =
 		monster.classname = "zombieboss";
 		monster.displayname = "Greater Zombie";
 		monster.experience = 56;
+		monster.maxgold = 175;
 
 		monster.th_stand = zombie_boss_stand1;
 		monster.th_run = zombie_boss_run1;
@@ -848,6 +864,7 @@ void() spawn_monster_use =
 		monster.classname = "troglod";
 		monster.displayname = "Troglodyte";
 		monster.experience = 175;
+		monster.maxgold = 400;
 		
 		monster.th_stand = troglod_stand1;
 		monster.th_run = troglod_run1;
@@ -882,6 +899,7 @@ void() spawn_monster_use =
 		monster.classname = "dragon";
 		monster.displayname = "Green Dragon";
 		monster.experience = 81;
+		monster.maxgold = 221;
 
 		monster.th_stand = dragon_stand;
 		monster.th_walk = dragon_walk;
@@ -919,6 +937,7 @@ void() spawn_monster_use =
 		monster.displayname = "Hydra";
 		monster.flags = monster.flags | FL_MONSTER | FL_SWIM;
 		monster.experience = 25;
+		monster.maxgold = 115;
 		
 		monster.th_stand = hydra_idle;
 		monster.th_walk = hydra_move;
@@ -936,25 +955,27 @@ void() spawn_monster_use =
 		precache_sound ("needles/die.wav");
 		
 		precache_model ("progs/needles.mdl");
-		setmodel (self, "progs/needles.mdl");
-		setsize(self, VEC_HULL_MIN, VEC_HULL_MAX);
+		setmodel (monster, "progs/needles.mdl");
+		setsize(monster, VEC_HULL_MIN, VEC_HULL_MAX);
 
-		self.movetype = MOVETYPE_FLY;
-		self.health = 1;
-		self.solid = SOLID_TRIGGER;
-		self.takedamage = DAMAGE_AIM;
-		self.classname = "needles";
-		self.displayname = "Needles";
-		self.netname = "solid";
-		self.avelocity = '0 50 0';
-		self.cnt = 0;
-		if (!self.scale)
-			self.scale = 1;
-		self.flags = self.flags | FL_MONSTER;
-		
-		self.th_die = needles_die;
-		self.think = needles_think;
-		self.nextthink = time + 0.1;
+		monster.movetype = MOVETYPE_FLY;
+		monster.health = 1;
+		monster.solid = SOLID_TRIGGER;
+		monster.takedamage = DAMAGE_AIM;
+		monster.classname = "needles";
+		monster.displayname = "Needles";
+		monster.netname = "solid";
+		monster.avelocity = '0 50 0';
+		monster.cnt = 0;
+		if (!monster.scale)
+			monster.scale = 1;
+		monster.flags = monster.flags | FL_MONSTER;
+		monster.experience = 20;
+		monster.maxgold = 76;
+	
+		monster.th_die = needles_die;
+		monster.think = needles_think;
+		monster.nextthink = time + 0.1;
 		
 		// This monster has it's own think function to start
 		remove(self);
@@ -988,7 +1009,8 @@ void() spawn_monster_use =
 		monster.solid = SOLID_NOT;
 		monster.classname = "merman";
 		monster.displayname = "Merman";
-		monster.experience = 90;
+		monster.experience = 44;
+		monster.maxgold = 88;
 		
 		monster.th_stand = merman_idle;
 		monster.th_walk = merman_walk;
@@ -1035,6 +1057,7 @@ void() spawn_monster_use =
 		monster.alpha = 0.9;
 		monster.effects = EF_NODEPTHTEST;
 		monster.experience = 44;
+		monster.maxgold = 118;
 
 		monster.th_stand = ethskull_1;
 		monster.th_walk = ethskull_2;
@@ -1077,6 +1100,7 @@ void() spawn_monster_use =
 		monster.displayname = "Lesser Wraith";
 		setsize (monster, VEC_HULL_MIN, VEC_HULL_MAX);
 		monster.experience = 67;
+		monster.maxgold = 168;
 
 		monster.alpha = 0.2;
 		monster.effects = EF_NODEPTHTEST;
@@ -1118,6 +1142,7 @@ void() spawn_monster_use =
 		monster.netname = "solid";
 		setsize (monster, '-16 -16 -24', '16 16 24');
 		monster.experience = 20;
+		monster.maxgold = 33;
 
 		monster.th_stand = raven_idle;
 		monster.th_misc = raven_misc;
@@ -1179,6 +1204,7 @@ void() spawn_monster_use =
 		monster.th_die = knight2_die;
 		monster.th_jump = knight2_jump;
 		monster.experience = 80; // how much exp to give on death
+		monster.maxgold = 220;
 
 		monster.th_block = knight2_block1;
 		if (!monster.ai_blockfreq) // frequency on how much the enemy blocks
@@ -1218,6 +1244,7 @@ void() spawn_monster_use =
 		monster.classname = "werewolf";
 		monster.displayname = "Werewolf";
 		monster.experience = 88;
+		monster.maxgold = 266;
 
 		monster.th_stand = werewolf_stand;
 		monster.th_walk = werewolf_walk;
@@ -1247,6 +1274,7 @@ void() spawn_monster_use =
 		monster.takedamage = DAMAGE_AIM;
 		monster.solid = SOLID_NOT;
 		monster.experience = 21;
+		monster.maxgold = 20;
 		monster.flags = FL_MONSTER;
 		monster.classname = "ghost2";
 		monster.displayname = "Sorrowful Spirit";
@@ -1294,6 +1322,7 @@ void() spawn_monster_use =
 		monster.classname = "golem";
 		monster.displayname = "Stone Golem";
 		monster.experience = 44;
+		monster.maxgold = 125;
 
 		monster.th_stand = golem_stand;
 		monster.th_walk = golem_walk;
@@ -1329,7 +1358,6 @@ void() spawn_monster_use =
 		self.solid = SOLID_NOT;
 		self.takedamage = DAMAGE_NO;
 		self.classname = "medusaspawner";
-		
 		setsize(self, '0 0 0', '0 0 0');
 
 		self.think = medusa_spawn;

@@ -137,6 +137,25 @@ void() efxflashe_think =
 	frameskip(0.01);
 };
 
+// wind spiral
+void() windspiral_think =
+{
+	if (self.scale < 5)
+		self.scale = self.scale + 0.1;
+	if (self.alpha > 0.01)
+		self.alpha = self.alpha - 0.01;
+	else
+	{
+		remove(self);
+		return;
+	}
+	if (!self.frame)
+		self.angles_y = self.angles_y + 10;
+	else
+		self.angles_z = self.angles_z + 10;
+	frameskip (0.01);
+};
+
 // diving swallow hit ring model animation
 void() divingshit_think =
 {

@@ -466,10 +466,10 @@ void(float screenwidth, float screenheight) DrawComboCounter =
 			drawpic (pos2, "progs/cmbomsg3.png", '196 40.5', '1 1 1', 1, DRAWFLAG_NORMAL);
 		if (msg == 4)
 			drawpic (pos2, "progs/cmbomsg4.png", '196 40.5', '1 1 1', 1, DRAWFLAG_NORMAL);
-		if (msg == 5) // Bigger message, move back a tad
-			drawpic (pos2 - '25 0', "progs/cmbomsg5.png", '196 40.5', '1 1 1', 1, DRAWFLAG_NORMAL);
-		if (msg == 6)
-			drawpic (pos2, "progs/cmbomsg6.png", '196 40.5', '1 1 1', 1, DRAWFLAG_NORMAL);
+		if (msg == 5) // Adjust slightly
+			drawpic (pos2 - '15 0', "progs/cmbomsg5.png", '196 40.5', '1 1 1', 1, DRAWFLAG_NORMAL);
+		if (msg == 6) // Adjust slightly
+			drawpic (pos2 - '10 0', "progs/cmbomsg6.png", '196 40.5', '1 1 1', 1, DRAWFLAG_NORMAL);
 		if (msg == 7)
 			drawpic (pos2, "progs/cmbomsg7.png", '196 40.5', '1 1 1', 1, DRAWFLAG_NORMAL);
 		if (msg == 8)

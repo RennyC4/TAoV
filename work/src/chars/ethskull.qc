@@ -195,7 +195,7 @@ void() monster_ethskull =
 	self.alpha = 0.9;
 	self.effects = EF_NODEPTHTEST;
 	self.experience = 44;
-	self.maxgold = 77;
+	self.maxgold = 118;
 
 	self.th_stand = ethskull_1;
 	self.th_walk = ethskull_2;

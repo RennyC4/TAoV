@@ -5218,37 +5218,25 @@ void() player_airkick12b	=[	$airkick12,	player_airkick13 	] {frameskip(0.05);}
 void() player_airkick13		=[	$airkick13,	player_airkick14 	] {frameskip(0.1);sound (self, CHAN_VOICE, "player/yell1.wav", 1, ATTN_NORM);sound (self, CHAN_AUTO, "player/sword.wav", 1, ATTN_NORM);self.velocity_y = 0;};
 void() player_airkick14		=[	$airkick14,	player_airkick15 	] {frameskip(0.1);};
 
-void() windspiral_think =
-{
-	if (self.scale < 5)
-		self.scale = self.scale + 0.1;
-	if (self.alpha > 0)
-		self.alpha = self.alpha - 0.015;
-	else
-	{
-		remove(self);
-		return;
-	}
-	self.angles_y = self.angles_y + 10;
-	frameskip (0.01);
-};
-
 void() player_airkick15		=[	$airkick15,	player_airkick16 	] 
 {
 	local entity effect;
-	
+
 	makevectors (self.angles);
 
 	effect = spawn();
 	setorigin(effect, self.origin + v_forward * 32);
 	setmodel(effect, "progs/windsprl.mdl");
 	effect.angles_y = random()*360;
-	effect.effects = EF_ADDITIVE | EF_FULLBRIGHT | EF_NODEPTHTEST;
+	
+	effect.effects = EF_ADDITIVE | EF_NODEPTHTEST;
 	effect.movetype = MOVETYPE_NOCLIP;
 	effect.classname = "windspiral_effect";
 	effect.solid = SOLID_NOT;
 	effect.owner = self;
 	effect.alpha = 1;
+	effect.scale = 0.25;
+	self.frame = 0;
 	setsize (effect, '0 0 0', '0 0 0');
 
 	effect.think = windspiral_think;
@@ -6523,7 +6511,7 @@ void() swallow_testxcheck =
 
 void() divingswallow_hit =
 {
-	local entity head, effect;
+	local entity head, effect, effect2;
 	local vector dir;
 
 	makevectors(self.angles);
@@ -6531,7 +6519,7 @@ void() divingswallow_hit =
 	head = searchradius(self.origin + v_forward * 16, 40);
 	while (head)
 	{
-		if (head.takedamage && head != self && visible(head)
+		if (head != self && visible(head)
 		&& ((coop == TRUE && head.classname != "player" && self.classname == "player")
 		|| (coop == FALSE || self.flags & FL_MONSTER))) // coop
 		{
@@ -6570,6 +6558,30 @@ void() divingswallow_hit =
 						effect.angles_x = self.angles_x;
 					effect.think = divingshit_think;
 					effect.nextthink = time;
+
+					effect2 = spawn();
+					setorigin(effect2, head.origin + v_forward*15);
+					setmodel(effect2, "progs/windsprl.mdl");
+					effect2.alpha = 1;
+					effect2.effects = EF_NODEPTHTEST | EF_ADDITIVE;
+					effect2.movetype = MOVETYPE_NOCLIP;
+					effect2.classname = "windspiral_effect";
+					effect2.solid = SOLID_NOT;
+					effect2.frame = 1;
+
+					if (self.angles_y != 0)
+						effect2.angles_x = self.angles_x * -1;
+					else
+						effect2.angles_x = self.angles_x;
+
+					effect2.angles_z = random()*360;
+					effect2.owner = self;
+					effect2.scale = 0.25;
+					setsize (effect2, '0 0 0', '0 0 0');
+
+					effect2.think = windspiral_think;
+					effect2.nextthink = time;
+					sound (self, CHAN_AUTO, "player/woosh.wav", 1, ATTN_NORM);
 
 					head.knockback = 5;
 					self.owner.camshake_finished = time + 0.2;
