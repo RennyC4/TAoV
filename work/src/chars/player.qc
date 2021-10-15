@@ -5160,11 +5160,11 @@ void() player_airkick6		=[	$airkick6,	player_airkick6 	]
 	}
 	if (self.owner.mashattack == TRUE)
 	{
-		self.think = player_airkick6b;
-		self.nextthink = time;// + 0.1;
 		self.aircombo_count = 6;
-		self.owner.aircombo_finished = time + 0.3;
+		self.owner.aircombo_finished = time + 0.4;
 		self.owner.mashattack = FALSE;
+		self.think = player_airkick6b;
+		self.nextthink = time + 0.1;
 		return;
 	}
 	frameskip(0.08);
@@ -5187,7 +5187,7 @@ void() player_airkick10		=[	$airkick10,	player_airkick10	]
 		self.think = player_airkick10b;
 		self.nextthink = time;// + 0.1;
 		self.aircombo_count = 7;
-		self.owner.aircombo_finished = time + 0.3;
+		self.owner.aircombo_finished = time + 0.4;
 		self.owner.mashattack = FALSE;
 		return;
 	}
@@ -5208,7 +5208,7 @@ void() player_airkick12		=[	$airkick12,	player_airkick12 	]
 	{
 		self.aircombo_count = 7;
 		self.think = player_airkick12b;
-		self.nextthink = time;// + 0.1;
+		self.nextthink = time + 0.1;
 		self.owner.aircombo_finished = time + 999;
 		self.owner.mashattack = FALSE;
 		return;
