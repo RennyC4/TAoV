@@ -1077,7 +1077,7 @@ void() gold_touch =
 		setpause(1);
 	}
 
-	local float aprice = 100 * floor(other.owner.level / 2.5); // Tied to wizards teleport to castle stuff
+	local float aprice = 100 * floor(other.owner.level / 3.5); // Tied to wizards teleport to castle stuff
 	if (world.model != "maps/village.bsp")
 	{
 		if (other.owner.last_combo > 0)

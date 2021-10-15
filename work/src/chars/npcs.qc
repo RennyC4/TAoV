@@ -770,7 +770,7 @@ void() wizard_chat =
 	else if (self.mode == 1)
 	{
 		self.enemy.owner.conversation = TRUE;
-		aprice = 100 * floor(self.enemy.owner.level / 2.5);
+		aprice = 100 * floor(self.enemy.owner.level / 3.5);
 		if (self.chatrefresh_finished < time)
 		{
 			if (self.cnt == 0)

@@ -674,7 +674,7 @@ void() CombatThink =
 
 	if (!self.th_melee && !self.th_missile && !self.th_magic)
 		return;
-	if (self.enemy.flypain || self.enemy.lowceil == TRUE) // vigil got hit hard and is flying or is crouched under a low ceiling, don't attack
+	if (self.enemy.flypain || self.enemy.lowceil == TRUE || self.enemy.owner.purge_toggle) // vigil got hit hard and is flying or is crouched under a low ceiling or is purging someone, don't attack
 		return;
 
 	r = range(self.enemy);

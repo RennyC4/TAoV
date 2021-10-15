@@ -2858,7 +2858,7 @@ void() player_fire =
 	{
 		if (self.wallgrab == FALSE)
 		{
-			if (self.keyflags & KEY_DOWN && self.char.inair > 15 && (self.char.frame != $airkick15 && self.char.frame != $airkick16 && self.char.frame != $airkick17))
+			if (self.keyflags & KEY_DOWN && self.char.inair > 15 && (self.char.frame != $airkick14 && self.char.frame != $airkick15 && self.char.frame != $airkick16 && self.char.frame != $airkick17))
 			{
 				if ((relics & IT_RELIC3 || deathmatch) && (self.char.aircombo_count == 4 || self.char.frame == $djump))
 				{
@@ -3142,6 +3142,7 @@ void() forwardflip_move =
 		self.angles_y = 180;
 	self.velocity = '0 0 0';
 	self.velocity_z = 220;
+	self.inair = 10; // prevent head smash
 
 	self.flags = self.flags - (self.flags & FL_ONGROUND);
 };
@@ -3156,6 +3157,7 @@ void() player_fflip6	=[	$fflip6,	player_fflip7	] {};
 void() player_fflip7	=[	$fflip7,	player_fflip8	] {};
 void() player_fflip8	=[	$fflip8,	player_fflip8	] 
 {
+	self.inair = 10; // prevent head smash
 	self.flypain = FALSE;
 	self.pain_finished = self.fly_time = time; // allow blocking etc
 	if (self.onground == TRUE || checkground(self) || self.velocity_z > 0) // Fixes animation jump button press before onground is done
@@ -5236,7 +5238,7 @@ void() player_airkick15		=[	$airkick15,	player_airkick16 	]
 	effect.owner = self;
 	effect.alpha = 1;
 	effect.scale = 0.25;
-	self.frame = 0;
+	effect.frame = 0;
 	setsize (effect, '0 0 0', '0 0 0');
 
 	effect.think = windspiral_think;
