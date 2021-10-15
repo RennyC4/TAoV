@@ -859,6 +859,8 @@ void() PlayerPreThink =
 			{
 				self.inwater_finished = time + 0.6;
 				// Fixes not allowing Left/Right movement in water
+				if (self.char.block_finished > time)
+					self.char.block_finished = time; // remove any left over block timers
 				self.char.aircombo_count = 0;
 				self.ledgegrab = FALSE;
 				self.walljump = FALSE;

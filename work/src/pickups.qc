@@ -1133,6 +1133,8 @@ void() drop_gold =
 
 	if (deathmatch)
 		return;
+	if (self.flags & FL_BOSS)
+		return;
 
 	goldg = spawn();
 	goldg.movetype = MOVETYPE_TOSS;

@@ -187,7 +187,7 @@ void() baron_hidesword4 	=[	$draw2,	baron_hidesword4	]
 void() baron_swing1 	=[	$swing1,	baron_swing2	] 
 {
 	BlockCancel();
-	local float b = random()*9 * 0.1;  // stagger first frame
+	local float b = random()*3 * 0.1;  // stagger first frame
 	frameskip(0.08 + b);
 };
 void() baron_swing2 	=[	$swing2,	baron_swing3	] {BlockCancel();frameskip(0.08);};

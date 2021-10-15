@@ -195,9 +195,9 @@ void()	werewolf_atk	=[	$melee1,		werewolf_atk	]
 	self.frame = $melee1 + self.walkframe;
 	self.walkframe = self.walkframe + 1;
 	
-	if (self.walkframe < 2)
+	if (self.walkframe < 2 || (self.walkframe > 6 && self.walkframe < 8))
 	{
-		local float b = random()*9 * 0.1;  // stagger first frame
+		local float b = random()*5 * 0.1;  // stagger first frame
 		frameskip(0.125 + b);
 	}
 	else

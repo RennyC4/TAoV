@@ -51,7 +51,7 @@ void() ethskull_2	=[	$idle1,	ethskull_2		]
 		}
 		head = head.chain;
 	}
-	ai_fly(6);
+	ai_fly(12);
 };
 
 //pain

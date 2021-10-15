@@ -4863,6 +4863,7 @@
 "origin" "2156 -521 232"
 "awareness" "3"
 "_phong" "1"
+"targetname" "ethskull_come"
 }
 // entity 33
 {
@@ -5863,6 +5864,7 @@
 "classname" "monster_ghoul"
 "origin" "2440 -472 96"
 "_phong" "1"
+"target" "ethskull_come"
 }
 // entity 128
 {

@@ -124,8 +124,15 @@ void() boss_idle1 = [0, boss_idle1]
 	{
 		boss_face();
 
+		// Don't allow Vigil to hit the boss while swimming for a cheap kill
+		// TODO: Needs to work in multiplayer
+		if (self.enemy.swimming)
+			self.takedamage = DAMAGE_NO;
+		else
+			self.takedamage = DAMAGE_AIM;
+
 		// Combat code here!
-		if (!self.enemy.swimming && self.attack_finished < time)
+		if (self.attack_finished < time)
 		{
 			r = boss_range(self.enemy);
 			if (r == RANGE_MELEE)
@@ -150,8 +157,7 @@ void() boss_idle1 = [0, boss_idle1]
 				}
 				else
 				{
-					if (!self.enemy.swimming)
-						boss_rockdrop1();
+					boss_rockdrop1();
 					self.level = self.level + 1;
 				}
 			}
@@ -163,7 +169,7 @@ void() boss_idle1 = [0, boss_idle1]
 			//self.solid = SOLID_NOT;
 		}
 	}
-	
+		
 	if (self.stand_finished < time)
 	{
 		self.walkframe = self.walkframe + 1;
@@ -172,8 +178,8 @@ void() boss_idle1 = [0, boss_idle1]
 	self.frame = $stand1 + self.walkframe;
 	if (self.walkframe > 29)
 		self.walkframe = 0;
-	self.takedamage = DAMAGE_AIM;
 	self.velocity = '0 0 0';
+
 	frameskip(0.01);
 };
 
@@ -226,9 +232,7 @@ void() boss_rockdrop10 = [$shockc10, boss_idle1] {};
 void() Boss2Melee =
 {
 	FireMelee(40,0,3,100,5,0,1, FALSE,0,0);
-	
-	self.char.enemy = self.enemy;
-	
+
 	// Damage boss from purge attacks
 	// '.char' refers to the Eternal Dragon itself as .owner is used for other means
 	local float calc = self.char.health - self.health;
@@ -245,7 +249,7 @@ void() Boss2Melee =
 
 void() boss_attack1 = [$attack1, boss_attack2] 
 {
-	local float b = random()*9 * 0.1;  // stagger first frame
+	local float b = random()*4 * 0.1;  // stagger first frame
 	frameskip(0.08 + b);
 };
 void() boss_attack2 = [$attack2, boss_attack3] {frameskip(0.5);};
@@ -283,7 +287,11 @@ void() boss_attack12 = [$attack12, boss_attack13] {frameskip(0.08);};
 void() boss_attack13 = [$attack13, boss_attack14] {frameskip(0.08);};
 void() boss_attack14 = [$attack14, boss_attack15] {frameskip(0.08);};
 void() boss_attack15 = [$attack15, boss_attack16] {frameskip(0.08);};
-void() boss_attack16 = [$attack16, boss_attack17] {frameskip(0.5);};
+void() boss_attack16 = [$attack16, boss_attack17] 
+{
+	local float b = random()*4 * 0.1;  // stagger first frame
+	frameskip(0.5 + b);
+};
 void() boss_attack17 = [$attack17, boss_attack18] {frameskip(0.08);};
 void() boss_attack18 = [$attack18, boss_attack19] 
 {

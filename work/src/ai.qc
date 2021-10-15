@@ -717,28 +717,29 @@ void() CombatThink =
 	// Flying / Swimming Monsters attack
 	//
 
-	if (self.flags & FL_SWIM && pointcontents(self.origin) == CONTENT_WATER)
+	if (self.classname == "merman" && self.flags & FL_SWIM && pointcontents(self.origin) == CONTENT_WATER)
 	{
-		if (self.classname == "merman")
+		if (random() < 0.1)
 		{
-			if (random() < 0.3)
+			if (self.th_missile)
+				self.th_missile();
+		}
+		return;
+	}
+
+	//if ((self.flags & FL_SWIM && pointcontents(self.origin) == CONTENT_WATER) || self.movetype == MOVETYPE_FLY)
+	
+	if (self.movetype == MOVETYPE_FLY || self.movetype == MOVETYPE_NOCLIP || (self.flags & FL_SWIM && pointcontents(self.origin) == CONTENT_WATER))
+	{
+		if (self.th_melee && r <= RANGE_CLOSE)
+				self.th_melee();
+		else
+		{
+			if (random() < 0.1)
 			{
 				if (self.th_missile)
 					self.th_missile();
 			}
-		}
-		else
-		{
-			if (self.th_melee && r <= RANGE_CLOSE)
-					self.th_melee();
-			else
-			{
-				if (random() < 0.3)
-				{
-					if (self.th_missile)
-						self.th_missile();
-				}
-			}		
 		}
 		return;
 	}

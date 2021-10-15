@@ -106,7 +106,7 @@ void()	knight2_run8	=[	$runb8,		knight2_run1	] {ai_walk(12);};
 void()	knight2_atk1	=[	$attackb3,		knight2_atk2	] 
 {
 	BlockCancel();
-	local float b = random()*9 * 0.1;  // stagger first frame
+	local float b = random()*3 * 0.1;  // stagger first frame
 	frameskip(0.07 + b);
 };
 void()	knight2_atk2	=[	$attackb4,		knight2_atk3	] {knight2_yell();sound (self, CHAN_WEAPON, "knight/sword1.wav", 1, ATTN_NORM);BlockCancel();frameskip(0.07);};
@@ -121,7 +121,7 @@ void()	knight2_atkb1	=[	$runattack1,		knight2_atkb2	]
 {
 	BlockCancel();
 	ai_forward(6);
-	local float b = random()*9 * 0.1;  // stagger first frame
+	local float b = random()*3 * 0.1;  // stagger first frame
 	frameskip(0.05 + b);
 };
 void()	knight2_atkb2	=[	$runattack2,		knight2_atkb3	] {BlockCancel();ai_forward(6);frameskip(0.05);knight2_yell();};

@@ -11,6 +11,10 @@
 void() needles_die =
 {
 	local entity effect;
+	
+	self.movetype = MOVETYPE_NONE;
+	self.velocity = '0 0 0';
+	
 	if (self.cnt < 50)
 	{
 		if (self.cnt == 1) // run once
