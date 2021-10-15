@@ -252,7 +252,7 @@ void() boss_attack1 = [$attack1, boss_attack2]
 	local float b = random()*4 * 0.1;  // stagger first frame
 	frameskip(0.08 + b);
 };
-void() boss_attack2 = [$attack2, boss_attack3] {frameskip(0.5);};
+void() boss_attack2 = [$attack2, boss_attack3] {sound (self, CHAN_WEAPON, "dragon/bite.wav", 1, ATTN_NORM);frameskip(0.5);};
 void() boss_attack3 = [$attack3, boss_attack4] {frameskip(0.08);};
 void() boss_attack4 = [$attack4, boss_attack5] {frameskip(0.08);};
 void() boss_attack5 = [$attack5, boss_attack6] {frameskip(0.08);};
@@ -291,6 +291,7 @@ void() boss_attack16 = [$attack16, boss_attack17]
 {
 	local float b = random()*4 * 0.1;  // stagger first frame
 	frameskip(0.5 + b);
+	sound (self, CHAN_WEAPON, "dragon/bite.wav", 1, ATTN_NORM);
 };
 void() boss_attack17 = [$attack17, boss_attack18] {frameskip(0.08);};
 void() boss_attack18 = [$attack18, boss_attack19] 
@@ -544,7 +545,7 @@ void() spawn_boulder_spawner =
 
 void() boss_rise1	=[	$rise1, boss_rise2 ] 
 {
-	sound (self, CHAN_WEAPON, "boss1/out1.wav", 1, ATTN_NORM);
+	sound (self, CHAN_AUTO, "boss1/out1.wav", 1, ATTN_NORM);
 	boss_face();
 
 	// spawn his boulder spawners
@@ -612,6 +613,7 @@ void() monster_boss2 =
 	precache_sound ("boss1/sight1.wav");
 	precache_sound ("boss1/pain.wav");
 	precache_sound ("boss1/death.wav");
+	precache_sound ("dragon/bite.wav");
 	precache_sound ("misc/rocks.wav");
 	precache_sound ("misc/explode.wav");
 
