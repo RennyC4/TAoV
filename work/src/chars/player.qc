@@ -3142,7 +3142,7 @@ void() forwardflip_move =
 		self.angles_y = 180;
 	self.velocity = '0 0 0';
 	self.velocity_z = 220;
-	self.inair = 10; // prevent head smash
+	self.inair = 1; // prevent head smash
 
 	self.flags = self.flags - (self.flags & FL_ONGROUND);
 };
@@ -3157,7 +3157,7 @@ void() player_fflip6	=[	$fflip6,	player_fflip7	] {};
 void() player_fflip7	=[	$fflip7,	player_fflip8	] {};
 void() player_fflip8	=[	$fflip8,	player_fflip8	] 
 {
-	self.inair = 10; // prevent head smash
+	self.inair = 1; // prevent head smash
 	self.flypain = FALSE;
 	self.pain_finished = self.fly_time = time; // allow blocking etc
 	if (self.onground == TRUE || checkground(self) || self.velocity_z > 0) // Fixes animation jump button press before onground is done
