@@ -243,7 +243,11 @@ void() Boss2Melee =
 	remove(self);
 };
 
-void() boss_attack1 = [$attack1, boss_attack2] {frameskip(0.08);};
+void() boss_attack1 = [$attack1, boss_attack2] 
+{
+	local float b = random()*9 * 0.1;  // stagger first frame
+	frameskip(0.08 + b);
+};
 void() boss_attack2 = [$attack2, boss_attack3] {frameskip(0.5);};
 void() boss_attack3 = [$attack3, boss_attack4] {frameskip(0.08);};
 void() boss_attack4 = [$attack4, boss_attack5] {frameskip(0.08);};

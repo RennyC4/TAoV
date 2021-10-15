@@ -194,7 +194,14 @@ void()	werewolf_atk	=[	$melee1,		werewolf_atk	]
 
 	self.frame = $melee1 + self.walkframe;
 	self.walkframe = self.walkframe + 1;
-	frameskip(0.125);
+	
+	if (self.walkframe < 2)
+	{
+		local float b = random()*9 * 0.1;  // stagger first frame
+		frameskip(0.125 + b);
+	}
+	else
+		frameskip(0.125);
 };
 
 // short pain sequence, over half health
@@ -246,7 +253,7 @@ void() werewolf_pain_decide =
 	monster_removeslide();
 	sound (self, CHAN_VOICE, "werewolf/pain.wav", 1, ATTN_NORM);
 
-	if (self.ignoreaircombo == FALSE)
+	if (self.ignoreaircombo == FALSE || !checkground(self))
 	{
 		werewolf_painb();
 		return;

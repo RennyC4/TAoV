@@ -184,7 +184,12 @@ void() baron_hidesword4 	=[	$draw2,	baron_hidesword4	]
 	monster_removeslide();
 };
 
-void() baron_swing1 	=[	$swing1,	baron_swing2	] {BlockCancel();frameskip(0.08);};
+void() baron_swing1 	=[	$swing1,	baron_swing2	] 
+{
+	BlockCancel();
+	local float b = random()*9 * 0.1;  // stagger first frame
+	frameskip(0.08 + b);
+};
 void() baron_swing2 	=[	$swing2,	baron_swing3	] {BlockCancel();frameskip(0.08);};
 void() baron_swing3 	=[	$swing3,	baron_swing4	] {BlockCancel();frameskip(0.08);};
 void() baron_swing4 	=[	$swing4,	baron_swing5	] {BlockCancel();sound (self, CHAN_WEAPON, "baron/sword.wav", 1, ATTN_NORM);frameskip(0.08);};

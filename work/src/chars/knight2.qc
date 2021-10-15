@@ -103,8 +103,13 @@ void()	knight2_run6	=[	$runb6,		knight2_run7	] {ai_walk(12);};
 void()	knight2_run7	=[	$runb7,		knight2_run8	] {ai_walk(12);};
 void()	knight2_run8	=[	$runb8,		knight2_run1	] {ai_walk(12);};
 
-void()	knight2_atk1	=[	$attackb3,		knight2_atk2	] {BlockCancel();knight2_yell();sound (self, CHAN_WEAPON, "knight/sword1.wav", 1, ATTN_NORM);frameskip(0.07);};
-void()	knight2_atk2	=[	$attackb4,		knight2_atk3	] {BlockCancel();frameskip(0.07);};
+void()	knight2_atk1	=[	$attackb3,		knight2_atk2	] 
+{
+	BlockCancel();
+	local float b = random()*9 * 0.1;  // stagger first frame
+	frameskip(0.07 + b);
+};
+void()	knight2_atk2	=[	$attackb4,		knight2_atk3	] {knight2_yell();sound (self, CHAN_WEAPON, "knight/sword1.wav", 1, ATTN_NORM);BlockCancel();frameskip(0.07);};
 void()	knight2_atk3	=[	$attackb5,		knight2_atk4	] {BlockCancel();frameskip(0.07);};
 void()	knight2_atk4	=[	$attackb6,		knight2_atk5	] {BlockCancel();frameskip(0.07);};
 void()	knight2_atk5	=[	$attackb7,		knight2_atk6	] {BlockCancel();frameskip(0.07);};
@@ -112,8 +117,14 @@ void()	knight2_atk6	=[	$attackb8,		knight2_atk7	] {BlockCancel();FireMelee(14,10
 void()	knight2_atk7	=[	$attackb9,		knight2_atk8] {BlockCancel();frameskip(0.07);};
 void()	knight2_atk8 	=[	$attackb10,		knight2_walk1] {BlockCancel();frameskip(0.07);};
 
-void()	knight2_atkb1	=[	$runattack1,		knight2_atkb2	] {BlockCancel();ai_forward(6);knight2_yell();frameskip(0.05);};
-void()	knight2_atkb2	=[	$runattack2,		knight2_atkb3	] {BlockCancel();ai_forward(6);frameskip(0.05);};
+void()	knight2_atkb1	=[	$runattack1,		knight2_atkb2	] 
+{
+	BlockCancel();
+	ai_forward(6);
+	local float b = random()*9 * 0.1;  // stagger first frame
+	frameskip(0.05 + b);
+};
+void()	knight2_atkb2	=[	$runattack2,		knight2_atkb3	] {BlockCancel();ai_forward(6);frameskip(0.05);knight2_yell();};
 void()	knight2_atkb3	=[	$runattack3,		knight2_atkb4	] {BlockCancel();ai_forward(6);frameskip(0.05);};
 void()	knight2_atkb4	=[	$runattack4,		knight2_atkb5	] {BlockCancel();ai_forward(6);frameskip(0.05);};
 void()	knight2_atkb5	=[	$runattack5,		knight2_atkb6	] {BlockCancel();ai_forward(6);sound (self, CHAN_WEAPON, "knight/sword1.wav", 1, ATTN_NORM);frameskip(0.05);};

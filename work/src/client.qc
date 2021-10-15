@@ -675,6 +675,8 @@ void() PlayerPreThink =
 
 	if (self.char != world)
 	{
+		//local float b = random()*5 * 0.1;
+	
 		// HUD Test stuff
 		//self.absorb_finished = time + 1;
 		//self.perfectguard_buff = time + 1;
