@@ -463,7 +463,14 @@ void() LightningThink =
 						T_Damage (head, self, self.owner, 3, 0);
 				}
 				else
-					T_Damage (head, self, self.owner, 2, 0);
+				{
+					if (self.owner.classname == "archg") // arch ghoul damage
+						T_Damage (head, self, self.owner, 4, 0);
+					else if (self.owner.classname == "troglod") // troglodyte damage
+						T_Damage (head, self, self.owner, 7, 0);
+					else
+						T_Damage (head, self, self.owner, 2, 0);
+				}
 				self.cnt = self.cnt + 1;
 			}
 		}
