@@ -6027,6 +6027,7 @@ void() player_die3	=[	$pain5,	player_die3 ]
 					}
 					else // warp back to safety (village.bsp)...
 					{
+						self.owner.pouch = FALSE; // remove pouch if held
 						local string h;
 						h = ftos(2);
 						cvar_set("gamecfg", h);
