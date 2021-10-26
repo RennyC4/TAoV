@@ -2636,6 +2636,8 @@ void() player_fire =
 		return;
 	if (self.trigger_spincut_finished > time)
 		return;
+	if (self.char.frame == $hsblked1)
+		return;
 
 	if (self.attack_finished > time)
 	{
@@ -2858,7 +2860,7 @@ void() player_fire =
 	{
 		if (self.wallgrab == FALSE)
 		{
-			if (self.keyflags & KEY_DOWN && self.char.inair > 15 && (self.char.frame != $airkick14 && self.char.frame != $airkick15 && self.char.frame != $airkick16 && self.char.frame != $airkick17))
+			if (self.keyflags & KEY_DOWN && self.char.inair > 15 && (self.char.frame != $airkick14 && self.char.frame != $airkick15 && self.char.frame != $airkick16))
 			{
 				if ((relics & IT_RELIC3 || deathmatch) && (self.char.aircombo_count == 4 || self.char.frame == $djump))
 				{
@@ -4749,6 +4751,9 @@ void() player_hsblked	=[	$hsblked1,	player_hsblked	]
 {
 	local vector view;
 
+	self.owner.attack_finished = time + 0.1;
+	self.owner.noblock_finished = time + 0.1;
+
 	view = vectoangles(self.enemy.origin - self.origin);
 	self.angles_y = view_y;
 	self.fixangle = TRUE;
@@ -4950,6 +4955,7 @@ void() player_jumpatk2	=[	$jumpatk2,	player_jumpatk2	]
 				sound (head, CHAN_BODY, "player/block.wav", 1, ATTN_NORM);
 
 				self.enemy = head;
+				//FIXME: On player_hsblcked call, disable attack button momentarily
 				player_hsblked(); // blocked headsmash frame
 				return;
 			}
