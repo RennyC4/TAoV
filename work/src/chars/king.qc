@@ -91,7 +91,7 @@ void() transporter_touch =
 		shrineHUD_on = TRUE;
 		//centerprint (other.owner, "/P^5My dear Vigil, although I have perished from flesh and blood I am still able lend assistance from this spirtual plane. I still possess enough power to transfer your essense to various shrine rooms around my former kingdom.\n\nWhere would you make haste to?^7\n");
 
-		if (other.owner.keyflags & (KEY_RIGHT | KEY_LEFT) || other.owner.button2) // Turn off
+		if (other.owner.keyflags & (KEY_RIGHT | KEY_LEFT) || other.owner.button2 || other.owner.button3) // Turn off
 		{
 			other.owner.FL_JMPPRESSED = TRUE; // Don't allow jump on menu close with button2
 			shrineHUD_on = FALSE;
