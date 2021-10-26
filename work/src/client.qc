@@ -877,7 +877,7 @@ void() PlayerPreThink =
 					watersplash_particle();
 					watersplash_particle();
 					self.bubble_count = time + 3;
-					sound (self.char, CHAN_BODY, "misc/h2ohit1.wav", 1, ATTN_NORM);
+					sound (self.char, CHAN_AUTO, "misc/h2ohit1.wav", 1, ATTN_NORM);
 					self.playersplash_finished = time + 0.5;
 				}
 			}
