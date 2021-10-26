@@ -6613,6 +6613,9 @@ void() divingswallow_hit =
 					else
 						self.owner.mana = self.owner.mana + 6;
 
+					if (self.owner.mana > self.owner.max_mana) // cap mana gain
+						self.owner.mana = self.owner.max_mana;
+
 					self.think = player_bflip1;
 					self.owner.backflip_finished = time + 0.7; // Perfect value! Player enters negative velocity by this itme...
 				}
@@ -6637,6 +6640,9 @@ void() divingswallow_hit =
 						self.owner.mana = self.owner.mana + 1;
 					else
 						self.owner.mana = self.owner.mana + 2;
+
+					if (self.owner.mana > self.owner.max_mana) // cap mana gain
+						self.owner.mana = self.owner.max_mana;
 				}
 				self.owner.combo = self.owner.combo + 1; // raise combo counter
 			}
