@@ -247,10 +247,13 @@ void(entity targ) SpawnHPBar =
 	targ.hpbar = e;
 	e.nodrawtoclient = targ;
 
-	if (targ.max_health == 0)
-		targ.max_health = targ.health;
+//	if (targ.max_health == 0)
+//		targ.max_health = targ.health;
 
-	e.view_ofs = '0 0 1'*targ.maxs_z + '0 0 5'; // offset from enemy.origin
+	if (targ.flags & IT_BOSS2)
+		e.view_ofs = '0 0 1'*targ.maxs_z + '0 0 -50'; // offset from enemy.origin
+	else
+		e.view_ofs = '0 0 1'*targ.maxs_z + '0 0 5'; // offset from enemy.origin
 	makevectors(targ.angles);
 	e.origin = targ.origin
 	 + '0 0 1'	* e.view_ofs_z
@@ -272,7 +275,11 @@ void(entity targ) SpawnHPBar =
 
 	e.lefty = e.alpha = 0.8;
 
-	e.scale = 0.75; // smaller-size
+	if (targ.flags & FL_BOSS)
+		e.scale = 1.50; // bigger-size
+	else
+		e.scale = 0.75; // smaller-size
+
 	e.effects = EF_NODEPTHTEST | EF_ADDITIVE;
 
 	setmodel(e, "progs/hpbar/hpbar.spr");
