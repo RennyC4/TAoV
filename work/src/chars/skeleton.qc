@@ -171,7 +171,7 @@ void()	skel_die9	=[	$death9,	skel_die10	] {monster_death();};
 void()	skel_die10	=[	$death10,	skel_die10	] 
 {
 	monster_death();
-	if (self.flags & FL_ONGROUND)
+	if (self.flags & FL_ONGROUND || self.flags & FL_PARTIALGROUND || checkground(self))
 	{
 		sound (self, CHAN_BODY, "skeleton/smash.wav", 1, ATTN_NORM);
 		self.think = SkelFinal1;
