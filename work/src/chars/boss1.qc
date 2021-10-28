@@ -384,7 +384,7 @@ void() sgk_think =
 		self.mode = 0;
 	}
 
-	if (self.stand_finished < time)
+	if (self.stand_finished < time && self.block_finished < time)
 	{
 		// No need to shift foreground/background as I'm lined up my enemy
 		if (self.origin_y < self.enemy.origin_y + 20 && self.origin_y > self.enemy.origin_y - 20)
@@ -424,11 +424,27 @@ void() sgk_think =
 	}
 	
 	//
-	// SGK Attack logic
+	// SGK Blocking airborn Vigil
 	//
 	
 	local float r = range(self.enemy);
-
+	
+	if (!self.enemy.onground && !self.enemy.flypain && r < 4)
+	{
+		// Check if I'm facing the enemy and they're facing me at a close range
+		if ((self.enemy.angles_y == 180 && self.angles_y == 0) || (self.enemy.angles_y == 0 && self.angles_y == 180))
+		{
+			self.block_finished = time + 0.25;
+			// Needs block frames
+			self.frame = 131;
+			frameskip(0.2);
+		}
+	}
+	
+	//
+	// SGK Attack logic
+	//
+	
 	if (r <= RANGE_MELEE || r <= RANGE_CLOSE)
 	{
 		if (self.th_melee)
