@@ -4955,8 +4955,8 @@ void() player_jumpatk2	=[	$jumpatk2,	player_jumpatk2	]
 				sound (head, CHAN_BODY, "player/block.wav", 1, ATTN_NORM);
 
 				self.enemy = head;
-				//FIXME: On player_hsblcked call, disable attack button momentarily
-				player_hsblked(); // blocked headsmash frame
+				self.think = player_hsblked; // blocked headsmash frame
+				self.nextthink = time;
 				return;
 			}
 

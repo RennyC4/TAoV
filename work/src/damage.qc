@@ -563,6 +563,7 @@ float() crandom =
 	return 2*(random() - 0.5);
 };
 
+float max_blood_ents;
 void() BloodSplatThink =
 {
 	if (self.flags & FL_ONGROUND || self.flags & FL_PARTIALGROUND || self.mode > 999)
@@ -599,6 +600,7 @@ void() BloodSplatThink =
 			}
 			else
 			{
+				max_blood_ents = max_blood_ents - 1;
 				remove(self);
 				return;
 			}
@@ -619,28 +621,32 @@ void() BloodSplatTouch =
 
 void(vector org, entity own) ThrowBloodSplat =
 {
-	local entity splat;
+	if (max_blood_ents < 10)
+	{
+		local entity splat;
 
-	splat = spawn();
-	splat.movetype = MOVETYPE_TOSS;
-	splat.solid = SOLID_NOT;
+		splat = spawn();
+		splat.movetype = MOVETYPE_TOSS;
+		splat.solid = SOLID_NOT;
 
-	//dir = normalize(dir);
-	//splat.velocity = 0 * (450 + 50*random());
-	splat.velocity_x = splat.velocity_x + crandom()*40;
-	splat.velocity_y = splat.velocity_y + crandom()*40;
-	splat.velocity_z = splat.velocity_z + 120 + 50*random();
-	//splat.avelocity = '0 1000 0';
-	
-	splat.alpha = 1;
-	splat.think = BloodSplatThink;
-	splat.nextthink = time + 0.1;
-	splat.classname = "blood";
-	splat.effects = EF_FULLBRIGHT;
+		//dir = normalize(dir);
+		//splat.velocity = 0 * (450 + 50*random());
+		splat.velocity_x = splat.velocity_x + crandom()*40;
+		splat.velocity_y = splat.velocity_y + crandom()*40;
+		splat.velocity_z = splat.velocity_z + 120 + 50*random();
+		//splat.avelocity = '0 1000 0';
+		
+		splat.alpha = 1;
+		splat.think = BloodSplatThink;
+		splat.nextthink = time + 0.1;
+		splat.classname = "blood";
+		splat.effects = EF_FULLBRIGHT;
 
-	setmodel (splat, "progs/blooddrop.mdl");
-	setsize (splat, '1 1 1', '1 1 1');     
-	setorigin (splat, org);
+		setmodel (splat, "progs/blooddrop.mdl");
+		setsize (splat, '1 1 1', '1 1 1');     
+		setorigin (splat, org);
+		max_blood_ents = max_blood_ents + 1;
+	}
 };
 
 void() ThrowBodyPart_HitFloor =
