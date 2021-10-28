@@ -686,8 +686,7 @@ void() monster_boss1 =
 	setmodel (self, "progs/s_knight.mdl");
 	setsize(self, VEC_HULL_MIN, '16 16 64');
 	if (difficulty < 2)
-		self.health = self.max_health = 1; // regular health
-//		self.health = self.max_health = 800; // regular health
+		self.health = self.max_health = 800; // regular health
 	else
 		self.health = self.max_health = 1200; // hard health (50% tougher)
 	self.netname = "solid";
