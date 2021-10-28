@@ -1102,7 +1102,7 @@ void(float dist) ai_fly =
 	if (self.enemy.flypain)
 	{
 		if (self.classname != "ethskull") // etheral skulls need to backup after hitting target
-			self.velocity = '0 0 0';
+			self.velocity = self.velocity * -1 / 2;
 		if (self.classname == "horror" && self.enemy) // prevent fireball spam on Vigil wakeup
 			self.attack_finished = time + 3;
 
