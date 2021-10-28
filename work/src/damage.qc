@@ -636,6 +636,7 @@ void(vector org, entity own) ThrowBloodSplat =
 	splat.think = BloodSplatThink;
 	splat.nextthink = time + 0.1;
 	splat.classname = "blood";
+	splat.effects = EF_FULLBRIGHT;
 
 	setmodel (splat, "progs/blooddrop.mdl");
 	setsize (splat, '1 1 1', '1 1 1');     
