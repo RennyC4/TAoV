@@ -2928,71 +2928,69 @@ void() player_fire =
 				self.mashattack = TRUE;
 				return;
 			}
-			else			
+
+			if (self.backflip_finished < time)
 			{
-				if (self.backflip_finished < time)
+				if (self.char.aircombo_count < 3) // Don't yell during triple air kick
 				{
-					if (self.char.aircombo_count < 3) // Don't yell during triple air kick
-					{
-						oself = self;
-						self = self.char;
-						player_yell(0);
-						self = oself;
-					}
-					if (self.zoom_mode != 0 && self.camera_forcezoom_finished < time)
-							self.zoom_mode = 0; // No Zoom
-					if (self.char.aircombo_count == 0)
-					{
-						self.char.inair = 33; // Fix silly animation issue
-						self.char.aircombo_count = 1;
-						self.aircombo_finished = time + 0.15;
-						self.char.think = player_jumpatkb1;
-					}
-					else if (self.char.aircombo_count == 1)
-					{
-						self.char.aircombo_count = 2;
-						self.aircombo_finished = time + 0.17;
-						self.char.think = player_jumpatkb2;
-					}
-					// allow Vigil's jumpatkb2 frame to play before starting 3rd aircombo hit
-					else if (self.char.aircombo_count == 2 && self.char.frame != $jumpatkb2)
-					{
-						self.char.aircombo_count = 3;
-						self.char.think = player_jumpatkb4;
-						self.aircombo_finished = time + 0.3;
-					}
-					else if (self.char.aircombo_count == 3)
-					{
-						self.char.aircombo_count = 5;
-						self.softshadow_time = time + 0.35;
-						self.aircombo_finished = time + 0.35;
-						self.char.think = player_airkick1;
-					}
-					else if (self.char.aircombo_count == 5)
-					{
-						self.char.aircombo_count = 6;
-						self.softshadow_time = time + 0.35;
-						self.aircombo_finished = time + 0.35;
-						self.char.think = player_airkick7;
-					}
-					else if (self.char.aircombo_count == 6)
-					{
-						self.char.aircombo_count = 7;
-						self.softshadow_time = time + 0.35;
-						self.aircombo_finished = time + 0.35;
-						self.char.think = player_airkick11;
-					}
-					else if (self.char.aircombo_count == 7)
-					{
-						self.char.aircombo_count = 7;
-						self.softshadow_time = time + 0.35;
-						self.aircombo_finished = time + 999;
-						self.char.think = player_airkick13;
-					}
-					//
-					// 7 is reserved!!
-					//
+					oself = self;
+					self = self.char;
+					player_yell(0);
+					self = oself;
 				}
+				if (self.zoom_mode != 0 && self.camera_forcezoom_finished < time)
+						self.zoom_mode = 0; // No Zoom
+				if (self.char.aircombo_count == 0)
+				{
+					self.char.inair = 33; // Fix silly animation issue
+					self.char.aircombo_count = 1;
+					self.aircombo_finished = time + 0.15;
+					self.char.think = player_jumpatkb1;
+				}
+				else if (self.char.aircombo_count == 1)
+				{
+					self.char.aircombo_count = 2;
+					self.aircombo_finished = time + 0.17;
+					self.char.think = player_jumpatkb2;
+				}
+				// allow Vigil's jumpatkb2 frame to play before starting 3rd aircombo hit
+				else if (self.char.aircombo_count == 2 && self.char.frame != $jumpatkb2)
+				{
+					self.char.aircombo_count = 3;
+					self.char.think = player_jumpatkb4;
+					self.aircombo_finished = time + 0.3;
+				}
+				else if (self.char.aircombo_count == 3)
+				{
+					self.char.aircombo_count = 5;
+					self.softshadow_time = time + 0.35;
+					self.aircombo_finished = time + 0.35;
+					self.char.think = player_airkick1;
+				}
+				else if (self.char.aircombo_count == 5)
+				{
+					self.char.aircombo_count = 6;
+					self.softshadow_time = time + 0.35;
+					self.aircombo_finished = time + 0.35;
+					self.char.think = player_airkick7;
+				}
+				else if (self.char.aircombo_count == 6)
+				{
+					self.char.aircombo_count = 7;
+					self.softshadow_time = time + 0.35;
+					self.aircombo_finished = time + 0.35;
+					self.char.think = player_airkick11;
+				}
+				else if (self.char.aircombo_count == 7)
+				{
+					self.char.aircombo_count = 7;
+					self.softshadow_time = time + 0.35;
+					self.aircombo_finished = time + 999;
+					self.char.think = player_airkick13;
+				}
+				//
+				// 7 is reserved!!
+				//
 			}
 		}
 	}
