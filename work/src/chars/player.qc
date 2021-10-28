@@ -2531,7 +2531,7 @@ void() player_move = [0, player_move]
 	self.owner.swordshadow_time = time;
 	self.owner.softshadow_time = time;
 	self.chargespincnt = 0; // Remove spins from charge spin attack
-	self.mashattack = FALSE;
+	self.owner.mashattack = FALSE;
 	self.dodge_finished = time;
 	self.ftspin_count = 0;
 	self.knockback = 0; // reset his knockback! important
@@ -2965,21 +2965,21 @@ void() player_fire =
 					{
 						self.char.aircombo_count = 5;
 						self.softshadow_time = time + 0.35;
-						self.aircombo_finished = time + 0.4;
+						self.aircombo_finished = time + 0.35;
 						self.char.think = player_airkick1;
 					}
 					else if (self.char.aircombo_count == 5)
 					{
 						self.char.aircombo_count = 6;
 						self.softshadow_time = time + 0.35;
-						self.aircombo_finished = time + 0.4;
+						self.aircombo_finished = time + 0.35;
 						self.char.think = player_airkick7;
 					}
 					else if (self.char.aircombo_count == 6)
 					{
 						self.char.aircombo_count = 7;
 						self.softshadow_time = time + 0.35;
-						self.aircombo_finished = time + 0.4;
+						self.aircombo_finished = time + 0.35;
 						self.char.think = player_airkick11;
 					}
 					else if (self.char.aircombo_count == 7)
@@ -5124,7 +5124,7 @@ void() player_jumpatkb1	=[	$jumpatkb1,	player_move 	] {if (self.onground == TRUE
 void() player_jumpatkb2	=[	$jumpatkb2,	player_jumpatkb3] {if (self.onground == TRUE) player_move();self.attack_type = 7;frameskip(0.08);};
 void() player_jumpatkb3	=[	$jumpatkb3,	player_move 	] {if (self.onground == TRUE) player_move();FireMelee(3,25,1,25,1,0,0,FALSE,24,0);sound (self, CHAN_AUTO, "player/motion2.wav", 1, ATTN_NORM);};
 
-void() player_jumpatkbb8;
+void() player_airkick1;
 void() player_jumpatkb4	=[	$jumpatkb4,	player_jumpatkb5 	] {if (self.onground == TRUE) player_move();frameskip(0.04);};
 void() player_jumpatkb5	=[	$jumpatkb5,	player_jumpatkb6 	] {if (self.onground == TRUE) player_move();frameskip(0.04);};
 void() player_jumpatkb6	=[	$jumpatkb6,	player_jumpatkb7 	] {if (self.onground == TRUE) player_move();frameskip(0.04);};
@@ -5133,23 +5133,24 @@ void() player_jumpatkb8	=[	$jumpatkb8,	player_move		]
 {
 	sound (self, CHAN_WEAPON, "player/sword.wav", 1, ATTN_NORM);
 	FireMelee(10,25,1,30,5,0,0,FALSE,24,0);
+
+	if (self.owner.mashattack == TRUE)
+	{
+		self.aircombo_count = 5;
+		self.owner.aircombo_finished = time + 0.35;
+		self.owner.mashattack = FALSE;
+		self.think = player_airkick1;
+		self.nextthink = time + 0.1;
+		return;
+	}
 	if (self.onground == TRUE)
 	{
 		player_move();
 		return;
 	}
-	if (self.owner.mashattack == TRUE)
-	{
-		self.think = player_jumpatkbb8;
-		self.nextthink = time;
-		self.aircombo_count = 5;
-		self.owner.aircombo_finished = time + 0.3;
-		self.owner.mashattack = FALSE;
-		return;
-	}
-
 };
-void() player_jumpatkbb8	=[	$jumpatkb8,	player_airkick1		] {}
+
+//void() player_jumpatkbb8	=[	$jumpatkb8,	player_airkick1		] {}
 
 void() player_airkick6b;
 void() player_airkick1		=[	$airkick1,	player_airkick2 	] {frameskip(0.06);sound (self, CHAN_VOICE, "player/yell2.wav", 1, ATTN_NORM);};

@@ -674,7 +674,7 @@ void() PlayerPreThink =
 	}
 
 	if (self.char != world)
-	{
+	{		
 		// Send Vigil's origin to CSQC for Blind status mainly
 		self.vigil_x = self.char.origin_x;
 		self.vigil_y = self.char.origin_y;
