@@ -501,6 +501,45 @@ void() boss1_pain =
 	self.pain_finished = time + 0.6;
 };
 
+void() boss1_death_glassshard_think = 
+{
+	if (self.alpha < 0.1)
+	{
+		remove(self);
+		return;
+	}
+	self.alpha = self.alpha - 0.025;
+	frameskip(0.1);
+};
+
+void() boss1_death_glassshard =
+{
+	local entity shard;
+
+	shard = spawn ();
+	shard.angles_y = random() * 360;
+	makevectors (shard.angles);
+	shard.velocity = v_forward * (50 + random()*450);
+	shard.velocity_z = 150 + (random()*450);
+	shard.owner = self;
+	shard.movetype = MOVETYPE_BOUNCE;
+	shard.solid = SOLID_NOT;
+	shard.classname = "shard";
+	shard.effects = EF_FULLBRIGHT;
+	
+	setmodel (shard, "progs/glasshrd.mdl");
+
+	shard.alpha = 1;
+	shard.avelocity = '250 250 250';
+	
+	setsize (shard, '0 0 0', '0 0 0');
+	makevectors (self.angles);
+	setorigin (shard, self.origin + v_up * 20);
+
+	shard.think = boss1_death_glassshard_think;
+	shard.nextthink = time;
+};
+
 void() boss1_death =
 {
 	local float ox, oy, oz, i;
@@ -528,6 +567,9 @@ void() boss1_death =
 		WriteCoord (MSG_BROADCAST, ox);
 		WriteCoord (MSG_BROADCAST, oy);
 		WriteCoord (MSG_BROADCAST, oz);
+	
+		for (i = 0; i < 3; i = i+1)
+			boss1_death_glassshard();
 	}
 	else
 	{
@@ -536,7 +578,6 @@ void() boss1_death =
 			self.takedamage = DAMAGE_NO;
 			self.gaveexp = TRUE;
 			GiveExperience(999999);
-			SUB_UseTargets(); // fire any activators
 		}
 	
 		freeze_finished = time + 0.1 * (frametime * 100); // slowmo effect
@@ -563,6 +604,11 @@ void() boss1_death =
 		fx.nextthink = time;
 		fx.solid = SOLID_NOT;
 
+		for (i = 0; i < 25; i = i+1)
+			boss1_death_glassshard();
+			
+		sound (self, CHAN_AUTO, "misc/glassbrk.wav", 1, ATTN_NONE);
+		
 		remove(self);
 		return;
 	}
@@ -627,18 +673,21 @@ void() monster_boss1 =
 		remove(self);
 		return;
 	}
+	precache_model ("progs/glasshrd.mdl");
 	precache_model ("progs/s_knight.mdl");
+	precache_model ("progs/firecolm.mdl");
 	precache_sound ("knight/sword1.wav");
 	precache_sound ("sgk/pain.wav");
 	precache_sound ("misc/explode.wav");
 	precache_sound ("spells/flame.wav");
-	precache_model ("progs/firecolm.mdl");
+	precache_sound ("misc/glassbrk.wav");
 
 	self.movetype = MOVETYPE_NOCLIP; // Don't move until activated
 	setmodel (self, "progs/s_knight.mdl");
 	setsize(self, VEC_HULL_MIN, '16 16 64');
 	if (difficulty < 2)
-		self.health = self.max_health = 800; // regular health
+		self.health = self.max_health = 1; // regular health
+//		self.health = self.max_health = 800; // regular health
 	else
 		self.health = self.max_health = 1200; // hard health (50% tougher)
 	self.netname = "solid";
