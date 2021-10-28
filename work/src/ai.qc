@@ -723,12 +723,14 @@ void() CombatThink =
 		return;
 	}
 
-	//if ((self.flags & FL_SWIM && pointcontents(self.origin) == CONTENT_WATER) || self.movetype == MOVETYPE_FLY)
-	
 	if (self.movetype == MOVETYPE_FLY || self.movetype == MOVETYPE_NOCLIP || (self.flags & FL_SWIM && pointcontents(self.origin) == CONTENT_WATER))
 	{
 		if (self.th_melee && r <= RANGE_CLOSE)
-				self.th_melee();
+		{
+			if (self.movetype == MOVETYPE_FLY || self.movetype == MOVETYPE_NOCLIP)
+				self.velocity = self.velocity / 2;
+			self.th_melee();
+		}
 		else
 		{
 			if (random() < 0.1)
