@@ -88,17 +88,22 @@ void()  zombie_boss_attc8	=[	$attc8,		zombie_boss_run1	] {};
 
 void() zombie_boss_missile =
 {
-	if (self.attack_finished > time)
-		return;
-	
-	self.attack_finished = time + 1;
-	
-	if (random() < 0.33)
-		zombie_boss_atta1();
-	else if (random() < 0.66)
-		zombie_boss_attb1();
+	if (self.attack_finished < time)
+	{
+		if (random() < 0.33)
+			zombie_boss_atta1();
+		else if (random() < 0.66)
+			zombie_boss_attb1();
+		else
+			zombie_boss_attc1();
+
+		self.attack_finished = time + 1;
+	}
 	else
-		zombie_boss_attc1();
+	{
+		if (self.th_run)
+			self.th_run();
+	}
 };
 
 void()	zombie_boss_paina1	=[	$paina1,	zombie_boss_paina2	] 
