@@ -6084,6 +6084,7 @@ void() player_die =
 	
 	self.angles_z = 0;
 	self.owner.magicmenu = FALSE;
+	self.owner.swordshadow_time = time;
 	self.pain_finished = time + 999;
 	self.flypain = TRUE;
 
