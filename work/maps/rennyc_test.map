@@ -410,3 +410,9 @@
 "classname" "light"
 "origin" "-472 56 170"
 }
+// entity 13
+{
+"classname" "monster_wraith"
+"origin" "-256 16 128"
+"awareness" "4"
+}
