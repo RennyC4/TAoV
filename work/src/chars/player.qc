@@ -3068,7 +3068,7 @@ void() player_grabatk4	=[	$grabatk4,	player_grab2	]
 		self.grabbed = FALSE;
 		self.enemy.grabbed = FALSE;
 		self.movetype = MOVETYPE_WALK;
-		player_move();
+		frameskip(0.1);
 	}
 	frameskip(0.05);
 };
@@ -3085,7 +3085,8 @@ void() player_grabatk8	=[	$grabatk5,	player_grabatk9	]
 		self.grabbed = FALSE;
 		self.enemy.grabbed = FALSE;
 		self.movetype = MOVETYPE_WALK;
-		player_move();
+		self.think = player_move;
+		frameskip(0.1);
 	}
 };
 void() player_grabatk9	=[	$grabatk6,	player_grabatk10 ] {frameskip(0.15);};

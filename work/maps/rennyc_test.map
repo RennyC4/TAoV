@@ -412,7 +412,7 @@
 }
 // entity 13
 {
-"classname" "monster_wraith"
-"origin" "-256 16 128"
+"classname" "monster_knight"
+"origin" "-240 64 96"
 "awareness" "4"
 }
