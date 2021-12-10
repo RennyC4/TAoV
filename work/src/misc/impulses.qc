@@ -199,7 +199,7 @@ void() CheckImpulseButtons =
 			return; // Fixes Vigil dancing when spamming flask key whilst moving
 
 		if (self.char.block_finished > time)
-			self.char.block_finished = time - 1;
+			self.char.block_finished = time;
 
 		self.softshadow_time = time;
 		self.char.movetype = MOVETYPE_STEP; // Stop sliding

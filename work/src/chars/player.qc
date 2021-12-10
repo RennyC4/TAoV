@@ -2312,6 +2312,7 @@ void() player_move = [0, player_move]
 	{
 		if (self.velocity_x || self.velocity_y && self.owner.keyflags & (KEY_LEFT | KEY_RIGHT | KEY_UP | KEY_DOWN) || self.owner.forcewalk_finished > time)
 		{
+			self.block_finished = time; // auto-block fix
 			if (self.swimming)
 			{
 				self.running = FALSE; // don't easily wake up monsters!
