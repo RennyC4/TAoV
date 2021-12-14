@@ -2291,7 +2291,7 @@ void() player_move = [0, player_move]
 {
 	local vector source;
 	local float onefoot = FALSE;
-	
+
 	if (self.deadflag == DEAD_DEAD) // Zombie Vigil fix
 		return;
 
@@ -2336,7 +2336,7 @@ void() player_move = [0, player_move]
 					}
 					if (self.new_walkframe > 11) // foot step sound, keep it in sync
 						self.new_walkframe = 0;
-					
+
 					self.frame = $walk1 + self.new_walkframe;
 
 					if (self.grabcooldown_finished < time && self.grabbed == FALSE && !self.swimming)

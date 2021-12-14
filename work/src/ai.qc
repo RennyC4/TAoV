@@ -469,7 +469,6 @@ void() ai_watercheck_removal =
 		WriteByte (MSG_ALL, SVC_KILLEDMONSTER);
 		remove(self);
 	}
-	return;
 };
 
 /*
@@ -662,7 +661,7 @@ void() CombatThink =
 	local float r, h;
 
 	close_check(); // don't allow player inside origin point
-	ai_watercheck_removal();
+	//ai_watercheck_removal();
 
 	//
 	// monsters can block, they block more on higher difficulty settings
