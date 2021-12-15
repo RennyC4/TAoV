@@ -896,6 +896,7 @@ void() CombatThink =
 				}
 				self.ai_attack = 2;
 			}
+			self.nextthink = time + 0.1;
 		}
 	}
 };
