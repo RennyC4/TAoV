@@ -1355,7 +1355,7 @@ void(float dist) ai_walk =
 				if (self.monster_running == FALSE)
 				{
 					self.monster_running = TRUE;
-					self.think = self.th_run;
+					self.th_run();
 				}
 			}
 			else
@@ -1363,7 +1363,7 @@ void(float dist) ai_walk =
 				if (self.monster_running == TRUE)
 				{
 					self.monster_running = FALSE;
-					self.think = self.th_walk;
+					self.th_walk();
 				}
 			}
 		}
@@ -1373,11 +1373,9 @@ void(float dist) ai_walk =
 			{
 				self.monster_running = FALSE;
 				if (self.th_walk)
-					self.think = self.th_walk;
+					self.th_walk();
 				else
-				{
-					self.think = self.th_run;
-				}
+					self.th_run();
 			}
 		}
 	}
