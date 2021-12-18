@@ -356,7 +356,8 @@ void(float damg, float hight) Fireball =
 	missile.pflags = PFLAGS_FULLDYNAMIC | PFLAGS_NOSHADOW;
 	missile.light_lev = 40;
 	missile.color = [2, 1, 0];
-
+	missile.hitcontentsmaski = CONTENTBIT_SOLID|0x00000002i|CONTENTBIT_BODY|CONTENTBIT_PLAYERCLIP; // don't ignore clipbrushes etc
+	
 	missile.think = FireBallThink;
 	missile.nextthink = time + 0.1;
 

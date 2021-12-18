@@ -2426,7 +2426,7 @@ void() player_move = [0, player_move]
 				}
 				else
 				{
-					if (self.idle_count <= 150)
+					if (self.idle_count <= 150 && world.model != "maps/village.bsp")
 					{
 						if (self.walkframe > 5)
 							self.walkframe = 0;
@@ -2434,6 +2434,10 @@ void() player_move = [0, player_move]
 						if (self.swimming)
 							frameskip(0.2);
 						// Animation slow down on idle frames
+						if (self.idle_count > 0)
+							frameskip(0.085);
+						if (self.idle_count > 20)
+							frameskip(0.096);
 						if (self.idle_count > 50)
 							frameskip(0.11);
 						if (self.idle_count > 60)
@@ -6967,7 +6971,10 @@ void() player_doublejump1	=[	$djump,	player_doublejump1	]
 		if (self.invunerability_finished < time && self.owner.safezone == FALSE)
 		{
 			self.owner.aircombo_finished = time + 0.2;
-			FireMelee(2,0,0,50,0,0,1,TRUE,25,0);
+			if (!relics & IT_RELIC3)
+				FireMelee(2,0,0,50,0,0,TRUE,TRUE,25,0);
+			else // Owning spin slash relic will allow in-air enemies to be combo'd
+				FireMelee(2,0,0,50,0,0,FALSE,TRUE,25,0);
 		}
 	}
 	else if (self.walkframe > 6)

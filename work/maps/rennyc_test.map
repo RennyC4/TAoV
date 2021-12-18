@@ -416,3 +416,25 @@
 "origin" "-240 64 96"
 "awareness" "4"
 }
+// entity 14
+{
+"classname" "trigger_once"
+"target" "churchbell"
+// brush 0
+{
+( -136 -48 63 ) ( -136 -88 63 ) ( -136 -88 47 ) trigger 0 -48 180 1 -1
+( -136 -88 63 ) ( -96 -88 63 ) ( -96 -88 47 ) trigger 0 -48 0 1 1
+( -96 -88 47 ) ( -96 -48 47 ) ( -136 -48 47 ) trigger 0 0 180 1 -1
+( -136 -48 63 ) ( -96 -48 63 ) ( -96 -88 63 ) trigger 0 0 0 1 1
+( -96 -48 47 ) ( -96 -48 63 ) ( -136 -48 63 ) trigger 0 -48 180 1 -1
+( -96 -88 63 ) ( -96 -48 63 ) ( -96 -48 47 ) trigger 0 -48 0 1 1
+}
+}
+// entity 15
+{
+"classname" "misc_sound"
+"origin" "-112 152 72"
+"noise" "ambience/chbells1"
+"targetname" "churchbell"
+"cnt" "1"
+}
