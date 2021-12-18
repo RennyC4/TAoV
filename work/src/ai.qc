@@ -1326,7 +1326,8 @@ void(float dist) ai_walk =
 				if (random() < 0.7)
 				{
 					self.stand_finished = time + 1 * random()*2;
-					self.th_stand();
+					self.think = self.th_stand;
+					self.nextthink = time;
 					//return;
 				}
 			}
@@ -1355,7 +1356,9 @@ void(float dist) ai_walk =
 				if (self.monster_running == FALSE)
 				{
 					self.monster_running = TRUE;
-					self.th_run();
+					self.think = self.th_run;
+					self.nextthink = time;
+					//self.th_run();
 				}
 			}
 			else
@@ -1363,7 +1366,10 @@ void(float dist) ai_walk =
 				if (self.monster_running == TRUE)
 				{
 					self.monster_running = FALSE;
-					self.th_walk();
+					self.think = self.th_walk;
+					self.nextthink = time;
+
+					//self.th_walk();
 				}
 			}
 		}
@@ -1373,9 +1379,22 @@ void(float dist) ai_walk =
 			{
 				self.monster_running = FALSE;
 				if (self.th_walk)
+				{
+					self.think = self.th_walk;
+					self.nextthink = time;
+				}
+				else
+				{
+					self.think = self.th_run;
+					self.nextthink = time;
+				}
+
+/*
+				if (self.th_walk)
 					self.th_walk();
 				else
 					self.th_run();
+*/
 			}
 		}
 	}
