@@ -6092,6 +6092,7 @@ void() player_die =
 	self.owner.swordshadow_time = time;
 	self.pain_finished = time + 999;
 	self.flypain = TRUE;
+	self.owner.combo = 0; // reset combo counter
 
 	sound (self, CHAN_VOICE, "player/death.wav", 1, ATTN_NONE);
 
@@ -6626,7 +6627,7 @@ void() divingswallow_hit =
 					self.think = player_bflip1;
 					self.owner.backflip_finished = time + 0.7; // Perfect value! Player enters negative velocity by this itme...
 				}
-				else
+				else if (head.health > 0)
 				{
 					// spawn a hit sprite
 					effect = spawn();
