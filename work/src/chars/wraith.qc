@@ -75,7 +75,7 @@ void() wraith_walk12	=[	$walk12,	wraith_walk1		]
 
 void() wraith_smash1	=[	$smash1,	wraith_smash2		] 
 {
-	local float b = random()*9 * 0.1;  // stagger first frame
+	local float b = random()*4 * 0.1;  // stagger first frame
 	frameskip(0.08 + b);
 	ai_forceface();
 };
@@ -93,7 +93,7 @@ void() wraith_smash12	=[	$smash12,	wraith_walk1		] {frameskip(0.08);ai_forceface
 
 void() wraith_strike1	=[	$astrike1,	wraith_strike2		] 
 {
-	local float b = random()*9 * 0.1;  // stagger first frame
+	local float b = random()*4 * 0.1;  // stagger first frame
 	frameskip(0.08 + b);
 	ai_forceface();
 };
@@ -108,7 +108,7 @@ void() wraith_strike9	=[	$astrike9,	wraith_walk1		] {frameskip(0.08);ai_forcefac
 
 void() wraith_cstrike1	=[	$cstrike1,	wraith_cstrike2		] 
 {
-	local float b = random()*9 * 0.1;  // stagger first frame
+	local float b = random()*4 * 0.1;  // stagger first frame
 	frameskip(0.08 + b);
 	ai_forceface();
 };
@@ -123,7 +123,7 @@ void() wraith_cstrike9	=[	$cstrike9,	wraith_walk1		] {frameskip(0.08);ai_forcefa
 
 void() wraith_magic1	=[	$magic1,	wraith_magic2		] 
 {
-	local float b = random()*9 * 0.1;  // stagger first frame
+	local float b = random()*4 * 0.1;  // stagger first frame
 	frameskip(0.08 + b);
 	ai_forceface();
 };
