@@ -231,16 +231,17 @@ void() boss_rockdrop10 = [$shockc10, boss_idle1] {};
 
 void() Boss2Melee =
 {
-	FireMelee(40,0,3,100,5,0,1, FALSE,0,0);
+	FireMelee(40,0,3,100,5,0,1,FALSE,0,0);
 
 	// Damage boss from purge attacks
 	// '.char' refers to the Eternal Dragon itself as .owner is used for other means
+
 	local float calc = self.char.health - self.health;
 	local string s = ftos(calc);
 
 	if (calc > 0 && calc != self.char.health)
 		self.char.health = self.char.health - calc;
-
+	
 	if (self.char.health < 1)
 		Killed (self.char, self.enemy);
 
@@ -627,7 +628,7 @@ void() monster_boss2 =
 	self.solid = SOLID_NOT;
 	self.classname = "breakable"; // stay solid
 	self.displayname = "Eternal Dragon";
-	self.health = 1333;
+	self.health = self.max_health = 1333;
 	self.deadflag = DEAD_NO;
 	self.noblood = TRUE;
 	self.flags = FL_MONSTER | FL_BOSS | IT_BOSS2;

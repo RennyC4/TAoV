@@ -373,14 +373,8 @@ void() CheckImpulseButtons =
 	//
 	// Debugging! / Cheats!
 	//
-	
-	if (self.impulse == 10)
-	{
-		local string s = ftos(self.level);
-		bprint ("Vigils Level: ", s, "\n");
-	}
-	
-	if (cvar("developer") == 2)
+
+	if (cvar("developer") == 0)
 			return;
 
 	if (self.impulse == 6 && self.level < 99)
