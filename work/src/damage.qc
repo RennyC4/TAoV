@@ -532,7 +532,8 @@ void(entity targ, entity inflictor, entity attacker, float damage, float statusr
 
 	// lets clear some values
 	self.knockback = 0; // clear physics stuff
-	attacker.attack_type = 0;
+	if (attacker.classname != "player") // manually cleared on player
+		attacker.attack_type = 0;
 	targ.damage_type = 0;
 	targ.knockback = 0;
 	
@@ -992,11 +993,9 @@ void(float damg, float dist, float knokback, float rsize, float snd, float flsh,
 					head.damage_type = self.attack_type;
 					T_Damage (head, self, self, damg, statusrand);
 
-					if (self.attack_type < 6)
-					{
-						if (self.flags & FL_MONSTER) // Vigil's attack_type is set to 0 on each attack button press
-							self.attack_type = 0;
-					}
+					// Vigil's attack_type is set to 0 in player_fire (each attack button press)
+					if (self.attack_type < 6 && self.flags & FL_MONSTER)
+						self.attack_type = 0;
 
 					if (self.classname == "player" && head.solid != SOLID_BSP && head.classname != "breakable")
 						self.enemy = head; // record which entity vigil hit

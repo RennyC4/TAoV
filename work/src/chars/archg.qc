@@ -114,7 +114,7 @@ void() archg_melee2	=[	$melee2,	archg_melee3		] {};
 void() archg_melee3	=[	$melee3,	archg_melee4		] {};
 void() archg_melee4	=[	$melee4,	archg_melee5		] {};
 void() archg_melee5	=[	$melee5,	archg_melee6		] {};
-void() archg_melee6	=[	$melee6,	archg_melee7		] {FireMelee(0,15,3,50,99,0,0,TRUE,0,0);};
+void() archg_melee6	=[	$melee6,	archg_melee7		] {FireMelee(0,15,3,50,99,0,0,TRUE,0,0);sound (self, CHAN_AUTO, "misc/windpush.wav", 1, ATTN_NORM);};
 void() archg_melee7	=[	$melee7,	archg_melee8		] {};
 void() archg_melee8	=[	$melee8,	archg_melee9		] {};
 void() archg_melee9	=[	$melee9,	archg_melee10		] {};
@@ -304,6 +304,8 @@ void() monster_archghoul =
 	precache_sound ("archg/pain.wav");
 	precache_sound ("archg/death.wav");
 	precache_sound ("gaunt/charge.wav");
+
+	precache_sound ("misc/windpush.wav");
 
 	self.solid = SOLID_SLIDEBOX;
 	self.movetype = MOVETYPE_STEP;

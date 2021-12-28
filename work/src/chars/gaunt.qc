@@ -124,18 +124,18 @@ void() gaunt_pain5 	=[	$pain5,	gaunt_pain6	] {monster_removeslide();};
 void() gaunt_pain6 	=[	$pain6,	gaunt_run1	] {monster_removeslide();};
 
 // gaunt raises hand
-void() gaunt_finger1 	=[	$hup1,	gaunt_finger2	] {gaunt_talk();frameskip(0.02);monster_removeslide();};
-void() gaunt_finger2 	=[	$hup2,	gaunt_finger3	] {frameskip(0.02);monster_removeslide();};
-void() gaunt_finger3 	=[	$hup3,	gaunt_finger4	] {frameskip(0.02);monster_removeslide();};
-void() gaunt_finger4 	=[	$hup4,	gaunt_finger5	] {frameskip(0.02);monster_removeslide();};
-void() gaunt_finger5 	=[	$hup5,	gaunt_finger6	] {frameskip(0.02);monster_removeslide();};
-void() gaunt_finger6 	=[	$hup6,	gaunt_finger7	] {frameskip(0.02);monster_removeslide();};
-void() gaunt_finger7 	=[	$hup7,	gaunt_finger8	] {frameskip(0.02);monster_removeslide();};
-void() gaunt_finger8 	=[	$hup8,	gaunt_finger9	] {frameskip(0.02);monster_removeslide();};
+void() gaunt_finger1 	=[	$hup1,	gaunt_finger2	] {gaunt_talk();frameskip(0.03);monster_removeslide();};
+void() gaunt_finger2 	=[	$hup2,	gaunt_finger3	] {frameskip(0.03);monster_removeslide();};
+void() gaunt_finger3 	=[	$hup3,	gaunt_finger4	] {frameskip(0.03);monster_removeslide();};
+void() gaunt_finger4 	=[	$hup4,	gaunt_finger5	] {frameskip(0.03);monster_removeslide();};
+void() gaunt_finger5 	=[	$hup5,	gaunt_finger6	] {frameskip(0.03);monster_removeslide();};
+void() gaunt_finger6 	=[	$hup6,	gaunt_finger7	] {frameskip(0.03);monster_removeslide();};
+void() gaunt_finger7 	=[	$hup7,	gaunt_finger8	] {frameskip(0.03);monster_removeslide();};
+void() gaunt_finger8 	=[	$hup8,	gaunt_finger9	] {frameskip(0.03);monster_removeslide();};
 
 void() gaunt_finger9 	=[	$finger1,	gaunt_finger10	] {monster_removeslide();};
 void() gaunt_finger10 	=[	$finger2,	gaunt_finger11	] {monster_removeslide();};
-void() gaunt_finger11	=[	$finger3,	gaunt_finger12	] {FireMelee(0,15,3,50,99,0,0,FALSE,0,0);monster_removeslide();};
+void() gaunt_finger11	=[	$finger3,	gaunt_finger12	] {FireMelee(0,15,3,50,99,0,0,FALSE,0,0);monster_removeslide();sound (self, CHAN_AUTO, "misc/windpush.wav", 1, ATTN_NORM);};
 
 void() gaunt_finger12	=[	$hup8,	gaunt_finger13	] {monster_removeslide();};
 void() gaunt_finger13	=[	$hup7,	gaunt_finger14	] {monster_removeslide();};
@@ -445,6 +445,8 @@ void() monster_gaunt =
 	precache_sound ("gaunt/scream6.wav");
 	precache_sound ("gaunt/scream7.wav");
 	precache_sound ("gaunt/scream8.wav");
+
+	precache_sound ("misc/windpush.wav");
 
 	self.solid = SOLID_SLIDEBOX;
 	self.movetype = MOVETYPE_STEP;

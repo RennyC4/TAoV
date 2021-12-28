@@ -1156,7 +1156,7 @@ void() stool =
 	setmodel (self, "progs/stool.mdl");
 	setsize(self, '-7 -7 0', '7 7 25');
 	self.movetype = MOVETYPE_NONE;
-	self.solid = SOLID_SLIDEBOX;
+	self.solid = SOLID_NOT;
 	self.takedamage = DAMAGE_NO;
 	self.classname = "stool";
 	self.touch = onground_touch;
@@ -1192,7 +1192,7 @@ void() chair =
 	setmodel (self, "progs/chair.mdl");
 	setsize(self, '-8 -0 -24', '17 18 30');
 	self.movetype = MOVETYPE_NONE;
-	self.solid = SOLID_SLIDEBOX;
+	self.solid = SOLID_NOT;
 	self.takedamage = DAMAGE_NO;
 	self.classname = "chair";
 	self.touch = onground_touch;

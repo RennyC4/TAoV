@@ -187,6 +187,10 @@ void() misc_shake_camera =
 {
 	local entity y;
 
+	// Don't allow camera shake on level changes
+	if (frametime < 7)
+		return;
+
 	y = find(world, classname, "camera");
 	while(y)
 	{

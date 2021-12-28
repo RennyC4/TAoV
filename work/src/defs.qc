@@ -802,6 +802,7 @@ float IT_RELIC6 = 32; // water breathing
 float IT_RELIC7 = 64; // cube of knowledge
 float IT_RELIC8 = 128; // perfect guard
 float IT_RELIC9 = 256; // soul candle
+float IT_RELIC10 = 512; // burning epitome
 
 // Spells
 float spells;

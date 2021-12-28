@@ -370,3 +370,10 @@
 "mdl" "progs/relic1.mdl"
 "alpha" ".8"
 }
+// entity 29
+{
+"classname" "item_relic"
+"cnt" "9"
+"origin" "-536 12 0"
+"mdl" "progs/relic3.mdl"
+}

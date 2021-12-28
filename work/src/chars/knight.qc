@@ -291,10 +291,15 @@ void() monster_knight =
 	self.movetype = MOVETYPE_STEP;
 	setmodel (self, "progs/knight.mdl");
 	setsize (self, '-16 -16 -24', '16 16 40');
-	if (difficulty < 2)
-		self.health = 100; // regular health
-	else
-		self.health = 150; // hard health (50% tougher)
+
+	if (self.health != 1) // Remove me (DEBUG)
+	{
+		if (difficulty < 2)
+			self.health = 100; // regular health
+		else
+			self.health = 150; // hard health (50% tougher)
+	}
+
 	self.netname = "solid";
 	self.takedamage = DAMAGE_AIM;
 	self.solid = SOLID_NOT;

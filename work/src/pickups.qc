@@ -654,7 +654,7 @@ void() relic_touch =
 		else if (self.items & IT_RELIC2)
 			centerprint (other.owner, "/P^bAscending Feather Obtained!^b\n\n===========================\n\n\n^1Perform a double jump\n\n\nPerformed by pressing JUMP again in mid-air\n\nYou may now perform Vigil's Uppercut Slice (UP + ATTACK in MID-AIR)\n\n\n\n^3Press ATTACK or JUMP to Resume ...");
 		else if (self.items & IT_RELIC3)
-			centerprint (other.owner, "/P^bBattle Accretion Obtained!^b\n\n===========================\n\n\n^1Unlocks powerful attacks when ascending feather relic is also obtained\n\n\nPerform by UP + ATTACK in mid-air and then DOWN + ATTACK\n\nDouble Jump is also enhanced\n\n\n\n^3Press ATTACK or JUMP to resume ...");
+			centerprint (other.owner, "/P^bSpin Slash Obtained!^b\n\n===========================\n\n\n^1Double jump can now damage and combo enemies, may slash through certain obstacles\n\n\nPerform by double jumping\n\n\n\n^3Press ATTACK or JUMP to resume ...");
 		else if (self.items & IT_RELIC4)
 			centerprint (other.owner, "/P^bSkewer Clutch Obtained!^b\n\n===========================\n\n\n^1Grab and jump off walls\n\n\nPerformed by JUMPING or being in MID-AIR and HOLDING the DIRECTION towards a flat wall\nPress ATTACK during a WALL GRAB to jump kick off the wall into enemies\n\n\n\n^3Press ATTACK or JUMP to resume ...");
 		else if (self.items & IT_RELIC5)
@@ -663,13 +663,15 @@ void() relic_touch =
 			centerprint (other.owner, "/P^bWater Breathing Amulet Obtained!^b\n\n===========================\n\n\n^1Breathe underwater forever\n\n\n\n^3Press ATTACK or JUMP to resume ...");
 		else if (self.items & IT_RELIC7)
 		{
-			other.owner.displayname = ""; // Don't display on first grab
+			other.owner.displayname = ""; // Remove monster name on obtaining relic
 			centerprint (other.owner, "/P^bCube of Knowledge Obtained!^b\n\n===========================\n\n\n^1Shows enemies name\n\n\n\n^3Press ATTACK or JUMP to resume ...");
 		}
 		else if (self.items & IT_RELIC8)
 			centerprint (other.owner, "/P^bPerfect Guard Obtained!^b\n\n===========================\n\n\n^1Blocking an attack before it connects grants temporary invunerability as well as unblockable attacks, enemies are knocked back and any enhancements are negated\n\nPerfect Guarding a magic spell will absorb the mana cost and add it to Vigils MP\n\n\n\n^3Press ATTACK or JUMP to resume ...");
 		else if (self.items & IT_RELIC9)
 			centerprint (other.owner, "/P^bSoul Candle Obtained!^b\n\n===========================\n\n\n^1Automatically lights up pitch black areas\n\n\n\n^3Press ATTACK or JUMP to resume ...");
+		else if (self.items & IT_RELIC10)
+			centerprint (other.owner, "/P^bBurning Epitome Obtained!^b\n\n===========================\n\n^1Flaming Head Smash\n\n\nPerformed by pressing DOWN + ATTACK MID-AIR after performing a Spin slash double jump or Uppercut Slice (UP + ATTACK in MID-AIR)\n\n\n^3Press ATTACK or JUMP to resume ...");
 
 		setpause(1); // pause game on pickup
 	}
@@ -717,6 +719,11 @@ void() relic_think =
 		p.owner = self;
 	}
 	
+	if (self.cnt == 2)
+		self.colormod = '0 0 1';
+	if (self.cnt == 9)
+		self.colormod = '1 0 0';
+	
 	if (self.cnt == 0 && relics & IT_RELIC1)
 	{
 		remove(self);
@@ -761,6 +768,11 @@ void() relic_think =
 	{
 		remove(self);
 		return;
+	}
+	if (self.cnt == 9 && relics & IT_RELIC10)
+	{
+		remove(self);
+		return;
 	}	
 	frameskip(0.05);
 };
@@ -785,7 +797,7 @@ void() item_relic =
 		precache_model ("progs/relic2.mdl");
 		setmodel (self, "progs/relic2.mdl");
 	}
-	else if (self.cnt == 2) // Combat Relic
+	else if (self.cnt == 2) // Combat Relic (Spin Slash)
 	{
 		precache_model ("progs/relic3.mdl");
 		setmodel (self, "progs/relic3.mdl");
@@ -820,15 +832,21 @@ void() item_relic =
 		precache_model ("progs/relic9.mdl");
 		setmodel (self, "progs/relic9.mdl");
 	}
+	else if (self.cnt == 9) // Combat Relic (Burning Epitome)
+	{
+		precache_model ("progs/relic3.mdl");
+		setmodel (self, "progs/relic3.mdl");
+	}
 	else
 	{
 		precache_model ("progs/filler.spr");
 		setmodel (self, "progs/filler.spr");
 	}
+
 	precache_sound ("misc/relic.wav");
 
 	self.alpha = self.mode = 1;
-	self.movetype = MOVETYPE_NONE;
+	self.movetype = MOVETYPE_NOCLIP;
 	setsize (self, '-1 -1 -1', '1 1 1');
 	self.solid = SOLID_TRIGGER;
 	self.classname = "relic";
@@ -852,6 +870,8 @@ void() item_relic =
 		self.items = IT_RELIC8;
 	else if (self.cnt == 8)
 		self.items = IT_RELIC9;
+	else if (self.cnt == 9)
+		self.items = IT_RELIC10;
 
 	// Give off RT Light
 	spawn_color_glow(3, 0, 5, 50, self);

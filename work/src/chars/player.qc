@@ -157,7 +157,7 @@ void() Setup_Dummy =
 		self.swordlevel = 0;
 		self.armorlevel = 0;
 		// Give proper relics / spells / special moves to Vigil
-		relics = relics | IT_RELIC1 | IT_RELIC2 | IT_RELIC3 | IT_RELIC4 | IT_RELIC5 | IT_RELIC8;
+		relics = relics | IT_RELIC1 | IT_RELIC2 | IT_RELIC3 | IT_RELIC4 | IT_RELIC5 | IT_RELIC8 | IT_RELIC10;
 		spells = spells | IT_SPELL1 | IT_SPELL2 | IT_SPELL3 | IT_SPELL4;
 
 		game_progress = game_progress | IT_PROGRESS2; // Add Cyclone Crush
@@ -2867,7 +2867,7 @@ void() player_fire =
 		{
 			if (self.keyflags & KEY_DOWN && self.char.inair > 15 && (self.char.frame != $airkick14 && self.char.frame != $airkick15 && self.char.frame != $airkick16))
 			{
-				if ((relics & IT_RELIC3 || deathmatch) && (self.char.aircombo_count == 4 || self.char.frame == $djump))
+				if ((relics & IT_RELIC10 || deathmatch) && (self.char.aircombo_count == 4 || (self.char.frame == $djump && relics & IT_RELIC3)))
 				{
 					oself = self;
 					self = self.char;
