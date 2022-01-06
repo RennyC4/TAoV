@@ -671,7 +671,7 @@ void() relic_touch =
 		else if (self.items & IT_RELIC9)
 			centerprint (other.owner, "/P^bSoul Candle Obtained!^b\n\n===========================\n\n\n^1Automatically lights up pitch black areas\n\n\n\n^3Press ATTACK or JUMP to resume ...");
 		else if (self.items & IT_RELIC10)
-			centerprint (other.owner, "/P^bBurning Epitome Obtained!^b\n\n===========================\n\n^1Flaming Head Smash\n\n\nPerformed by pressing DOWN + ATTACK MID-AIR after performing a Spin slash double jump or Uppercut Slice (UP + ATTACK in MID-AIR)\n\n\n^3Press ATTACK or JUMP to resume ...");
+			centerprint (other.owner, "/P^bBurning Epitome Obtained!^b\n\n===========================\n\n^1Flaming head smash unlocked\n\n\nPerformed by pressing DOWN + ATTACK MID-AIR after performing a Spin slash double jump or Uppercut Slice (UP + ATTACK in MID-AIR)\n\n\n^3Press ATTACK or JUMP to resume ...");
 
 		setpause(1); // pause game on pickup
 	}

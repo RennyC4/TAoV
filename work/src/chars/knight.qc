@@ -246,8 +246,8 @@ void() knight_jump	=[	$runb5,	knight_jump	]
 		knight_kneel1();
 };
 
-void()	knight_grabbed1	=[	$pain1,		knight_grabbed2	] {self.grab_finished = time + 1;};
-void()	knight_grabbed2	=[	$pain1,		knight_grabbed2	] 
+void()	knight_grabbed1	=[	$pain3,		knight_grabbed2	] {self.grab_finished = time + 1;};
+void()	knight_grabbed2	=[	$pain3,		knight_grabbed2	] 
 {
 	if (self.grab_finished < time || self.grabbed == FALSE)
 	{
