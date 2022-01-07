@@ -213,10 +213,10 @@ void() baron_smash8 	=[	$smack8,	baron_smash9	]
 	effect.solid = SOLID_NOT;
 	setsize (effect, '-21 -21 -16', '22 23 31');
 	effect.movetype = MOVETYPE_STEP;
-	effect.effects = EF_FULLBRIGHT;
+	effect.effects = EF_FULLBRIGHT | EF_ADDITIVE;
 	effect.velocity_z = -999;
 	effect.think = effect_think;
-	effect.alpha = 0.2;
+	effect.alpha = 0.8;
 	effect.nextthink = time + 0.1;
 
 	head = searchradius(self.origin, 60);

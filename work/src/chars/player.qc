@@ -4744,7 +4744,7 @@ void() jumpatk_grounded =
 	setmodel(effect, "progs/grounded.mdl");
 	effect.solid = SOLID_NOT;
 	setsize (effect, '-21 -21 -16', '22 23 31');
-	effect.movetype = MOVETYPE_FLY;
+	effect.movetype = MOVETYPE_NOCLIP;
 	effect.think = effect_think;
 	effect.alpha = 0.8;
 	effect.effects = EF_ADDITIVE | EF_FULLBRIGHT;
@@ -7015,6 +7015,9 @@ void() player_airdivings1 =
 		sound (self, CHAN_BODY, "player/fast.wav", 1, ATTN_NORM);
 	}
 
+	self.inair = 0;
+	self.bigfall = FALSE; // remove bigfall
+
 	// a noclip monster may of exited the level, so just get out of this...
 	// also make sure that vigil hasn't somehow gone passed his target or it hasn't died anyways, if so break out
 	if (!visible(self.enemy) || (self.origin_x > self.enemy.origin_x && self.angles_y == 0) || (self.origin_x < self.enemy.origin_x && self.angles_y == 180)
@@ -7041,6 +7044,7 @@ void() player_airdivings1 =
 
 	if (self.aircombo_count != 8)
 		self.aircombo_count = 8; // used in divingswallowhit();
+
 	divingswallow_hit();
 
 	self.owner.attack_finished = time + 0.2;

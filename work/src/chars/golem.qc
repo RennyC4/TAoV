@@ -185,8 +185,9 @@ void()	golem_atk2	=[	$combo1,		golem_atk2	]
 		setsize (effect, '-21 -21 -16', '22 23 31');
 		effect.movetype = MOVETYPE_STEP;
 		effect.velocity_z = -999;
+		effect.effects = EF_FULLBRIGHT | EF_ADDITIVE;
 		effect.think = effect_think;
-		effect.alpha = 0.2;
+		effect.alpha = 0.8;
 		effect.nextthink = time + 0.1;
 
 		head = searchradius(self.origin, 60);
