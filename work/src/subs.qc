@@ -33,7 +33,7 @@ void() DelayThink =
 };
 
 void(string targ) FireTarget =
-{
+{	
 	local entity t, stemp, otemp, act;
 	
 	act = activator;
@@ -53,8 +53,9 @@ void(string targ) FireTarget =
 				
 		//
 		// Allows two monsters to awaketarget each other without loop crashing
+		// targetted monster must not have a current enemy target, prevents 'stuck enemy' glitch
 		//
-		
+
 		if (self.awaketarget == t.targetname)
 			self.use = SUB_Null; // prevent loop crash
 		
@@ -67,7 +68,7 @@ void(string targ) FireTarget =
 		{
 			if (self.use)
 			{
-				self.use ();
+				self.use();
 
 				//
 				// Clear all awaketargets after use, prevent loop crash

@@ -1196,6 +1196,7 @@ void(float dist) ai_walk =
 
 	if (self.health < 1)
 		return;
+
 	if (self.enemy.owner.flags & FL_NOTARGET)
 	{
 		if (self.th_stand)
@@ -1287,8 +1288,8 @@ void(float dist) ai_walk =
 				else
 				{
 					self.enemy = world;
-					self.th_stand();
-					return;
+					self.think = self.th_stand;
+					self.nextthink = time + 0.1;
 				}
 			}
 		}

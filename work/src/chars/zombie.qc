@@ -368,7 +368,7 @@ void()	zombie_die12	=[	$death12,	zombie_die12	]
 void() zombie_die =
 {
 	if (self.gaveexp != TRUE) // only give experience on first instance of death
-	{			  // otherwise player can keep knocking corpse for EXP
+	{			  			  // otherwise player can keep knocking corpse for EXP
 		self.movetype = MOVETYPE_TOSS;
 		self.avelocity = '300 300 0';
 		self.gaveexp = TRUE;
