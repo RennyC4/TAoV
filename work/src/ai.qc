@@ -1236,9 +1236,14 @@ void(float dist) ai_walk =
 		else
 		{
 			if (pointcontents(self.origin) == CONTENT_WATER || pointcontents(self.origin) == CONTENT_SLIME || pointcontents(self.origin) == CONTENT_LAVA)
-				self.th_swim();
+			{
+				if (self.th_swim)
+					self.think = self.th_swim;
+				else
+					self.think = self.th_stand;
+			}
 			else
-				self.th_stand();
+				self.think = self.th_stand;
 		}
 		self.nextthink = time + 0.1;
 		return;
