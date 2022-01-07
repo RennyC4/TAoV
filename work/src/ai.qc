@@ -767,15 +767,19 @@ void() CombatThink =
 				if (h < 0.5)
 				{
 					if (self.th_magic)
+					{
 						self.think = self.th_magic;
-						//self.th_magic();
+						self.nextthink = time;
+					}
 				}
 			}
 			else if (h < 0.02) // used to be 0.08
 			{
 				if (self.th_magic)
+				{
 					self.think = self.th_magic;
-					//self.th_magic();
+					self.nextthink = time;
+				}
 			}
 		}
 		self.ai_reattack = FALSE;
@@ -835,19 +839,11 @@ void() CombatThink =
 		{
 			if (self.th_melee) // Don't allow melee attacks if the player is jumping all around
 			{
-				// if (self.enemy.onground || self.enemy.flags & FL_ONGROUND)
-				// Find a better way to check if the enemy is a certain distance off the ground from
-				// the monster
-				//self.th_melee();
-				
 				if (self.enemy.onground || self.enemy.flags & FL_ONGROUND || self.enemy.paincount >= 1 || (self.enemy.attack_finished > time &&
 				(self.enemy.aircombo_count == 5 || self.enemy.aircombo_count == 6)))
 					self.th_melee();
 				else if (self.th_block)
-				{
-					self.think = self.th_block;
-					self.nextthink = time;
-				}
+					self.th_block();
 				else
 					self.th_melee();
 			}
@@ -866,8 +862,10 @@ void() CombatThink =
 				if (h < 0.5)
 				{
 					if (self.th_magic)
-						//self.th_magic();
+					{
 						self.think = self.th_magic;
+						self.nextthink = time;
+					}
 				}
 			}
 			else if (h < 0.1)
@@ -881,22 +879,27 @@ void() CombatThink =
 					if (self.classname == "zombieboss" || self.classname == "zombie")
 					{
 						if (r3 <= 275)
+						{
 							self.think = self.th_magic;
-							//self.th_magic();
+							self.nextthink = time;
+						}
 					}
 					else if (self.classname == "hellknight")
 					{
 						if (r3 <= 350)
+						{
 							self.think = self.th_magic;
-							//self.th_magic();
+							self.nextthink = time;
+						}
 					}
 					else
+					{
 						self.think = self.th_magic;
-						//self.th_magic();
+						self.nextthink = time;
+					}
 				}
 				self.ai_attack = 2;
 			}
-			self.nextthink = time + 0.1;
 		}
 	}
 };
@@ -1196,7 +1199,6 @@ void(float dist) ai_walk =
 
 	if (self.health < 1)
 		return;
-
 	if (self.enemy.owner.flags & FL_NOTARGET)
 	{
 		if (self.th_stand)
@@ -1288,8 +1290,8 @@ void(float dist) ai_walk =
 				else
 				{
 					self.enemy = world;
-					self.think = self.th_stand;
-					self.nextthink = time + 0.1;
+					self.th_stand();
+					return;
 				}
 			}
 		}

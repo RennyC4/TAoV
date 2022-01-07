@@ -88,11 +88,6 @@ void()  zombie_boss_attc8	=[	$attc8,		zombie_boss_run1	] {};
 
 void() zombie_boss_missile =
 {
-	if (self.attack_finished > time)
-		return;
-	
-	self.attack_finished = time + 1;
-	
 	if (random() < 0.33)
 		zombie_boss_atta1();
 	else if (random() < 0.66)
@@ -264,8 +259,9 @@ void() monster_zombie_boss =
 	self.th_pain = zombie_boss_pain;
 	self.th_die = zombie_boss_die;
 	self.th_grab = zombie_boss_grabbed1;
-	self.th_magic = zombie_boss_missile;
+	
 	self.th_melee = zombie_boss_missile;
+	self.th_magic = zombie_boss_missile;
 	
 	//spawn_shadow();
 	enemy_start();

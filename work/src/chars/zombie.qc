@@ -262,7 +262,7 @@ void() zombie_missile =
 	if (self.attack_finished > time)
 		return;
 	
-	self.attack_finished = time + 1;
+	self.attack_finished = time + 0.75;
 	
 	if (random() < 0.33)
 		zombie_atta1();
@@ -448,6 +448,7 @@ void() monster_zombie =
 	self.th_pain = zombie_pain;
 	self.th_die = zombie_die;
 	self.th_grab = zombie_grabbed1;
+
 	self.th_magic = zombie_missile;
 	self.th_melee = zombie_missile;
 
