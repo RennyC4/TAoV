@@ -828,50 +828,53 @@ void() ComboMeter = // called from playerpostthink
 			self.last_combo = self.combo; // record and store it
 
 			// Congrats messages to the player
-			if (self.combo > 3 && self.combo < 7)
+			if (cvar("scratch2") == 0)
 			{
-				self.combo_message = 1;
-				localsound("misc/combomsg1", 4, 1);
-			}
-			else if (self.combo > 7 && self.combo < 10)
-			{
-				self.combo_message = 2;
-				localsound("misc/combomsg2", 4, 1);
-			}
-			else if (self.combo > 9 && self.combo < 15)
-			{
-				self.combo_message = 3;
-				localsound("misc/combomsg3", 4, 1);
-			}
-			else if (self.combo > 14 && self.combo < 20)
-			{
-				self.combo_message = 4;
-				localsound("misc/combomsg4", 4, 1);
-			}
-			else if (self.combo > 19 && self.combo < 30)
-			{
-				self.combo_message = 5;
-				localsound("misc/combomsg5", 4, 1);
-			}
-			else if (self.combo > 29 && self.combo < 50)
-			{
-				self.combo_message = 6;
-				localsound("misc/combomsg6", 4, 1);
-			}
-			else if (self.combo > 49 && self.combo < 75)
-			{
-				self.combo_message = 7;
-				localsound("misc/combomsg7", 4, 1);
-			}
-			else if (self.combo > 74 && self.combo < 99)
-			{
-				self.combo_message = 8;
-				localsound("misc/combomsg8", 4, 1);
-			}
-			else if (self.combo > 98)
-			{
-				self.combo_message = 9;
-				localsound("misc/combomsg9", 4, 1);
+				if (self.combo > 3 && self.combo < 7)
+				{
+					self.combo_message = 1;
+					localsound("misc/combomsg1", 4, 1);
+				}
+				else if (self.combo > 7 && self.combo < 10)
+				{
+					self.combo_message = 2;
+					localsound("misc/combomsg2", 4, 1);
+				}
+				else if (self.combo > 9 && self.combo < 15)
+				{
+					self.combo_message = 3;
+					localsound("misc/combomsg3", 4, 1);
+				}
+				else if (self.combo > 14 && self.combo < 20)
+				{
+					self.combo_message = 4;
+					localsound("misc/combomsg4", 4, 1);
+				}
+				else if (self.combo > 19 && self.combo < 30)
+				{
+					self.combo_message = 5;
+					localsound("misc/combomsg5", 4, 1);
+				}
+				else if (self.combo > 29 && self.combo < 50)
+				{
+					self.combo_message = 6;
+					localsound("misc/combomsg6", 4, 1);
+				}
+				else if (self.combo > 49 && self.combo < 75)
+				{
+					self.combo_message = 7;
+					localsound("misc/combomsg7", 4, 1);
+				}
+				else if (self.combo > 74 && self.combo < 99)
+				{
+					self.combo_message = 8;
+					localsound("misc/combomsg8", 4, 1);
+				}
+				else if (self.combo > 98)
+				{
+					self.combo_message = 9;
+					localsound("misc/combomsg9", 4, 1);
+				}
 			}
 
 			self.combo = self.combostep = self.combocompare1 = self.combocompare2 = self.combocompare3 = 0;
