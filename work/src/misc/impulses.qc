@@ -303,20 +303,25 @@ void() CheckImpulseButtons =
 			{
 				if (self.attack_finished < time)
 				{
+					self.char.aircombo_count = 9; // can only do it once in air
 					self.char.purge_cooldown = time;
 					self.purge_toggle = FALSE;
 					self.char.enemy = world;
+					
 					self.char.perform_flyingswallow = FALSE; // remove flag on new kick
+					
 					self.noblock_finished = time + 0.4; // don't allow block for a split second on round house
 					self.char.idle_count = 0; // reset pose
 					self.char.attack_type = 0; // reset attack type
 					self.char.velocity_y = 0; // remove foreground/backgound velocity
 					self.char.movetype = MOVETYPE_WALK; // fix flying vigil from ledge grab -> kick
-					self.char.think = player_kick1;
 					self.char.inair = self.char.bigfall = 0; // remove any big fall flags
+					self.char.grabbed = FALSE;
+
 					self.attack_finished = time + 1;
+
+					self.char.think = player_kick1;
 					self.char.nextthink = time;
-					self.char.aircombo_count = 9; // can only do it once in air
 				}
 			}
 			else if (self.char.dodge_finished < time)
