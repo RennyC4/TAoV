@@ -6539,7 +6539,7 @@ void() divingswallow_hit =
 		&& ((coop == TRUE && head.classname != "player" && self.classname == "player")
 		|| (coop == FALSE || self.flags & FL_MONSTER))) // coop
 		{
-			if (head.th_pain)
+			if (head.th_pain && self.enemy == head)
 			{
 				if (head.noblood == FALSE)
 				{
