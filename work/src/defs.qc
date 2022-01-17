@@ -754,6 +754,16 @@ float FL_BOSS = 8192; // entity is a boss monster
 nosave float NOSAVE_CHECK;
 nosave float SAVE_GAME_LOADED;
 
+// CSQC Combo congrats display messages
+.float combo_message;
+.float combo_message_finished;
+
+// Status Effect Behaviors
+.float poison_tick_finished;
+.float poison_snd_tick_finished;
+.float blind_snd_tick_finished;
+.float broken_tick_finished;
+
 //=======================
 //GAME PROGRESSION VALUES - Start
 //=======================
@@ -773,10 +783,6 @@ float IT_SHRINE1 = 1; // Castle Entrance Shrine
 float IT_SHRINE2 = 2; // Cursed Cavern Shrine
 float IT_SHRINE3 = 4; // Grand Cathedral Shrine
 
-// Outdated
-// float tshrine_castle; // teleport shrine: castle
-// float tshrine_cavern; // teleport shrine: cavern
-
 float hp_max_ups;
 // These are set one step up from spawnflags due to HPMAXUP1 being zero causes problems
 float IT_HPMAXUP1 = 1;
@@ -788,7 +794,7 @@ float IT_HPMAXUP6 = 32;
 
 // Keys
 float keys;
-float IT_KEY1 = 1; // Gold key
+float IT_KEY1 = 1; // Gold ("Church") key
 float IT_KEY2 = 2; // Silver key
 
 // Relics
@@ -818,25 +824,13 @@ float IT_BOSS2 = 2;
 float IT_BOSS3 = 4;
 float IT_BOSS4 = 8;
 
-// CSQC Combo congrats display messages
-.float combo_message;
-.float combo_message_finished;
-
-// Status Effect Behaviors
-.float poison_tick_finished;
-.float poison_snd_tick_finished;
-.float blind_snd_tick_finished;
-.float broken_tick_finished;
-
 //=======================
 //GAME PROGRESSION VALUES - End
 //=======================
 
-float	CONST_BIGHITSLOW		= 1; // Time * frametime, game freeze on big hits
 
-const float BUTTON0 = 1 << 0;
-const float BUTTON1 = 1 << 1;
-const float BUTTON2 = 1 << 2;
-const float BUTTON3 = 1 << 3;
-const float BUTTON4 = 1 << 4;
-const float BUTTON5 = 1 << 5;
+//=======================
+// CONSTANTS
+//=======================
+
+float	CONST_BIGHITSLOW		= 1; // Time * frametime, game freeze on big hits
