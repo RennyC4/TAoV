@@ -992,8 +992,8 @@ void(float damg, float hight, float fwd) Firebeam =
 	beam.alpha = 0.5;
 
 	beam.attack_finished = time + 0.5; // set beam duration
-	beam.nextthink = time + 0.01;
 	beam.think = firebeam_think;
+	beam.nextthink = time;
 	beam.mode = damg;
 	beam.effects = EF_ADDITIVE;
 
