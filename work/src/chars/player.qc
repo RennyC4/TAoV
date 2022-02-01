@@ -5628,7 +5628,18 @@ void() player_twist    =[	$twist,	player_twist		]
 	if (!self.swimming)
 		self.angles_z = self.angles_z + 15; // spin Vigil
 	else
-		self.angles_z = self.angles_z + 8; // spin Vigil underwater
+	{
+		self.velocity_z = self.velocity_z / 1.05;
+		if (self.inwater_pain > 300)
+		{
+			self.inwater_pain = 0;
+			self.angles_z = 0;
+			player_move();
+			return;
+		}
+		self.inwater_pain = self.inwater_pain + 1;
+		self.angles_z = self.angles_z + 8; // spin Vigil underwater slower
+	}
 	
 	//
 	// Check if his X origin (left/right) moved
