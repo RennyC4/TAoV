@@ -646,21 +646,38 @@ void() StartFrame =
 	framecount = framecount + 1;
 };
 
-void() MakeSolidList =
+void(float onlyplayer) MakeSolidList =
 {
 	local entity y;
 
 	y = find(world, netname, "solid");
-	while (y)
-	{
-		if (y.solid != SOLID_SLIDEBOX && y.classname != "breakable" && y.health > 0) // dead bodies shant go solid
+
+	if (!onlyplayer)
+	{	
+		while (y)
 		{
-			y.solid = SOLID_SLIDEBOX;
-			setorigin(y, y.origin);
+			if (y.solid != SOLID_SLIDEBOX && y.classname != "breakable" && y.health > 0) // dead bodies shant go solid
+			{
+				y.solid = SOLID_SLIDEBOX;
+				setorigin(y, y.origin);
+			}
+			y = find(y, netname, "solid");
 		}
-		y = find(y, netname, "solid");
+		y = find(world, netname, "solid");
 	}
-	y = find(world, netname, "solid");
+	else
+	{
+		while (y)
+		{
+			if (y.solid != SOLID_SLIDEBOX && y.classname == "player" && y.health > 0) // dead bodies shant go solid
+			{
+				y.solid = SOLID_SLIDEBOX;
+				setorigin(y, y.origin);
+			}
+			y = find(y, netname, "solid");
+		}
+		y = find(world, netname, "solid");
+	}
 };
 
 void() UnmakeSolidList =

@@ -2181,7 +2181,7 @@ void() player_grab =
 	if (self.running == TRUE || self.grabbed == TRUE)
 		self.running = FALSE;
 
-	MakeSolidList();
+	MakeSolidList(FALSE);
 	
 	local vector v;
 	v = self.angles;
@@ -3388,6 +3388,7 @@ void() spinattack =
 					
 					sound (self, CHAN_WEAPON, "player/bigcut.wav", 1, ATTN_NORM);
 
+					self.owner.screenflash_finished = time + 0.1;
 					if (head.health > 0)
 						self.owner.mana = self.owner.mana - 15;
 					if (self.frame >= $spin8) // full blow back
@@ -4822,7 +4823,7 @@ void() player_jumpatk2	=[	$jumpatk2,	player_jumpatk2	]
 			self.velocity_x = 0 - (self.speed / 1.2);
 	}
 
-	MakeSolidList();
+	MakeSolidList(FALSE);
 	head = searchradius(self.origin - v_up*20, 50); // 50 radius hit box on head smash
 	while (head)
 	{

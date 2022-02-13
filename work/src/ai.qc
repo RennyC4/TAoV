@@ -1434,7 +1434,7 @@ void(float dist) ai_walk =
 		// Traceline check if something breakable is blocking my path and I can smash it
 		//
 		
-		MakeSolidList();
+		MakeSolidList(FALSE);
 		makevectors(self.angles);
 		
 		traceline (self.origin, self.origin + v_forward*64 - v_up*24, FALSE, self); // center

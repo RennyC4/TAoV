@@ -66,7 +66,7 @@ void() ArcherArrowThink =
 {
 	local entity head, effect;
 
-	MakeSolidList();
+	MakeSolidList(TRUE);
 
 	self.angles = vectoangles(self.velocity);
 

@@ -810,7 +810,7 @@ void(float damg, float dist, float knokback, float rsize, float snd, float flsh,
 	local entity head, effect, oself;
 	local vector dir, h;
 
-	MakeSolidList();
+	MakeSolidList(FALSE);
 	makevectors(self.angles);
 
 	head = searchradius (self.origin + v_forward * dist + v_up * up, rsize);

@@ -102,7 +102,7 @@ void() FireBallHomeIn =
 {
 	local entity head, effect;
 
-	MakeSolidList();
+	MakeSolidList(FALSE);
 			
 	head = searchradius(self.origin, 25);
 	while (head)
@@ -398,7 +398,7 @@ void() LightningThink =
 	WriteCoord (MSG_BROADCAST, targ_z);
 
 	r = random();
-	MakeSolidList();
+	MakeSolidList(FALSE);
 
 	source = self.origin;
 	traceline (source, source - v_up*100, FALSE, self);
@@ -622,7 +622,7 @@ void() icefield_think =
 		}
 	}
 
-	MakeSolidList();
+	MakeSolidList(FALSE);
 	head = searchradius(self.origin, (self.cnt2 * 1.5));
 	while (head)
 	{
@@ -830,7 +830,7 @@ void() firebeam_think =
 	// do damage
 	if (self.frame == 0)
 	{
-		MakeSolidList();
+		MakeSolidList(FALSE);
 		head = searchradius(self.origin - v_up*20, 50);
 		while (head)
 		{
@@ -1084,7 +1084,7 @@ void() TwisterThink =
 		}
 	}
 
-	MakeSolidList();
+	MakeSolidList(FALSE);
 
 	head = searchradius(self.origin, 50);
 	while (head)

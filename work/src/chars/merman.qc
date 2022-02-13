@@ -166,7 +166,7 @@ void() MermanSpitThink =
 {
 	local entity head, effect;
 
-	MakeSolidList();
+	MakeSolidList(TRUE);
 
 	head = searchradius(self.origin, 5);
 	while (head)

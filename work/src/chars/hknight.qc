@@ -300,19 +300,17 @@ void() HellKnight_Lightning =
 {
 	local vector org;
 	local entity temp, oself;
-	local float r;
 
 	// Change owner so the traceline attack can hit Vigil
 	oself = self.owner;
 	self.owner = world;
 	
-	r = random();
 	makevectors (self.angles);
 
 	self.colormod = '1 1 5';
 	sound (self, CHAN_WEAPON, "spells/thunder.wav", 1, ATTN_NORM);
 
-	MakeSolidList();
+	MakeSolidList(TRUE);
 
 	org = self.origin + '0 0 20' + v_forward * 35;
 	traceline (org, org + v_forward * 350, FALSE, self);
@@ -325,7 +323,7 @@ void() HellKnight_Lightning =
 		temp.classname = "sprite";
 
 		temp.alpha = 0.5;
-		if (r < 0.5)
+		if (random() < 0.5)
 			temp.frame = 0;
 		else
 			temp.frame = 1;
@@ -363,7 +361,7 @@ void() HellKnight_Lightning =
 			temp2.classname = "sprite";
 
 			temp2.alpha = 0.5;
-			if (r < 0.5)
+			if (random() < 0.5)
 				temp2.frame = 0;
 			else
 				temp2.frame = 1;
@@ -405,7 +403,6 @@ void() HellKnight_Lightning =
 	{
 		temp = spawn ();
 		temp.movetype = MOVETYPE_NOCLIP;
-		//temp.solid = SOLID_TRIGGER;
 		temp.solid = SOLID_NOT;
 		temp.classname = "sprite";
 		temp.effects = EF_MUZZLEFLASH | EF_ADDITIVE;
