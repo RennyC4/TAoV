@@ -101,8 +101,11 @@ void() spawn_magicfog =
 void() FireBallHomeIn =
 {
 	local entity head, effect;
-
-	MakeSolidList(FALSE);
+	
+	if (self.owner.flags & FL_MONSTER)
+		MakeSolidList(TRUE); // Player only
+	else
+		MakeSolidList(FALSE);
 			
 	head = searchradius(self.origin, 25);
 	while (head)
@@ -398,7 +401,11 @@ void() LightningThink =
 	WriteCoord (MSG_BROADCAST, targ_z);
 
 	r = random();
-	MakeSolidList(FALSE);
+	
+	if (self.owner.flags & FL_MONSTER)
+		MakeSolidList(TRUE); // Player only
+	else
+		MakeSolidList(FALSE);
 
 	source = self.origin;
 	traceline (source, source - v_up*100, FALSE, self);
@@ -622,7 +629,11 @@ void() icefield_think =
 		}
 	}
 
-	MakeSolidList(FALSE);
+	if (self.owner.flags & FL_MONSTER)
+		MakeSolidList(TRUE); // Player only
+	else
+		MakeSolidList(FALSE);
+
 	head = searchradius(self.origin, (self.cnt2 * 1.5));
 	while (head)
 	{
@@ -837,8 +848,12 @@ void() firebeam_think =
 	// do damage
 	if (self.frame == 0)
 	{
-		MakeSolidList(FALSE);
-		head = searchradius(self.origin - v_up*20, 50);
+		if (self.owner.flags & FL_MONSTER)
+			MakeSolidList(TRUE); // Player only
+		else
+			MakeSolidList(FALSE);
+
+		head = searchradius(self.origin - v_up*20, 40);
 		while (head)
 		{
 			if (head != self && visible(head) && head.perfectguard_buff < time && head.takedamage && self.owner != head && head.deadflag != DEAD_DEAD
@@ -1091,7 +1106,10 @@ void() TwisterThink =
 		}
 	}
 
-	MakeSolidList(FALSE);
+	if (self.owner.flags & FL_MONSTER)
+		MakeSolidList(TRUE); // Player only
+	else
+		MakeSolidList(FALSE);
 
 	head = searchradius(self.origin, 50);
 	while (head)

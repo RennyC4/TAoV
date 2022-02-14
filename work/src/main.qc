@@ -650,6 +650,9 @@ void(float onlyplayer) MakeSolidList =
 {
 	local entity y;
 
+	// Takedamage check is only for players, allows Hell Knights lighting to pass through dodging players
+	// if applied to monsters it'll disabling mid-air comboing their corpses
+
 	y = find(world, netname, "solid");
 
 	if (!onlyplayer)
@@ -665,11 +668,11 @@ void(float onlyplayer) MakeSolidList =
 		}
 		y = find(world, netname, "solid");
 	}
-	else
+	else // only players
 	{
 		while (y)
 		{
-			if (y.solid != SOLID_SLIDEBOX && y.classname == "player" && y.health > 0) // dead bodies shant go solid
+			if (y.solid != SOLID_SLIDEBOX && y.classname == "player" && y.health > 0 && y.takedamage) // dead bodies shant go solid
 			{
 				y.solid = SOLID_SLIDEBOX;
 				setorigin(y, y.origin);
