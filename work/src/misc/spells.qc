@@ -822,8 +822,15 @@ void() firebeam_think =
 		}
 		else
 		{
-			remove(self);
-			return;
+			self.frame = 5;
+			if (self.alpha > 0)
+				self.alpha = self.alpha - 0.05;
+			else
+			{
+				setmodel (self, string_null);
+				remove(self);
+				return;
+			}
 		}
 	}
 
