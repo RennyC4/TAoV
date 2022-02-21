@@ -218,10 +218,10 @@ void() FireBallHomeIn =
 
 	if (!(self.owner.origin_z < self.enemy.origin_z + 25 && self.owner.origin_z > self.enemy.origin_z - 25))
 	{
-		if (self.origin_z < self.enemy.origin_z)
-			self.velocity_z = self.velocity_z + 25 * frametime * 75;
 		if (self.origin_z > self.enemy.origin_z)
 			self.velocity_z = self.velocity_z - 25 * frametime * 75;
+		if (self.origin_z < self.enemy.origin_z)
+			self.velocity_z = self.velocity_z + 25 * frametime * 75;
 	}
 
 	if (self.flags & FL_ONGROUND)
