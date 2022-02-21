@@ -215,10 +215,14 @@ void() FireBallHomeIn =
 		self.velocity_y = self.velocity_y + 25 * frametime * 75;
 	if (self.origin_y > self.enemy.origin_y)
 		self.velocity_y = self.velocity_y - 25 * frametime * 75;
-	if (self.origin_z < self.enemy.origin_z)
-		self.velocity_z = self.velocity_z + 12.5 * frametime * 75;
-	if (self.origin_z > self.enemy.origin_z)
-		self.velocity_z = self.velocity_z - 12.5 * frametime * 75;
+
+	if (!(self.owner.origin_z < self.enemy.origin_z + 25 && self.owner.origin_z > self.enemy.origin_z - 25))
+	{
+		if (self.origin_z < self.enemy.origin_z)
+			self.velocity_z = self.velocity_z + 25 * frametime * 75;
+		if (self.origin_z > self.enemy.origin_z)
+			self.velocity_z = self.velocity_z - 25 * frametime * 75;
+	}
 
 	if (self.flags & FL_ONGROUND)
 		self.flags = self.flags - FL_ONGROUND;
@@ -304,7 +308,7 @@ void() FireBallThink =
 		if (bestv)
 			self.enemy = bestv;
 	}
-	if (self.flags & FL_MONSTER) // Fireball is launched only at the target they're mad at
+	if (self.flags & FL_MONSTER && self.enemy) // Fireball is launched only at the target they're mad at
 		self.enemy = self.owner.enemy;
 
 	if (self.enemy)
