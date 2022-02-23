@@ -467,12 +467,15 @@ void() LightningThink =
 				if (self.owner.classname == "player")
 				{
 					head.knockback = 0;
-					if (head.classname == "dragon")
+					if (head.classname == "dragon") // monsters with immense weakness
 						T_Damage (head, self, self.owner, 5, 0);
-					else if (head.classname == "sgknight")
-						T_Damage (head, self, self.owner, 4, 0);					
+					else if (head.classname == "sgknight") // stained glass knight takes slightly more damage
+						T_Damage (head, self, self.owner, 4, 0);
+					else if (head.classname == "ethskull" || head.classname == "ghost" || head.classname == "ghost2" || head.classname == "ghoul" || head.classname == "lesserwraith"
+					|| head.classname == "wraith" || head.classname == "zombie" || head.classname == "zombieboss" || head.classname == "skeleton") // undead enemies aren't affected much
+						T_Damage (head, self, self.owner, 1, 0);						
 					else
-						T_Damage (head, self, self.owner, 3, 0);
+						T_Damage (head, self, self.owner, 3, 0); // normal damage
 				}
 				else
 				{
