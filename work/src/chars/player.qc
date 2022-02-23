@@ -5805,7 +5805,7 @@ void() player_pain =
 			else // hit on ground
 			{
 				self.think = player_knockedfar1;
-				self.nextthink = time + 0.1;
+				self.nextthink = time;
 				self.fly_time = time + 999;
 				self.pain_finished = time + 999;
 				self.velocity = '0 0 0';
@@ -5820,22 +5820,22 @@ void() player_pain =
 			if (self.knockback == 2)
 			{
 				self.think = player_knockedup1;
-				self.nextthink = time + 0.1;
+				self.nextthink = time;
 			}
 			else if (self.knockback == 3)
 			{
 				self.think = player_twist;
-				self.nextthink = time + 0.1;
+				self.nextthink = time;
 			}
 			else if (self.knockback == 5)
 			{
 				self.think = player_knockedfar1;
-				self.nextthink = time + 0.1;
+				self.nextthink = time;
 			}
 			else if (self.knockback == 7)
 			{
 				self.think = player_knockedup1;
-				self.nextthink = time + 0.1;
+				self.nextthink = time;
 			}
 			else
 				player_hit3();
@@ -5886,12 +5886,16 @@ void() player_pain =
 			self.velocity_x = 0;
 			self.think = player_knockedup1;
 			self.nextthink = time + 0.1;
+			if (freeze_finished < time) // don't interefere with level up/etc
+				freeze_finished = time + (CONST_BIGHITSLOW * frametime);
 		}
 		else if (self.knockback == 3)
 		{
 			self.owner.camshake_finished = time + 0.2;
 			self.think = player_twist;
 			self.nextthink = time + 0.1;
+			if (freeze_finished < time) // don't interefere with level up/etc
+				freeze_finished = time + (CONST_BIGHITSLOW * frametime);
 		}
 		else if (self.knockback == 4)
 		{
@@ -5903,6 +5907,8 @@ void() player_pain =
 			self.owner.camshake_finished = time + 0.2;
 			self.think = player_knockedfar1;
 			self.nextthink = time + 0.1;
+			if (freeze_finished < time) // don't interefere with level up/etc
+				freeze_finished = time + (CONST_BIGHITSLOW * frametime);
 		}
 		else
 		{
