@@ -132,21 +132,23 @@ void() FireBallHomeIn =
 				head.damage_type = 2; // Fire based damage
 				if (head.classname != "dragon") // dragon's are immune to fireball
 				{
-					if (head.classname == "merman") // double damage on Merman
+					if (head.classname == "ethskull" || head.classname == "ghost" || head.classname == "ghost2" || head.classname == "ghoul" || head.classname == "lesserwraith"
+					|| head.classname == "wraith" || head.classname == "zombie" || head.classname == "zombieboss" || head.classname == "skeleton") // undead enemies slightly damaged more
+						T_Damage (head, self, self.owner, self.mode * 1.25, 0);
+					else if (head.classname == "merman") // double damage on Merman
 						T_Damage (head, self, self.owner, self.mode * 2, 0);
 					else if (head.classname == "golem") // golems are resistant
 						T_Damage (head, self, self.owner, self.mode / 3, 0);
 					else if (head.classname == "sgknight") // SGK is very resistant
 						T_Damage (head, self, self.owner, self.mode / 4, 0);
-					else
-					{
-						if (head.classname == "player")
-							head.colormod = '5 2.5 0';
+					else // normal damage
 						T_Damage (head, self, self.owner, self.mode, 0);
-					}
 				}
 				if (self.owner.classname == "player")
 					self.owner.owner.combo = self.owner.owner.combo + 1; // raise combo counter
+
+				if (head.classname == "player")
+					head.colormod = '5 2.5 0';
 			}
 			else
 			{
