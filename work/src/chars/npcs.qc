@@ -339,26 +339,37 @@ void() priest_chat =
 		if (self.chatrefresh_finished < time)
 		{
 			if (self.cnt2 == 0)
-				centerprint (self.enemy.owner, "/PYou're safe within the confines of this church, what do you seek brother?\n\n===========================\n\n ^b    Ask for a blessing^b\n          Record progress\n  Upgrade Health Flask\n                   Leave\n\n","^3   Experience: ", g, " / ", h);
+				centerprint (self.enemy.owner, "/PYou're safe within the confines of this church, what do you seek brother?\n\n===========================\n\n^b      Ask for a blessing^b\n          Record progress\n              Refill Flask\n   Upgrade Health Flask\n                   Leave\n\n","^3   Experience: ", g, " / ", h);
 			else if (self.cnt2 == 1)
-				centerprint (self.enemy.owner, "/PYou're safe within the confines of this church, what do you seek brother?\n\n===========================\n\n       Ask for a blessing\n       ^b Record progress^b\n  Upgrade Health Flask\n                   Leave\n\n","^3   Experience: ", g, " / ", h);
+				centerprint (self.enemy.owner, "/PYou're safe within the confines of this church, what do you seek brother?\n\n===========================\n\n        Ask for a blessing\n^b         Record progress^b\n              Refill Flask\n   Upgrade Health Flask\n                   Leave\n\n","^3   Experience: ", g, " / ", h);
 			else if (self.cnt2 == 2)
-				centerprint (self.enemy.owner, "/PYou're safe within the confines of this church, what do you seek brother?\n\n===========================\n\n       Ask for a blessing\n          Record progress\n^bUpgrade Health Flask^b\n                   Leave\n\n","^3   Experience: ", g, " / ", h);
+				centerprint (self.enemy.owner, "/PYou're safe within the confines of this church, what do you seek brother?\n\n===========================\n\n        Ask for a blessing\n          Record progress\n^b             Refill Flask^b\n   Upgrade Health Flask\n                   Leave\n\n","^3   Experience: ", g, " / ", h);
 			else if (self.cnt2 == 3)
-				centerprint (self.enemy.owner, "/PYou're safe within the confines of this church, what do you seek brother?\n\n===========================\n\n       Ask for a blessing\n          Record progress\n  Upgrade Health Flask\n ^b                Leave^b\n\n","^3   Experience: ", g, " / ", h);
+				centerprint (self.enemy.owner, "/PYou're safe within the confines of this church, what do you seek brother?\n\n===========================\n\n        Ask for a blessing\n          Record progress\n              Refill Flask\n^b  Upgrade Health Flask^b\n                   Leave\n\n","^3   Experience: ", g, " / ", h);
+			else if (self.cnt2 == 4)
+				centerprint (self.enemy.owner, "/PYou're safe within the confines of this church, what do you seek brother?\n\n===========================\n\n        Ask for a blessing\n          Record progress\n              Refill Flask\n   Upgrade Health Flask\n^b                  Leave^b\n\n","^3   Experience: ", g, " / ", h);
 
 			self.chatrefresh_finished = time + 0.1;
 		}
 
-		// Flask Upgrade
+		// Flask Refill
 		if (self.cnt2 == 2)
 		{
+			local float rprice;
+			rprice = 2 * (self.enemy.owner.hflask_max_amt / 1.25);
+			self.enemy.owner.display_price = rprice;
+		}
+
+		// Flask Upgrade
+		if (self.cnt2 == 3)
+		{
 			local float hprice;
-			hprice = 10 * (self.enemy.owner.hflask_max_amt / 1.25);
+			hprice = 14 * (self.enemy.owner.hflask_max_amt / 1.25);
 			self.enemy.owner.display_price = hprice;
 		}
-		else
-			self.enemy.owner.display_price = 0; // hide display
+
+		if (self.cnt2 != 2 && self.cnt2 != 3)
+			self.enemy.owner.display_price = 0; // hide CSQC display
 			
 		//
 		// User menu control
@@ -421,6 +432,20 @@ void() priest_chat =
 				}
 				if (self.cnt2 == 2)
 				{
+					if (self.enemy.owner.gold >= rprice && self.enemy.owner.hflask_amt < self.enemy.owner.hflask_max_amt)
+					{
+						centerprint (self.enemy.owner, "/P^bFlask Refilled!^b\n\n===========================\n\n\n^1Flask refilled, your contribution is appreciated.\n\n\n\n^3Press ATTACK or JUMP to resume ...\n");
+						self.enemy.owner.display_price = 0;						
+						setpause (1);
+						sound (self, CHAN_AUTO, "misc/potland.wav", 1, ATTN_NORM);
+						self.enemy.owner.hflask_amt = self.enemy.owner.hflask_max_amt;
+						self.enemy.owner.gold = self.enemy.owner.gold - rprice;
+					}
+					else
+						sound (self, CHAN_AUTO, "misc/menu2.wav", 1, ATTN_NORM);
+				}
+				if (self.cnt2 == 3)
+				{
 					if (self.enemy.owner.gold >= hprice && self.enemy.owner.hflask_max_amt < 200)
 					{
 						centerprint (self.enemy.owner, "/P^bFlask Upgraded!^b\n\n===========================\n\n\n^1Additional reserve health has been added to your flask by 5 hit points.\n\n\n\n^3Press ATTACK or JUMP to resume ...\n");
@@ -433,7 +458,7 @@ void() priest_chat =
 					else
 						sound (self, CHAN_AUTO, "misc/menu2.wav", 1, ATTN_NORM);
 				}
-				if (self.cnt2 == 3) // User leaves conversation screen
+				if (self.cnt2 == 4) // User leaves conversation screen
 				{
 					self.enemy.owner.display_price = 0;
 					self.mode = 0; // Not chatting anymore
@@ -451,10 +476,10 @@ void() priest_chat =
 			self.selection = FALSE;
 
 		// Prevent menu overflow
-		if (self.cnt2 > 3)
+		if (self.cnt2 > 4)
 			self.cnt2 = 0;
 		if (self.cnt2 < 0)
-			self.cnt2 = 3;
+			self.cnt2 = 4;
 	}
 };
 
