@@ -4307,9 +4307,10 @@ void() player_attacka10	=[	$attacka10,	player_attacka11	]
 	self.oangles = self.angles;
 };
 
-void() player_attacka11	=[	$attacka11,	player_attacka12	] {frameskip(0.07);spinpush();};
+void() player_attacka11	=[	$attacka11,	player_attacka12	] {self.attack_type = 5;frameskip(0.07);spinpush();};
 void() player_attacka12	=[	$attacka12,	player_attacka13	] 
 {
+	self.attack_type = 5;
 	if (self.owner.mashattack != FALSE) // QOL issue
 		self.owner.mashattack = FALSE;  // Allows user to spam attack key and safely end the combo if wanted
 	frameskip(0.07);
@@ -4324,6 +4325,7 @@ void() player_attacka15;
 void() player_attacka17;
 void() player_attacka13	=[	$attacka13,	player_attacka13	] 
 {
+	self.attack_type = 5;
 	if (self.ftspin_count == 3)
 		sound (self, CHAN_WEAPON, "player/sword3.wav", 1, ATTN_NORM);
 	if (self.ftspin_count == 1 || self.ftspin_count == 4)
@@ -4340,9 +4342,8 @@ void() player_attacka13	=[	$attacka13,	player_attacka13	]
 		self.ftspin_count = self.ftspin_count + 1;
 	}
 	else
-	{
 		player_attacka14();
-	}
+
 	spinpush();
 	frameskip (0.05);
 };
@@ -6964,7 +6965,7 @@ void() player_doublejump1	=[	$djump,	player_doublejump1	]
 		self.velocity_z = self.velocity_z + 300; // additional height
 	}
 
-	if (relics & IT_RELIC3)
+	if (relics & IT_RELIC3 && world.model != "maps/village.bsp")
 	{
 		if (self.djump_spincnt > 4)
 		{
@@ -6984,9 +6985,9 @@ void() player_doublejump1	=[	$djump,	player_doublejump1	]
 			return;
 		}
 	}
-
+	
 	// Spin Slash Sound
-	if (self.walkframe == 0 && relics & IT_RELIC3)
+	if (self.walkframe == 0 && (relics & IT_RELIC3 && world.model != "maps/village.bsp"))
 		sound (self, CHAN_BODY, "player/swrdspin.wav", 1, ATTN_NORM);
 	else if (self.walkframe == 2) // Spin slash damage
 	{
