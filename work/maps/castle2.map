@@ -7130,6 +7130,7 @@
 "classname" "trigger_changelevel"
 "cnt" "3"
 "map" "cavern"
+"spawnflags" "1"
 // brush 0
 {
 ( 2128 -176 -320 ) ( 2128 -448 -320 ) ( 2128 -448 -528 ) trigger [ 0 -1 0 0 ] [ 0 0 -1 0 ] 0 1 1

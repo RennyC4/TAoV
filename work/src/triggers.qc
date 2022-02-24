@@ -309,7 +309,7 @@ void() changelevel_touch =
 	
 				r = vlen (self.origin - self.enemy.origin);
 
-				if (r <= 300 && visible(self.enemy))
+				if (r <= 300 && visible(self.enemy) && !oself.spawnflags)
 				{
 					centerprint (v.enemy.owner, "I cannot advance until pursuing enemies are defeated or far away ...");
 					return;
