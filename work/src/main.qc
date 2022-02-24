@@ -334,7 +334,7 @@ float(float parm, float which) decode =
 
 void() SetNewParms = 
 {
-	parm1 = 75; // health
+	parm1 = 50; // health
 	parm2 = encode(0, 0, 0); // spells obtained, armor level, sword level
 	parm3 = 0; // bosses defeated
 	parm4 = encode(0, 1, 0); // current spell, level, keys
@@ -344,13 +344,13 @@ void() SetNewParms =
 	parm8 = 0; // shrine progress bit
 	parm9 = 0; // mana
 	parm10 = 0; // turbo mode
-	parm11 = 75; // vigils max health
+	parm11 = 50; // vigils max health
 	parm12 = 0; // vigil pouch status
 	parm14 = 0; // vigils experience
 	parm15 = 20; // vigils mana pool
 	parm17 = 0; // relics
-	parm18 = 15; // health flask amount
-	parm19 = 15; // health flask max amount
+	parm18 = 25; // health flask amount
+	parm19 = 25; // health flask max amount
 };
 
 void() SetChangeParms =

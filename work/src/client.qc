@@ -1321,19 +1321,17 @@ void() SetLevel =
 			sound (self, CHAN_AUTO, "misc/levelup.wav", 1, ATTN_NORM);
 			self.owner.level = self.owner.level + 1;
 	
-			//num = ceil(random()*2);
-			self.max_health = self.max_health + 4;
-			self.owner.max_health = self.owner.max_health + 4; // + num; //(10*(self.owner.level / 6)); // needed for parm11 save
+			self.max_health = self.max_health + 2;
+			self.owner.max_health = self.owner.max_health + 2;
 
-			//self.max_mana = 17 + (10*(self.level / 3));
 			self.max_mana = self.max_mana + 3;
 			self.owner.max_mana = self.owner.max_mana + 3;
 			
 			self.owner.experience = 0; // reset back
-			self.owner.armorvalue = self.owner.level; // Update HUD
+			//self.owner.armorvalue = self.owner.level; // Update HUD
 			DisplayLevel(); // display sprite sign
 			freeze_finished = time + 5 * frametime;
-	      }
+	    }
 	}
 };
 

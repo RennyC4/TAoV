@@ -410,11 +410,11 @@ void() HealthFlask =
 		{
 			// Remove status effects faster!
 			if (self.status_poison_finished > time)
-				self.status_poison_finished = self.status_poison_finished - 0.25;
+				self.status_poison_finished = self.status_poison_finished - 0.35;
 			if (self.status_blind_finished > time)
-				self.status_blind_finished = self.status_blind_finished - 0.25;
+				self.status_blind_finished = self.status_blind_finished - 0.35;
 			if (self.status_broken_finished > time)
-				self.status_broken_finished = self.status_broken_finished - 0.25;
+				self.status_broken_finished = self.status_broken_finished - 0.35;
 
 			if (self.char.health < self.char.max_health)
 				self.char.health = self.char.health + 1;
