@@ -402,7 +402,7 @@ void() HealthFlask =
 	if (self.hflask_drink_speed > time)
 		return;
 	else
-		self.hflask_drink_speed = time + 0.05; // Drink speed
+		self.hflask_drink_speed = time + 0.03; // Drink speed
 
 	if (self.char.health < self.char.max_health || self.status_poison_finished > time || self.status_blind_finished > time || self.status_broken_finished > time)
 	{

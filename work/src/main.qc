@@ -349,8 +349,8 @@ void() SetNewParms =
 	parm14 = 0; // vigils experience
 	parm15 = 20; // vigils mana pool
 	parm17 = 0; // relics
-	parm18 = 25; // health flask amount
-	parm19 = 25; // health flask max amount
+	parm18 = 30; // health flask amount
+	parm19 = 30; // health flask max amount
 };
 
 void() SetChangeParms =
