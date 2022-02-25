@@ -1138,7 +1138,7 @@ void(float damg, float dist, float knokback, float rsize, float snd, float flsh,
 						if (head.knockback == 2 || head.knockback == 3 || head.knockback == 5) // Guard break + Chip damage
 						{
 							// Set the knockback, deal the damage, then have the player run his animation in proper order
-							local float chip_d = floor(damg / 3); // Guard breaks have chip damage
+							local float chip_d = floor(damg / 4); // Guard breaks have chip damage
 							self.knockback = head.knockback = 0; // Knockback movement is done by $blockbrk1
 							head.owner.camshake_finished = time + 0.2;
 							if (self.flags & FL_MONSTER) // Enforce entity-passthrough
