@@ -531,6 +531,7 @@ void() boss1_death_glassshard_think =
 void() boss1_death_glassshard =
 {
 	local entity shard;
+	local float r = random()*20; // randomize Z axis spawn
 
 	shard = spawn ();
 	shard.angles_y = random() * 360;
@@ -550,7 +551,7 @@ void() boss1_death_glassshard =
 	
 	setsize (shard, '0 0 0', '0 0 0');
 	makevectors (self.angles);
-	setorigin (shard, self.origin + v_up * 20);
+	setorigin (shard, self.origin + v_up * r);
 
 	shard.think = boss1_death_glassshard_think;
 	shard.nextthink = time;

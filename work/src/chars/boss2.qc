@@ -266,7 +266,7 @@ void() boss_attack6 = [$attack6, boss_attack7]
 	h = spawn();
 	setmodel (h, string_null);
 	setsize (h, '0 0 0', '0 0 0');
-	setorigin (h, self.origin + v_up * 100 + v_forward * 125);
+	setorigin (h, self.origin + v_up * 100 + v_forward * 120);
 	h.char = self;
 	h.flags = FL_BOSS | FL_MONSTER; // Do not allow Boss to be hit by his own melee!
 	h.movetype = MOVETYPE_NOCLIP;
@@ -304,7 +304,7 @@ void() boss_attack18 = [$attack18, boss_attack19]
 	h = spawn();
 	setmodel (h, string_null);
 	setsize (h, '0 0 0', '0 0 0');
-	setorigin (h, self.origin + v_up * 100 + v_forward * 125);
+	setorigin (h, self.origin + v_up * 100 + v_forward * 120);
 	h.char = self;
 	h.flags = FL_BOSS | FL_MONSTER; // Do not allow Boss to be hit by his own melee!
 	h.movetype = MOVETYPE_NOCLIP;

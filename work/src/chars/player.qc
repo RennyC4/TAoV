@@ -6146,6 +6146,7 @@ void() player_block1	=[	$block1,	player_block1	]
 		player_block3();
 	if (self.perfectguard_buff < time)
 		self.takedamage = DAMAGE_AIM;
+	self.paincount = 0; // reset pain count (3 hit knockdown) on block
 };
 
 void() player_block2	=[	$block2,	player_block2	] 
@@ -6181,6 +6182,7 @@ void() player_block2	=[	$block2,	player_block2	]
 		player_move();
 	if (self.onground == FALSE)
 		player_block3();
+	self.paincount = 0; // reset pain count (3 hit knockdown) on block
 };
 
 void() player_block3	=[	$block3,	player_block3	] 
@@ -6210,6 +6212,7 @@ void() player_block3	=[	$block3,	player_block3	]
 		player_move();
 	if (self.perfectguard_buff < time)
 		self.takedamage = DAMAGE_AIM;
+	self.paincount = 0; // reset pain count (3 hit knockdown) on block
 };
 
 void() player_blockbrk_movement =
