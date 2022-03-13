@@ -1340,7 +1340,7 @@ void() barrel_break =
 			drop_health();
 		if (self.spawnflags & 2)
 			drop_mana();
-		if (random() < 0.5)
+		if (random() < 0.5 || world.model == "maps/village.bsp") // always drop gold in the village
 			drop_gold();
 		remove(self);
 		return;
