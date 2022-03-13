@@ -1324,9 +1324,15 @@ void() SetLevel =
 			self.max_health = self.max_health + 3;
 			self.owner.max_health = self.owner.max_health + 3;
 
+			self.health = self.health + 3;
+			self.owner.health = self.owner.health + 3;
+
 			self.max_mana = self.max_mana + 3;
 			self.owner.max_mana = self.owner.max_mana + 3;
-			
+
+			self.mana = self.mana + 3;
+			self.owner.mana = self.owner.mana + 3;
+
 			self.owner.experience = 0; // reset back
 			//self.owner.armorvalue = self.owner.level; // Update HUD
 			DisplayLevel(); // display sprite sign
