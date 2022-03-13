@@ -1760,6 +1760,9 @@ void(entity attacker) monster_pain =
 void() player_move;
 void() monster_death =
 {
+	if (self.colormod != '1 1 1')
+		self.colormod = '1 1 1';
+
 	self.berserk_finished = time;
 	if (self.flags & FL_ONGROUND)
 		self.velocity_x = self.velocity_y = 0;
