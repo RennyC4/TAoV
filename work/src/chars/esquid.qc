@@ -268,7 +268,7 @@ void() lit_think =
 							WriteCoord (MSG_BROADCAST, self.owner.origin_x);
 							WriteCoord (MSG_BROADCAST, self.owner.origin_y);
 							WriteCoord (MSG_BROADCAST, self.owner.origin_z);
-							T_Damage (self.owner, head, head, 80, 0);
+							T_Damage (self.owner, head, head, self.health, 0); // Perfect Guard kills in one hit
 							head.owner.combo = head.owner.combo + 1; // raise combo counter
 						}
 						head.knockback = 0;

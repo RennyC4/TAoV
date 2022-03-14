@@ -6998,9 +6998,9 @@ void() player_doublejump1	=[	$djump,	player_doublejump1	]
 		{
 			self.owner.aircombo_finished = time + 0.2;
 			if (!relics & IT_RELIC3)
-				FireMelee(2,0,0,50,0,0,TRUE,TRUE,25,0);
+				FireMelee(1,0,0,50,0,0,TRUE,TRUE,25,0);
 			else // Owning spin slash relic will allow in-air enemies to be combo'd
-				FireMelee(2,0,0,50,0,0,FALSE,TRUE,25,0);
+				FireMelee(3,0,0,50,0,0,FALSE,TRUE,25,0);
 		}
 	}
 	else if (self.walkframe > 6)
