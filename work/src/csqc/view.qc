@@ -672,6 +672,7 @@ void() AnimateHead =
 	local float poison = getstatf(STAT_STATUS_POISON);
 	local float pg = getstatf(STAT_PERFECTGUARD);
 	local float hp = getstatf(STAT_HEALTH);
+	local float h = getstatf(STAT_COMBO);
 
 	if (hp != 9999) // Not dead
 	{
@@ -686,11 +687,22 @@ void() AnimateHead =
 		else
 			head.colormod = '1 1 1';
 
-		head.angles_x = sin(cltime*0.65)*8;
-		head.angles_y = 180 + sin(cltime*0.45)*25;
+		if (h > 11 || pg > time) // angry face
+		{
+			head.skin = 1;
+			head.angles_y = 180;
+			head.angles_x = -15;
+		}
+		else // neutral face
+		{
+			head.skin = 0;
+			head.angles_x = sin(cltime*0.65)*8;
+			head.angles_y = 180 + sin(cltime*0.45)*25;
+		}
 	}
 	else
 	{
+		head.skin = 0;
 	    head.origin = '0 0 -2';
 		head.colormod = '.5 0 0';
 		head.angles_y = 180;
@@ -709,6 +721,7 @@ void(vector pos) Draw_Vigil_Head =
         precache_model("progs/hud_head.mdl");
         setmodel(head, "progs/hud_head.mdl");
         setorigin(head, '0 0 0');
+		head.skin = 0;
     }
     AnimateHead();
     entdraw(head, pos,'36 36', -76);
