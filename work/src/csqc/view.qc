@@ -689,7 +689,10 @@ void() AnimateHead =
 
 		if (h > 11 || pg > time) // angry face
 		{
-			head.skin = 1;
+			if (pg > time)
+				head.skin = 2; // smirk
+			else
+				head.skin = 1;
 			head.angles_y = 180;
 			head.angles_x = -15;
 		}

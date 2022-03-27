@@ -4644,7 +4644,6 @@
 // entity 151
 {
 "classname" "func_illusionary"
-"alpha" "0.75"
 "_phong" "1"
 // brush 0
 {
