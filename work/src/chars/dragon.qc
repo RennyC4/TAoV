@@ -87,7 +87,7 @@ void()	dragon_atk	=[	$attack1,		dragon_atk	]
 
 	if (self.walkframe == 14) // attack
 	{
-		self.status_broken_finished = time + 8;
+		self.status_broken_finished = time + 16;
 		FireMelee(28,35,3,45,5,1,1,FALSE,0,0.35);
 	}
 	if (self.walkframe == 30) // break out

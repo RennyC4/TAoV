@@ -45,7 +45,7 @@ void() ethskull_2	=[	$idle1,	ethskull_2		]
 		
 			sound (self, CHAN_WEAPON, "player/bigcut.wav", 1, ATTN_NORM);
 			head.knockback = 4; // always fall, even if on ground
-			self.status_blind_finished = time + 10;
+			self.status_blind_finished = time + 20;
 			T_Damage (head, self, self, 28, 0.44);
 			self.attack_finished = time + 3;
 		}

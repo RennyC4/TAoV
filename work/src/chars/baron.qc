@@ -225,7 +225,7 @@ void() baron_smash8 	=[	$smack8,	baron_smash9	]
 		if ((head.takedamage && head != self && !head.flags & FL_MONSTER && head.onground == TRUE) || head.classname == "breakable")
 		{
 			head.knockback = 2; // pop Vigil in the air
-			self.status_broken_finished = time + 10;
+			self.status_broken_finished = time + 20;
 			T_Damage (head, self, self, 18, 0.25);
 			if (head.classname == "player")	
 				head.owner.camshake_finished = time + 0.4;

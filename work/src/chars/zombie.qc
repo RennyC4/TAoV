@@ -117,12 +117,12 @@ void() DarkBallThink =
 					local float r = random();
 					if (self.owner.classname == "zombieboss")
 					{
-						self.owner.status_blind_finished = time + 10;
+						self.owner.status_blind_finished = time + 20;
 						T_Damage (head, self.owner, self.owner, 7, 0.5);
 					}
 					else
 					{
-						self.owner.status_blind_finished = time + 6;
+						self.owner.status_blind_finished = time + 16;
 						T_Damage (head, self.owner, self.owner, 3, 0.25);
 					}
 				}

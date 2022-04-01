@@ -130,7 +130,7 @@ void()	knight_atkb8	=[	$runattack8,		knight_atkb9	]
 	BlockCancel();
 	ai_forward(6);
 	frameskip(0.08);
-	self.status_broken_finished = time + 4;
+	self.status_broken_finished = time + 8;
 	FireMelee(16,10,3,50,5,0,0,FALSE,0,0.1);
 };
 void()	knight_atkb9	=[	$runattack9,		knight_atkb10	] {BlockCancel();ai_forward(6);frameskip(0.08);};

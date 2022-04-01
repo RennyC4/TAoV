@@ -178,7 +178,7 @@ void() MermanSpitThink =
 				if (head.block_finished < time) // Do damage
 				{
 					sound (self, CHAN_WEAPON, "merman/dissolve.wav", 1, ATTN_NORM);
-					self.owner.status_poison_finished = time + 3;
+					self.owner.status_poison_finished = time + 6;
 					T_Damage (head, self.owner, self.owner, 1, 1);
 					head.colormod = '0 5 0';
 					remove(self);

@@ -245,7 +245,7 @@ void() hellknight_smash8 	=[	$smash8,	hellknight_smash9	]
 {
 	BlockCancel();
 	ai_forward(5);
-	self.status_broken_finished = time + 8;
+	self.status_broken_finished = time + 16;
 	FireMelee(18,15,3,45,5,0,0,FALSE,0,0.20);
 };
 void() hellknight_smash9 	=[	$smash9,	hellknight_smash10	] {BlockCancel();frameskip(0.07);};
