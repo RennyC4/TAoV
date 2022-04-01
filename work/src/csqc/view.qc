@@ -95,12 +95,15 @@ void(vector pos) DrawSwordStatus =
 		return;
 
 	local float sword = getstatf(STAT_SWORD);
-	local string h = ftos(sword);
+//	local string h = ftos(sword);
 	
 	drawpic (pos - '5 9', "progs/swordicon.png", '14 24 0', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
 	drawpic (pos - '7 10', "progs/swordicon.png", '14 24 0', '1 1 1', 1, DRAWFLAG_NORMAL); // sword pic
-	drawstring (pos + '1 1', h, '18 18', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
-	drawstring (pos, h, '18 18', '1 1 1', 1, DRAWFLAG_NORMAL);
+
+	Hud_DrawLargeValue_Items(pos - '50 0', sword, 25); // 1st digit
+
+//	drawstring (pos + '1 1', h, '18 18', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
+//	drawstring (pos, h, '18 18', '1 1 1', 1, DRAWFLAG_NORMAL);
 };
 
 void(vector pos) DrawArmorStatus =
@@ -109,12 +112,15 @@ void(vector pos) DrawArmorStatus =
 		return;
 
 	local float armor = getstatf(STAT_ARMOR2);
-	local string h = ftos(armor);
+//	local string h = ftos(armor);
 	
 	drawpic (pos - '8 8', "progs/armoricon.png", '24 24 0', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
 	drawpic (pos - '10 10', "progs/armoricon.png", '24 24 0', '1 1 1', 1, DRAWFLAG_NORMAL); // armor pic
-	drawstring (pos + '1 1', h, '18 18', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
-	drawstring (pos, h, '18 18', '1 1 1', 1, DRAWFLAG_NORMAL);
+
+	Hud_DrawLargeValue_Items(pos - '45 0', armor, 25); // 1st digit
+
+//	drawstring (pos + '1 1', h, '18 18', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
+//	drawstring (pos, h, '18 18', '1 1 1', 1, DRAWFLAG_NORMAL);
 };
 
 void(vector pos) DrawMonsterNameDisplay =
@@ -140,40 +146,40 @@ void(vector pos) DrawCurrentSelectedSpell =
 		drawpic (pos + '1 1', "progs/spell1_s.png", '32 32 0', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
 		drawpic (pos, "progs/spell1_s.png", '32 32 0', '1 1 1', 1, DRAWFLAG_NORMAL);
 		// Draw Mana Cost
-		drawstring (pos + '25 17', " 10 mp", '8 8', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
-		drawstring (pos + '24 16', " 10 mp", '8 8', '.25 .25 1', 1, DRAWFLAG_NORMAL);
+		drawstring (pos + '21 17', " 10mp", '8 8', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
+		drawstring (pos + '20 16', " 10mp", '8 8', '.25 .25 1', 1, DRAWFLAG_NORMAL);
 	}
 	else if (selected_spell == 1)
 	{
 		drawpic (pos + '1 1', "progs/spell2_s.png", '32 32 0', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
 		drawpic (pos, "progs/spell2_s.png", '32 32 0', '1 1 1', 1, DRAWFLAG_NORMAL);
 		// Draw Mana Cost
-		drawstring (pos + '25 17', " 50 mp", '8 8', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
-		drawstring (pos + '24 16', " 50 mp", '8 8', '.25 .25 1', 1, DRAWFLAG_NORMAL);
+		drawstring (pos + '21 17', " 50mp", '8 8', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
+		drawstring (pos + '20 16', " 50mp", '8 8', '.25 .25 1', 1, DRAWFLAG_NORMAL);
 	}
 	else if (selected_spell == 2)
 	{
 		drawpic (pos + '1 1', "progs/spell3_s.png", '32 32 0', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
 		drawpic (pos, "progs/spell3_s.png", '32 32 0', '1 1 1', 1, DRAWFLAG_NORMAL);
 		// Draw Mana Cost
-		drawstring (pos + '25 17', " 30 mp", '8 8', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
-		drawstring (pos + '24 16', " 30 mp", '8 8', '.25 .25 1', 1, DRAWFLAG_NORMAL);
+		drawstring (pos + '21 17', " 30mp", '8 8', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
+		drawstring (pos + '20 16', " 30mp", '8 8', '.25 .25 1', 1, DRAWFLAG_NORMAL);
 	}
 	else if (selected_spell == 4)
 	{
 		drawpic (pos + '1 1', "progs/spell4_s.png", '32 32 0', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
 		drawpic (pos, "progs/spell4_s.png", '32 32 0', '1 1 1', 1, DRAWFLAG_NORMAL);
 		// Draw Mana Cost
-		drawstring (pos + '25 17', " 100 mp", '8 8', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
-		drawstring (pos + '24 16', " 100 mp", '8 8', '.25 .25 1', 1, DRAWFLAG_NORMAL);
+		drawstring (pos + '21 17', " 100mp", '8 8', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
+		drawstring (pos + '20 16', " 100mp", '8 8', '.25 .25 1', 1, DRAWFLAG_NORMAL);
 	}
 	else if (selected_spell == 8)
 	{
 		drawpic (pos + '1 1', "progs/spell5_s.png", '32 32 0', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
 		drawpic (pos, "progs/spell5_s.png", '32 32 0', '1 1 1', 1, DRAWFLAG_NORMAL);
 		// Draw Mana Cost
-		drawstring (pos + '25 17', " 75 mp", '8 8', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
-		drawstring (pos + '24 16', " 75 mp", '8 8', '.25 .25 1', 1, DRAWFLAG_NORMAL);
+		drawstring (pos + '21 17', " 75mp", '8 8', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
+		drawstring (pos + '20 16', " 75mp", '8 8', '.25 .25 1', 1, DRAWFLAG_NORMAL);
 	}
 };
 
@@ -224,24 +230,12 @@ void(vector pos) DrawHPBar =
     //
     // HP Text
     //
-    local string hp_str = sprintf("^xf44%d", hp);
-    local string maxhp_str = sprintf("/^xd55%d hp", maxhp);
-    local float max_width = 58;
+    local string hp_str = sprintf("%d", hp);
+    local string maxhp_str = sprintf(" / %d", maxhp);
+    local float max_width = 50;
     local float scale = min(max_width/(stringwidth(hp_str,TRUE,'13 13') + stringwidth(hp_str,TRUE,'10 10')),1);
     
-    
-    // Current hp
-    local vector textpos = pos + '6 -20 0';
-    drawstring (textpos + '1.5 1.5', hp_str, [13*scale, 13], '0 0 0', 0.6, DRAWFLAG_NORMAL);
-    drawstring (textpos, hp_str, [13*scale, 13], '1 1 1', 1, DRAWFLAG_NORMAL);
-    textpos_x += (stringwidth(hp_str,TRUE,[13*scale, 13])) + 1;
-    textpos_y += 4;
-    
-    // Max hp
-    drawstring (textpos + '1 1', maxhp_str, [10*scale, 10], '0 0 0', 0.6, DRAWFLAG_NORMAL);
-    drawstring (textpos, maxhp_str, [10*scale, 10], '1 1 1', 1, DRAWFLAG_NORMAL);
-	
-	//
+    //
 	// HP Bar
 	//
 	
@@ -280,6 +274,19 @@ void(vector pos) DrawHPBar =
 	drawsubpic(barpos, [164*minfrac, 16], "gfx/hpbar/new/hpbar", '0 0', [minfrac, 1], '1 1 1', 1, DRAWFLAG_NORMAL); 	//hpbar
 	
 	drawsubpic(barpos, '164 16', "gfx/hpbar/new/hpbar_foreground", '0 0', '1 1', '1 1 1', 1, DRAWFLAG_NORMAL); 	//foreground
+	
+	// Draw text over bar
+
+	// Current hp
+    local vector textpos = pos + '10 5 0';
+
+    drawstring (textpos + '1 1', hp_str, [8*scale, 8], '0 0 0', 1, DRAWFLAG_NORMAL); // HP text shadow
+    drawstring (textpos, hp_str, [8*scale, 8], '1 1 1', 1, DRAWFLAG_NORMAL);
+    textpos_x += (stringwidth(hp_str, TRUE, [8*scale, 8])) + 1;
+    
+    // Max hp
+    drawstring (textpos + '1 1', maxhp_str, [8*scale, 8], '0 0 0', 1, DRAWFLAG_NORMAL); // Max HP text shadow
+    drawstring (textpos, maxhp_str, [8*scale, 8], '1 1 1', 1, DRAWFLAG_NORMAL);
 }
 
 float mpbar_old_frac;
@@ -292,23 +299,6 @@ void(vector pos) DrawMPBar =
 	local float mp = getstatf(STAT_MANA);
 	
 	//drawfill('0 0', '256 256', 1, 1);
-	
-	//
-	// MP Text
-	//
-	
-	// Current mp
-	local string str = sprintf("^x44f%d", mp);
-	local vector textpos = pos + '4 14 0';
-	drawstring (textpos + '1.5 1.5', str, '16 16', '0 0 0', 0.6, DRAWFLAG_NORMAL);
-	drawstring (textpos, str, '16 16', '1 1 1', 1, DRAWFLAG_NORMAL);
-	textpos_x += (stringwidth(str,1)*16) + 1;
-	textpos_y += 3;
-	
-	// Max mp
-	local string str = sprintf("/^x55d%d mp", maxmp);
-	drawstring (textpos + '1 1', str, '10 10', '0 0 0', 0.6, DRAWFLAG_NORMAL);
-	drawstring (textpos, str, '10 10', '1 1 1', 1, DRAWFLAG_NORMAL);
 	
 	//
 	// MP Bar
@@ -348,6 +338,24 @@ void(vector pos) DrawMPBar =
 	drawsubpic(barpos, [124*minfrac, 12], "gfx/hpbar/new/hpbar_desat", '0 0', [minfrac, 1], '0.1 0.1 1', 1, DRAWFLAG_NORMAL); //mpbar
 	
 	drawsubpic(barpos, '124 12', "gfx/hpbar/new/hpbar_foreground", '0 0', '1 1', '1 1 1', 1, DRAWFLAG_NORMAL); 	//foreground
+
+	//
+	// MP Text
+	//
+	
+	// Current mp
+	local string str = sprintf("%d", mp);
+	local vector textpos = pos + '8 3.5 0';
+	drawstring (textpos + '1 1', str, '7 7', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
+	drawstring (textpos, str, '7 7', '1 1 1', 1, DRAWFLAG_NORMAL);
+
+	textpos_x += (stringwidth(str,1)*7) + 1;
+	textpos_y += 0;
+	
+	// Max mp
+	local string str = sprintf(" / %d", maxmp);
+	drawstring (textpos + '1 1', str, '7 7', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
+	drawstring (textpos, str, '7 7', '1 1 1', 1, DRAWFLAG_NORMAL);
 }
 
 float xpbar_old_frac;
@@ -821,6 +829,7 @@ void(vector pos) Draw_Level_Number =
 		drawstring (pos + '0 1', g, '8 8 0', '1 1 1', 1, DRAWFLAG_NORMAL); // drop shadow
 		drawstring (pos, z, '8 8 0', '1 1 1', 1, DRAWFLAG_NORMAL);
 	}
+	drawstring (pos + '-15 0', "Lv.", '8 8 0', '1 1 1', 1, DRAWFLAG_NORMAL); // Lv. text
 };
 
 void(vector pos) DrawShrineHud =
@@ -1139,20 +1148,20 @@ void(float width, float height, float menushown) CSQC_UpdateView =
 			return;
 
 		DrawHeadBackground('20 10');				// Draw Head background border
-		DrawGoldHUD('20 10');						// Draws 3D Gold model
+		DrawGoldHUD('20 0');						// Draws 3D Gold model
 		Draw_Vigil_Head('18 16');					// Draws Vigil's 3D Head
-		Draw_Health_Potion('125 4');				// Draws Health Potion bottle
-		DrawFlaskStatus('125 4');
+		Draw_Health_Potion('55 4');				// Draws Health Potion bottle
+		DrawFlaskStatus('55 4');
 		DrawLevelName(width, height, '.9 .1 0');	// Draws level name at the beginning of a level
 		DrawXPBar('54 26');
 		DrawMPBar('18 48');
 		DrawHPBar('46 32');
-		DrawGoldStatus('22 75');					// Draws gold on HUD
+		DrawGoldStatus('20 65');					// Draws gold on HUD
 		DrawSwordStatus('200 17');					// Draws sword level on HUD
 		DrawArmorStatus('176 17');					// Draws armor level on HUD
 		DrawCurrentSelectedSpell('132 38');			// Draws the selected spell on HUD
 		DrawPlayerStatus('0 0');					// Draw "Status: " Text
-		Draw_Level_Number('37 42');					// Draw Vigil's Level
+		Draw_Level_Number('38 10');					// Draw Vigil's Level
 
 		local float keys = getstatf(STAT_KEYS);	// Draw Keys on screen
 		if (keys == 1) // 1 = Gold, 2 = Silver

@@ -85,11 +85,32 @@ void(vector pos, float value, float threshhold) Hud_DrawLargeValue_Red =
 	}
 };
 
+// view.qc
+void(vector pos, float value, float threshhold) Hud_DrawLargeValue_Items =
+{
+	float c;
+	float len;
+	string s;
+	if (value < 0)
+		value = 0;	//hrm
+
+	s = ftos(floor(value));
+	len = strlen(s);
+
+	pos_x += 24 * (3-len);
+	
+	while(len>0)
+	{
+		len--;
+		c = str2chr(s, len);
+		drawpic(pos + '1 1' + len * '16 0 0', number[c-'0'], '16 16 0', '0 0 0', 1, 0); // shadow
+		drawpic(pos + len * '16 0 0', number[c-'0'], '16 16 0', '1 1 1', 1, 0);
+	}
+};
+
 //Hud entry point!
 //showscores is set if +scores is held (check health yourself).
-void(vector virtsize, float showscores) CSQC_DrawHud =
-{
-};
+void(vector virtsize, float showscores) CSQC_DrawHud = {};
 
 void(float apilevel, string enginename, float engineversion) CSQC_Init =
 {
