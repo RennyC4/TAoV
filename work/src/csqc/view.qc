@@ -85,7 +85,7 @@ void(vector pos) DrawGoldStatus =
 
 void(float screenwidth, float screenheight) DrawPouchIcon =
 {
-	local vector pos2 = [(screenwidth - stringwidth("", TRUE, '20 20 0'))/30, (screenheight - 18)/6];
+	local vector pos2 = [(screenwidth - stringwidth("", TRUE, '20 20 0'))/5.8, (screenheight - 18)/254];
 	drawpic (pos2, "progs/pouch.png", '20 20', '1 1 1', 1, DRAWFLAG_NORMAL);
 };
 
@@ -146,7 +146,7 @@ void(vector pos) DrawCurrentSelectedSpell =
 		drawpic (pos + '1 1', "progs/spell1_s.png", '32 32 0', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
 		drawpic (pos, "progs/spell1_s.png", '32 32 0', '1 1 1', 1, DRAWFLAG_NORMAL);
 		// Draw Mana Cost
-		drawstring (pos + '21 17', " 10mp", '8 8', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
+		drawstring (pos + '21 16', " 10mp", '8 8', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
 		drawstring (pos + '20 16', " 10mp", '8 8', '.25 .25 1', 1, DRAWFLAG_NORMAL);
 	}
 	else if (selected_spell == 1)
@@ -154,7 +154,7 @@ void(vector pos) DrawCurrentSelectedSpell =
 		drawpic (pos + '1 1', "progs/spell2_s.png", '32 32 0', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
 		drawpic (pos, "progs/spell2_s.png", '32 32 0', '1 1 1', 1, DRAWFLAG_NORMAL);
 		// Draw Mana Cost
-		drawstring (pos + '21 17', " 50mp", '8 8', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
+		drawstring (pos + '21 16', " 50mp", '8 8', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
 		drawstring (pos + '20 16', " 50mp", '8 8', '.25 .25 1', 1, DRAWFLAG_NORMAL);
 	}
 	else if (selected_spell == 2)
@@ -162,7 +162,7 @@ void(vector pos) DrawCurrentSelectedSpell =
 		drawpic (pos + '1 1', "progs/spell3_s.png", '32 32 0', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
 		drawpic (pos, "progs/spell3_s.png", '32 32 0', '1 1 1', 1, DRAWFLAG_NORMAL);
 		// Draw Mana Cost
-		drawstring (pos + '21 17', " 30mp", '8 8', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
+		drawstring (pos + '21 16', " 30mp", '8 8', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
 		drawstring (pos + '20 16', " 30mp", '8 8', '.25 .25 1', 1, DRAWFLAG_NORMAL);
 	}
 	else if (selected_spell == 4)
@@ -170,7 +170,7 @@ void(vector pos) DrawCurrentSelectedSpell =
 		drawpic (pos + '1 1', "progs/spell4_s.png", '32 32 0', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
 		drawpic (pos, "progs/spell4_s.png", '32 32 0', '1 1 1', 1, DRAWFLAG_NORMAL);
 		// Draw Mana Cost
-		drawstring (pos + '21 17', " 100mp", '8 8', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
+		drawstring (pos + '21 16', " 100mp", '8 8', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
 		drawstring (pos + '20 16', " 100mp", '8 8', '.25 .25 1', 1, DRAWFLAG_NORMAL);
 	}
 	else if (selected_spell == 8)
@@ -178,7 +178,7 @@ void(vector pos) DrawCurrentSelectedSpell =
 		drawpic (pos + '1 1', "progs/spell5_s.png", '32 32 0', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
 		drawpic (pos, "progs/spell5_s.png", '32 32 0', '1 1 1', 1, DRAWFLAG_NORMAL);
 		// Draw Mana Cost
-		drawstring (pos + '21 17', " 75mp", '8 8', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
+		drawstring (pos + '21 16', " 75mp", '8 8', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
 		drawstring (pos + '20 16', " 75mp", '8 8', '.25 .25 1', 1, DRAWFLAG_NORMAL);
 	}
 };
@@ -568,6 +568,7 @@ void(vector pos) DrawGoldHUD =
 		gold.frame = 0;
 		gold.origin = '0 0 -15';
 		gold.angles_x = 25;
+		gold.scale = 0.5;
 	}
 	entdraw(gold, pos, '14 100', -112);
 };
@@ -1148,7 +1149,7 @@ void(float width, float height, float menushown) CSQC_UpdateView =
 			return;
 
 		DrawHeadBackground('20 10');				// Draw Head background border
-		DrawGoldHUD('20 0');						// Draws 3D Gold model
+		DrawGoldHUD('145 -60');						// Draws 3D Gold model
 		Draw_Vigil_Head('18 16');					// Draws Vigil's 3D Head
 		Draw_Health_Potion('55 4');				// Draws Health Potion bottle
 		DrawFlaskStatus('55 4');
@@ -1156,9 +1157,9 @@ void(float width, float height, float menushown) CSQC_UpdateView =
 		DrawXPBar('54 26');
 		DrawMPBar('18 48');
 		DrawHPBar('46 32');
-		DrawGoldStatus('20 65');					// Draws gold on HUD
-		DrawSwordStatus('200 17');					// Draws sword level on HUD
-		DrawArmorStatus('176 17');					// Draws armor level on HUD
+		DrawGoldStatus('130 8');					// Draws gold on HUD
+		DrawSwordStatus('128 10');					// Draws sword level on HUD
+		DrawArmorStatus('102 10');					// Draws armor level on HUD
 		DrawCurrentSelectedSpell('132 38');			// Draws the selected spell on HUD
 		DrawPlayerStatus('0 0');					// Draw "Status: " Text
 		Draw_Level_Number('38 10');					// Draw Vigil's Level
