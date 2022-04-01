@@ -4766,7 +4766,7 @@ void() player_hsblked	=[	$hsblked1,	player_hsblked	]
 	self.angles_y = view_y;
 	self.fixangle = TRUE;
 
-	if (self.onground == TRUE)
+	if (self.onground == TRUE || pointcontents(self.origin) == CONTENT_WATER || pointcontents(self.origin) == CONTENT_LAVA || pointcontents(self.origin) == CONTENT_SLIME)
 	{
 		if (self.angles_y > 90 && self.angles_y < 270)
 			self.angles_y = 180;
