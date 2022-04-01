@@ -1100,10 +1100,18 @@ void() gold_touch =
 	local float aprice = 100 * floor(other.owner.level / 3.5); // Tied to wizards teleport to castle stuff
 	if (world.model != "maps/village.bsp")
 	{
-		if (other.owner.last_combo > 0)
-			self.cnt = other.owner.level * 13 + ceil(random()*9) + ceil(other.owner.last_combo / 2);
-		else
+		if (self.message == "breakable") // message string is used to see who dropped the gold without classname getting in the way from being removed
+		{
 			self.cnt = other.owner.level * 13 + ceil(random()*9);
+			self.cnt = floor(self.cnt / 6);
+		}
+		else
+		{
+			if (other.owner.last_combo > 0)
+				self.cnt = other.owner.level * 13 + ceil(random()*9) + ceil(other.owner.last_combo / 2);
+			else
+				self.cnt = other.owner.level * 13 + ceil(random()*9);
+		}
 	}
 	else
 	{
@@ -1168,6 +1176,7 @@ void() drop_gold =
 	goldg.alpha = 1;
 	goldg.flags = FL_ITEM;
 	goldg.owner = self;
+	goldg.message = self.classname; // store the classname of who spawned me
 	goldg.maxgold = self.maxgold;
 	goldg.frame = 1; // spin
 	goldg.touch = gold_touch;
