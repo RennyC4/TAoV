@@ -453,6 +453,9 @@ static string anumber[10] =
 void Hud_DrawLargeValue(vector pos, float value, float threshhold);
 void(float screenwidth, float screenheight) DrawComboCounter =
 {
+	if (world.model == "maps/village.bsp")
+		return;
+
 	local float h = getstatf(STAT_COMBO);
 	local vector pos = [(screenwidth - stringwidth("", TRUE, '18 18 0'))/1.5, (screenheight - 18)/2.25];
 	local vector pos2 = [(screenwidth - stringwidth("", TRUE, '122 40.5 0'))/1.30, (screenheight - 18)/2.5];
@@ -696,7 +699,7 @@ void() AnimateHead =
 		else
 			head.colormod = '1 1 1';
 
-		if (h > 11 || pg > time) // angry face
+		if (h > 11 || pg > time && world.model != "maps/village.bsp") // angry face
 		{
 			if (pg > time)
 				head.skin = 2; // smirk

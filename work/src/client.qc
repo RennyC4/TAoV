@@ -1102,7 +1102,8 @@ void() PlayerPostThink =
 
 	if (self.char)
 	{
-		ComboMeter(); // display combo count
+		if (world.model != "maps/village.bsp")
+			ComboMeter(); // display combo count
 
 		UnmakeSolidList(); // called each frame after physics run
 
