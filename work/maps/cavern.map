@@ -10426,7 +10426,7 @@
 // entity 325
 {
 "classname" "monster_gremlin"
-"origin" "-2568 -40 -584"
+"origin" "-2568 -56 -568"
 "_phong" "1"
 "angle" "285"
 }
