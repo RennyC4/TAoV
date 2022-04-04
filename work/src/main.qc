@@ -518,7 +518,7 @@ void() StartFrame =
 	
 	for (entity v = world; (v=nextent(v));)
 	{
-		if (!v.flags & FL_MONSTER && !v.classname == "player")
+		if (!v.flags & FL_MONSTER && !v.classname == "player" && !v.classname == "guard")
 			continue;
 
 		// Colormod smooth removal on monsters
