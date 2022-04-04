@@ -97,6 +97,17 @@ void() player_dodgef1;
 // Remove me when FTE's MOVETYPE_FOLLOW is fixed
 void() volbrand_think =
 {
+	if (self.owner.perfectguard_buff < time)
+	{
+		setmodel (self, "progs/plyr2.mdl");
+		self.colormod = '1 1 1';
+	}
+	else
+	{
+		setmodel (self, "progs/plyr2pg.mdl");
+		self.colormod = '5 5 0';
+	}
+
 	setorigin (self, self.owner.origin);
 	self.angles = self.owner.angles;
 	self.frame = self.owner.frame;
@@ -715,19 +726,27 @@ void() SwordShadows =
 	shadows.classname = "shadows";
 	shadows.movetype  = MOVETYPE_NOCLIP;
 	shadows.solid     = SOLID_NOT;
-	shadows.alpha     = 0.25;
 	shadows.drawonlytoclient = self; // reduce network traffic
 	shadows.effects   = EF_ADDITIVE | EF_FULLBRIGHT;
 	setmodel (shadows, "progs/swordfx.mdl");
 
-	if (shadows.owner.swordlevel == 0)
-		shadows.skin = 0;
-	if (shadows.owner.swordlevel == 1)
-		shadows.skin = 1;
-	if (shadows.owner.swordlevel == 2)
-		shadows.skin = 2;
-	if (shadows.owner.swordlevel == 3)
-		shadows.skin = 3;
+	if (shadows.owner.char.perfectguard_buff < time)
+	{
+		shadows.alpha     = 0.25;
+		if (shadows.owner.swordlevel == 0)
+			shadows.skin = 0;
+		if (shadows.owner.swordlevel == 1)
+			shadows.skin = 1;
+		if (shadows.owner.swordlevel == 2)
+			shadows.skin = 2;
+		if (shadows.owner.swordlevel == 3)
+			shadows.skin = 3;
+	}
+	else
+	{
+		shadows.skin = 4;
+		shadows.alpha = 0.50;
+	}
 
 	shadows.frame = self.char.frame;
 	shadows.angles = self.char.angles;
