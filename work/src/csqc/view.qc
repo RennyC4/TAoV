@@ -146,40 +146,40 @@ void(vector pos) DrawCurrentSelectedSpell =
 		drawpic (pos + '1 1', "progs/spell1_s.png", '32 32 0', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
 		drawpic (pos, "progs/spell1_s.png", '32 32 0', '1 1 1', 1, DRAWFLAG_NORMAL);
 		// Draw Mana Cost
-		drawstring (pos + '21 16', " 10mp", '8 8', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
-		drawstring (pos + '20 16', " 10mp", '8 8', '.25 .25 1', 1, DRAWFLAG_NORMAL);
+		drawstring (pos + '25 16', "10mp", '8 8', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
+		drawstring (pos + '24 16', "10mp", '8 8', '1 1 1', 1, DRAWFLAG_NORMAL);
 	}
 	else if (selected_spell == 1)
 	{
 		drawpic (pos + '1 1', "progs/spell2_s.png", '32 32 0', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
 		drawpic (pos, "progs/spell2_s.png", '32 32 0', '1 1 1', 1, DRAWFLAG_NORMAL);
 		// Draw Mana Cost
-		drawstring (pos + '21 16', " 50mp", '8 8', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
-		drawstring (pos + '20 16', " 50mp", '8 8', '.25 .25 1', 1, DRAWFLAG_NORMAL);
+		drawstring (pos + '25 16', "50mp", '8 8', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
+		drawstring (pos + '24 16', "50mp", '8 8', '1 1 1', 1, DRAWFLAG_NORMAL);
 	}
 	else if (selected_spell == 2)
 	{
 		drawpic (pos + '1 1', "progs/spell3_s.png", '32 32 0', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
 		drawpic (pos, "progs/spell3_s.png", '32 32 0', '1 1 1', 1, DRAWFLAG_NORMAL);
 		// Draw Mana Cost
-		drawstring (pos + '21 16', " 30mp", '8 8', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
-		drawstring (pos + '20 16', " 30mp", '8 8', '.25 .25 1', 1, DRAWFLAG_NORMAL);
+		drawstring (pos + '25 16', "30mp", '8 8', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
+		drawstring (pos + '24 16', "30mp", '8 8', '1 1 1', 1, DRAWFLAG_NORMAL);
 	}
 	else if (selected_spell == 4)
 	{
 		drawpic (pos + '1 1', "progs/spell4_s.png", '32 32 0', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
 		drawpic (pos, "progs/spell4_s.png", '32 32 0', '1 1 1', 1, DRAWFLAG_NORMAL);
 		// Draw Mana Cost
-		drawstring (pos + '21 16', " 100mp", '8 8', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
-		drawstring (pos + '20 16', " 100mp", '8 8', '.25 .25 1', 1, DRAWFLAG_NORMAL);
+		drawstring (pos + '25 16', "100mp", '8 8', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
+		drawstring (pos + '24 16', "100mp", '8 8', '1 1 1', 1, DRAWFLAG_NORMAL);
 	}
 	else if (selected_spell == 8)
 	{
 		drawpic (pos + '1 1', "progs/spell5_s.png", '32 32 0', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
 		drawpic (pos, "progs/spell5_s.png", '32 32 0', '1 1 1', 1, DRAWFLAG_NORMAL);
 		// Draw Mana Cost
-		drawstring (pos + '21 16', " 75mp", '8 8', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
-		drawstring (pos + '20 16', " 75mp", '8 8', '.25 .25 1', 1, DRAWFLAG_NORMAL);
+		drawstring (pos + '25 16', "75mp", '8 8', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
+		drawstring (pos + '24 16', "75mp", '8 8', '1 1 1', 1, DRAWFLAG_NORMAL);
 	}
 };
 
@@ -592,24 +592,24 @@ void(vector pos) DrawFlaskStatus =
 	if (flask == 0) // blink with ^b on zero flask left
 	{
 		drawstring (pos + '22 0' + '1 1', display_final, '8 8', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
-		drawstring (pos + '22 0', display_final, '8 8', '1 0 0', 1, DRAWFLAG_NORMAL);
+		drawstring (pos + '22 0', display_final, '8 8', '1 1 1', 1, DRAWFLAG_NORMAL);
 	}
 	else
 	{
 		drawstring (pos + '22 0' + '1 1', h, '8 8', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
-		drawstring (pos + '22 0', h, '8 8', '1 0 0', 1, DRAWFLAG_NORMAL);
+		drawstring (pos + '22 0', h, '8 8', '1 1 1', 1, DRAWFLAG_NORMAL);
 	}
 
 	// Draw "-"
-	drawstring (pos + '23 7', "=", '20 8', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
-	drawstring (pos + '22 6', "=", '20 8', '1 1 1', 1, DRAWFLAG_NORMAL);
+	drawstring (pos + '24 7', "=", '20 8', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
+	drawstring (pos + '23 6', "=", '20 8', '1 1 1', 1, DRAWFLAG_NORMAL);
 	
 	local float maxflask = getstatf(STAT_FLASK_MAX);
 	local string s = ftos(maxflask);
 
 	// Draw max flask amount
 	drawstring (pos + '22 14', s, '8 8', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
-	drawstring (pos + '22 13', s, '8 8', '1 0 0', 1, DRAWFLAG_NORMAL);
+	drawstring (pos + '22 13', s, '8 8', '1 1 1', 1, DRAWFLAG_NORMAL);
 	
 	// Draw X over flask on certain conditions
 	
