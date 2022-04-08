@@ -763,7 +763,7 @@ void(vector pos) DrawPlayerStatus =
     local float broken = getstatf(STAT_STATUS_BROKEN);
     local float pg = getstatf(STAT_PERFECTGUARD);
 	
-    local vector listpos = pos + '8 121';
+	local vector listpos = pos + '8 70';
     
 	if (time < pg)
     {
