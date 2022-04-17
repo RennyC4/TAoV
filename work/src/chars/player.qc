@@ -6981,6 +6981,7 @@ void() player_doublejump1	=[	$djump,	player_doublejump1	]
 
 	if (self.djump_spincnt == 0)
 	{
+		self.owner.speedline_time = time + 0.1;
 		self.djump_spincnt = 1;
 		player_yell(0);
 		self.velocity_z = self.walkframe = 0;
