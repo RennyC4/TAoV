@@ -16,8 +16,10 @@ void(float screenwidth, float screenheight, vector color) DrawLevelName =
 	//
 	// Hardcoded alpha values because for some reason passing a variable into alpha isn't updating correctly	
 	//
-	if (cltime < 4)
-		Sbar_DrawString(pos + '2 2', world.message, 1, '18 18 0', '0 0 0'); // shadow
+	if (cltime < 3.3)
+	{
+		Sbar_DrawString(pos + '1 1', world.message, 1, '18 18 0', '0 0 0'); // shadow
+	}
 
 	if (cltime < 1)
 		Sbar_DrawString(pos, world.message, 0.1, '18 18 0', color);
