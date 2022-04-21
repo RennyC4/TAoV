@@ -470,35 +470,64 @@ void(float screenwidth, float screenheight) DrawComboCounter =
 	if (msg > 0 && h < 2)
 	{
 		if (msg == 1)
+		{
+			drawpic (pos2 + '1 1', "progs/cmbomsg1.png", '196 40.5', '0 0 0', 1, DRAWFLAG_NORMAL); // Shadow
 			drawpic (pos2, "progs/cmbomsg1.png", '196 40.5', '1 1 1', 1, DRAWFLAG_NORMAL);
+		}
 		if (msg == 2)
+		{
+			drawpic (pos2 + '1 1', "progs/cmbomsg2.png", '196 40.5', '0 0 0', 1, DRAWFLAG_NORMAL); // Shadow
 			drawpic (pos2, "progs/cmbomsg2.png", '196 40.5', '1 1 1', 1, DRAWFLAG_NORMAL);
+		}
 		if (msg == 3)
+		{
+			drawpic (pos2 + '1 1', "progs/cmbomsg3.png", '196 40.5', '0 0 0', 1, DRAWFLAG_NORMAL); // Shadow
 			drawpic (pos2, "progs/cmbomsg3.png", '196 40.5', '1 1 1', 1, DRAWFLAG_NORMAL);
+		}
 		if (msg == 4)
+		{
+			drawpic (pos2 + '1 1', "progs/cmbomsg4.png", '196 40.5', '0 0 0', 1, DRAWFLAG_NORMAL); // Shadow
 			drawpic (pos2, "progs/cmbomsg4.png", '196 40.5', '1 1 1', 1, DRAWFLAG_NORMAL);
+		}
 		if (msg == 5) // Adjust slightly
+		{
+			drawpic (pos2 - '14 1', "progs/cmbomsg5.png", '196 40.5', '0 0 0', 1, DRAWFLAG_NORMAL); // Shadow
 			drawpic (pos2 - '15 0', "progs/cmbomsg5.png", '196 40.5', '1 1 1', 1, DRAWFLAG_NORMAL);
+		}
 		if (msg == 6) // Adjust slightly
+		{
+			drawpic (pos2 - '9 1', "progs/cmbomsg6.png", '196 40.5', '0 0 0', 1, DRAWFLAG_NORMAL); // Shadow
 			drawpic (pos2 - '10 0', "progs/cmbomsg6.png", '196 40.5', '1 1 1', 1, DRAWFLAG_NORMAL);
+		}
 		if (msg == 7)
+		{
+			drawpic (pos2 + '1 1', "progs/cmbomsg7.png", '196 40.5', '0 0 0', 1, DRAWFLAG_NORMAL); // Shadow
 			drawpic (pos2, "progs/cmbomsg7.png", '196 40.5', '1 1 1', 1, DRAWFLAG_NORMAL);
+		}
 		if (msg == 8)
+		{
+			drawpic (pos2 + '1 1', "progs/cmbomsg8.png", '196 40.5', '0 0 0', 1, DRAWFLAG_NORMAL); // Shadow
 			drawpic (pos2, "progs/cmbomsg8.png", '196 40.5', '1 1 1', 1, DRAWFLAG_NORMAL);
+		}
 		if (msg == 9)
+		{
+			drawpic (pos2 + '1 1', "progs/cmbomsg9.png", '196 40.5', '0 0 0', 1, DRAWFLAG_NORMAL); // Shadow
 			drawpic (pos2, "progs/cmbomsg9.png", '196 40.5', '1 1 1', 1, DRAWFLAG_NORMAL);
+		}
 	}
 };
 
 void(float screenwidth, float screenheight) DrawPerfectGuard =
 {
 	local vector pos2 = [(screenwidth - stringwidth("", TRUE, '122 40.5 0'))/1.30, (screenheight - 18)/3];
+	drawpic (pos2 + '1 1', "progs/perfgrd.png", '122 40.5', '0 0 0', 1, DRAWFLAG_NORMAL); // Shadow
 	drawpic (pos2, "progs/perfgrd.png", '122 40.5', '1 1 1', 1, DRAWFLAG_NORMAL);
 };
 
 void(float screenwidth, float screenheight) DrawAbsorption =
 {
 	local vector pos2 = [(screenwidth - stringwidth("", TRUE, '122 40.5 0'))/1.275, (screenheight - 18)/3.6];
+	drawpic (pos2 + '1 1', "progs/absorb.png", '122 40.5', '0 0 0', 1, DRAWFLAG_NORMAL); // Shadow
 	drawpic (pos2, "progs/absorb.png", '122 40.5', '1 1 1', 1, DRAWFLAG_NORMAL);
 };
 
