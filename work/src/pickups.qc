@@ -1047,6 +1047,7 @@ void() gold_think =
 			self.angles_x = self.angles_z = 0;
 			sound (self, CHAN_BODY, "misc/gold.wav", 1, ATTN_NORM);
 			self.frame = 0; // no spin
+			self.angles_y = random()*360;
 			setorigin(self, self.origin + v_up*1);
 			return;
 		}
