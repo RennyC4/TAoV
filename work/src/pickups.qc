@@ -685,40 +685,10 @@ void() relic_touch =
 	return;
 };
 
-void() relicparticle_think =
-{
-	if (self.attack_finished < time)
-	{
-		remove(self);
-		return;
-	}
-	particle(self.origin, '0 0 0', 151, 20);
-	frameskip (0.1);
-};
-
 void() relic_think =
 {
 	local entity p;
 
-	// spawn a particle moving around - single player only
-	// to keep network traffic down
-	if (!deathmatch && !coop)
-	{
-		p = spawn();
-		p.movetype = MOVETYPE_NOCLIP;
-		p.solid = SOLID_NOT;
-		p.angles_x = random() * 360;
-		makevectors (p.angles);
-		p.velocity = v_forward * 75;
-		setmodel (p, "progs/null.spr");
-		setsize (p, '0 0 0', '0 0 0');
-		setorigin (p, self.origin);
-		p.think = relicparticle_think;
-		p.nextthink = time + 0.1;
-		p.attack_finished = time + 0.5;
-		p.owner = self;
-	}
-	
 	if (self.cnt == 2)
 		self.colormod = '0 0 1';
 	if (self.cnt == 9)
