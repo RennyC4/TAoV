@@ -336,6 +336,7 @@ void() StatusEffects =
 {	
 	if (self.char.health <= 0)
 		return;
+	// Force walk cutscenes already handled in client.qc
 
 	// Blindness is handled through CSQC
 	if (self.status_blind_finished > time)

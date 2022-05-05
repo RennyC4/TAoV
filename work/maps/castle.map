@@ -13311,7 +13311,7 @@
 {
 "classname" "item_health"
 "origin" "-7942 -214 792"
-"cnt" "10"
+"cnt" "33"
 "_phong" "1"
 }
 // entity 402
