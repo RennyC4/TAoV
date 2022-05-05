@@ -5,4 +5,4 @@ game taov
 protocolname "taov"
 basegame data
 disablehomedir 1
-MAXVER FTE 5808
+MAXVER FTE 6202

@@ -94,6 +94,11 @@ void() player_dodged1;
 void() player_dodgee1;
 void() player_dodgef1;
 
+void() swordstareffect;
+void() swordstareffect2;
+void() swordstareffect3;
+void() swordstareffect4;
+
 // Remove me when FTE's MOVETYPE_FOLLOW is fixed
 void() volbrand_think =
 {
@@ -3971,7 +3976,6 @@ void() player_stabs12b	=[	$stabs12,	player_stabs12b	]
 	}
 };
 
-void() swordstareffect3;
 void() player_fstab4;
 
 void() player_fstab1	=[	$fstab1,	player_fstab2	]
@@ -3986,7 +3990,20 @@ void() player_fstab1	=[	$fstab1,	player_fstab2	]
 	frameskip(0.15);
 	player_yell(1);
 };
-void() player_fstab2	=[	$fstab2,	player_fstab3	] {frameskip(0.03);};
+
+void() player_fstab2	=[	$fstab2,	player_fstab3	] 
+{
+	if (self.owner.bighit_freeze > time) // check if attack landed, needs to be called after FireMelee();
+	{
+		if (freeze_finished < time) // don't interefere with level up/etc
+			freeze_finished = time + (CONST_BIGHITSLOW * frametime);
+	}
+
+	sound (self, CHAN_WEAPON, "player/sword2.wav", 0.5, ATTN_NORM);
+	swordstareffect();
+
+	frameskip(0.03);
+};
 void() player_fstab3	=[	$fstab3,	player_fstab3	] 
 {
 	local entity effect;
@@ -4245,11 +4262,10 @@ void() player_attacka8	=[	$attacka8,	player_attacka9	]
 	frameskip(0.07);
 };
 
-void() swordstareffect;
 void() player_attacka9  =[	$attacka9,	player_attacka9b ]
 {
 	sound (self, CHAN_AUTO, "player/motion1.wav", 1, ATTN_NORM);
-	sound (self, CHAN_WEAPON, "player/sword2.wav", 1, ATTN_NORM);
+	sound (self, CHAN_WEAPON, "player/sword2.wav", 0.5, ATTN_NORM);
 	swordstareffect();
 	player_yell(0);
 	FireMelee(5,30,6,25,0,0,1,FALSE,0,0);
@@ -4417,6 +4433,12 @@ void() player_attacka16	=[	$attacka16,	player_attacka16	]
 		self.angles = self.oangles;
 		player_move();
 	}
+	else if (self.owner.combo_finished > time + 0.1 && self.owner.bighit_freeze < time + 0.5)
+	{
+		swordstareffect4();
+		sound (self, CHAN_WEAPON, "player/sword2.wav", 0.5, ATTN_NORM);
+	}
+
 	local entity effect, oself;
 	
 	makevectors (self.angles);
@@ -4481,7 +4503,7 @@ void() swordstareffect =
 
 	effect = spawn();
 	setorigin(effect, self.origin + v_forward * 34 + v_up*7);
-	setmodel(effect, "progs/star2.spr");
+	setmodel(effect, "progs/star2.spr"); // oriented
 	effect.solid = SOLID_NOT;
 	if (self.angles_y == 0)
 		effect.velocity_x = 80;
@@ -4518,7 +4540,7 @@ void() swordstareffect3 =
 
 	effect = spawn();
 	setorigin(effect, self.origin + v_forward * 54 + v_up * 25);
-	setmodel(effect, "progs/star.spr");
+	setmodel(effect, "progs/star.spr"); // not oriented (angles don't matter)
 	effect.solid = SOLID_NOT;
 	effect.owner = self;
 	effect.drawonlytoclient = self.owner.owner; // reduce network traffic
@@ -4527,6 +4549,22 @@ void() swordstareffect3 =
 	effect.nextthink = time + 0.1;
 };
 
+void() swordstareffect4 =
+{
+	local entity effect;
+
+	makevectors(self.angles);
+
+	effect = spawn();
+	setorigin(effect, self.origin + v_forward * 54 + v_up * 5);
+	setmodel(effect, "progs/star.spr"); // not oriented (angles don't matter)
+	effect.solid = SOLID_NOT;
+	effect.owner = self;
+	effect.drawonlytoclient = self.owner.owner; // reduce network traffic
+	effect.movetype = MOVETYPE_NOCLIP;
+	effect.think = swordstareffect3_think;
+	effect.nextthink = time + 0.1;
+};
 
 // Vigil's air launcher
 void() dashattack_forward = // push player forward during animation
@@ -6420,7 +6458,7 @@ void() player_icefield4	=[	$magicc4,	player_move	]
 	self.nextthink = time + 2;
 };
 
-void() swordstareffect_2 =
+void() swordstareffect2 =
 {
 	local entity effect;
 
@@ -6462,7 +6500,7 @@ void() player_magicd5	=[	$magicd5,	player_magicd6	]
 	effect.think = chargebeam_effect;
 	effect.nextthink = time + 0.1;
 	sound (effect, CHAN_AUTO, "spells/charge.wav", 1, ATTN_NORM);
-	swordstareffect_2();
+	swordstareffect2();
 	self.nextthink = time + 1;
 	self.colormod = '5 0 0';
 };
