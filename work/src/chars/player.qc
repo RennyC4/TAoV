@@ -4263,8 +4263,10 @@ void() player_attacka8	=[	$attacka8,	player_attacka9	]
 void() player_attacka9  =[	$attacka9,	player_attacka9b ]
 {
 	sound (self, CHAN_AUTO, "player/motion1.wav", 1, ATTN_NORM);
-	sound (self, CHAN_WEAPON, "player/sword2.wav", 0.5, ATTN_NORM);
-	swordstareffect();
+	
+	//sound (self, CHAN_WEAPON, "player/sword2.wav", 0.5, ATTN_NORM);
+	//swordstareffect();
+	
 	player_yell(0);
 	FireMelee(5,30,6,25,0,0,1,FALSE,0,0);
 	frameskip(0.05);
@@ -4432,7 +4434,7 @@ void() player_attacka16	=[	$attacka16,	player_attacka16	]
 		self.angles = self.oangles;
 		player_move();
 	}
-	else if (self.attacka16_star_finished < time)
+	else if (self.attacka16_star_finished < time && self.owner.combo > 0)
 	{
 		swordstareffect4();
 		sound (self, CHAN_WEAPON, "player/sword2.wav", 0.5, ATTN_NORM);
