@@ -3994,15 +3994,12 @@ void() player_fstab1	=[	$fstab1,	player_fstab2	]
 
 void() player_fstab2	=[	$fstab2,	player_fstab3	] 
 {
-	if (self.owner.bighit_freeze > time) // check if attack landed, needs to be called after FireMelee();
+	if (freeze_finished < time && self.owner.combo > 0) // don't interefere with level up/etc
 	{
-		if (freeze_finished < time) // don't interefere with level up/etc
-			freeze_finished = time + (CONST_BIGHITSLOW * frametime);
+		freeze_finished = time + (CONST_BIGHITSLOW * frametime);
+		sound (self, CHAN_WEAPON, "player/sword2.wav", 0.5, ATTN_NORM);
+		swordstareffect();
 	}
-
-	sound (self, CHAN_WEAPON, "player/sword2.wav", 0.5, ATTN_NORM);
-	swordstareffect();
-
 	frameskip(0.03);
 };
 void() player_fstab3	=[	$fstab3,	player_fstab3	] 
@@ -4427,6 +4424,7 @@ void() player_attacka15	=[	$attacka15,	player_attacka16	]
 	sound (self, CHAN_BODY, "player/skid.wav", 1, ATTN_NORM);
 };
 
+.float attacka16_star_finished;
 void() player_attacka16	=[	$attacka16,	player_attacka16	]  
 {
 	if (self.owner.combo_finished < time)
@@ -4434,10 +4432,11 @@ void() player_attacka16	=[	$attacka16,	player_attacka16	]
 		self.angles = self.oangles;
 		player_move();
 	}
-	else if (self.owner.combo_finished > time + 0.1 && self.owner.bighit_freeze < time + 0.5)
+	else if (self.attacka16_star_finished < time)
 	{
 		swordstareffect4();
 		sound (self, CHAN_WEAPON, "player/sword2.wav", 0.5, ATTN_NORM);
+		self.attacka16_star_finished = time + 0.3;
 	}
 
 	local entity effect, oself;
@@ -4604,14 +4603,13 @@ void() player_chargeatkmovement =
 		self.velocity_x = 0 - (self.speed * 1);
 	if (self.flags & FL_ONGROUND)
 		self.flags = self.flags - FL_ONGROUND;
-
 };
 
 void() player_chargeatk1	=[	$charge5,	player_chargeatk2	] 
 {
 	self.takedamage = DAMAGE_NO; // I-Frames
 	sound (self, CHAN_AUTO, "player/jump.wav", 1, ATTN_NORM);
-	self.noblock_finished = time + 999;
+	self.owner.noblock_finished = time + 999;
 	self.owner.swordshadow_time = time + 0.5; // sword shadow
 	player_yell(2);
 	player_chargeatkmovement();
@@ -4657,6 +4655,7 @@ void() player_chargeatk4	=[	$charge8,	player_chargeatk4	]
 	if (self.onground == TRUE || self.flags & FL_ONGROUND)
 		player_chargeatk5();
 };
+
 void() player_chargeatk5	=[	$charge9,	player_chargeatk5	] 
 {
 	// Hard hit
@@ -4682,10 +4681,9 @@ void() player_chargeatk5	=[	$charge9,	player_chargeatk5	]
 	else
 	{
 		self.think = player_move;
-		self.nextthink = time + 0.3;
+		self.nextthink = time + 0.18;
 	}
 };
-
 
 //*
 // jump attack
