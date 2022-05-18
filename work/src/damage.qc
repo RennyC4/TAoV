@@ -881,7 +881,6 @@ void(float damg, float dist, float knokback, float rsize, float snd, float flsh,
 
 						// Damage stuff needs to go at the end otherwise fields get cleared improperly
 						sound (self, CHAN_AUTO, "player/bigcut.wav", 1, ATTN_NORM);
-						head.owner.screenflash_finished = time + 0.1;
 						self.damage_type = 5; // cut in half
 
 						local float purge_dmg = 100 + (33 * head.owner.swordlevel);
@@ -891,7 +890,8 @@ void(float damg, float dist, float knokback, float rsize, float snd, float flsh,
 						head.think = player_purge1; // Do something cool
 						head.nextthink = time;
 						head.owner.combo = head.owner.combo + 1; // raise combo counter
-
+						head.owner.screenflash_finished = time + 0.025;
+						
 						return;
 					}
 

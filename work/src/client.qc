@@ -622,13 +622,14 @@ void() PlayerPreThink =
 	{
 		if (self.screenflash_mode == FALSE)
 		{
-			if (freeze_finished < time) // Don't spam screen with flashes
+			if (freeze_finished < time || self.purge_toggle) // Don't spam screen with flashes
 			{
 				self.vcshift_ok = TRUE;
 				self.screentint_finished = time + 0.01 * (frametime * 100);
 				stuffcmd (self, "v_cshift 255 255 255 100\n");
 			}
-			self.screenflash_mode = TRUE;
+			else
+				self.screenflash_mode = TRUE;
 		}
 		else
 			self.screenflash_mode = FALSE;

@@ -528,8 +528,8 @@ void() LightningStorm =
 	local entity missile;
 	local float r;
 
-	if (random() < 0.25 && self.classname == "player")
-		self.owner.screenflash_finished = time + 0.02;
+	if (random() < 0.5 && self.classname == "player")
+		self.owner.screenflash_finished = time + 0.01;
 
 	if (lightning_count < 25)
 	{
