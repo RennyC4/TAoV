@@ -74,9 +74,12 @@ void()	skel_pain5	=[	$pain5,		skel_run1	] {monster_removeslide();};
 void() skel_particle_think =
 {
 	if (self.attack_finished < time)
+	{
 		remove(self);
-	particle (self.origin, '0 0 0', 12, 6);
-	frameskip (0.01);
+		return;
+	}
+	particle (self.origin, '0 0 0', 12, 9);
+	frameskip (0.05);
 };
 
 void() skel_particle =
@@ -86,8 +89,8 @@ void() skel_particle =
 	spark = spawn ();
 	spark.angles_y = random() * 360;
 	makevectors (spark.angles);
-	spark.velocity = v_forward * 50;
-	spark.velocity_z = 250;
+	spark.velocity = v_forward * (25 + random()*45);
+	spark.velocity_z = (150 + random()*50);
 	spark.owner = self;
 	spark.movetype = MOVETYPE_TOSS;
 	spark.solid = SOLID_NOT;
