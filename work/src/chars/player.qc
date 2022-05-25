@@ -3981,6 +3981,7 @@ void() player_fstab4;
 
 void() player_fstab1	=[	$fstab1,	player_fstab2	]
 {
+	self.takedamage = DAMAGE_NO;
 	if (self.owner.keyflags & (KEY_LEFT | KEY_RIGHT))
 	{
 		if (self.owner.keyflags & KEY_LEFT)
@@ -4004,6 +4005,8 @@ void() player_fstab2	=[	$fstab2,	player_fstab3	]
 };
 void() player_fstab3	=[	$fstab3,	player_fstab3	] 
 {
+	self.takedamage = DAMAGE_AIM;
+
 	local entity effect;
 	
 	makevectors (self.angles);
