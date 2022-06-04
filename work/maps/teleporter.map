@@ -1192,3 +1192,16 @@
 ( -32 -152 216 ) ( -32 -136 216 ) ( -32 -136 200 ) rtex255 [ 0 1 0 -24 ] [ 0 0 -1 56 ] 0 1 1
 }
 }
+// entity 22
+{
+"classname" "statue7"
+"origin" "-135 -313 105"
+"angle" "180"
+"_phong" "1"
+}
+// entity 23
+{
+"classname" "statue7"
+"origin" "-209 -313 105"
+"_phong" "1"
+}
