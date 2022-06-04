@@ -610,6 +610,9 @@ float turbo_mode; // Turbo mode boolean, saved in parms
 .float ftspin_count;
 .float lowceil;
 
+.float attackhit; // timer on if an attack landed on the target
+.float beenblocked; // timer record on both attacker / victim if blocking an attack has occured (melee only)
+
 // Perfect Guard
 .float perfectblock; // timer
 .float perfectblock_cooldown;

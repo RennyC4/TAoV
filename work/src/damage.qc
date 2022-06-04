@@ -1001,6 +1001,9 @@ void(float damg, float dist, float knokback, float rsize, float snd, float flsh,
 						self.enemy = head; // record which entity vigil hit
 
 					self.attackedname = head.classname; // record on every strike
+
+					self.beenblocked = time; // remove blocking on attacker
+					self.attackhit = time + 0.35;
 						
 					//
 					// Air Comboing physics, Y Axis adjustment is done in player.qc - !Not anymore!
@@ -1025,6 +1028,9 @@ void(float damg, float dist, float knokback, float rsize, float snd, float flsh,
 			{
 				if (self.flags & FL_MONSTER && !head.flags & FL_MONSTER || !self.flags & FL_MONSTER) // fix monsters pretending to hit each other
 				{
+					if (self.attackhit < time)
+						self.beenblocked = time + 0.35;
+
 					if (self.attack_type == 6) // jump kick 1 hit
 						self.attack_type = 7;
 					else if (self.attack_type == 7) // jump kick 2 hit

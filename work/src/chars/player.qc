@@ -99,6 +99,8 @@ void() swordstareffect2;
 void() swordstareffect3;
 void() swordstareffect4;
 
+.float rollforward_fstab2;
+
 // Remove me when FTE's MOVETYPE_FOLLOW is fixed
 void() volbrand_think =
 {
@@ -3596,6 +3598,9 @@ void() runattack_forward = // push player forward during animation
 
 	makevectors(self.angles);
 
+	if (self.enemy) // enemy matches vigils speed for easier full hits
+		self.enemy.velocity_x = self.velocity_x;
+
 	self.movetype = MOVETYPE_WALK;
 	if (self.onground == TRUE)
 	{
@@ -3995,14 +4000,18 @@ void() player_fstab1	=[	$fstab1,	player_fstab2	]
 
 void() player_fstab2	=[	$fstab2,	player_fstab3	] 
 {
-	if (freeze_finished < time && self.owner.combo > 0) // don't interefere with level up/etc
+	if (self.rollforward_fstab2 < time)
 	{
-		freeze_finished = time + (CONST_BIGHITSLOW * frametime);
-		sound (self, CHAN_WEAPON, "player/sword2.wav", 0.5, ATTN_NORM);
-		swordstareffect();
+		if (freeze_finished < time && self.owner.combo > 0 && self.beenblocked < time) // don't interefere with level up/etc
+		{
+			freeze_finished = time + (CONST_BIGHITSLOW * frametime);
+			sound (self, CHAN_WEAPON, "player/sword2.wav", 0.5, ATTN_NORM);
+			swordstareffect();
+		}
 	}
 	frameskip(0.03);
 };
+
 void() player_fstab3	=[	$fstab3,	player_fstab3	] 
 {
 	self.takedamage = DAMAGE_AIM;
@@ -7569,9 +7578,10 @@ void() player_dodgeb9	    =[	$dodgeb9,	player_block		 	]
 
 	if (self.owner.mashattack == TRUE && self.onground && self.lowceil == FALSE)
 	{
+		self.rollforward_fstab2 = time + 1; // stop star sword effect and slow down effect on forward roll
 		self.swing_count = 0;
 		self.think = player_fstab2;
-		self.nextthink = time + 0.1;
+		self.nextthink = time; // + 0.1;
 		self.owner.mashattack = FALSE;
 		self.owner.attack_finished = time + 0.7;
 		self.owner.combo_finished = time + 0.7;
