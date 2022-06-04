@@ -3599,7 +3599,7 @@ void() runattack_forward = // push player forward during animation
 	makevectors(self.angles);
 
 	if (self.enemy) // enemy matches vigils speed for easier full hits
-		self.enemy.velocity_x = self.velocity_x;
+		self.enemy.velocity_y = self.velocity_y;
 
 	self.movetype = MOVETYPE_WALK;
 	if (self.onground == TRUE)
