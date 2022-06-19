@@ -3512,7 +3512,32 @@ void() spinattack_particle = // white particles to spin around vigil
 	parti.nextthink = time;
 };
 
-void() player_spinatk1	=[	$spin1,	player_spinatk2	] {frameskip(0.08);sound (self, CHAN_VOICE, "player/spinatk.wav", 1, ATTN_NORM);spinattack_particle();};
+void() spinatk_wind_spiral =
+{
+	local entity effect;
+
+	makevectors (self.angles);
+
+	effect = spawn();
+	setorigin (effect, self.origin - v_up * 30);
+	setmodel(effect, "progs/spnatkspr.mdl");
+	effect.angles_y = random()*360;
+	
+	effect.movetype = MOVETYPE_NOCLIP;
+	effect.classname = "spinwindspiral_effect";
+	effect.solid = SOLID_NOT;
+	effect.owner = self;
+	effect.alpha = 1;
+	effect.scale = 1;
+	effect.attack_finished = time + 0.3;
+	setsize (effect, '0 0 0', '0 0 0');
+
+	effect.effects = EF_ADDITIVE | EF_FULLBRIGHT | EF_NODEPTHTEST;
+	effect.think = spinwindspiral_think;
+	effect.nextthink = time;
+};
+
+void() player_spinatk1	=[	$spin1,	player_spinatk2	] {spinatk_wind_spiral();frameskip(0.08);sound (self, CHAN_VOICE, "player/spinatk.wav", 1, ATTN_NORM);spinattack_particle();};
 void() player_spinatk2	=[	$spin2,	player_spinatk3	] {frameskip(0.08);spinattack();};
 void() player_spinatk3	=[	$spin3,	player_spinatk4	] {frameskip(0.08);};
 void() player_spinatk4	=[	$spin4,	player_spinatk5	] {frameskip(0.08);spinattack();spinattack_particle();};

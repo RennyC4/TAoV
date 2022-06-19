@@ -137,6 +137,37 @@ void() efxflashe_think =
 	frameskip(0.01);
 };
 
+// spin attack spiral
+void() spinwindspiral_think =
+{
+	if (self.cnt < 30)
+		self.cnt = self.cnt + 2; // rising speed
+	else
+		self.cnt = 30; // stop at this height
+
+	setorigin (self, self.owner.origin - v_up * 30 + (v_up * self.cnt));
+
+	self.angles_y = self.angles_y + 8; // spin speed
+
+	if (self.attack_finished < time)
+	{
+		if (self.scale < 3)
+			self.scale = self.scale + 0.025;
+		else
+		{
+			if (self.alpha > 0.05)
+				self.alpha = self.alpha - 0.05;
+			else
+			{
+				remove(self);
+				return;
+			}
+		}
+	}
+	frameskip (0.01);
+};
+
+
 // wind spiral
 void() windspiral_think =
 {
