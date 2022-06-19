@@ -969,7 +969,7 @@ void() PlayerPreThink =
 		//
 		// Vigil's brace for Impact after a large fall
 		//
-		if (self.char.inair > 74 && self.char.velocity_z < -499 && (self.char.aircombo_count != 5 && self.char.aircombo_count != 6))
+		if (self.char.inair > 84 && self.char.velocity_z < -549 && (self.char.aircombo_count != 5 && self.char.aircombo_count != 6))
 			self.char.bigfall = TRUE;
 
 		if (self.shadow_time > time)
