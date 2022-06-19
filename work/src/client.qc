@@ -1103,8 +1103,10 @@ void() PlayerPostThink =
 
 	if (self.char)
 	{
-		if (world.model != "maps/village.bsp")
+		if (world.model != "maps/village.bsp" || self.safezone || self.char.safezone)
 			ComboMeter(); // display combo count
+		else
+			self.combo = 0; // combo should always be zero in village and safe zones
 
 		UnmakeSolidList(); // called each frame after physics run
 
