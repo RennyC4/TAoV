@@ -1373,7 +1373,7 @@ void() cursor_think =
 		else if (self.owner.menu_choice == 6)
 			self.origin_z = self.owner.origin_z - 115;
 	}
-	self.nextthink = time + 0.01;
+	frameskip(0.01);
 };
 
 void() menuscreen_think =
@@ -1383,7 +1383,7 @@ void() menuscreen_think =
 	else if (self.menu_which == 1)
 		setmodel (self, "progs/menu2.spr");
 		
-	self.nextthink = time + 0.01;
+	self.nextthink = time;
 };
 
 void() misc_menu1 =
@@ -1411,7 +1411,7 @@ void() misc_menu1 =
 	setmodel(cursor, "progs/cursor.spr");
 	cursor.scale = 1;
 	cursor.think = cursor_think;
-	cursor.nextthink = time + 0.01;
+	cursor.nextthink = time;
 };
 
 /*QUAKED info_notnull (0 0.5 0) (-4 -4 -4) (4 4 4)

@@ -5253,8 +5253,6 @@ void() player_jumpatkb8	=[	$jumpatkb8,	player_move		]
 	}
 };
 
-//void() player_jumpatkbb8	=[	$jumpatkb8,	player_airkick1		] {}
-
 void() player_airkick6b;
 void() player_airkick1		=[	$airkick1,	player_airkick2 	] {frameskip(0.06);sound (self, CHAN_VOICE, "player/yell2.wav", 1, ATTN_NORM);};
 void() player_airkick2		=[	$airkick2,	player_airkick3 	] {frameskip(0.06);};
@@ -7525,7 +7523,7 @@ void() player_smashdown7    =[	$smash8,	player_smashdown8		]
 	self.owner.swordshadow_time = time + 0.05;
 	self.attack_type = 5;
 	self.sword_spincnt = 99; // screen shake in FireMelee
-	FireMelee(20,35,3,35,5,1,1,TRUE,0,0);
+	FireMelee(30,35,3,35,5,1,1,TRUE,0,0);
 	if (self.owner.bighit_freeze > time) // check if attack landed, needs to be called after FireMelee();
 	{
 		if (freeze_finished < time) // don't interefere with level up/etc
