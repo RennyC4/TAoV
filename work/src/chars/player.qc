@@ -1099,7 +1099,7 @@ void() player_checkledge =
 
 	droptofloor();
 
-	if (walkmove(0,0))
+	if (walkmove(0,0) && !(pointcontents(self.origin) == CONTENT_WATER || pointcontents(self.origin) == CONTENT_SLIME || pointcontents(self.origin) == CONTENT_LAVA))
 	{
 		// use Z checking if it's okay for Vigil to grab, try to keep his hands near the ledge as close as possible...
 		if (self.origin_z > self.owner.origin_z + 30 && self.origin_z < self.owner.origin_z + 45)
