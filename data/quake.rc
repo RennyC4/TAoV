@@ -91,4 +91,4 @@ alias -block "-button3"
 alias +flask "impulse 4"
 alias -flask "impulse 5"
 
-alias f_demoend "wait;map start";
+alias f_demoend "wait;map start"; // Removing this breaks attract mode
