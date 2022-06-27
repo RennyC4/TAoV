@@ -66,6 +66,7 @@ r_coronas_occlusion 1 // fix flicker corona effect
 r_sprite_backfacing 1 // oriented sprite fix
 r_keepimages 1 // skybox fix
 in_windowed_mouse 0 // don't grab mouse cursor
+cfg_save_auto 1 // fte auto saves configs after certain times
 
 // Fonts
 con_textfont "fonts/console"
