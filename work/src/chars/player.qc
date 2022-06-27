@@ -3529,10 +3529,9 @@ void() spinatk_wind_spiral =
 	effect.owner = self;
 	effect.alpha = 1;
 	effect.scale = 1;
-	effect.attack_finished = time + 0.3;
+	effect.attack_finished = time + 0.4;
 	setsize (effect, '0 0 0', '0 0 0');
 
-	effect.effects = EF_ADDITIVE | EF_FULLBRIGHT | EF_NODEPTHTEST;
 	effect.think = spinwindspiral_think;
 	effect.nextthink = time;
 };

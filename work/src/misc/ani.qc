@@ -140,10 +140,10 @@ void() efxflashe_think =
 // spin attack spiral
 void() spinwindspiral_think =
 {
-	if (self.cnt < 30)
-		self.cnt = self.cnt + 2; // rising speed
+	if (self.cnt < 50)
+		self.cnt = self.cnt + 1; // rising speed
 	else
-		self.cnt = 30; // stop at this height
+		self.cnt = 50; // stop at this height
 
 	setorigin (self, self.owner.origin - v_up * 30 + (v_up * self.cnt));
 
@@ -155,7 +155,7 @@ void() spinwindspiral_think =
 			self.scale = self.scale + 0.025;
 		else
 		{
-			if (self.alpha > 0.05)
+			if (self.alpha > 0)
 				self.alpha = self.alpha - 0.05;
 			else
 			{
