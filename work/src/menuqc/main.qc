@@ -567,7 +567,7 @@ void m_draw(vector scrsz)
 			drawpic ('336 76', "progs/demosign2.png", '170 81', '0 0 0', 1, 0); // shadow
 			drawpic ('335 75', "progs/demosign2.png", '170 81', '2 2 2', 1, 0);
 		}
-		
+
 		drawfont = FONT_MENU;
 		
 		drawfill('0 0', scrsz, '0 0 0', 0.65);
