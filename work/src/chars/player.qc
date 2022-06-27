@@ -2432,7 +2432,7 @@ void() player_move = [0, player_move]
 					if (self.walkframe > 5)
 						self.walkframe = 0;
 					self.frame = $standb1 + self.walkframe;
-					if (!self.swimming)
+					if (!self.swimming && !self.owner.safezone)
 					{
 						// Animation slow down on idle frames
 						if (self.idle_count > 50)
@@ -3490,6 +3490,7 @@ void() spinattack =
 		self.velocity_z = self.velocity_z / 0.5 * frametime; // Spin attack in mid air causes slower descent to the ground
 		self.aircombo_count = 0;
 	}
+	self.velocity_y = 0;
 	self.owner.swordshadow_time = time + 1;
 };
 
