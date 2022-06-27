@@ -167,6 +167,41 @@ void() spinwindspiral_think =
 	frameskip (0.01);
 };
 
+// sword spin attack spiral grab attack
+void() player_swordspin_fx_think_grab =
+{
+	self.angles_y = self.angles_y + 1; // spin speed
+	self.angles_x = self.angles_x + 10; // spin speed
+	self.scale = 2;
+	
+	if (self.attack_finished < time)
+	{
+		remove(self);
+		return;
+	}
+
+	frameskip (0.01);
+};
+
+// sword spin attack spiral
+void() player_swordspin_fx_think =
+{
+	self.angles_y = self.angles_y + 1; // spin speed
+	self.angles_x = self.angles_x + 10; // spin speed
+
+	if (self.scale > 3)
+		self.cnt = TRUE;
+	else
+		self.scale = self.scale + 0.015;
+	
+	if (self.cnt)
+	{
+		remove(self);
+		return;
+	}
+
+	frameskip (0.01);
+};
 
 // wind spiral
 void() windspiral_think =

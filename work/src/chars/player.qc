@@ -7469,7 +7469,36 @@ void() player_wallrunningjumpkick3	=[	$jumpatkb1,	player_wallrunningjumpkick3	]
 	frameskip(0.05);
 };
 
-void() player_swordspin1   =[	$dfattack1,	player_swordspin2	] {frameskip(0.05);};
+void(float grab) player_swordspin_fx =
+{
+	local entity effect;
+
+	makevectors(self.angles);
+	
+	effect = spawn();
+	effect.owner = self;
+	effect.alpha = 1;
+	effect.movetype = MOVETYPE_NOCLIP;
+	effect.classname = "Vwindspiral_effect";
+	effect.solid = SOLID_NOT;
+	effect.frame = 0;
+
+	setmodel(effect, "progs/vswrdspn.mdl");
+	setsize (effect, '0 0 0', '0 0 0');
+	if (grab)
+	{
+		effect.attack_finished = time + 0.5;
+		effect.think = player_swordspin_fx_think_grab;
+	}
+	else	
+		effect.think = player_swordspin_fx_think;
+
+	effect.nextthink = time;
+
+	setorigin(effect, self.origin + v_forward * 34 + v_up * 17);
+};
+
+void() player_swordspin1   =[	$dfattack1,	player_swordspin2	] {player_swordspin_fx(0);frameskip(0.05);};
 void() player_swordspin2   =[	$dfattack2,	player_swordspin3	] {frameskip(0.05);};
 void() player_swordspin3   =[	$dfattack3,	player_swordspin4	] 
 {player_yell(0);sound (self, CHAN_WEAPON, "player/swrdspin.wav", 1, ATTN_NORM);self.owner.swordshadow_time = time + 1;frameskip(0.02);};
@@ -7770,7 +7799,7 @@ void() player_purge2	=[	$attacka4,	player_move	]
 	sound (self, CHAN_AUTO, "misc/teleport.wav", 1, ATTN_NORM);
 };
 
-void() player_miniswordspin1   =[	$dfattack1,	player_miniswordspin2	] {frameskip(0.05);};
+void() player_miniswordspin1   =[	$dfattack1,	player_miniswordspin2	] {player_swordspin_fx(1);frameskip(0.05);};
 void() player_miniswordspin2   =[	$dfattack2,	player_miniswordspin3	] {frameskip(0.05);};
 void() player_miniswordspin3   =[	$dfattack3,	player_miniswordspin4	] 
 {player_yell(0);sound (self, CHAN_WEAPON, "player/swrdspin.wav", 1, ATTN_NORM);self.owner.swordshadow_time = time + 0.5;frameskip(0.02);};
