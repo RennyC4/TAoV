@@ -14310,3 +14310,20 @@
 "model" "progs/flower.mdl"
 "angle" "300"
 }
+// entity 477
+{
+"classname" "dlight_pflags"
+"origin" "3488 1266 -3790"
+"light_lev" "144"
+"color" "1 0.33 0"
+"style" "0"
+"_phong" "1"
+}
+// entity 478
+{
+"classname" "light_flame_brazier_tall"
+"origin" "3489 1265 -3855"
+"_color" "255 128 0"
+"style" "6"
+"_phong" "1"
+}
