@@ -166,7 +166,7 @@
 // entity 2
 {
 "classname" "statue5"
-"origin" "-172 -328 81"
+"origin" "-172 -328 83"
 "angle" "90"
 "_phong" "1"
 }
