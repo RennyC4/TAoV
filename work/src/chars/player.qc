@@ -7482,20 +7482,21 @@ void(float grab) player_swordspin_fx =
 	effect.classname = "Vwindspiral_effect";
 	effect.solid = SOLID_NOT;
 	effect.frame = 0;
+	effect.scale = 2.75;
 
 	setmodel(effect, "progs/vswrdspn.mdl");
 	setsize (effect, '0 0 0', '0 0 0');
-	if (grab)
-	{
-		effect.attack_finished = time + 0.5;
-		effect.think = player_swordspin_fx_think_grab;
-	}
-	else	
-		effect.think = player_swordspin_fx_think;
 
+	if (grab)
+		effect.attack_finished = time + 0.5;
+	else
+		effect.attack_finished = time + 1.3;
+	
+
+	effect.think = player_swordspin_fx_think;
 	effect.nextthink = time;
 
-	setorigin(effect, self.origin + v_forward * 34 + v_up * 17);
+	setorigin(effect, self.origin + v_forward * 30 + v_up * 22);
 };
 
 void() player_swordspin1   =[	$dfattack1,	player_swordspin2	] {player_swordspin_fx(0);frameskip(0.05);};
