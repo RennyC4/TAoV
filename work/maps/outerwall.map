@@ -15163,7 +15163,7 @@
 // entity 349
 {
 "classname" "statue3"
-"origin" "7237 -325 254"
+"origin" "7237 -325 270"
 "angle" "90"
 "_phong" "1"
 }

@@ -220,9 +220,9 @@ void() func_destroy_map01 =
 	if (!self.health)
 		self.health = 1;
 
-	precache_model ("progs/rock1.mdl");
-	precache_model ("progs/rock2.mdl");
-	precache_model ("progs/rock3.mdl");
+	precache_model ("progs/rubble1.mdl");
+	precache_model ("progs/rubble2.mdl");
+	precache_model ("progs/rubble3.mdl");
 	self.noise = "misc/rocks.wav";
 	self.cnt = 1;
 
@@ -282,12 +282,12 @@ void() destroy_destroy = // how silly
 	}
 	else if (self.cnt == 1)
 	{
-	      ThrowSceneryGib ("progs/rock1.mdl", h);
-	      ThrowSceneryGib ("progs/rock2.mdl", h);
-	      ThrowSceneryGib ("progs/rock3.mdl", h);
-	      ThrowSceneryGib ("progs/rock1.mdl", h);
-	      ThrowSceneryGib ("progs/rock2.mdl", h);
-	      ThrowSceneryGib ("progs/rock3.mdl", h);
+	      ThrowSceneryGib ("progs/rubble1.mdl", h);
+	      ThrowSceneryGib ("progs/rubble2.mdl", h);
+	      ThrowSceneryGib ("progs/rubble3.mdl", h);
+	      ThrowSceneryGib ("progs/rubble1.mdl", h);
+	      ThrowSceneryGib ("progs/rubble2.mdl", h);
+	      ThrowSceneryGib ("progs/rubble3.mdl", h);
 	}
 	else if (self.cnt == 2)
 	{
@@ -347,9 +347,9 @@ void() func_destroy =
 	}
 	if (self.cnt == 1)
 	{
-		precache_model ("progs/rock1.mdl");
-		precache_model ("progs/rock2.mdl");
-		precache_model ("progs/rock3.mdl");
+		precache_model ("progs/rubble1.mdl");
+		precache_model ("progs/rubble2.mdl");
+		precache_model ("progs/rubble3.mdl");
 		self.noise = "misc/rocks.wav";
 	}
 	if (self.cnt == 2)

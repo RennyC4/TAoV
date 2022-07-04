@@ -5860,7 +5860,7 @@
 // entity 10
 {
 "classname" "statue2"
-"origin" "-1176 -280 -34"
+"origin" "-1176 -280 -26"
 "angle" "90"
 "_phong" "1"
 }

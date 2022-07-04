@@ -7474,7 +7474,7 @@ void(float grab) player_swordspin_fx =
 	local entity effect;
 
 	makevectors(self.angles);
-	
+
 	effect = spawn();
 	effect.owner = self;
 	effect.alpha = 1;
@@ -7482,7 +7482,9 @@ void(float grab) player_swordspin_fx =
 	effect.classname = "Vwindspiral_effect";
 	effect.solid = SOLID_NOT;
 	effect.frame = 0;
-	effect.scale = 2.75;
+	effect.scale = 2.85;
+	effect.effects = EF_FULLBRIGHT | EF_ADDITIVE;
+	effect.alpha = 0.8;
 
 	setmodel(effect, "progs/vswrdspn.mdl");
 	setsize (effect, '0 0 0', '0 0 0');
@@ -7490,13 +7492,13 @@ void(float grab) player_swordspin_fx =
 	if (grab)
 		effect.attack_finished = time + 0.5;
 	else
-		effect.attack_finished = time + 1.3;
+		effect.attack_finished = time + 1.25;
 	
 
 	effect.think = player_swordspin_fx_think;
 	effect.nextthink = time;
 
-	setorigin(effect, self.origin + v_forward * 30 + v_up * 22);
+	setorigin(effect, self.origin + v_forward * 30 + v_up * 24);
 };
 
 void() player_swordspin1   =[	$dfattack1,	player_swordspin2	] {player_swordspin_fx(0);frameskip(0.05);};

@@ -877,17 +877,6 @@ void() spellbook_touch =
 	return;
 };
 
-void() spellbookparticle_think =
-{
-	if (self.attack_finished < time)
-	{
-		remove(self);
-		return;
-	}
-	particle(self.origin, '0 0 0', 63, 20);
-	frameskip (0.1);
-};
-
 void() spellbook_think =
 {
 	local entity p;
@@ -905,9 +894,6 @@ void() spellbook_think =
 		setmodel (p, "progs/null.spr");
 		setsize (p, '0 0 0', '0 0 0');
 		setorigin (p, self.origin);
-		p.think = spellbookparticle_think;
-		p.nextthink = time + 0.1;
-		p.attack_finished = time + 0.5;
 	}
 	
 	if (self.cnt == 0 && spells & IT_SPELL1)

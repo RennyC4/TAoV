@@ -8341,13 +8341,13 @@
 // entity 154
 {
 "classname" "candelabra"
-"origin" "-1814 1338 -3613"
+"origin" "-1638 1354 -3613"
 "_phong" "1"
 }
 // entity 155
 {
 "classname" "candelabra"
-"origin" "-1814 1192 -3613"
+"origin" "-1638 1174 -3613"
 "_phong" "1"
 }
 // entity 156
