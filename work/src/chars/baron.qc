@@ -242,7 +242,7 @@ void() baron_smash12 	=[	$smack12,	baron_run1  	] {frameskip(0.05);monster_remov
 
 void() baron_melee =
 {
-	if (random() < 0.5)
+	if (random() < 0.66)
 		baron_swing1();
 	else
 		baron_smash1();
