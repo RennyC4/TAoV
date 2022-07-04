@@ -1172,7 +1172,7 @@ void() bed =
 	precache_model ("progs/bed.mdl");
 
 	setmodel (self, "progs/bed.mdl");
-	setsize(self, '-55 -40 5', '61 39 26');
+	setsize(self, '-55 -40 -1', '61 39 26');
 	self.movetype = MOVETYPE_NONE;
 	self.solid = SOLID_SLIDEBOX;
 	self.takedamage = DAMAGE_NO;
@@ -1264,8 +1264,24 @@ void() light_lantern =
 	self.movetype = MOVETYPE_NONE;
 	self.solid = SOLID_NOT;
 	self.takedamage = DAMAGE_NO;
-	self.classname = "brazierl";
+	self.classname = "light_lantern";
 	setsize(self, '-10 -10 -44', '10 10 5');
+	makestatic(self);
+};
+
+/*QUAKED light_lantern2 (0 1 0) (-7 -7 -65) (7 7 -8)
+A swinging lantern, should be hung from ceilings
+*/
+void() light_lantern2 =
+{
+	precache_model ("progs/lantern2.mdl");
+
+	setmodel (self, "progs/lantern2.mdl");
+	self.movetype = MOVETYPE_NONE;
+	self.solid = SOLID_NOT;
+	self.takedamage = DAMAGE_NO;
+	self.classname = "light_lantern2";
+	setsize(self, '-3 -3 -36', '4 4 1');
 	makestatic(self);
 };
 

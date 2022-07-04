@@ -10783,3 +10783,13 @@
 "awareness" "4"
 "targetname" "relicbattle"
 }
+// entity 350
+{
+"classname" "light_lantern2"
+"origin" "-1848 -128 -349.366"
+}
+// entity 351
+{
+"classname" "light_lantern2"
+"origin" "-2168 -126 -360.685"
+}

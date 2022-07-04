@@ -8658,7 +8658,7 @@
 }
 // entity 157
 {
-"classname" "statue3"
+"classname" "statue9"
 "origin" "1235 -251 494"
 "angle" "90"
 "_phong" "1"
@@ -15272,4 +15272,21 @@
 ( 1296 -8 1984 ) ( 1336 -48 1984 ) ( 1320 -48 1984 ) bronze_trim1_1 [ 1 0 0 40 ] [ 0 1 0 -39 ] 0 1 1
 ( 1336 -48 1984 ) ( 1296 -8 1984 ) ( 1296 0 1969 ) bronze_trim1_2 [ 0 1 0 -15 ] [ 0 0 -1 -1.59998 ] 0 1 1.66667
 }
+}
+// entity 566
+{
+"classname" "dlight_pflags"
+"origin" "1098 -232 710"
+"light_lev" "188"
+"color" "1 0.33 0"
+"style" "1"
+"angle" "270"
+"_phong" "1"
+}
+// entity 567
+{
+"classname" "candle"
+"origin" "1092 -232 702"
+"angle" "0"
+"_phong" "1"
 }

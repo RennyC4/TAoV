@@ -513,6 +513,7 @@ ai_stand - waiting for player
 
 void() ai_stand =
 {
+	ai_watercheck_removal();
 	check_game_progress();
 
 	// Fixes floating monsters during stand frames
@@ -536,7 +537,6 @@ void() ai_stand =
 		return;
 
 	walkmove(0, 0); // use triggers on standing
-	ai_watercheck_removal();
 	monster_removeslide();
 	close_check(); // don't allow player inside origin point
 	
