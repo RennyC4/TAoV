@@ -101,12 +101,16 @@ void() spawn_magicfog =
 void() FireBallHomeIn =
 {
 	local entity head, effect;
-	
+
+/*	
 	if (self.owner.flags & FL_MONSTER)
 		MakeSolidList(TRUE); // Player only
 	else
 		MakeSolidList(FALSE);
-			
+*/
+
+	MakeSolidList(FALSE); // Test
+		
 	head = searchradius(self.origin, 25); // hit box size from origin point
 	while (head)
 	{
@@ -290,7 +294,7 @@ void() FireBallThink =
 	{
 		//float bestd = 9999999;
 
-		float bestd = 2500;
+		float bestd = 1000;
 		entity bestv = world;
 		for (entity v = world; (v=nextent(v));)
 		{
@@ -339,7 +343,7 @@ void() FireBallThink =
 	if (self.enemy)
 	{
 		FireBallHomeIn();
-		frameskip(0.01);
+		frameskip(0.1);
 		return;
 	}
 
