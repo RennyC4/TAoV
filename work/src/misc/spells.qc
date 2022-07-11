@@ -107,7 +107,7 @@ void() FireBallHomeIn =
 	else
 		MakeSolidList(FALSE);
 			
-	head = searchradius(self.origin, 25);
+	head = searchradius(self.origin, 25); // hit box size from origin point
 	while (head)
 	{
 		if (head.takedamage && self.owner != head && self.enemy == head && head.perfectguard_buff < time)
@@ -162,6 +162,7 @@ void() FireBallHomeIn =
 							head.owner.mana = head.owner.max_mana;
 					}
 					PerfectGuard(head);
+					UnmakeSolidList();
 					remove(self);
 					return;
 				}
@@ -175,6 +176,7 @@ void() FireBallHomeIn =
 			}
 			sound (self, CHAN_AUTO, "spells/fhit.wav", 1, ATTN_NORM);
 			spawn_embers();
+			UnmakeSolidList();
 			remove(self);
 			return;
 		}
@@ -286,7 +288,9 @@ void() FireBallThink =
 	
 	if (!self.enemy && !self.flags & FL_MONSTER)
 	{
-		float bestd = 9999999;
+		//float bestd = 9999999;
+
+		float bestd = 2500;
 		entity bestv = world;
 		for (entity v = world; (v=nextent(v));)
 		{
@@ -300,7 +304,7 @@ void() FireBallThink =
 				continue; // next entity please
 
 			vector heading = v.origin - self.origin;
-			float d = heading*heading;
+			float d = heading * heading;
 			if (d < bestd)
 			{
 				bestd = d;
@@ -312,9 +316,6 @@ void() FireBallThink =
 	}
 	if (self.flags & FL_MONSTER && self.enemy) // Fireball is launched only at the target they're mad at
 		self.enemy = self.owner.enemy;
-
-	if (self.enemy)
-		FireBallHomeIn();
 
 	if (self.attack_finished < time)
 	{
@@ -335,7 +336,14 @@ void() FireBallThink =
 		return;
 	}
 
-	frameskip(0.01);
+	if (self.enemy)
+	{
+		FireBallHomeIn();
+		frameskip(0.01);
+		return;
+	}
+
+	frameskip(0.1);
 };
 
 void(float damg, float hight) Fireball =
