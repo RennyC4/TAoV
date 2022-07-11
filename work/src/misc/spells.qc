@@ -102,15 +102,11 @@ void() FireBallHomeIn =
 {
 	local entity head, effect;
 
-/*	
 	if (self.owner.flags & FL_MONSTER)
 		MakeSolidList(TRUE); // Player only
 	else
 		MakeSolidList(FALSE);
-*/
 
-	MakeSolidList(FALSE); // Test
-		
 	head = searchradius(self.origin, 25); // hit box size from origin point
 	while (head)
 	{
@@ -186,8 +182,6 @@ void() FireBallHomeIn =
 		}
 		head = head.chain;
 	}
-
-	UnmakeSolidList();
  
 	if (self.velocity == '0 0 0' || self.enemy.health <= 0)
 	{
@@ -234,6 +228,8 @@ void() FireBallHomeIn =
 
 	if (self.flags & FL_ONGROUND)
 		self.flags = self.flags - FL_ONGROUND;
+		
+	UnmakeSolidList();
 };
 
 void() FireballWallTouch =
@@ -260,6 +256,7 @@ void() FireballWallTouch =
 		remove(self);
 		return;
 	}
+	UnmakeSolidList();
 };
 
 /*
@@ -294,7 +291,7 @@ void() FireBallThink =
 	{
 		//float bestd = 9999999;
 
-		float bestd = 1000;
+		float bestd = 9999999;
 		entity bestv = world;
 		for (entity v = world; (v=nextent(v));)
 		{
@@ -343,7 +340,7 @@ void() FireBallThink =
 	if (self.enemy)
 	{
 		FireBallHomeIn();
-		frameskip(0.1);
+		frameskip(0.01);
 		return;
 	}
 
