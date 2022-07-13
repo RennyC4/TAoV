@@ -3045,7 +3045,7 @@ void() player_bigfall1	=[	$pain2,	player_move	]
 	effect.movetype = MOVETYPE_NOCLIP;
 		
 	effect.think = dust_think;
-	effect.nextthink = time + 0.01;
+	effect.nextthink = time;
 
 	PainSound();
 	self.nextthink = time + 0.5;
@@ -3640,7 +3640,7 @@ void() runattack_forward = // push player forward during animation
 			effect.movetype = MOVETYPE_FLY;
 			effect.velocity_z = 100;
 			effect.think = dust_think;
-			effect.nextthink = time + 0.01;
+			effect.nextthink = time;
 		}
 		else
 		{
@@ -3653,7 +3653,7 @@ void() runattack_forward = // push player forward during animation
 			effect.movetype = MOVETYPE_FLY;
 			effect.velocity_z = 100;
 			effect.think = dust_think;
-			effect.nextthink = time + 0.01;
+			effect.nextthink = time;
 		}
 	}
 	self.velocity_time = time + 0.2;
@@ -3779,31 +3779,25 @@ void() plyr_armstab_think =
 
 	if (self.owner.frame >= $stabs1 && self.owner.frame <= $stabs12)
 	{
-		makevectors (self.angles);
-		setorigin(self, self.owner.origin - v_forward*2 - v_up*2); // Keep arm stab graphic on Vigil
-		
-		effect = spawn();
-		setorigin(effect, self.origin + v_forward * 48); //- v_up*28 + v_forward * 48);
-		setmodel(effect, "progs/dust.spr");
-
-		if (self.angles_y == 0)
-			effect.velocity_x = 1080;
-		else
-			effect.velocity_x = -1080;
 	
-		effect.solid = SOLID_NOT;
-		effect.owner = self;
-		effect.drawonlytoclient = self.owner.owner; // reduce network traffic
-		effect.movetype = MOVETYPE_NOCLIP;
-		effect.think = dust_think;
-		effect.nextthink = time + 0.01;
-		
-		// Drop dust to the ground then half-way into the ground
-		oself = self;
-		self = effect;
-		droptofloor();
-		self.origin_z = self.origin_z - 20;
-		self = oself;
+		if (self.owner.frame == $stabs2 || self.owner.frame == $stabs7 || self.owner.frame == $stabs11) // reduce particle dust spawn
+		{		
+			makevectors (self.angles);
+			setorigin(self, self.owner.origin - v_forward*2 - v_up*2); // Keep arm stab graphic on Vigil
+			
+			effect = spawn();
+			setorigin(effect, self.origin + v_forward * 48); //- v_up*28 + v_forward * 48);
+			setmodel(effect, "progs/dust.spr");
+
+			effect.solid = SOLID_NOT;
+			effect.owner = self;
+			effect.drawonlytoclient = self.owner.owner; // reduce network traffic
+			effect.movetype = MOVETYPE_NOCLIP;
+			effect.flags = FL_MONSTER; // Run droptofloor in dust_think
+			effect.think = dust_think;
+			effect.nextthink = time;
+			effect.origin_z = effect.origin_z - 35;
+		}
 
 		if (self.frame > 0)
 			self.frame = self.frame - 1;
@@ -4045,15 +4039,18 @@ void() player_fstab3	=[	$fstab3,	player_fstab3	]
 	
 	makevectors (self.angles);
 
-	effect = spawn();
-	setorigin(effect, self.origin - v_up*28);
-	setmodel(effect, "progs/dust.spr");	
-	effect.solid = SOLID_NOT;
-	effect.owner = self;
-	effect.drawonlytoclient = self.owner; // reduce network traffic
-	effect.movetype = MOVETYPE_NOCLIP;
-	effect.think = dust_think;
-	effect.nextthink = time + 0.01;
+	if (self.fstab_cnt == 1 || self.fstab_cnt == 3) // dust particle optimization
+	{
+		effect = spawn();
+		setorigin(effect, self.origin - v_up*28);
+		setmodel(effect, "progs/dust.spr");	
+		effect.solid = SOLID_NOT;
+		effect.owner = self;
+		effect.drawonlytoclient = self.owner; // reduce network traffic
+		effect.movetype = MOVETYPE_NOCLIP;
+		effect.think = dust_think;
+		effect.nextthink = time;
+	}
 	
 	if (self.fstab_cnt == 5) // Do it once
 	{
@@ -4161,10 +4158,7 @@ void() player_attacka1	=[	$attacka1,	player_attacka2	]
 	player_yell(0);
 };
 
-void() player_attacka2	=[	$attacka2,	player_attacka3	] 
-{
-	frameskip(0.05);
-};
+void() player_attacka2	=[	$attacka2,	player_attacka3	] {frameskip(0.05);};
 
 void() player_attacka3	=[	$attacka3,	player_attacka4	] 
 {
@@ -4185,7 +4179,7 @@ void() player_attacka3	=[	$attacka3,	player_attacka4	]
 		effect.velocity_x = -500;
 		
 	effect.think = dust_think;
-	effect.nextthink = time + 0.01;
+	effect.nextthink = time;
 
 	sound (self, CHAN_WEAPON, "player/sword.wav", 1, ATTN_NORM);
 	sound (self, CHAN_BODY, "player/skid.wav", 1, ATTN_NORM);
@@ -4264,13 +4258,9 @@ void() player_attacka6	=[	$attacka6,	player_attacka7	]
 		effect.owner = self;
 		effect.drawonlytoclient = self.owner; // reduce network traffic
 		effect.movetype = MOVETYPE_NOCLIP;
-		if (self.angles_y == 0)
-			effect.velocity_x = 500;
-		else
-			effect.velocity_x = -500;
-		
+
 		effect.think = dust_think;
-		effect.nextthink = time + 0.01;
+		effect.nextthink = time;
 	
 		self.velocity_z = 100;
 		self.velocity_time = time + 0.1;
@@ -4355,7 +4345,7 @@ void() spinpush =
 	effect.owner = self;
 	effect.movetype = MOVETYPE_NOCLIP;
 	effect.think = dust_think;
-	effect.nextthink = time + 0.01;
+	effect.nextthink = time;
 		
 	if (self.movetype != MOVETYPE_WALK) // Allow Velocity Fix
 		self.movetype = MOVETYPE_WALK;
@@ -5157,7 +5147,7 @@ void() player_jumpatk2	=[	$jumpatk2,	player_jumpatk2	]
 		effect.movetype = MOVETYPE_NOCLIP;
 		
 		effect.think = dust_think;
-		effect.nextthink = time + 0.01;
+		effect.nextthink = time;
 	
 		jumpatk_grounded();
 		player_jumpatk3();
@@ -6326,7 +6316,7 @@ void() player_blockbrk_movement =
 			effect.movetype = MOVETYPE_FLY;
 			effect.velocity_z = 100;
 			effect.think = dust_think;
-			effect.nextthink = time + 0.01;
+			effect.nextthink = time;
 		}
 		else
 		{
@@ -6339,7 +6329,7 @@ void() player_blockbrk_movement =
 			effect.movetype = MOVETYPE_FLY;
 			effect.velocity_z = 100;
 			effect.think = dust_think;
-			effect.nextthink = time + 0.01;
+			effect.nextthink = time;
 		}
 	}
 	self.block_finished = time;
