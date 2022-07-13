@@ -151,6 +151,7 @@ void() spinwindspiral_think =
 
 	if (self.attack_finished < time)
 	{
+		self.effects = EF_ADDITIVE;
 		if (self.scale < 3)
 			self.scale = self.scale + 0.025;
 		else

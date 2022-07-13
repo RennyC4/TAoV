@@ -3373,7 +3373,7 @@ void() spinattack_particle_think =
 	self.oldorigin = self.origin;
 	self.velocity_z = 150;
 	makevectors(self.angles);
-	particle(self.origin + v_forward * 50, '0 0 0', 12, 25);
+	particle(self.origin + v_forward * 35, '0 0 0', 12, 25);
 	frameskip(0.05);
 };
 
