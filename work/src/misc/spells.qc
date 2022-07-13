@@ -97,8 +97,10 @@ void() spawn_magicfog =
 
 
 
-.float fireballhome_finished;
-void() FireBallHomeIn =
+
+
+
+void() FireBall_HitBox =
 {
 	local entity head, effect;
 
@@ -110,7 +112,7 @@ void() FireBallHomeIn =
 	head = searchradius(self.origin, 25); // hit box size from origin point
 	while (head)
 	{
-		if (head.takedamage && self.owner != head && self.enemy == head && head.perfectguard_buff < time)
+		if (head.takedamage && self.owner != head && head.perfectguard_buff < time)
 		{
 			effect = spawn();
 			setorigin(effect, head.origin + v_up * 14);
@@ -145,7 +147,10 @@ void() FireBallHomeIn =
 						T_Damage (head, self, self.owner, self.mode, 0);
 				}
 				if (self.owner.classname == "player")
+				{
 					self.owner.owner.combo = self.owner.owner.combo + 1; // raise combo counter
+					self.owner.enemy = head; // FIX: Fireball casted again tracks the same target
+				}
 
 				if (head.classname == "player")
 					head.colormod = '5 2.5 0';
@@ -182,7 +187,16 @@ void() FireBallHomeIn =
 		}
 		head = head.chain;
 	}
- 
+};
+
+
+.float fireballhome_finished;
+void() FireBallHomeIn =
+{
+	local entity effect;
+
+	FireBall_HitBox();
+	
 	if (self.velocity == '0 0 0' || self.enemy.health <= 0)
 	{
 		effect = spawn();
@@ -256,65 +270,21 @@ void() FireballWallTouch =
 		remove(self);
 		return;
 	}
-	UnmakeSolidList();
 };
-
-/*
-float bestd = 9999999;
-entity bestv = world;
-for (entity v = world; (v=nextent(v)); )
-{
-    if (!suitable)
-		continue;
-    vector heading = v.origin - self.origin;
-    float d = heading*heading;
-    if (d < bestd)
-    {
-        bestd = d;
-        bestv = v;
-    }
-}
-if (bestv)
-    WEFOUNDONE(bestv);
-*/
 
 void() FireBallThink =
 {
-	local entity head, effect, oself;
-	local float infront_ok;
-	
-	//
-	// Don't keep cycling through entities per-frame eating precious CPU time
-	//
-	
-	if (!self.enemy && !self.flags & FL_MONSTER)
-	{
-		float bestd = 9999999;
-		entity bestv = world;
-		for (entity v = world; (v=nextent(v));)
-		{
-			oself = self;
-			self = self.owner;
-			infront_ok = infront(v);
-			self = oself;
-			if (v == self || v.health < 1 || v.netname != "solid" || (v.classname == "player" && deathmatch == FALSE && !self.owner.flags & FL_MONSTER) || v.classname == "breakable"
-			|| !visible(v) || infront_ok == FALSE || (v.flags & FL_MONSTER && self.owner.flags & FL_MONSTER))
-				continue; // next entity please
-			vector heading = v.origin - self.origin;
-			float d = heading*heading;
-			if (d < bestd)
-			{
-				bestd = d;
-				bestv = v;
-			}
-		}
-		if (bestv)
-			self.enemy = bestv;
-	}
-	if (self.flags & FL_MONSTER && self.enemy) // Fireball is launched only at the target they're mad at
+	local entity head;
+	local entity effect;
+
+	if (self.owner.enemy && self.owner.enemy.health > 0)
 		self.enemy = self.owner.enemy;
+
 	if (self.enemy)
 		FireBallHomeIn();
+	else
+		FireBall_HitBox(); // already ran in FireBallHomeIn();
+
 	if (self.attack_finished < time)
 	{
 		effect = spawn();
@@ -323,18 +293,13 @@ void() FireBallThink =
 		effect.movetype = MOVETYPE_NONE;
 		effect.think = firesprite_think;
 		effect.nextthink = time;
-		effect.pflags = PFLAGS_FULLDYNAMIC | PFLAGS_NOSHADOW;
-		effect.light_lev = 80;
-		effect.color = [2, 1, 0];
-			
 		effect.solid = SOLID_NOT;
-		spawn_embers();
 		remove(self);
 		return;
 	}
+
 	frameskip(0.01);
 };
-
 
 void(float damg, float hight) Fireball =
 {
@@ -359,6 +324,7 @@ void(float damg, float hight) Fireball =
 	missile.mode = damg;
 	missile.touch = FireballWallTouch;
 	missile.attack_finished = time + 0.5;
+	missile.angles = self.angles;
 
 	missile.pflags = PFLAGS_FULLDYNAMIC | PFLAGS_NOSHADOW;
 	missile.light_lev = 40;
@@ -366,7 +332,7 @@ void(float damg, float hight) Fireball =
 	missile.hitcontentsmaski = CONTENTBIT_SOLID|0x00000002i|CONTENTBIT_BODY|CONTENTBIT_PLAYERCLIP; // don't ignore clipbrushes etc
 	
 	missile.think = FireBallThink;
-	missile.nextthink = time + 0.1;
+	missile.nextthink = time;
 
 	setmodel (missile, "progs/fball.mdl");
 	setsize (missile, '0 0 0', '0 0 0');		

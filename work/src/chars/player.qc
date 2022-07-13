@@ -4465,7 +4465,7 @@ void() player_attacka16	=[	$attacka16,	player_attacka16	]
 	{
 		swordstareffect4();
 		sound (self, CHAN_WEAPON, "player/sword2.wav", 0.5, ATTN_NORM);
-		self.attacka16_star_finished = time + 0.3;
+		self.attacka16_star_finished = time + 0.5;
 	}
 
 	local entity effect, oself;
