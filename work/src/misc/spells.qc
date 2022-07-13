@@ -282,15 +282,13 @@ void() FireBallThink =
 {
 	local entity head, effect, oself;
 	local float infront_ok;
-
+	
 	//
 	// Don't keep cycling through entities per-frame eating precious CPU time
 	//
 	
 	if (!self.enemy && !self.flags & FL_MONSTER)
 	{
-		//float bestd = 9999999;
-
 		float bestd = 9999999;
 		entity bestv = world;
 		for (entity v = world; (v=nextent(v));)
@@ -299,13 +297,11 @@ void() FireBallThink =
 			self = self.owner;
 			infront_ok = infront(v);
 			self = oself;
-
 			if (v == self || v.health < 1 || v.netname != "solid" || (v.classname == "player" && deathmatch == FALSE && !self.owner.flags & FL_MONSTER) || v.classname == "breakable"
 			|| !visible(v) || infront_ok == FALSE || (v.flags & FL_MONSTER && self.owner.flags & FL_MONSTER))
 				continue; // next entity please
-
 			vector heading = v.origin - self.origin;
-			float d = heading * heading;
+			float d = heading*heading;
 			if (d < bestd)
 			{
 				bestd = d;
@@ -317,7 +313,8 @@ void() FireBallThink =
 	}
 	if (self.flags & FL_MONSTER && self.enemy) // Fireball is launched only at the target they're mad at
 		self.enemy = self.owner.enemy;
-
+	if (self.enemy)
+		FireBallHomeIn();
 	if (self.attack_finished < time)
 	{
 		effect = spawn();
@@ -326,7 +323,6 @@ void() FireBallThink =
 		effect.movetype = MOVETYPE_NONE;
 		effect.think = firesprite_think;
 		effect.nextthink = time;
-
 		effect.pflags = PFLAGS_FULLDYNAMIC | PFLAGS_NOSHADOW;
 		effect.light_lev = 80;
 		effect.color = [2, 1, 0];
@@ -336,16 +332,9 @@ void() FireBallThink =
 		remove(self);
 		return;
 	}
-
-	if (self.enemy)
-	{
-		FireBallHomeIn();
-		frameskip(0.01);
-		return;
-	}
-
-	frameskip(0.1);
+	frameskip(0.01);
 };
+
 
 void(float damg, float hight) Fireball =
 {
