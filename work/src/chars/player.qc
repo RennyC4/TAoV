@@ -2159,7 +2159,10 @@ void() player_jumpframe =
 {
 	self.charge_count = 4; // set charge up attack somewhat when in air
 
-	if ((self.onground == FALSE && self.inair > 31) || self.velocity_z > 100)
+//  REMOVED In-Air jump frame animation stuff as FTE allows proper climbing down stairs (sv_gameplayfix_stepdown 1)
+//	if ((self.onground == FALSE && self.inair > 31) || self.velocity_z > 100)
+
+	if (self.onground == FALSE || self.velocity_z > 100)
 	{
 		if (self.aircombo_count == 0 || self.aircombo_count == 3 || self.aircombo_count == 4 || self.aircombo_count >= 7)
 		{
