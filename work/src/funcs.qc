@@ -493,7 +493,7 @@ void() barrier_think  =
 void() barrier_use =
 {
 	// Boss defeated, barrier perma-removed
-	if (bosses == IT_BOSS2 && world.model == "maps/boss2.bsp")
+	if (bosses & IT_BOSS2 && world.model == "maps/boss2.bsp")
 	{
 		remove(self);
 		return;

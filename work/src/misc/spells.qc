@@ -294,6 +294,7 @@ void() FireBallThink =
 		effect.think = firesprite_think;
 		effect.nextthink = time;
 		effect.solid = SOLID_NOT;
+		spawn_embers();
 		remove(self);
 		return;
 	}
@@ -332,7 +333,7 @@ void(float damg, float hight) Fireball =
 	missile.hitcontentsmaski = CONTENTBIT_SOLID|0x00000002i|CONTENTBIT_BODY|CONTENTBIT_PLAYERCLIP; // don't ignore clipbrushes etc
 	
 	missile.think = FireBallThink;
-	missile.nextthink = time;
+	missile.nextthink = time + 0.1;
 
 	setmodel (missile, "progs/fball.mdl");
 	setsize (missile, '0 0 0', '0 0 0');		

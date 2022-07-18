@@ -198,7 +198,9 @@ void() multi_touch =
 {
 	// After Stained Glass Knight is defeated then the trigger_once
 	// needs to be disabled!
-	if (bosses == IT_BOSS1 && world.model == "maps/boss1.bsp")
+	if (bosses & IT_BOSS1 && world.model == "maps/boss1.bsp")
+		return;
+	if (bosses & IT_BOSS2 && world.model == "maps/boss2.bsp")
 		return;
 
 	// default, player only
@@ -293,7 +295,7 @@ void() changelevel_touch =
 	//   - prevents being smacked into a trigger_changelevel mainly -
 	//
 	
-	if (self.map != "teleporter" && self.map != "boss2" && self.map != "church")
+	if (self.map != "teleporter" && self.map != "boss1" && self.map != "boss2")
 	{
 		for (entity v = world; (v=nextent(v));)
 		{
@@ -460,7 +462,7 @@ void() musicchange_use =
 	}
 	
 	// Boss defeated, boss music triggers perma-removed
-	if (bosses == IT_BOSS2 && world.model == "maps/boss2.bsp")
+	if (bosses & IT_BOSS2 && world.model == "maps/boss2.bsp")
 	{
 		remove(self);
 		return;

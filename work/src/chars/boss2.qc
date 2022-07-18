@@ -347,8 +347,6 @@ void() boss_death10 = [$death9, boss_death10]
 	self.cnt2 = 0;
 	self.think = boss_deaththink;
 	self.nextthink = time + 1;
-	
-	bosses = bosses | IT_BOSS2; // Defeated Boss 2, record it
 };
 
 void() boss_fbeam1 = [$shockb1, boss_fbeam2] 
@@ -421,6 +419,8 @@ void() boss_pain =
 
 void() boss_die =
 {
+	bosses = bosses | IT_BOSS2; // Defeated Boss 2, record it
+
 	self.solid = SOLID_NOT;
 	self.deadflag = DEAD_DEAD;
 	self.takedamage = DAMAGE_NO;
@@ -582,7 +582,7 @@ void() boss2_awake =
 	{
 		remove(self);
 		return;
-	}	
+	}
 	self.solid = SOLID_SLIDEBOX;
 	WriteByte (MSG_BROADCAST, SVC_TEMPENTITY);
 	WriteByte (MSG_BROADCAST, TE_LAVASPLASH);
@@ -594,6 +594,15 @@ void() boss2_awake =
 
 	boss_rise1();
 }
+
+void() boss2_removalcheck
+{
+	if (bosses & IT_BOSS2) // defeated
+	{
+		remove(self);
+		return;
+	}
+};
 
 void() monster_boss2 =
 {
@@ -636,4 +645,7 @@ void() monster_boss2 =
 	self.th_die = boss_die;
 	self.th_stand = boss_idle1;
 	self.th_pain = boss_pain;
+
+	self.think = boss2_removalcheck;
+	self.nextthink = time + 1;
 };
