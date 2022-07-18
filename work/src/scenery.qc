@@ -387,7 +387,7 @@ void() dlight_lightning_think =
 {
 	if (self.cnt == FALSE)
 	{
-		self.light_lev = 1000;
+		self.light_lev = 667; // Higher levels cause FPS drops
 		self.cnt = TRUE; // FLASH
 		self.pflags = PFLAGS_FULLDYNAMIC;
 		self.nextthink = time + random();

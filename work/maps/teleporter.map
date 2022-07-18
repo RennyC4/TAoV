@@ -250,7 +250,7 @@
 // entity 9
 {
 "classname" "trigger_camstyle"
-"campos" "-170 -308 172"
+"campos" "-170 -308 178"
 "camerastyle" "4"
 "_phong" "1"
 // brush 0

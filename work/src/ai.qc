@@ -1650,7 +1650,9 @@ void() wakeup =
 
 void(entity attacker) monster_pain =
 {
-	// Face player properly before physics are ran
+	// Face player properly before physics are ran -
+	// This is intentionally inaccurate; allows the player to control the battlefield moreso by using angle checks instead of origin_x (left/right)
+	// whereas the opposite is true for monsters vs player
 	if (attacker.angles_y > 90 && attacker.angles_y < 270)
 		self.angles_y = 0;
 	else
@@ -1688,7 +1690,7 @@ void(entity attacker) monster_pain =
 	{
 		self.velocity = '0 0 0';
 		self.velocity_z = 300;
-		//if (self.angles_y == 0)
+
 		if (self.angles_y > 90 && self.angles_y < 270)
 			self.velocity_x = 100;
 		else
@@ -1707,7 +1709,7 @@ void(entity attacker) monster_pain =
 		self.velocity = '0 0 0';
 		setorigin(self, self.origin);
 		self.velocity_z = 300;
-		//if (self.angles_y == 0)
+
 		if (self.angles_y > 90 && self.angles_y < 270)
 			self.velocity_x = 300;
 		else
@@ -1716,11 +1718,12 @@ void(entity attacker) monster_pain =
 	else if (self.knockback == 4)
 	{
 		self.velocity_z = 200;
-		//if (self.angles_y == 0)
+
 		if (self.angles_y > 90 && self.angles_y < 270)
 			self.velocity_x = 50;
 		else
 			self.velocity_x = -50;
+
 		self.paincount = 2;
 	}
 	else if (self.knockback == 5)
@@ -1728,7 +1731,6 @@ void(entity attacker) monster_pain =
 		self.velocity = '0 0 0';
 		self.velocity_z = 350;
 
-		//if (self.angles_y == 0)
 		if (self.angles_y > 90 && self.angles_y < 270)
 			self.velocity_x = 200;
 		else
@@ -1739,7 +1741,6 @@ void(entity attacker) monster_pain =
 		self.velocity = '0 0 0';
 		self.velocity_z = 0;
 
-		//if (self.angles_y == 0)
 		if (self.angles_y > 90 && self.angles_y < 270)
 			self.velocity_x = 400;
 		else

@@ -35,17 +35,17 @@ void(entity attackerb) player_damage_physics =
 		self.velocity = '0 0 0';
 		self.velocity_z = 300;
 
-		if (attackerb.angles_y > 90 && attackerb.angles_y < 270)
+		if (attackerb.origin_x > self.origin_x)
 			self.velocity_x = -100;
 		else
 			self.velocity_x = 100;
 
-		// Old physics logic
+		// Old Physics logic
 		/*
-		if (attackerb.angles_y == 0)
-			self.velocity_x = 100;
-		else
+		if (attackerb.angles_y > 90 && attackerb.angles_y < 270)
 			self.velocity_x = -100;
+		else
+			self.velocity_x = 100;
 		*/
 		
 		if (deathmatch == FALSE)
@@ -66,17 +66,17 @@ void(entity attackerb) player_damage_physics =
 		self.velocity = '0 0 0';
 		self.velocity_z = 300;
 
-		if (attackerb.angles_y > 90 && attackerb.angles_y < 270)
+		if (attackerb.origin_x > self.origin_x)
 			self.velocity_x = -300;
 		else
 			self.velocity_x = 300;
 
 		// Old physics logic
 		/*
-		if (attackerb.angles_y == 0)
-			self.velocity_x = 300;
-		else
+		if (attackerb.angles_y > 90 && attackerb.angles_y < 270)
 			self.velocity_x = -300;
+		else
+			self.velocity_x = 300;
 		*/
 		
 		if (self.flags & FL_ONGROUND)
@@ -93,17 +93,17 @@ void(entity attackerb) player_damage_physics =
 		else
 			self.velocity_z = 100;
 
-		if (attackerb.angles_y > 90 && attackerb.angles_y < 270)
+		if (attackerb.origin_x > self.origin_x)
 			self.velocity_x = -50;
 		else
 			self.velocity_x = 50;
 
 		// Old physics logic
 		/*
-		if (attackerb.angles_y == 0)
-			self.velocity_x = 50;
-		else
+		if (attackerb.angles_y > 90 && attackerb.angles_y < 270)
 			self.velocity_x = -50;
+		else
+			self.velocity_x = 50;
 		*/
 		
 		if (self.flags & FL_ONGROUND)
@@ -116,17 +116,17 @@ void(entity attackerb) player_damage_physics =
 		self.velocity = '0 0 0';
 		self.velocity_z = 350;
 		
+		if (attackerb.origin_x > self.origin_x)
+			self.velocity_x = -200;
+		else
+			self.velocity_x = 200;
+
+		// Old physics logic
+		/*
 		if (attackerb.angles_y > 90 && attackerb.angles_y < 270)
 			self.velocity_x = -200;
 		else
 			self.velocity_x = 200;
-			
-		// Old physics logic
-		/*
-		if (attackerb.angles_y == 0)
-			self.velocity_x = 200;
-		else
-			self.velocity_x = -200;
 		*/
 		
 		if (self.flags & FL_ONGROUND)
@@ -139,17 +139,17 @@ void(entity attackerb) player_damage_physics =
 		self.velocity = '0 0 0';
 		self.velocity_z = 0;
 
-		if (attackerb.angles_y > 90 && attackerb.angles_y < 270)
+		if (attackerb.origin_x > self.origin_x)
 			self.velocity_x = -400;
 		else
 			self.velocity_x = 400;
 
 		// Old physics logic
 		/*
-		if (attackerb.angles_y == 0)
-			self.velocity_x = 400;
-		else
+		if (attackerb.angles_y > 90 && attackerb.angles_y < 270)
 			self.velocity_x = -400;
+		else
+			self.velocity_x = 400;
 		*/
 
 		if (self.flags & FL_ONGROUND)
@@ -191,7 +191,7 @@ void(entity targ, entity attacker) Killed =
 			killed_monsters = killed_monsters + 1;
 			WriteByte (MSG_ALL, SVC_KILLEDMONSTER);
 		}
-		if (random() < 0.40) // 40% chance of gold drop
+		if (random() < 0.45) // 45% chance of gold drop
 			drop_gold();
 		self.bump_kills = TRUE; // kill counter was bumped, do not do it again!
 	}
@@ -969,10 +969,17 @@ void(float damg, float dist, float knokback, float rsize, float snd, float flsh,
  					// flip the appropriate victim around to face attacker from behind
 					if (head.solid != SOLID_BSP && head.classname != "breakable" && !head.flags & FL_BOSS)
 					{
+						if (self.origin_x > head.origin_x)
+							head.angles_y = 0;
+						else
+							head.angles_y = 180;
+					
+						/*
 						if (self.angles_y > 90 && self.angles_y < 270) // Attacker facing right
 							head.angles_y = 0; // victim faces left
 						else
 							head.angles_y = 180; // victim faces right
+						*/
 					}
 
 					//
@@ -1048,10 +1055,17 @@ void(float damg, float dist, float knokback, float rsize, float snd, float flsh,
 					// or a destroyable object - that'd just be silly...
 					if (head.solid != SOLID_BSP && head.classname != "breakable")
 					{
+						if (self.origin_x > head.origin_x)
+							head.angles_y = 0;
+						else
+							head.angles_y = 180;
+
+						/*
 						if (self.angles_y > 90 && self.angles_y < 270) // Attacker facing right
 							head.angles_y = 0; // Block victim faces left
 						else
 							head.angles_y = 180; // Block victim faces right
+						*/
 					}
 
 					// spawn a block sprite, except on PG timing
