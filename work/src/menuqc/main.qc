@@ -562,16 +562,22 @@ void m_draw(vector scrsz)
 	
 	if (menuIsOn)
 	{
+		drawfill('0 0', scrsz, '0 0 0', 0.65); // darken
+
 		if (current_menu == MENU_Main)
 		{
-			drawpic ('336 76', "progs/demosign2.png", '170 81', '0 0 0', 1, 0); // shadow
-			drawpic ('335 75', "progs/demosign2.png", '170 81', '2 2 2', 1, 0);
+			local vector pos = scrsz / 2;
+	
+			pos_x = pos_x - 86;
+			pos_y = pos_y - 167;
+			drawpic (pos + '2.5 2.5', "progs/demosign2.png", '170 81', '.01 .01 .01', 1, 0); // shadow
+			drawpic (pos, "progs/demosign2.png", '170 81', '1 1 1', 1, 0);
 		}
 
 		drawfont = FONT_MENU;
 		
-		drawfill('0 0', scrsz, '0 0 0', 0.65);
 		drawMenu(current_menu);
+
 		
 		if (current_menu.draw)
 			current_menu.draw();
