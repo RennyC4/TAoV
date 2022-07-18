@@ -223,6 +223,8 @@ void() skeleton_jump =
 	local entity check, oself;
 	local float cj;
 
+	if (self.enemy.owner.flags & FL_NOTARGET)
+		return;
 	if (!self.enemy)
 		return;
 	if (self.cnt > time)

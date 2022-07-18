@@ -112,7 +112,7 @@ void() FireBall_HitBox =
 	head = searchradius(self.origin, 25); // hit box size from origin point
 	while (head)
 	{
-		if (head.takedamage && self.owner != head && head.perfectguard_buff < time)
+		if (head.takedamage && self.owner != head && head.perfectguard_buff < time && (self.owner.flags & FL_MONSTER && !head.flags & FL_MONSTER || !self.owner.flags & FL_MONSTER))
 		{
 			effect = spawn();
 			setorigin(effect, head.origin + v_up * 14);
@@ -194,10 +194,8 @@ void() FireBall_HitBox =
 void() FireBallHomeIn =
 {
 	local entity effect;
-
-	FireBall_HitBox();
 	
-	if (self.velocity == '0 0 0' || self.enemy.health <= 0)
+	if (self.velocity == '0 0 0')
 	{
 		effect = spawn();
 		setorigin(effect, self.origin + v_up * 14);
@@ -274,16 +272,15 @@ void() FireballWallTouch =
 
 void() FireBallThink =
 {
-	local entity head;
-	local entity effect;
+	local entity head, effect;
 
 	if (self.owner.enemy && self.owner.enemy.health > 0)
 		self.enemy = self.owner.enemy;
 
+	FireBall_HitBox();
+
 	if (self.enemy)
 		FireBallHomeIn();
-	else
-		FireBall_HitBox(); // already ran in FireBallHomeIn();
 
 	if (self.attack_finished < time)
 	{
