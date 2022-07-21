@@ -305,6 +305,8 @@ player model (Old and new!), Merman monster and so forth
 
 Reki - Client-side QuakeC (CSQC) help the for HUD, smoother camera, and a big help for the MenuQC
 
+Wes Desjardins AKA Gridluster - Awesome music tracks that replaced 'borrowed' works
+
 MTrop - Fixed taunt2.wav too much "sssss" on my voice
 
 Sock - Used his book.mdl
