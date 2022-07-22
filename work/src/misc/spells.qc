@@ -120,7 +120,7 @@ void() FireBall_HitBox =
 			effect.movetype = MOVETYPE_NONE;
 			effect.think = firesprite_think;
 
-			effect.pflags = PFLAGS_FULLDYNAMIC | PFLAGS_NOSHADOW;
+			//effect.pflags = PFLAGS_FULLDYNAMIC | PFLAGS_NOSHADOW;
 			effect.light_lev = 80;
 			effect.color = [2, 1, 0];
 	
@@ -202,7 +202,7 @@ void() FireBallHomeIn =
 		setmodel(effect, "progs/fire.spr");
 		effect.movetype = MOVETYPE_NONE;
 
-		effect.pflags = PFLAGS_FULLDYNAMIC | PFLAGS_NOSHADOW;
+		//effect.pflags = PFLAGS_FULLDYNAMIC | PFLAGS_NOSHADOW;
 		effect.light_lev = 80;
 		effect.color = [2, 1, 0];
 			
@@ -256,7 +256,7 @@ void() FireballWallTouch =
 		setmodel(effect, "progs/fire.spr");
 		effect.movetype = MOVETYPE_NONE;
 
-		effect.pflags = PFLAGS_FULLDYNAMIC | PFLAGS_NOSHADOW;
+		//effect.pflags = PFLAGS_FULLDYNAMIC | PFLAGS_NOSHADOW;
 		effect.light_lev = 80;
 		effect.color = [2, 1, 0];
 
@@ -324,7 +324,7 @@ void(float damg, float hight) Fireball =
 	missile.attack_finished = time + 0.5;
 	missile.angles = self.angles;
 
-	missile.pflags = PFLAGS_FULLDYNAMIC | PFLAGS_NOSHADOW;
+	//missile.pflags = PFLAGS_FULLDYNAMIC | PFLAGS_NOSHADOW;
 	missile.light_lev = 40;
 	missile.color = [2, 1, 0];
 	missile.hitcontentsmaski = CONTENTBIT_SOLID|0x00000002i|CONTENTBIT_BODY|CONTENTBIT_PLAYERCLIP; // don't ignore clipbrushes etc
