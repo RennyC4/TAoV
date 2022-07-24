@@ -274,13 +274,18 @@ void() FireBallThink =
 {
 	local entity head, effect;
 
-	if (self.owner.enemy && self.owner.enemy.health > 0)
-		self.enemy = self.owner.enemy;
+//	if (self.owner.enemy && self.owner.enemy.health > 0)
+//		self.enemy = self.owner.enemy;
 
 	FireBall_HitBox();
 
-	if (self.enemy)
+	if (self.enemy || self.owner.fireball_targ)
+	{
+		if (self.owner.fireball_targ)
+			self.enemy = self.owner.fireball_targ;
+
 		FireBallHomeIn();
+	}
 
 	if (self.attack_finished < time)
 	{

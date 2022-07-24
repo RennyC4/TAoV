@@ -2330,11 +2330,15 @@ void() player_move = [0, player_move]
 
 	if (self.tired_finished > time)
 		player_tired1();
+	
 	if (!self.shadow) // sprite shadow, drawn under Vigil
 	{
 		//spawn_shadow();
 		self.shadow = TRUE;
 	}
+
+	//FireBall_Targ(); // Vigil himself runs targetting spell for Fireball
+	
 	// Reset X+Z angles
 	if (!self.swimming)
 		self.angles_x = self.angles_z = 0;
@@ -3782,7 +3786,7 @@ void() plyr_armstab_think =
 	if (self.owner.frame >= $stabs1 && self.owner.frame <= $stabs12)
 	{
 	
-		if (self.owner.frame == $stabs2 || self.owner.frame == $stabs7 || self.owner.frame == $stabs11) // reduce particle dust spawn
+		if (self.owner.frame == $stabs4 || self.owner.frame == $stabs8) // reduce particle dust spawn
 		{		
 			makevectors (self.angles);
 			setorigin(self, self.owner.origin - v_forward*2 - v_up*2); // Keep arm stab graphic on Vigil
@@ -6392,7 +6396,39 @@ void() player_block =
 // magic spells
 //*
 
-void() player_fireball1	=[	$magicb1,	player_fireball2	] {spawn_magicfog();self.effects = EF_MUZZLEFLASH;};
+void() FireBall_Targ =
+{
+	self.fireball_targ = world;
+
+	float bestd = 9999999;
+	entity bestv = world;
+	for (entity v = world; (v=nextent(v));)
+	{
+		if (v == self || v.health < 1 || v.netname != "solid" || (v.classname == "player" && deathmatch == FALSE && !self.owner.flags & FL_MONSTER) || v.classname == "breakable"
+		|| !visible(v) || !infront(v))
+			continue; // next entity please
+
+		vector heading = v.origin - self.origin;
+		float d = heading * heading;
+		
+		if (d < bestd)
+		{
+			bestd = d;
+			bestv = v;
+		}
+	}
+	
+	if (bestv) // Found one, test range
+	{
+		local float r = vlen (self.origin - bestv.origin);
+		if (r >= 500)
+			self.fireball_targ = world;
+		else
+			self.fireball_targ = bestv;
+	}
+};
+
+void() player_fireball1	=[	$magicb1,	player_fireball2	] {spawn_magicfog();self.effects = EF_MUZZLEFLASH;FireBall_Targ();};
 void() player_fireball2	=[	$magicb2,	player_move	] 
 {
 	self.angles_y = self.turn_y;

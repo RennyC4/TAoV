@@ -107,7 +107,7 @@ void() CheckImpulseButtons =
 						self.char.angles_y = -180; // set specific angle
 						self.char.icefield_count = 0;
 						self.attack_finished = time + 1;
-						self.char.think =	player_icefield1;
+						self.char.think = player_icefield1;
 						self.char.nextthink = time + 0.1;
 					}
 					else if (self.mana >= 30 / 1.5)
@@ -116,7 +116,7 @@ void() CheckImpulseButtons =
 						self.char.angles_y = -180; // set specific angle
 						self.char.icefield_count = 0;
 						self.attack_finished = time + 1;
-						self.char.think =	player_icefield1;
+						self.char.think = player_icefield1;
 						self.char.nextthink = time + 0.1;
 						self.char.tired_finished = time + 7;
 					}
@@ -131,7 +131,7 @@ void() CheckImpulseButtons =
 						self.char.angles_y = -180; // set specific angle
 						self.attack_finished = time + 999;
 						self.char.beams_shot = 0;
-						self.char.think =	player_magicd1;
+						self.char.think = player_magicd1;
 						self.char.nextthink = time + 0.1;
 					}
 					else if (self.mana >= 100 / 1.5)
@@ -140,7 +140,7 @@ void() CheckImpulseButtons =
 						self.char.angles_y = -180; // set specific angle
 						self.attack_finished = time + 999;
 						self.char.beams_shot = 0;
-						self.char.think =	player_magicd1;
+						self.char.think = player_magicd1;
 						self.char.nextthink = time + 0.1;
 						self.char.tired_finished = time + 9;
 					}
@@ -155,7 +155,7 @@ void() CheckImpulseButtons =
 						self.char.angles_y = -180; // set specific angle
 						self.attack_finished = time + 5;
 						self.char.tcount = 0;
-						self.char.think =	player_twister1;
+						self.char.think = player_twister1;
 						self.char.nextthink = time + 0.1;
 					}
 					else if (self.mana >= 75 / 1.5)
@@ -164,7 +164,7 @@ void() CheckImpulseButtons =
 						self.char.angles_y = -180; // set specific angle
 						self.char.tcount = 0;
 						self.attack_finished = time + 5;
-						self.char.think =	player_twister1;
+						self.char.think = player_twister1;
 						self.char.nextthink = time + 0.1;
 						self.char.tired_finished = time + 8;
 					}

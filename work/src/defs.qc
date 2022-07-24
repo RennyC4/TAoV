@@ -612,6 +612,7 @@ float turbo_mode; // Turbo mode boolean, saved in parms
 
 .float attackhit; // timer on if an attack landed on the target
 .float beenblocked; // timer record on both attacker / victim if blocking an attack has occured (melee only)
+.entity fireball_targ; // Vigil's fireball target, called before launching a fireball
 
 // Perfect Guard
 .float perfectblock; // timer

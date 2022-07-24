@@ -257,11 +257,16 @@ float(entity targ) range =
 	local float		r;
 	
 	r = vlen (self.origin - targ.origin);
-	if (r >= 0 && r <= 40) 	    return RANGE_CLOSE;
-	else if (r > 40 && r <= 75)	return RANGE_MELEE;
-	else if (r > 75 && r <= 85)	return RANGE_NEAR;
-	else if (r > 85 && r < 200)	return RANGE_MID;
-	else						return RANGE_FAR;
+	if (r <= 40)
+		return RANGE_CLOSE;
+	else if (r > 40 && r <= 75)
+		return RANGE_MELEE;
+	else if (r > 75 && r <= 85)
+		return RANGE_NEAR;
+	else if (r > 85 && r < 200)
+		return RANGE_MID;
+
+	return RANGE_FAR;
 };
 
 void() ai_forceface =
