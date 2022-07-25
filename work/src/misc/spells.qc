@@ -120,10 +120,6 @@ void() FireBall_HitBox =
 			effect.movetype = MOVETYPE_NONE;
 			effect.think = firesprite_think;
 
-			//effect.pflags = PFLAGS_FULLDYNAMIC | PFLAGS_NOSHADOW;
-			//effect.light_lev = 80;
-			//effect.color = [2, 1, 0];
-	
 			effect.nextthink = time;
 			effect.solid = SOLID_NOT;
 			if (deathmatch == TRUE) // deathmatch damage is divided by 3
@@ -201,10 +197,6 @@ void() FireBallHomeIn =
 		setorigin(effect, self.origin + v_up * 14);
 		setmodel(effect, "progs/fire.spr");
 		effect.movetype = MOVETYPE_NONE;
-
-		//effect.pflags = PFLAGS_FULLDYNAMIC | PFLAGS_NOSHADOW;
-		//effect.light_lev = 80;
-		//effect.color = [2, 1, 0];
 			
 		effect.think = firesprite_think;
 		effect.nextthink = time;
@@ -256,10 +248,6 @@ void() FireballWallTouch =
 		setmodel(effect, "progs/fire.spr");
 		effect.movetype = MOVETYPE_NONE;
 
-		//effect.pflags = PFLAGS_FULLDYNAMIC | PFLAGS_NOSHADOW;
-		//effect.light_lev = 80;
-		//effect.color = [2, 1, 0];
-
 		effect.think = firesprite_think;
 		effect.nextthink = time;
 		effect.solid = SOLID_NOT;
@@ -274,19 +262,21 @@ void() FireBallThink =
 {
 	local entity head, effect;
 
-//	if (self.owner.enemy && self.owner.enemy.health > 0)
-//		self.enemy = self.owner.enemy;
-
 	FireBall_HitBox();
 
-	if (self.enemy || self.owner.fireball_targ)
+	if (self.owner.flags & FL_MONSTER)
+		self.enemy = self.owner.enemy;
+	else
 	{
-		if (self.owner.fireball_targ)
-			self.enemy = self.owner.fireball_targ;
-
-		FireBallHomeIn();
+		if (self.enemy || self.owner.fireball_targ)
+		{
+			if (self.owner.fireball_targ)
+				self.enemy = self.owner.fireball_targ;
+		}
 	}
 
+	FireBallHomeIn();
+	
 	if (self.attack_finished < time)
 	{
 		effect = spawn();
@@ -329,12 +319,6 @@ void(float damg, float hight) Fireball =
 	missile.attack_finished = time + 0.5;
 	missile.angles = self.angles;
 
-	//missile.pflags = PFLAGS_FULLDYNAMIC | PFLAGS_NOSHADOW;
-	//missile.light_lev = 40;
-	//missile.color = [2, 1, 0];
-	
-	//missile.hitcontentsmaski = CONTENTBIT_SOLID|0x00000002i|CONTENTBIT_BODY|CONTENTBIT_PLAYERCLIP; // don't ignore clipbrushes etc
-	
 	missile.think = FireBallThink;
 	missile.nextthink = time + 0.1;
 
