@@ -1059,21 +1059,21 @@ void() gold_touch =
 	{
 		if (self.message == "breakable") // message string is used to see who dropped the gold without classname getting in the way from being removed
 		{
-			self.cnt = other.owner.level * 13 + ceil(random()*9);
+			self.cnt = other.owner.level * 15 + ceil(random()*9);
 			self.cnt = floor(self.cnt / 6);
 		}
 		else
 		{
 			if (other.owner.last_combo > 0)
-				self.cnt = other.owner.level * 13 + ceil(random()*9) + ceil(other.owner.last_combo / 2);
+				self.cnt = other.owner.level * 15 + ceil(random()*9) + ceil(other.owner.last_combo / 2);
 			else
-				self.cnt = other.owner.level * 13 + ceil(random()*9);
+				self.cnt = other.owner.level * 15 + ceil(random()*9);
 		}
 	}
 	else
 	{
 		if (other.owner.gold < aprice)
-			self.cnt = other.owner.level * 13 + ceil(random()*9); // normal calc
+			self.cnt = other.owner.level * 15 + ceil(random()*9); // normal calc
 		else
 			self.cnt = 1 + random()*11; // give cheap change after reaching teleporter price
 	}
