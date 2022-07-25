@@ -2336,8 +2336,6 @@ void() player_move = [0, player_move]
 		//spawn_shadow();
 		self.shadow = TRUE;
 	}
-
-	//FireBall_Targ(); // Vigil himself runs targetting spell for Fireball
 	
 	// Reset X+Z angles
 	if (!self.swimming)

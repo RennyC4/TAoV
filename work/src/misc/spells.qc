@@ -121,8 +121,8 @@ void() FireBall_HitBox =
 			effect.think = firesprite_think;
 
 			//effect.pflags = PFLAGS_FULLDYNAMIC | PFLAGS_NOSHADOW;
-			effect.light_lev = 80;
-			effect.color = [2, 1, 0];
+			//effect.light_lev = 80;
+			//effect.color = [2, 1, 0];
 	
 			effect.nextthink = time;
 			effect.solid = SOLID_NOT;
@@ -203,8 +203,8 @@ void() FireBallHomeIn =
 		effect.movetype = MOVETYPE_NONE;
 
 		//effect.pflags = PFLAGS_FULLDYNAMIC | PFLAGS_NOSHADOW;
-		effect.light_lev = 80;
-		effect.color = [2, 1, 0];
+		//effect.light_lev = 80;
+		//effect.color = [2, 1, 0];
 			
 		effect.think = firesprite_think;
 		effect.nextthink = time;
@@ -257,8 +257,8 @@ void() FireballWallTouch =
 		effect.movetype = MOVETYPE_NONE;
 
 		//effect.pflags = PFLAGS_FULLDYNAMIC | PFLAGS_NOSHADOW;
-		effect.light_lev = 80;
-		effect.color = [2, 1, 0];
+		//effect.light_lev = 80;
+		//effect.color = [2, 1, 0];
 
 		effect.think = firesprite_think;
 		effect.nextthink = time;
@@ -330,9 +330,10 @@ void(float damg, float hight) Fireball =
 	missile.angles = self.angles;
 
 	//missile.pflags = PFLAGS_FULLDYNAMIC | PFLAGS_NOSHADOW;
-	missile.light_lev = 40;
-	missile.color = [2, 1, 0];
-	missile.hitcontentsmaski = CONTENTBIT_SOLID|0x00000002i|CONTENTBIT_BODY|CONTENTBIT_PLAYERCLIP; // don't ignore clipbrushes etc
+	//missile.light_lev = 40;
+	//missile.color = [2, 1, 0];
+	
+	//missile.hitcontentsmaski = CONTENTBIT_SOLID|0x00000002i|CONTENTBIT_BODY|CONTENTBIT_PLAYERCLIP; // don't ignore clipbrushes etc
 	
 	missile.think = FireBallThink;
 	missile.nextthink = time + 0.1;
