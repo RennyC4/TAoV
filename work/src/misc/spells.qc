@@ -264,6 +264,11 @@ void() FireBallThink =
 
 	FireBall_HitBox();
 
+	if (self.owner.enemy && self.owner.enemy.health > 0)
+		self.enemy = self.owner.enemy;
+
+// Entity cycling is too expensive
+/*
 	if (self.owner.flags & FL_MONSTER)
 		self.enemy = self.owner.enemy;
 	else
@@ -274,6 +279,7 @@ void() FireBallThink =
 				self.enemy = self.owner.fireball_targ;
 		}
 	}
+*/
 
 	FireBallHomeIn();
 	

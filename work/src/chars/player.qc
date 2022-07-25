@@ -2159,8 +2159,6 @@ void() player_jumpframe =
 {
 	self.charge_count = 4; // set charge up attack somewhat when in air
 
-//	if ((self.onground == FALSE && self.inair > 31) || self.velocity_z > 100) // Keep inAir for slightly troublesome instances
-
 	if ((self.onground == FALSE && self.inair > 17) || self.velocity_z > 100) // Keep inAir for slightly troublesome instances
 	{
 		if (self.aircombo_count == 0 || self.aircombo_count == 3 || self.aircombo_count == 4 || self.aircombo_count >= 7)
@@ -6394,6 +6392,8 @@ void() player_block =
 // magic spells
 //*
 
+// Entity cycling is too expensive
+/*
 void() FireBall_Targ =
 {
 	self.fireball_targ = world;
@@ -6425,8 +6425,12 @@ void() FireBall_Targ =
 			self.fireball_targ = bestv;
 	}
 };
+*/
 
-void() player_fireball1	=[	$magicb1,	player_fireball2	] {spawn_magicfog();self.effects = EF_MUZZLEFLASH;FireBall_Targ();};
+// Entity cyling is too expensive
+//void() player_fireball1	=[	$magicb1,	player_fireball2	] {spawn_magicfog();self.effects = EF_MUZZLEFLASH;FireBall_Targ();};
+
+void() player_fireball1	=[	$magicb1,	player_fireball2	] {spawn_magicfog();self.effects = EF_MUZZLEFLASH;};
 void() player_fireball2	=[	$magicb2,	player_move	] 
 {
 	self.angles_y = self.turn_y;
