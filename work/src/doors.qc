@@ -350,8 +350,6 @@ float (entity e1, entity e2) EntitiesTouching =
 /*
 =============
 LinkDoors
-
-
 =============
 */
 void() LinkDoors =

@@ -655,6 +655,7 @@ void() func_swing_use =
 	// Object will reverse direction
 	if (self.cnt2 == TRUE)
 	{
+		self.solid = SOLID_BSP; // Moving, turn solid if not
 		if (self.attack_finished < time)
 		{
 			self.avelocity = self.pos1 * -1;
@@ -689,6 +690,7 @@ void() func_swing_use =
 	{
 		if (self.mode >= self.cnt) // stop moving/thinking
 		{
+			self.solid = SOLID_NOT; // Fully stopped doors / etc turn non-solid - prevents Vigil from getting stuck
 			self.avelocity = '0 0 0';
 			sound (self, CHAN_BODY, self.noise2, 1, ATTN_NORM);
 			self.count = FALSE;
