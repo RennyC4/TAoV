@@ -9486,7 +9486,7 @@
 // entity 89
 {
 "classname" "lionhead"
-"origin" "-417 -672 656"
+"origin" "-409 -672 656"
 "angle" "180"
 "_phong" "1"
 }
