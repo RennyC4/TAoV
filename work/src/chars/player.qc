@@ -2828,6 +2828,7 @@ void() player_fire =
 					if (self.zoom_mode != 0)
 						self.zoom_mode = 0; // No Zoom
 					self.swordshadow_time = time + 1; // sword shadow
+					self.char.takedamage = DAMAGE_AIM; // Fixes rare i-frame occurances
 					self.char.think = player_stabs1;
 					self.char.swing_count = 2;
 					self.attack_finished = time + 1;
@@ -4021,6 +4022,7 @@ void() player_fstab1	=[	$fstab1,	player_fstab2	]
 
 void() player_fstab2	=[	$fstab2,	player_fstab3	] 
 {
+	self.takedamage = DAMAGE_AIM;
 	if (self.rollforward_fstab2 < time)
 	{
 		if (freeze_finished < time && self.owner.combo > 0 && self.beenblocked < time) // don't interefere with level up/etc
@@ -6688,24 +6690,21 @@ void() divingswallow_hit =
 		{
 			if (head.th_pain)
 			{
-				if (head.noblood == FALSE)
-				{
-					ThrowBloodSplat(head.origin, head);
-					ThrowBloodSplat(head.origin, head);
-					ThrowBloodSplat(head.origin, head);
-					ThrowBloodSplat(head.origin, head);
-				}
-
 				if (self.owner.wallrun == FALSE)
 					self.bflipwall_finished = time + 0.3;
 				head.paincount = 0;
 				head.velocity = '0 0 0';
 				head.flags = head.flags - (head.flags & FL_ONGROUND);
-				head.velocity = self.velocity; // drag enemy in the air along with Vigil
 
 				if (self.aircombo_count == 8 && head == self.enemy) // for air diving swallow
 				{
 					head.damage_type = self.attack_type = 5; // Cut/gored/sliced in half!
+					if (head.noblood == FALSE)
+					{
+						ThrowBloodSplat(head.origin, head);
+						ThrowBloodSplat(head.origin, head);
+						ThrowBloodSplat(head.origin, head);
+					}
 
 					// spawn a hit sprite
 					effect = spawn();
@@ -6775,8 +6774,16 @@ void() divingswallow_hit =
 					self.owner.backflip_finished = time + 0.7; // Perfect value! Player enters negative velocity by this itme...
 					self.owner.combo = self.owner.combo + 1; // raise combo counter
 				}
-				else if (head.health > 0)
+				else if (head.health > 0 || !checkground(head))
 				{
+					head.velocity = self.velocity; // drag enemy in the air along with Vigil
+					if (head.noblood == FALSE)
+					{
+						ThrowBloodSplat(head.origin, head);
+						ThrowBloodSplat(head.origin, head);
+						ThrowBloodSplat(head.origin, head);
+					}
+
 					// spawn a hit sprite
 					effect = spawn();
 					setorigin(effect, head.origin + v_up*22);

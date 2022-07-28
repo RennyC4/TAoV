@@ -205,6 +205,8 @@ void() baron_smash6 	=[	$smack6,	baron_smash7	] {frameskip(0.15);monster_removes
 void() baron_smash7 	=[	$smack7,	baron_smash8	] {frameskip(0.05);monster_removeslide();};
 void() baron_smash8 	=[	$smack8,	baron_smash9	] 
 {
+	monster_removeslide();
+
 	local entity effect, head;
 
 	effect = spawn();

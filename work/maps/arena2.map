@@ -1041,12 +1041,12 @@
 // entity 5
 {
 "classname" "barrel"
-"origin" "672 -264 -200"
+"origin" "672 -264 -192"
 }
 // entity 6
 {
 "classname" "barrel"
-"origin" "400 -160 -256"
+"origin" "400 -160 -248"
 }
 // entity 7
 {
@@ -1056,7 +1056,7 @@
 // entity 8
 {
 "classname" "barrel"
-"origin" "672 -296 -200"
+"origin" "672 -296 -192"
 }
 // entity 9
 {
@@ -1067,31 +1067,31 @@
 {
 "classname" "flag"
 "angle" "90"
-"origin" "1040 -324 -120"
+"origin" "1040 -324 -128"
 }
 // entity 11
 {
 "classname" "flag"
 "angle" "90"
-"origin" "736 -324 -120"
+"origin" "736 -324 -128"
 }
 // entity 12
 {
 "classname" "flag"
 "angle" "90"
-"origin" "440 -324 -120"
+"origin" "440 -324 -128"
 }
 // entity 13
 {
 "classname" "flag"
 "angle" "90"
-"origin" "136 -324 -120"
+"origin" "136 -324 -128"
 }
 // entity 14
 {
 "classname" "flag"
 "angle" "90"
-"origin" "-164 -324 -120"
+"origin" "-164 -324 -128"
 }
 // entity 15
 {
@@ -1186,12 +1186,12 @@
 // entity 33
 {
 "classname" "barrel"
-"origin" "136 -136 -256"
+"origin" "136 -136 -248"
 }
 // entity 34
 {
 "classname" "barrel"
-"origin" "96 -136 -256"
+"origin" "96 -136 -248"
 }
 // entity 35
 {
