@@ -3532,7 +3532,6 @@ void(float miniver) spinatk_wind_spiral =
 	effect.classname = "spinwindspiral_effect";
 	effect.solid = SOLID_NOT;
 	effect.owner = self;
-//	effect.scale = 1;
 	effect.attack_finished = time + 0.4;
 	setsize (effect, '0 0 0', '0 0 0');
 

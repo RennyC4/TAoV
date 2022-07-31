@@ -140,6 +140,12 @@ void() efxflashe_think =
 // spin attack spiral
 void() spinwindspiral_think =
 {
+	if (self.owner.pain_finished > time)
+	{
+		remove(self);
+		return;
+	}
+
 	if (self.cnt < 50)
 		self.cnt = self.cnt + 1; // rising speed
 	else
@@ -171,6 +177,12 @@ void() spinwindspiral_think =
 // mini spin attack spiral
 void() spinwindspiralmini_think =
 {
+	if (self.owner.pain_finished > time)
+	{
+		remove(self);
+		return;
+	}
+
 	setorigin (self, self.owner.origin + (v_up * 8));
 
 	self.angles_y = self.angles_y + 8 ; // spin speed
