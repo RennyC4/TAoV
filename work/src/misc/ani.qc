@@ -168,6 +168,32 @@ void() spinwindspiral_think =
 	frameskip (0.01);
 };
 
+// mini spin attack spiral
+void() spinwindspiralmini_think =
+{
+	setorigin (self, self.owner.origin + (v_up * 8));
+
+	self.angles_y = self.angles_y + 8 ; // spin speed
+
+	if (self.attack_finished < time)
+	{
+		self.effects = EF_ADDITIVE;
+		if (self.scale < 3)
+			self.scale = self.scale + 0.025;
+		else
+		{
+			if (self.alpha > 0)
+				self.alpha = self.alpha - 0.08;
+			else
+			{
+				remove(self);
+				return;
+			}
+		}
+	}
+	frameskip (0.01);
+};
+
 // sword spin attack spiral
 void() player_swordspin_fx_think =
 {
