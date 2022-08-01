@@ -174,6 +174,18 @@ void() spinwindspiral_think =
 	frameskip (0.01);
 };
 
+//wall grab sword sparks
+void() spark_think =
+{
+	particle (self.origin, '0 0 0', 111, 2); // yellow particles
+	if (self.attack_finished < time)
+	{
+		remove(self);
+		return;
+	}
+	frameskip(0.025);
+};
+
 // mini spin attack spiral
 void() spinwindspiralmini_think =
 {

@@ -4350,6 +4350,8 @@ void() player_attacka9b	=[	$attacka9,	player_attacka9b ]
 .vector oangles;
 void() spinpush =
 {
+	self.owner.noblock_finished = time + 0.2;
+
 	local entity effect;
 	
 	makevectors (self.angles);
@@ -6651,16 +6653,6 @@ void() player_twister3	=[	$magica4,	player_twister3	]
 };
 void() player_twister4	=[	$magica4,	player_move	] {};
 
-void() spark_think =
-{
-	particle (self.origin, '0 0 0', 111, 4); // yellow particles
-	if (self.attack_finished < time)
-	{
-		remove(self);
-		return;
-	}
-	self.nextthink = time + 0.1;
-};
 
 //
 // Function is used for testx checking to see if the players x origin
@@ -6955,20 +6947,27 @@ void() player_wallgrab	=[	$wallgrab,	player_wallgrab 	]
 	if (self.angles_y == 225 || self.angles_y == -225)
 		self.angles_y = 180;
 
-	makevectors(self.angles);
 
 	spark = spawn ();
 	spark.owner = self;
+
+	spark.angles = self.owner.angles;
+
+	makevectors(self.angles);
+
 	spark.drawonlytoclient = self.owner.owner; // reduce network traffic
-	spark.movetype = MOVETYPE_NOCLIP;
+	spark.movetype = MOVETYPE_BOUNCE;
 	spark.solid = SOLID_NOT;
 	spark.classname = "swordspark";
 	setmodel (spark, string_null);
 	spark.think = spark_think;
-	spark.nextthink = time + 0.1;
+	spark.nextthink = time;
 	spark.velocity_z = 25;
-	spark.attack_finished = time + 0.4;
-	setorigin(spark, self.origin + v_forward * 20);
+	
+	spark.velocity = v_forward * (50 + random()*50) * -1;
+	
+	spark.attack_finished = time + 0.5;
+	setorigin(spark, self.origin + v_forward * 20 + v_up * 10);
 
 	if (self.owner.zoom_mode != 0 && self.owner.camera_forcezoom_finished < time)
 		self.owner.zoom_mode = 0; // No zoom
