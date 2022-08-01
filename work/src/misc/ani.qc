@@ -140,7 +140,7 @@ void() efxflashe_think =
 // spin attack spiral
 void() spinwindspiral_think =
 {
-	if (self.owner.pain_finished > time)
+	if (self.owner.pain_finished > time || self.owner.dodge_finished > time || self.owner.block_finished > time)
 	{
 		remove(self);
 		return;
@@ -177,7 +177,7 @@ void() spinwindspiral_think =
 // mini spin attack spiral
 void() spinwindspiralmini_think =
 {
-	if (self.owner.pain_finished > time)
+	if (self.owner.pain_finished > time || self.owner.dodge_finished > time || self.owner.block_finished > time)
 	{
 		remove(self);
 		return;
