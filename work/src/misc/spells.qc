@@ -280,6 +280,7 @@ void() FireBallThink =
 		effect.nextthink = time;
 		effect.solid = SOLID_NOT;
 		spawn_embers();
+		sound (self, CHAN_BODY, "spells/fhit.wav", 1, ATTN_NORM);
 		remove(self);
 		return;
 	}
