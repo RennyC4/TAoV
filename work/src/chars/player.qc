@@ -5376,7 +5376,7 @@ void() player_airkick15		=[	$airkick15,	player_airkick16 	]
 
 	effect.think = windspiral_think;
 	effect.nextthink = time;
-	sound (self, CHAN_AUTO, "player/woosh.wav", 1, ATTN_NORM);
+	sound (self, CHAN_AUTO, "player/woosh.wav", 0.5, ATTN_NORM);
 
 	self.owner.camshake_finished = time + 0.2;
 	self.owner.shadow_time = time + 0.05; // red shadow
@@ -6764,11 +6764,11 @@ void() divingswallow_hit =
 
 					effect2.think = windspiral_think;
 					effect2.nextthink = time;
-					sound (self, CHAN_AUTO, "player/woosh.wav", 1, ATTN_NORM);
+					sound (effect2, CHAN_AUTO, "player/woosh.wav", 0.5, ATTN_NORM);
 
 					head.knockback = 5;
 					self.owner.camshake_finished = time + 0.2;
-					sound (self, CHAN_WEAPON, "player/hugekick.wav", 1, ATTN_NORM);
+					sound (self, CHAN_AUTO, "player/hugekick.wav", 1, ATTN_NORM);
 					self.owner.screenflash_finished = time + 0.1;
 
 					local float damg_calc;
