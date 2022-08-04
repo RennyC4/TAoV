@@ -151,26 +151,35 @@ void() spinwindspiral_think =
 	else
 		self.cnt = 50; // stop at this height
 
-	setorigin (self, self.owner.origin - v_up * 30 + (v_up * self.cnt));
 
-	self.angles_y = self.angles_y + 8; // spin speed
-
-	if (self.attack_finished < time)
+	if (self.cnt2 != 2)
 	{
-		self.effects = EF_ADDITIVE;
-		if (self.scale < 3)
-			self.scale = self.scale + 0.025;
-		else
+		self.angles_y = self.angles_y + 8; // spin speed
+		setorigin (self, self.owner.origin - v_up * 30 + (v_up * self.cnt));
+		if (self.attack_finished < time)
 		{
-			if (self.alpha > 0)
-				self.alpha = self.alpha - 0.05;
+			if (self.scale < 3)
+				self.scale = self.scale + 0.025;
 			else
 			{
-				remove(self);
-				return;
+				if (self.alpha > 0)
+					self.alpha = self.alpha - 0.05;
+				else
+				{
+					remove(self);
+					return;
+				}
 			}
 		}
 	}
+	else
+	{
+		self.angles_x = self.angles_x + 12; // spin speed
+		setorigin (self, self.owner.origin);
+		if (self.attack_finished < time)
+			remove(self);
+	}
+
 	frameskip (0.01);
 };
 

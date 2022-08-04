@@ -3516,7 +3516,7 @@ void() spinattack_particle = // white particles to spin around vigil
 	parti.nextthink = time;
 };
 
-void(float miniver) spinatk_wind_spiral =
+void(float ver) spinatk_wind_spiral =
 {
 	local entity effect;
 
@@ -3525,28 +3525,42 @@ void(float miniver) spinatk_wind_spiral =
 	effect = spawn();
 	setorigin (effect, self.origin - v_up * 30);
 	setmodel(effect, "progs/spnatkspr.mdl");
-	effect.angles_y = random()*360;
 	
-	effect.cnt = miniver;
+	effect.cnt2 = ver;
 	effect.movetype = MOVETYPE_NOCLIP;
 	effect.classname = "spinwindspiral_effect";
 	effect.solid = SOLID_NOT;
 	effect.owner = self;
-	effect.attack_finished = time + 0.4;
 	setsize (effect, '0 0 0', '0 0 0');
 
-	if (!miniver)
+	effect.effects = EF_ADDITIVE;
+
+	if (ver == 0) // normal spin attack
 	{
-		effect.alpha = 1;
+		effect.angles_y = random()*360;
+		effect.attack_finished = time + 0.4;
+
+		effect.alpha = 0.8;
 		effect.scale = 1;
 		effect.think = spinwindspiral_think;
 	}
-	else
+	else if (ver == 1) // smaller spin attack (from foward attack)
 	{
-		effect.effects = EF_ADDITIVE;
+		effect.angles_y = random()*360;
+		effect.attack_finished = time + 0.4;
+
 		effect.alpha = 0.5;
 		effect.scale = 2;
 		effect.think = spinwindspiralmini_think;
+	}
+	else // charge up spin attack
+	{
+		effect.attack_finished = time + 0.5;
+
+		effect.alpha = 1;
+		effect.scale = 2.88;
+		effect.angles_z = 90;	
+		effect.think = spinwindspiral_think;	
 	}
 
 	effect.nextthink = time;
@@ -3574,7 +3588,7 @@ void() player_kickforward =
 
 void() player_kick1	=[	$kick1,	player_kick2	] 
 {
-	sound (self, CHAN_AUTO, "player/motion1.wav", 1, ATTN_NORM);
+	sound (self, CHAN_AUTO, "player/kickswng.wav", 1, ATTN_NORM);
 	if (self.onground == TRUE)
 		self.velocity_z = 250;
 	else
@@ -4655,6 +4669,8 @@ void() player_chargeatkmovement =
 
 void() player_chargeatk1	=[	$charge5,	player_chargeatk2	] 
 {
+	spinatk_wind_spiral(2); // spawn vfx
+	
 	self.takedamage = DAMAGE_NO; // I-Frames
 	sound (self, CHAN_AUTO, "player/jump.wav", 1, ATTN_NORM);
 	self.owner.noblock_finished = time + 999;
@@ -4670,7 +4686,7 @@ void() player_chargeatk3	=[	$charge7,	player_chargeatk3	]
 	if (self.chargespincnt < 46)
 	{
 		if (self.chargespincnt == 0 || self.chargespincnt == 20 || self.chargespincnt == 40)
-			sound (self, CHAN_WEAPON, "player/twoosh.wav", 1, ATTN_NORM);
+			sound (self, CHAN_AUTO, "player/twoosh.wav", 1, ATTN_NORM);
 
 		if (self.chargespincnt == 3 || self.chargespincnt == 12 || self.chargespincnt == 25 || self.chargespincnt == 35)
 		{
@@ -4826,7 +4842,7 @@ void() jatkspecial =
 	self.velocity_z = self.velocity_z + 200;
 };
 
-void() player_jatkspecial1	=[	$jatkspc1,	player_jatkspecial2	] {jatkspecial();frameskip(0.06);FireMelee(3,15,0,35,0,0,1,FALSE,0,0);sound (self, CHAN_ITEM, "player/swrdspin.wav", 1, ATTN_NORM);};
+void() player_jatkspecial1	=[	$jatkspc1,	player_jatkspecial2	] {jatkspecial();frameskip(0.06);FireMelee(3,15,0,35,0,0,1,FALSE,0,0);sound (self, CHAN_AUTO, "player/swrdspin.wav", 1, ATTN_NORM);};
 void() player_jatkspecial2	=[	$jatkspc2,	player_jatkspecial3	] {jatkspecial();frameskip(0.06);FireMelee(3,15,0,35,0,0,1,FALSE,0,0);}
 void() player_jatkspecial3	=[	$jatkspc3,	player_jatkspecial4	] {jatkspecial();frameskip(0.06);FireMelee(3,15,0,35,0,0,1,FALSE,0,0);};
 void() player_jatkspecial4	=[	$jatkspc4,	player_jatkspecial5	] {jatkspecial();frameskip(0.06);FireMelee(3,15,0,35,0,0,1,FALSE,0,0);};
@@ -6998,7 +7014,7 @@ void() player_wallgrab	=[	$wallgrab,	player_wallgrab 	]
 		player_walljumpkick1();
 		player_yell(1); 
 
-		sound (self, CHAN_BODY, "player/fast.wav", 1, ATTN_NORM);
+		sound (self, CHAN_AUTO, "player/fast.wav", 1, ATTN_NORM);
 		self.velocity_z = 50;
 		return;
 	}
@@ -7180,7 +7196,7 @@ void() player_airdivings1 =
 	if (self.frame != $jumpatkb1) // only execute once...
 	{
 		self.frame = $jumpatkb1;
-		sound (self, CHAN_BODY, "player/fast.wav", 1, ATTN_NORM);
+		sound (self, CHAN_AUTO, "player/fast.wav", 1, ATTN_NORM);
 	}
 
 	self.inair = 0;
@@ -7466,7 +7482,7 @@ void() player_wallrunningjumpkick2	=[	$wallgrab,	player_wallrunningjumpkick3	]
 
 	view = vectoangles(self.enemy.origin - self.origin);
 	self.angles_y = view_y;
-	sound (self, CHAN_BODY, "player/fast.wav", 1, ATTN_NORM);
+	sound (self, CHAN_AUTO, "player/fast.wav", 1, ATTN_NORM);
 	frameskip (0.01);
 };
 
@@ -7533,7 +7549,7 @@ void(float grab) player_swordspin_fx =
 	effect.frame = 0;
 	effect.scale = 2.85;
 	effect.effects = EF_FULLBRIGHT | EF_ADDITIVE;
-	effect.alpha = 0.8;
+	effect.alpha = 0.5;
 
 	setmodel(effect, "progs/vswrdspn.mdl");
 	setsize (effect, '0 0 0', '0 0 0');
@@ -7553,7 +7569,7 @@ void(float grab) player_swordspin_fx =
 void() player_swordspin1   =[	$dfattack1,	player_swordspin2	] {player_swordspin_fx(0);frameskip(0.05);};
 void() player_swordspin2   =[	$dfattack2,	player_swordspin3	] {frameskip(0.05);};
 void() player_swordspin3   =[	$dfattack3,	player_swordspin4	] 
-{player_yell(0);sound (self, CHAN_WEAPON, "player/swrdspin.wav", 1, ATTN_NORM);self.owner.swordshadow_time = time + 1;frameskip(0.02);};
+{player_yell(0);sound (self, CHAN_AUTO, "player/swrdspin.wav", 1, ATTN_NORM);self.owner.swordshadow_time = time + 1;frameskip(0.02);};
 void() player_swordspin4   =[	$dfattack4,	player_swordspin5	] {FireMelee(1,35,0,25,0,0,1,FALSE,0,0);frameskip(0.02);};
 void() player_swordspin5   =[	$dfattack5,	player_swordspin6	] {frameskip(0.02);};
 
@@ -7566,7 +7582,7 @@ void() player_swordspin6   =[	$dfattack6,	player_swordspin7	]
 		player_swordspin22();
 		return;
 	}
-	sound (self, CHAN_WEAPON, "player/swrdspin.wav", 1, ATTN_NORM);
+	sound (self, CHAN_AUTO, "player/swrdspin.wav", 1, ATTN_NORM);
 	self.sword_spincnt = self.sword_spincnt + 1;
 	frameskip(0.02);
 };
@@ -7854,7 +7870,7 @@ void() player_purge2	=[	$attacka4,	player_move	]
 void() player_miniswordspin1   =[	$dfattack1,	player_miniswordspin2	] {player_swordspin_fx(1);frameskip(0.05);};
 void() player_miniswordspin2   =[	$dfattack2,	player_miniswordspin3	] {frameskip(0.05);};
 void() player_miniswordspin3   =[	$dfattack3,	player_miniswordspin4	] 
-{player_yell(0);sound (self, CHAN_WEAPON, "player/swrdspin.wav", 1, ATTN_NORM);self.owner.swordshadow_time = time + 0.5;frameskip(0.02);};
+{player_yell(0);sound (self, CHAN_AUTO, "player/swrdspin.wav", 1, ATTN_NORM);self.owner.swordshadow_time = time + 0.5;frameskip(0.02);};
 void() player_miniswordspin4   =[	$dfattack4,	player_miniswordspin5	] {FireMelee(1,35,4,25,0,0,1,TRUE,0,0);frameskip(0.02);};
 void() player_miniswordspin5   =[	$dfattack5,	player_miniswordspin6	] {frameskip(0.02);};
 
@@ -7867,7 +7883,7 @@ void() player_miniswordspin6   =[	$dfattack6,	player_miniswordspin7	]
 		player_miniswordspin22();
 		return;
 	}
-	sound (self, CHAN_WEAPON, "player/swrdspin.wav", 1, ATTN_NORM);
+	sound (self, CHAN_AUTO, "player/swrdspin.wav", 1, ATTN_NORM);
 	self.sword_spincnt = self.sword_spincnt + 1;
 	frameskip(0.02);
 };
