@@ -262,12 +262,12 @@ void() FireBallThink =
 {
 	local entity head, effect;
 
-	if (self.owner.enemy && self.owner.enemy.health > 0)
+	if (self.owner.enemy)
 		self.enemy = self.owner.enemy;
 
 	FireBall_HitBox();
 
-	if (self.enemy)
+	if (self.enemy && self.enemy.health > 0 && self.enemy.deadflag != DEAD_DEAD && self.enemy != self.owner)
 		FireBallHomeIn();
 
 	if (self.attack_finished < time)

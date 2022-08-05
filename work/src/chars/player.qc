@@ -6598,6 +6598,7 @@ void() swordstareffect2 =
 
 void() player_magicd1	=[	$magicd1,	player_magicd2	] 
 {
+	self.owner.noblock_finished = time + 999;
 	spawn_magicfog();
 
 	if (self.owner.camera_forcezoom_finished < time)
