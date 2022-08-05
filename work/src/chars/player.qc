@@ -546,24 +546,33 @@ void() PlayerWaterPhysics =
 void() speedline_think =
 {
 	local vector view;
+		
+	if (!self.cnt)
+	{
+		// NOTE: View_x == 270 is the speed lines completely facing downward
 
-	// NOTE: View_x == 270 is the speed lines completely facing downward
+		makevectors (self.angles);
+		view = vectoangles(self.owner.origin - self.origin);
 
-	makevectors (self.angles);
-	view = vectoangles(self.owner.origin - self.origin);
+		// prevent horizontal lines when Vigil's X Velocity is zero!
+		if (self.owner.velocity_z == 0 && view_x == 270 && self.owner.onground == TRUE)
+			view_x = 0;
+		// speed lines must always face doward on Vigil's head smashes
+		if (self.owner.frame == $jumpatk2 || self.owner.frame == $jumpatk3 && view_x == 0)
+			view_x = 270;
 
-	// prevent horizontal lines when Vigil's X Velocity is zero!
-	if (self.owner.velocity_z == 0 && view_x == 270 && self.owner.onground == TRUE)
-		view_x = 0;
-	// speed lines must always face doward on Vigil's head smashes
-	if (self.owner.frame == $jumpatk2 || self.owner.frame == $jumpatk3 && view_x == 0)
-		view_x = 270;
+		// Debug
+		//local string s = ftos(self.owner.angles_y);
+		//bprint ("Ang: ", s, "\n");
 
-	if (self.owner.angles_y == 0)
-		self.angles_z = view_x;
-	else
-		self.angles_z = view_x * -1;
-
+		if (self.owner.angles_y == 0 || self.owner.angles_y == -45)
+			self.angles_z = view_x;
+		else
+			self.angles_z = view_x * -1;
+		
+		self.cnt = TRUE;
+	}
+	
 	if (self.attack_finished < time) // animate speed
 	{
 		if (random() < 0.5)
@@ -585,6 +594,7 @@ void() speedline_think =
 		remove(self);
 		return;
 	}
+	
 	frameskip(0.01);
 };
 
@@ -617,7 +627,7 @@ void() SpeedLine =
 	speedl.frame = random()*3;
 
 	speedl.think = speedline_think;
-	speedl.nextthink = time + 0.01;
+	speedl.nextthink = time;// + 0.01;
 	self.nextspeed_time = time + 0.15;
 };
 
@@ -4927,6 +4937,7 @@ void() hsmash_testzcheck =
 			oself = self;
 			self = self.owner;
 
+			self.owner.speedline_time = time;
 			jumpatk_grounded();
 			player_jumpatk3();
 			self.owner.camshake_finished = time + 0.2;
@@ -4946,7 +4957,7 @@ void() player_jumpatk2	=[	$jumpatk2,	player_jumpatk2	]
 	local vector no = '0 0 0';
 	local vector h;
 
-	self.owner.speedline_time = time + 0.1; // speedline
+	self.owner.speedline_time = time + 0.05; // speedline
 
 	if (self.aircombo_count == 6) // add a tad of forward velocity
 	{
@@ -5183,6 +5194,7 @@ void() player_jumpatk2	=[	$jumpatk2,	player_jumpatk2	]
 
 	if (self.onground == TRUE)
 	{	
+		self.owner.speedline_time = time;
 		makevectors (self.angles);
 
 		effect = spawn();
