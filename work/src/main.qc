@@ -198,7 +198,6 @@ void() worldspawn =
 		precache_sound ("player/inlava.wav");
 		precache_sound ("player/inslime.wav");
 		precache_sound ("player/twoosh.wav");
-		precache_sound ("player/owhit.wav");
 		precache_sound ("player/invun.wav");
 		precache_sound ("player/sword4.wav");
 		precache_sound ("player/hugekick.wav");
@@ -207,6 +206,7 @@ void() worldspawn =
 		precache_sound ("player/djump.wav");
 		precache_sound ("player/climb.wav");
 		precache_sound ("player/run.wav");
+		precache_sound ("player/run2.wav");
 		precache_sound ("player/wrun1.wav");
 		precache_sound ("player/wrun2.wav");
 		precache_sound ("player/swrdwall.wav");

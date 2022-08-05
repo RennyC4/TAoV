@@ -12202,7 +12202,7 @@
 }
 // entity 124
 {
-"model" "ambience/swamp3.wav"
+"model" "ambience/swamp2.wav"
 "origin" "2856 -328 64"
 "classname" "ambience_speaker"
 "_phong" "1"
@@ -12237,7 +12237,7 @@
 }
 // entity 129
 {
-"model" "ambience/swamp3.wav"
+"model" "ambience/swamp2.wav"
 "origin" "-728 -264 64"
 "classname" "ambience_speaker"
 "_phong" "1"
@@ -12272,21 +12272,21 @@
 }
 // entity 134
 {
-"model" "ambience/swamp3.wav"
+"model" "ambience/swamp2.wav"
 "origin" "3432 -328 64"
 "classname" "ambience_speaker"
 "_phong" "1"
 }
 // entity 135
 {
-"model" "ambience/swamp3.wav"
+"model" "ambience/swamp2.wav"
 "origin" "3048 -328 64"
 "classname" "ambience_speaker"
 "_phong" "1"
 }
 // entity 136
 {
-"model" "ambience/swamp3.wav"
+"model" "ambience/swamp2.wav"
 "origin" "3240 -328 64"
 "classname" "ambience_speaker"
 "_phong" "1"
@@ -12311,7 +12311,7 @@
 {
 "random" "1"
 "interval" "5"
-"model" "ambience/owl2.wav"
+"model" "ambience/owl.wav"
 "origin" "-1336 -264 64"
 "classname" "ambience_speaker"
 "_phong" "1"
@@ -12329,7 +12329,7 @@
 {
 "random" "1"
 "interval" "5"
-"model" "ambience/owl2.wav"
+"model" "ambience/owl.wav"
 "origin" "2504 -264 64"
 "classname" "ambience_speaker"
 "_phong" "1"
@@ -12338,7 +12338,7 @@
 {
 "random" "1"
 "interval" "5"
-"model" "ambience/owl2.wav"
+"model" "ambience/owl.wav"
 "origin" "1224 -264 64"
 "classname" "ambience_speaker"
 "_phong" "1"
@@ -12347,7 +12347,7 @@
 {
 "random" "1"
 "interval" "5"
-"model" "ambience/owl2.wav"
+"model" "ambience/owl.wav"
 "origin" "328 -264 64"
 "classname" "ambience_speaker"
 "_phong" "1"
@@ -12356,7 +12356,7 @@
 {
 "random" "1"
 "interval" "5"
-"model" "ambience/owl2.wav"
+"model" "ambience/owl.wav"
 "origin" "-504 -264 64"
 "classname" "ambience_speaker"
 "_phong" "1"

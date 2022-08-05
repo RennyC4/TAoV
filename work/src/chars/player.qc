@@ -2360,8 +2360,13 @@ void() player_move = [0, player_move]
 				{					
 					if (self.walkani_finished < time) // needs to run on a seperate timer so player_grab(); is more reliable
 					{
-						if (self.new_walkframe == 1 || self.new_walkframe == 6 && self.onground == TRUE)
-							sound (self, CHAN_BODY, "player/run.wav", 0.5, ATTN_NORM);
+						if (self.onground == TRUE)
+						{
+							if (self.new_walkframe == 1)
+								sound (self, CHAN_BODY, "player/run.wav", 0.5, ATTN_NORM);
+							if (self.new_walkframe == 6)
+								sound (self, CHAN_BODY, "player/run2.wav", 0.5, ATTN_NORM);
+						}
 						self.new_walkframe = self.new_walkframe + 1;
 						self.walkani_finished = time + 0.05;
 					}
@@ -2378,8 +2383,13 @@ void() player_move = [0, player_move]
 				else // running frames
 				{
 					// running step sound
-					if (self.walkframe == 1 || self.walkframe == 4 && self.onground == TRUE)
-						sound (self, CHAN_BODY, "player/run.wav", 1, ATTN_NORM);
+					if (self.onground == TRUE)
+					{
+						if (self.walkframe == 1)
+							sound (self, CHAN_BODY, "player/run.wav", 0.5, ATTN_NORM);
+						if (self.walkframe == 4)
+							sound (self, CHAN_BODY, "player/run2.wav", 0.5, ATTN_NORM);
+					}
 					if (self.walkframe > 5) // foot step sound, keep it in sync
 						self.walkframe = 0;
 					if (self.owner.zoom_mode != 2) // zoom out
@@ -4069,6 +4079,8 @@ void() player_fstab3	=[	$fstab3,	player_fstab3	]
 	
 	makevectors (self.angles);
 
+	self.owner.swordshadow_time = time + 0.2; // sword shadow
+
 	if (self.fstab_cnt == 1 || self.fstab_cnt == 3) // dust particle optimization
 	{
 		effect = spawn();
@@ -5670,7 +5682,7 @@ void() player_walled3    =[	0,	player_walled3	]
 		self.takedamage = DAMAGE_NO;
 		self.angles_x = self.angles_z = 0;
 		player_walled4();
-		sound (self, CHAN_BODY, "player/owhit.wav", 1, ATTN_NORM);
+		sound (self, CHAN_BODY, "player/jmpflor.wav", 1, ATTN_NORM);
 		self.velocity = '0 0 0';
 		return;
 	}
@@ -5703,7 +5715,7 @@ void() twist_testxcheck =
 				else
 					self.angles_y = 180;
 				player_walled4();
-				sound (self, CHAN_BODY, "player/owhit.wav", 1, ATTN_NORM);
+				sound (self, CHAN_BODY, "player/jmpflor.wav", 1, ATTN_NORM);
 				return;
 			}
 			self = oself;
@@ -5799,7 +5811,7 @@ void() player_twist    =[	$twist,	player_twist		]
 			else
 				self.angles_y = 180;
 			player_walled4();
-			sound (self, CHAN_BODY, "player/owhit.wav", 1, ATTN_NORM);
+			sound (self, CHAN_BODY, "player/jmpflor.wav", 1, ATTN_NORM);
 			return;
 		}
 	}

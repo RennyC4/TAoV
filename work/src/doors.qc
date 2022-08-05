@@ -297,6 +297,8 @@ void() door_touch =
 			setpause(1);
 			return;
 		}
+		else
+			sound (other.owner, CHAN_AUTO, "misc/key.wav", 1, ATTN_NORM); //  Unlock sound
 	}
 
 	self.touch = SUB_Null;
@@ -462,6 +464,7 @@ void() func_door =
 
 	precache_sound ("doors/door1.wav");
 	precache_sound ("doors/close1.wav");
+	precache_sound ("misc/key.wav");
 	precache_sound ("misc/talk.wav");
 
 	SetMovedir ();

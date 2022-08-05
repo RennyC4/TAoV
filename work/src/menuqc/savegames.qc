@@ -314,6 +314,7 @@ void Savegame_Save_Saveinslot(float key, float ascii, menuElement *element)
 		return;
 	
 	localcmd(sprintf("savegame %s\n", over_element.name));
+	localsound("misc/prayer", 4, 1);
 	
 	over_element = blank_element;
 	current_menu = MENU_Main;
