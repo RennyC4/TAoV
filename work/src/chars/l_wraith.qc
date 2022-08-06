@@ -218,7 +218,6 @@ void() lesserwraith_die =
 	}
 	sound (self, CHAN_VOICE, "wraith/death.wav", 1, ATTN_NORM);
 
-	self.movetype = MOVETYPE_TOSS;
 	self.alpha = 1;
 	self.velocity = '0 0 0';
 	lesserwraith_death1();

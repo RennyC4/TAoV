@@ -89,7 +89,6 @@ void() ethskull_die =
 		self.takedamage = DAMAGE_NO;
 		sound (self, CHAN_BODY, "ethskull/death.wav", 1, ATTN_NORM);
 		self.velocity = '0 0 0';
-		self.movetype = MOVETYPE_NONE;
 	}
 	if (self.scale > 0)
 	{
