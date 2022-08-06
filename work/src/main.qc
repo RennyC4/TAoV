@@ -673,8 +673,8 @@ void(float onlyplayer) MakeSolidList =
 	else // only players
 	{
 		while (y)
-		{
-			if (y.solid != SOLID_SLIDEBOX && y.classname == "player" && y.health > 0 && y.takedamage) // dead bodies shant go solid
+		{ //if (y.flags & FL_MONSTER && y.grabbed)
+			if (y.solid != SOLID_SLIDEBOX && (y.classname == "player" || (y.flags & FL_MONSTER && y.grabbed)) && y.health > 0 && y.takedamage) // dead bodies shant go solid
 			{
 				y.solid = SOLID_SLIDEBOX;
 				setorigin(y, y.origin);
