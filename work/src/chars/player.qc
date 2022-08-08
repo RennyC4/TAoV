@@ -547,7 +547,7 @@ void() speedline_think =
 {
 	local vector view;
 		
-	if (!self.cnt)
+	if (self.cnt < 5)
 	{
 		// NOTE: View_x == 270 is the speed lines completely facing downward
 
@@ -570,7 +570,7 @@ void() speedline_think =
 		else
 			self.angles_z = view_x * -1;
 		
-		self.cnt = TRUE;
+		self.cnt = self.cnt + 1;
 	}
 	
 	if (self.attack_finished < time) // animate speed
