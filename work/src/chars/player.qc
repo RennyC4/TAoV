@@ -1650,14 +1650,14 @@ void() player_think =
 	//
 	
 	//
-	// Vigil's Air Flying Swallow attack executor
+	// Vigil's Diving Swallow attack executor
 	//
 
-	if (self.button0 && self.char.health > 0 && self.char.deadflag != DEAD_DEAD && self.char.grabbed == FALSE && self.char.enemy && (game_progress & IT_PROGRESS4 || deathmatch == TRUE))
+	if (self.button0 && self.char.health > 0 && self.char.deadflag != DEAD_DEAD && self.char.grabbed == FALSE && self.char.enemy != world && (game_progress & IT_PROGRESS4 || deathmatch == TRUE))
 	{
-		if (self.char.frame >= $kick1 && self.char.frame < $kick5) // Vigil performed a mid air round house kick
+		if (self.char.frame >= $kick1 && self.char.frame <= $kick5) // Vigil performed a mid air round house kick
 		{
-			self.char.perform_flyingswallow = TRUE;
+			self.char.perform_divingswallow = TRUE;
 			self.noblock_finished = time + 999;
 		}
 	}
@@ -3645,7 +3645,7 @@ void() player_kick5	=[	$kick5,	player_move 	]
 	player_kickforward();
 	frameskip(0.15);
 	player_kickforward();
-	if (self.perform_flyingswallow == TRUE)
+	if (self.perform_divingswallow == TRUE)
 	{
 		// Face enemy direction properly first
 		if (self.enemy)
@@ -6679,7 +6679,7 @@ void() player_twister3	=[	$magica4,	player_twister3	]
 			self.owner.mana = self.owner.mana - (75 / 1.5);
 	}
 
-	if (self.tcount > 50)
+	if (self.tcount > 19)
 		player_twister4();
 	else
 		self.owner.attack_finished = time + 1;
@@ -6706,7 +6706,7 @@ void() swallow_testxcheck =
 
 	if (self.owner)
 	{
-		if (self.owner.origin_x == self.origin_x && self.owner.onground == FALSE)
+		if (self.owner.origin_x == self.origin_x && self.owner.onground == FALSE && self.owner.velocity_z < 1)
 		{
 			oself = self;
 			self = self.owner;
@@ -7232,8 +7232,10 @@ void() player_airdivings1 =
 	if (!visible(self.enemy) || (self.origin_x > self.enemy.origin_x && self.angles_y == 0) || (self.origin_x < self.enemy.origin_x && self.angles_y == 180)
 	|| self.origin == self.oldorigin || (self.enemy.deadflag == DEAD_DEAD || self.enemy == world))
 	{
-		self.think = player_bflip1;
 		self.owner.backflip_finished = time + 0.7; // Perfect value! Player enters negative velocity by this itme...
+		self.think = player_bflip1;
+		self.nextthink = time;
+		return;
 	}
 
 	self.angles_x = view_x * -1;
@@ -7244,10 +7246,15 @@ void() player_airdivings1 =
 	self.angles = vectoangles(self.velocity);
 
 	// keep vigil inline with his target just incase
-	if (self.enemy.origin_y > self.origin_y)
-		self.velocity_y = self.velocity_y + (bt * 100) * frametime; // the speed
+	if(self.enemy != world)
+	{
+		if (self.enemy.origin_y > self.origin_y)
+			self.velocity_y = self.velocity_y + (bt * 100) * frametime; // the speed
+		else
+			self.velocity_y = self.velocity_y + (bt * 100) * frametime * -1; // the speed
+	}
 	else
-		self.velocity_y = self.velocity_y + (bt * 100) * frametime * -1; // the speed
+		self.velocity_y = 0;
 
 	self.owner.zoom_mode = 2;
 

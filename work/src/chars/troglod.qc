@@ -99,7 +99,7 @@ void() troglod_lightning4		=[	$castb4,	troglod_lightning5		] {ai_forceface();};
 void() troglod_lightning5		=[	$castb5,	troglod_lightning6		] {sound (self, CHAN_AUTO, "spells/lightn.wav", 1, ATTN_NORM);ai_forceface();};
 void() troglod_lightning6		=[	$castb6,	troglod_lightning6		] 
 {
-	if (self.lcount > 50)
+	if (self.lcount > 24)
 		troglod_lightning7();
 	else
 		LightningStorm();

@@ -411,7 +411,7 @@ void(vector o, vector d, float color, float count) particle = #48;// start a par
 .float doublejump_finished; // when the animation is done itself
 .float walljump; // jumped from a wall grab
 .float nextspeed_time; // called from playerprethink
-.float perform_flyingswallow; // button pressed, so perform it when ready!
+.float perform_divingswallow; // button pressed, so perform it when ready!
 .float djump_spincnt; // how many times vigil can spin cut
 .float sword_spincnt; // how many tiems vigil spun his sword around with the down, forward + attack move
 .float wallrun_height;
@@ -680,8 +680,6 @@ float menu_ccounter;
 float menu_camera;
 
 float freeze_finished;
-
-float lightning_count;
 
 .float zoom_mode; // different zooming styles
 .float current_zoom; // current zooming level

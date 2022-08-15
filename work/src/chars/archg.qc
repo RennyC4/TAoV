@@ -141,7 +141,7 @@ void() archg_lightning6		=[	$cast6,	archg_lightning7		] {};
 void() archg_lightning7		=[	$cast7,	archg_lightning8		] {sound (self, CHAN_AUTO, "spells/lightn.wav", 1, ATTN_NORM);};
 void() archg_lightning8		=[	$cast8,	archg_lightning8		] 
 {
-	if (self.lcount > 50)
+	if (self.lcount > 24)
 		archg_lightning9();
 	else
 		LightningStorm();

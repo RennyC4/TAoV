@@ -308,7 +308,7 @@ void() CheckImpulseButtons =
 					self.purge_toggle = FALSE;
 					self.char.enemy = world;
 					
-					self.char.perform_flyingswallow = FALSE; // remove flag on new kick
+					self.char.perform_divingswallow = FALSE; // remove flag on new kick
 					
 					self.noblock_finished = time + 0.4; // don't allow block for a split second on round house
 					self.char.idle_count = 0; // reset pose

@@ -346,6 +346,8 @@ void() LightningThink =
 	targ_x = (targ_x + RandomRange (-50, 50));
 	targ_y = (targ_y + RandomRange (-50, 50));
 
+	// Save particle resources
+	/*
 	WriteByte (MSG_BROADCAST, SVC_TEMPENTITY);
 	WriteByte (MSG_BROADCAST, TE_LIGHTNING1);
 	WriteEntity (MSG_BROADCAST, self);
@@ -355,6 +357,7 @@ void() LightningThink =
 	WriteCoord (MSG_BROADCAST, targ_x);
 	WriteCoord (MSG_BROADCAST, targ_y);
 	WriteCoord (MSG_BROADCAST, targ_z);
+	*/
 
 	r = random();
 	
@@ -466,7 +469,6 @@ void() LightningThink =
 
 	if (self.attack_finished < time)
 	{
-		lightning_count = lightning_count - 1;
 		remove(self);
 		return;
 	}
@@ -481,44 +483,39 @@ void() LightningStorm =
 	if (random() < 0.5 && self.classname == "player")
 		self.owner.screenflash_finished = time + 0.01;
 
-	if (lightning_count < 25)
-	{
-		r = random();
+	r = random();
 
-		missile = spawn ();
-		missile.owner = self;
-		missile.movetype = MOVETYPE_NOCLIP;
-		missile.solid = SOLID_NOT;
-		missile.classname = "lightning";
+	missile = spawn ();
+	missile.owner = self;
+	missile.movetype = MOVETYPE_NOCLIP;
+	missile.solid = SOLID_NOT;
+	missile.classname = "lightning";
 
-		// set missile speed
-		missile.angles_y = random() * 360;
+	// set missile speed
+	missile.angles_y = random() * 360;
 
-		makevectors (missile.angles);
+	makevectors (missile.angles);
 
-		missile.velocity = aim(self, 500);
-		missile.velocity = missile.velocity * 500;
-		missile.angles = vectoangles(missile.velocity);
+	missile.velocity = aim(self, 500);
+	missile.velocity = missile.velocity * 500;
+	missile.angles = vectoangles(missile.velocity);
 
-		// set missile duration
-		missile.alpha = 0.5;
-		missile.effects = EF_NODEPTHTEST;
-		missile.think = LightningThink;
-		missile.nextthink = time + 0.01;
-		missile.attack_finished = time + 0.3;
-		missile.avelocity = '400 600 200';
+	// set missile duration
+	missile.alpha = 0.5;
+	missile.effects = EF_NODEPTHTEST | EF_ADDITIVE;
+	missile.think = LightningThink;
+	missile.nextthink = time;
+	missile.attack_finished = time + 0.3;
 
-		setmodel (missile, "progs/lball.spr");
-		setsize (missile, '0 0 0', '0 0 0');
-		setorigin (missile, self.origin + '0 0 110');
+	setmodel (missile, "progs/lball.spr");
+	setsize (missile, '0 0 0', '0 0 0');
+	setorigin (missile, self.origin + '0 0 110');
 
-		if (self.classname == "player")
-			self.owner.attack_finished = time + 0.2;
-		else
-			missile.owner.attack_finished = time + 0.2;
-		self.lcount = self.lcount + 1; // count up till end
-		lightning_count = lightning_count + 1;
-	}
+	if (self.classname == "player")
+		self.owner.attack_finished = time + 0.2;
+	else
+		missile.owner.attack_finished = time + 0.2;
+	self.lcount = self.lcount + 1; // count up till end
 };
 
 
@@ -1135,7 +1132,6 @@ void() Twister =
 	missile.solid = SOLID_NOT;
 	missile.classname = "twister";
 
-	// set missile speed
 	missile.angles_y = random() * 360;
 
 	makevectors (missile.angles);
@@ -1144,11 +1140,10 @@ void() Twister =
 	missile.velocity = missile.velocity * 25;
 	missile.angles = vectoangles(missile.velocity);
 
-	// set missile duration
-	missile.alpha = 0.4;
+	missile.alpha = 0.8;
 
 	missile.think = TwisterThink;
-	missile.nextthink = time + 0.1;
+	missile.nextthink = time;
 
 	missile.attack_finished = time + 10;
 

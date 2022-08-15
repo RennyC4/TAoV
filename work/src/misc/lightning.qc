@@ -9,58 +9,16 @@
 */
 
 void() lightning;
-void() light_reset =
-{
-	// sending a bunch of lightstyles at once over a network is bad
-	if (deathmatch || coop)
-		return;
-
-	lightstyle(0, "m");
-	lightstyle(1, "mmnmmommommnonmmonqnmmo");
-	lightstyle(2, "abcdefghijklmnopqrstuvwxyzyxwvutsrqponmlkjihgfedcba");
-	lightstyle(3, "mmmmmaaaaammmmmaaaaaabcdefgabcdefg");
-	lightstyle(4, "mamamamamama");
-	lightstyle(5,"jklmnopqrstuvwxyzyxwvutsrqponmlkj");
-	lightstyle(6, "nmonqnmomnmomomno");
-	lightstyle(7, "mmmaaaabcdefgmmmmaaaammmaamm");
-	lightstyle(8, "mmmaaammmaaammmabcdefaaaammmmabcdefmmmaaaa");
-	lightstyle(9, "aaaaaaaazzzzzzzz");
-	lightstyle(10, "mmamammmmammamamaaamammma");
-	lightstyle(11, "abcdefghijklmnopqrrqponmlkjihgfedcba");
-	lightstyle(63, "a");
-};
-
-void() full_bright =
-{
-	// sending a bunch of lightstyles at once over a network is bad
-	if (deathmatch || coop)
-		return;
-
-	lightstyle(0, "z");
-	lightstyle(1, "z");
-	lightstyle(2, "z");
-	lightstyle(3, "z");
-	lightstyle(4, "z");
-	lightstyle(5,"z");
-	lightstyle(6, "z");
-	lightstyle(7, "z");
-	lightstyle(8, "z");
-	lightstyle(9, "z");
-	lightstyle(10, "z");
-	lightstyle(11, "z");
-	lightstyle(63, "z");
-};
-
-float lightning_strikes; // only allow so many lightning strikes at a given time
-				         // or else we'll crash quake with too many TE_LIGHTNING calls!
+float lightning_strikes; // only allow so many lightning strikes (one) at a time
+				         // otherwise dire consequences can occur
 
 void() lightning_strike =
 {
 	local vector targ;
 
-	if (random() < 0.2 && lightning_strikes == 0)
+	if (random() < 0.2 && !lightning_strikes)
 	{
-		lightning_strikes = lightning_strikes + 1;
+		lightning_strikes = TRUE;
 		self.cnt = TRUE;
 
 		targ = self.origin - '0 0 9999';
@@ -95,22 +53,18 @@ void() lightning_strike =
 
 	if (self.cnt == TRUE)
 	{
-		lightning_strikes = lightning_strikes - 1;
+		lightning_strikes = FALSE;
 		self.cnt = FALSE;
 	}
-//	light_reset();
 	self.think = lightning;
 	self.nextthink = time + 0.1;
 };
 
 /*QUAKED lightning (0 1 0) (-10 -10 -10) (10 10 10)
-Lightning entity, causes full bright flashes automatically
-and is effective for stormy weather ambience
+Lightning entity effective for stormy weather ambience
 */
 void() lightning =
 {
-//	if (random() < 0.02)
-//		full_bright();
 	self.think = lightning_strike;
-	self.nextthink = time + 10 * random()*0.5;
+	self.nextthink = time + 5 + random()*15;
 };

@@ -323,7 +323,12 @@ void() InitCamera =
 	self.test_org = self.origin;
 };
 
-void() ClientKill = {};
+void() ClientKill = 
+{
+	if (self.char)
+		T_Damage (self.char, self, self, 9999, 0);
+};
+
 void(optional float csqcactive) ClientConnect = 
 {
 	local float i, j;
