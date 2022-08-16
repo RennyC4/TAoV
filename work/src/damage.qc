@@ -630,6 +630,8 @@ void() ThrowBodyPart_HitFloor =
 		self.cnt = 0;
 		return;
 	}
+	self.oldorigin = self.origin;
+
 	if (self.cnt > 50)
 		self.mode = TRUE;
 	self.cnt = self.cnt + 1;
@@ -638,7 +640,7 @@ void() ThrowBodyPart_HitFloor =
 
 void() ThrowBodyPart_Touch =
 {
-	if (other.solid != SOLID_BSP)
+	if (other.solid != SOLID_BSP || self.velocity_z > 0)
 		return;
 
 	sound (self, CHAN_BODY, "misc/hitgrond.wav", 1, ATTN_NORM);
@@ -667,7 +669,7 @@ void(string gibname) ThrowBodyPart =
 	head.alpha = 1;
 	head.owner = world;
 	head.velocity = v_forward * r;
-	head.velocity_z = 310;
+	head.velocity_z = 200 + random()*200;
 	head.touch = ThrowBodyPart_Touch;
 
 	if (head.flags & FL_ONGROUND)
@@ -675,7 +677,14 @@ void(string gibname) ThrowBodyPart =
 
 	head.think = ThrowBodyPart_HitFloor;
 	head.nextthink = time;
-	head.avelocity = '250 100 100';
+
+	if (random() < 0.25)
+		head.avelocity = '250 100 100';
+	else if (random() < 0.50)
+		head.avelocity = '100 250 100';
+	else
+		head.avelocity = '100 100 250';
+
 
 	setmodel (head, gibname);
 	setorigin (head, self.origin);
