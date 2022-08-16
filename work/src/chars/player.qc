@@ -4128,7 +4128,7 @@ void() fstab3_muzzle =
 		s.angles_z = -90;
 	else
 	{
-		remove(self);
+		remove(s);
 		return;
 	}
 	s.angles_y = 90;
