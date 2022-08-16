@@ -546,7 +546,14 @@ void() PlayerWaterPhysics =
 void() speedline_think =
 {
 	local vector view;
-		
+
+	// Don't allow speedlines when Vigil directly faces the camera or away from it
+	if (self.owner.angles_y == 90 || self.owner.angles_y == 270)
+	{
+		remove(self);
+		return;
+	}
+
 	if (self.cnt < 5)
 	{
 		// NOTE: View_x == 270 is the speed lines completely facing downward
@@ -627,7 +634,7 @@ void() SpeedLine =
 	speedl.frame = random()*3;
 
 	speedl.think = speedline_think;
-	speedl.nextthink = time;// + 0.01;
+	speedl.nextthink = time;
 	self.nextspeed_time = time + 0.15;
 };
 
@@ -4099,7 +4106,11 @@ void() fstab3_muzzle_think =
 	}
 
 	makevectors(self.owner.angles);
-	setorigin(self, self.owner.origin + v_forward * 70 + v_up * 16.5);
+
+	if (self.owner.angles_y == 180)
+		setorigin(self, self.owner.origin + v_forward * 74 + v_up * 16.5);
+	else if (self.owner.angles_y == 0)
+		setorigin(self, self.owner.origin + v_forward * 70 + v_up * 16.5);
 
 	frameskip(0.01);
 };
@@ -4112,7 +4123,6 @@ void() fstab3_muzzle =
 
 	s = spawn();
 	s.owner = self;
-	setorigin(s, self.origin + v_forward * 70 + v_up * 16.5);
 	setmodel(s, "progs/jatkspc.mdl");
 	setsize (s, '0 0 0', '0 0 0');
 	s.movetype = MOVETYPE_NOCLIP;
@@ -4120,18 +4130,24 @@ void() fstab3_muzzle =
 	s.effects = EF_ADDITIVE | EF_FULLBRIGHT;
 	s.solid = SOLID_NOT;
 	s.scale = 0.5;
-	s.angles = self.angles;
-		
+	
+	s.angles = self.angles;	
+	s.angles_y = 90;
 	if (s.owner.angles_y == 180)
+	{
 		s.angles_z = 90;
+		setorigin(s, self.origin + v_forward * 74 + v_up * 16.5);
+	}
 	else if (s.owner.angles_y == 0)
+	{
 		s.angles_z = -90;
+		setorigin(s, self.origin + v_forward * 70 + v_up * 16.5);
+	}
 	else
 	{
 		remove(s);
 		return;
 	}
-	s.angles_y = 90;
 	s.avelocity = '2000 0 0';
 
 	s.think = fstab3_muzzle_think;
