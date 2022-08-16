@@ -678,9 +678,9 @@ void(string gibname) ThrowBodyPart =
 	head.think = ThrowBodyPart_HitFloor;
 	head.nextthink = time;
 
-	if (random() < 0.25)
+	if (random() < 0.35)
 		head.avelocity = '250 100 100';
-	else if (random() < 0.50)
+	else if (random() < 0.70)
 		head.avelocity = '100 250 100';
 	else
 		head.avelocity = '100 100 250';
