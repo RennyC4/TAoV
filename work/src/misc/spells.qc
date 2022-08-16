@@ -841,7 +841,6 @@ void() firebeam_think =
 						if (deathmatch == TRUE)
 							self.mode = 1;
 
-						//head.airdamage_finished = time + 0.2;
 						head.damage_type = 2; // Fire based damage
 						head.knockback = 1;
 	
@@ -887,7 +886,7 @@ void() firebeam_think =
 		}
 		UnmakeSolidList();
 	}
-	self.nextthink = time + 0.1;
+	frameskip(0.1);
 };
 
 void() beameffect_think =

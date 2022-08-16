@@ -1782,7 +1782,7 @@ void() player_think =
 	// Fix Physics (Slope-Sliding Issue)
 	//
 
-	if ((self.char.frame >= $stand1 && self.char.frame <= $stand6) || (self.char.frame >= $standb1 && self.char.frame <= $standb6) || (self.char.frame == $block1 || self.char.frame == $block2) || self.char.grab_count > 0)
+	if ((self.char.frame >= $stand1 && self.char.frame <= $stand6) || (self.char.frame >= $standb1 && self.char.frame <= $standb6) || (self.char.frame == $block1 || self.char.frame == $block2) || self.char.grab_count > 0 || self.char.frame == $magica1)
 	{
 		//
 		// TraceBox to ensure that the ground beneath Vigil's feet is still there
@@ -1802,9 +1802,17 @@ void() player_think =
 	
 		// MOVETYPE has to be MOVETYPE_WALK for menus to work properly
 		if ((self.char.velocity_x || self.char.velocity_y) || self.conversation == TRUE || (self.button0 && self.char.grab_count <= 0) || self.char.swimming || test == FALSE || self.char.frame == $block3)
+		{
 			self.char.movetype = MOVETYPE_WALK;
+			if (self.magicmenu) // Auto-remove magic menu on falling
+			{
+				self.magicmenu = FALSE;
+				sound (self, CHAN_ITEM, "player/mmenu1.wav", 1, ATTN_NORM);
+			}
+		}
 		else										// Not moving, standing still
 			self.char.movetype = MOVETYPE_STEP;		// STEP means no stupid slope-sliding, tracebox needed to make him fall if ground beneath his feet changes
+		
 	}
 	
 	
@@ -4081,6 +4089,55 @@ void() player_fstab2	=[	$fstab2,	player_fstab3	]
 	frameskip(0.03);
 };
 
+void() fstab3_muzzle_think =
+{
+	// remove graphical flame
+	if (self.owner.frame != $fstab3)
+	{
+		remove(self);
+		return;
+	}
+
+	makevectors(self.owner.angles);
+	setorigin(self, self.owner.origin + v_forward * 70 + v_up * 16.5);
+
+	frameskip(0.01);
+};
+
+void() fstab3_muzzle =
+{
+	local entity s;
+
+	makevectors(self.angles);
+
+	s = spawn();
+	s.owner = self;
+	setorigin(s, self.origin + v_forward * 70 + v_up * 16.5);
+	setmodel(s, "progs/jatkspc.mdl");
+	setsize (s, '0 0 0', '0 0 0');
+	s.movetype = MOVETYPE_NOCLIP;
+	s.alpha = 0.7;
+	s.effects = EF_ADDITIVE | EF_FULLBRIGHT;
+	s.solid = SOLID_NOT;
+	s.scale = 0.5;
+	s.angles = self.angles;
+		
+	if (s.owner.angles_y == 180)
+		s.angles_z = 90;
+	else if (s.owner.angles_y == 0)
+		s.angles_z = -90;
+	else
+	{
+		remove(self);
+		return;
+	}
+	s.angles_y = 90;
+	s.avelocity = '2000 0 0';
+
+	s.think = fstab3_muzzle_think;
+	s.nextthink = time;
+};
+
 void() player_fstab3	=[	$fstab3,	player_fstab3	] 
 {
 	self.takedamage = DAMAGE_AIM;
@@ -4093,6 +4150,9 @@ void() player_fstab3	=[	$fstab3,	player_fstab3	]
 
 	if (self.fstab_cnt == 1 || self.fstab_cnt == 3) // dust particle optimization
 	{
+		if (self.fstab_cnt == 1) // spawn once
+			fstab3_muzzle();
+			
 		effect = spawn();
 		setorigin(effect, self.origin - v_up*28);
 		setmodel(effect, "progs/dust.spr");	
@@ -4827,7 +4887,6 @@ void() jatkspecial_muzzle_think =
 	makevectors(self.owner.angles);
 	setorigin(self, self.owner.origin - v_up * 36 + v_forward * 10);
 	
-	// We use drawonlytoclientnow
 	if (!coop && !deathmatch)
 		jatk_particle();
 	
@@ -4851,7 +4910,7 @@ void() jatkspecial_muzzle =
 	s.effects = EF_ADDITIVE | EF_FULLBRIGHT;
 	s.solid = SOLID_NOT;
 	s.think = jatkspecial_muzzle_think;
-	s.nextthink = time + 0.1;
+	s.nextthink = time;
 };
 
 void() jatkspecial =
@@ -4874,7 +4933,7 @@ void() player_jatkspecial7	=[	$jatkspc7,	player_jumpatk2		]
 {
 	self.velocity = '0 0 0';
 	if (self.velocity_z > -500)
-		self.velocity_z = self.velocity_z - 500;
+		self.velocity_z = - 500;
 	player_yell(1);
 	sound (self, CHAN_BODY, "player/fast.wav", 1, ATTN_NORM);
 	jatkspecial_muzzle();
@@ -6492,7 +6551,7 @@ void() player_fireball2	=[	$magicb2,	player_move	]
 {
 	self.angles_y = self.turn_y;
 	self.colormod = '3 2 1';
-	Fireball(25,15);
+	Fireball(25,21);
 
 	// Subtract mana for the spell accordingly
 	if (self.owner.mana >= 10)
