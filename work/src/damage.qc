@@ -638,6 +638,7 @@ void() ThrowBodyPart_HitFloor =
 	self.nextthink = time + 0.1;
 };
 
+/*
 void() ThrowBodyPart_Touch =
 {
 	if (other.solid != SOLID_BSP || self.velocity_z > 0)
@@ -652,6 +653,7 @@ void() ThrowBodyPart_Touch =
 	self.think = SUB_Null;
 	self.nextthink = time;
 };
+*/
 
 void(string gibname) ThrowBodyPart =
 {
@@ -670,7 +672,7 @@ void(string gibname) ThrowBodyPart =
 	head.owner = world;
 	head.velocity = v_forward * r;
 	head.velocity_z = 200 + random()*200;
-	head.touch = ThrowBodyPart_Touch;
+	//head.touch = ThrowBodyPart_Touch;
 
 	if (head.flags & FL_ONGROUND)
 		head.flags = head.flags - FL_ONGROUND;
