@@ -315,7 +315,7 @@ void() HellKnight_Lightning =
 	org = self.origin + '0 0 20' + v_forward * 35;
 	traceline (org, org + v_forward * 350, FALSE, self);
 
-	if (trace_ent.health > 0 && trace_ent.takedamage && trace_ent.classname == "player")
+	if (trace_ent.health > 0 && trace_ent.takedamage && trace_ent.classname == "player" && trace_ent.perfectguard_buff < time)
 	{
 		temp = spawn ();
 		temp.movetype = MOVETYPE_NONE;
