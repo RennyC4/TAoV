@@ -2863,7 +2863,8 @@ void() player_fire =
 					if (self.zoom_mode != 0)
 						self.zoom_mode = 0; // No Zoom
 					self.swordshadow_time = time + 1; // sword shadow
-					self.char.takedamage = DAMAGE_AIM; // Fixes rare i-frame occurances
+					if (self.char.perfectguard_buff < time)
+						self.char.takedamage = DAMAGE_AIM; // Fixes rare i-frame occurances
 					self.char.think = player_stabs1;
 					self.char.swing_count = 2;
 					self.attack_finished = time + 1;
@@ -3203,7 +3204,11 @@ void() player_grabatk17;
 void() player_grabatk16	=[	$grabatk12,	player_grabatk16	] {if (self.flags & FL_ONGROUND)player_grabatk17();self.grabbed = FALSE;};
 
 void() player_grabatk17	=[	$grabatk13,	player_grabatk18	] {frameskip (0.5);};
-void() player_grabatk18	=[	$grabatk14,	player_move		] {self.takedamage = DAMAGE_AIM;};
+void() player_grabatk18	=[	$grabatk14,	player_move		]
+{
+	if (self.perfectguard_buff < time)
+		self.takedamage = DAMAGE_AIM;
+};
 
 // forward flip to get up
 void() forwardflip_move =
@@ -4083,7 +4088,8 @@ void() player_fstab1	=[	$fstab1,	player_fstab2	]
 
 void() player_fstab2	=[	$fstab2,	player_fstab3	] 
 {
-	self.takedamage = DAMAGE_AIM;
+	if (self.perfectguard_buff < time)
+		self.takedamage = DAMAGE_AIM;
 	if (self.rollforward_fstab2 < time)
 	{
 		if (freeze_finished < time && self.owner.combo > 0 && self.beenblocked < time) // don't interefere with level up/etc
@@ -4156,7 +4162,8 @@ void() fstab3_muzzle =
 
 void() player_fstab3	=[	$fstab3,	player_fstab3	] 
 {
-	self.takedamage = DAMAGE_AIM;
+	if (self.perfectguard_buff < time)
+		self.takedamage = DAMAGE_AIM;
 
 	local entity effect;
 	
@@ -4824,7 +4831,8 @@ void() player_chargeatk5	=[	$charge9,	player_chargeatk5	]
 	self.attack_type = 5;
 	FireMelee(22,30,6,30,2,1,1,TRUE,0,0);
 	self.chargespincnt = 0;
-	self.takedamage = DAMAGE_AIM; // I-Frames off
+	if (self.perfectguard_buff < time)
+		self.takedamage = DAMAGE_AIM; // I-Frames off
 	if (self.owner.bighit_freeze > time) // check if attack landed, needs to be called after FireMelee();
 	{
 		if (freeze_finished < time) // don't interefere with level up/etc
@@ -5336,7 +5344,8 @@ void() airuppercut =
 
 void() player_airuppercut1	=[	$uppercut1,	player_airuppercut2	]
 {
-	self.takedamage = DAMAGE_AIM; // Remove delayed versions I-Frames
+	if (self.perfectguard_buff < time)
+		self.takedamage = DAMAGE_AIM; // Remove delayed versions I-Frames
 	frameskip(0.05);
 	player_yell(1);
 };
@@ -7953,7 +7962,8 @@ void() player_purge2	=[	$attacka4,	player_move	]
 {
 	player_purge_prop();
 	self.movetype = MOVETYPE_WALK;
-	self.takedamage = DAMAGE_AIM;
+	if (self.perfectguard_buff < time)
+		self.takedamage = DAMAGE_AIM;
 	self.effects = 0;
 
 	WriteByte (MSG_BROADCAST, SVC_TEMPENTITY);
