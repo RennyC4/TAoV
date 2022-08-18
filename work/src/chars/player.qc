@@ -5821,7 +5821,7 @@ void() player_twist    =[	$twist,	player_twist		]
 	v_x = v_x + 25;       // Remove tilt on traceline!
 	makevectors (v);	  //
 
-	traceline(self.origin, self.origin - v_forward * 24, FALSE, self);
+	traceline(self.origin, self.origin - v_forward * 26, FALSE, self);
 	if (trace_fraction < 1 && trace_ent.solid == SOLID_BSP && !self.swimming)
 	{
 		self.owner.camshake_finished = time + 0.2;
