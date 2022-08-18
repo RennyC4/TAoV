@@ -17,7 +17,7 @@
 "_dirtscale" "1"
 "_sunlight_dirt" "1"
 "_minlight_dirt" "1"
-"_lightmap_scale" "8"
+"_lightmap_scale" "32"
 "_phong" "1"
 // brush 0
 {
