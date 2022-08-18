@@ -405,6 +405,10 @@ void() HellKnight_Lightning =
 			if (range(self.enemy) == RANGE_CLOSE || range(self.enemy) == RANGE_MELEE || range(self.enemy) == RANGE_NEAR)
 				trace_ent.counter_finished = time + 0.5;
 
+			if (self.angles_y > 90 && self.angles_y < 270) // Attacker facing right
+				trace_ent.angles_y = 0; // victim faces left
+			else
+				trace_ent.angles_y = 180; // victim faces right
 		}
 		sound (trace_ent, CHAN_BODY, "weapons/lhit.wav", 1, ATTN_NORM);
 	}
