@@ -421,42 +421,63 @@
 }
 // entity 13
 {
-"classname" "trigger_once"
-"target" "churchbell"
-"target2" "beep"
-// brush 0
-{
-( -136 -48 63 ) ( -136 -88 63 ) ( -136 -88 47 ) trigger 0 -48 180 1 -1
-( -136 -88 63 ) ( -96 -88 63 ) ( -96 -88 47 ) trigger 0 -48 0 1 1
-( -96 -88 47 ) ( -96 -48 47 ) ( -136 -48 47 ) trigger 0 0 180 1 -1
-( -136 -48 63 ) ( -96 -48 63 ) ( -96 -88 63 ) trigger 0 0 0 1 1
-( -96 -48 47 ) ( -96 -48 63 ) ( -136 -48 63 ) trigger 0 -48 180 1 -1
-( -96 -88 63 ) ( -96 -48 63 ) ( -96 -48 47 ) trigger 0 -48 0 1 1
-}
-}
-// entity 14
-{
 "classname" "misc_sound"
 "origin" "-112 152 72"
 "noise" "ambience/chbells1"
 "targetname" "churchbell"
 "cnt" "1"
 }
-// entity 15
+// entity 14
 {
 "classname" "monster_knight"
-"origin" "-184 -44 80"
+"origin" "-360 -28 80"
 "angle" "180"
 "targetname" "beep"
 "awareness" "4"
 "health" "1"
 }
+// entity 15
+{
+"classname" "barrel"
+"origin" "-240 -72 80"
+}
 // entity 16
 {
-"classname" "monster_knight"
-"origin" "-176 -8 80"
-"angle" "180"
-"targetname" "beep"
-"awareness" "4"
-"health" "1"
+"classname" "barrel"
+"origin" "-240 -32 72"
+}
+// entity 17
+{
+"classname" "barrel"
+"origin" "-240 8 72"
+}
+// entity 18
+{
+"classname" "barrel"
+"origin" "-280 8 72"
+}
+// entity 19
+{
+"classname" "barrel"
+"origin" "-280 -32 72"
+}
+// entity 20
+{
+"classname" "barrel"
+"origin" "-280 -72 80"
+}
+// entity 21
+{
+"classname" "barrel"
+"origin" "-320 8 72"
+}
+// entity 22
+{
+"classname" "barrel"
+"origin" "-320 -32 72"
+}
+// entity 23
+{
+"classname" "barrel"
+"origin" "-320 -72 80"
 }

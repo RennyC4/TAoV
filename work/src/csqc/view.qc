@@ -141,47 +141,103 @@ void(vector pos) DrawMonsterNameDisplay =
 
 void(vector pos) DrawCurrentSelectedSpell =
 {
+	local float mp = getstatf(STAT_MANA);
 	local float selected_spell = getstatf(STAT_SPELL);
 	
-	if (selected_spell == 0)
+	if (selected_spell == 0) //  Fireball
 	{
 		drawpic (pos + '1 1', "progs/spell1_s.png", '32 32 0', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
 		drawpic (pos, "progs/spell1_s.png", '32 32 0', '1 1 1', 1, DRAWFLAG_NORMAL);
 		// Draw Mana Cost
 		drawstring (pos + '25 16', "10mp", '8 8', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
 		drawstring (pos + '24 16', "10mp", '8 8', '1 1 1', 1, DRAWFLAG_NORMAL);
+
+		if (mp >= 7 && mp < 10) // Draw tired icon
+		{
+			drawpic (pos + '16 20', "progs/arrow_d.png", '8 8 0', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
+			drawpic (pos + '16 20', "progs/arrow_d.png", '8 8 0', '1 1 1', 1, DRAWFLAG_NORMAL);
+		}
+		else if (mp < 7) // Draw unavailable icon
+		{
+			drawstring (pos + '18 21', "^0X", '8 8', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
+			drawstring (pos + '17 20', "X", '8 8', '1 0 0', 1, DRAWFLAG_NORMAL);			
+		}
 	}
-	else if (selected_spell == 1)
+	else if (selected_spell == 1) // Lightning
 	{
 		drawpic (pos + '1 1', "progs/spell2_s.png", '32 32 0', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
 		drawpic (pos, "progs/spell2_s.png", '32 32 0', '1 1 1', 1, DRAWFLAG_NORMAL);
 		// Draw Mana Cost
 		drawstring (pos + '25 16', "50mp", '8 8', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
 		drawstring (pos + '24 16', "50mp", '8 8', '1 1 1', 1, DRAWFLAG_NORMAL);
+
+		if (mp >= 33 && mp < 50) // Draw tired icon
+		{
+			drawpic (pos + '16 20', "progs/arrow_d.png", '8 8 0', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
+			drawpic (pos + '16 20', "progs/arrow_d.png", '8 8 0', '1 1 1', 1, DRAWFLAG_NORMAL);
+		}
+		else if (mp < 33) // Draw unavailable icon
+		{
+			drawstring (pos + '18 21', "^0X", '8 8', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
+			drawstring (pos + '17 20', "X", '8 8', '1 0 0', 1, DRAWFLAG_NORMAL);
+		}
 	}
-	else if (selected_spell == 2)
+	else if (selected_spell == 2) // Ice Field
 	{
 		drawpic (pos + '1 1', "progs/spell3_s.png", '32 32 0', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
 		drawpic (pos, "progs/spell3_s.png", '32 32 0', '1 1 1', 1, DRAWFLAG_NORMAL);
 		// Draw Mana Cost
 		drawstring (pos + '25 16', "30mp", '8 8', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
 		drawstring (pos + '24 16', "30mp", '8 8', '1 1 1', 1, DRAWFLAG_NORMAL);
+
+		if (mp >= 20 && mp < 30) // Draw tired icon
+		{
+			drawpic (pos + '16 20', "progs/arrow_d.png", '8 8 0', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
+			drawpic (pos + '16 20', "progs/arrow_d.png", '8 8 0', '1 1 1', 1, DRAWFLAG_NORMAL);
+		}
+		else if (mp < 20) // Draw unavailable icon
+		{
+			drawstring (pos + '18 21', "^0X", '8 8', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
+			drawstring (pos + '17 20', "X", '8 8', '1 0 0', 1, DRAWFLAG_NORMAL);
+		}
 	}
-	else if (selected_spell == 4)
+	else if (selected_spell == 4) // Fire Beam
 	{
 		drawpic (pos + '1 1', "progs/spell4_s.png", '32 32 0', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
 		drawpic (pos, "progs/spell4_s.png", '32 32 0', '1 1 1', 1, DRAWFLAG_NORMAL);
 		// Draw Mana Cost
 		drawstring (pos + '25 16', "100mp", '8 8', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
 		drawstring (pos + '24 16', "100mp", '8 8', '1 1 1', 1, DRAWFLAG_NORMAL);
+
+		if (mp >= 67 && mp < 100) // Draw tired icon
+		{
+			drawpic (pos + '16 20', "progs/arrow_d.png", '8 8 0', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
+			drawpic (pos + '16 20', "progs/arrow_d.png", '8 8 0', '1 1 1', 1, DRAWFLAG_NORMAL);
+		}
+		else if (mp < 67) // Draw unavailable icon
+		{
+			drawstring (pos + '18 21', "^0X", '8 8', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
+			drawstring (pos + '17 20', "X", '8 8', '1 0 0', 1, DRAWFLAG_NORMAL);
+		}
 	}
-	else if (selected_spell == 8)
+	else if (selected_spell == 8) // Twister
 	{
 		drawpic (pos + '1 1', "progs/spell5_s.png", '32 32 0', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
 		drawpic (pos, "progs/spell5_s.png", '32 32 0', '1 1 1', 1, DRAWFLAG_NORMAL);
 		// Draw Mana Cost
 		drawstring (pos + '25 16', "75mp", '8 8', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
 		drawstring (pos + '24 16', "75mp", '8 8', '1 1 1', 1, DRAWFLAG_NORMAL);
+		
+		if (mp >= 50 && mp < 75) // Draw tired icon
+		{
+			drawpic (pos + '16 20', "progs/arrow_d.png", '8 8 0', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
+			drawpic (pos + '16 20', "progs/arrow_d.png", '8 8 0', '1 1 1', 1, DRAWFLAG_NORMAL);
+		}
+		else if (mp < 50) // Draw unavailable icon
+		{
+			drawstring (pos + '18 21', "^0X", '8 8', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
+			drawstring (pos + '17 20', "X", '8 8', '1 0 0', 1, DRAWFLAG_NORMAL);
+		}		
 	}
 };
 

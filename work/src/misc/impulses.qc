@@ -61,7 +61,7 @@ void() CheckImpulseButtons =
 						self.char.angles_y = self.char.turn_y;
 						self.attack_finished = time + 0.6;
 						self.char.think = player_fireball1;
-						self.char.nextthink = time + 0.1;
+						self.char.nextthink = time;
 					}
 					else if (self.mana >= 10 / 1.5)
 					{
@@ -69,7 +69,7 @@ void() CheckImpulseButtons =
 						self.char.angles_y = self.char.turn_y;
 						self.attack_finished = time + 0.6;
 						self.char.think = player_fireball1;
-						self.char.nextthink = time + 0.1;
+						self.char.nextthink = time;
 						self.char.tired_finished = time + 3; // add .6 from attack_finished
 					}
 					else
@@ -84,7 +84,7 @@ void() CheckImpulseButtons =
 						self.char.lcount = 0;
 						self.attack_finished = time + 1;
 						self.char.think = player_lightning1;
-						self.char.nextthink = time + 0.1;
+						self.char.nextthink = time;
 					}
 					else if (self.mana >= 50 / 1.5)
 					{
@@ -93,7 +93,7 @@ void() CheckImpulseButtons =
 						self.char.lcount = 0;
 						self.attack_finished = time + 1;
 						self.char.think = player_lightning1;
-						self.char.nextthink = time + 0.1;
+						self.char.nextthink = time;
 						self.char.tired_finished = time + 6;
 					}
 					else
@@ -108,7 +108,7 @@ void() CheckImpulseButtons =
 						self.char.icefield_count = 0;
 						self.attack_finished = time + 1;
 						self.char.think = player_icefield1;
-						self.char.nextthink = time + 0.1;
+						self.char.nextthink = time;
 					}
 					else if (self.mana >= 30 / 1.5)
 					{
@@ -118,7 +118,7 @@ void() CheckImpulseButtons =
 						self.attack_finished = time + 1;
 						self.char.think = player_icefield1;
 						self.char.nextthink = time + 0.1;
-						self.char.tired_finished = time + 7;
+						self.char.tired_finished = time;
 					}
 					else
 						self.char.angles_y = self.char.turn_y;
@@ -132,7 +132,7 @@ void() CheckImpulseButtons =
 						self.attack_finished = time + 999;
 						self.char.beams_shot = 0;
 						self.char.think = player_magicd1;
-						self.char.nextthink = time + 0.1;
+						self.char.nextthink = time;
 					}
 					else if (self.mana >= 100 / 1.5)
 					{
@@ -141,7 +141,7 @@ void() CheckImpulseButtons =
 						self.attack_finished = time + 999;
 						self.char.beams_shot = 0;
 						self.char.think = player_magicd1;
-						self.char.nextthink = time + 0.1;
+						self.char.nextthink = time;
 						self.char.tired_finished = time + 9;
 					}
 					else
@@ -156,7 +156,7 @@ void() CheckImpulseButtons =
 						self.attack_finished = time + 5;
 						self.char.tcount = 0;
 						self.char.think = player_twister1;
-						self.char.nextthink = time + 0.1;
+						self.char.nextthink = time;
 					}
 					else if (self.mana >= 75 / 1.5)
 					{
@@ -165,7 +165,7 @@ void() CheckImpulseButtons =
 						self.char.tcount = 0;
 						self.attack_finished = time + 5;
 						self.char.think = player_twister1;
-						self.char.nextthink = time + 0.1;
+						self.char.nextthink = time;
 						self.char.tired_finished = time + 8;
 					}
 					else
