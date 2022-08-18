@@ -351,6 +351,12 @@ void() HellKnight_Lightning =
 				trace_ent.knockback = 0;
 				T_Damage (trace_ent, self, self, 8, 0);
 			}
+			else
+			{
+				// Check if Vigil is close, if so allow counter
+				if (range(self.enemy) == RANGE_CLOSE || range(self.enemy) == RANGE_MELEE || range(self.enemy) == RANGE_NEAR)
+					trace_ent.counter_finished = time + 0.5;
+			}
 		}
 		else // perfect guard
 		{

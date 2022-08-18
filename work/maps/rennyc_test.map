@@ -270,15 +270,6 @@
 }
 // brush 29
 {
-( 400 48 160 ) ( 400 -64 160 ) ( 400 -64 40 ) *cobalt 32 56 0 1 1
-( 400 -64 160 ) ( 576 -64 160 ) ( 576 -64 40 ) *cobalt -16 56 0 1 1
-( 576 -64 40 ) ( 576 48 40 ) ( 400 48 40 ) *cobalt -16 -32 0 1 1
-( 400 48 160 ) ( 576 48 160 ) ( 576 -64 160 ) *cobalt -16 -32 0 1 1
-( 576 48 40 ) ( 576 48 160 ) ( 400 48 160 ) *cobalt -16 56 0 1 1
-( 576 -64 160 ) ( 576 48 160 ) ( 576 48 40 ) *cobalt 32 56 0 1 1
-}
-// brush 30
-{
 ( 304 112 -48 ) ( 304 0 -48 ) ( 304 0 -112 ) brickground 0 0 0 1 1
 ( 304 0 -48 ) ( 352 0 -48 ) ( 352 0 -112 ) brickground 0 0 0 1 1
 ( 352 0 -112 ) ( 352 112 -112 ) ( 304 112 -112 ) brickground 0 0 0 1 1
@@ -286,7 +277,7 @@
 ( 352 112 -112 ) ( 352 112 -48 ) ( 304 112 -48 ) brickground 0 0 0 1 1
 ( 352 0 -48 ) ( 352 112 -48 ) ( 352 112 -112 ) brickground 0 0 0 1 1
 }
-// brush 31
+// brush 30
 {
 ( -16 16 16 ) ( -16 -96 16 ) ( -16 -96 -112 ) brickground -32 0 0 1 1
 ( -16 -96 16 ) ( 32 -96 16 ) ( 32 -96 -112 ) brickground 64 0 0 1 1
@@ -295,7 +286,7 @@
 ( 32 16 -112 ) ( 32 16 16 ) ( -16 16 16 ) brickground 64 0 0 1 1
 ( 32 -96 16 ) ( 32 16 16 ) ( 32 16 -112 ) brickground -32 0 0 1 1
 }
-// brush 32
+// brush 31
 {
 ( -560 128 24 ) ( -560 129 24 ) ( -560 128 25 ) bnbrk1_2 0 0 0 1 1
 ( -560 128 24 ) ( -560 128 25 ) ( -559 128 24 ) bnbrk1_2 0 0 0 1 1
@@ -391,35 +382,10 @@
 }
 // entity 9
 {
-"classname" "item_relic"
-"origin" "-484 -68 84"
-"cnt" "2"
-}
-// entity 10
-{
-"classname" "trigger_spincut"
-// brush 0
-{
-( -512 48 224 ) ( -512 -96 224 ) ( -512 -96 48 ) trigger 0 -48 0 1 1
-( -512 -96 224 ) ( -424 -96 224 ) ( -424 -96 48 ) trigger 0 -48 0 1 1
-( -424 -96 48 ) ( -424 48 48 ) ( -512 48 48 ) trigger 0 0 0 1 1
-( -512 48 224 ) ( -424 48 224 ) ( -424 -96 224 ) trigger 0 0 0 1 1
-( -424 48 48 ) ( -424 48 224 ) ( -512 48 224 ) trigger 0 -48 0 1 1
-( -424 -96 224 ) ( -424 48 224 ) ( -424 48 48 ) trigger 0 -48 0 1 1
-}
-}
-// entity 11
-{
-"classname" "item_relic"
-"origin" "-484 44 76"
-"cnt" "1"
-}
-// entity 12
-{
 "classname" "light"
 "origin" "-472 56 170"
 }
-// entity 13
+// entity 10
 {
 "classname" "misc_sound"
 "origin" "-112 152 72"
@@ -427,57 +393,9 @@
 "targetname" "churchbell"
 "cnt" "1"
 }
-// entity 14
+// entity 11
 {
-"classname" "monster_knight"
-"origin" "-360 -28 80"
-"angle" "180"
-"targetname" "beep"
-"awareness" "4"
-"health" "1"
-}
-// entity 15
-{
-"classname" "barrel"
-"origin" "-240 -72 80"
-}
-// entity 16
-{
-"classname" "barrel"
-"origin" "-240 -32 72"
-}
-// entity 17
-{
-"classname" "barrel"
-"origin" "-240 8 72"
-}
-// entity 18
-{
-"classname" "barrel"
-"origin" "-280 8 72"
-}
-// entity 19
-{
-"classname" "barrel"
-"origin" "-280 -32 72"
-}
-// entity 20
-{
-"classname" "barrel"
-"origin" "-280 -72 80"
-}
-// entity 21
-{
-"classname" "barrel"
-"origin" "-320 8 72"
-}
-// entity 22
-{
-"classname" "barrel"
-"origin" "-320 -32 72"
-}
-// entity 23
-{
-"classname" "barrel"
-"origin" "-320 -72 80"
+"classname" "monster_hell_knight"
+"origin" "-336 -32 88"
+"angles" "0 180 0"
 }

@@ -2731,10 +2731,11 @@ void() player_fire =
 	// counter attack
 	if (self.char.counter_finished > time && self.char.onground == TRUE)
 	{
-		self.char.takedamage = DAMAGE_NO;
+		self.char.takedamage = DAMAGE_NO; // iframes
 		self.char.block_finished = time;
 		self.char.dodge_finished = time;
 		self.char.think = player_counter1;
+		self.char.nextthink = time;
 		self.swordshadow_time = time + 0.7; // sword shadow
 		self.attack_finished = time + 0.7;
 		return;
