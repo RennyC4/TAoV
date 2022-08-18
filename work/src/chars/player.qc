@@ -4191,9 +4191,9 @@ void() player_fstab3	=[	$fstab3,	player_fstab3	]
 	if (self.fstab_cnt == 5) // Do it once
 	{
 		if (!deathmatch)
-			FireMelee(10,35,3,35,5,1,1,FALSE,0,0);
+			FireMelee(12,35,3,35,5,1,1,FALSE,0,0);
 		else
-			FireMelee(10,35,6,35,5,1,1,FALSE,0,0); // Don't guard break in deathmatch on first hit
+			FireMelee(12,35,6,35,5,1,1,FALSE,0,0); // Don't guard break in deathmatch on first hit
 		if (self.owner.bighit_freeze > time) // check if attack landed, needs to be called after FireMelee();
 		{
 			if (freeze_finished < time) // don't interefere with level up/etc
@@ -4205,7 +4205,7 @@ void() player_fstab3	=[	$fstab3,	player_fstab3	]
 
 	if (self.fstab_cnt >= 25) // and twice...
 	{
-		FireMelee(10,35,3,35,5,1,1,FALSE,0,0);
+		FireMelee(12,35,3,35,5,1,1,FALSE,0,0);
 		if (self.owner.bighit_freeze > time) // check if attack landed, needs to be called after FireMelee();
 		{
 			if (freeze_finished < time) // don't interefere with level up/etc
@@ -4574,7 +4574,7 @@ void() player_attacka14	=[	$attacka14,	player_attacka15	]
 		self.attack_type = 5;
 		self.angles = self.oangles; // FIXME: Set angle before firing Melee
 		self.owner.shadow_time = time + 0.1; // red shadow
-		FireMelee(8,0,3,65,5,1,1,FALSE,0,0); // to prevent monster from getting hit the wrong way
+		FireMelee(6,0,3,65,5,1,1,FALSE,0,0); // to prevent monster from getting hit the wrong way
 		if (self.owner.bighit_freeze > time) // check if attack landed, needs to be called after FireMelee();
 		{
 			if (freeze_finished < time) // don't interefere with level up/etc
@@ -4612,27 +4612,14 @@ void() player_attacka16	=[	$attacka16,	player_attacka16	]
 	makevectors (self.angles);
 
 	effect = spawn();
-	setorigin(effect, self.origin + v_forward * 44);
+	setorigin(effect, self.origin + v_forward * 44 - v_up*28);
 	setmodel(effect, "progs/dust.spr");	
 	effect.solid = SOLID_NOT;
 	effect.owner = self;
 	effect.drawonlytoclient = self.owner; // reduce network traffic
-	effect.movetype = MOVETYPE_NOCLIP;
-	
-	// Drop dust to the ground then half-way into the ground
-	oself = self;
-	self = effect;
-	droptofloor();
-	self.origin_z = self.origin_z - 20;
-	self = oself;
-		
-	if (self.angles_y == 0)
-		effect.velocity_x = 500;
-	else
-		effect.velocity_x = -500;
-		
+	effect.movetype = MOVETYPE_NOCLIP;		
 	effect.think = dust_think;
-	effect.nextthink = time + 0.01;
+	effect.nextthink = time;
 };
 
 void() player_attacka17	=[	$attacka17,	player_attacka18	] {};
