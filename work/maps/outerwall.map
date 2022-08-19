@@ -13606,7 +13606,7 @@
 // entity 231
 {
 "classname" "func_wall"
-"alpha" "0.5"
+"alpha" "0.75"
 "_phong" "1"
 // brush 0
 {

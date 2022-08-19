@@ -6779,7 +6779,7 @@ void() player_twister4	=[	$magica4,	player_move	] {};
 
 //
 // Function is used for testx checking to see if the players x origin
-// changed and if it hasn't bail them out of the swallow attacks
+// changed and if it hasn't bail them out of the swallow attacks, situational due to Z velocity
 //
 
 void() swallow_testxcheck =
@@ -7302,9 +7302,9 @@ void() player_airdivings1 =
 	local vector view;
 	local float bt;
 
-	self.owner.noblock_finished = time + 0.2;
+	self.owner.noblock_finished = time + 0.2; // Can't block cancel out of air diving swallow
 	self.movetype = MOVETYPE_WALK;
-	self.takedamage = DAMAGE_NO;
+	self.takedamage = DAMAGE_NO; // iframes
 
 	view = vectoangles(self.enemy.origin - self.origin);
 	bt = vlen(self.enemy.origin - self.origin);
@@ -7359,6 +7359,7 @@ void() player_airdivings1 =
 	self.owner.shadow_time = time + 0.1;
 	self.owner.speedline_time = time + 0.2; // speedline
 
+/*
 	//
 	// Check if his X origin (left/right) moved
 	//
@@ -7378,6 +7379,7 @@ void() player_airdivings1 =
 	setmodel(testx, string_null);
 	setsize(testx, '0 0 0', '0 0 0');
 	setorigin(testx, self.origin);
+*/
 
 	frameskip(0.05);
 };
