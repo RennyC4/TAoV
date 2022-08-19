@@ -252,11 +252,11 @@ returns the range catagorization of an entity reletive to self
 =============
 */
 
-float(entity targ) range =
+float(entity owner, entity targ) range =
 {
 	local float		r;
 	
-	r = vlen (self.origin - targ.origin);
+	r = vlen (owner.origin - targ.origin);
 	if (r <= 40)
 		return RANGE_CLOSE;
 	else if (r > 40 && r <= 75)
@@ -312,7 +312,7 @@ void() HuntTarget =
 		return;
 	}
 
-	if (range(self.enemy) >= RANGE_FAR)
+	if (range(self, self.enemy) >= RANGE_FAR)
 	{
 		if (self.th_run)
 		{
@@ -362,7 +362,7 @@ void() FindTarget =
 	monster = searchradius(self.origin, 500);
 	while (monster)
 	{
-		if (monster.show_hostile > time && visible(monster) && range(monster) <= RANGE_MID && monster.enemy.health > 0 && monster.enemy.invunerability_finished < time && !monster.enemy.owner.flags & FL_NOTARGET)
+		if (monster.show_hostile > time && visible(monster) && range(self, monster) <= RANGE_MID && monster.enemy.health > 0 && monster.enemy.invunerability_finished < time && !monster.enemy.owner.flags & FL_NOTARGET)
 		{
 			FireAwakeTargets();
 			dprint (self.classname);
@@ -383,7 +383,7 @@ void() FindTarget =
 		{
 			if (self.awareness == 0)
 			{
-				if (visible(player) && player.deadflag != DEAD_DEAD && range(player) <= RANGE_MID && player.invunerability_finished < time && !player.owner.flags & FL_NOTARGET)
+				if (visible(player) && player.deadflag != DEAD_DEAD && range(self, player) <= RANGE_MID && player.invunerability_finished < time && !player.owner.flags & FL_NOTARGET)
 				{
 					if (player.running == TRUE || infront(player))
 					{
@@ -563,7 +563,7 @@ void() ai_stand =
 		if (self.stand_finished > time)
 		{
 			// player moved too far? he's vunerable? go after him!
-			if (range(self.enemy) >= RANGE_FAR && self.flags & FL_ONGROUND || (self.enemy.angles_y == self.angles_y || self.enemy.owner.hflask_drink_finished > time || self.enemy.tired_finished > time || self.enemy.headsmash_recovery_finished > time))
+			if (range(self, self.enemy) >= RANGE_FAR && self.flags & FL_ONGROUND || (self.enemy.angles_y == self.angles_y || self.enemy.owner.hflask_drink_finished > time || self.enemy.tired_finished > time || self.enemy.headsmash_recovery_finished > time))
 			{
 				if (self.th_run)
 				{
@@ -633,7 +633,7 @@ void() BlockCancel =
 	if (self.aircombo_finished > time)
 		return;
 
-	r = range(self.enemy);
+	r = range(self, self.enemy);
 	
 	if (self.th_block && !self.enemy.swimming && self.berserk_finished < time)
 	{
@@ -677,7 +677,7 @@ void() CombatThink =
 	if (self.enemy.flypain || self.enemy.lowceil == TRUE || self.enemy.owner.purge_toggle) // vigil got hit hard and is flying or is crouched under a low ceiling or is purging someone, don't attack
 		return;
 
-	r = range(self.enemy);
+	r = range(self, self.enemy);
 	h = random();
 
 	// This code *caused* AI jitters when they're moving! - Fixed (Don't use self.think for th_block)
@@ -1101,7 +1101,7 @@ void(float dist) ai_fly =
 		self.th_die();
 		return;
 	}
-	r = range(self.enemy);
+	r = range(self, self.enemy);
 
 	// look in the players direction
 	if (self.origin_x < self.enemy.origin_x)
@@ -1219,7 +1219,7 @@ void(float dist) ai_walk =
 	close_check(); // don't allow player inside origin point
 	monster_removeslide();
 	
-	r = range(self.enemy);
+	r = range(self, self.enemy);
 
 	// Disabled, Twister made enemies flip in the air in the older versions. It was cool but
 	// hard to work out all the bugs, so I'll keep this left over code if I ever come back to
@@ -1362,7 +1362,7 @@ void(float dist) ai_walk =
 
 	if (self.flags & FL_ONGROUND)
 	{
-		if (range(self.enemy) >= RANGE_FAR || (self.enemy.angles_y == self.angles_y || self.enemy.tired_finished > time || self.enemy.owner.hflask_drink_finished > time || self.enemy.headsmash_recovery_finished > time))
+		if (range(self, self.enemy) >= RANGE_FAR || (self.enemy.angles_y == self.angles_y || self.enemy.tired_finished > time || self.enemy.owner.hflask_drink_finished > time || self.enemy.headsmash_recovery_finished > time))
 		{
 			if (self.th_run)
 			{
@@ -1477,7 +1477,7 @@ void(float dist) ai_walk =
 		// No need to shift foreground/background as I'm lined up my enemy
 		if (self.origin_y < self.enemy.origin_y + 20 && self.origin_y > self.enemy.origin_y - 20)
 		{
-			if (self.enemy.inair && range(self.enemy) != RANGE_FAR)
+			if (self.enemy.inair && range(self, self.enemy) != RANGE_FAR)
 				walkmove (self.angles_y, dist * (-1 / 1.25)); // Back up from air attacks
 			else if (!(self.origin_x > self.enemy.origin_x - 40 && self.origin_x < self.enemy.origin_x + 40))
 			{
@@ -1533,7 +1533,7 @@ void(float dist) ai_swim =
 		return;
 	}
 
-	r = range(self.enemy);
+	r = range(self, self.enemy);
 
 	if (self.enemy.health < 1) // Target destroyed
 	{

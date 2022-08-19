@@ -3796,7 +3796,17 @@ void() player_runatk8	=[	$runatk5,	player_move 	] {};
 
 void() player_waterslash1	=[	$slash1,	player_waterslash2	] {frameskip(0.1);};
 void() player_waterslash2	=[	$slash2,	player_waterslash3	] {frameskip(0.1);};
-void() player_waterslash3	=[	$slash3,	player_waterslash4	] {FireMelee(100,35,0,35,0,0,0,TRUE,0,0);frameskip(0.1);sound (self, CHAN_WEAPON, "player/sword4.wav", 1, ATTN_NORM);};
+void() player_waterslash3	=[	$slash3,	player_waterslash4	] 
+{
+	// Do an additional check
+	if (pointcontents(self.origin) == CONTENT_WATER || pointcontents(self.origin) == CONTENT_LAVA || pointcontents(self.origin) == CONTENT_SLIME)
+		FireMelee(100,35,0,35,0,0,0,TRUE,0,0);
+	else
+		FireMelee(2,35,0,35,0,0,0,FALSE,0,0);
+
+	sound (self, CHAN_WEAPON, "player/sword4.wav", 1, ATTN_NORM);
+	frameskip(0.1);
+};
 void() player_waterslash4	=[	$slash4,	player_waterslash5	] {frameskip(0.1);};
 void() player_waterslash5	=[	$slash5,	player_waterslash6	] {frameskip(0.1);};
 void() player_waterslash6	=[	$slash6,	player_waterslash7	] {frameskip(0.1);};
@@ -6989,6 +6999,13 @@ void() player_walljumpkickslide   =[	$pain2,	player_walljumpkickslide 	]
 .float divingswallow_wallcheck_finished;
 void() player_walljumpkick1	=[	$jumpatkb1,	player_walljumpkick1	]
 {
+	if (pointcontents(self.origin) == CONTENT_WATER || pointcontents(self.origin) == CONTENT_SLIME || pointcontents(self.origin) == CONTENT_LAVA) // break out if underwater
+	{
+		self.think = player_move;
+		self.nextthink = time;
+		return;
+	}
+	
 	self.owner.noblock_finished = time + 5;
 	self.inair = 16; // fixes rare issue
 	if (self.angles_y == 0)
@@ -7302,7 +7319,7 @@ void() player_airdivings1 =
 	// a noclip monster may of exited the level, so just get out of this...
 	// also make sure that vigil hasn't somehow gone passed his target or it hasn't died anyways, if so break out
 	if (!visible(self.enemy) || (self.origin_x > self.enemy.origin_x && self.angles_y == 0) || (self.origin_x < self.enemy.origin_x && self.angles_y == 180)
-	|| self.origin == self.oldorigin || (self.enemy.deadflag == DEAD_DEAD || self.enemy == world))
+	|| self.origin == self.oldorigin || (self.enemy.deadflag == DEAD_DEAD || self.enemy == world) || (pointcontents(self.origin) == CONTENT_WATER || pointcontents(self.origin) == CONTENT_SLIME || pointcontents(self.origin) == CONTENT_LAVA))
 	{
 		self.owner.backflip_finished = time + 0.7; // Perfect value! Player enters negative velocity by this itme...
 		self.think = player_bflip1;
@@ -7592,6 +7609,13 @@ void() player_wallrunningjumpkick2	=[	$wallgrab,	player_wallrunningjumpkick3	]
 
 void() player_wallrunningjumpkick3	=[	$jumpatkb1,	player_wallrunningjumpkick3	]
 {
+	if (pointcontents(self.origin) == CONTENT_WATER || pointcontents(self.origin) == CONTENT_SLIME || pointcontents(self.origin) == CONTENT_LAVA) // Break out if water is entered
+	{
+		self.think = player_move;
+		self.nextthink = time;
+		return;
+	}
+	
 	self.movetype = MOVETYPE_WALK;
 	makevectors(self.angles);
 

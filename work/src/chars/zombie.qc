@@ -109,6 +109,12 @@ void() DarkBallThink =
 					if (head.owner.mana > head.owner.max_mana)
 						head.owner.mana = head.owner.max_mana;
 					PerfectGuard(head);
+					// Check if Vigil is close, if so allow counter
+					if (range(self.owner, self.owner.enemy) == RANGE_CLOSE || range(self.owner, self.owner.enemy) == RANGE_MELEE || range(self.owner, self.owner.enemy) == RANGE_NEAR)
+					{
+						head.enemy = self.owner; // needed for counter attack to face the proper direction
+						head.counter_finished = time + 0.5;
+					}
 					remove(self);
 					return;
 				}

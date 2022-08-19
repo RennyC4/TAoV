@@ -16,7 +16,7 @@ void() npc_default =
 		y = find(world, classname, "player");
 		while(y)
 		{
-			if (y.classname == "player" && range(y) < RANGE_NEAR && !y.owner.conversation && !y.enemy)
+			if (y.classname == "player" && range(self, y) < RANGE_NEAR && !y.owner.conversation && !y.enemy)
 			{
 				self.enemy = y;
 				y.enemy = self;
@@ -105,7 +105,7 @@ void() npc_default =
 		self.npcmove_finished = time;
 		if (self.enemy.enemy == self)
 		{
-			if (range(self.enemy) < RANGE_NEAR)
+			if (range(self, self.enemy) < RANGE_NEAR)
 			{
 				view = vectoangles(self.enemy.origin - self.origin);
 				self.angles_y = view_y;

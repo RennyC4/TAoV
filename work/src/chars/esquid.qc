@@ -197,7 +197,7 @@ void() lit_think =
 			head = searchradius(self.origin, 999);
 			while (head)
 			{
-				if (range(self.owner.enemy) <= RANGE_MID && visible(self.owner.enemy))
+				if (range(self, self.owner.enemy) <= RANGE_MID && visible(self.owner.enemy))
 				{
 					if (head.deadflag == DEAD_NO && head == self.owner.enemy)
 					{

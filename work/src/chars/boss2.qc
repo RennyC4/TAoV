@@ -124,13 +124,6 @@ void() boss_idle1 = [0, boss_idle1]
 	{
 		boss_face();
 
-		// Don't allow Vigil to hit the boss while swimming for a cheap kill
-		// TODO: Needs to work in multiplayer
-		if (self.enemy.swimming)
-			self.takedamage = DAMAGE_NO;
-		else
-			self.takedamage = DAMAGE_AIM;
-
 		// Combat code here!
 		if (self.attack_finished < time)
 		{

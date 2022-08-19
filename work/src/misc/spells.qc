@@ -153,6 +153,11 @@ void() FireBall_HitBox =
 			}
 			else
 			{
+				if (range(self.owner, self.owner.enemy) == RANGE_CLOSE || range(self.owner, self.owner.enemy) == RANGE_MELEE || range(self.owner, self.owner.enemy) == RANGE_NEAR)
+				{
+					head.enemy = self.owner; // needed for counter attack to face the proper direction
+					head.counter_finished = time + 0.5;
+				}
 				if (head.perfectblock > time)
 				{
 					if (head.owner) // Reward mana
@@ -401,6 +406,11 @@ void() LightningThink =
 
 					if (head.perfectblock > time)
 					{
+						if (range(self.owner, self.owner.enemy) == RANGE_CLOSE || range(self.owner, self.owner.enemy) == RANGE_MELEE || range(self.owner, self.owner.enemy) == RANGE_NEAR)
+						{
+							head.enemy = self.owner; // needed for counter attack to face the proper direction
+							head.counter_finished = time + 0.5;
+						}
 						if (head.owner) // Reward mana
 						{
 							head.owner.mana = head.owner.mana + 50;
@@ -602,6 +612,11 @@ void() icefield_think =
 				{
 					if (head.perfectblock > time)
 					{
+						if (range(self.owner, self.owner.enemy) == RANGE_CLOSE || range(self.owner, self.owner.enemy) == RANGE_MELEE || range(self.owner, self.owner.enemy) == RANGE_NEAR)
+						{
+							head.enemy = self.owner; // needed for counter attack to face the proper direction
+							head.counter_finished = time + 0.5;
+						}
 						if (head.owner) // Reward mana
 						{
 							head.owner.mana = head.owner.mana + 30;
@@ -819,6 +834,11 @@ void() firebeam_think =
 				{
 					if (head.perfectblock > time)
 					{
+						if (range(self.owner, self.owner.enemy) == RANGE_CLOSE || range(self.owner, self.owner.enemy) == RANGE_MELEE || range(self.owner, self.owner.enemy) == RANGE_NEAR)
+						{
+							head.enemy = self.owner; // needed for counter attack to face the proper direction
+							head.counter_finished = time + 0.5;
+						}
 						if (head.owner) // Reward mana
 						{
 							head.owner.mana = head.owner.mana + 100;
@@ -1079,6 +1099,11 @@ void() TwisterThink =
 
 				if (head.perfectblock > time)
 				{
+					if (range(self.owner, self.owner.enemy) == RANGE_CLOSE || range(self.owner, self.owner.enemy) == RANGE_MELEE || range(self.owner, self.owner.enemy) == RANGE_NEAR)
+					{
+						head.enemy = self.owner; // needed for counter attack to face the proper direction
+						head.counter_finished = time + 0.5;
+					}
 					if (head.owner) // Reward mana
 					{
 						head.owner.mana = head.owner.mana + 13;
@@ -1160,7 +1185,7 @@ void() Twister =
 
 
 
-// FIRE BUSTER
+// FIRE BUSTER (SGK Ability)
 
 
 
@@ -1201,7 +1226,7 @@ void() fire_buster_think =
 		effect = spawn();
 		setorigin(effect, self.origin);
 		setmodel(effect, "progs/firecolm.mdl");
-		effect.movetype = MOVETYPE_NONE; // Fixes PG making me fly off
+		effect.movetype = MOVETYPE_NONE; // Fixes PG making me fly off somewhere
 		effect.angles_y = -90;
 		effect.scale = 1;
 		effect.solid = SOLID_NOT;

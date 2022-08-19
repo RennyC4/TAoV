@@ -137,7 +137,7 @@ void() InitCamera =
 	local float test;
 
 	source = self.origin;
-	dest = self.origin;
+	dest = self.origin + v_up * 4;
 
 	tracebox (source, '-12 -12 -12', '12 12 12', dest, 1, self);
 
@@ -350,7 +350,7 @@ void(optional float csqcactive) ClientConnect =
 
 		bprint ("The honorable ");
 		bprint (self.netname);
-		bprint (" has joined.\n");
+		bprint (" has joined the realm.\n");
 	}
 };
 

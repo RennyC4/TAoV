@@ -118,11 +118,23 @@ void() ArcherArrowThink =
 					self.velocity = '0 0 0';
 					self.think = arrow_remove;
 					self.nextthink = time;
+					// Check if Vigil is close, if so allow counter
+					if (range(self.owner, self.owner.enemy) == RANGE_CLOSE || range(self.owner, self.owner.enemy) == RANGE_MELEE || range(self.owner, self.owner.enemy) == RANGE_NEAR)
+					{
+						head.enemy = self.owner; // needed for counter attack to face the proper direction
+						head.counter_finished = time + 0.5;
+					}
 					return;
 				}
 			}
 			else // Perfect Block
 			{
+				// Check if Vigil is close, if so allow counter
+				if (range(self.owner, self.owner.enemy) == RANGE_CLOSE || range(self.owner, self.owner.enemy) == RANGE_MELEE || range(self.owner, self.owner.enemy) == RANGE_NEAR)
+				{
+					head.enemy = self.owner; // needed for counter attack to face the proper direction
+					head.counter_finished = time + 0.5;
+				}
 				PerfectGuard(head);
 				remove(self);
 				return;
@@ -258,7 +270,7 @@ void() archer_fireb18 	=[	$shootb18,	archer_move1	] {};
 // archer decides what type of firing animation to play on how far Vigil is
 void() archer_fire_decide =
 {
-	if (range(self.enemy) == RANGE_FAR)
+	if (range(self, self.enemy) == RANGE_FAR)
 		archer_fireb1();
 	else
 		archer_fire1();

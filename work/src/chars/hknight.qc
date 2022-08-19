@@ -354,8 +354,11 @@ void() HellKnight_Lightning =
 			else
 			{
 				// Check if Vigil is close, if so allow counter
-				if (range(self.enemy) == RANGE_CLOSE || range(self.enemy) == RANGE_MELEE || range(self.enemy) == RANGE_NEAR)
+				if (range(self, self.enemy) == RANGE_CLOSE || range(self, self.enemy) == RANGE_MELEE || range(self, self.enemy) == RANGE_NEAR)
+				{
+					trace_ent.enemy = self; // needed for counter attack to face the proper direction
 					trace_ent.counter_finished = time + 0.5;
+				}
 			}
 		}
 		else // perfect guard
@@ -402,13 +405,17 @@ void() HellKnight_Lightning =
 				trace_ent.owner.mana = trace_ent.owner.max_mana;
 			PerfectGuard(trace_ent);
 			trace_ent.owner.combo = trace_ent.owner.combo + 1; // raise combo counter
-			if (range(self.enemy) == RANGE_CLOSE || range(self.enemy) == RANGE_MELEE || range(self.enemy) == RANGE_NEAR)
-				trace_ent.counter_finished = time + 0.5;
 
 			if (self.angles_y > 90 && self.angles_y < 270) // Attacker facing right
 				trace_ent.angles_y = 0; // victim faces left
 			else
 				trace_ent.angles_y = 180; // victim faces right
+
+			if (range(self, self.enemy) == RANGE_CLOSE || range(self, self.enemy) == RANGE_MELEE || range(self, self.enemy) == RANGE_NEAR)
+			{
+				trace_ent.enemy = self; // needed for counter attack to face the proper direction
+				trace_ent.counter_finished = time + 0.5;
+			}
 		}
 		sound (trace_ent, CHAN_BODY, "weapons/lhit.wav", 1, ATTN_NORM);
 	}

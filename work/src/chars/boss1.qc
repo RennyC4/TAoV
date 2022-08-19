@@ -427,7 +427,7 @@ void() sgk_think =
 	// SGK Blocking airborn Vigil
 	//
 	
-	local float r = range(self.enemy);
+	local float r = range(self, self.enemy);
 	
 	if (!self.enemy.onground && !self.enemy.flypain && r < 4)
 	{

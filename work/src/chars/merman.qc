@@ -202,13 +202,21 @@ void() MermanSpitThink =
 					// block
 					if (head.classname == "player")
 					{
-						if (self.angles_y > 90 && self.angles_y < 270) // Attacker facing right
-							head.angles_y = 0; // Block victim faces left
+						// look in the proper direction
+						if (head.origin_x < self.owner.origin_x)
+							head.angles_y = 0;
 						else
-							head.angles_y = 180; // Block victim faces right
+							head.angles_y = 180;
+
 						head.effects = EF_MUZZLEFLASH; // create light on melee impact
 						head.think = player_block;
 						head.nextthink = time + 0.1;
+						// Check if Vigil is close, if so allow counter
+						if (range(self.owner, self.owner.enemy) == RANGE_CLOSE || range(self.owner, self.owner.enemy) == RANGE_MELEE || range(self.owner, self.owner.enemy) == RANGE_NEAR)
+						{
+							head.enemy = self.owner; // needed for counter attack to face the proper direction
+							head.counter_finished = time + 0.5;
+						}
 					}
 					remove(self);
 					return;
@@ -216,6 +224,16 @@ void() MermanSpitThink =
 			}
 			else // Perfect Block
 			{
+				// look in the proper direction
+				if (head.origin_x < self.owner.origin_x)
+					head.angles_y = 0;
+				else
+					head.angles_y = 180;
+				if (range(self.owner, self.owner.enemy) == RANGE_CLOSE || range(self.owner, self.owner.enemy) == RANGE_MELEE || range(self.owner, self.owner.enemy) == RANGE_NEAR)
+				{
+					head.enemy = self.owner; // needed for counter attack to face the proper direction
+					head.counter_finished = time + 0.5;
+				}
 				PerfectGuard(head);
 				remove(self);
 				return;

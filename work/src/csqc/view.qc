@@ -97,15 +97,11 @@ void(vector pos) DrawSwordStatus =
 		return;
 
 	local float sword = getstatf(STAT_SWORD);
-//	local string h = ftos(sword);
 	
 	drawpic (pos - '5 9', "progs/swordicon.png", '14 24 0', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
 	drawpic (pos - '7 10', "progs/swordicon.png", '14 24 0', '1 1 1', 1, DRAWFLAG_NORMAL); // sword pic
 
 	Hud_DrawLargeValue_Items(pos - '50 0', sword, 25); // 1st digit
-
-//	drawstring (pos + '1 1', h, '18 18', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
-//	drawstring (pos, h, '18 18', '1 1 1', 1, DRAWFLAG_NORMAL);
 };
 
 void(vector pos) DrawArmorStatus =
@@ -114,15 +110,11 @@ void(vector pos) DrawArmorStatus =
 		return;
 
 	local float armor = getstatf(STAT_ARMOR2);
-//	local string h = ftos(armor);
 	
 	drawpic (pos - '8 8', "progs/armoricon.png", '24 24 0', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
 	drawpic (pos - '10 10', "progs/armoricon.png", '24 24 0', '1 1 1', 1, DRAWFLAG_NORMAL); // armor pic
 
 	Hud_DrawLargeValue_Items(pos - '45 0', armor, 25); // 1st digit
-
-//	drawstring (pos + '1 1', h, '18 18', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
-//	drawstring (pos, h, '18 18', '1 1 1', 1, DRAWFLAG_NORMAL);
 };
 
 void(vector pos) DrawMonsterNameDisplay =
@@ -154,7 +146,7 @@ void(vector pos) DrawCurrentSelectedSpell =
 
 		if (mp >= 7 && mp < 10) // Draw tired icon
 		{
-			drawpic (pos + '16 20', "progs/arrow_d.png", '8 8 0', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
+			drawpic (pos + '17 21', "progs/arrow_d.png", '8 8 0', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
 			drawpic (pos + '16 20', "progs/arrow_d.png", '8 8 0', '1 1 1', 1, DRAWFLAG_NORMAL);
 		}
 		else if (mp < 7) // Draw unavailable icon
@@ -173,7 +165,7 @@ void(vector pos) DrawCurrentSelectedSpell =
 
 		if (mp >= 33 && mp < 50) // Draw tired icon
 		{
-			drawpic (pos + '16 20', "progs/arrow_d.png", '8 8 0', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
+			drawpic (pos + '17 21', "progs/arrow_d.png", '8 8 0', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
 			drawpic (pos + '16 20', "progs/arrow_d.png", '8 8 0', '1 1 1', 1, DRAWFLAG_NORMAL);
 		}
 		else if (mp < 33) // Draw unavailable icon
@@ -192,7 +184,7 @@ void(vector pos) DrawCurrentSelectedSpell =
 
 		if (mp >= 20 && mp < 30) // Draw tired icon
 		{
-			drawpic (pos + '16 20', "progs/arrow_d.png", '8 8 0', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
+			drawpic (pos + '17 21', "progs/arrow_d.png", '8 8 0', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
 			drawpic (pos + '16 20', "progs/arrow_d.png", '8 8 0', '1 1 1', 1, DRAWFLAG_NORMAL);
 		}
 		else if (mp < 20) // Draw unavailable icon
@@ -211,7 +203,7 @@ void(vector pos) DrawCurrentSelectedSpell =
 
 		if (mp >= 67 && mp < 100) // Draw tired icon
 		{
-			drawpic (pos + '16 20', "progs/arrow_d.png", '8 8 0', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
+			drawpic (pos + '17 21', "progs/arrow_d.png", '8 8 0', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
 			drawpic (pos + '16 20', "progs/arrow_d.png", '8 8 0', '1 1 1', 1, DRAWFLAG_NORMAL);
 		}
 		else if (mp < 67) // Draw unavailable icon
@@ -230,7 +222,7 @@ void(vector pos) DrawCurrentSelectedSpell =
 		
 		if (mp >= 50 && mp < 75) // Draw tired icon
 		{
-			drawpic (pos + '16 20', "progs/arrow_d.png", '8 8 0', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
+			drawpic (pos + '17 21', "progs/arrow_d.png", '8 8 0', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
 			drawpic (pos + '16 20', "progs/arrow_d.png", '8 8 0', '1 1 1', 1, DRAWFLAG_NORMAL);
 		}
 		else if (mp < 50) // Draw unavailable icon

@@ -255,7 +255,7 @@ void() CheckImpulseButtons =
 				return;
 			if (self.purge_toggle == TRUE)
 				return;
-			if (pointcontents(self.char.origin) == CONTENT_WATER || pointcontents(self.owner.origin) == CONTENT_LAVA || pointcontents(self.owner.origin) == CONTENT_SLIME)
+			if (pointcontents(self.char.origin) == CONTENT_WATER || pointcontents(self.owner.origin) == CONTENT_LAVA || pointcontents(self.owner.origin) == CONTENT_SLIME || self.char.swimming)
 				return;
 			if (self.char.flypain || self.char.tired_finished > time || self.wallrun == TRUE)
 				return;
