@@ -6898,9 +6898,11 @@ void() divingswallow_hit =
 					if (self.owner.mana > self.owner.max_mana) // cap mana gain
 						self.owner.mana = self.owner.max_mana;
 
-					self.think = player_bflip1;
 					self.owner.backflip_finished = time + 0.7; // Perfect value! Player enters negative velocity by this itme...
 					self.owner.combo = self.owner.combo + 1; // raise combo counter
+
+					self.think = player_bflip1;
+					frameskip(0.1);
 				}
 				else if (head.health > 0 || !checkground(head))
 				{
@@ -7333,9 +7335,10 @@ void() player_airdivings1 =
 	self.velocity = aim(self, 750);
 	self.velocity = self.velocity * 750;
 	self.angles = vectoangles(self.velocity);
+	//self.angles_y = view_y;
 
 	// keep vigil inline with his target just incase
-	if(self.enemy != world)
+	if (self.enemy != world)
 	{
 		if (self.enemy.origin_y > self.origin_y)
 			self.velocity_y = self.velocity_y + (bt * 100) * frametime; // the speed
@@ -7376,7 +7379,7 @@ void() player_airdivings1 =
 	setsize(testx, '0 0 0', '0 0 0');
 	setorigin(testx, self.origin);
 
-	frameskip(0.1);
+	frameskip(0.05);
 };
 
 // Need to check for wall grabbing during his wall running frames!
