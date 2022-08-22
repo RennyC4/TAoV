@@ -1809,10 +1809,10 @@ void() player_think =
 			test = TRUE;
 	
 		// MOVETYPE has to be MOVETYPE_WALK for menus to work properly
-		if ((self.char.velocity_x || self.char.velocity_y) || self.conversation == TRUE || (self.button0 && self.char.grab_count <= 0) || self.char.swimming || (test == FALSE && self.origin != self.oldorigin) || self.char.frame == $block3)
+		if ((self.char.velocity_x || self.char.velocity_y) || self.conversation == TRUE || (self.button0 && self.char.grab_count <= 0) || self.char.swimming || test == FALSE || self.char.frame == $block3)
 		{
 			self.char.movetype = MOVETYPE_WALK;
-			if (self.magicmenu) // Auto-remove magic menu on falling
+			if (self.magicmenu && self.char.velocity_z != 0) // Auto-remove magic menu on falling
 			{
 				self.magicmenu = FALSE;
 				sound (self, CHAN_ITEM, "player/mmenu1.wav", 1, ATTN_NORM);
