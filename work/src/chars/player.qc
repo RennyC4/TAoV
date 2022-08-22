@@ -1801,6 +1801,7 @@ void() player_think =
 		dest = self.char.origin - v_up * 12;
 		
 		tracebox (source, VEC_HULL_MIN, VEC_HULL_MAX, dest, 1, self);
+		self.oldorigin = self.origin;
 
 		if (trace_fraction == 1) // Hit nothing
 			test = FALSE;
@@ -1808,7 +1809,7 @@ void() player_think =
 			test = TRUE;
 	
 		// MOVETYPE has to be MOVETYPE_WALK for menus to work properly
-		if ((self.char.velocity_x || self.char.velocity_y) || self.conversation == TRUE || (self.button0 && self.char.grab_count <= 0) || self.char.swimming || test == FALSE || self.char.frame == $block3)
+		if ((self.char.velocity_x || self.char.velocity_y) || self.conversation == TRUE || (self.button0 && self.char.grab_count <= 0) || self.char.swimming || (test == FALSE && self.origin != self.oldorigin) || self.char.frame == $block3)
 		{
 			self.char.movetype = MOVETYPE_WALK;
 			if (self.magicmenu) // Auto-remove magic menu on falling
@@ -1819,6 +1820,8 @@ void() player_think =
 		}
 		else										// Not moving, standing still
 			self.char.movetype = MOVETYPE_STEP;		// STEP means no stupid slope-sliding, tracebox needed to make him fall if ground beneath his feet changes
+		
+		self.oldorigin = self.origin;
 		
 	}
 	
@@ -2182,6 +2185,8 @@ void() wallgrab_check =
 .float swimanimation_finished;
 void() player_jumpframe =
 {
+	if (self.block_finished > time) // FIX: end block on jump frames
+		self.block_finished = time;
 	self.charge_count = 4; // set charge up attack somewhat when in air
 
 	if ((self.onground == FALSE && self.inair > 17) || self.velocity_z > 100) // Keep inAir for slightly troublesome instances
