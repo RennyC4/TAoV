@@ -974,7 +974,10 @@ void(float damg, float dist, float knokback, float rsize, float snd, float flsh,
 						self.attack_type = 0;
 
 					if (self.classname == "player" && head.solid != SOLID_BSP && head.classname != "breakable")
+					{
 						self.enemy = head; // record which entity vigil hit
+						self.perfectblock_cooldown = time; // reset PG cooldown timer on successful hit
+					}
 
 					self.attackedname = head.classname; // record on every strike
 
@@ -1110,6 +1113,7 @@ void(float damg, float dist, float knokback, float rsize, float snd, float flsh,
 					makevectors (self.angles);
 					if (head.classname == "player")
 					{
+						head.purge_cooldown = time; // successful block removes any purge cooldowns
 						head.enemy = self; // Update who attacked Vigil last
 						if (head.perfectblock < time && head.perfectguard_buff < time)
 							head.knockback = knokback; // For guard breaking

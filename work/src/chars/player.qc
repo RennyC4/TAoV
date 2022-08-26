@@ -299,6 +299,7 @@ void(entity plyr) PerfectGuard	=
 	plyr.owner.screentint_finished = time + 0.01 * (frametime * 100);
 	stuffcmd (plyr.owner, "v_cshift 255 200 0 25\n"); // yellow tint quick
 
+
 	freeze_finished = time + 0.05 * (frametime * 100);
 	plyr.colormod = '2 2 1';
 	plyr.alpha = 0.625; // ghost effect
@@ -1448,9 +1449,11 @@ void() player_think =
 		player_fire();
 		
 		if (self.char.purge_cooldown < time)
-			self.char.purge_finished = time + 0.06; // frame window
-		self.char.purge_cooldown = time + 0.25;
-		self.char.perfectblock_cooldown = time;
+		{
+			self.char.purge_finished = time + 0.06; // purge success window
+			if (self.char.pain_finished < time)
+				self.char.purge_cooldown = time + 1.5;
+		}
 
 		self.FL_ATKPRESSED = TRUE;
 	}
@@ -1464,7 +1467,15 @@ void() player_think =
 		}
 		self.char.charge_count = 0;
 	}
-
+	
+	/* Debugging timers
+	//Remove Me
+	if (self.char.perfectblock_cooldown > time)
+		centerprint (self, "PG Cooldown Running\n");
+	else
+		centerprint (self, "\n");
+	*/
+	
 	//
 	// Players launcher attack (attack (hold) + forward + forward)
 	//
@@ -6015,8 +6026,8 @@ void() player_pain =
 	self.owner.magicmenu = FALSE;
 
 	PainSound();
-	self.perfectblock_cooldown = time + 0.5; // can't PG after being hit
-	self.purge_cooldown = time + 0.75; // can't purge right after being hit
+	self.perfectblock_cooldown = time + 1; // can't PG after being hit
+	self.purge_cooldown = time + 1; // can't purge right after being hit
 
 	//
 	// Vigil's pain behavior works a bit differently in deathmatch

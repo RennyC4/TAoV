@@ -27,7 +27,7 @@ void() CheckImpulseButtons =
 		{
 			self.char.grabbed = FALSE;
 			self.char.sword_spincnt = 0;
-			self.char.purge_cooldown = time;
+			//self.char.purge_cooldown = time;
 			self.purge_toggle = FALSE;
 			self.noblock_finished = time + 1;
 			self.char.movetype = MOVETYPE_WALK; // fix flying vigil from ledge grab -> kick
@@ -304,7 +304,7 @@ void() CheckImpulseButtons =
 				if (self.attack_finished < time)
 				{
 					self.char.aircombo_count = 9; // can only do it once in air
-					self.char.purge_cooldown = time;
+					//self.char.purge_cooldown = time;
 					self.purge_toggle = FALSE;
 					self.char.enemy = world;
 					
@@ -333,7 +333,6 @@ void() CheckImpulseButtons =
 				self.char.idle_count = 0; // reset pose
 				self.attack_finished = time;
 				self.dodge_finished = time;
-				self.char.purge_cooldown = time;
 				self.purge_toggle = FALSE;
 
 				// needed to fix "blocking while getting up"
@@ -353,7 +352,7 @@ void() CheckImpulseButtons =
 					if (self.char.perfectblock_cooldown < time)
 					{
 						self.char.perfectblock = time + 0.135;
-						self.char.perfectblock_cooldown = time + 0.5;
+						self.char.perfectblock_cooldown = time + 1;
 					}
 				}
 				self.char.nextthink = time;
