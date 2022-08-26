@@ -166,7 +166,7 @@ void() spawn_ghost =
 	ghost.takedamage = DAMAGE_AIM;
 	ghost.solid = SOLID_NOT;
 	ghost.classname = "ghost2";
-	self.displayname = "Malevolent Spirit";
+	ghost.displayname = "Malevolent Spirit";
 	setsize (ghost, VEC_HULL_MIN, VEC_HULL_MAX);
 	ghost.noblood = TRUE;
 	ghost.th_stand = ghost_think;
