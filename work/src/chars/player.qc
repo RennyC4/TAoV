@@ -1373,19 +1373,16 @@ void() player_think =
 				player_checkledge();
 		}
 	}
-	
-	// Jump buffer for Run attack Hop
-	if (self.button2 && self.char.runatk_speed > 70)
-		self.button2_buffer = TRUE;
 
 	//
 	// Spin Attack
 	//
 
-	if (self.button0 && self.button2 && self.safezone == FALSE && self.attack_finished < time && self.char.tired_finished < time
+	if (self.button0 && self.button2 && self.button2_buffer == FALSE && self.safezone == FALSE && self.attack_finished < time && self.char.tired_finished < time
 	&& self.ledgegrab == FALSE && self.wallgrab == FALSE && self.char.deadflag != DEAD_DEAD && self.char.movetype != MOVETYPE_FLY
 	&& self.wallrun == FALSE && self.forcewalk_finished < time && self.char.fly_time < time && self.char.guardbreak_finished < time
-	&& self.char.dodge_finished < time && !self.char.swimming && self.char.health > 0 && self.nospinatk_finished < time && self.char.lowceil == FALSE && self.trigger_spincut_finished < time)
+	&& self.char.dodge_finished < time && !self.char.swimming && self.char.health > 0 && self.nospinatk_finished < time &&
+	self.char.lowceil == FALSE && self.trigger_spincut_finished < time)
 	{
 		if (!self.char.flypain)
 		{
@@ -1415,6 +1412,22 @@ void() player_think =
 			}
 		}
 	}
+
+	//
+	// Jump buffer for running attack hop / spin attack control fix
+	//
+	
+	if (self.button2)
+	{
+		if (self.char.runatk_speed > 70 || !self.char.onground)
+			self.button2_buffer = TRUE;
+	}
+	else
+	{
+		if (!self.char.onground)
+			self.button2_buffer = FALSE;	
+	}
+	
 
 	if (self.button0 && self.char.tired_finished < time && self.char.deadflag != DEAD_DEAD && self.forcewalk_finished < time
 	&& self.char.fly_time < time && self.safezone == FALSE && self.char.guardbreak_finished < time && self.char.health > 0 && self.char.lowceil == FALSE)
@@ -2614,7 +2627,7 @@ void() player_move = [0, player_move]
 	self.sword_spincnt = 0; // reset sword 'spin' animation stuff (cyclone crush etc)
 
 	if (self.flags & FL_ONGROUND && self.owner.button2_buffer)
-		self.owner.button2_buffer = FALSE; // Reset short hop flag
+		self.owner.button2_buffer = FALSE; // Reset short hop flag/button2 buffer
 
 	self.owner.button3 = self.owner.FL_BLKPRESSED = FALSE; // Reset block button flag
 	self.block_finished = time; // auto-block fix

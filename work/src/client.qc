@@ -825,7 +825,7 @@ void() PlayerPreThink =
 		if (self.impulse != 0)
 			self.impulse = 0;
 
-		if (cvar("developer") < 2) // Attract demo recording mode
+		if (cvar("developer") < 1) // Attract demo recording mode
 		{
 			if (freeze_finished > time)
 			{
@@ -998,6 +998,10 @@ void() PlayerPreThink =
 		//self.status_blind_finished = time + 3;
 		//self.status_broken_finished = time + 3;
 		//self.char.purge_finished = time + 3;
+	
+		// Debug inair time
+		//local string f = ftos(self.char.inair);
+		//bprint ("In Air: ", f, "\n");
 
 		if (self.forcewalk_finished < time && (self.status_blind_finished > time || self.status_poison_finished > time || self.status_broken_finished > time))
 			StatusEffects();
@@ -1252,10 +1256,13 @@ void() PutClientInServer =
 	self.new_zoom = self.origin; // store initial camera position
 
 	// Set proper commands on game load
-	if (turbo_mode)
-		localcmd ("sv_gamespeed 1.25\n"); // needs to be set
-	else
-		localcmd ("sv_gamespeed 1\n"); // needs to be set
+	if (cvar("developer") != 1) // allow slow-mo in dev mode
+	{
+		if (turbo_mode)
+			localcmd ("sv_gamespeed 1.25\n"); // needs to be set
+		else
+			localcmd ("sv_gamespeed 1\n"); // needs to be set
+	}
 
 	stuffcmd (self, "v_cshift\n"); // remove cshift effects
 	
