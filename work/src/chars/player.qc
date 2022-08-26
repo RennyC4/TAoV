@@ -1451,7 +1451,7 @@ void() player_think =
 			self.char.purge_finished = time + 0.06; // frame window
 		self.char.purge_cooldown = time + 0.25;
 		self.char.perfectblock_cooldown = time;
-		
+
 		self.FL_ATKPRESSED = TRUE;
 	}
 	else
@@ -2747,7 +2747,7 @@ void() player_fire =
 	self.char.movetype = MOVETYPE_WALK; // Allow velocity
 
 	// counter attack
-	if (self.char.counter_finished > time && self.char.onground == TRUE)
+	if (self.char.counter_finished > time && self.char.onground == TRUE && !self.button3)
 	{
 		self.char.takedamage = DAMAGE_NO; // iframes
 		self.char.block_finished = time;
@@ -6016,7 +6016,7 @@ void() player_pain =
 
 	PainSound();
 	self.perfectblock_cooldown = time + 0.5; // can't PG after being hit
-	self.purge_cooldown = time + 0.5; // can't purge right after being hit
+	self.purge_cooldown = time + 0.75; // can't purge right after being hit
 
 	//
 	// Vigil's pain behavior works a bit differently in deathmatch

@@ -1664,7 +1664,7 @@ void(entity attacker) monster_pain =
 		self.angles_y = 180;
 
 	// Color flash on pain
-	if (self.block_finished < time)
+	//if (self.block_finished < time)
 		self.colormod = '3 1 1';
 
 	// Ignore air combo flag is on the monster
@@ -1677,12 +1677,12 @@ void(entity attacker) monster_pain =
 		self.velocity = '0 0 0';
 		return;
 	}
-		
+
 	if (self.flags & FL_ONGROUND) // required
 		self.flags = self.flags - (self.flags & FL_ONGROUND);
 
 	self.velocity_y = 0;
-	
+
 	if (self.grabbed == TRUE)
 		self.th_grab();
 	if (self.movetype == MOVETYPE_FLY)
