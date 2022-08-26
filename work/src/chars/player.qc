@@ -2760,6 +2760,7 @@ void() player_fire =
 	// counter attack
 	if (self.char.counter_finished > time && self.char.onground == TRUE && !self.button3)
 	{
+		self.noblock_finished = time + 3;
 		self.char.takedamage = DAMAGE_NO; // iframes
 		self.char.block_finished = time;
 		self.char.dodge_finished = time;
