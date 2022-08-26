@@ -108,6 +108,7 @@ void() ArcherArrowThink =
 					// block
 					if (head.classname == "player")
 					{
+						head.purge_cooldown = time;
 						head.effects = EF_MUZZLEFLASH; // create light on melee impact
 						head.think = player_block;
 						head.nextthink = time + 0.1;

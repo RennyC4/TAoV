@@ -346,13 +346,14 @@ void() HellKnight_Lightning =
 		
 		if (trace_ent.perfectblock < time)
 		{
-			if (trace_ent.block_finished < time)
+			if (trace_ent.block_finished < time) // hit target
 			{
 				trace_ent.knockback = 0;
 				T_Damage (trace_ent, self, self, 8, 0);
 			}
 			else
 			{
+				trace_ent.purge_cooldown = time;
 				// Check if Vigil is close, if so allow counter
 				if (range(self, self.enemy) == RANGE_CLOSE || range(self, self.enemy) == RANGE_MELEE || range(self, self.enemy) == RANGE_NEAR)
 				{
@@ -419,7 +420,7 @@ void() HellKnight_Lightning =
 		}
 		sound (trace_ent, CHAN_BODY, "weapons/lhit.wav", 1, ATTN_NORM);
 	}
-	else
+	else // hit nothing
 	{
 		temp = spawn ();
 		temp.movetype = MOVETYPE_NOCLIP;

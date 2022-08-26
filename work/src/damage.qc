@@ -493,6 +493,9 @@ void(entity targ, entity inflictor, entity attacker, float damage, float statusr
 	self.knockback = 0; // clear physics stuff
 	if (attacker.classname != "player") // manually cleared on player
 		attacker.attack_type = 0;
+	else
+		attacker.perfectblock_cooldown = time; // remove perfect guard cooldown on vigils strikes
+
 	targ.damage_type = 0;
 	targ.knockback = 0;
 	
@@ -974,10 +977,7 @@ void(float damg, float dist, float knokback, float rsize, float snd, float flsh,
 						self.attack_type = 0;
 
 					if (self.classname == "player" && head.solid != SOLID_BSP && head.classname != "breakable")
-					{
 						self.enemy = head; // record which entity vigil hit
-						self.perfectblock_cooldown = time; // reset PG cooldown timer on successful hit
-					}
 
 					self.attackedname = head.classname; // record on every strike
 

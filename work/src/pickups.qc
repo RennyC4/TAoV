@@ -166,7 +166,7 @@ void() item_hpmaxup_touch =
 	local entity y = find(world, classname, "player");
 	while (y)
 	{
-		if (y) // dead bodies shant go solid
+		if (y)
 		{
 			DisplayHPMaxUp(y);
 			sound (self, CHAN_ITEM, "misc/hpmaxup.wav", 1, ATTN_NORM);	
@@ -174,7 +174,7 @@ void() item_hpmaxup_touch =
 			y.max_health = y.max_health + 5; // add + 5 max health
 			if (y.health > 0) // don't revive dead players and zombie them
 				y.health = y.health + 5; // add + 5 health as well
-			y.rainbow_finished = time + 1; // rainbow
+			y.rainbow_finished = time + 1; // rainbow effect
 		}
 		y = find(y, classname, "player");
 	}
@@ -282,12 +282,12 @@ void() item_health_touch =
 	{
 		if (other.owner.hflask_amt < other.owner.hflask_max_amt)
 		{
-			other.owner.hflask_amt = other.owner.hflask_amt + calc;
+			other.owner.hflask_amt = other.owner.hflask_amt + ceil(calc);
 			self.cnt = self.cnt - calc;
 		}
 		else if (calc <= 0 && other.health < other.max_health)
 		{
-			other.health = other.health + self.cnt; // flask is full, insta-heal player
+			other.health = other.health + ceil(self.cnt); // flask is full, insta-heal player
 			self.cnt = self.cnt - calc2;
 		}
 	}

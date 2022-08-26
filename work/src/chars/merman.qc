@@ -208,6 +208,7 @@ void() MermanSpitThink =
 						else
 							head.angles_y = 180;
 
+						head.purge_cooldown = time;
 						head.effects = EF_MUZZLEFLASH; // create light on melee impact
 						head.think = player_block;
 						head.nextthink = time + 0.1;

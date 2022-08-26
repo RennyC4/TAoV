@@ -179,6 +179,7 @@ void() FireBall_HitBox =
 					else
 						head.angles_y = 180; // Block victim faces right
 				}
+				head.purge_cooldown = time;
 			}
 			sound (self, CHAN_AUTO, "spells/fhit.wav", 1, ATTN_NORM);
 			spawn_embers();

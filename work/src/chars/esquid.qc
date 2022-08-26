@@ -246,6 +246,7 @@ void() lit_think =
 								T_Damage (head, self, self.owner, 35,0);
 							else if (head.classname == "player")
 							{
+								head.purge_cooldown = time;
 								head.effects = EF_MUZZLEFLASH; // create light on melee impact
 								head.think = player_blockbrk1;
 							}
