@@ -137,18 +137,22 @@ void() InitCamera =
 	local float test;
 
 	source = self.origin;
-	dest = self.origin + v_up * 4;
+	dest = self.origin + v_up * 16;
 
 	tracebox (source, '-12 -12 -12', '12 12 12', dest, 1, self);
 
 	if (trace_fraction < 1)
 		self.cam_zcheck = TRUE;
-	// TODO: Have the camera zoom out?
-	if (self.cam_zcheck == TRUE)
+
+	if (self.cam_zcheck == TRUE) // Camera hit ceiling
 	{
-		self.camera_forcezoom_finished = time + 1;
-		self.zoom_mode = 2;
-		self.cam_zcheck = FALSE;
+		if (self.goalentity.origin_z > self.origin_z)
+		{
+			self.camera_forcezoom_finished = time + 1; // Try a zoom out
+			self.zoom_mode = 2;
+		}
+		else
+			self.cam_zcheck =  FALSE;
 	}
 
 	//
@@ -177,14 +181,16 @@ void() InitCamera =
 	if (self.camerastyle != 3)
 		view_x = (ot_x / 2) + view_x; // dividing by 2 made the camera smoother..
 
-	// note: if this line is removed, camera will raise up slowly on certain camstyles
-	if (self.goalentity.lowceil == FALSE)
+	if (self.cam_zcheck == FALSE)
 	{
-		if (self.camerastyle == 0 || self.camerastyle == 3 || self.camerastyle == 5)
-			view_z = ot_z + view_z + (80 * frametime);
+		if (self.goalentity.lowceil == FALSE)
+		{
+			if (self.camerastyle == 0 || self.camerastyle == 3 || self.camerastyle == 5)
+				view_z = ot_z + view_z + (80 * frametime); // note: if this line is removed, camera will raise up slowly on certain camstyles
+		}
+		else // low ceiling situation
+			view_z = self.goalentity.origin_z - 16;
 	}
-	else // low ceiling situation
-		view_z = self.goalentity.origin_z - 16;
 
 	//
 	// Camera zooming in and out is done here
