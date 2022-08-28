@@ -868,7 +868,7 @@ void() spincut_touch =
 			other.velocity_z = self.speed;
 		}
 
-		if (self.pain_finished < time)
+		if (self.pain_finished < time) // play sound + particle effect
 		{
 			if (!self.spawnflags) // Default green
 				particle(other.origin, '0 0 0', 62, 50);
@@ -881,8 +881,17 @@ void() spincut_touch =
 	{
 		if (other.frame != 136) // Not head smashing
 			other.velocity_z = other.velocity_z / 1.15;
-		else
+		else // head smashing down
+		{
+			if (self.pain_finished < time) // play sound + particle effect
+			{
+				if (!self.spawnflags) // Default green
+					particle(other.origin, '0 0 0', 62, 50);
+				sound (other, CHAN_AUTO, self.noise, 1, ATTN_NORM);
+				self.pain_finished = time + self.cnt;
+			}			
 			other.velocity_z = other.velocity_z / 1.05;
+		}
 		if (relics & IT_RELIC3 && other.frame != 241)
 			other.owner.doublejump = FALSE; // Re-allow Double Jump
 

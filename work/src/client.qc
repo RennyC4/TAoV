@@ -143,6 +143,8 @@ void() InitCamera =
 
 	if (trace_fraction < 1)
 		self.cam_zcheck = TRUE;
+	else
+		self.cam_zcheck = FALSE;
 
 	if (self.cam_zcheck == TRUE) // Camera hit ceiling
 	{
@@ -151,8 +153,8 @@ void() InitCamera =
 			self.camera_forcezoom_finished = time + 1; // Try a zoom out
 			self.zoom_mode = 2;
 		}
-		else
-			self.cam_zcheck =  FALSE;
+		//else
+		//	self.cam_zcheck =  FALSE;
 	}
 
 	//

@@ -3605,7 +3605,9 @@ void(float ver) spinatk_wind_spiral =
 	setsize (effect, '0 0 0', '0 0 0');
 
 	effect.effects = EF_ADDITIVE;
-
+	effect.drawflags = 7; // override lighting
+	effect.abslight = -100;
+	
 	if (ver == 0) // normal spin attack
 	{
 		effect.angles_y = random()*360;
@@ -5508,6 +5510,8 @@ void() player_airkick15		=[	$airkick15,	player_airkick16 	]
 	effect.alpha = 1;
 	effect.scale = 0.25;
 	effect.frame = 0;
+	effect.drawflags = 7; // override lighting
+	effect.abslight = -100;
 	setsize (effect, '0 0 0', '0 0 0');
 
 	effect.think = windspiral_think;
@@ -7714,6 +7718,9 @@ void(float grab) player_swordspin_fx =
 	effect.effects = EF_ADDITIVE;
 	effect.alpha = 0.9;
 	effect.angles_z = 90;
+
+	effect.drawflags = 7; // override lighting
+	effect.abslight = -100;
 
 	setmodel(effect, "progs/spnatkspr.mdl");
 	setsize (effect, '0 0 0', '0 0 0');
