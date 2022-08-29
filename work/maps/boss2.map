@@ -371,6 +371,7 @@
 "origin" "-1147 -245 -96"
 "_bounce" "0"
 "_phong" "1"
+"maxgold" "10"
 }
 // entity 33
 {
@@ -379,6 +380,7 @@
 "angle" "30"
 "_bounce" "0"
 "_phong" "1"
+"maxgold" "10"
 }
 // entity 34
 {
