@@ -6377,6 +6377,12 @@ void() player_die =
 
 	self.dead_lockkey_finished = time + 999; // don't allow key presses until Vigil hit the ground on death
 	player_die1();
+
+	if (!coop && !deathmatch)
+	{
+		self.music = "sound/music/track21.ogg";
+		stuffcmd (self.owner, sprintf("music %s\n", self.music));
+	}
 };
 
 //*
