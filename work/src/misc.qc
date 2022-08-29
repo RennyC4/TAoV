@@ -828,6 +828,7 @@ void() misc_title1 =
 	self.cnt2 = self.cnt;
 	self.origin_z = self.origin_z + 300;
 	self.angles_y = -90;
+	self.effects = EF_NODEPTHTEST;
 	self.think = misc_title1_think;
 	self.nextthink = time;
 	self.scale = self.alpha = 1;
@@ -867,8 +868,9 @@ void() misc_title2 =
 	self.cnt2 = self.origin_x;
 	self.origin_x = self.origin_x - 175;
 	self.cnt = self.origin_x;
-	self.nextthink = time + 0.1;
+	self.nextthink = time;
 	self.scale = 1;
+	self.effects = EF_NODEPTHTEST;
 };
 
 //===
