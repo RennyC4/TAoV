@@ -153,8 +153,8 @@ void() InitCamera =
 			self.camera_forcezoom_finished = time + 1; // Try a zoom out
 			self.zoom_mode = 2;
 		}
-		//else
-		//	self.cam_zcheck =  FALSE;
+		else
+			self.cam_zcheck =  FALSE;
 	}
 
 	//
