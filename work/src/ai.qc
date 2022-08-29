@@ -1205,7 +1205,7 @@ void(float dist) ai_walk =
 	if (self.health < 1)
 		return;
 
-	UnmakeSolidList();
+	//UnmakeSolidList();
 
 	if (self.enemy.owner.flags & FL_NOTARGET)
 	{

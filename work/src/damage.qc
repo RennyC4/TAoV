@@ -796,12 +796,7 @@ void(float damg, float dist, float knokback, float rsize, float snd, float flsh,
 			if (head.block_finished < time || unblockable == TRUE || self.perfectguard_buff > time)
 			{
 				if (self.flags & FL_MONSTER && !head.flags & FL_MONSTER || !self.flags & FL_MONSTER) // fix monsters pretending to hit each other
-				{
-					if (head.flags & IT_BOSS2 && self.swimming)
-					{
-						bprint ("WHAT!\n");
-					}
-						
+				{						
 					if (flsh)
 						self.owner.screenflash_finished = time + 0.1; // hard hit -> screen flashes
 					
