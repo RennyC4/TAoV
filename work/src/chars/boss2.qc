@@ -629,7 +629,7 @@ void() monster_boss2 =
 	self.takedamage = DAMAGE_AIM;
 	self.solid = SOLID_NOT;
 	self.classname = "breakable"; // stay solid
-	self.displayname = "Eternal Dragon";
+	self.displayname = "Eternal Dragon"; // Tied to FireMelee in damage.qc
 	self.health = self.max_health = 1333;
 	self.deadflag = DEAD_NO;
 	self.noblood = TRUE;

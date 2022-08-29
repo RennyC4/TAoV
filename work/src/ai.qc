@@ -1204,6 +1204,9 @@ void(float dist) ai_walk =
 
 	if (self.health < 1)
 		return;
+
+	UnmakeSolidList();
+
 	if (self.enemy.owner.flags & FL_NOTARGET)
 	{
 		if (self.th_stand)
@@ -1462,8 +1465,6 @@ void(float dist) ai_walk =
 			if (self.th_melee)
 				self.th_melee();
 		}
-
-		//UnmakeSolidList();
 		
 		// Only 'navigate stupidly' when I can't see Vigil or I'm an electric squid
 		if (!visible(self.enemy) || self.classname == "esquid")

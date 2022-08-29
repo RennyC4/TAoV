@@ -239,18 +239,17 @@ void() FireBallHomeIn =
 	if (self.flags & FL_ONGROUND)
 		self.flags = self.flags - FL_ONGROUND;
 		
-	UnmakeSolidList();
+	UnmakeSolidList(); // Don't remove, fireball will explode on bounding box otherwise
 };
 
 void() FireballWallTouch =
 {
 	local entity effect;
 
-	// Don't allow monsters to stop Fireballs
-	if (other != self.owner && other.flags != FL_MONSTER)
+	if (other != self.owner) // && other.flags != FL_MONSTER)
 	{
 		effect = spawn();
-		setorigin(effect, self.origin + v_up * 14);
+		setorigin(effect, self.origin);
 		setmodel(effect, "progs/fire.spr");
 		effect.movetype = MOVETYPE_NONE;
 
@@ -322,7 +321,7 @@ void(float damg, float hight) Fireball =
 	//missile.pflags = PFLAGS_FULLDYNAMIC | PFLAGS_NOSHADOW;
 	missile.light_lev = 40;
 	missile.color = [2, 1, 0];
-	missile.hitcontentsmaski = CONTENTBIT_SOLID|0x00000002i|CONTENTBIT_BODY|CONTENTBIT_PLAYERCLIP; // don't ignore clipbrushes etc
+	missile.hitcontentsmaski = CONTENTBIT_SOLID|0x00000002i|CONTENTBIT_BODY|CONTENTBIT_PLAYERCLIP; // don't ignore clip brushes etc
 	
 	missile.think = FireBallThink;
 	missile.nextthink = time + 0.1;
