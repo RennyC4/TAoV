@@ -143,7 +143,7 @@ void() ArcherArrowThink =
 		}
 		head = head.chain;
 	}
-	UnmakeSolidList();
+	//UnmakeSolidList();
 
 	if (self.flags & FL_ONGROUND)
 		self.flags = self.flags - FL_ONGROUND;

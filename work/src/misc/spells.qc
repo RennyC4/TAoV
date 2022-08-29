@@ -168,7 +168,7 @@ void() FireBall_HitBox =
 							head.owner.mana = head.owner.max_mana;
 					}
 					PerfectGuard(head);
-					UnmakeSolidList();
+					//UnmakeSolidList();
 					remove(self);
 					return;
 				}
@@ -183,7 +183,7 @@ void() FireBall_HitBox =
 			}
 			sound (self, CHAN_AUTO, "spells/fhit.wav", 1, ATTN_NORM);
 			spawn_embers();
-			UnmakeSolidList();
+			//UnmakeSolidList();
 			remove(self);
 			return;
 		}
@@ -239,7 +239,7 @@ void() FireBallHomeIn =
 	if (self.flags & FL_ONGROUND)
 		self.flags = self.flags - FL_ONGROUND;
 		
-	UnmakeSolidList();
+	//UnmakeSolidList();
 };
 
 void() FireballWallTouch =
@@ -476,7 +476,7 @@ void() LightningThink =
 	setsize (temp, '0 0 0', '0 0 0');		
 	setorigin (temp, self.origin - v_up * 65);
 
-	UnmakeSolidList();
+	//UnmakeSolidList();
 
 	if (self.attack_finished < time)
 	{
@@ -681,7 +681,7 @@ void() icefield_think =
 		}
 		head = head.chain;
 	}
-	UnmakeSolidList();
+	//UnmakeSolidList();
 
 	frameskip(0.01);
 };
@@ -905,7 +905,7 @@ void() firebeam_think =
 			}
 			head = head.chain;
 		}
-		UnmakeSolidList();
+		//UnmakeSolidList();
 	}
 	frameskip(0.1);
 };
@@ -1140,7 +1140,7 @@ void() TwisterThink =
 		}
 		head = head.chain;
 	}
-	UnmakeSolidList();
+	//UnmakeSolidList();
 	frameskip(0.1);
 };
 

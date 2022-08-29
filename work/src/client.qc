@@ -611,9 +611,6 @@ void() PlayerPreThink =
 {
 	local entity manashadow;
 
-	//local string s = ftos(input_buttons);
-	//bprint (s, "\n");
-
 	//
 	// Fixes bug for loading the proper music during save game load
 	//
@@ -1015,7 +1012,7 @@ void() PlayerPreThink =
 			StatusEffects();
 
 		//
-		// Vigil overhead cursor / Perfect guard buff symbol
+		// Vigil overhead cursor / perfect guard buff symbol
 		//
 
 		if (!visible(self.char) || self.char.perfectguard_buff > time)
@@ -1095,29 +1092,32 @@ void() PlayerPostThink =
 	if (cvar("developer") == 2)
 		return;
 
-	// FrikaC: keyflag control system begin
-	if (self.origin != self.test_org && self.forcewalk_finished < time && self.char.dodge_finished < time)
+	if (world.model != "maps/start.bsp")
 	{
-		makevectors(self.angles);
-		self.keyflags = 0;
-		tree = self.test_org - self.origin;
-		
-		if (framecount > 29) // Prevent accidental key press on map change
+		// FrikaC: keyflag control system begin
+		if (self.origin != self.test_org && self.forcewalk_finished < time && self.char.dodge_finished < time)
 		{
-			if (tree_z < -1)
-				self.keyflags = self.keyflags | KEY_UP;
-			else if (tree_z > 1)
-				self.keyflags = self.keyflags | KEY_DOWN;
-			if (v_right * tree < -1)
-				self.keyflags = self.keyflags | KEY_RIGHT;
-			else if (v_right * tree > 1)
-				self.keyflags = self.keyflags | KEY_LEFT;
+			makevectors(self.angles);
+			self.keyflags = 0;
+			tree = self.test_org - self.origin;
+			
+			if (framecount > 29) // Prevent accidental key press on map change
+			{
+				if (tree_z < -1)
+					self.keyflags = self.keyflags | KEY_UP;
+				else if (tree_z > 1)
+					self.keyflags = self.keyflags | KEY_DOWN;
+				if (v_right * tree < -1)
+					self.keyflags = self.keyflags | KEY_RIGHT;
+				else if (v_right * tree > 1)
+					self.keyflags = self.keyflags | KEY_LEFT;
+			}
 		}
+		else
+			self.keyflags = 0;
+		setorigin(self, self.test_org);
 	}
-	else
-		self.keyflags = 0;
-	setorigin(self, self.test_org);
-
+	
 	if (self.char)
 	{
 		if (world.model != "maps/village.bsp" || self.safezone || self.char.safezone)
@@ -1146,10 +1146,13 @@ void() PlayerPostThink =
 	{
 		if (title1_finished > time)
 			return;
+
 		self.cnt = TRUE;
 		stuffcmd(self, "wf\n");
 		sound (self, CHAN_VOICE, "misc/title2.wav", 1, ATTN_NONE);
-		title1_finished = time + 1.5;	
+
+		//title1_finished = time + 1.5;
+		title1_finished = time + 3;
 	}
 
 	//* graphical menu *
@@ -1229,7 +1232,7 @@ void() PutClientInServer =
 
 	self.origin = spawn_spot.origin; // Move to the spawnspot location
 	setorigin(self.lock_view, spawn_spot.origin);
-
+	
 	self.movetype = MOVETYPE_NOCLIP;
 	self.flags = FL_CLIENT;
 	self.origin = spawn_spot.origin;

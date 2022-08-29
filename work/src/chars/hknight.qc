@@ -450,7 +450,7 @@ void() HellKnight_Lightning =
 	WriteCoord (MSG_BROADCAST, trace_endpos_y);
 	WriteCoord (MSG_BROADCAST, trace_endpos_z);
 
-	UnmakeSolidList();
+	//UnmakeSolidList();
 	self.owner = oself;
 };
 

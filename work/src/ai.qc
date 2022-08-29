@@ -1463,7 +1463,7 @@ void(float dist) ai_walk =
 				self.th_melee();
 		}
 
-		UnmakeSolidList();
+		//UnmakeSolidList();
 		
 		// Only 'navigate stupidly' when I can't see Vigil or I'm an electric squid
 		if (!visible(self.enemy) || self.classname == "esquid")
@@ -1664,7 +1664,7 @@ void(entity attacker) monster_pain =
 		self.angles_y = 180;
 
 	// Color flash on pain
-	//if (self.block_finished < time)
+	if (self.block_finished < time)
 		self.colormod = '3 1 1';
 
 	// Ignore air combo flag is on the monster

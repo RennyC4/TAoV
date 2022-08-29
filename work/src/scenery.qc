@@ -1337,7 +1337,7 @@ void() barrel_ressurect = // test if it's okay to respawn me
 		self.nextthink = time + 1;
 	}
 	self.movetype = MOVETYPE_NONE;
-	UnmakeSolidList();
+	//UnmakeSolidList();
 };
 
 void() barrel_break =

@@ -2363,7 +2363,7 @@ void() player_grab =
 		}
 		head = head.chain;
 	}
-	UnmakeSolidList();
+	//UnmakeSolidList();
 };
 
 .float shadow;
@@ -3155,7 +3155,7 @@ void() player_grab2	=[	$grab2,	player_grab2	]
 		self.movetype = MOVETYPE_WALK;
 		player_move();
 	}
-	UnmakeSolidList();
+	//UnmakeSolidList();
 };
 
 // hit over head with hilt
@@ -5335,7 +5335,7 @@ void() player_jumpatk2	=[	$jumpatk2,	player_jumpatk2	]
 		self.owner.attack_finished = time;
 		return;
 	}
-	UnmakeSolidList();
+	//UnmakeSolidList();
 	self.velocity_y = 0;
 	self.owner.shadow_time = time + 0.1;
 };

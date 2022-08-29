@@ -151,7 +151,7 @@ void() DarkBallThink =
 		head = head.chain;
 	}
 
-	UnmakeSolidList();
+	//UnmakeSolidList();
 
 	if (self.enemy == world || self.velocity == '0 0 0' || self.enemy.health <= 0 || self.cnt2 < 0.1)
 	{
