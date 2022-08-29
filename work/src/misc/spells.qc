@@ -239,7 +239,7 @@ void() FireBallHomeIn =
 	if (self.flags & FL_ONGROUND)
 		self.flags = self.flags - FL_ONGROUND;
 		
-	//UnmakeSolidList();
+	UnmakeSolidList();
 };
 
 void() FireballWallTouch =
