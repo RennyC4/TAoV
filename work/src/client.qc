@@ -668,7 +668,7 @@ void() PlayerPreThink =
 			}
 			else if (world.model == "maps/menu.bsp")
 			{
-				stuffcmd(self, "wf\n");
+				//stuffcmd(self, "wf\n");
 				stuffcmd(self, "viewsize 110\n");
 				stuffcmd(self, "stopmusic\n");	
 			}
