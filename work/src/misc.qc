@@ -773,11 +773,15 @@ void() misc_title1_think =
 {
 	if (title1_finished > time)
 	{
-		self.scale = self.scale - 0.0070;
+		self.velocity_y = -1000; // Shot back from title screen properly
+		self.effects = 0;
+
+		self.scale = self.scale - 0.005;
 		if (self.alpha > 0)
 			self.alpha = self.alpha - 0.0055;
 		else
 			setmodel (self, "progs/null.spr");
+
 		self.angles_z = self.angles_z + 5; // spin
 	}
 	else
@@ -824,6 +828,7 @@ void() misc_title1 =
 	setmodel (self, "progs/title.spr");
 	self.mode = 0;
 	self.speed = 1;
+	self.movetype = MOVETYPE_NOCLIP;
 	self.cnt = self.origin_z;
 	self.cnt2 = self.cnt;
 	self.origin_z = self.origin_z + 300;

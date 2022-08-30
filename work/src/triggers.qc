@@ -196,7 +196,7 @@ void() multi_trigger =
 
 void() multi_touch =
 {
-	// After Stained Glass Knight is defeated then the trigger_once
+	// After bosses are defeated then the trigger_once
 	// needs to be disabled!
 	if (bosses & IT_BOSS1 && world.model == "maps/boss1.bsp")
 		return;
@@ -206,11 +206,16 @@ void() multi_touch =
 	// default, player only
 	// spawnflag 2 = monster only
 	// spawnflag 4 = both player / monster
-	if ((self.spawnflags & 2 && other.flags & FL_MONSTER) || (!self.spawnflags && other.classname == "player") || (self.spawnflags & 4))
+	if (world.model != "maps/start.bsp")
 	{
-		self.enemy = other;
-		multi_trigger ();
+		if ((self.spawnflags & 2 && other.flags & FL_MONSTER) || (!self.spawnflags && other.classname == "player") || (self.spawnflags & 4))
+		{
+			self.enemy = other;
+			multi_trigger ();
+		}
 	}
+	else // allow camera/player to hit triggers
+		multi_trigger ();
 };
 
 /*QUAKED trigger_multiple (.5 .5 .5) ? notouch

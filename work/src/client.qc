@@ -1073,7 +1073,7 @@ void() PlayerPreThink =
 
 		InitCamera(); // Main game camera
 	}
-	else if (self.angles_y != -90)
+	else if (title1_finished < time)
 	{
 		self.angles_y = -90;
 		self.fixangle = TRUE;
@@ -1129,6 +1129,9 @@ void() PlayerPostThink =
 
 		// now do the movement
 		player_think(); // player.qc
+
+		// HP Bars
+		CheckEnemyHPBar();
 	}
 
 	// Enforce TAoV defaults
@@ -1140,7 +1143,7 @@ void() PlayerPostThink =
 		stuffcmd (self, "chase_active 0\n");
 	if (cvar("scr_fov_mode") != 5)
 		stuffcmd (self, "scr_fov_mode 5\n");
-			
+
 	//* title screen *
 	if (self.button0 && framecount > 79 && world.model == "maps/start.bsp" && self.cnt == FALSE)
 	{
@@ -1151,15 +1154,43 @@ void() PlayerPostThink =
 		stuffcmd(self, "wf\n");
 		sound (self, CHAN_VOICE, "misc/title2.wav", 1, ATTN_NONE);
 
-		//title1_finished = time + 1.5;
 		title1_finished = time + 3;
+	}
+
+	if (title1_finished > time) // Move camera after hitting attack to start game
+	{
+		msg_entity = self;
+		WriteByte(MSG_ONE, 5);
+		WriteEntity(MSG_ONE, self.lock_view);
+
+		self.lock_view.movetype = MOVETYPE_FLY;
+		if (time + 2.05 > title1_finished)
+		{
+			if (self.lock_view.angles_y >= -165)
+			{
+				self.lock_view.angles_y = self.lock_view.angles_y - (500 * frametime);
+				self.angles_y = self.angles_y - (500 * frametime);
+			}
+			else
+			{
+				self.lock_view.angles_y = -180;
+				self.angles_y = -180;
+			}		
+		}
+
+		self.lock_view.angles = self.angles;
+		makevectors (self.angles);
+		self.lock_view.velocity = aim(self.lock_view, 500);
+		self.lock_view.velocity = self.lock_view.velocity * 500;
+	
+		self.fixangle = TRUE;
+		setorigin (self, self.lock_view.origin);
 	}
 
 	//* graphical menu *
 	if (world.model == "maps/menu.bsp" || world.model == "maps/start.bsp")
 	{
-		if (self.angles_x != 0)
-			self.angles_x = 0;
+		self.angles_x = 0;
 		self.fixangle = TRUE; // Fixes weird angle left overs from intro.bsp
 
 		if (world.model == "maps/menu.bsp")
@@ -1199,8 +1230,6 @@ void() PlayerPostThink =
 			e = find (e, classname, "cameratarget");
 		}
 	}
-	// HP Bars
-	CheckEnemyHPBar();
 };
 
 //----
