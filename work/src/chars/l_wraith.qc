@@ -33,7 +33,22 @@ $frame w_attack8 w_attack9 w_attack10 w_attack11 w_attack12 w_attack13 w_attack1
 $frame w_attack15 w_attack16 w_attack17 w_attack18 w_attack19 w_attack20 
 $frame w_attack21 w_attack22 
 
-void() lesserwraith_stand1	=[	$float1,	lesserwraith_stand2		] {ai_stand();self.alpha = 0.2;};
+void() lesserwraith_stand1	=[	$float1,	lesserwraith_stand2		] 
+{
+	ai_stand();
+	self.alpha = 0.2;
+
+	local float r = random();
+	if (random() < 0.1)
+	{
+		self.velocity = '0 0 0';
+		if (r < 0.5)
+			sound (self, CHAN_VOICE, "wraith/idle1.wav", 1, ATTN_NORM);
+		else
+			sound (self, CHAN_VOICE, "wraith/idle2.wav", 1, ATTN_NORM);
+	}
+
+};
 void() lesserwraith_stand2	=[	$float2,	lesserwraith_stand3		] {ai_stand();};
 void() lesserwraith_stand3	=[	$float3,	lesserwraith_stand4		] {ai_stand();};
 void() lesserwraith_stand4	=[	$float4,	lesserwraith_stand5		] {ai_stand();};
@@ -46,8 +61,7 @@ void() lesserwraith_stand9	=[	$float9,	lesserwraith_stand1		] {ai_stand();};
 void() lesserwraith_walk1	=[	$walk1,	lesserwraith_walk2		] {self.alpha = 0.35;ai_fly(16);};
 void() lesserwraith_walk2	=[	$walk2,	lesserwraith_walk3		] 
 {
-	local float r;
-	r = random();
+	local float r = random();
 	if (random() < 0.1)
 	{
 		self.velocity = '0 0 0';

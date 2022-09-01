@@ -404,7 +404,7 @@
 }
 // entity 11
 {
-"classname" "monster_archer"
+"classname" "monster_lesserwraith"
 "origin" "-336 -32 88"
 "angles" "0 180 0"
 "awareness" "4"

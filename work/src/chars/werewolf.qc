@@ -296,7 +296,7 @@ void() werewolf_die =
 		self.gaveexp = TRUE;
 		GiveExperience(self.experience);
 		self.walkframe = 0;
-		sound (self, CHAN_VOICE, "dog/cry.wav", 1, ATTN_NORM);
+		sound (self, CHAN_VOICE, "werewolf/howl.wav", 1, ATTN_NORM);
 	}
 	if (self.knockback != 2 && self.knockback != 3)
 	{
@@ -327,7 +327,6 @@ void() monster_werewolf =
 		return;
 	}
 	precache_sound ("player/twoosh.wav");
-	precache_sound ("dog/cry.wav");
 	precache_sound ("werewolf/walk1.wav");
 	precache_sound ("werewolf/walk2.wav");
 	precache_sound ("werewolf/pain.wav");

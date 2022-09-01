@@ -20,7 +20,21 @@ $frame magic1 magic2 magic3 magic4 magic5 magic6 magic7 magic8 magic9 magic10 ma
 $frame pain1 pain2 pain3 pain4 pain5 pain6
 $frame death1 death2 death3 death4 death5 death6 death7 death8 death9 death10 death11 death12
 
-void() wraith_stand1	=[	$stand1,	wraith_stand2		] {ai_stand();self.alpha = 0.2;};
+void() wraith_stand1	=[	$stand1,	wraith_stand2		] 
+{
+	ai_stand();
+	self.alpha = 0.2;
+
+	local float r = random();	
+	if (random() < 0.1)
+	{
+		self.velocity = '0 0 0';
+		if (r < 0.5)
+			sound (self, CHAN_VOICE, "wraith/idle1.wav", 1, ATTN_NORM);
+		else
+			sound (self, CHAN_VOICE, "wraith/idle2.wav", 1, ATTN_NORM);
+	}
+};
 void() wraith_stand2	=[	$stand2,	wraith_stand3		] {ai_stand();};
 void() wraith_stand3	=[	$stand3,	wraith_stand4		] {ai_stand();};
 void() wraith_stand4	=[	$stand4,	wraith_stand5		] {ai_stand();};
@@ -45,8 +59,7 @@ void() wraith_walk1	=[	$walk1,	wraith_walk2		]
 };
 void() wraith_walk2	=[	$walk2,	wraith_walk3		] 
 {
-	local float r;
-	r = random();
+	local float r = random();
 	if (random() < 0.1)
 	{
 		self.velocity = '0 0 0';
