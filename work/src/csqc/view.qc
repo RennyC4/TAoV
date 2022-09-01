@@ -768,6 +768,7 @@ void() AnimateHead =
 	local float h = getstatf(STAT_COMBO);
 	local float g = getstatf(STAT_HEAD_GOD);
 
+/*
 	if (g) // God mode on
 	{
 		head.skin = 4;
@@ -777,7 +778,18 @@ void() AnimateHead =
 	}
 	else
 	{
-		if (hp != 9999) // Not dead
+	*/
+
+	if (hp != 9999) // Not dead
+	{
+		if (g) // God mode on
+		{
+			head.skin = 4;
+			head.angles_x = sin(cltime*0.65)*8;
+			head.angles_y = 180 + sin(cltime*0.45)*25;
+			head.colormod = '2 2 1';
+		}
+		else
 		{
 			head.origin = '0 0 -5';
 
@@ -834,14 +846,14 @@ void() AnimateHead =
 				}
 			}
 		}
-		else
-		{
-			head.skin = 0;
-			head.origin = '0 0 -2';
-			head.colormod = '.5 0 0';
-			head.angles_y = 180;
-			head.angles_x = -60;
-		}
+	}
+	else
+	{
+		head.skin = 0;
+		head.origin = '0 0 -2';
+		head.colormod = '.5 0 0';
+		head.angles_y = 180;
+		head.angles_x = -60;
 	}
 };
  
