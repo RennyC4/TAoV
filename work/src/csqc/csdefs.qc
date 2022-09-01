@@ -2227,3 +2227,7 @@ const float DRAWFLAG_MIPMAP = 0x100; // only for R_BeginPolygon
 #define STAT_LEVEL 57
 #define STAT_ABSORB 58
 #define STAT_COMBOMSG 59
+
+// Vigil's mug on HUD
+#define STAT_HEAD_PAIN 60
+#define STAT_HEAD_GOD 61

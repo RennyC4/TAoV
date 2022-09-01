@@ -5807,6 +5807,7 @@
 "angle" "89"
 "origin" "56 -128 32"
 "_phong" "1"
+"maxgold" "89"
 }
 // entity 3
 {
@@ -5814,6 +5815,7 @@
 "angle" "342"
 "origin" "56 -88 32"
 "_phong" "1"
+"maxgold" "89"
 }
 // entity 4
 {
@@ -5821,6 +5823,7 @@
 "angle" "339"
 "origin" "144 -408 32"
 "_phong" "1"
+"maxgold" "111"
 }
 // entity 5
 {
@@ -5828,6 +5831,7 @@
 "angle" "217"
 "origin" "144 -456 32"
 "_phong" "1"
+"maxgold" "111"
 }
 // entity 6
 {
@@ -7368,18 +7372,21 @@
 "classname" "barrel"
 "origin" "-5984 -352 1906"
 "_phong" "1"
+"maxgold" "57"
 }
 // entity 146
 {
 "classname" "barrel"
 "origin" "-5944 -352 1906"
 "_phong" "1"
+"maxgold" "57"
 }
 // entity 147
 {
 "classname" "barrel"
 "origin" "-6008 -320 1906"
 "_phong" "1"
+"maxgold" "57"
 }
 // entity 148
 {
@@ -7392,6 +7399,7 @@
 "classname" "barrel"
 "origin" "-5336 -336 1906"
 "_phong" "1"
+"maxgold" "71"
 }
 // entity 150
 {

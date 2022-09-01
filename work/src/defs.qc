@@ -624,6 +624,9 @@ float turbo_mode; // Turbo mode boolean, saved in parms
 // Spell absorbtion
 .float absorb_finished;
 
+// Send godmode status to CSQC
+.float god;
+
 // Purge
 .float purge_finished;
 .float purge_cooldown;
@@ -681,6 +684,7 @@ float menu_camera;
 
 float freeze_finished;
 
+// Camera
 .float zoom_mode; // different zooming styles
 .float current_zoom; // current zooming level
 .float min_zoom; // minimum zoom level allowed
@@ -739,6 +743,10 @@ float FL_BOSS = 8192; // entity is a boss monster
 #define STAT_LEVEL 57
 #define STAT_ABSORB 58
 #define STAT_COMBOMSG 59
+
+// Vigil's mug on HUD
+#define STAT_HEAD_PAIN 60
+#define STAT_HEAD_GOD 61
 
 //
 

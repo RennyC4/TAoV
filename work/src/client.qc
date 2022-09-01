@@ -623,7 +623,13 @@ void() PlayerPreThink =
 	
 	if (cvar("developer") == 2)
 		return;
-		
+
+	// Silly way of doing this to send to CSQC
+	if (self.flags & FL_GODMODE)
+		self.god = TRUE;
+	else
+		self.god = FALSE;
+
 	//
 	// screen flashing seizure effect
 	//
@@ -690,7 +696,12 @@ void() PlayerPreThink =
 		self.vigil_x = self.char.origin_x;
 		self.vigil_y = self.char.origin_y;
 		self.vigil_z = self.char.origin_z;
-		
+
+		if (self.char.pain_finished > time) // Send to CSQC
+			self.pain_finished = time = self.char.pain_finished;
+		else
+			self.pain_finished = time - 1;
+
 		//if (self.char.lowceil)
 		//	bprint ("Low Ceiling Flag On\n");
 

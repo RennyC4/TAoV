@@ -411,7 +411,7 @@
 }
 // entity 12
 {
-"classname" "item_gold"
-"origin" "-179 -45 64"
+"classname" "barrel"
+"origin" "-179 -45 96"
 "maxgold" "1"
 }
