@@ -757,6 +757,7 @@ void(vector pos) Draw_Health_Potion =
 // Draw 3D Vigil Head on HUD
 //
 
+.float cnt;
 void() AnimateHead =
 {
 	local float blind = getstatf(STAT_STATUS_BLIND);
@@ -802,12 +803,31 @@ void() AnimateHead =
 			{
 				if (pf > time) // pain face
 				{
+					if (!head.cnt)
+					{
+						// Randomize LEFT/RIGHT
+						if (random() < 0.33)
+							head.angles_y = 165;
+						else if (random() < 0.66)
+							head.angles_y = 195;
+						else
+							head.angles_y = 180;
+
+						// Randomize UP/DOWN
+						if (random() < 0.33)
+							head.angles_x = 15;
+						else if (random() < 0.66)
+							head.angles_x = 0;
+						else
+							head.angles_x = -15;
+
+						head.cnt = TRUE;
+					}
 					head.skin = 3;
-					head.angles_y = 180;
-					head.angles_x = -15;
 				}
 				else
 				{
+					head.cnt = FALSE;
 					head.skin = 0;
 					head.angles_x = sin(cltime*0.65)*8;
 					head.angles_y = 180 + sin(cltime*0.45)*25;
