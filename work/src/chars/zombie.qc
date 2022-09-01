@@ -429,7 +429,6 @@ void() monster_zombie =
 	precache_sound ("zombie/pain2.wav");
 	precache_sound ("zombie/pain3.wav");
 	precache_sound ("zombie/pain4.wav");
-	precache_sound ("zombie/smack.wav");
 	precache_sound ("zombie/splat.wav");
 	precache_sound ("zombie/death.wav");
 

@@ -404,14 +404,8 @@
 }
 // entity 11
 {
-"classname" "monster_hell_knight"
+"classname" "monster_archer"
 "origin" "-336 -32 88"
 "angles" "0 180 0"
 "awareness" "4"
-}
-// entity 12
-{
-"classname" "barrel"
-"origin" "-179 -45 96"
-"maxgold" "1"
 }
