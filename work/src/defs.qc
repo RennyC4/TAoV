@@ -609,6 +609,7 @@ float turbo_mode; // Turbo mode boolean, saved in parms
 .float camera_forcezoom_finished; // if true, camera will force zoom out to help it get unstuck
 .float ftspin_count;
 .float lowceil;
+.entity izunatarg; // izuna drop target
 
 .float attackhit; // timer on if an attack landed on the target
 .float beenblocked; // timer record on both attacker / victim if blocking an attack has occured (melee only)

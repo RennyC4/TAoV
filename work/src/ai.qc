@@ -676,6 +676,8 @@ void() CombatThink =
 		return;
 	if (self.enemy.flypain || self.enemy.lowceil == TRUE || self.enemy.owner.purge_toggle) // vigil got hit hard and is flying or is crouched under a low ceiling or is purging someone, don't attack
 		return;
+	if (self.enemy.izunatarg)
+		return;
 
 	r = range(self, self.enemy);
 	h = random();

@@ -2074,6 +2074,18 @@ void() player_think =
 	// SPECIAL MOVE MOTIONS: Reset keys if timer is dropped
 	//
 
+/*
+	// Debugging
+	local string s = ftos(self.moveprog1);
+	bprint ("MP Up: ", s);
+	local string s = ftos(self.moveprog2);
+	bprint (" MP Down: ", s);
+	local string s = ftos(self.moveprog3);
+	bprint (" MP Left: ", s);
+	local string s = ftos(self.moveprog4);
+	bprint (" MP Right: ", s, "\n");
+*/
+
 	if (self.moveprog1_finished < time)
 		self.moveprog1 = 0;
 	if (self.moveprog2_finished < time)
@@ -2670,6 +2682,7 @@ void() player_fstab1;
 void() player_stabs1;
 void() player_slash1;
 void() player_waterslash1;
+void() player_gizuna1;
 
 .float voice_finished; // don't allow Vigil's voice to overlap
 void(float voice_type) player_yell =
@@ -2933,26 +2946,41 @@ void() player_fire =
 		}
 		else // grab attacks here
 		{
-			if (self.char.grab_count == 0)
+			// Grab - izuna drop
+			if (self.moveprog2 > 1)
 			{
-				self.grab_finished = time + 1.5; // reset break out timer
-				self.char.think = player_grabatk1;
-				self.attack_finished = time + 0.5;
-				self.char.grab_count = 1;
+				if (self.moveprog1 > 0)
+				{
+					self.char.izunatarg = self.enemy; // record who gets izuna'd
+					bprint ("Izuna Targ: ", self.char.izunatarg.classname, "\n");
+					self.char.velocity_z = 500;
+					self.char.izunatarg.velocity_z = 500;
+					self.char.think = player_gizuna1;
+				}
 			}
-			else if (self.char.grab_count == 1)
+			else
 			{
-				self.grab_finished = time + 1.5; // reset break out timer
-				self.char.think = player_grabatk5;
-				self.attack_finished = time + 0.7;
-				self.char.grab_count = 2;
-			}
-			else if (self.char.grab_count == 2)
-			{
-				self.grab_finished = time + 1.5; // reset break out timer
-				self.char.think = player_grabatk11;
-				self.attack_finished = time + 1.1;
-				self.char.grab_count = 0;
+				if (self.char.grab_count == 0)
+				{
+					self.grab_finished = time + 1.5; // reset break out timer
+					self.char.think = player_grabatk1;
+					self.attack_finished = time + 0.5;
+					self.char.grab_count = 1;
+				}
+				else if (self.char.grab_count == 1)
+				{
+					self.grab_finished = time + 1.5; // reset break out timer
+					self.char.think = player_grabatk5;
+					self.attack_finished = time + 0.7;
+					self.char.grab_count = 2;
+				}
+				else if (self.char.grab_count == 2)
+				{
+					self.grab_finished = time + 1.5; // reset break out timer
+					self.char.think = player_grabatk11;
+					self.attack_finished = time + 1.1;
+					self.char.grab_count = 0;
+				}
 			}
 			self.char.movetype = MOVETYPE_WALK; // Remove Vigils MOVETYPE_NONE/TOSS; fix
 		}
@@ -8089,4 +8117,57 @@ void() player_miniswordspin22   =[	$dfattack2,		player_move					]
 	sound (self, CHAN_AUTO, "player/jump.wav", 1, ATTN_NORM);
 
 	frameskip(0.05);
+};
+
+.float izunaspin_speed;
+void() player_gizuna1   =[	$bflip2,	player_gizuna1	]
+{
+	if (self.izunatarg)
+	{
+		self.izunatarg.angles_y = self.angles_y * -180;
+		self.izunatarg.angles_z = self.angles_z;
+
+		// Izuna reached apex, start falling
+		if (self.velocity_z <= 0)
+		{
+			if (self.angles_x < 90)
+			{
+				self.velocity = '0 0 0';
+				self.angles_x = self.angles_x + 3;
+				self.movetype = MOVETYPE_NONE;
+			}
+			else
+				self.movetype = MOVETYPE_WALK;
+
+			self.izunatarg.angles_z = -90;
+			setorigin (self.izunatarg, self.origin + v_forward * 16);
+
+			// Spin downward
+			if (self.izunaspin_speed < 15)
+				self.izunaspin_speed = self.izunaspin_speed + 0.2;
+			self.angles_y = self.angles_y + self.izunaspin_speed; // Spin downward
+			
+			local string s = ftos(self.izunaspin_speed);
+			bprint (s, "\n");
+		}
+		else // Going up
+		{
+			local vector x;
+
+			x_x = 0;
+			x_y = self.angles_y;
+			x_z = self.angles_z;
+
+			makevectors (x);
+			setorigin (self.izunatarg, self.origin + v_forward * 16);
+
+			self.izunaspin_speed = 0;
+			self.angles_x = -90;
+		}
+		
+		// Spin fast on the way down
+	}
+	else
+		player_move();
+	frameskip (0.01);
 };
