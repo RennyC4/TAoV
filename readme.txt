@@ -28,16 +28,12 @@
 -------------
 
 The Ascension of Vigil is a 3D beat 'em up freeware standalone game using a modified Quake
-engine, it was originally based on Golden Axe at one point how that changed when
-I decided to do my own modifications to the gameplay to make a bit more appealing to gamers
-of newer generations.
+engine (FTEQuake), it was originally based on Golden Axe at one point however that changed when
+I decided to change the scope of the game,.
 
 This game mixes a variety of gameplay elements such as platforming, minor roleplaying
 statistics, magic spells, equipment upgrades, relics (ability upgrades), air combos and
-so on; it is currently updated often with new content. This is a work in progress and I
-hope to see it finished through till it's done, it also proves that 3D games are able to
-have as fast furious gameplay as 2D games if done so correctly as well as Quake being a
-very usable engine for 2D style gameplay.
+so on. This is a work in progress and I hope to see it finished through till it's done.
 
 It can be summed up as a 3D Beat em up RPG platforming adventure fighting exploration game,
 yeah - or "Hybrid 3D search action".
@@ -50,12 +46,12 @@ https://discordapp.com/invite/7VQpDvy?
 *Features*
 ----------
 
-- Fully standalone! This game extracts into it's own directory
+- Fully stand-alone!
 
 - Fully graphical 2D menus, title screen, and more...
 
 - An intelligent camera that tracks the action dynamically complete with zooming features,
-or you may turn it off for the more 'old school' feeling
+or you may turn it off for a more retro style camera
 
 - Grab enemies upclose and beat them personally
 
@@ -64,10 +60,9 @@ or you may turn it off for the more 'old school' feeling
 - RPG traits such as a leveling up / experience system, as well as talking to characters
 and buying equipment
 
-- Blocking & countering, block an enemy attack then deliver your own in return almost
-instantly
+- Blocking & countering, block an enemy attack then deliver your own in return
 
-- Combo Counter, the game tracks how many hits you've successfully performed in a row
+- Combo counter, the game tracks how many hits you've successfully performed in a row
 
 - Evasive maneuvers, double jumping in midair to avoid enemy attacks and recovering from a
 fall with a backflip or clinging to walls
@@ -75,7 +70,7 @@ fall with a backflip or clinging to walls
 - A magic system rarely seen, featuring 5 devastating and useful spells that acts similar to
 Guardian Heroes system for easy access and casting
 
-- Multiplayer support! Cooperative and Deathmatch are fully supported
+- Multiplayer support! cooperative and deathmatch are fully supported
 
 - Air combos! A feature never done before in the Quake engine, and on ground combos are
 included as well that can be mixed together
@@ -86,8 +81,7 @@ included as well that can be mixed together
 
 - Story is explained inside the game (leave the title screen alone)
 
-- Use the enviroment around you, grab ledges and hoist Vigil up similar to Prince of
-Persia or run along the walls
+- Use the enviroment around you by performing ledge grabs, wall running, wall grabs and more
 
 - Most enemies die with special animations
 
