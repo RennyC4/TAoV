@@ -104,11 +104,6 @@ void() FireBall_HitBox =
 {
 	local entity head, effect;
 
-	if (self.owner.flags & FL_MONSTER)
-		MakeSolidList(TRUE); // Player only
-	else
-		MakeSolidList(FALSE);
-
 	head = searchradius(self.origin, 25); // hit box size from origin point
 	while (head)
 	{
@@ -168,7 +163,6 @@ void() FireBall_HitBox =
 							head.owner.mana = head.owner.max_mana;
 					}
 					PerfectGuard(head);
-					//UnmakeSolidList();
 					remove(self);
 					return;
 				}
@@ -183,7 +177,6 @@ void() FireBall_HitBox =
 			}
 			sound (self, CHAN_AUTO, "spells/fhit.wav", 1, ATTN_NORM);
 			spawn_embers();
-			//UnmakeSolidList();
 			remove(self);
 			return;
 		}
@@ -242,6 +235,7 @@ void() FireBallHomeIn =
 	UnmakeSolidList(); // Don't remove, fireball will explode on bounding box otherwise
 };
 
+/*
 void() FireballWallTouch =
 {
 	local entity effect;
@@ -262,6 +256,7 @@ void() FireballWallTouch =
 		return;
 	}
 };
+*/
 
 void() FireBallThink =
 {
@@ -314,7 +309,7 @@ void(float damg, float hight) Fireball =
 	missile.angles = vectoangles(missile.velocity);
 	missile.avelocity = '600 300 150';
 	missile.mode = damg;
-	missile.touch = FireballWallTouch;
+	//missile.touch = FireballWallTouch;
 	missile.attack_finished = time + 0.5;
 	missile.angles = self.angles;
 
@@ -365,11 +360,6 @@ void() LightningThink =
 	*/
 
 	r = random();
-	
-	if (self.owner.flags & FL_MONSTER)
-		MakeSolidList(TRUE); // Player only
-	else
-		MakeSolidList(FALSE);
 
 	source = self.origin;
 	traceline (source, source - v_up*100, FALSE, self);
@@ -474,8 +464,6 @@ void() LightningThink =
 	setmodel (temp, "progs/lightnin.spr");
 	setsize (temp, '0 0 0', '0 0 0');		
 	setorigin (temp, self.origin - v_up * 65);
-
-	//UnmakeSolidList();
 
 	if (self.attack_finished < time)
 	{
@@ -595,11 +583,6 @@ void() icefield_think =
 		}
 	}
 
-	if (self.owner.flags & FL_MONSTER)
-		MakeSolidList(TRUE); // Player only
-	else
-		MakeSolidList(FALSE);
-
 	head = searchradius(self.origin, (self.cnt2 * 1.5));
 	while (head)
 	{
@@ -680,7 +663,6 @@ void() icefield_think =
 		}
 		head = head.chain;
 	}
-	//UnmakeSolidList();
 
 	frameskip(0.01);
 };
@@ -819,11 +801,13 @@ void() firebeam_think =
 	// do damage
 	if (self.frame == 0)
 	{
+		/*
 		if (self.owner.flags & FL_MONSTER)
 			MakeSolidList(TRUE); // Player only
 		else
 			MakeSolidList(FALSE);
-
+		*/
+		
 		head = searchradius(self.origin - v_up*20, 40);
 		while (head)
 		{
@@ -890,7 +874,7 @@ void() firebeam_think =
 						else
 							head.angles_y = 0;
 
-						head.velocity = '0 0 75';
+						head.velocity = '0 0 50';
 						if (head.flags & FL_ONGROUND)
 							head.flags = head.flags - FL_ONGROUND;
 						if (self.owner.angles_y == 0)
@@ -1081,11 +1065,6 @@ void() TwisterThink =
 		}
 	}
 
-	if (self.owner.flags & FL_MONSTER)
-		MakeSolidList(TRUE); // Player only
-	else
-		MakeSolidList(FALSE);
-
 	head = searchradius(self.origin, 50);
 	while (head)
 	{
@@ -1132,6 +1111,7 @@ void() TwisterThink =
 				head.twister_damage_finished = time + 0.5;
 
 				head.velocity = '0 0 0';
+
 				self.velocity_z = head.velocity_z + 75;
 				if (head.flags & FL_ONGROUND)
 					head.flags = head.flags - (head.flags & FL_ONGROUND);
@@ -1139,7 +1119,7 @@ void() TwisterThink =
 		}
 		head = head.chain;
 	}
-	//UnmakeSolidList();
+
 	frameskip(0.1);
 };
 

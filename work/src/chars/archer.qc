@@ -66,8 +66,6 @@ void() ArcherArrowThink =
 {
 	local entity head, effect;
 
-	MakeSolidList(TRUE);
-
 	self.angles = vectoangles(self.velocity);
 
 	head = searchradius(self.origin, 5);
@@ -143,7 +141,6 @@ void() ArcherArrowThink =
 		}
 		head = head.chain;
 	}
-	//UnmakeSolidList();
 
 	if (self.flags & FL_ONGROUND)
 		self.flags = self.flags - FL_ONGROUND;

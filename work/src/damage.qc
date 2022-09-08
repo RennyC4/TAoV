@@ -783,7 +783,6 @@ void(float damg, float dist, float knokback, float rsize, float snd, float flsh,
 	local entity head, effect, oself;
 	local vector dir, h;
 
-	MakeSolidList(FALSE);
 	makevectors(self.angles);
 
 	head = searchradius (self.origin + v_forward * dist + v_up * up, rsize);
@@ -1220,7 +1219,6 @@ void(float damg, float dist, float knokback, float rsize, float snd, float flsh,
 		}
 		head = head.chain; // cycle to next entity
 	}
-	UnmakeSolidList();
 };
 
 //

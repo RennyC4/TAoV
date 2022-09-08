@@ -2261,8 +2261,6 @@ void() player_grab =
 	
 	if (self.running == TRUE || self.grabbed == TRUE)
 		self.running = FALSE;
-
-	MakeSolidList(FALSE);
 	
 	local vector v;
 	v = self.angles;
@@ -2363,7 +2361,6 @@ void() player_grab =
 		}
 		head = head.chain;
 	}
-	//UnmakeSolidList();
 };
 
 .float shadow;
@@ -3155,7 +3152,6 @@ void() player_grab2	=[	$grab2,	player_grab2	]
 		self.movetype = MOVETYPE_WALK;
 		player_move();
 	}
-	//UnmakeSolidList();
 };
 
 // hit over head with hilt
@@ -5080,7 +5076,6 @@ void() player_jumpatk2	=[	$jumpatk2,	player_jumpatk2	]
 			self.velocity_x = 0 - (self.speed / 1.2);
 	}
 
-	MakeSolidList(FALSE);
 	head = searchradius(self.origin - v_up*20, 50); // 50 radius hit box on head smash
 	while (head)
 	{
@@ -5335,7 +5330,6 @@ void() player_jumpatk2	=[	$jumpatk2,	player_jumpatk2	]
 		self.owner.attack_finished = time;
 		return;
 	}
-	//UnmakeSolidList();
 	self.velocity_y = 0;
 	self.owner.shadow_time = time + 0.1;
 };

@@ -163,8 +163,13 @@ void() InitCamera =
 	
 	if ((self.camerastyle == 0 || self.camerastyle >= 2) && self.camerastyle != 4) // normal camera tracking
 	{
-		if (self.camchangetarget_finished < time && self.goalentity != self.char)
+		if (self.camchangetarget_finished < time)
+		{
+			if (self.goalentity != self.char)
 				self.goalentity = self.char;
+		}
+		else if (self.goalentity.health < 1 || self.goalentity == world)
+			self.goalentity = self.char;
 
 		if (cvar("scratch3") == 0)
 		{
@@ -1135,8 +1140,6 @@ void() PlayerPostThink =
 			ComboMeter(); // display combo count
 		else
 			self.combo = 0; // combo should always be zero in village and safe zones
-
-		UnmakeSolidList(); // called each frame after physics run
 
 		// now do the movement
 		player_think(); // player.qc

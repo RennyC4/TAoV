@@ -166,8 +166,6 @@ void() MermanSpitThink =
 {
 	local entity head, effect;
 
-	MakeSolidList(TRUE);
-
 	head = searchradius(self.origin, 5);
 	while (head)
 	{
@@ -242,7 +240,6 @@ void() MermanSpitThink =
 		}
 		head = head.chain;
 	}
-	//UnmakeSolidList();
 
 	if (self.flags & FL_ONGROUND)
 		self.flags = self.flags - FL_ONGROUND;

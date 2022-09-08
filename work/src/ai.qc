@@ -1205,8 +1205,6 @@ void(float dist) ai_walk =
 	if (self.health < 1)
 		return;
 
-	UnmakeSolidList();
-
 	if (self.enemy.owner.flags & FL_NOTARGET)
 	{
 		if (self.th_stand)
@@ -1441,10 +1439,8 @@ void(float dist) ai_walk =
 		//
 		// Traceline check if something breakable is blocking my path and I can smash it
 		//
-		
-		MakeSolidList(FALSE);
+
 		makevectors(self.angles);
-		
 		traceline (self.origin, self.origin + v_forward*64 - v_up*24, FALSE, self); // center
 		if (trace_ent.classname == "breakable")
 		{

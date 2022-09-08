@@ -93,8 +93,6 @@ void() DarkBallThink =
 {
 	local entity head, effect;
 
-	MakeSolidList(TRUE);
-
 	head = searchradius(self.origin, 5);
 	while (head)
 	{
@@ -150,8 +148,6 @@ void() DarkBallThink =
 		}
 		head = head.chain;
 	}
-
-	//UnmakeSolidList();
 
 	if (self.enemy == world || self.velocity == '0 0 0' || self.enemy.health <= 0 || self.cnt2 < 0.1)
 	{

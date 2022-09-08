@@ -310,7 +310,7 @@ void() HellKnight_Lightning =
 	self.colormod = '1 1 5';
 	sound (self, CHAN_WEAPON, "spells/thunder.wav", 1, ATTN_NORM);
 
-	MakeSolidList(TRUE);
+	MakeSolidList(TRUE); // Absolutely needed for tracelines to hit
 
 	org = self.origin + '0 0 20' + v_forward * 35;
 	traceline (org, org + v_forward * 350, FALSE, self);
@@ -450,7 +450,7 @@ void() HellKnight_Lightning =
 	WriteCoord (MSG_BROADCAST, trace_endpos_y);
 	WriteCoord (MSG_BROADCAST, trace_endpos_z);
 
-	//UnmakeSolidList();
+	UnmakeSolidList();
 	self.owner = oself;
 };
 
