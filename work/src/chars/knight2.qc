@@ -270,11 +270,14 @@ void() knight2_jump	=[	$runb5,	knight2_jump	]
 void()	knight2_grabbed1	=[	$pain1,		knight2_grabbed2	] {self.grab_finished = time + 1;};
 void()	knight2_grabbed2	=[	$pain1,		knight2_grabbed2	] 
 {
-	if (self.grab_finished < time || self.grabbed == FALSE)
+	if (!self.izunatarg)
 	{
-		self.th_walk();
-		return;
-	}		
+		if (self.grab_finished < time || self.grabbed == FALSE)
+		{
+			self.th_walk();
+			return;
+		}
+	}	
 };
 
 /*QUAKED monster_knight2 (1 0 0) (-16 -16 -24) (16 16 32)

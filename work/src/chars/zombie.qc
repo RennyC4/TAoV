@@ -390,10 +390,13 @@ void() zombie_die =
 void()	zombie_grabbed1	=[	$painb2,		zombie_grabbed2	] {self.grab_finished = time + 1;};
 void()	zombie_grabbed2	=[	$painb2,		zombie_grabbed2	] 
 {
-	if (self.grab_finished < time || self.grabbed == FALSE)
+	if (!self.izunatarg)
 	{
-		self.th_run();
-		return;
+		if (self.grab_finished < time || self.grabbed == FALSE)
+		{
+			self.th_run();
+			return;
+		}
 	}
 };
 

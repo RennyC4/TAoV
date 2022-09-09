@@ -374,11 +374,14 @@ void()	merman_jump11	=[	$jump11,	merman_jump11	]
 void()	merman_grabbed1	=[	$spit3,		merman_grabbed2	] {self.grab_finished = time + 1;};
 void()	merman_grabbed2	=[	$pain1,		merman_grabbed2	] 
 {
-	if (self.grab_finished < time || self.grabbed == FALSE)
+	if (!self.izunatarg)
 	{
-		self.th_walk();
-		return;
-	}		
+		if (self.grab_finished < time || self.grabbed == FALSE)
+		{
+			self.th_walk();
+			return;
+		}
+	}	
 };
 
 void() merman_die1	=[	$death1,	merman_die1	]

@@ -332,11 +332,14 @@ void() baron_jump4	=[	$jump4,	baron_jump4	]
 void()	baron_grabbed1	=[	$painb4,		baron_grabbed2	] {self.grab_finished = time + 1;};
 void()	baron_grabbed2	=[	$painb4,		baron_grabbed2	] 
 {
-	if (self.grab_finished < time || self.grabbed == FALSE)
+	if (!self.izunatarg)
 	{
-		self.th_walk();
-		return;
-	}		
+		if (self.grab_finished < time || self.grabbed == FALSE)
+		{
+			self.th_walk();
+			return;
+		}
+	}
 };
 
 /*QUAKED monster_baron (1 0 0) (-16 -16 -24) (16 16 32)

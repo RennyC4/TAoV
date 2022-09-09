@@ -227,11 +227,14 @@ void() archg_pain1	=[	$castb9,	archg_walk1		] {monster_removeslide();frameskip(0
 void() archg_grabbed1	=[	$idle1,	archg_grabbed2		] {self.grab_finished = time + 1;};
 void() archg_grabbed2	=[	$idle1,	archg_grabbed2		]
 {
-	if (self.grab_finished < time || self.grabbed == FALSE)
+	if (!self.izunatarg)
 	{
-		self.th_walk();
-		return;
-	}		
+		if (self.grab_finished < time || self.grabbed == FALSE)
+		{
+			self.th_run();
+			return;
+		}
+	}	
 };
 
 void() archg_pain =

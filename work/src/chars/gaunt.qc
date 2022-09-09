@@ -204,11 +204,14 @@ void() gaunt_die =
 void()	gaunt_grabbed1	=[	$pain3,		gaunt_grabbed2	] {self.grab_finished = time + 1;};
 void()	gaunt_grabbed2	=[	$pain3,		gaunt_grabbed2	] 
 {
-	if (self.grab_finished < time || self.grabbed == FALSE)
+	if (!self.izunatarg)
 	{
-		self.th_run();
-		return;
-	}		
+		if (self.grab_finished < time || self.grabbed == FALSE)
+		{
+			self.th_run();
+			return;
+		}
+	}
 };
 
 void()	gaunt_firebolt1		=[	$firebolt1,		gaunt_firebolt2	 ] {spawn_magicfog();monster_removeslide();};

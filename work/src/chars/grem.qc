@@ -239,11 +239,14 @@ void() grem_pain =
 void() grem_grabbed1	=[	$painb1,	grem_grabbed2	] {self.grab_finished = time + 1;};
 void() grem_grabbed2	=[	$painb1,	grem_grabbed2	] 
 {
-	if (self.grab_finished < time || self.grabbed == FALSE)
+	if (!self.izunatarg)
 	{
-		self.th_run();
-		return;
-	}		
+		if (self.grab_finished < time || self.grabbed == FALSE)
+		{
+			self.th_run();
+			return;
+		}
+	}	
 };
 
 void() grem_death1	=[	$death1,	grem_death2		] {monster_death();};

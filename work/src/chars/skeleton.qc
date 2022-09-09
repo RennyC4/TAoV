@@ -264,10 +264,13 @@ void() skeleton_jump =
 void()	skel_grabbed1	=[	$pain2,		skel_grabbed2	] {self.grab_finished = time + 1;};
 void()	skel_grabbed2	=[	$pain2,		skel_grabbed2	] 
 {
-	if (self.grab_finished < time || self.grabbed == FALSE)
+	if (!self.izunatarg)
 	{
-		self.th_run();
-		return;
+		if (self.grab_finished < time || self.grabbed == FALSE)
+		{
+			self.th_run();
+			return;
+		}
 	}
 };
 

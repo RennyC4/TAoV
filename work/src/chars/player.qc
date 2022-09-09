@@ -571,14 +571,24 @@ void() speedline_think =
 		if (self.owner.frame == $jumpatk2 || self.owner.frame == $jumpatk3 && view_x == 0)
 			view_x = 270;
 
-		// Debug
+		// Debugging
 		//local string s = ftos(self.owner.angles_y);
 		//bprint ("Ang: ", s, "\n");
 
-		if (self.owner.angles_y == 0 || self.owner.angles_y == -45)
-			self.angles_z = view_x;
-		else
-			self.angles_z = view_x * -1;
+		if (!self.owner.izunatarg)
+		{
+			if (self.owner.angles_y == 0 || self.owner.angles_y == 45)
+				self.angles_z = view_x * -1;
+			else
+				self.angles_z = view_x;
+		}
+		else // Izuna angles based on vigils old angles
+		{
+			if (self.owner.oangles_y == 0 || self.owner.oangles_y == 45)
+				self.angles_z = view_x;
+			else
+				self.angles_z = view_x * -1;
+		}
 		
 		self.cnt = self.cnt + 1;
 	}
@@ -2366,6 +2376,7 @@ void() player_grab =
 						self.attack_finished = time + 0.25; // Fix any sillyness
 						self.owner.grab_finished = time + 1.5;
 						self.owner.nojump_finished = time + 0.5;
+						self.combo_message_finished = time + 3; // give leniency for combos
 					}
 				}
 				if (check != world)
@@ -2957,7 +2968,18 @@ void() player_fire =
 				{
 					self.char.izunatarg = self.enemy; // record who gets izuna'd
 					self.enemy.izunatarg = self.char; // record on victim
-					bprint ("Izuna Targ: ", self.char.izunatarg.classname, "\n");
+					
+					// Setup victim
+					self.char.izunatarg.grab_finished = time + 999;
+					self.char.izunatarg.grabbed = TRUE;
+					if (self.char.izunatarg.th_grab)
+					{
+						self.char.izunatarg.think = self.char.izunatarg.th_grab;
+						self.char.izunatarg.nextthink = time;
+					}
+
+					// Debugging
+					//bprint ("Izuna Targ: ", self.char.izunatarg.classname, "\n");
 					
 					self.char.velocity_z = 550;
 					self.char.izunatarg.velocity_z = 550;
@@ -2967,7 +2989,15 @@ void() player_fire =
 					self.attack_finished = time + 999;
 					self.noblock_finished = time + 999; // don't allow block
 					
+					sound (self.char, CHAN_AUTO, "player/jump.wav", 1, ATTN_NORM);
 					self.char.oangles = self.char.angles; // store original angle
+
+					oself = self;
+					self = self.char;
+					player_yell(0);
+					sound (self, CHAN_AUTO, "player/grab.wav", 1, ATTN_NORM);
+					self = oself;
+
 					self.char.think = player_gizuna1;
 					self.char.nextthink = time;
 				}
@@ -7307,7 +7337,7 @@ void() player_ledgegrab1	=[	$ledgeg1,	player_ledgegrab1 	]
 
 void() player_doublejump1	=[	$djump,	player_doublejump1	] 
 {
-	self.angles_x = self.angles_x - 45; // spin
+	self.angles_x = self.angles_x + 45; // spin
 
 	if (self.djump_spincnt == 0)
 	{
@@ -8132,7 +8162,7 @@ void() player_miniswordspin22   =[	$dfattack2,		player_move					]
 	frameskip(0.05);
 };
 
-
+.float izuna_sfx_finished;
 void() player_gizuna1   =[	$izuna1,	player_gizuna1	]
 {
 	local entity effect;
@@ -8155,11 +8185,17 @@ void() player_gizuna1   =[	$izuna1,	player_gizuna1	]
 					self.velocity = v_forward * - 80;
 					self.movetype = MOVETYPE_FLY;
 					player_yell(1);
+					sound (self, CHAN_AUTO, "player/motion1.wav", 1, ATTN_NORM);
 					self.izuna_apex = TRUE;
 				}
 			}
 			else // Spin downward
 			{
+				if (self.izuna_sfx_finished < time)
+				{
+					sound (self, CHAN_BODY, "player/swrdspin.wav", 1, ATTN_NORM);
+					self.izuna_sfx_finished = time + 0.3;
+				}
 				self.movetype = MOVETYPE_WALK;
 
 				if (self.izunaspin_speed < 15)
@@ -8167,18 +8203,38 @@ void() player_gizuna1   =[	$izuna1,	player_gizuna1	]
 			}
 			self.angles_y = self.angles_y + self.izunaspin_speed; // Spin speed
 			self.owner.shadow_time = time + 0.1; // red shadows
+			self.owner.speedline_time = time + 0.1;
 		}
 		else // Going up
 		{
+			self.owner.combometer_finished = time + 999; // give leniency for combos
 			self.owner.softshadow_time = time + 0.1; // soft shadows
+			if (!self.onground)
+				self.owner.speedline_time = time + 0.1;
 		}
 
 		self.izunatarg.angles = self.angles;
 		setorigin (self.izunatarg, self.origin + v_forward * 16 + v_up * 24);
-		
+
+		// Cancel out if water surface is hit
+		if (self.swimming)
+		{
+			self.angles = self.oangles; // restore correct angle
+			self.speedline_time = time;
+			self.owner.shadow_time = time;
+			self.owner.attack_finished = time;
+			self.owner.grab_finished = time;
+			self.grabbed = FALSE;
+			player_move();
+			return;
+		}
+
 		// Hit ground, do damage
 		if (self.onground && self.velocity_z <= 0)
 		{
+			self.owner.speedline_time = time;
+			self.owner.camshake_finished = time + 0.2;
+
 			// Effects
 			jumpatk_grounded();
 
@@ -8194,7 +8250,12 @@ void() player_gizuna1   =[	$izuna1,	player_gizuna1	]
 			effect.nextthink = time;
 
 			// Do Damage
-			FireMelee(100,0,3,50,6,1,1,TRUE,0,0);
+			local float calc = 75 + ceil(self.owner.combo / 2);
+			FireMelee(calc,0,3,50,6,1,1,TRUE,0,0);
+			
+			// Debugging
+			//local string g = ftos(calc);
+			//bprint ("g: ", g, "\n");
 
 			// Clean up
 			setorigin (self.izunatarg, self.origin);
@@ -8207,9 +8268,10 @@ void() player_gizuna1   =[	$izuna1,	player_gizuna1	]
 			self.izuna_apex = FALSE;
 			self.owner.grab_finished = time;
 			self.owner.attack_finished = time + 999;
+			self.owner.combometer_finished = time + 3; // give leniency for combos, reset to default from 999 earlier
 
 			// Backflip out
-			self.angles = self.oangles; 
+			self.angles = self.oangles; // restore correct angle
 			
 			self.owner.doublejump = TRUE; // don't allow double jump out of a backflip
 			self.owner.backflip_finished = time + 0.7; // Perfect value! Player enters negative velocity by this itme...
@@ -8219,7 +8281,6 @@ void() player_gizuna1   =[	$izuna1,	player_gizuna1	]
 			self.nextthink = time;
 
 			freeze_finished = time + (4 * frametime);
-
 			return;
 		}
 	}

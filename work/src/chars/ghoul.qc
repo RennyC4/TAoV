@@ -159,10 +159,13 @@ void() ghoul_die8	=[	$die8,	ghoul_die8	] {monster_death();};
 void()	ghoul_grabbed1	=[	$stand1,		ghoul_grabbed2	] {self.grab_finished = time + 1;monster_removeslide();};
 void()	ghoul_grabbed2	=[	$stand1,		ghoul_grabbed2	] 
 {
-	if (self.grab_finished < time || self.grabbed == FALSE)
+	if (!self.izunatarg)
 	{
-		self.th_run();
-		return;
+		if (self.grab_finished < time || self.grabbed == FALSE)
+		{
+			self.th_run();
+			return;
+		}
 	}		
 };
 

@@ -294,11 +294,14 @@ void() archer_pain =
 void()	archer_grabbed1	=[	$pain5,		archer_grabbed2	] {self.grab_finished = time + 1;};
 void()	archer_grabbed2	=[	$pain5,		archer_grabbed2	] 
 {
-	if (self.grab_finished < time || self.grabbed == FALSE)
+	if (!self.izunatarg)
 	{
-		self.th_run();
-		return;
-	}		
+		if (self.grab_finished < time || self.grabbed == FALSE)
+		{
+			self.th_run();
+			return;
+		}
+	}
 };
 
 void() archer_death1	=[	$death1,		archer_death1	] {monster_death();};
