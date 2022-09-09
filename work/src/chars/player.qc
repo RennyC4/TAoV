@@ -2972,6 +2972,7 @@ void() player_fire =
 					// Setup victim
 					self.char.izunatarg.grab_finished = time + 999;
 					self.char.izunatarg.grabbed = TRUE;
+					self.char.izunatarg.takedamage = DAMAGE_NO; // Cannot be hit by others
 					if (self.char.izunatarg.th_grab)
 					{
 						self.char.izunatarg.think = self.char.izunatarg.th_grab;
@@ -2980,9 +2981,11 @@ void() player_fire =
 
 					// Debugging
 					//bprint ("Izuna Targ: ", self.char.izunatarg.classname, "\n");
-					
+
+					// Upward velocity
 					self.char.velocity_z = 550;
 					self.char.izunatarg.velocity_z = 550;
+					self.char.takedamage = DAMAGE_NO; // Cannot be hit by others
 					self.char.izunaspin_speed = 0;
 					self.char.izuna_apex = FALSE;
 					self.grab_finished = time + 999;
@@ -8251,6 +8254,7 @@ void() player_gizuna1   =[	$izuna1,	player_gizuna1	]
 
 			// Do Damage
 			local float calc = 75 + ceil(self.owner.combo / 2);
+			self.izunatarg.takedamage = DAMAGE_AIM; // reactivate damage on target
 			FireMelee(calc,0,3,50,6,1,1,TRUE,0,0);
 			
 			// Debugging
