@@ -69,6 +69,7 @@ in_windowed_mouse 0 // don't grab mouse cursor
 gl_texturemode nll // chunky pixels by default
 cfg_save_auto 1 // fte auto saves configs after certain times
 s_al_disable 2 // sound fix (disable OpenAL) for non-mono sounds
+r_meshpitch 1 // required
 
 // Fonts
 con_textfont "fonts/console"

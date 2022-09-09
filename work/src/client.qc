@@ -124,7 +124,7 @@ void() InitCamera =
 			else // envenom style camera
 				self.angles_y = view_y;
 
-			self.angles_x = view2_x * -1; // view2 is the new smooth camera entity
+			self.angles_x = view2_x; // view2 is the new smooth camera entity
 		}
 	}
 
@@ -326,7 +326,7 @@ void() InitCamera =
 	//
 
 	self.camerastyle_old = self.camerastyle;
-	
+
 	if (framecount < 20) // adjust cam at the start of the level before dynamic camera can take place
 		self.angles_y = -90;
 

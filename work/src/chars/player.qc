@@ -65,6 +65,7 @@ $frame dodgeb1 dodgeb2 dodgeb3 dodgeb4 dodgeb5 dodgeb6 dodgeb7 dodgeb8 dodgeb9
 $frame dodgec1 dodgec2 dodgec3 dodgec4 dodgec5 dodgec6 dodgec7
 $frame dodged1 dodged2 dodged3 dodged4 dodged5 dodged6 dodged7
 $frame swim1 swim2 swim3 swim4 swim5 swim6 swim7 swim8
+$frame izuna1
 
 void() PainSound;
 void() player_ledgegrab1;
@@ -100,6 +101,7 @@ void() swordstareffect3;
 void() swordstareffect4;
 
 .float rollforward_fstab2;
+.vector oangles;
 
 // Remove me when FTE's MOVETYPE_FOLLOW is fixed
 void() volbrand_think =
@@ -1831,20 +1833,22 @@ void() player_think =
 			test = FALSE;
 		else // on ground
 			test = TRUE;
-	
+
 		// MOVETYPE has to be MOVETYPE_WALK for menus to work properly
-		if ((self.char.velocity_x || self.char.velocity_y) || self.conversation == TRUE || (self.button0 && self.char.grab_count <= 0) || self.char.swimming || test == FALSE || self.char.frame == $block3)
+		if (!self.char.izunatarg)
 		{
-			self.char.movetype = MOVETYPE_WALK;
-			if (self.magicmenu && self.char.velocity_z != 0) // Auto-remove magic menu on falling
+			if ((self.char.velocity_x || self.char.velocity_y) || self.conversation == TRUE || (self.button0 && self.char.grab_count <= 0) || self.char.swimming || test == FALSE || self.char.frame == $block3)
 			{
-				self.magicmenu = FALSE;
-				sound (self, CHAN_ITEM, "player/mmenu1.wav", 1, ATTN_NORM);
+				self.char.movetype = MOVETYPE_WALK;
+				if (self.magicmenu && self.char.velocity_z != 0) // Auto-remove magic menu on falling
+				{
+					self.magicmenu = FALSE;
+					sound (self, CHAN_ITEM, "player/mmenu1.wav", 1, ATTN_NORM);
+				}
 			}
+			else										// Not moving, standing still
+				self.char.movetype = MOVETYPE_STEP;		// STEP means no stupid slope-sliding, tracebox needed to make him fall if ground beneath his feet changes
 		}
-		else										// Not moving, standing still
-			self.char.movetype = MOVETYPE_STEP;		// STEP means no stupid slope-sliding, tracebox needed to make him fall if ground beneath his feet changes
-		
 		self.oldorigin = self.origin;
 		
 	}
@@ -2952,10 +2956,20 @@ void() player_fire =
 				if (self.moveprog1 > 0)
 				{
 					self.char.izunatarg = self.enemy; // record who gets izuna'd
+					self.enemy.izunatarg = self.char; // record on victim
 					bprint ("Izuna Targ: ", self.char.izunatarg.classname, "\n");
-					self.char.velocity_z = 500;
-					self.char.izunatarg.velocity_z = 500;
+					
+					self.char.velocity_z = 550;
+					self.char.izunatarg.velocity_z = 550;
+					self.char.izunaspin_speed = 0;
+					self.char.izuna_apex = FALSE;
+					self.grab_finished = time + 999;
+					self.attack_finished = time + 999;
+					self.noblock_finished = time + 999; // don't allow block
+					
+					self.char.oangles = self.char.angles; // store original angle
 					self.char.think = player_gizuna1;
+					self.char.nextthink = time;
 				}
 			}
 			else
@@ -4533,7 +4547,6 @@ void() player_attacka9b	=[	$attacka9,	player_attacka9b ]
 	frameskip(0.02);
 };
 
-.vector oangles;
 void() spinpush =
 {
 	self.owner.noblock_finished = time + 0.2;
@@ -8119,55 +8132,100 @@ void() player_miniswordspin22   =[	$dfattack2,		player_move					]
 	frameskip(0.05);
 };
 
-.float izunaspin_speed;
-void() player_gizuna1   =[	$bflip2,	player_gizuna1	]
+
+void() player_gizuna1   =[	$izuna1,	player_gizuna1	]
 {
+	local entity effect;
+
+	makevectors (self.angles);
+	self.takedamage = DAMAGE_NO;
+
 	if (self.izunatarg)
 	{
-		self.izunatarg.angles_y = self.angles_y * -180;
-		self.izunatarg.angles_z = self.angles_z;
-
-		// Izuna reached apex, start falling
-		if (self.velocity_z <= 0)
+		if (self.velocity_z <= 0 || self.izuna_apex) // Izuna reached apex, start falling
 		{
-			if (self.angles_x < 90)
+			if (self.angles_x > -180)
 			{
-				self.velocity = '0 0 0';
-				self.angles_x = self.angles_x + 3;
-				self.movetype = MOVETYPE_NONE;
+				self.angles_x = self.angles_x - 4.5;
+				if (!self.izuna_apex)
+				{
+					freeze_finished = time + (3 * frametime);
+
+					self.velocity = '0 0 300';
+					self.velocity = v_forward * - 80;
+					self.movetype = MOVETYPE_FLY;
+					player_yell(1);
+					self.izuna_apex = TRUE;
+				}
 			}
-			else
+			else // Spin downward
+			{
 				self.movetype = MOVETYPE_WALK;
 
-			self.izunatarg.angles_z = -90;
-			setorigin (self.izunatarg, self.origin + v_forward * 16);
-
-			// Spin downward
-			if (self.izunaspin_speed < 15)
-				self.izunaspin_speed = self.izunaspin_speed + 0.2;
-			self.angles_y = self.angles_y + self.izunaspin_speed; // Spin downward
-			
-			local string s = ftos(self.izunaspin_speed);
-			bprint (s, "\n");
+				if (self.izunaspin_speed < 15)
+					self.izunaspin_speed = self.izunaspin_speed + 0.5;
+			}
+			self.angles_y = self.angles_y + self.izunaspin_speed; // Spin speed
+			self.owner.shadow_time = time + 0.1; // red shadows
 		}
 		else // Going up
 		{
-			local vector x;
-
-			x_x = 0;
-			x_y = self.angles_y;
-			x_z = self.angles_z;
-
-			makevectors (x);
-			setorigin (self.izunatarg, self.origin + v_forward * 16);
-
-			self.izunaspin_speed = 0;
-			self.angles_x = -90;
+			self.owner.softshadow_time = time + 0.1; // soft shadows
 		}
+
+		self.izunatarg.angles = self.angles;
+		setorigin (self.izunatarg, self.origin + v_forward * 16 + v_up * 24);
 		
-		// Spin fast on the way down
+		// Hit ground, do damage
+		if (self.onground && self.velocity_z <= 0)
+		{
+			// Effects
+			jumpatk_grounded();
+
+			effect = spawn();
+			setorigin(effect, self.origin - v_up * 18);
+			setmodel(effect, "progs/dust.spr");	
+			effect.solid = SOLID_NOT;
+			effect.owner = self;
+			effect.drawonlytoclient = self.owner; // reduce network traffic
+			effect.movetype = MOVETYPE_NOCLIP;
+				
+			effect.think = dust_think;
+			effect.nextthink = time;
+
+			// Do Damage
+			FireMelee(100,0,3,50,6,1,1,TRUE,0,0);
+
+			// Clean up
+			setorigin (self.izunatarg, self.origin);
+			self.izunatarg.angles_x = 0;
+			self.izunatarg.grabbed = FALSE;
+			self.izunatarg.izunatarg = world;
+			
+			self.grabbed = FALSE;
+			self.izunatarg = world;
+			self.izuna_apex = FALSE;
+			self.owner.grab_finished = time;
+			self.owner.attack_finished = time + 999;
+
+			// Backflip out
+			self.angles = self.oangles; 
+			
+			self.owner.doublejump = TRUE; // don't allow double jump out of a backflip
+			self.owner.backflip_finished = time + 0.7; // Perfect value! Player enters negative velocity by this itme...
+			self.aircombo_count = 0; // prevent animation glitch in player_jumpframe();
+
+			self.think = player_bflip1;
+			self.nextthink = time;
+
+			freeze_finished = time + (4 * frametime);
+
+			return;
+		}
 	}
 	else
-		player_move();
+		self.think = player_move;
+
+	self.inair = 0; // Cancel bigfall logic
 	frameskip (0.01);
 };
