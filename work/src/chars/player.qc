@@ -1433,21 +1433,20 @@ void() player_think =
 
 	if (self.char.inair > 16 && !self.char.onground)
 	{
-			if (self.moveprog1 > 0 && self.moveprog2 > 1 && self.char.enemy && !(self.char.izunatarg.flags & FL_ONGROUND) && self.char.enemy.health > 0)
+			if (self.moveprog1 > 0 && self.moveprog2 > 1 && self.char.enemy && !(self.char.izunatarg.flags & FL_ONGROUND) && self.combo > 0 && self.char.enemy.movetype != MOVETYPE_NONE)
 			{
+				self.char.izunatarg = self.char.enemy; // record who gets izuna'd
+				self.char.enemy.izunatarg = self.char; // record on victim
+				
 				oself = self;
 				self = self.char; // become vigil real fast
 
-				local float test_iz, test_iz2;
+				local float test_iz;
 				test_iz = visible(self.izunatarg);
-				test_iz2 = infront(self.izunatarg);
 
 				self = oself;
 
-				self.char.izunatarg = self.char.enemy; // record who gets izuna'd
-				self.char.enemy.izunatarg = self.char; // record on victim
-
-				if (test_iz && test_iz2) // checks passed
+				if (test_iz && self.char.izunatarg != world) // checks passed
 				{
 					oself = self;
 					self = self.char; // become vigil real fast
@@ -3564,7 +3563,7 @@ void() player_counter6	=[	$counter6,	player_counter7	] {frameskip(0.05);player_c
 void() player_counter7	=[	$counter7,	player_counter8	] 
 {
 	frameskip(0.05);
-	self.attack_type = 5; // Cut/gored/sliced in half!
+	self.attack_type = 5; // Cut in half!
 	FireMelee(15,15,1,55,5,0,TRUE,TRUE,0,0);
 	if (self.owner.bighit_freeze > time) // check if attack landed, needs to be called after FireMelee();
 	{
@@ -7009,7 +7008,7 @@ void() divingswallow_hit =
 
 				if (self.aircombo_count == 8 && head == self.enemy) // for air diving swallow
 				{
-					head.damage_type = self.attack_type = 5; // Cut/gored/sliced in half!
+					//head.damage_type = self.attack_type = 5; // Cut in half!
 					if (head.noblood == FALSE)
 					{
 						ThrowBloodSplat(head.origin, head);
@@ -8335,8 +8334,12 @@ void() player_gizuna1   =[	$izuna1,	player_gizuna1	]
 			self.owner.attack_finished = time;
 			self.owner.grab_finished = time;
 			self.grabbed = FALSE;
-			
+			self.enemy = world;
+
+			//
 			// Clean up
+			//
+
 			self.angles = self.oangles; // restore correct angle
 
 			// Need to compensate for larger bounding box monsters
@@ -8378,21 +8381,26 @@ void() player_gizuna1   =[	$izuna1,	player_gizuna1	]
 			effect.think = dust_think;
 			effect.nextthink = time;
 
-			// Do Damage
+			// Calculate dammage and apply
 			local float calc;
-			if (!self.owner.swordlevel)
-				calc = 25 + ceil(self.owner.combo / 2);
+			if (self.owner.swordlevel == 0)
+				calc = 25 + ceil(self.owner.combo);
+			else if (self.owner.swordlevel == 1)
+				calc = 50 + ceil(self.owner.combo);
+			else if (self.owner.swordlevel == 2)
+				calc = 75 + ceil(self.owner.combo);
 			else
-				calc = (25 * self.owner.swordlevel) + ceil(self.owner.combo / 2);
-			
-			self.izunatarg.takedamage = DAMAGE_AIM; // reactivate damage on target
-			FireMelee(calc,0,3,50,6,1,1,TRUE,0,0);
-			
-			// Debugging
-			//local string g = ftos(calc);
-			//bprint ("g: ", g, "\n");
+				calc = 100 + ceil(self.owner.combo);
+			if (calc > 150) // cap max damage
+				calc = 150;
 
+			self.izunatarg.takedamage = DAMAGE_AIM; // reactivate damage on target
+			self.attack_type = 5; // Cut in half!
+			FireMelee(calc,0,3,50,6,1,1,TRUE,0,0);
+
+			//
 			// Clean up
+			//
 
 			self.angles = self.oangles; // restore correct angle
 
@@ -8408,6 +8416,7 @@ void() player_gizuna1   =[	$izuna1,	player_gizuna1	]
 			self.izunatarg.izunatarg = world;
 			
 			self.grabbed = FALSE;
+			self.enemy = world;
 			self.izunatarg = world;
 			self.izuna_apex = FALSE;
 			self.owner.grab_finished = time;
@@ -8426,8 +8435,8 @@ void() player_gizuna1   =[	$izuna1,	player_gizuna1	]
 			return;
 		}
 	}
-	else
-		self.think = player_move;
+	//else
+	//	self.think = player_move;
 
 	self.inair = 0; // Cancel bigfall logic
 	frameskip (0.01);
