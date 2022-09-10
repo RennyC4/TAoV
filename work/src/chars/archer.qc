@@ -297,11 +297,10 @@ void()	archer_grabbed2	=[	$pain5,		archer_grabbed2	]
 	if (!self.izunatarg)
 	{
 		if (self.grab_finished < time || self.grabbed == FALSE)
-		{
 			self.th_run();
-			return;
-		}
 	}
+	else
+		ai_watercheck_removal();
 };
 
 void() archer_death1	=[	$death1,		archer_death1	] {monster_death();};

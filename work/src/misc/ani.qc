@@ -260,6 +260,21 @@ void() windspiral_think =
 	frameskip (0.01);
 };
 
+// izuna wind spiral
+void() izuna_windspiral_think =
+{
+	if (self.scale < 1)
+		self.scale = self.scale + 0.01;
+	else
+	{
+		remove(self);
+		return;
+	}
+	self.angles_y = self.angles_y + 6;
+
+	frameskip (0.01);
+};
+
 // diving swallow hit ring model animation
 void() divingshit_think =
 {

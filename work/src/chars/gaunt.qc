@@ -207,11 +207,10 @@ void()	gaunt_grabbed2	=[	$pain3,		gaunt_grabbed2	]
 	if (!self.izunatarg)
 	{
 		if (self.grab_finished < time || self.grabbed == FALSE)
-		{
 			self.th_run();
-			return;
-		}
 	}
+	else
+		ai_watercheck_removal();
 };
 
 void()	gaunt_firebolt1		=[	$firebolt1,		gaunt_firebolt2	 ] {spawn_magicfog();monster_removeslide();};

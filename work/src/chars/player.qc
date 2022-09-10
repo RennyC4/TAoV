@@ -1171,6 +1171,7 @@ void() player_checkledge =
 .float jump_finished;
 .float grabcooldown_finished;
 void() player_bigfall1;
+void() player_gizuna1;
 
 void() player_think =
 {
@@ -1426,6 +1427,79 @@ void() player_think =
 		}
 	}
 
+	//
+	// In-Air Izuna Drop
+	//
+
+	if (self.char.inair > 16 && !self.char.onground)
+	{
+			if (self.moveprog1 > 0 && self.moveprog2 > 1 && self.char.enemy && !(self.char.izunatarg.flags & FL_ONGROUND) && self.char.enemy.health > 0)
+			{
+				oself = self;
+				self = self.char; // become vigil real fast
+
+				local float test_iz, test_iz2;
+				test_iz = visible(self.izunatarg);
+				test_iz2 = infront(self.izunatarg);
+
+				self = oself;
+
+				self.char.izunatarg = self.char.enemy; // record who gets izuna'd
+				self.char.enemy.izunatarg = self.char; // record on victim
+
+				if (test_iz && test_iz2) // checks passed
+				{
+					oself = self;
+					self = self.char; // become vigil real fast
+					
+					player_prop(); // spawn fading clone
+					player_yell(0);
+					sound (self, CHAN_AUTO, "player/grab.wav", 1, ATTN_NORM);
+					
+					self = oself;
+
+					WriteByte (MSG_BROADCAST, SVC_TEMPENTITY);
+					WriteByte (MSG_BROADCAST, TE_TELEPORT);
+					WriteCoord (MSG_BROADCAST, self.char.origin_x);
+					WriteCoord (MSG_BROADCAST, self.char.origin_y);
+					WriteCoord (MSG_BROADCAST, self.char.origin_z);
+					
+					sound (self.char, CHAN_AUTO, "misc/teleport.wav", 1, ATTN_NORM);
+					setorigin (self.char, self.char.izunatarg.origin); // warp
+
+					WriteByte (MSG_BROADCAST, SVC_TEMPENTITY);
+					WriteByte (MSG_BROADCAST, TE_TELEPORT);
+					WriteCoord (MSG_BROADCAST, self.char.origin_x);
+					WriteCoord (MSG_BROADCAST, self.char.origin_y);
+					WriteCoord (MSG_BROADCAST, self.char.origin_z);
+
+					self.char.velocity_z = self.char.izunatarg.velocity_z = 222;
+	
+					// Setup victim
+					self.char.izunatarg.grab_finished = time + 999;
+					self.char.izunatarg.grabbed = TRUE;
+					self.char.izunatarg.takedamage = DAMAGE_NO; // Cannot be hit by others
+					if (self.char.izunatarg.th_grab)
+					{
+						self.char.izunatarg.think = self.char.izunatarg.th_grab;
+						self.char.izunatarg.nextthink = time;
+					}
+
+					self.char.takedamage = DAMAGE_NO; // Cannot be hit by others
+					self.char.izunaspin_speed = 0;
+					self.char.izuna_apex = FALSE;
+					self.grab_finished = time + 999;
+					self.attack_finished = time + 999;
+					self.noblock_finished = time + 999; // don't allow block
+					
+					self.char.oangles = self.char.angles; // store original angle
+
+					self.char.think = player_gizuna1;
+					self.char.nextthink = time;
+				}
+			}
+		}
+		
 	//
 	// Jump buffer for running attack hop / spin attack control fix
 	//
@@ -2088,7 +2162,7 @@ void() player_think =
 	// SPECIAL MOVE MOTIONS: Reset keys if timer is dropped
 	//
 
-/*
+	/*
 	// Debugging
 	local string s = ftos(self.moveprog1);
 	bprint ("MP Up: ", s);
@@ -2098,7 +2172,7 @@ void() player_think =
 	bprint (" MP Left: ", s);
 	local string s = ftos(self.moveprog4);
 	bprint (" MP Right: ", s, "\n");
-*/
+	*/
 
 	if (self.moveprog1_finished < time)
 		self.moveprog1 = 0;
@@ -5140,6 +5214,7 @@ void() player_jumpatk2	=[	$jumpatk2,	player_jumpatk2	]
 	local vector no = '0 0 0';
 	local vector h;
 
+	self.owner.combometer_finished = time + 3; // give leniency for combos
 	self.owner.speedline_time = time + 0.05; // speedline
 
 	if (self.aircombo_count == 6) // add a tad of forward velocity
@@ -7437,7 +7512,7 @@ void() player_airdivings1 =
 		return;
 	}
 
-	self.angles_x = view_x * -1;
+	self.angles_x = view_x;
 
 	makevectors (self.angles);
 	self.velocity = aim(self, 750);
@@ -8044,11 +8119,11 @@ void() player_purge_prop_think =
 	frameskip(0.01);
 };
 
-void() player_purge_prop =
+void() player_prop =
 {
 	local entity effect;
 	
-	// spawn a hit sprite
+	// spawn
 	effect = spawn();
 	effect.owner = self;
 	setorigin(effect, self.origin);
@@ -8059,8 +8134,8 @@ void() player_purge_prop =
 	effect.solid = SOLID_NOT;
 	effect.angles = self.angles;
 	effect.alpha = 1;
-	if (effect.frame == $attacka4)
-		effect.skin = 1;
+	//if (effect.frame == $attacka4)
+	effect.skin = 1;
 	effect.effects = EF_NODEPTHTEST | EF_ADDITIVE | EF_FULLBRIGHT;
 	effect.think = player_purge_prop_think;
 	effect.nextthink = time;
@@ -8088,7 +8163,7 @@ void() player_purge1	=[	$attacka4,	player_purge2	]
 
 void() player_purge2	=[	$attacka4,	player_move	]
 {
-	player_purge_prop();
+	player_prop();
 	self.movetype = MOVETYPE_WALK;
 	if (self.perfectguard_buff < time)
 		self.takedamage = DAMAGE_AIM;
@@ -8168,7 +8243,7 @@ void() player_miniswordspin22   =[	$dfattack2,		player_move					]
 .float izuna_sfx_finished;
 void() player_gizuna1   =[	$izuna1,	player_gizuna1	]
 {
-	local entity effect;
+	local entity effect, weffect;
 
 	makevectors (self.angles);
 	self.takedamage = DAMAGE_NO;
@@ -8190,10 +8265,42 @@ void() player_gizuna1   =[	$izuna1,	player_gizuna1	]
 					player_yell(1);
 					sound (self, CHAN_AUTO, "player/motion1.wav", 1, ATTN_NORM);
 					self.izuna_apex = TRUE;
+					self.owner.zoom_mode = 1;
 				}
 			}
 			else // Spin downward
 			{
+				if (self.velocity_z <= -180)
+				{
+					if (self.velocity_x != 0 || self.velocity_y != 0)
+					{
+						self.velocity_x = self.velocity_y = 0; // head straight down
+						sound (self, CHAN_AUTO, "player/fast.wav", 1, ATTN_NORM);
+
+						// Effects
+						weffect = spawn();
+						setorigin(weffect, self.origin + v_up * 100);
+						setmodel(weffect, "progs/windsprl.mdl");
+						weffect.angles_y = random()*360;
+						
+						weffect.effects = EF_ADDITIVE;
+						weffect.movetype = MOVETYPE_NOCLIP;
+						weffect.classname = "windspiral_weffect";
+						weffect.solid = SOLID_NOT;
+						weffect.owner = self;
+						weffect.alpha = 1;
+						weffect.scale = 0.05;
+						weffect.frame = 0;
+						weffect.velocity_z = 75;
+						weffect.drawflags = 7; // override lighting
+						weffect.abslight = -66;
+						setsize (weffect, '0 0 0', '0 0 0');
+
+						weffect.think = izuna_windspiral_think;
+						weffect.nextthink = time;						
+					}
+				}
+					
 				if (self.izuna_sfx_finished < time)
 				{
 					sound (self, CHAN_BODY, "player/swrdspin.wav", 1, ATTN_NORM);
@@ -8228,7 +8335,26 @@ void() player_gizuna1   =[	$izuna1,	player_gizuna1	]
 			self.owner.attack_finished = time;
 			self.owner.grab_finished = time;
 			self.grabbed = FALSE;
+			
+			// Clean up
+			self.angles = self.oangles; // restore correct angle
+
+			// Need to compensate for larger bounding box monsters
+			makevectors(self.angles);
+			if (self.izunatarg.absmin != VEC_HULL_MIN && self.izunatarg.absmax != VEC_HULL_MAX)
+				setorigin (self.izunatarg, self.origin + v_forward * 16);
+			else
+				setorigin (self.izunatarg, self.origin);
+
+			self.izunatarg.angles_x = 0;
+			self.izunatarg.grabbed = FALSE;
+			self.izunatarg.izunatarg = world;
+
+			self.izunatarg = world;
+			self.izuna_apex = FALSE;
+
 			player_move();
+			self.owner.camerastyle = 0;
 			return;
 		}
 
@@ -8236,7 +8362,7 @@ void() player_gizuna1   =[	$izuna1,	player_gizuna1	]
 		if (self.onground && self.velocity_z <= 0)
 		{
 			self.owner.speedline_time = time;
-			self.owner.camshake_finished = time + 0.2;
+			self.owner.camshake_finished = time + 0.4;
 
 			// Effects
 			jumpatk_grounded();
@@ -8253,7 +8379,12 @@ void() player_gizuna1   =[	$izuna1,	player_gizuna1	]
 			effect.nextthink = time;
 
 			// Do Damage
-			local float calc = 75 + ceil(self.owner.combo / 2);
+			local float calc;
+			if (!self.owner.swordlevel)
+				calc = 25 + ceil(self.owner.combo / 2);
+			else
+				calc = (25 * self.owner.swordlevel) + ceil(self.owner.combo / 2);
+			
 			self.izunatarg.takedamage = DAMAGE_AIM; // reactivate damage on target
 			FireMelee(calc,0,3,50,6,1,1,TRUE,0,0);
 			
@@ -8262,7 +8393,16 @@ void() player_gizuna1   =[	$izuna1,	player_gizuna1	]
 			//bprint ("g: ", g, "\n");
 
 			// Clean up
-			setorigin (self.izunatarg, self.origin);
+
+			self.angles = self.oangles; // restore correct angle
+
+			// Need to compensate for larger bounding box monsters
+			makevectors(self.angles);
+			if (self.izunatarg.absmin != VEC_HULL_MIN && self.izunatarg.absmax != VEC_HULL_MAX)
+				setorigin (self.izunatarg, self.origin + v_forward * 16);
+			else
+				setorigin (self.izunatarg, self.origin);
+			
 			self.izunatarg.angles_x = 0;
 			self.izunatarg.grabbed = FALSE;
 			self.izunatarg.izunatarg = world;
@@ -8275,8 +8415,6 @@ void() player_gizuna1   =[	$izuna1,	player_gizuna1	]
 			self.owner.combometer_finished = time + 3; // give leniency for combos, reset to default from 999 earlier
 
 			// Backflip out
-			self.angles = self.oangles; // restore correct angle
-			
 			self.owner.doublejump = TRUE; // don't allow double jump out of a backflip
 			self.owner.backflip_finished = time + 0.7; // Perfect value! Player enters negative velocity by this itme...
 			self.aircombo_count = 0; // prevent animation glitch in player_jumpframe();

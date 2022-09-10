@@ -377,11 +377,8 @@ void()	merman_grabbed2	=[	$pain1,		merman_grabbed2	]
 	if (!self.izunatarg)
 	{
 		if (self.grab_finished < time || self.grabbed == FALSE)
-		{
 			self.th_walk();
-			return;
-		}
-	}	
+	}
 };
 
 void() merman_die1	=[	$death1,	merman_die1	]

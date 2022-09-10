@@ -230,11 +230,10 @@ void() archg_grabbed2	=[	$idle1,	archg_grabbed2		]
 	if (!self.izunatarg)
 	{
 		if (self.grab_finished < time || self.grabbed == FALSE)
-		{
 			self.th_run();
-			return;
-		}
-	}	
+	}
+	else
+		ai_watercheck_removal();
 };
 
 void() archg_pain =

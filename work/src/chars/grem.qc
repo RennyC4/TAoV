@@ -242,11 +242,10 @@ void() grem_grabbed2	=[	$painb1,	grem_grabbed2	]
 	if (!self.izunatarg)
 	{
 		if (self.grab_finished < time || self.grabbed == FALSE)
-		{
 			self.th_run();
-			return;
-		}
-	}	
+	}
+	else
+		ai_watercheck_removal();
 };
 
 void() grem_death1	=[	$death1,	grem_death2		] {monster_death();};

@@ -162,11 +162,10 @@ void()	ghoul_grabbed2	=[	$stand1,		ghoul_grabbed2	]
 	if (!self.izunatarg)
 	{
 		if (self.grab_finished < time || self.grabbed == FALSE)
-		{
 			self.th_run();
-			return;
-		}
-	}		
+	}
+	else
+		ai_watercheck_removal();	
 };
 
 void() ghoul_die =

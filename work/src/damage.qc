@@ -774,7 +774,7 @@ void()	sparks_fade4 = [0, SUB_Remove]
 //
 
 void() player_purge1;
-void() player_purge_prop;
+void() player_prop;
 void() player_block;
 void() player_blockbrk1;
 void(entity y) monster_pain;
@@ -818,7 +818,7 @@ void(float damg, float dist, float knokback, float rsize, float snd, float flsh,
 						
 						oself = self;
 						self = head;
-						player_purge_prop(); // spawn fading clone
+						player_prop(); // spawn fading clone
 						self = oself;
 						
 						// spawn a hit sprite

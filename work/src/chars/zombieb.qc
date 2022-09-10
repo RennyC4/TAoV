@@ -200,11 +200,10 @@ void()	zombie_boss_grabbed2	=[	$painb2,		zombie_boss_grabbed2	]
 	if (!self.izunatarg)
 	{
 		if (self.grab_finished < time || self.grabbed == FALSE)
-		{
 			self.th_run();
-			return;
-		}
 	}
+	else
+		ai_watercheck_removal();
 };
 
 /*QUAKED monster_zombie_boss (1 0 0) (-16 -16 -24) (16 16 32)

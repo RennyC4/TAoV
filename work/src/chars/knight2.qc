@@ -273,11 +273,10 @@ void()	knight2_grabbed2	=[	$pain1,		knight2_grabbed2	]
 	if (!self.izunatarg)
 	{
 		if (self.grab_finished < time || self.grabbed == FALSE)
-		{
 			self.th_walk();
-			return;
-		}
-	}	
+	}
+	else
+		ai_watercheck_removal();
 };
 
 /*QUAKED monster_knight2 (1 0 0) (-16 -16 -24) (16 16 32)
