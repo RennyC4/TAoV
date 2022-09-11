@@ -376,7 +376,7 @@ void() StatusEffects =
 	// Broken
 	if (self.status_broken_finished > time)
 	{
-		if (self.broken_tick_finished < time && self.hflask_drink_finished < time && !self.char.flypain && self.char.pain_finished < time && self.purge_toggle == FALSE)
+		if (self.broken_tick_finished < time && self.hflask_drink_finished < time && !self.char.flypain && self.char.pain_finished < time && self.purge_toggle == FALSE && !self.izunatarg)
 		{
 			self.char.colormod = '5 5 5';
 			self.noblock_finished = time + 1; // don't allow block
