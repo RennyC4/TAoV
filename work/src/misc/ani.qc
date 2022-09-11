@@ -174,7 +174,7 @@ void() spinwindspiral_think =
 	}
 	else
 	{
-		self.angles_x = self.angles_x + 12; // spin speed
+		self.angles_x = self.angles_x - 12; // spin speed
 		setorigin (self, self.owner.origin);
 		if (self.attack_finished < time)
 			remove(self);
