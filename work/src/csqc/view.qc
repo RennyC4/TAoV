@@ -809,7 +809,7 @@ void() AnimateHead =
 				else
 					head.skin = 1;
 				head.angles_y = 180;
-				head.angles_x = -15;
+				head.angles_x = 15;
 			}
 			else // neutral face
 			{

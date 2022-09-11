@@ -538,8 +538,12 @@ void() ai_stand =
 		self.flags = self.flags - (self.flags & FL_ONGROUND); // Allow drop
 	}
 	
-	if (self.health < 1)
+	if (self.health < 1 && self.deadflag != DEAD_DEAD)
+	{
+		if (self.th_die)
+			self.th_die();
 		return;
+	}
 
 	walkmove(0, 0); // use triggers on standing
 	monster_removeslide();

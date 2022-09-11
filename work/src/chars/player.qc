@@ -1440,7 +1440,20 @@ void() player_think =
 	if (self.char.inair > 16 && !self.char.onground && self.char.izunatarg == world && self.char.enemy != world && self.char.frame != $izuna1 && self.char.pain_finished < time)
 	{
 			local float r = range(self.char, self.char.enemy);
-			if (self.moveprog1 > 0 && self.moveprog2 > 1 && !(self.char.izunatarg.flags & FL_ONGROUND) && self.combo > 0 && self.char.enemy.movetype != MOVETYPE_NONE && r != RANGE_FAR && self.char.enemy.izuna_exec_finished > time)
+			local float cg = checkground(self.char.enemy);
+			local float vel = FALSE;
+
+			if (cg) // Allow Izuna on target that's alive on the ground
+			{
+				if (self.char.enemy.health > 0)
+				{
+					cg = FALSE;
+					vel = TRUE; // Pulled enemy off the ground, so add Z vel
+				}
+				else
+					cg = TRUE;
+			}
+			if (self.moveprog1 > 0 && self.moveprog2 > 1 && !cg && self.combo > 0 && self.char.enemy.movetype != MOVETYPE_NONE && r != RANGE_FAR && self.char.enemy.izuna_exec_finished > time)
 			{
 				self.char.izunatarg = self.char.enemy; // record who gets izuna'd
 				self.char.enemy.izunatarg = self.char; // record on victim
@@ -1499,7 +1512,15 @@ void() player_think =
 					self.noblock_finished = time + 999; // don't allow block
 
 					self.char.oangles = self.char.angles; // store original angle
-
+					
+					if (vel)
+					{
+						sound (self.char, CHAN_AUTO, "player/jump.wav", 1, ATTN_NORM);
+						sound (self.char, CHAN_AUTO, "player/grab.wav", 1, ATTN_NORM);
+						self.char.velocity = '0 0 0';
+						self.char.velocity_z = 550;
+						self.char.izunatarg.velocity_z = 550;
+					}
 					self.char.think = player_gizuna1;
 					self.char.nextthink = time;
 				}
@@ -8416,9 +8437,15 @@ void() player_gizuna1   =[	$izuna1,	player_gizuna1	]
 			// Need to compensate for larger bounding box monsters
 			makevectors(self.angles);
 			if (self.izunatarg.absmin != VEC_HULL_MIN && self.izunatarg.absmax != VEC_HULL_MAX)
-				setorigin (self.izunatarg, self.origin + v_forward * 16);
+				setorigin (self.izunatarg, self.origin + v_forward * 16 + v_up * 64);
 			else
-				setorigin (self.izunatarg, self.origin);
+				setorigin (self.izunatarg, self.origin + v_up * 64);
+			
+			local entity oself;
+			oself = self;
+			self = self.izunatarg;
+			droptofloor(); // Put monster back to floor
+			self = oself;
 			
 			self.izunatarg.angles_x = 0;
 			self.izunatarg.izuna_exec_finished = time; // remove timer
