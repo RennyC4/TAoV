@@ -1239,7 +1239,7 @@ void() PlayerPostThink =
 		{
 			view = vectoangles(e.origin - self.origin);
 			self.angles = view;
-			self.angles_x = view_x * -1;
+			self.angles_x = view_x;// * -1;
 			self.fixangle = TRUE;
 			e = find (e, classname, "cameratarget");
 		}
