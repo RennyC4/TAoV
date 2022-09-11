@@ -649,7 +649,7 @@ void(vector pos) DrawGoldHUD =
 		gold.effects = EF_FULLBRIGHT;
 		gold.frame = 0;
 		gold.origin = '0 0 -15';
-		gold.angles_x = 25;
+		gold.angles_x = -25;
 		gold.scale = 0.5;
 	}
 	entdraw(gold, pos, '14 100', -112);
@@ -827,11 +827,11 @@ void() AnimateHead =
 
 						// Randomize UP/DOWN
 						if (random() < 0.33)
-							head.angles_x = 15;
+							head.angles_x = -15;
 						else if (random() < 0.66)
 							head.angles_x = 0;
 						else
-							head.angles_x = -15;
+							head.angles_x = 15;
 
 						head.cnt = TRUE;
 					}
@@ -853,7 +853,7 @@ void() AnimateHead =
 		head.origin = '0 0 -2';
 		head.colormod = '.5 0 0';
 		head.angles_y = 180;
-		head.angles_x = -60;
+		head.angles_x = 60;
 	}
 };
  

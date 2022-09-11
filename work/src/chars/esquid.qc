@@ -170,7 +170,7 @@ void() lit_think =
 	local vector org;
 	local float r;
 
-	if (self.owner.health < 1 || self.owner.enemy.flypain || self.owner.enemy.swimming || self.owner.enemy.perfectguard_buff > time)
+	if (self.owner.health < 1 || self.owner.enemy.flypain || self.owner.enemy.swimming || self.owner.enemy.perfectguard_buff > time || !self.owner.enemy.takedamage)
 	{
 		remove(self);
 		return;

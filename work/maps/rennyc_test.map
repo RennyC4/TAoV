@@ -309,7 +309,7 @@
 }
 // entity 10
 {
-"classname" "monster_horror"
+"classname" "monster_wraith"
 "origin" "-448 -40 136"
 "angles" "0 180 0"
 "awareness" "4"

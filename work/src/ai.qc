@@ -1204,8 +1204,12 @@ void(float dist) ai_walk =
 {
 	local float r, ran;
 
-	if (self.health < 1)
+	if (self.health < 1 && self.deadflag != DEAD_DEAD)
+	{
+		if (self.th_die)
+			self.th_die();
 		return;
+	}
 
 	if (self.enemy.owner.flags & FL_NOTARGET)
 	{

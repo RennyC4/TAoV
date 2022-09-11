@@ -370,6 +370,10 @@ void(entity targ, entity inflictor, entity attacker, float damage, float statusr
 			}
 		}
 		targ.enemy = attacker; // update who attacked Vigil last
+		attacker.izuna_exec_finished = time; // remove izuna ability on attacker hitting player
+		
+		if (deathmatch)
+			targ.izuna_exec_finished = time + 0.5; // can be air izuna dropped after being hit
 	}
 	else
 	{
@@ -417,6 +421,8 @@ void(entity targ, entity inflictor, entity attacker, float damage, float statusr
 				attacker.owner.displayname_finished = time + 3;
 			}
 		}
+		if (!attacker.onground || !attacker.flags & FL_ONGROUND)
+			targ.izuna_exec_finished = time + 0.5; // can be air izuna dropped after being hit
 	}
 
 	//
@@ -810,7 +816,7 @@ void(float damg, float dist, float knokback, float rsize, float snd, float flsh,
 					// Purge
 					//
 					
-					if (head.classname == "player" && head.purge_finished > time && head.owner && self.flags & FL_MONSTER && !deathmatch && self.health > 0 && !head.swimming && !head.owner.button3 && !head.grabbed)
+					if (head.classname == "player" && head.purge_finished > time && head.owner && self.flags & FL_MONSTER && !deathmatch && self.health > 0 && !head.swimming && !head.owner.button3 && !head.grabbed && !head.izunatarg)
 					{
 						head.purge_oldorigin = head.origin; // hold original position before warp
 						head.purge_targ = self;

@@ -614,6 +614,7 @@ float turbo_mode; // Turbo mode boolean, saved in parms
 .entity izunatarg; // izuna drop target
 .float izunaspin_speed;
 .float izuna_apex;
+.float izuna_exec_finished; // timer for how long the target can be air inzuna'd
 
 .float attackhit; // timer on if an attack landed on the target
 .float beenblocked; // timer record on both attacker / victim if blocking an attack has occured (melee only)

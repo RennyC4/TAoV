@@ -195,6 +195,8 @@ void() CheckImpulseButtons =
 			return;
 		if (self.char.deadflag == DEAD_DEAD)
 			return;
+		if (self.char.izunatarg != world)
+			return;
 		if (self.keyflags & (KEY_UP | KEY_DOWN | KEY_LEFT | KEY_RIGHT))
 			return; // Fixes Vigil dancing when spamming flask key whilst moving
 

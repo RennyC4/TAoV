@@ -18,7 +18,7 @@ void() ghost_think =
 	while (targ)
 	{
 		if (targ.classname == "player" && visible(targ) && targ.health > 1
-		&& targ.invunerability_finished < time && targ.takedamage != DAMAGE_NO && !self.enemy.owner.flags & FL_NOTARGET)
+		&& targ.invunerability_finished < time && targ.takedamage != DAMAGE_NO && !self.enemy.owner.flags & FL_NOTARGET && !targ.izunatarg)
 		{
 			self.enemy = targ;
 			disto = vlen(self.enemy.origin - self.origin);

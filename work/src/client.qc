@@ -938,7 +938,7 @@ void() PlayerPreThink =
 		else
 		{
 			self.char.swimming = FALSE;
-			self.char.speed = 120; // Vigil's speed is set here...
+			self.char.speed = 120; // Vigil's default speed is set here...
 		}
 				
 		//

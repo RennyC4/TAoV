@@ -482,7 +482,7 @@ void() PlayerWaterPhysics =
 		self.char.velocity_z = self.char.velocity_z - 6 * (frametime * 100);
 		return;
 	}
-		
+
 	if (self.button2 && self.ledgegrab == FALSE && self.inwater_finished < time) // Player actively swimming up
 	{
 		if (self.char.velocity_z < 100)
@@ -515,18 +515,19 @@ void() PlayerWaterPhysics =
 	//
 	// Tilt Vigil forward while moving/swimming
 	//
+
 	if (self.char.health > 0)
 	{
 		if ((self.char.velocity_x > -5 && self.char.velocity_x < 5) && (self.char.velocity_y > -5 && self.char.velocity_y < 5))
 		{
 			if (self.char.angles_x != 0)
 			{
-				if (self.char.angles_x < 0)
+				if (self.char.angles_x > 0)
 				{
 					if (self.char.onground)
-						self.char.angles_x = self.char.angles_x + 3;
+						self.char.angles_x = self.char.angles_x - 3;
 					else
-						self.char.angles_x = self.char.angles_x + 0.5;
+						self.char.angles_x = self.char.angles_x - 0.5;
 				}
 				else
 					self.char.angles_x = 0;
@@ -534,12 +535,17 @@ void() PlayerWaterPhysics =
 		}
 		else
 		{
-			if (self.char.angles_x > -35)
-				self.char.angles_x = self.char.angles_x - 0.5;
+			if (self.char.angles_x < 35)
+				self.char.angles_x = self.char.angles_x + 0.5;
 			else
-				self.char.angles_x = -35;
+				self.char.angles_x = 35;
 		}
 	}
+	
+	// Debugging
+	//local string f = ftos(self.char.angles_x);
+	//bprint ("X: ", f, "\n");
+	
 	self.char.inair = 0; // remove inair
 	self.char.bigfall = FALSE; // remove bigfall
 	self.char.charge_count = 0; // Can't charge attack underwater
@@ -1375,7 +1381,7 @@ void() player_think =
 			self.FL_MGCPRESSED = FALSE;
 	}
 
-	//
+	// 
 	// Vigil's Ledge Grabbing routine ran under these circumstances
 	//
 
@@ -1396,7 +1402,7 @@ void() player_think =
 	&& self.ledgegrab == FALSE && self.wallgrab == FALSE && self.char.deadflag != DEAD_DEAD && self.char.movetype != MOVETYPE_FLY
 	&& self.wallrun == FALSE && self.forcewalk_finished < time && self.char.fly_time < time && self.char.guardbreak_finished < time
 	&& self.char.dodge_finished < time && !self.char.swimming && self.char.health > 0 && self.nospinatk_finished < time &&
-	self.char.lowceil == FALSE && self.trigger_spincut_finished < time)
+	self.char.lowceil == FALSE && self.trigger_spincut_finished < time && self.char.izunatarg == world)
 	{
 		if (!self.char.flypain)
 		{
@@ -1431,9 +1437,10 @@ void() player_think =
 	// In-Air Izuna Drop
 	//
 
-	if (self.char.inair > 16 && !self.char.onground)
+	if (self.char.inair > 16 && !self.char.onground && self.char.izunatarg == world && self.char.enemy != world && self.char.frame != $izuna1 && self.char.pain_finished < time)
 	{
-			if (self.moveprog1 > 0 && self.moveprog2 > 1 && self.char.enemy && !(self.char.izunatarg.flags & FL_ONGROUND) && self.combo > 0 && self.char.enemy.movetype != MOVETYPE_NONE)
+			local float r = range(self.char, self.char.enemy);
+			if (self.moveprog1 > 0 && self.moveprog2 > 1 && !(self.char.izunatarg.flags & FL_ONGROUND) && self.combo > 0 && self.char.enemy.movetype != MOVETYPE_NONE && r != RANGE_FAR && self.char.enemy.izuna_exec_finished > time)
 			{
 				self.char.izunatarg = self.char.enemy; // record who gets izuna'd
 				self.char.enemy.izunatarg = self.char; // record on victim
@@ -1490,7 +1497,7 @@ void() player_think =
 					self.grab_finished = time + 999;
 					self.attack_finished = time + 999;
 					self.noblock_finished = time + 999; // don't allow block
-					
+
 					self.char.oangles = self.char.angles; // store original angle
 
 					self.char.think = player_gizuna1;
@@ -1513,7 +1520,6 @@ void() player_think =
 		if (!self.char.onground)
 			self.button2_buffer = FALSE;	
 	}
-	
 
 	if (self.button0 && self.char.tired_finished < time && self.char.deadflag != DEAD_DEAD && self.forcewalk_finished < time
 	&& self.char.fly_time < time && self.safezone == FALSE && self.char.guardbreak_finished < time && self.char.health > 0 && self.char.lowceil == FALSE)
@@ -1531,7 +1537,10 @@ void() player_think =
 			sound (self, CHAN_ITEM, "player/mmenu1.wav", 1, ATTN_NORM);
 			self.magicmenu = FALSE;
 		}
-		player_fire();
+
+		// HACK: Prevent quick firing Vigil's normal jump kick on Izuna Drop execution, but only in air
+		if (!self.char.izunatarg)
+			player_fire();
 		
 		if (self.char.purge_cooldown < time)
 		{
@@ -1674,7 +1683,7 @@ void() player_think =
 	&& self.wallgrab == FALSE && self.char.deadflag != DEAD_DEAD && self.char.movetype != MOVETYPE_FLY
 	&& self.ledgegrab == FALSE && self.ledgegrab_finished < time && self.char.fly_time < time
 	&& self.char.guardbreak_finished < time && self.char.dodge_finished < time && self.char.health > 0 && self.char.grabbed == FALSE
-	&& self.magicmenu == FALSE && self.char.tired_finished < time && self.wallrun == FALSE)
+	&& self.magicmenu == FALSE && self.char.tired_finished < time && self.wallrun == FALSE && self.char.izunatarg == world)
 	{
 		if (self.keyflags & (KEY_LEFT | KEY_RIGHT))
 		{
@@ -2702,6 +2711,7 @@ void() player_move = [0, player_move]
 		self.owner.ledgegrab_finished = time;
 		self.djump_spincnt = 0; // remove double jump flag
 	}
+	self.izunatarg = world;
 	self.owner.purge_toggle = FALSE;
 	self.pain_finished = time;
 	self.paincount = 0;
@@ -3035,48 +3045,45 @@ void() player_fire =
 		else // grab attacks here
 		{
 			// Grab - izuna drop
-			if (self.moveprog2 > 1)
+			if (self.moveprog1 > 0 && self.moveprog2 > 1)
 			{
-				if (self.moveprog1 > 0)
+				self.char.izunatarg = self.enemy; // record who gets izuna'd
+				self.enemy.izunatarg = self.char; // record on victim
+				
+				// Setup victim
+				self.char.izunatarg.grab_finished = time + 999;
+				self.char.izunatarg.grabbed = TRUE;
+				self.char.izunatarg.takedamage = DAMAGE_NO; // Cannot be hit by others
+				if (self.char.izunatarg.th_grab)
 				{
-					self.char.izunatarg = self.enemy; // record who gets izuna'd
-					self.enemy.izunatarg = self.char; // record on victim
-					
-					// Setup victim
-					self.char.izunatarg.grab_finished = time + 999;
-					self.char.izunatarg.grabbed = TRUE;
-					self.char.izunatarg.takedamage = DAMAGE_NO; // Cannot be hit by others
-					if (self.char.izunatarg.th_grab)
-					{
-						self.char.izunatarg.think = self.char.izunatarg.th_grab;
-						self.char.izunatarg.nextthink = time;
-					}
-
-					// Debugging
-					//bprint ("Izuna Targ: ", self.char.izunatarg.classname, "\n");
-
-					// Upward velocity
-					self.char.velocity_z = 550;
-					self.char.izunatarg.velocity_z = 550;
-					self.char.takedamage = DAMAGE_NO; // Cannot be hit by others
-					self.char.izunaspin_speed = 0;
-					self.char.izuna_apex = FALSE;
-					self.grab_finished = time + 999;
-					self.attack_finished = time + 999;
-					self.noblock_finished = time + 999; // don't allow block
-					
-					sound (self.char, CHAN_AUTO, "player/jump.wav", 1, ATTN_NORM);
-					self.char.oangles = self.char.angles; // store original angle
-
-					oself = self;
-					self = self.char;
-					player_yell(0);
-					sound (self, CHAN_AUTO, "player/grab.wav", 1, ATTN_NORM);
-					self = oself;
-
-					self.char.think = player_gizuna1;
-					self.char.nextthink = time;
+					self.char.izunatarg.think = self.char.izunatarg.th_grab;
+					self.char.izunatarg.nextthink = time;
 				}
+
+				// Debugging
+				//bprint ("Izuna Targ: ", self.char.izunatarg.classname, "\n");
+
+				// Upward velocity
+				self.char.velocity_z = 550;
+				self.char.izunatarg.velocity_z = 550;
+				self.char.takedamage = DAMAGE_NO; // Cannot be hit by others
+				self.char.izunaspin_speed = 0;
+				self.char.izuna_apex = FALSE;
+				self.grab_finished = time + 999;
+				self.attack_finished = time + 999;
+				self.noblock_finished = time + 999; // don't allow block
+				
+				sound (self.char, CHAN_AUTO, "player/jump.wav", 1, ATTN_NORM);
+				self.char.oangles = self.char.angles; // store original angle
+
+				oself = self;
+				self = self.char;
+				player_yell(0);
+				sound (self, CHAN_AUTO, "player/grab.wav", 1, ATTN_NORM);
+				self = oself;
+
+				self.char.think = player_gizuna1;
+				self.char.nextthink = time;
 			}
 			else
 			{
@@ -5819,16 +5826,16 @@ void() player_knockedup1    =[	$walled1,	player_knockedup1 ]
 	if (self.velocity_z > 0)
 	{
 		if (!self.swimming)
-			self.angles_x = -90; // going up!
+			self.angles_x = 90; // going up!
 	}
 	else
 	{
-		if (self.angles_x < 90)
+		if (self.angles_x > -90)
 		{
 			if (!self.swimming)
-				self.angles_x = self.angles_x + 6;
+				self.angles_x = self.angles_x - 6;
 			else
-				self.angles_x = self.angles_x + 2;
+				self.angles_x = self.angles_x - 2;
 		}
 	}
 	if (self.swimming) // sink slower when hit than in normal air
@@ -5878,11 +5885,11 @@ void() player_knockedfar1    =[	$walled1,	player_knockedfar1 ]
 	}
 
 	if (self.velocity_z > 0)
-		self.angles_x = -45;
+		self.angles_x = 45;
 	else
 	{
-		if (self.angles_x < 90)
-			self.angles_x = self.angles_x + 3;
+		if (self.angles_x > -90)
+			self.angles_x = self.angles_x - 3;
 	}
 	if (self.onground == TRUE)
 	{
@@ -5936,8 +5943,8 @@ void() player_walled4 	 =[     $walled5,        player_getupb1 ]
 void() player_walled3    =[	0,	player_walled3	] 
 {
 	// Tilt realistically
-	if (self.angles_x > -90)
-		self.angles_x = self.angles_x - 3;
+	if (self.angles_x < 90)
+		self.angles_x = self.angles_x + 3;
 
 	if (self.walkframe > 1)
 		self.walkframe = 0;
@@ -5945,7 +5952,7 @@ void() player_walled3    =[	0,	player_walled3	]
 	self.walkframe = self.walkframe + 1;
 	self.movetype = MOVETYPE_WALK;
 
-	if (self.onground == TRUE && self.angles_x < -75) // face plant
+	if (self.onground == TRUE && self.angles_x > 75) // face plant
 	{
 		self.owner.camshake_finished = time + 0.2;
 		PainSound();
@@ -6020,15 +6027,15 @@ void() player_twist    =[	$twist,	player_twist		]
 	}
 	
 	if (self.velocity_z > 0)
-		self.angles_x = -25;
+		self.angles_x = 25;
 	else
 	{
-		if (self.angles_x < 45)
-			self.angles_x = self.angles_x + 1;
+		if (self.angles_x > -45)
+			self.angles_x = self.angles_x - 1;
 	}
 
 	if (!self.swimming)
-		self.angles_z = self.angles_z + 15; // spin Vigil
+		self.angles_z = self.angles_z - 15; // spin Vigil
 	else
 	{
 		self.velocity_z = self.velocity_z / 1.05;
@@ -6040,7 +6047,7 @@ void() player_twist    =[	$twist,	player_twist		]
 			return;
 		}
 		self.inwater_pain = self.inwater_pain + 1;
-		self.angles_z = self.angles_z + 8; // spin Vigil underwater slower
+		self.angles_z = self.angles_z - 8; // spin Vigil underwater slower
 	}
 	
 	//
@@ -8350,11 +8357,13 @@ void() player_gizuna1   =[	$izuna1,	player_gizuna1	]
 				setorigin (self.izunatarg, self.origin);
 
 			self.izunatarg.angles_x = 0;
+			self.izunatarg.izuna_exec_finished = time; // remove timer
 			self.izunatarg.grabbed = FALSE;
 			self.izunatarg.izunatarg = world;
 
 			self.izunatarg = world;
 			self.izuna_apex = FALSE;
+			self.enemy = world;
 
 			player_move();
 			self.owner.camerastyle = 0;
@@ -8412,6 +8421,7 @@ void() player_gizuna1   =[	$izuna1,	player_gizuna1	]
 				setorigin (self.izunatarg, self.origin);
 			
 			self.izunatarg.angles_x = 0;
+			self.izunatarg.izuna_exec_finished = time; // remove timer
 			self.izunatarg.grabbed = FALSE;
 			self.izunatarg.izunatarg = world;
 			
@@ -8435,8 +8445,6 @@ void() player_gizuna1   =[	$izuna1,	player_gizuna1	]
 			return;
 		}
 	}
-	//else
-	//	self.think = player_move;
 
 	self.inair = 0; // Cancel bigfall logic
 	frameskip (0.01);
