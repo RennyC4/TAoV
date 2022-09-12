@@ -679,6 +679,7 @@ void() manashadows_think =
 	self.angles = self.owner.angles;
 	self.frame = self.owner.frame;
 	setorigin (self, self.owner.origin);
+	self.think = manashadows_think;
 	frameskip(0.01);
 };
 

@@ -990,7 +990,7 @@ void(float damg, float dist, float knokback, float rsize, float snd, float flsh,
 					self.attackhit = time + 0.35;
 						
 					//
-					// Air Comboing physics, Y Axis adjustment is done in player.qc - !Not anymore!
+					// Air Comboing physics, Y axis (Up/Down) is halted
 					//
 
 					if (!self.flags & FL_ONGROUND && ignoreair == FALSE) // If in air
