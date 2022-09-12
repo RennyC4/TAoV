@@ -1665,7 +1665,7 @@ void(entity attacker) monster_pain =
 	// Face player properly before physics are ran -
 	// This is intentionally inaccurate; allows the player to control the battlefield moreso by using angle checks instead of origin_x (left/right)
 	// whereas the opposite is true for monsters vs player
-	if (attacker.onground || attacker.flags & FL_ONGROUND || checkground(attacker))
+	if (attacker.inair < 16 && (attacker.onground || attacker.flags & FL_ONGROUND || checkground(attacker)))
 	{
 		if (attacker.angles_y > 90 && attacker.angles_y < 270)
 			self.angles_y = 0;
@@ -1673,12 +1673,11 @@ void(entity attacker) monster_pain =
 			self.angles_y = 180;
 	}
 	else
+	{
 		if (attacker.origin_x > self.origin_x)
 			self.angles_y = 0;
 		else
 			self.angles_y = 180;
-	{
-	
 	}
 
 	// Color flash on pain
