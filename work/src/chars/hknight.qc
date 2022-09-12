@@ -399,12 +399,12 @@ void() HellKnight_Lightning =
 			WriteCoord (MSG_BROADCAST, org_z);
 
 			trace_ent.knockback = 0;
+			PerfectGuard(trace_ent); // call PG before T_Damage
 			T_Damage (self, trace_ent, trace_ent, 24, 0);
 			trace_ent.owner.mana = trace_ent.owner.mana + 5;
 			trace_ent.owner.absorb_finished = time + 3;
 			if (trace_ent.owner.mana > trace_ent.owner.max_mana)
 				trace_ent.owner.mana = trace_ent.owner.max_mana;
-			PerfectGuard(trace_ent);
 			trace_ent.owner.combo = trace_ent.owner.combo + 1; // raise combo counter
 
 			if (self.angles_y > 90 && self.angles_y < 270) // Attacker facing right
