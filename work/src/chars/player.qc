@@ -6034,7 +6034,7 @@ void() player_twist    =[	$twist,	player_twist		]
 {
 	local vector v;
 
-	self.pain_finished = time + 0.1;
+	self.pain_finished = time + 999;
 
 	//
 	// Check for walls for Vigil to smack into
