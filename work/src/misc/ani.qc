@@ -265,7 +265,7 @@ void() izuna_windspiral_think =
 {
 	if (self.scale < 1)
 		self.scale = self.scale + 0.01;
-	else
+	if (self.attack_finished < time)
 	{
 		remove(self);
 		return;

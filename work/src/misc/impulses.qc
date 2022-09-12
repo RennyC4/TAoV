@@ -271,7 +271,9 @@ void() CheckImpulseButtons =
 				return;
 			if (self.char.deadflag == DEAD_DEAD)
 				return;
-			
+			if (self.char.izunatarg)
+				return;
+
 			self.softshadow_time = time;
 			self.char.swing_count = 0; // Balance issue
 

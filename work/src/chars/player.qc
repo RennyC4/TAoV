@@ -372,11 +372,11 @@ void() StatusEffects =
 			self.poison_tick_finished = time + 0.25;
 		}
 	}
-	
+
 	// Broken
 	if (self.status_broken_finished > time)
 	{
-		if (self.broken_tick_finished < time && self.hflask_drink_finished < time && !self.char.flypain && self.char.pain_finished < time && self.purge_toggle == FALSE && !self.izunatarg)
+		if (self.broken_tick_finished < time && self.hflask_drink_finished < time && !self.char.flypain && self.char.pain_finished < time && self.purge_toggle == FALSE && !self.char.izunatarg)
 		{
 			self.char.colormod = '5 5 5';
 			self.noblock_finished = time + 1; // don't allow block
@@ -384,6 +384,11 @@ void() StatusEffects =
 			self.nospinatk_finished = time + 1; // don't allow spin attack
 			self.nobackflip_finished = time + 1; // don't allow backflip
 			sound (self.char, CHAN_AUTO, "player/broken.wav", 1, ATTN_NORM);
+
+			self.char.grabbed = self.grabbed = FALSE;
+			if (self.char.enemy.grabbed)
+				self.char.enemy.grabbed = FALSE;
+
 			if (self.char.perfectguard_buff < time) // remove i-frame stuff
 				self.char.takedamage = DAMAGE_AIM;
 			T_Damage (self.char, self, self, 0, 0); // do the annoying magic
@@ -483,7 +488,7 @@ void() PlayerWaterPhysics =
 		return;
 	}
 
-	if (self.button2 && self.ledgegrab == FALSE && self.inwater_finished < time) // Player actively swimming up
+	if (self.button2 && self.ledgegrab == FALSE && self.inwater_finished < time && self.char.pain_finished < time) // Player actively swimming up
 	{
 		if (self.char.velocity_z < 100)
 			self.char.velocity_z = self.char.velocity_z + 7 * (frametime * 100);
@@ -516,7 +521,8 @@ void() PlayerWaterPhysics =
 	// Tilt Vigil forward while moving/swimming
 	//
 
-	if (self.char.health > 0)
+	
+	if (self.char.health > 0 && self.char.pain_finished < time)
 	{
 		if ((self.char.velocity_x > -5 && self.char.velocity_x < 5) && (self.char.velocity_y > -5 && self.char.velocity_y < 5))
 		{
@@ -541,7 +547,7 @@ void() PlayerWaterPhysics =
 				self.char.angles_x = 35;
 		}
 	}
-	
+
 	// Debugging
 	//local string f = ftos(self.char.angles_x);
 	//bprint ("X: ", f, "\n");
@@ -6027,12 +6033,14 @@ void() player_twist    =[	$twist,	player_twist		]
 {
 	local vector v;
 
+	self.pain_finished = time + 0.1;
+
 	//
 	// Check for walls for Vigil to smack into
 	//
 
 	v = self.angles;	  //
-	v_x = v_x + 25;       // Remove tilt on traceline!
+	v_x = v_x - 25;       // Remove tilt on traceline!
 	makevectors (v);	  //
 
 	traceline(self.origin, self.origin - v_forward * 26, FALSE, self);
@@ -6059,6 +6067,7 @@ void() player_twist    =[	$twist,	player_twist		]
 		self.angles_z = self.angles_z - 15; // spin Vigil
 	else
 	{
+		self.owner.inwater_finished = time -1;
 		self.velocity_z = self.velocity_z / 1.05;
 		if (self.inwater_pain > 300)
 		{
@@ -6067,31 +6076,36 @@ void() player_twist    =[	$twist,	player_twist		]
 			player_move();
 			return;
 		}
+
 		self.inwater_pain = self.inwater_pain + 1;
 		self.angles_z = self.angles_z - 8; // spin Vigil underwater slower
 	}
-	
-	//
-	// Check if his X origin (left/right) moved
-	//
 
-	local entity testx;
+	if (!self.swimming)
+	{
+		//
+		// Check if his X origin (left/right) moved
+		//
 
-	makevectors(self.angles);
+		local entity testx;
 
-	testx = spawn();
-	testx.owner = self;
-	testx.drawonlytoclient = self.owner.owner; // reduce network traffic
-	testx.movetype = MOVETYPE_NOCLIP;
-	testx.solid = SOLID_NOT;
-	testx.think = twist_testxcheck;
-	testx.nextthink = time + 0.1;
-	setmodel(testx, string_null); // debug return to string null
-	setsize(testx, '0 0 0', '0 0 0');
-	setorigin(testx, self.origin);
-	
+		makevectors(self.angles);
+
+		testx = spawn();
+		testx.owner = self;
+		testx.drawonlytoclient = self.owner.owner; // reduce network traffic
+		testx.movetype = MOVETYPE_NOCLIP;
+		testx.solid = SOLID_NOT;
+		testx.think = twist_testxcheck;
+		testx.nextthink = time + 0.1;
+		setmodel(testx, string_null); // debug return to string null
+		setsize(testx, '0 0 0', '0 0 0');
+		setorigin(testx, self.origin);
+	}
+
 	if (self.onground == TRUE)
 	{
+		self.pain_finished = time + 999;
 		self.velocity = '0 0 0';
 		self.owner.camshake_finished = time + 0.2;
 		PainSound();
@@ -6122,7 +6136,14 @@ void() player_getup3	=[	$getup3,	player_getup4	] {self.angles_z = self.angles_x 
 void() player_getup4	=[	$getup4,	player_getup5	] {self.pain_finished = time;self.angles_z = self.angles_x = 0;};
 void() player_getup5	=[	$getup5,	player_move 	] {self.angles_z = self.angles_x = 0;};
 
-void() player_hit5	=[	$pain5,	player_hit6 	] {self.movetype = MOVETYPE_TOSS;self.velocity_x = self.velocity_y = 0;model_tilt();self.owner.softshadow_time = time;frameskip (0.7);};
+void() player_hit5	=[	$pain5,	player_hit6 	] 
+{
+	self.movetype = MOVETYPE_TOSS;
+	self.velocity_x = self.velocity_y = 0;
+	model_tilt();
+	self.owner.softshadow_time = time;
+	frameskip (0.7);
+};
 
 void() player_hit6	=[	$pain5,	player_hit6 	]
 {
@@ -8316,11 +8337,13 @@ void() player_gizuna1   =[	$izuna1,	player_gizuna1	]
 						weffect.solid = SOLID_NOT;
 						weffect.owner = self;
 						weffect.alpha = 1;
-						weffect.scale = 0.05;
+						weffect.scale = 0.15;
 						weffect.frame = 0;
 						weffect.velocity_z = 75;
+						weffect.attack_finished = time + 0.8;
 						weffect.drawflags = 7; // override lighting
-						weffect.abslight = -66;
+						weffect.abslight = -50;
+
 						setsize (weffect, '0 0 0', '0 0 0');
 
 						weffect.think = izuna_windspiral_think;
@@ -8385,6 +8408,9 @@ void() player_gizuna1   =[	$izuna1,	player_gizuna1	]
 			self.izunatarg = world;
 			self.izuna_apex = FALSE;
 			self.enemy = world;
+			if (self.owner.status_broken_finished > time)
+				self.owner.broken_tick_finished = time + 1 + ceil(random()*4 + 1);
+			self.owner.noblock_finished = time;
 
 			player_move();
 			self.owner.camerastyle = 0;
@@ -8459,11 +8485,15 @@ void() player_gizuna1   =[	$izuna1,	player_gizuna1	]
 			self.owner.grab_finished = time;
 			self.owner.attack_finished = time + 999;
 			self.owner.combometer_finished = time + 3; // give leniency for combos, reset to default from 999 earlier
+			self.owner.noblock_finished = time + 0.3; // don't allow block
 
 			// Backflip out
 			self.owner.doublejump = TRUE; // don't allow double jump out of a backflip
 			self.owner.backflip_finished = time + 0.7; // Perfect value! Player enters negative velocity by this itme...
 			self.aircombo_count = 0; // prevent animation glitch in player_jumpframe();
+
+			if (self.owner.status_broken_finished > time)
+				self.owner.broken_tick_finished = time + 1 + ceil(random()*4 + 1);
 
 			self.think = player_bflip1;
 			self.nextthink = time;

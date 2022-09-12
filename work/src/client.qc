@@ -707,9 +707,6 @@ void() PlayerPreThink =
 		else
 			self.pain_finished = time - 1;
 
-		//if (self.char.lowceil)
-		//	bprint ("Low Ceiling Flag On\n");
-
 		//
 		//	Full Mana visual indicator
 		//
@@ -932,8 +929,8 @@ void() PlayerPreThink =
 				}
 				self.char.dmgtime = time + 0.5;
 			}
-			PlayerWaterPhysics();
 			self.char.swimming = TRUE;
+			PlayerWaterPhysics();
 		}
 		else
 		{
@@ -1159,46 +1156,51 @@ void() PlayerPostThink =
 		stuffcmd (self, "scr_fov_mode 5\n");
 
 	//* title screen *
-	if (self.button0 && framecount > 79 && world.model == "maps/start.bsp" && self.cnt == FALSE)
+	if (world.model == "maps/start.bsp")
 	{
-		if (title1_finished > time)
-			return;
-
-		self.cnt = TRUE;
-		stuffcmd(self, "wf\n");
-		sound (self, CHAN_VOICE, "misc/title2.wav", 1, ATTN_NONE);
-
-		title1_finished = time + 3;
-	}
-
-	if (title1_finished > time) // Move camera after hitting attack to start game
-	{
-		msg_entity = self;
-		WriteByte(MSG_ONE, 5);
-		WriteEntity(MSG_ONE, self.lock_view);
-
-		self.lock_view.movetype = MOVETYPE_FLY;
-		if (time + 2.05 > title1_finished)
+		if (self.button0 && framecount > 79 && self.cnt == FALSE)
 		{
-			if (self.lock_view.angles_y >= -165)
-			{
-				self.lock_view.angles_y = self.lock_view.angles_y - (500 * frametime);
-				self.angles_y = self.angles_y - (500 * frametime);
-			}
-			else
-			{
-				self.lock_view.angles_y = -180;
-				self.angles_y = -180;
-			}		
+			if (title1_finished > time)
+				return;
+
+			self.cnt = TRUE;
+			stuffcmd(self, "wf\n");
+			sound (self, CHAN_VOICE, "misc/title2.wav", 1, ATTN_NONE);
+
+			title1_finished = time + 3;
 		}
 
-		self.lock_view.angles = self.angles;
-		makevectors (self.angles);
-		self.lock_view.velocity = aim(self.lock_view, 500);
-		self.lock_view.velocity = self.lock_view.velocity * 500;
-	
-		self.fixangle = TRUE;
-		setorigin (self, self.lock_view.origin);
+		if (title1_finished > time) // Move camera after hitting attack to start game
+		{
+			msg_entity = self;
+			WriteByte(MSG_ONE, 5);
+			WriteEntity(MSG_ONE, self.lock_view);
+
+			self.lock_view.movetype = MOVETYPE_FLY;
+			if (time + 2.05 > title1_finished)
+			{
+				if (self.lock_view.angles_y >= -165)
+				{
+					self.lock_view.angles_y = self.lock_view.angles_y - (500 * frametime);
+					self.angles_y = self.angles_y - (500 * frametime);
+				}
+				else
+				{
+					self.lock_view.angles_y = -180;
+					self.angles_y = -180;
+				}		
+			}
+
+			self.lock_view.movetype = MOVETYPE_FLY;
+			self.lock_view.hitcontentsmaski = CONTENTBIT_SOLID|0x00000002i|CONTENTBIT_BODY|CONTENTBIT_PLAYERCLIP;
+			self.lock_view.angles = self.angles;
+			makevectors (self.angles);
+			self.lock_view.velocity = aim(self.lock_view, 500);
+			self.lock_view.velocity = self.lock_view.velocity * 500;
+		
+			self.fixangle = TRUE;
+			setorigin (self, self.lock_view.origin);
+		}
 	}
 
 	//* graphical menu *
