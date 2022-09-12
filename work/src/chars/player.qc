@@ -589,14 +589,14 @@ void() speedline_think =
 
 		if (!self.owner.izunatarg)
 		{
-			if (self.owner.angles_y == 0 || self.owner.angles_y == 45)
+			if (self.owner.angles_y == 0 || self.owner.angles_y == -45 || self.owner.angles_y == 45)
 				self.angles_z = view_x * -1;
 			else
 				self.angles_z = view_x;
 		}
 		else // Izuna angles based on vigils old angles
 		{
-			if (self.owner.oangles_y == 0 || self.owner.oangles_y == 45)
+			if (self.owner.oangles_y == 0 || self.owner.oangles_y == -45 || self.owner.oangles_y == 45)
 				self.angles_z = view_x;
 			else
 				self.angles_z = view_x * -1;
