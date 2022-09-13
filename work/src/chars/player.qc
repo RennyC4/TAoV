@@ -666,7 +666,7 @@ void() SpeedLine =
 // called from client.qc
 void() manashadows_think =
 {
-	if (self.alpha > 0)
+	if (self.alpha > 0 || !self.owner)
 	{
 		self.alpha = self.alpha - 0.0080;
 		self.scale = self.scale + 0.005;
@@ -679,7 +679,7 @@ void() manashadows_think =
 	self.angles = self.owner.angles;
 	self.frame = self.owner.frame;
 	setorigin (self, self.owner.origin);
-	self.think = manashadows_think;
+
 	frameskip(0.01);
 };
 
@@ -1503,6 +1503,7 @@ void() player_think =
 	
 					// Setup victim
 					self.char.izunatarg.grab_finished = time + 999;
+					self.char.izunatarg.oeffects = self.char.izunatarg.effects; // store effects
 					self.char.izunatarg.grabbed = TRUE;
 					self.char.izunatarg.takedamage = DAMAGE_NO; // Cannot be hit by others
 					if (self.char.izunatarg.th_grab)
@@ -3079,6 +3080,7 @@ void() player_fire =
 				self.enemy.izunatarg = self.char; // record on victim
 				
 				// Setup victim
+				self.char.izunatarg.oeffects = self.char.izunatarg.effects; // store effects
 				self.char.izunatarg.grab_finished = time + 999;
 				self.char.izunatarg.grabbed = TRUE;
 				self.char.izunatarg.takedamage = DAMAGE_NO; // Cannot be hit by others
@@ -3103,7 +3105,6 @@ void() player_fire =
 				
 				sound (self.char, CHAN_AUTO, "player/jump.wav", 1, ATTN_NORM);
 				self.char.oangles = self.char.angles; // store original angle
-
 				oself = self;
 				self = self.char;
 				player_yell(0);
@@ -3469,6 +3470,7 @@ void() backflip_move =
 
 void() player_bflip1	=[	$bflip1,	player_bflip2	] 
 {
+	self.effects = 0; // Remove izuna drop NODEPTHTEST
 	self.movetype = MOVETYPE_WALK;
 	self.takedamage = DAMAGE_NO;
 	self.angles_z = self.angles_x = 0;
@@ -8290,11 +8292,14 @@ void() player_miniswordspin22   =[	$dfattack2,		player_move					]
 };
 
 .float izuna_sfx_finished;
+void() player_gizuna2;
 void() player_gizuna1   =[	$izuna1,	player_gizuna1	]
 {
 	local entity effect, weffect;
 
 	makevectors (self.angles);
+	self.oeffects = self.effects; // store any .effects
+	self.effects = EF_NODEPTHTEST;
 	self.takedamage = DAMAGE_NO;
 
 	if (self.izunatarg)
@@ -8337,13 +8342,13 @@ void() player_gizuna1   =[	$izuna1,	player_gizuna1	]
 						weffect.classname = "windspiral_weffect";
 						weffect.solid = SOLID_NOT;
 						weffect.owner = self;
-						weffect.alpha = 1;
+						weffect.alpha = 0.5;
 						weffect.scale = 0.15;
 						weffect.frame = 0;
 						weffect.velocity_z = 75;
-						weffect.attack_finished = time + 0.8;
+						weffect.attack_finished = time + 0.6;
 						weffect.drawflags = 7; // override lighting
-						weffect.abslight = -50;
+						weffect.abslight = -100;
 
 						setsize (weffect, '0 0 0', '0 0 0');
 
@@ -8375,6 +8380,7 @@ void() player_gizuna1   =[	$izuna1,	player_gizuna1	]
 		}
 
 		self.izunatarg.angles = self.angles;
+		self.izunatarg.nowaterremove_finished = time + 1; // disable ai water check removal
 		setorigin (self.izunatarg, self.origin + v_forward * 16 + v_up * 24);
 
 		// Cancel out if water surface is hit
@@ -8392,32 +8398,49 @@ void() player_gizuna1   =[	$izuna1,	player_gizuna1	]
 			// Clean up
 			//
 
-			self.angles = self.oangles; // restore correct angle
-
 			// Need to compensate for larger bounding box monsters
-			makevectors(self.angles);
-			if (self.izunatarg.absmin != VEC_HULL_MIN && self.izunatarg.absmax != VEC_HULL_MAX)
-				setorigin (self.izunatarg, self.origin + v_forward * 16);
+			makevectors(self.oangles);
+			self.izunatarg.velocity = '0 0 0';
+			if (self.izunatarg.mins != VEC_HULL_MIN && self.izunatarg.maxs != VEC_HULL_MAX)
+			{
+				setorigin (self.izunatarg, self.origin + v_forward * 16 + v_up * 64);
+				local entity oself = self;
+				self = self.izunatarg;
+				droptofloor(); // Put monster back to floor
+				self = oself;
+			}
 			else
 				setorigin (self.izunatarg, self.origin);
 
-			self.izunatarg.angles_x = 0;
 			self.izunatarg.izuna_exec_finished = time; // remove timer
 			self.izunatarg.grabbed = FALSE;
 			self.izunatarg.izunatarg = world;
-
-			self.izunatarg = world;
+			
+			self.grabbed = FALSE;
+			if (self.enemy.enemy)
+				self.enemy.enemy = world;
 			self.izuna_apex = FALSE;
-			self.enemy = world;
+			self.owner.grab_finished = time;
+			self.owner.attack_finished = time + 999;
+			self.owner.combometer_finished = time + 3; // give leniency for combos, reset to default from 999 earlier
+			self.owner.noblock_finished = time + 0.3; // don't allow block
+
+			self.aircombo_count = 0; // prevent animation glitch in player_jumpframe();
+
 			if (self.owner.status_broken_finished > time)
 				self.owner.broken_tick_finished = time + 1 + ceil(random()*4 + 1);
-			self.owner.noblock_finished = time;
+
+			self.effects = 0;
+
+			self.angles = self.oangles; // restore correct angle
+			self.izunatarg.angles_x = 0;
+			self.izunatarg = world;
 
 			player_move();
 			self.owner.camerastyle = 0;
 			return;
 		}
-
+		
 		// Hit ground, do damage
 		if (self.onground && self.velocity_z <= 0)
 		{
@@ -8438,72 +8461,86 @@ void() player_gizuna1   =[	$izuna1,	player_gizuna1	]
 			effect.think = dust_think;
 			effect.nextthink = time;
 
-			// Calculate dammage and apply
-			local float calc;
-			if (self.owner.swordlevel == 0)
-				calc = 25 + ceil(self.owner.combo);
-			else if (self.owner.swordlevel == 1)
-				calc = 50 + ceil(self.owner.combo);
-			else if (self.owner.swordlevel == 2)
-				calc = 75 + ceil(self.owner.combo);
-			else
-				calc = 100 + ceil(self.owner.combo);
-			if (calc > 150) // cap max damage
-				calc = 150;
-
-			self.izunatarg.takedamage = DAMAGE_AIM; // reactivate damage on target
-			self.attack_type = 5; // Cut in half!
-			FireMelee(calc,0,3,50,6,1,1,TRUE,0,0);
-
 			//
 			// Clean up
 			//
 
-			self.angles = self.oangles; // restore correct angle
+			freeze_finished = time + (3 * frametime);
 
-			// Need to compensate for larger bounding box monsters
-			makevectors(self.angles);
-			if (self.izunatarg.absmin != VEC_HULL_MIN && self.izunatarg.absmax != VEC_HULL_MAX)
-				setorigin (self.izunatarg, self.origin + v_forward * 16 + v_up * 64);
-			else
-				setorigin (self.izunatarg, self.origin + v_up * 64);
-			
-			local entity oself;
-			oself = self;
-			self = self.izunatarg;
-			droptofloor(); // Put monster back to floor
-			self = oself;
-			
-			self.izunatarg.angles_x = 0;
 			self.izunatarg.izuna_exec_finished = time; // remove timer
 			self.izunatarg.grabbed = FALSE;
-			self.izunatarg.izunatarg = world;
+			if (self.izunatarg.izunatarg)
+				self.izunatarg.izunatarg = world;
 			
 			self.grabbed = FALSE;
-			self.enemy = world;
-			self.izunatarg = world;
+			if (self.enemy.enemy)
+				self.enemy.enemy = world;
 			self.izuna_apex = FALSE;
 			self.owner.grab_finished = time;
 			self.owner.attack_finished = time + 999;
 			self.owner.combometer_finished = time + 3; // give leniency for combos, reset to default from 999 earlier
 			self.owner.noblock_finished = time + 0.3; // don't allow block
 
-			// Backflip out
-			self.owner.doublejump = TRUE; // don't allow double jump out of a backflip
-			self.owner.backflip_finished = time + 0.7; // Perfect value! Player enters negative velocity by this itme...
-			self.aircombo_count = 0; // prevent animation glitch in player_jumpframe();
-
 			if (self.owner.status_broken_finished > time)
 				self.owner.broken_tick_finished = time + 1 + ceil(random()*4 + 1);
 
-			self.think = player_bflip1;
-			self.nextthink = time;
+			self.think = player_gizuna2;
+			self.nextthink = time + 0.1;
 
-			freeze_finished = time + (4 * frametime);
 			return;
 		}
 	}
 
 	self.inair = 0; // Cancel bigfall logic
 	frameskip (0.01);
+};
+
+void() player_gizuna2   =[	$izuna1,	player_bflip1	]
+{
+	self.angles = self.oangles; // restore correct angle
+
+	self.effects = self.oeffects; // restore old effects
+	self.izunatarg.effects = self.izunatarg.oeffects;
+
+	self.izunatarg.nowaterremove_finished = time + 1; // disable ai water check removal
+	
+	// Need to compensate for larger bounding box monsters
+	makevectors(self.oangles);
+	self.izunatarg.velocity = '0 0 0';
+	if (self.izunatarg.mins != VEC_HULL_MIN && self.izunatarg.maxs != VEC_HULL_MAX)
+	{
+		setorigin (self.izunatarg, self.origin + v_forward * 16 + v_up * 64);
+		local entity soself = self;
+		self = self.izunatarg;
+		droptofloor(); // Put monster back to floor
+		self = soself;
+	}
+	else
+		setorigin (self.izunatarg, self.origin);
+				
+	// Calculate dammage
+	local float calc;
+	if (self.owner.swordlevel == 0)
+		calc = 25 + ceil(self.owner.combo);
+	else if (self.owner.swordlevel == 1)
+		calc = 50 + ceil(self.owner.combo);
+	else if (self.owner.swordlevel == 2)
+		calc = 75 + ceil(self.owner.combo);
+	else
+		calc = 100 + ceil(self.owner.combo);
+	if (calc > 125) // cap max damage
+		calc = 125;
+
+	// Deal Damage
+	self.izunatarg.takedamage = DAMAGE_AIM; // reactivate damage on target
+	self.attack_type = 5; // Cut in half!
+	FireMelee(calc,0,3,50,6,1,1,TRUE,0,0);
+
+	self.izunatarg.angles_x = 0;
+	self.izunatarg = world;
+
+	// Backflip setup
+	self.owner.doublejump = TRUE; // don't allow double jump out of a backflip
+	self.owner.backflip_finished = time + 0.7; // Perfect value! Player enters negative velocity by this itme...
+	self.aircombo_count = 0; // prevent animation glitch in player_jumpframe();
 };

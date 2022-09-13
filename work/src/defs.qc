@@ -609,6 +609,8 @@ float turbo_mode; // Turbo mode boolean, saved in parms
 .float camera_forcezoom_finished; // if true, camera will force zoom out to help it get unstuck
 .float ftspin_count;
 .float lowceil;
+.float oeffects;
+.float nowaterremove_finished;
 
 // Izuna drop
 .entity izunatarg; // izuna drop target

@@ -587,6 +587,7 @@ void() item_key_touch =
 		{
 			centerprint (other.owner, "/P^bChurch Key^b\n\n===========================\n\nYou found a key labelled ''Church''.\n\n\n^3Press ATTACK or JUMP to resume ...");
 			setpause(1);
+			centerprint (other.owner, "/P^bChurch Key^b\n\n===========================\n\nYou found a key labelled ''Church''.\n\n\n^3Press ATTACK or JUMP to resume ...");
 			keys = keys | IT_KEY1;
 		}
 	}
@@ -1052,6 +1053,7 @@ void() gold_touch =
 	{
 		centerprint (other.owner, "/P^bAcquired Gold^b\n\nGold can be used to buy upgrades & more\n\n===========================\n\n\n^1The higher number of strikes Vigil is able to chain together allows for more gold to be given when picked up!\n\n\n^3Press ATTACK or JUMP to resume ...");
 		setpause(1);
+		centerprint (other.owner, "/P^bAcquired Gold^b\n\nGold can be used to buy upgrades & more\n\n===========================\n\n\n^1The higher number of strikes Vigil is able to chain together allows for more gold to be given when picked up!\n\n\n^3Press ATTACK or JUMP to resume ...");
 	}
 
 	local float aprice = 100 * floor(other.owner.level / 3.5); // Tied to wizards teleport to castle stuff

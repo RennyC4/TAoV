@@ -463,6 +463,8 @@ void() ai_watercheck_removal =
 		return;
 	if (self.classname == "merman" || self.classname == "ethskull")
 		return;
+	if (self.nowaterremove_finished > time)
+		return;
 
 	if (pointcontents(self.origin) == CONTENT_WATER || pointcontents(self.origin) == CONTENT_SLIME || pointcontents(self.origin) == CONTENT_LAVA)
 	{

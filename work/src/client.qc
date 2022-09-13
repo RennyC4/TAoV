@@ -174,7 +174,13 @@ void() InitCamera =
 		if (cvar("scratch3") == 0)
 		{
 			if (self.camerastyle != 5)
-				ot = ot * (bt * 3) * frametime; // the speed
+			{
+				if (self.goalentity.izunatarg)
+					ot = ot * (bt * 0) * frametime; // izuna disables tracking temporarily
+				else
+					ot = ot * (bt * 3) * frametime; // the speed
+				
+			}
 			else
 				ot = ot * (bt * 10) * frametime; // speed increase to keep on top of Vigil faster
 		}
@@ -836,7 +842,7 @@ void() PlayerPreThink =
 		//		 causes issues where plats will go through Vigil and set his bbox to null
 		//
 
-		if (self.char.absmin != VEC_HULL_MIN && self.char.absmax != VEC_HULL_MAX && self.char.dodge_finished < time && self.char.lowceil == FALSE)
+		if (self.char.mins != VEC_HULL_MIN && self.char.maxs != VEC_HULL_MAX && self.char.dodge_finished < time && self.char.lowceil == FALSE)
 			setsize(self.char, VEC_HULL_MIN, VEC_HULL_MAX);
 	
 		CheckImpulseButtons();
@@ -1389,6 +1395,7 @@ void() SetLevel =
 			{
 				centerprint (self.owner, "/P^bLevel Up!^b\n\nKilling foes increases Vigil's strength & resolve\n\n===========================\n\n\n^1Enemies give varying amounts of experience points which strengthens Vigil, leveling up increases Vigil's maximum HP & MP!\n\n\n^3Press ATTACK or JUMP to resume ...");
 				setpause(1);
+				centerprint (self.owner, "/P^bLevel Up!^b\n\nKilling foes increases Vigil's strength & resolve\n\n===========================\n\n\n^1Enemies give varying amounts of experience points which strengthens Vigil, leveling up increases Vigil's maximum HP & MP!\n\n\n^3Press ATTACK or JUMP to resume ...");
 			}
 			sound (self, CHAN_AUTO, "misc/levelup.wav", 1, ATTN_NORM);
 			self.owner.level = self.owner.level + 1;
