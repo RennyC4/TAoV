@@ -666,16 +666,13 @@ void() SpeedLine =
 // called from client.qc
 void() manashadows_think =
 {
-	if (self.alpha > 0 || !self.owner)
-	{
-		self.alpha = self.alpha - 0.0080;
-		self.scale = self.scale + 0.005;
-	}
-	else
+	if (self.attack_finished < time)
 	{
 		remove(self);
 		return;
 	}
+
+	self.scale = self.scale + 0.005;
 	self.angles = self.owner.angles;
 	self.frame = self.owner.frame;
 	setorigin (self, self.owner.origin);
@@ -3470,7 +3467,6 @@ void() backflip_move =
 
 void() player_bflip1	=[	$bflip1,	player_bflip2	] 
 {
-	self.effects = 0; // Remove izuna drop NODEPTHTEST
 	self.movetype = MOVETYPE_WALK;
 	self.takedamage = DAMAGE_NO;
 	self.angles_z = self.angles_x = 0;
@@ -5186,7 +5182,7 @@ void() jumpatk_grounded =
 	effect.movetype = MOVETYPE_NOCLIP;
 	effect.think = effect_think;
 	effect.alpha = 0.8;
-	effect.effects = EF_ADDITIVE | EF_FULLBRIGHT;
+	effect.effects = EF_ADDITIVE | EF_FULLBRIGHT | EF_NODEPTHTEST;
 	effect.nextthink = time + 0.1;
 };
 

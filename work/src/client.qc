@@ -702,7 +702,16 @@ void() PlayerPreThink =
 	}
 
 	if (self.char != world)
-	{		
+	{
+		// Angle fix
+		if (self.char.angles_y >= 270)
+			self.char.angles_y = -90;
+
+		// Debugging
+		//self.char.angles_y = self.char.angles_y + 1;
+		//local string h = ftos(self.char.angles_y);
+		//bprint ("Y: ", h, "\n");
+
 		// Send Vigil's origin to CSQC for Blind status mainly
 		self.vigil_x = self.char.origin_x;
 		self.vigil_y = self.char.origin_y;
@@ -729,10 +738,11 @@ void() PlayerPreThink =
 					manashadow.movetype = MOVETYPE_NOCLIP;
 					manashadow.solid = SOLID_NOT;
 					manashadow.scale = 1;
-					manashadow.alpha = 0.75;
+					manashadow.alpha = 0.5;
 					manashadow.colormod = '0 255 255';
 					manashadow.drawonlytoclient = self; // reduce network traffic
 					manashadow.effects = EF_ADDITIVE | EF_FULLBRIGHT | EF_NODEPTHTEST;
+					manashadow.attack_finished = time + 0.35;
 					setmodel (manashadow, "progs/plyr.mdl");
 
 					manashadow.frame = self.char.frame;
@@ -765,10 +775,11 @@ void() PlayerPreThink =
 			manashadow.movetype = MOVETYPE_NOCLIP;
 			manashadow.solid = SOLID_NOT;
 			manashadow.scale = 1;
-			manashadow.alpha = 0.75;
+			manashadow.alpha = 0.5;
 			manashadow.colormod = '218 0 218'; // purple
 			manashadow.drawonlytoclient = self; // reduce network traffic
 			manashadow.effects = EF_ADDITIVE | EF_FULLBRIGHT | EF_NODEPTHTEST;
+			manashadow.attack_finished = time + 0.35;
 			setmodel (manashadow, "progs/plyr.mdl");
 
 			manashadow.frame = self.char.frame;

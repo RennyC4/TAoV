@@ -468,6 +468,7 @@ void() ai_watercheck_removal =
 
 	if (pointcontents(self.origin) == CONTENT_WATER || pointcontents(self.origin) == CONTENT_SLIME || pointcontents(self.origin) == CONTENT_LAVA)
 	{
+		dprint ("Monster water death, entity removed\n");
 		if (self.enemy.classname == "player" && self.enemy.health > 0) // reward for death
 			GiveExperience(self.experience);
 
@@ -1664,25 +1665,15 @@ void() wakeup =
 
 void(entity attacker) monster_pain =
 {
+	
 	// Face player properly before physics are ran -
 	// This is intentionally inaccurate; allows the player to control the battlefield moreso by using angle checks instead of origin_x (left/right)
 	// whereas the opposite is true for monsters vs player
 	
-	// In-air stuff functions differently however using origin checks due to angular changes
-	if (attacker.inair < 30)
-	{
-		if (attacker.angles_y > 90 && attacker.angles_y < 270)
-			self.angles_y = 0;
-		else
-			self.angles_y = 180;
-	}
+	if (attacker.angles_y >= 90 && attacker.angles_y <= 270)
+		self.angles_y = 0;
 	else
-	{
-		if (attacker.origin_x > self.origin_x)
-			self.angles_y = 0;
-		else
-			self.angles_y = 180;
-	}
+		self.angles_y = 180;
 
 	// Color flash on pain
 	if (self.block_finished < time)
