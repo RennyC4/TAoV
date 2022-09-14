@@ -859,7 +859,6 @@ void() LegShadow =
 
 .float combocompare1, combocompare2, combocompare3;
 .float combometer_finished, combostep, combo_message_finished;
-
 void() ComboMeter = // called from playerpostthink
 {
 	local string h;
@@ -943,7 +942,6 @@ void() ComboMeter = // called from playerpostthink
 					localsound("misc/combomsg9", 4, 1);
 				}
 			}
-
 			self.combo = self.combostep = self.combocompare1 = self.combocompare2 = self.combocompare3 = 0;
 			self.combo_message_finished = time + 3;
 		}
@@ -2738,6 +2736,7 @@ void() player_move = [0, player_move]
 		self.djump_spincnt = 0; // remove double jump flag
 	}
 	self.izunatarg = world;
+	self.effects = self.oeffects = 0;
 	self.owner.purge_toggle = FALSE;
 	self.pain_finished = time;
 	self.paincount = 0;
@@ -5004,7 +5003,7 @@ void() player_chargeatk3	=[	$charge7,	player_chargeatk3	]
 			self.attack_type = 5;
 			FireMelee(9,0,0,60,5,0,1,FALSE,0,0); // Hit all around
 		}
-		self.angles_x = self.angles_x - 15; // spin Vigil
+		self.angles_x = self.angles_x + 15; // spin Vigil
 		self.chargespincnt = self.chargespincnt + 1;
 	}
 	else
@@ -8366,10 +8365,10 @@ void() player_gizuna1   =[	$izuna1,	player_gizuna1	]
 			self.angles_y = self.angles_y + self.izunaspin_speed; // Spin speed
 			self.owner.shadow_time = time + 0.1; // red shadows
 			self.owner.speedline_time = time + 0.1;
+			self.owner.combometer_finished = time + 1; // give leniency for combos
 		}
 		else // Going up
 		{
-			self.owner.combometer_finished = time + 999; // give leniency for combos
 			self.owner.softshadow_time = time + 0.1; // soft shadows
 			if (!self.onground)
 				self.owner.speedline_time = time + 0.1;
@@ -8418,7 +8417,7 @@ void() player_gizuna1   =[	$izuna1,	player_gizuna1	]
 			self.izuna_apex = FALSE;
 			self.owner.grab_finished = time;
 			self.owner.attack_finished = time + 999;
-			self.owner.combometer_finished = time + 3; // give leniency for combos, reset to default from 999 earlier
+			self.owner.combometer_finished = time + 1; // give leniency for combos
 			self.owner.noblock_finished = time + 0.3; // don't allow block
 
 			self.aircombo_count = 0; // prevent animation glitch in player_jumpframe();
@@ -8474,7 +8473,7 @@ void() player_gizuna1   =[	$izuna1,	player_gizuna1	]
 			self.izuna_apex = FALSE;
 			self.owner.grab_finished = time;
 			self.owner.attack_finished = time + 999;
-			self.owner.combometer_finished = time + 3; // give leniency for combos, reset to default from 999 earlier
+			self.owner.combometer_finished = time + 1; // give leniency for combos
 			self.owner.noblock_finished = time + 0.3; // don't allow block
 
 			if (self.owner.status_broken_finished > time)

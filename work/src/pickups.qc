@@ -585,7 +585,6 @@ void() item_key_touch =
 	{
 		if (cvar("developer") != 3) // Demo / Attract recording mode
 		{
-			centerprint (other.owner, "/P^bChurch Key^b\n\n===========================\n\nYou found a key labelled ''Church''.\n\n\n^3Press ATTACK or JUMP to resume ...");
 			setpause(1);
 			centerprint (other.owner, "/P^bChurch Key^b\n\n===========================\n\nYou found a key labelled ''Church''.\n\n\n^3Press ATTACK or JUMP to resume ...");
 			keys = keys | IT_KEY1;
@@ -650,6 +649,8 @@ void() relic_touch =
 
 	if (cvar("developer") != 3) // Demo / Attract recording mode
 	{
+		setpause(1); // pause game on pickup
+
 		if (self.items & IT_RELIC1)
 			centerprint (other.owner, "/P^bIron Grip Obtained!^b\n\n===========================\n\n\n^1Grab and hoist up ledges\n\n\nPerformed by jumping towards a ledge and using UP direction to climb,\nto let go and fall press DOWN or BLOCK\n\n\n\n^3Press ATTACK or JUMP to resume ...");
 		else if (self.items & IT_RELIC2)
@@ -673,8 +674,6 @@ void() relic_touch =
 			centerprint (other.owner, "/P^bSoul Candle Obtained!^b\n\n===========================\n\n\n^1Automatically lights up pitch black areas\n\n\n\n^3Press ATTACK or JUMP to resume ...");
 		else if (self.items & IT_RELIC10)
 			centerprint (other.owner, "/P^bBurning Epitome Obtained!^b\n\n===========================\n\n^1Flaming head smash unlocked\n\n\nPerformed by pressing DOWN + ATTACK MID-AIR after performing a Spin slash double jump or Uppercut Slice (UP + ATTACK in MID-AIR)\n\n\n^3Press ATTACK or JUMP to resume ...");
-
-		setpause(1); // pause game on pickup
 	}
 	sound (self, CHAN_BODY, "misc/relic.wav", 1, ATTN_NORM);
 
@@ -859,6 +858,8 @@ void() spellbook_touch =
 
 	if (cvar("developer") != 3) // Demo / Attract recording mode
 	{
+		setpause(1);
+
 		if (self.items & IT_SPELL1)
 			centerprint (other.owner, "/P^bLightning Storm Obtained!^b\n\n===========================\n\n^1Press the MAGIC button to select your spell with UP and DOWN\nPress MAGIC again to cast the selected spell\nPress JUMP or BLOCK to cancel out\n\n\n\n^3Press ATTACK or JUMP to resume...");
 		else if (self.items & IT_SPELL2)
@@ -867,8 +868,6 @@ void() spellbook_touch =
 			centerprint (other.owner, "/P^bFire Beam Obtained!^b\n\n===========================\n\n^1Press the MAGIC button to select your spell with UP and DOWN\nPress MAGIC again to cast the selected spell\nPress JUMP or BLOCK to cancel out\n\n\n\n^3Press ATTACK or JUMP to resume...");
 		else if (self.items & IT_SPELL4)
 			centerprint (other.owner, "/P^bTwister Obtained!^b\n\n===========================\n\n^1Press the MAGIC button to select your spell with UP and DOWN\nPress MAGIC again to cast the selected spell\nPress JUMP or BLOCK to cancel out\n\n\n\n^3Press ATTACK or JUMP to resume...");
-
-		setpause(1);
 	}
 	sound (self, CHAN_BODY, "misc/spellbook.wav", 1, ATTN_NORM);
 	SUB_UseTargets(); // fire any activators
@@ -1053,7 +1052,6 @@ void() gold_touch =
 	{
 		centerprint (other.owner, "/P^bAcquired Gold^b\n\nGold can be used to buy upgrades & more\n\n===========================\n\n\n^1The higher number of strikes Vigil is able to chain together allows for more gold to be given when picked up!\n\n\n^3Press ATTACK or JUMP to resume ...");
 		setpause(1);
-		centerprint (other.owner, "/P^bAcquired Gold^b\n\nGold can be used to buy upgrades & more\n\n===========================\n\n\n^1The higher number of strikes Vigil is able to chain together allows for more gold to be given when picked up!\n\n\n^3Press ATTACK or JUMP to resume ...");
 	}
 
 	local float aprice = 100 * floor(other.owner.level / 3.5); // Tied to wizards teleport to castle stuff

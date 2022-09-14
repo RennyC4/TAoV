@@ -176,7 +176,7 @@ void() InitCamera =
 			if (self.camerastyle != 5)
 			{
 				if (self.goalentity.izunatarg)
-					ot = ot * (bt * 0) * frametime; // izuna disables tracking temporarily
+					ot = ot * (bt * 1) * frametime; // izuna almost disables tracking temporarily
 				else
 					ot = ot * (bt * 3) * frametime; // the speed
 				
@@ -1404,7 +1404,6 @@ void() SetLevel =
 		{
 			if (self.owner.level == 1 && players == 1)
 			{
-				centerprint (self.owner, "/P^bLevel Up!^b\n\nKilling foes increases Vigil's strength & resolve\n\n===========================\n\n\n^1Enemies give varying amounts of experience points which strengthens Vigil, leveling up increases Vigil's maximum HP & MP!\n\n\n^3Press ATTACK or JUMP to resume ...");
 				setpause(1);
 				centerprint (self.owner, "/P^bLevel Up!^b\n\nKilling foes increases Vigil's strength & resolve\n\n===========================\n\n\n^1Enemies give varying amounts of experience points which strengthens Vigil, leveling up increases Vigil's maximum HP & MP!\n\n\n^3Press ATTACK or JUMP to resume ...");
 			}

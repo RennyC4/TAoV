@@ -1029,7 +1029,7 @@ float(float evtype, float scanx, float chary, float devid) CSQC_InputEvent =
 		float pausestate = serverkeyfloat(SERVERKEY_PAUSESTATE);
 
 		if (pausestate > 0)
-		{			
+		{
 			switch (evtype)
 			{
 				case IE_KEYDOWN:
@@ -1137,7 +1137,14 @@ void(float width, float height, float menushown) CSQC_UpdateView =
 	// Read game pause state
 	float pausestate = serverkeyfloat(SERVERKEY_PAUSESTATE);
 	if (pausestate > 0)
+	{
 		pause_frame = pause_frame + 1;
+		//local vector pos = [(width - stringwidth("", TRUE, '321 28.5 0'))/3.5, (height - 50)];
+		
+		local vector pos = [(width)/3.25, (height - 50)];
+		drawpic (pos + '1 1', "progs/gamepause.png", '321 28.5', '0 0 0', .1-(sin(cltime*3.5)*1), DRAWFLAG_NORMAL); // shadow
+		drawpic (pos, "progs/gamepause.png", '321 28.5', '1 1 1', .1-(sin(cltime*3.5)*1), DRAWFLAG_NORMAL);		
+	}
 	else
 		pause_frame = 0;
 

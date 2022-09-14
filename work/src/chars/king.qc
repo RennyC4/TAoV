@@ -44,10 +44,10 @@ void() transporter_touch =
 			if (line == "castle")
 			{
 				shrine_progress = shrine_progress | IT_SHRINE1; // give shrine location
+				setpause(1);
 				centerprint (other.owner, "/P^bKharlia Castle Shrine Unlocked^b\n\n===========================\n\n^1You may now warp to the current area as well as Kharlia Village. Warping from Kharlia Village back to the Transporter Shrine will cost gold.\n\n\n^3Press ATTACK or JUMP to resume ...");
 				self.mode = 0;
 				self.cnt = 0;
-				setpause(1);
 			}
 		}
 
@@ -61,8 +61,8 @@ void() transporter_touch =
 			if (line == "cavern")
 			{
 				shrine_progress = shrine_progress | IT_SHRINE2; // give shrine location
-				centerprint (other.owner, "/P^bCursed Cavern Shrine Unlocked^b\n\n===========================\n\n\n^1You may now warp to the current area as well as Kharlia Village. Warping from Kharlia Village back to the Transporter Shrine will cost gold.\n\n\n^3Press ATTACK or JUMP to resume ...");
 				setpause(1);
+				centerprint (other.owner, "/P^bCursed Cavern Shrine Unlocked^b\n\n===========================\n\n\n^1You may now warp to the current area as well as Kharlia Village. Warping from Kharlia Village back to the Transporter Shrine will cost gold.\n\n\n^3Press ATTACK or JUMP to resume ...");
 				self.mode = 0;
 				self.cnt = 0;
 			}
@@ -78,8 +78,8 @@ void() transporter_touch =
 			if (line == "gcathedrl")
 			{
 				shrine_progress = shrine_progress | IT_SHRINE3; // give shrine location
-				centerprint (other.owner, "/P^bGrand Cathedral Shrine Unlocked^b\n\n===========================\n\n\n^1You may now warp to the current area as well as Kharlia Village. Warping from Kharlia Village back to the Transporter Shrine will cost gold.\n\n\n^3Press ATTACK or JUMP to resume ...");
 				setpause(1);
+				centerprint (other.owner, "/P^bGrand Cathedral Shrine Unlocked^b\n\n===========================\n\n\n^1You may now warp to the current area as well as Kharlia Village. Warping from Kharlia Village back to the Transporter Shrine will cost gold.\n\n\n^3Press ATTACK or JUMP to resume ...");
 				self.mode = 0;
 				self.cnt = 0;
 			}
