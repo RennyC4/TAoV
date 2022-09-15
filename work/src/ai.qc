@@ -1211,7 +1211,7 @@ void(float dist) ai_walk =
 {
 	local float r, ran;
 
-	if (self.health < 1 && self.deadflag != DEAD_DEAD)
+	if (self.health < 1)
 	{
 		if (self.th_die)
 			self.th_die();
@@ -1226,13 +1226,18 @@ void(float dist) ai_walk =
 		return;
 	}
 
+	// Allows triggers to be hit, touchtriggers does nothing
+	MakeSolidList(FALSE);
+	UnmakeSolidList();
+	//
+
 	if (self.flags & FL_ONGROUND)
-		self.velocity_x = 0; // FIXME: Remove X velocity when landed on the ground to stop sliding
+		self.velocity_x = 0; // Remove X velocity when landed on the ground to stop sliding
 
 	ai_watercheck_removal();
 	close_check(); // don't allow player inside origin point
 	monster_removeslide();
-	
+
 	r = range(self, self.enemy);
 
 	// Disabled, Twister made enemies flip in the air in the older versions. It was cool but
@@ -1669,7 +1674,6 @@ void(entity attacker) monster_pain =
 	// Face player properly before physics are ran -
 	// This is intentionally inaccurate; allows the player to control the battlefield moreso by using angle checks instead of origin_x (left/right)
 	// whereas the opposite is true for monsters vs player
-	
 	if (attacker.angles_y >= 90 && attacker.angles_y <= 270)
 		self.angles_y = 0;
 	else
@@ -1708,7 +1712,7 @@ void(entity attacker) monster_pain =
 		self.velocity = '0 0 0';
 		self.velocity_z = 300;
 
-		if (self.angles_y > 90 && self.angles_y < 270)
+		if (self.angles_y >= 90 && self.angles_y <= 270)
 			self.velocity_x = 100;
 		else
 			self.velocity_x = -100;
@@ -1727,7 +1731,7 @@ void(entity attacker) monster_pain =
 		setorigin(self, self.origin);
 		self.velocity_z = 300;
 
-		if (self.angles_y > 90 && self.angles_y < 270)
+		if (self.angles_y >= 90 && self.angles_y <= 270)
 			self.velocity_x = 300;
 		else
 			self.velocity_x = -300;
@@ -1736,7 +1740,7 @@ void(entity attacker) monster_pain =
 	{
 		self.velocity_z = 200;
 
-		if (self.angles_y > 90 && self.angles_y < 270)
+		if (self.angles_y >= 90 && self.angles_y <= 270)
 			self.velocity_x = 50;
 		else
 			self.velocity_x = -50;
@@ -1748,7 +1752,7 @@ void(entity attacker) monster_pain =
 		self.velocity = '0 0 0';
 		self.velocity_z = 350;
 
-		if (self.angles_y > 90 && self.angles_y < 270)
+		if (self.angles_y >= 90 && self.angles_y <= 270)
 			self.velocity_x = 200;
 		else
 			self.velocity_x = -200;
@@ -1758,7 +1762,7 @@ void(entity attacker) monster_pain =
 		self.velocity = '0 0 0';
 		self.velocity_z = 0;
 
-		if (self.angles_y > 90 && self.angles_y < 270)
+		if (self.angles_y >= 90 && self.angles_y <= 270)
 			self.velocity_x = 400;
 		else
 			self.velocity_x = -400;

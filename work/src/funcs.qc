@@ -104,17 +104,9 @@ void() func_fall_field_touch =
  
 	if (other.flags & FL_MONSTER)
 	{
-		local entity oself;
- 
-		oself = self;
- 
-		self = self.owner;
-		self.think = func_fall_use;
-		self.nextthink = self.owner.ltime + 0.1;                 
- 
-		self = oself;
- 
-		remove(self);
+		self.owner.think = func_fall_use;
+		self.owner.nextthink = self.owner.ltime + 0.1;                 
+ 		remove(self);
 	}
 };
  

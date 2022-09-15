@@ -301,6 +301,9 @@ void() HellKnight_Lightning =
 	local vector org;
 	local entity temp, oself;
 
+	// !Always call this before entity shifting (self,oself stuff)!
+	MakeSolidList(TRUE); // Absolutely needed for tracelines to hit
+
 	// Change owner so the traceline attack can hit Vigil
 	oself = self.owner;
 	self.owner = world;
@@ -309,8 +312,6 @@ void() HellKnight_Lightning =
 
 	self.colormod = '1 1 5';
 	sound (self, CHAN_WEAPON, "spells/thunder.wav", 1, ATTN_NORM);
-
-	MakeSolidList(TRUE); // Absolutely needed for tracelines to hit
 
 	org = self.origin + '0 0 20' + v_forward * 35;
 	traceline (org, org + v_forward * 350, FALSE, self);
@@ -451,6 +452,7 @@ void() HellKnight_Lightning =
 	WriteCoord (MSG_BROADCAST, trace_endpos_z);
 
 	self.owner = oself;
+
 	UnmakeSolidList();
 };
 

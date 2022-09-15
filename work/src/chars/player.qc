@@ -3092,6 +3092,7 @@ void() player_fire =
 				// Upward velocity
 				self.char.velocity_z = 550;
 				self.char.izunatarg.velocity_z = 550;
+				//
 				self.char.takedamage = DAMAGE_NO; // Cannot be hit by others
 				self.char.izunaspin_speed = 0;
 				self.char.izuna_apex = FALSE;
@@ -8413,8 +8414,11 @@ void() player_gizuna1   =[	$izuna1,	player_gizuna1	]
 			self.izunatarg.izunatarg = world;
 		
 			self.grabbed = FALSE;
-			if (self.enemy.enemy)
-				self.enemy.enemy = world;
+
+			// Don't remove izuna targets enemy, breaks stuff
+			//if (self.enemy.enemy)
+			//	self.enemy.enemy = world;
+
 			self.izuna_apex = FALSE;
 			self.owner.grab_finished = time;
 			self.owner.attack_finished = time + 999;
@@ -8470,8 +8474,11 @@ void() player_gizuna1   =[	$izuna1,	player_gizuna1	]
 				self.izunatarg.izunatarg = world;
 			
 			self.grabbed = FALSE;
-			if (self.enemy.enemy)
-				self.enemy.enemy = world;
+
+			// Don't remove izuna targets enemy, breaks stuff
+			//if (self.enemy.enemy)
+			//	self.enemy.enemy = world;
+
 			self.izuna_apex = FALSE;
 			self.owner.grab_finished = time;
 			self.owner.attack_finished = time + 999;

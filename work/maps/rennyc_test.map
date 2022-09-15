@@ -321,3 +321,38 @@
 "angles" "0 180 0"
 "awareness" "4"
 }
+// entity 12
+{
+"classname" "item_mana"
+"origin" "-454 -82 48"
+}
+// entity 13
+{
+"classname" "item_mana"
+"origin" "-474 -82 48"
+}
+// entity 14
+{
+"classname" "item_mana"
+"origin" "-494 -82 48"
+}
+// entity 15
+{
+"classname" "item_mana"
+"origin" "-494 -62 48"
+}
+// entity 16
+{
+"classname" "item_mana"
+"origin" "-474 -62 48"
+}
+// entity 17
+{
+"classname" "item_mana"
+"origin" "-454 -62 48"
+}
+// entity 18
+{
+"classname" "monster_ghoul"
+"origin" "-460 -4 112"
+}
