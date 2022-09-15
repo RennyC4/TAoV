@@ -8294,7 +8294,6 @@ void() player_gizuna1   =[	$izuna1,	player_gizuna1	]
 
 	makevectors (self.angles);
 	self.oeffects = self.effects; // store any .effects
-	self.effects = EF_NODEPTHTEST;
 	self.takedamage = DAMAGE_NO;
 
 	if (self.izunatarg)
@@ -8439,6 +8438,7 @@ void() player_gizuna1   =[	$izuna1,	player_gizuna1	]
 		// Hit ground, do damage
 		if (self.onground && self.velocity_z <= 0)
 		{
+			self.effects = EF_NODEPTHTEST;
 			self.owner.speedline_time = time;
 			self.owner.camshake_finished = time + 0.4;
 
@@ -8531,6 +8531,7 @@ void() player_gizuna2   =[	$izuna1,	player_bflip1	]
 	self.attack_type = 5; // Cut in half!
 	FireMelee(calc,0,3,50,6,1,1,TRUE,0,0);
 
+	self.owner.attack_finished = time;
 	self.izunatarg.angles_x = 0;
 	self.izunatarg = world;
 
