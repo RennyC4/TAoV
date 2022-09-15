@@ -6703,7 +6703,7 @@ void() player_blockbrk_movement =
 		}
 	}
 	self.block_finished = time;
-	self.owner.noblock_finished = time + 0.2;
+	self.owner.noblock_finished = time + 999;
 	self.guardbreak_finished = time + 0.2;
 
 	self.velocity_time = time + 0.2;
@@ -6735,6 +6735,8 @@ void() player_blockbrk5	=[	$blockbrk4,	player_block		] {};
 
 void() player_block =
 {
+	if (self.owner.noblock_finished > time)
+		self.owner.noblock_finished = time -1;
 	tracebox (self.origin, VEC_HULL_MIN, VEC_HULL_MAX, self.origin, 1, self);
 	if (trace_startsolid)
 	{
@@ -8155,7 +8157,7 @@ void() player_dodgef7	    =[	$dodgec7,	player_block		 	]
 //
 void() player_purge_prop_think =
 {
-	if (self.alpha > 0)
+	if (self.alpha > 0 || self.attack_finished < time)
 		self.alpha = self.alpha - 0.01;
 	else
 	{
@@ -8180,7 +8182,7 @@ void() player_prop =
 	effect.solid = SOLID_NOT;
 	effect.angles = self.angles;
 	effect.alpha = 1;
-	//if (effect.frame == $attacka4)
+	effect.attack_finished = time + 0.25;
 	effect.skin = 1;
 	effect.effects = EF_NODEPTHTEST | EF_ADDITIVE | EF_FULLBRIGHT;
 	effect.think = player_purge_prop_think;
@@ -8385,7 +8387,6 @@ void() player_gizuna1   =[	$izuna1,	player_gizuna1	]
 			self.owner.shadow_time = time;
 			self.owner.attack_finished = time;
 			self.owner.grab_finished = time;
-			self.grabbed = FALSE;
 			self.enemy = world;
 
 			//
@@ -8438,7 +8439,7 @@ void() player_gizuna1   =[	$izuna1,	player_gizuna1	]
 		// Hit ground, do damage
 		if (self.onground && self.velocity_z <= 0)
 		{
-			self.effects = EF_NODEPTHTEST;
+			self.effects = self.izunatarg.effects = EF_NODEPTHTEST;
 			self.owner.speedline_time = time;
 			self.owner.camshake_finished = time + 0.4;
 
@@ -8495,7 +8496,7 @@ void() player_gizuna2   =[	$izuna1,	player_bflip1	]
 	self.angles = self.oangles; // restore correct angle
 
 	self.effects = self.oeffects; // restore old effects
-	self.izunatarg.effects = self.izunatarg.oeffects;
+	self.izunatarg.effects = self.izunatarg.oeffects; // restore old effects on target
 
 	self.izunatarg.nowaterremove_finished = time + 1; // disable ai water check removal
 	
@@ -8534,6 +8535,7 @@ void() player_gizuna2   =[	$izuna1,	player_bflip1	]
 	self.owner.attack_finished = time;
 	self.izunatarg.angles_x = 0;
 	self.izunatarg = world;
+	self.grabbed = FALSE;
 
 	// Backflip setup
 	self.owner.doublejump = TRUE; // don't allow double jump out of a backflip

@@ -1834,6 +1834,7 @@ void() monster_death =
 .float nodrop; // don't auto-drop to floor
 void() enemy_start =
 {
+	self.oeffects = 0;
 	total_monsters = total_monsters + 1;
 	if (self.classname == "archer" && self.mode == 1) // mode 1 archers do not count, they're just background annoyances
 		total_monsters = total_monsters - 1;

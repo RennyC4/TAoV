@@ -450,8 +450,8 @@ void() HellKnight_Lightning =
 	WriteCoord (MSG_BROADCAST, trace_endpos_y);
 	WriteCoord (MSG_BROADCAST, trace_endpos_z);
 
-	UnmakeSolidList();
 	self.owner = oself;
+	UnmakeSolidList();
 };
 
 void() hellknight_lightning1	=[	$magicb1,	hellknight_lightning2	] 

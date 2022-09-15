@@ -176,7 +176,7 @@ void() InitCamera =
 			if (self.camerastyle != 5)
 			{
 				if (self.goalentity.izunatarg)
-					ot = ot * (bt * 1) * frametime; // izuna almost disables tracking temporarily
+					ot = ot * (bt * 1.5) * frametime; // izuna almost disables tracking temporarily
 				else
 					ot = ot * (bt * 3) * frametime; // the speed
 				
