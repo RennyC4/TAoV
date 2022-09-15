@@ -8407,10 +8407,11 @@ void() player_gizuna1   =[	$izuna1,	player_gizuna1	]
 			else
 				setorigin (self.izunatarg, self.origin);
 
+			self.izunatarg.takedamage = DAMAGE_AIM; // can be hit
 			self.izunatarg.izuna_exec_finished = time; // remove timer
 			self.izunatarg.grabbed = FALSE;
 			self.izunatarg.izunatarg = world;
-			
+		
 			self.grabbed = FALSE;
 			if (self.enemy.enemy)
 				self.enemy.enemy = world;

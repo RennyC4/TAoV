@@ -124,8 +124,11 @@ void() ethskull_flame_think =
 	}
 	makevectors (self.owner.angles); // needed for smooth origin calls
 	if (self.owner)
+	{
 		setorigin (self, self.owner.origin + v_up*18);
-
+		self.angles_x = self.owner.angles_x;
+		self.angles_z = self.owner.angles_z;
+	}
 	frameskip (0.01);
 };
 
