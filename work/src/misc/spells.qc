@@ -232,7 +232,7 @@ void() FireBallHomeIn =
 	if (self.flags & FL_ONGROUND)
 		self.flags = self.flags - FL_ONGROUND;
 		
-	UnmakeSolidList(); // Don't remove, fireball will explode on bounding box otherwise
+	//UnmakeSolidList(); // Don't remove, fireball will explode on bounding box otherwise
 };
 
 /*
@@ -299,7 +299,7 @@ void(float damg, float hight) Fireball =
 	missile = spawn ();
 	missile.owner = self;
 	missile.movetype = MOVETYPE_FLYMISSILE;
-	missile.solid = SOLID_SLIDEBOX;
+	missile.solid = SOLID_TRIGGER;
 	missile.classname = "fireball";
 		
 	// set missile speed
@@ -316,7 +316,7 @@ void(float damg, float hight) Fireball =
 	//missile.pflags = PFLAGS_FULLDYNAMIC | PFLAGS_NOSHADOW;
 	missile.light_lev = 40;
 	missile.color = [2, 1, 0];
-	missile.hitcontentsmaski = CONTENTBIT_SOLID|0x00000002i|CONTENTBIT_BODY|CONTENTBIT_PLAYERCLIP; // don't ignore clip brushes etc
+	missile.hitcontentsmaski = CONTENTBIT_SOLID|0x00000002i|CONTENTBIT_PLAYERCLIP; // don't ignore clip brushes etc
 	
 	missile.think = FireBallThink;
 	missile.nextthink = time + 0.1;
@@ -801,13 +801,6 @@ void() firebeam_think =
 	// do damage
 	if (self.frame == 0)
 	{
-		/*
-		if (self.owner.flags & FL_MONSTER)
-			MakeSolidList(TRUE); // Player only
-		else
-			MakeSolidList(FALSE);
-		*/
-		
 		head = searchradius(self.origin - v_up*20, 40);
 		while (head)
 		{
@@ -888,7 +881,6 @@ void() firebeam_think =
 			}
 			head = head.chain;
 		}
-		//UnmakeSolidList();
 	}
 	frameskip(0.1);
 };

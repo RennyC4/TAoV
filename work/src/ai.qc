@@ -105,7 +105,6 @@ void() close_check =
 		{
 			if (head == self.enemy && head.classname == "player" && head.health > 0 && self.closecheck_finished < time)
 			{
-				self.owner = head;
 				if (self.classname == "dragon" || self.classname == "golem" || self.classname == "werewolf")
 				{
 					if (self.th_melee)
@@ -283,10 +282,6 @@ void() HuntTarget =
 {
 	if (self.enemy.owner.flags & FL_NOTARGET)
 		return;
-		
-	// Player will become my owner, helps prevent 'stuck' issues
-	if (self.enemy.classname == "player")
-		self.owner = self.enemy;
 
 	self.show_hostile = time + 1;
 	self.goalentity = self.enemy;
@@ -1227,8 +1222,8 @@ void(float dist) ai_walk =
 	}
 
 	// Allows triggers to be hit, touchtriggers does nothing
-	MakeSolidList(FALSE);
-	UnmakeSolidList();
+	//MakeSolidList(FALSE);
+	//UnmakeSolidList();
 	//
 
 	if (self.flags & FL_ONGROUND)
@@ -1839,9 +1834,6 @@ void() monster_death =
 void() enemy_start =
 {
 	self.oeffects = 0;
-	total_monsters = total_monsters + 1;
-	if (self.classname == "archer" && self.mode == 1) // mode 1 archers do not count, they're just background annoyances
-		total_monsters = total_monsters - 1;
 	
 	if (!walkmove(0,0))
 	{
@@ -1858,15 +1850,21 @@ void() enemy_start =
 	self.use = wakeup; // monsters can be woken up by triggers
 	self.netname = "solid"; // this netname allows to become solid
 	self.takedamage = DAMAGE_AIM;
-	self.solid = SOLID_NOT; // monsters aren't solid till told to be
 	self.flags = self.flags | FL_MONSTER;
-	
+
+	self.solid = SOLID_SLIDEBOX;
+	self.dimension_solid = 2;
+	self.dimension_hit = 1;
+
+	/*
 	// FTE: Monsters need to obey the rules of clip brushes with wrbrushes
 	if (self.movetype != MOVETYPE_NOCLIP)
-		self.hitcontentsmaski = CONTENTBIT_SOLID|0x00000002i|CONTENTBIT_BODY|CONTENTBIT_PLAYERCLIP;
-	if (self.spawnflags & 64)
+		self.hitcontentsmaski = CONTENTBIT_SOLID|0x00000002i|CONTENTBIT_PLAYERCLIP|CONTENTBIT_BODY;
+	*/
+
+	if (self.spawnflags & 64) // Ignore clip brushes
 		self.hitcontentsmaski = CONTENTBIT_SOLID|0x00000002i|CONTENTBIT_BODY;
-	
+
 	if (!self.spawnflags & 2)
 		self.flags = self.flags - (self.flags & FL_ONGROUND); // Allow drop when spawnflag 2 isn't set
 	

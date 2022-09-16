@@ -150,7 +150,11 @@ void() Setup_Dummy =
 	setsize(dummy, VEC_HULL_MIN, VEC_HULL_MAX);
 
 	dummy.solid = SOLID_TRIGGER;
-	dummy.hitcontentsmaski = CONTENTBIT_SOLID|0x00000002i|CONTENTBIT_BODY|CONTENTBIT_PLAYERCLIP;
+	dummy.flags |= FL_FINDABLE_NONSOLID;
+	dummy.dimension_hit = 1;
+
+	//dummy.hitcontentsmaski = CONTENTBIT_SOLID|0x00000002i|CONTENTBIT_BODY|CONTENTBIT_PLAYERCLIP;
+
 	dummy.owner = self;
 
 	if (deathmatch == FALSE) // Setup Dummy Parms for coop/sp
@@ -3316,10 +3320,6 @@ void() player_grab2	=[	$grab2,	player_grab2	]
 	self.velocity_x = self.velocity_y = 0;
 	self.movetype = MOVETYPE_STEP;
 
-	// Fix for movement
-	if (self.enemy.flags & FL_MONSTER)
-		self.enemy.owner = self;
-
 	// look in the grabbed enemies direction
 	if (self.origin_x < self.enemy.origin_x)
 		self.angles_y = 0;
@@ -3384,7 +3384,8 @@ void() player_grabatk12	=[	$grabatk9,	player_grabatk13	]
 {     // lift off here
 	self.velocity = '0 0 0';
 	self.velocity_z = 200;
-	self.flags = self.flags - (self.flags & FL_ONGROUND);
+	if (self.flags & FL_ONGROUND)
+		self.flags = self.flags - (self.flags & FL_ONGROUND);
 }; 	
 void() player_grabatk13	=[	$grabatk10,	player_grabatk14	] {player_yell(0);};
 void() player_grabatk14	=[	$grabatk11,	player_grabatk15	] 
@@ -3430,7 +3431,8 @@ void() forwardflip_move =
 	self.velocity_z = 220;
 	self.inair = 1; // prevent head smash
 
-	self.flags = self.flags - (self.flags & FL_ONGROUND);
+	if (self.flags & FL_ONGROUND)
+		self.flags = self.flags - (self.flags & FL_ONGROUND);
 };
 
 void() player_fflip4;
@@ -6258,7 +6260,8 @@ void() player_pain =
 				self.fly_time = time + 999;
 				self.pain_finished = time + 999;
 				self.velocity = '0 0 0';
-				self.flags = self.flags - (self.flags & FL_ONGROUND);
+				if (self.flags & FL_ONGROUND)
+					self.flags = self.flags - (self.flags & FL_ONGROUND);
 				self.velocity = self.velocity - 9 * v_forward * 8;
 				self.velocity = self.velocity + 90 * '0 0 3';
 			}
@@ -6363,7 +6366,8 @@ void() player_pain =
 		{
 			player_hit3();
 			self.velocity = '0 0 0';
-			self.flags = self.flags - (self.flags & FL_ONGROUND);
+			if (self.flags & FL_ONGROUND)
+				self.flags = self.flags - (self.flags & FL_ONGROUND);
 			self.velocity = self.velocity - 9 * v_forward * 8;
 			self.velocity = self.velocity + 90 * '0 0 3';
 		}
@@ -6661,7 +6665,7 @@ void() player_block3	=[	$block3,	player_block3	]
 			self.angles_y = 180;
 	}
 	if (self.flags & FL_ONGROUND) // Don't allow hover
-		self.flags = self.flags - FL_ONGROUND;
+		self.flags = self.flags - (self.flags & FL_ONGROUND);
 	if (self.block_finished < time)
 		player_move();
 	if (self.perfectguard_buff < time)
@@ -6713,7 +6717,8 @@ void() player_blockbrk_movement =
 		self.velocity_x = self.speed * 2;
 	else if (self.angles_y == 0)
 		self.velocity_x = 0 - (self.speed * 2);
-	self.flags = self.flags - (self.flags & FL_ONGROUND);
+	if (self.flags & FL_ONGROUND)
+		self.flags = self.flags - (self.flags & FL_ONGROUND);
 };
 
 void() player_blockbrk1	=[	$blockbrk1,	player_blockbrk2	] 
@@ -7054,7 +7059,8 @@ void() divingswallow_hit =
 					self.bflipwall_finished = time + 0.3;
 				head.paincount = 0;
 				head.velocity = '0 0 0';
-				head.flags = head.flags - (head.flags & FL_ONGROUND);
+				if (head.flags & FL_ONGROUND)
+					head.flags = head.flags - (head.flags & FL_ONGROUND);
 
 				if (self.aircombo_count == 8 && head == self.enemy) // for air diving swallow
 				{
@@ -8279,7 +8285,7 @@ void() player_miniswordspin22   =[	$dfattack2,		player_move					]
 	self.owner.charge_count = 0; // disallow charge attack in air
 	self.inair = 16;
 	if (self.flags & FL_ONGROUND)
-		self.flags = self.flags - FL_ONGROUND;
+		self.flags = self.flags - (self.flags & FL_ONGROUND);
 	self.velocity_z = 300;
 	self.frame = $jump1;
 	self.think = player_move;
@@ -8409,6 +8415,7 @@ void() player_gizuna1   =[	$izuna1,	player_gizuna1	]
 				setorigin (self.izunatarg, self.origin);
 
 			self.izunatarg.takedamage = DAMAGE_AIM; // can be hit
+			self.takedamage = DAMAGE_AIM; // reactivate damage
 			self.izunatarg.izuna_exec_finished = time; // remove timer
 			self.izunatarg.grabbed = FALSE;
 			self.izunatarg.izunatarg = world;
@@ -8537,6 +8544,7 @@ void() player_gizuna2   =[	$izuna1,	player_bflip1	]
 
 	// Deal Damage
 	self.izunatarg.takedamage = DAMAGE_AIM; // reactivate damage on target
+	self.takedamage = DAMAGE_AIM; // reactivate damage
 	self.attack_type = 5; // Cut in half!
 	FireMelee(calc,0,3,50,6,1,1,TRUE,0,0);
 

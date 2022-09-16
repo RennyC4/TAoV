@@ -299,22 +299,18 @@ void() hk_eball_think =
 void() HellKnight_Lightning =
 {
 	local vector org;
-	local entity temp, oself;
+	local entity temp;
 
 	// !Always call this before entity shifting (self,oself stuff)!
-	MakeSolidList(TRUE); // Absolutely needed for tracelines to hit
+	//MakeSolidList(TRUE); // Absolutely needed for tracelines to hit
 
-	// Change owner so the traceline attack can hit Vigil
-	oself = self.owner;
-	self.owner = world;
-	
 	makevectors (self.angles);
 
 	self.colormod = '1 1 5';
 	sound (self, CHAN_WEAPON, "spells/thunder.wav", 1, ATTN_NORM);
 
 	org = self.origin + '0 0 20' + v_forward * 35;
-	traceline (org, org + v_forward * 350, FALSE, self);
+	traceline (org, org + v_forward * 350, MOVE_TRIGGERS, self);
 
 	if (trace_ent.health > 0 && trace_ent.takedamage && trace_ent.classname == "player" && trace_ent.perfectguard_buff < time)
 	{
@@ -451,9 +447,7 @@ void() HellKnight_Lightning =
 	WriteCoord (MSG_BROADCAST, trace_endpos_y);
 	WriteCoord (MSG_BROADCAST, trace_endpos_z);
 
-	self.owner = oself;
-
-	UnmakeSolidList();
+	//UnmakeSolidList();
 };
 
 void() hellknight_lightning1	=[	$magicb1,	hellknight_lightning2	] 
@@ -473,7 +467,11 @@ void() hellknight_lightning1	=[	$magicb1,	hellknight_lightning2	]
 void() hellknight_lightning2	=[	$magicb2,	hellknight_lightning3	] {monster_removeslide();ai_forceface();};
 void() hellknight_lightning3	=[	$magicb3,	hellknight_lightning4	] {monster_removeslide();};
 void() hellknight_lightning4	=[	$magicb4,	hellknight_lightning5	] {monster_removeslide();};
-void() hellknight_lightning5	=[	$magicb5,	hellknight_lightning6	] {monster_removeslide();HellKnight_Lightning();};
+void() hellknight_lightning5	=[	$magicb5,	hellknight_lightning6	] 
+{
+	monster_removeslide();
+	HellKnight_Lightning();
+};
 void() hellknight_lightning6	=[	$magicb6,	hellknight_lightning7	] {monster_removeslide();};
 void() hellknight_lightning7	=[	$magicb7,	hellknight_lightning8	] {monster_removeslide();};
 void() hellknight_lightning8	=[	$magicb8,	hellknight_lightning9	] 
@@ -484,7 +482,11 @@ void() hellknight_lightning8	=[	$magicb8,	hellknight_lightning9	]
 };
 void() hellknight_lightning9	=[	$magicb9,	hellknight_lightning10	] {monster_removeslide();};
 void() hellknight_lightning10	=[	$magicb10,	hellknight_lightning11	] {monster_removeslide();};
-void() hellknight_lightning11	=[	$magicb11,	hellknight_lightning12	] {monster_removeslide();HellKnight_Lightning();};
+void() hellknight_lightning11	=[	$magicb11,	hellknight_lightning12	] 
+{
+	monster_removeslide();
+	HellKnight_Lightning();
+};
 void() hellknight_lightning12	=[	$magicb12,	hellknight_lightning13	] {monster_removeslide();};
 void() hellknight_lightning13	=[	$magicb13,	hellknight_walk1  	] {monster_removeslide();};
 
@@ -546,7 +548,7 @@ void() monster_hell_knight =
 
 	self.netname = "solid";
 	self.takedamage = DAMAGE_AIM;
-	self.solid = SOLID_NOT;
+	self.solid = SOLID_SLIDEBOX;
 	self.classname = "hellknight";
 	self.displayname = "Corrupted Commander"; // new name
 	self.th_stand = hellknight_stand1;

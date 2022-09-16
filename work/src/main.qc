@@ -651,6 +651,11 @@ void() StartFrame =
 	framecount = framecount + 1;
 };
 
+//
+// Obsolete - Using FTE collision dimension_hit/solid now
+//
+
+/*
 void(float onlyplayer) MakeSolidList =
 {
 	local entity y;
@@ -679,6 +684,7 @@ void(float onlyplayer) MakeSolidList =
 		{ //if (y.flags & FL_MONSTER && y.grabbed)
 			if (y.solid != SOLID_SLIDEBOX && (y.classname == "player" || (y.flags & FL_MONSTER && y.grabbed)) && y.health > 0 && y.takedamage) // dead bodies shant go solid
 			{
+				bprint ("Player is SOLID\n");
 				y.solid = SOLID_SLIDEBOX;
 				setorigin(y, y.origin);
 			}
@@ -704,6 +710,11 @@ void() UnmakeSolidList =
 	}
 	y = find(world, netname, "solid");
 };
+*/
+
+//
+//
+//
 
 float bound2 (float bmin, float bvalue, float bmax)
 {

@@ -1318,7 +1318,7 @@ void() barrel_ressurect = // test if it's okay to respawn me
 	self.origin_z = self.origin_z + 1;
 	droptofloor();
 
-	MakeSolidList(FALSE);
+	//MakeSolidList(FALSE);
 	res = walkmove(self.angles_y, 0);
 	
 	if (res)
@@ -1338,7 +1338,7 @@ void() barrel_ressurect = // test if it's okay to respawn me
 	}
 	self.movetype = MOVETYPE_NONE;
 
-	UnmakeSolidList();
+	//UnmakeSolidList();
 };
 
 void() barrel_break =

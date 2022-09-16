@@ -264,7 +264,7 @@ T_Damage
 
 void(entity targ, entity inflictor, entity attacker, float damage, float statusrand) T_Damage =
 {
-	local	entity	oldself, old_owner;
+	local	entity	oldself;//, old_owner;
 	local	float	save, rs;
 
 	save = 0; // fixes bug with save calculation, rare instance of Vigil being 'OHKO'
@@ -277,7 +277,13 @@ void(entity targ, entity inflictor, entity attacker, float damage, float statusr
 
 	// used by buttons and triggers to set activator for target firing
 	damage_attacker = attacker;
-	
+
+	//
+	// Obsolete - Using FTE's dimension hit/solid
+	//
+
+	/*
+
 	// Allow entities to pass through each other while in combat, fixes odd stuck issues
 	// otherwise damage physics will be stopped. Barrels stay solid.
 	if (targ.classname != "player" && targ.classname != "breakable" && !deathmatch)
@@ -285,6 +291,8 @@ void(entity targ, entity inflictor, entity attacker, float damage, float statusr
 		old_owner = targ.owner;
 		targ.owner = attacker;
 	}
+
+	*/
 
 	// save damage based on the players armor level
 	if (targ.owner.armorlevel > 0 && targ.classname == "player")
@@ -325,7 +333,7 @@ void(entity targ, entity inflictor, entity attacker, float damage, float statusr
 		}
 		*/
 	}
-	
+
 	//
 	// Half-health trigger for monsters
 	//
@@ -506,12 +514,18 @@ void(entity targ, entity inflictor, entity attacker, float damage, float statusr
 	targ.knockback = 0;
 	
 	self = oldself;
-	
+
+	//
+	// Obsolete
+	//
+
+	/*
 	if (old_owner != world)
 	{
 		if (targ.classname != "breakable" && targ.classname != "player" && !deathmatch)
 			targ.owner = old_owner;
 	}
+	*/
 	// react to the damage - end
 };
 
@@ -1132,8 +1146,11 @@ void(float damg, float dist, float knokback, float rsize, float snd, float flsh,
 							local float chip_d = floor(damg / 4); // Guard breaks have chip damage
 							self.knockback = head.knockback = 0; // Knockback movement is done by $blockbrk1
 							head.owner.camshake_finished = time + 0.2;
-							if (self.flags & FL_MONSTER) // Enforce entity-passthrough
-								self.owner = head;
+
+							// Obsolete
+							//if (self.flags & FL_MONSTER) // Enforce entity-passthrough
+							//	self.owner = head;
+
 							T_Damage (head, self, self, chip_d, statusrand);
 
 							if (head.health > 0) // Don't override death routine						
