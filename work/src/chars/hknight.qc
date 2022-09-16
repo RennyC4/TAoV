@@ -301,9 +301,6 @@ void() HellKnight_Lightning =
 	local vector org;
 	local entity temp;
 
-	// !Always call this before entity shifting (self,oself stuff)!
-	//MakeSolidList(TRUE); // Absolutely needed for tracelines to hit
-
 	makevectors (self.angles);
 
 	self.colormod = '1 1 5';
@@ -447,7 +444,8 @@ void() HellKnight_Lightning =
 	WriteCoord (MSG_BROADCAST, trace_endpos_y);
 	WriteCoord (MSG_BROADCAST, trace_endpos_z);
 
-	//UnmakeSolidList();
+	if (self.enemy.classname == "player")
+		self.enemy.solid = SOLID_TRIGGER;
 };
 
 void() hellknight_lightning1	=[	$magicb1,	hellknight_lightning2	] 

@@ -152,6 +152,7 @@ void() Setup_Dummy =
 	dummy.solid = SOLID_TRIGGER;
 	dummy.flags |= FL_FINDABLE_NONSOLID;
 	dummy.dimension_hit = 1;
+	dummy.dimension_solid = 1; // New
 	dummy.hitcontentsmaski = CONTENTBIT_SOLID|0x00000002i|CONTENTBIT_BODY|CONTENTBIT_PLAYERCLIP;
 
 	dummy.owner = self;
@@ -8545,7 +8546,9 @@ void() player_gizuna2   =[	$izuna1,	player_bflip1	]
 	self.izunatarg.takedamage = DAMAGE_AIM; // reactivate damage on target
 	self.takedamage = DAMAGE_AIM; // reactivate damage
 	self.attack_type = 5; // Cut in half!
-	FireMelee(calc,0,3,50,6,1,1,TRUE,0,0);
+	sound (self, CHAN_AUTO, "player/hugekick.wav", 1, ATTN_NORM);
+	self.owner.screenflash_finished = time + 0.1; // hard hit -> screen flashes
+	FireMelee(calc,0,3,50,7,FALSE,1,TRUE,0,0); // silent sound / silent flash
 
 	self.owner.attack_finished = time;
 	self.izunatarg.angles_x = 0;

@@ -107,7 +107,7 @@ void() FireBall_HitBox =
 	head = searchradius(self.origin, 25); // hit box size from origin point
 	while (head)
 	{
-		if (head.takedamage && self.owner != head && head.perfectguard_buff < time && (self.owner.flags & FL_MONSTER && !head.flags & FL_MONSTER || !self.owner.flags & FL_MONSTER))
+		if (head.takedamage && head.deadflag != DEAD_DEAD && self.owner != head && head.perfectguard_buff < time && (self.owner.flags & FL_MONSTER && !head.flags & FL_MONSTER || !self.owner.flags & FL_MONSTER))
 		{
 			effect = spawn();
 			setorigin(effect, head.origin + v_up * 14);
@@ -231,32 +231,7 @@ void() FireBallHomeIn =
 
 	if (self.flags & FL_ONGROUND)
 		self.flags = self.flags - FL_ONGROUND;
-		
-	//UnmakeSolidList(); // Don't remove, fireball will explode on bounding box otherwise
 };
-
-/*
-void() FireballWallTouch =
-{
-	local entity effect;
-
-	if (other != self.owner) // && other.flags != FL_MONSTER)
-	{
-		effect = spawn();
-		setorigin(effect, self.origin);
-		setmodel(effect, "progs/fire.spr");
-		effect.movetype = MOVETYPE_NONE;
-
-		effect.think = firesprite_think;
-		effect.nextthink = time;
-		effect.solid = SOLID_NOT;
-		sound (self, CHAN_AUTO, "spells/fhit.wav", 1, ATTN_NORM);
-		spawn_embers();
-		remove(self);
-		return;
-	}
-};
-*/
 
 void() FireBallThink =
 {

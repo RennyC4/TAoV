@@ -1848,11 +1848,11 @@ void() enemy_start =
 	}
 
 	self.use = wakeup; // monsters can be woken up by triggers
-	self.netname = "solid"; // this netname allows to become solid
 	self.takedamage = DAMAGE_AIM;
 	self.flags = self.flags | FL_MONSTER;
 
 	self.solid = SOLID_SLIDEBOX;
+	self.flags |= FL_FINDABLE_NONSOLID;
 	self.dimension_solid = 2;
 	self.dimension_hit = 1;
 

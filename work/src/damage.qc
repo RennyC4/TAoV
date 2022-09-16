@@ -817,7 +817,10 @@ void(float damg, float dist, float knokback, float rsize, float snd, float flsh,
 				if (self.flags & FL_MONSTER && !head.flags & FL_MONSTER || !self.flags & FL_MONSTER) // fix monsters pretending to hit each other
 				{						
 					if (flsh)
-						self.owner.screenflash_finished = time + 0.1; // hard hit -> screen flashes
+					{
+						if (self.owner)
+							self.owner.screenflash_finished = time + 0.1; // hard hit -> screen flashes
+					}
 					
 					//
 					// Screen Shake on certain attacks

@@ -137,7 +137,7 @@ void() InitCamera =
 	local float test;
 
 	source = self.origin;
-	dest = self.origin + v_up * 16;
+	dest = self.origin + v_up * 32;
 
 	tracebox (source, '-12 -12 -12', '12 12 12', dest, 1, self);
 
