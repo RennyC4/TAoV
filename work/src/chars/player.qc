@@ -152,8 +152,7 @@ void() Setup_Dummy =
 	dummy.solid = SOLID_TRIGGER;
 	dummy.flags |= FL_FINDABLE_NONSOLID;
 	dummy.dimension_hit = 1;
-
-	//dummy.hitcontentsmaski = CONTENTBIT_SOLID|0x00000002i|CONTENTBIT_BODY|CONTENTBIT_PLAYERCLIP;
+	dummy.hitcontentsmaski = CONTENTBIT_SOLID|0x00000002i|CONTENTBIT_BODY|CONTENTBIT_PLAYERCLIP;
 
 	dummy.owner = self;
 
