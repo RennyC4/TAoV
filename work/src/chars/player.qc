@@ -150,7 +150,9 @@ void() Setup_Dummy =
 	setsize(dummy, VEC_HULL_MIN, VEC_HULL_MAX);
 
 	dummy.solid = SOLID_TRIGGER;
-	dummy.flags |= FL_FINDABLE_NONSOLID;
+	//dummy.flags |= FL_FINDABLE_NONSOLID;
+	
+	dummy.flags = FL_FINDABLE_NONSOLID;
 	dummy.dimension_hit = 1;
 	dummy.dimension_solid = 1; // New
 	dummy.hitcontentsmaski = CONTENTBIT_SOLID|0x00000002i|CONTENTBIT_BODY|CONTENTBIT_PLAYERCLIP;
@@ -1463,25 +1465,21 @@ void() player_think =
 			{
 				self.char.izunatarg = self.char.enemy; // record who gets izuna'd
 				self.char.enemy.izunatarg = self.char; // record on victim
-				
+
 				oself = self;
 				self = self.char; // become vigil real fast
-
 				local float test_iz;
 				test_iz = visible(self.izunatarg);
-
-				self = oself;
+				self = oself; // revert self
 
 				if (test_iz && self.char.izunatarg != world) // checks passed
 				{
 					oself = self;
 					self = self.char; // become vigil real fast
-					
 					player_prop(); // spawn fading clone
-					player_yell(0);
+					player_yell(0); // yell
 					sound (self, CHAN_AUTO, "player/grab.wav", 1, ATTN_NORM);
-					
-					self = oself;
+					self = oself; // revert self
 
 					WriteByte (MSG_BROADCAST, SVC_TEMPENTITY);
 					WriteByte (MSG_BROADCAST, TE_TELEPORT);
@@ -1525,15 +1523,15 @@ void() player_think =
 						sound (self.char, CHAN_AUTO, "player/jump.wav", 1, ATTN_NORM);
 						sound (self.char, CHAN_AUTO, "player/grab.wav", 1, ATTN_NORM);
 						self.char.velocity = '0 0 0';
-						self.char.velocity_z = 550;
-						self.char.izunatarg.velocity_z = 550;
+						self.char.velocity_z = 425; // normal player jump height
+						self.char.izunatarg.velocity_z = 425;
 					}
 					self.char.think = player_gizuna1;
 					self.char.nextthink = time;
 				}
 			}
 		}
-		
+
 	//
 	// Jump buffer for running attack hop / spin attack control fix
 	//
@@ -8406,8 +8404,8 @@ void() player_gizuna1   =[	$izuna1,	player_gizuna1	]
 			if (self.izunatarg.mins != VEC_HULL_MIN && self.izunatarg.maxs != VEC_HULL_MAX)
 			{
 				setorigin (self.izunatarg, self.origin + v_forward * 16 + v_up * 64);
-				local entity oself = self;
-				self = self.izunatarg;
+				local entity oself;
+				oself = self;
 				droptofloor(); // Put monster back to floor
 				self = oself;
 			}
@@ -8419,12 +8417,8 @@ void() player_gizuna1   =[	$izuna1,	player_gizuna1	]
 			self.izunatarg.izuna_exec_finished = time; // remove timer
 			self.izunatarg.grabbed = FALSE;
 			self.izunatarg.izunatarg = world;
-		
-			self.grabbed = FALSE;
 
-			// Don't remove izuna targets enemy, breaks stuff
-			//if (self.enemy.enemy)
-			//	self.enemy.enemy = world;
+			self.grabbed = FALSE;
 
 			self.izuna_apex = FALSE;
 			self.owner.grab_finished = time;
@@ -8445,7 +8439,6 @@ void() player_gizuna1   =[	$izuna1,	player_gizuna1	]
 
 			player_move();
 			self.owner.camerastyle = 0;
-			return;
 		}
 		
 		// Hit ground, do damage
@@ -8497,8 +8490,6 @@ void() player_gizuna1   =[	$izuna1,	player_gizuna1	]
 
 			self.think = player_gizuna2;
 			self.nextthink = time + 0.1;
-
-			return;
 		}
 	}
 
@@ -8522,7 +8513,6 @@ void() player_gizuna2   =[	$izuna1,	player_bflip1	]
 	{
 		setorigin (self.izunatarg, self.origin + v_forward * 16 + v_up * 64);
 		local entity soself = self;
-		self = self.izunatarg;
 		droptofloor(); // Put monster back to floor
 		self = soself;
 	}
@@ -8544,7 +8534,7 @@ void() player_gizuna2   =[	$izuna1,	player_bflip1	]
 
 	// Deal Damage
 	self.izunatarg.takedamage = DAMAGE_AIM; // reactivate damage on target
-	self.takedamage = DAMAGE_AIM; // reactivate damage
+	self.takedamage = DAMAGE_AIM; // reactivate damage on self
 	self.attack_type = 5; // Cut in half!
 	sound (self, CHAN_AUTO, "player/hugekick.wav", 1, ATTN_NORM);
 	self.owner.screenflash_finished = time + 0.1; // hard hit -> screen flashes

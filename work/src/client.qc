@@ -750,10 +750,9 @@ void() PlayerPreThink =
 					setorigin(manashadow, self.char.origin);
 
 					manashadow.think = manashadows_think;
-					manashadow.nextthink = time;
-
 					self.fullmana_display_timer = time + 0.5; // cooldown
 					sound (self, CHAN_AUTO, "player/fullmp.wav", 1, ATTN_NORM);
+					frameskip (time);
 				}
 				self.fullmana_display = TRUE; // Only do this once
 			}
