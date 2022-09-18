@@ -344,7 +344,14 @@
 }
 // entity 17
 {
-"classname" "monster_archer"
-"origin" "-288 0 96"
+"classname" "monster_hell_knight"
+"origin" "-336 64 80"
 "awareness" "4"
+"targetname" "2"
+}
+// entity 18
+{
+"classname" "monster_knight"
+"origin" "-240 64 80"
+"awaketarget" "2"
 }

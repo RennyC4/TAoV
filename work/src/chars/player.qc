@@ -2457,7 +2457,7 @@ void() player_grab =
 							self.owner.zoom_mode = 0; // no zoom
 						self.movetype = MOVETYPE_STEP; // Disable slope-slide
 						self.velocity_x = self.velocity_y = 0;
-						
+
 						if (self.th_grab)
 							self.th_grab();
 

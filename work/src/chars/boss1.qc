@@ -507,6 +507,33 @@ void() boss1_particle =
 
 void() boss1_pain =
 {
+	if (self.damage_type == 4) // Hit by lightning
+	{
+		local entity temp;
+
+		temp = spawn ();
+		temp.movetype = MOVETYPE_NOCLIP;
+		temp.solid = SOLID_NOT;
+		temp.classname = "sprite";
+
+		temp.alpha = 0.5;
+		if (random() < 0.5)
+			temp.frame = 0;
+		else
+			temp.frame = 1;
+
+		temp.effects = EF_MUZZLEFLASH | EF_ADDITIVE;
+		temp.alpha = 0.75;
+		temp.think = SUB_Remove;
+		temp.nextthink = time + 0.1;
+		temp.angles_y = -90; // face screen
+		temp.angles_z = random()*360; // random rotate
+		setmodel (temp, "progs/lsprite.spr");
+		setsize (temp, '0 0 0', '0 0 0');		
+		setorigin (temp, self.origin + v_up * 16);
+		spawn_color_glow(0, 0, 5, 100, temp);
+	}
+
 	if (self.health != self.oldhealth)
 		boss1_particle();
 
