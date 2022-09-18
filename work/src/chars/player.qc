@@ -1472,10 +1472,11 @@ void() player_think =
 
 				if (test_iz && self.char.izunatarg != world) // checks passed
 				{
+					player_yell(0); // yell
+
 					oself = self;
 					self = self.char; // become vigil real fast
 					player_prop(); // spawn fading clone
-					player_yell(0); // yell
 					sound (self, CHAN_AUTO, "player/grab.wav", 1, ATTN_NORM);
 					self = oself; // revert self
 
@@ -1994,10 +1995,8 @@ void() player_think =
 				self.char.think = player_move;
 				self.char.nextthink = time;
 				self.char.velocity_z = 350;
-				oself = self;
-				self = self.char;
 				player_yell(0);
-				self = oself;
+	
 				if (self.char.angles_y == 0)
 				{
 					self.char.velocity_x = -180;
@@ -2811,43 +2810,54 @@ void() player_gizuna1;
 void(float voice_type) player_yell =
 {
 	local float r, h;
+	local entity yeller;
 
 	h = random();
 	r = random();
 
 	if (self.classname != "player")
-		objerror ("Camera should not yell.\n");
+	{
+		if (self.classname == "camera")
+		{
+			if (self.char)
+				yeller = self.char;
+		}
+		else
+			objerror ("player_yell called by bad entity\n");
+	}
+	else
+		yeller = self;
 
 	if (voice_type == 0)
 	{
-		if (h < 0.4 && self.voice_finished < time)
+		if (h < 0.4 && yeller.voice_finished < time)
 		{
 			if (r < 0.25)
-				sound (self, CHAN_VOICE, "player/yell1.wav", 1, ATTN_NORM);
+				sound (yeller, CHAN_VOICE, "player/yell1.wav", 1, ATTN_NORM);
 			else if (r < 0.5)
-				sound (self, CHAN_VOICE, "player/yell2.wav", 1, ATTN_NORM);
+				sound (yeller, CHAN_VOICE, "player/yell2.wav", 1, ATTN_NORM);
 			else if (r < 0.75)
-				sound (self, CHAN_VOICE, "player/yell3.wav", 1, ATTN_NORM);
+				sound (yeller, CHAN_VOICE, "player/yell3.wav", 1, ATTN_NORM);
 			else
-				sound (self, CHAN_VOICE, "player/yell4.wav", 1, ATTN_NORM);
-			self.voice_finished = time + 0.8;
+				sound (yeller, CHAN_VOICE, "player/yell4.wav", 1, ATTN_NORM);
+			yeller.voice_finished = time + 0.8;
 		}
 	}
 	else
 	{
-		if (h < 0.2 && self.voice_finished < time)
+		if (h < 0.2 && yeller.voice_finished < time)
 		{
 			if (r < 0.20)
-				sound (self, CHAN_VOICE, "player/taunt1.wav", 1, ATTN_NORM);
+				sound (yeller, CHAN_VOICE, "player/taunt1.wav", 1, ATTN_NORM);
 			else if (r < 0.40)
-				sound (self, CHAN_VOICE, "player/taunt2.wav", 1, ATTN_NORM);
+				sound (yeller, CHAN_VOICE, "player/taunt2.wav", 1, ATTN_NORM);
 			else if (r < 0.60)
-				sound (self, CHAN_VOICE, "player/taunt3.wav", 1, ATTN_NORM);
+				sound (yeller, CHAN_VOICE, "player/taunt3.wav", 1, ATTN_NORM);
 			else if (r < 0.80)
-				sound (self, CHAN_VOICE, "player/taunt4.wav", 1, ATTN_NORM);
+				sound (yeller, CHAN_VOICE, "player/taunt4.wav", 1, ATTN_NORM);
 			else
-				sound (self, CHAN_VOICE, "player/taunt5.wav", 1, ATTN_NORM);
-			self.voice_finished = time + 1;
+				sound (yeller, CHAN_VOICE, "player/taunt5.wav", 1, ATTN_NORM);
+			yeller.voice_finished = time + 1;
 		}
 	}
 };
@@ -2916,11 +2926,7 @@ void() player_fire =
 	{
 		if (self.combo_finished < time)
 		{
-			oself = self;
-			self = self.char;
 			player_yell(0); // vigil yell
-			self = oself;
-			
 			if (self.char.angles_y == 45 || self.char.angles_y == -45)
 				self.char.angles_y = 0;
 			if (self.char.angles_y == 225 || self.char.angles_y == -225)
@@ -2955,10 +2961,7 @@ void() player_fire =
 				{
 					if (self.keyflags & (KEY_LEFT | KEY_RIGHT))
 					{
-						oself = self;
-						self = self.char;
 						player_yell(0); // vigil yell
-						self = oself;
 						if (self.zoom_mode != 0 && self.camera_forcezoom_finished < time)
 							self.zoom_mode = 0; // No Zoom
 						self.swordshadow_time = time + 0.4; // sword shadow
@@ -2971,10 +2974,7 @@ void() player_fire =
 					}
 					else
 					{
-						oself = self;
-						self = self.char;
 						player_yell(0); // vigil yell
-						self = oself;
 						if (self.zoom_mode != 0 && self.camera_forcezoom_finished < time)
 							self.zoom_mode = 0; // No Zoom
 						self.swordshadow_time = time + 0.4; // sword shadow
@@ -3006,10 +3006,7 @@ void() player_fire =
 			{
 				if (self.keyflags & (KEY_LEFT | KEY_RIGHT))
 				{
-					oself = self;
-					self = self.char;
 					player_yell(0); // vigil yell
-					self = oself;
 					if (self.zoom_mode != 0 && self.camera_forcezoom_finished < time)
 						self.zoom_mode = 0; // No Zoom
 					self.char.think = player_attacka5;
@@ -3020,10 +3017,7 @@ void() player_fire =
 				}
 				else
 				{
-					oself = self;
-					self = self.char;
 					player_yell(0); // vigil yell
-					self = oself;
 					if (self.zoom_mode != 0)
 						self.zoom_mode = 0; // No Zoom
 					self.swordshadow_time = time + 1; // sword shadow
@@ -3039,10 +3033,7 @@ void() player_fire =
 			{
 				if (self.keyflags & (KEY_LEFT | KEY_RIGHT))
 				{
-					oself = self;
-					self = self.char;
 					player_yell(0); // vigil yell
-					self = oself;
 					if (self.zoom_mode != 0 && self.camera_forcezoom_finished < time)
 						self.zoom_mode = 0; // No Zoom
 					self.char.swing_count = 0;
@@ -3102,11 +3093,9 @@ void() player_fire =
 				
 				sound (self.char, CHAN_AUTO, "player/jump.wav", 1, ATTN_NORM);
 				self.char.oangles = self.char.angles; // store original angle
-				oself = self;
-				self = self.char;
+
 				player_yell(0);
 				sound (self, CHAN_AUTO, "player/grab.wav", 1, ATTN_NORM);
-				self = oself;
 
 				self.char.think = player_gizuna1;
 				self.char.nextthink = time;
@@ -3146,10 +3135,7 @@ void() player_fire =
 			{
 				if ((relics & IT_RELIC10 || deathmatch) && (self.char.aircombo_count == 4 || (self.char.frame == $djump && relics & IT_RELIC3)))
 				{
-					oself = self;
-					self = self.char;
 					player_yell(1);
-					self = oself;
 					self.char.aircombo_count = 6; // Deal more damage on headsmash
 					self.noblock_finished = time + 999;
 					self.swordshadow_time = time + 1; // sword shadow
@@ -3157,10 +3143,7 @@ void() player_fire =
 				}
 				else
 				{
-					oself = self;
-					self = self.char;
 					player_yell(1);
-					self = oself;
 					self.char.aircombo_count = 5; // Normal head smash
 					sound (self.char, CHAN_WEAPON, "player/fast.wav", 1, ATTN_NORM);
 					self.char.think = player_jumpatk1;
@@ -3215,10 +3198,7 @@ void() player_fire =
 			{
 				if (self.char.aircombo_count < 3) // Don't yell during triple air kick
 				{
-					oself = self;
-					self = self.char;
 					player_yell(0);
-					self = oself;
 				}
 				if (self.zoom_mode != 0 && self.camera_forcezoom_finished < time)
 						self.zoom_mode = 0; // No Zoom
@@ -8406,8 +8386,8 @@ void() player_gizuna1   =[	$izuna1,	player_gizuna1	]
 			if (self.izunatarg.mins != VEC_HULL_MIN && self.izunatarg.maxs != VEC_HULL_MAX)
 			{
 				setorigin (self.izunatarg, self.origin + v_forward * 16 + v_up * 64);
-				local entity oself;
-				oself = self;
+				local entity oself = self;
+				self = self.izunatarg;
 				droptofloor(); // Put monster back to floor
 				self = oself;
 			}
@@ -8511,6 +8491,7 @@ void() player_gizuna2   =[	$izuna1,	player_bflip1	]
 	{
 		setorigin (self.izunatarg, self.origin + v_forward * 16 + v_up * 64);
 		local entity soself = self;
+		self = self.izunatarg;
 		droptofloor(); // Put monster back to floor
 		self = soself;
 	}
@@ -8539,17 +8520,18 @@ void() player_gizuna2   =[	$izuna1,	player_bflip1	]
 	FireMelee(calc,0,3,50,7,FALSE,1,TRUE,0,0); // silent sound / silent flash
 
 	self.owner.attack_finished = time;
-	self.izunatarg.angles_x = 0;
 	self.grabbed = FALSE;
 
 	// Backflip setup
 	self.owner.doublejump = TRUE; // don't allow double jump out of a backflip
 	self.owner.backflip_finished = time + 0.7; // Perfect value! Player enters negative velocity by this itme...
 	self.aircombo_count = 0; // prevent animation glitch in player_jumpframe();
+	//
 
 	self.effects = self.oeffects; // restore old effects
 	self.izunatarg.effects = self.izunatarg.oeffects; // restore old effects on target
 
 	self.angles_y = self.oangles_y; // restore correct angle
+	self.izunatarg.angles_x = 0;
 	self.izunatarg = world;
 };

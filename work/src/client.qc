@@ -853,7 +853,8 @@ void() PlayerPreThink =
 		//		 causes issues where plats will go through Vigil and set his bbox to null
 		//
 
-		if (self.char.mins != VEC_HULL_MIN && self.char.maxs != VEC_HULL_MAX && self.char.dodge_finished < time && self.char.lowceil == FALSE)
+		//if (self.char.mins != VEC_HULL_MIN && self.char.maxs != VEC_HULL_MAX && self.char.dodge_finished < time && self.char.lowceil == FALSE)
+		if (self.char.dodge_finished < time && self.char.lowceil == FALSE)
 			setsize(self.char, VEC_HULL_MIN, VEC_HULL_MAX);
 	
 		CheckImpulseButtons();

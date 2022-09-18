@@ -768,18 +768,6 @@ void() AnimateHead =
 	local float h = getstatf(STAT_COMBO);
 	local float g = getstatf(STAT_HEAD_GOD);
 
-/*
-	if (g) // God mode on
-	{
-		head.skin = 4;
-		head.angles_x = sin(cltime*0.65)*8;
-		head.angles_y = 180 + sin(cltime*0.45)*25;
-		head.colormod = '2 2 1';
-	}
-	else
-	{
-	*/
-
 	if (hp != 9999) // Not dead
 	{
 		if (g) // God mode on
@@ -1143,7 +1131,7 @@ void(float width, float height, float menushown) CSQC_UpdateView =
 		
 		local vector pos = [(width)/3.25, (height - 50)];
 		drawpic (pos + '1 1', "progs/gamepause.png", '321 28.5', '0 0 0', .1-(sin(cltime*3.5)*1), DRAWFLAG_NORMAL); // shadow
-		drawpic (pos, "progs/gamepause.png", '321 28.5', '1 1 1', .1-(sin(cltime*3.5)*1), DRAWFLAG_NORMAL);		
+		drawpic (pos, "progs/gamepause.png", '321 28.5', '1 1 1', .1-(sin(cltime*3.5)*1), DRAWFLAG_NORMAL);
 	}
 	else
 		pause_frame = 0;
@@ -1169,8 +1157,8 @@ void(float width, float height, float menushown) CSQC_UpdateView =
 		else
 			local vector pos = [(width - stringwidth("", TRUE, '321 28.5 0'))/3.5, (height - 18)/20];
 		
-		drawpic (pos + '1 1', "progs/demosign.png", '321 28.5', '0 0 0', .6-(sin(cltime*1.5)*5), DRAWFLAG_NORMAL); // shadow
-		drawpic (pos, "progs/demosign.png", '321 28.5', '1 1 1', .6-(sin(cltime*1.5)*5), DRAWFLAG_NORMAL);
+		drawpic (pos + '1 1', "progs/demosign.png", '321 28.5', '0 0 0', .6-(sin(cltime*3.5)*1), DRAWFLAG_NORMAL); // shadow
+		drawpic (pos, "progs/demosign.png", '321 28.5', '1 1 1', .6-(sin(cltime*3.5)*1), DRAWFLAG_NORMAL);
 
 		local vector pos2 = [(width - stringwidth("", TRUE, '170 81 0'))/30, (height - 18)/30];
 		drawpic (pos2 + '1 1', "progs/demosign2.png", '170 81', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
