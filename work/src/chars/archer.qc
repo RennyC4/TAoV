@@ -253,13 +253,14 @@ void() archer_fireb8 	=[	$shootb8,	archer_fireb9	] {ai_forceface();};
 void() archer_fireb9 	=[	$shootb9,	archer_fireb10	] {ai_forceface();};
 void() archer_fireb10 	=[	$shootb10,	archer_fireb11	] {ai_forceface();};
 void() archer_fireb11 	=[	$shootb11,	archer_fireb12	] {ai_forceface();};
-void() archer_fireb12 	=[	$shootb12,	archer_fireb13	] {sound (self, CHAN_WEAPON, "archer/bowdraw.wav", 1, ATTN_NORM);};
-void() archer_fireb13 	=[	$shootb13,	archer_fireb14	] {};
-void() archer_fireb14 	=[	$shootb14,	archer_fireb15	] {};
-void() archer_fireb15 	=[	$shootb15,	archer_fireb16	] {};
-void() archer_fireb16 	=[	$shootb16,	archer_fireb17	] {self.nextthink = time + 1;};
+void() archer_fireb12 	=[	$shootb12,	archer_fireb13	] {ai_forceface();sound (self, CHAN_WEAPON, "archer/bowdraw.wav", 1, ATTN_NORM);};
+void() archer_fireb13 	=[	$shootb13,	archer_fireb14	] {ai_forceface();};
+void() archer_fireb14 	=[	$shootb14,	archer_fireb15	] {ai_forceface();};
+void() archer_fireb15 	=[	$shootb15,	archer_fireb16	] {ai_forceface();};
+void() archer_fireb16 	=[	$shootb16,	archer_fireb17	] {ai_forceface();self.nextthink = time + 1;};
 void() archer_fireb17 	=[	$shootb17,	archer_fireb18	] 
 {
+	ai_forceface();
 	archer_arrow();
 	sound (self, CHAN_WEAPON, "archer/arrowuse.wav", 1, ATTN_NORM);
 };

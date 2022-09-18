@@ -9,7 +9,7 @@
 */
 
 .float beams_shot;
-.float firebeamSound_finished;
+.float elebeamSound_finished;
 .float lcount; // lightning count
 .float tcount; // twister count
 
@@ -23,7 +23,7 @@ void() chargeparticle_think =
 
 	if (self.cnt == 0) // charge particles for Ice Field
 		setmodel (self, "progs/s_bluep.spr");
-	else // charge particles for Fire Beam
+	else // charge particles for Elemental Beam
 		setmodel (self, "progs/s_redp.spr");
 
 	if (self.origin_x < self.owner.origin_x)
@@ -721,7 +721,7 @@ void() IceField =
 
 
 
-// FIRE BEAM
+// ELEMENTAL BEAM
 
 
 
@@ -748,7 +748,7 @@ void() chargebeam_effect =
 	frameskip(0.01);
 };
 
-void() firebeam_think =
+void() elebeam_think =
 {
 	local entity head, effect, spark;
 
@@ -813,7 +813,7 @@ void() firebeam_think =
 						if (deathmatch == TRUE)
 							self.mode = 1;
 
-						head.damage_type = 2; // Fire based damage
+						//head.damage_type = 2; // Fire based damage
 						head.knockback = 1;
 	
 						T_Damage (head, self, self.owner, self.mode, 0);
@@ -878,7 +878,7 @@ void() beameffect_think =
 	frameskip(0.01);
 };
 
-void() Firebeam_Muzzle =
+void() Elebeam_Muzzle =
 {
 	local	entity effect;
 
@@ -893,7 +893,7 @@ void() Firebeam_Muzzle =
 	effect.owner = self;
 	effect.movetype = MOVETYPE_NONE;
 	effect.solid = SOLID_NOT;
-	effect.classname = "firebeameffect";
+	effect.classname = "elebeameffect";
 	effect.think = beameffect_think;
 	effect.nextthink = time + 0.1;
 	effect.alpha = 0.5;
@@ -907,7 +907,7 @@ void() Firebeam_Muzzle =
 	setorigin (effect, self.origin + v_forward*36 + '0 0 12');
 };
 
-void(float damg, float hight, float fwd) Firebeam =
+void(float damg, float hight, float fwd) Elebeam =
 {
 	local entity beam;
 	local vector ang;
@@ -921,9 +921,9 @@ void(float damg, float hight, float fwd) Firebeam =
 	else
 		makevectors (self.angles);
 
-	if (self.firebeamSound_finished < time)
+	if (self.elebeamSound_finished < time)
 	{
-		self.firebeamSound_finished = time + 0.4;
+		self.elebeamSound_finished = time + 0.4;
 		sound (self, CHAN_BODY, "spells/fbeam.wav", 1, ATTN_NORM);
 	}
 
@@ -940,7 +940,7 @@ void(float damg, float hight, float fwd) Firebeam =
 	beam.alpha = 0.5;
 
 	beam.attack_finished = time + 0.5; // set beam duration
-	beam.think = firebeam_think;
+	beam.think = elebeam_think;
 	beam.nextthink = time;
 	beam.mode = damg;
 	beam.effects = EF_ADDITIVE;

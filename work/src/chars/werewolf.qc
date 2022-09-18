@@ -34,6 +34,17 @@ $frame painb11 painb12 painb13 painb14 painb15 painb16 painb17 painb18 painb19
 $frame cast1 cast2 cast3 cast4 cast5 cast6 cast7 cast8 cast9 cast10 cast11 cast12
 $frame cast13 cast14 cast15 cast16
 
+void()	werewolf_grabbed1	=[	$paina5,		werewolf_grabbed2	] {self.grab_finished = time + 1;};
+void()	werewolf_grabbed2	=[	$paina5,		werewolf_grabbed2	] 
+{
+	if (!self.izunatarg)
+	{
+		if (self.grab_finished < time || self.grabbed == FALSE)
+			self.th_walk();
+	}
+	else
+		ai_watercheck_removal();
+};
 
 //
 // Howl stupidly opening yourself up for punishment
@@ -248,6 +259,22 @@ void()	werewolf_painb =[	$painb1,	werewolf_painb	]
 // logic to decide which pain animation to play
 void() werewolf_pain_decide =
 {
+	//
+	// Enrage / Berserk
+	//
+	
+	local float r = random();
+	if (r <= 0.05 || self.spawnflags & 2)
+	{
+		if (self.health < self.max_health / 2.5 && self.mode == 0)
+		{
+			self.colormod = '3 1 1';
+			self.berserk_finished = time + 8;
+			enrage();
+			self.mode = 1; // only enrage once
+		}
+	}
+
 	monster_pain(self.enemy);
 
 	monster_removeslide();
@@ -356,6 +383,7 @@ void() monster_werewolf =
 	self.th_melee = werewolf_atk;
 	self.th_pain = werewolf_pain_decide;
 	self.th_die = werewolf_die;
+	self.th_grab = werewolf_grabbed1;
 	self.ignoreaircombo = TRUE; // Aircombos do not raise werewolf off ground
 	
 	//spawn_shadow();

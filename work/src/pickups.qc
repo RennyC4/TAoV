@@ -865,7 +865,7 @@ void() spellbook_touch =
 		else if (self.items & IT_SPELL2)
 			centerprint (other.owner, "/P^bIce Field Obtained!^b\n\n===========================\n\n^1Press the MAGIC button to select your spell with UP and DOWN\nPress MAGIC again to cast the selected spell\nPress JUMP or BLOCK to cancel out\n\n\n\n^3Press ATTACK or JUMP to resume...");
 		else if (self.items & IT_SPELL3)
-			centerprint (other.owner, "/P^bFire Beam Obtained!^b\n\n===========================\n\n^1Press the MAGIC button to select your spell with UP and DOWN\nPress MAGIC again to cast the selected spell\nPress JUMP or BLOCK to cancel out\n\n\n\n^3Press ATTACK or JUMP to resume...");
+			centerprint (other.owner, "/P^bElemental Beam Obtained!^b\n\n===========================\n\n^1Press the MAGIC button to select your spell with UP and DOWN\nPress MAGIC again to cast the selected spell\nPress JUMP or BLOCK to cancel out\n\n\n\n^3Press ATTACK or JUMP to resume...");
 		else if (self.items & IT_SPELL4)
 			centerprint (other.owner, "/P^bTwister Obtained!^b\n\n===========================\n\n^1Press the MAGIC button to select your spell with UP and DOWN\nPress MAGIC again to cast the selected spell\nPress JUMP or BLOCK to cancel out\n\n\n\n^3Press ATTACK or JUMP to resume...");
 	}

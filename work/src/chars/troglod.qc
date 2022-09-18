@@ -257,7 +257,7 @@ void()	troglod_firebeam13	=[	$casta11,		troglod_firebeam14	]
 	if (self.beams_shot < 30)
 	{
 		self.colormod = '5 0 0';
-		Firebeam(2, 12, 0);
+		Elebeam(2, 12, 0);
 		self.beams_shot = self.beams_shot + 1;
 	}
 	else
@@ -266,14 +266,14 @@ void()	troglod_firebeam13	=[	$casta11,		troglod_firebeam14	]
 		troglod_run1();
 	}
 	if (self.beams_shot <= 1)
-		Firebeam_Muzzle();
+		Elebeam_Muzzle();
 };
 void()	troglod_firebeam14	=[	$casta12,		troglod_firebeam15	] 
 {
 	if (self.beams_shot < 30)
 	{
 		self.colormod = '5 0 0';
-		Firebeam(1, 12, 0);
+		Elebeam(1, 12, 0);
 		self.beams_shot = self.beams_shot + 1;
 	}
 	else
@@ -287,7 +287,7 @@ void()	troglod_firebeam15	=[	$casta13,		troglod_firebeam13	]
 	if (self.beams_shot < 30)
 	{
 		self.colormod = '5 0 0';
-		Firebeam (1, 15, 0);
+		Elebeam (1, 15, 0);
 		self.beams_shot = self.beams_shot + 1;
 	}
 	else

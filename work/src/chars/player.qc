@@ -2421,6 +2421,9 @@ void() player_grab =
 				check.movetype = MOVETYPE_NOCLIP;
 				check.owner = self;
 				check.drawonlytoclient = self; // reduce network traffic
+				// Remove monster/player collision checks
+				check.dimension_solid = 0;
+				check.dimension_hit = 0;
 				setmodel (check, string_null);
 				setsize(check, self.enemy.mins, self.enemy.maxs);
 				setorigin(check, self.origin + v_forward * 25 + v_up * 32); // added v_up for slopes
@@ -5233,6 +5236,7 @@ void() player_jumpatk2	=[	$jumpatk2,	player_jumpatk2	]
 	local entity head, effect, fx;
 	local vector no = '0 0 0';
 	local vector h;
+	local float damg_calc;
 
 	self.owner.combometer_finished = time + 3; // give leniency for combos
 	self.owner.speedline_time = time + 0.05; // speedline
@@ -5411,9 +5415,7 @@ void() player_jumpatk2	=[	$jumpatk2,	player_jumpatk2	]
 					T_Damage (head, self, self, 18, 0);
 				else
 				{
-					local float damg_calc;
-					damg_calc = 50;
-					damg_calc = damg_calc + ceil(self.owner.swordlevel * 10);
+					damg_calc = 50 + ceil(self.owner.swordlevel * 10);
 					T_Damage (head, self, self, damg_calc, 0);
 				}
 				if (self.owner.bighit_freeze > time) // check if attack landed, needs to be called after FireMelee();
@@ -5430,9 +5432,7 @@ void() player_jumpatk2	=[	$jumpatk2,	player_jumpatk2	]
 					T_Damage (head, self, self, 10, 0);
 				else
 				{
-					//local float damg_calc;
-					damg_calc = 30;
-					damg_calc = damg_calc + ceil(self.owner.swordlevel * 10);
+					damg_calc = 30 + ceil(self.owner.swordlevel * 10);
 					T_Damage (head, self, self, damg_calc, 0);
 				}
 				if (self.owner.bighit_freeze > time) // check if attack landed, needs to be called after FireMelee();
@@ -6027,7 +6027,8 @@ void() player_twist    =[	$twist,	player_twist		]
 	//
 
 	v = self.angles;	  //
-	v_x = v_x - 25;       // Remove tilt on traceline!
+	//v_x = v_x - 25;       // Remove tilt on traceline!
+	v_x = 0;
 	makevectors (v);	  //
 
 	traceline(self.origin, self.origin - v_forward * 26, FALSE, self);
@@ -6947,7 +6948,7 @@ void() player_magicd7	=[	$magicd7,	player_magicd7 	]
 		self.takedamage = DAMAGE_NO;
 	if (self.beams_shot == 0)
 	{
-		Firebeam_Muzzle();
+		Elebeam_Muzzle();
 
 		// Subtract mana for the spell accordingly
 		if (self.owner.mana >= 100)
@@ -6958,7 +6959,7 @@ void() player_magicd7	=[	$magicd7,	player_magicd7 	]
 	// Fire beam here
 	if (self.beams_shot < 35) // 35 beams
 	{
-		Firebeam(5, 12, 20);
+		Elebeam(5, 12, 20);
 		self.beams_shot = self.beams_shot + 1; // increase beam by 1
 	}
 	else
@@ -8510,13 +8511,13 @@ void() player_gizuna2   =[	$izuna1,	player_bflip1	]
 	// Calculate dammage
 	local float calc;
 	if (self.owner.swordlevel == 0)
-		calc = 25 + ceil(self.owner.combo);
+		calc = 15 + ceil(self.owner.combo);
 	else if (self.owner.swordlevel == 1)
-		calc = 50 + ceil(self.owner.combo);
+		calc = 30 + ceil(self.owner.combo);
 	else if (self.owner.swordlevel == 2)
-		calc = 75 + ceil(self.owner.combo);
+		calc = 50 + ceil(self.owner.combo);
 	else
-		calc = 100 + ceil(self.owner.combo);
+		calc = 75 + ceil(self.owner.combo);
 	if (calc > 125) // cap max damage
 		calc = 125;
 

@@ -159,27 +159,10 @@ void()	knight2_painb11	=[	$painb11,	knight2_walk1	] {monster_removeslide();};
 void() knight2_pain =
 {
 	local float r, h;
-	
-	//
-	// Enrage / Berserk
-	//
-	
-	r = random();
-	if (r <= 0.05 || self.spawnflags & 2)
-	{
-		if (self.health < self.max_health / 2.5 && self.mode == 0)
-		{
-			self.colormod = '3 1 1';
-			self.berserk_finished = time + 8;
-			enrage();
-			self.mode = 1; // only enrage once
-		}
-	}
-
-	r = h = random();
 
 	monster_pain(self.enemy);
 
+	r = h = random();
 	if (h < 0.35)
 		sound (self, CHAN_VOICE, "knight/pain1.wav", 1, ATTN_NORM);
 	else if (h < 0.75)
@@ -187,7 +170,7 @@ void() knight2_pain =
 	else
 		sound (self, CHAN_VOICE, "knight/pain3.wav", 1, ATTN_NORM);
 		
-	if (r < 0.60) // pain1 is shorter, we want a harder opponent
+	if (r < 0.70) // pain1 is shorter, we want a harder opponent
 		knight2_pain1 (); 
 	else
 		knight2_painb1 ();

@@ -309,45 +309,42 @@
 }
 // entity 10
 {
-"classname" "monster_hell_knight"
-"origin" "-144 16 160"
-"angles" "0 180 0"
-"awareness" "4"
-"nodrop" "1"
-"spawnflags" "10"
+"classname" "item_mana"
+"origin" "-454 -82 48"
 }
 // entity 11
 {
 "classname" "item_mana"
-"origin" "-454 -82 48"
+"origin" "-474 -82 48"
 }
 // entity 12
 {
 "classname" "item_mana"
-"origin" "-474 -82 48"
+"origin" "-494 -82 48"
 }
 // entity 13
 {
 "classname" "item_mana"
-"origin" "-494 -82 48"
+"origin" "-494 -62 48"
 }
 // entity 14
 {
 "classname" "item_mana"
-"origin" "-494 -62 48"
+"origin" "-474 -62 48"
 }
 // entity 15
 {
 "classname" "item_mana"
-"origin" "-474 -62 48"
+"origin" "-454 -62 48"
 }
 // entity 16
 {
-"classname" "item_mana"
-"origin" "-454 -62 48"
+"classname" "monster_hydra"
+"origin" "144 -32 -48"
 }
 // entity 17
 {
-"classname" "monster_hydra"
-"origin" "144 -32 -48"
+"classname" "monster_archer"
+"origin" "-288 0 96"
+"awareness" "4"
 }

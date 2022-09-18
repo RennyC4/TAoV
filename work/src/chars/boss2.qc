@@ -346,7 +346,7 @@ void() boss_fbeam1 = [$shockb1, boss_fbeam2]
 {
 	if (self.beams_shot < 20)
 	{
-		Firebeam(3, 90, 90);
+		Elebeam(3, 90, 90);
 		self.beams_shot = self.beams_shot + 1;
 		boss_rockdrop();
 		shake_camera(0.1);

@@ -276,7 +276,7 @@ void()	gaunt_firebeam13	=[	$beam1,		gaunt_firebeam14	]
 	if (self.beams_shot < 30)
 	{
 		self.colormod = '5 0 0';
-		Firebeam(2, 12, 0);
+		Elebeam(2, 12, 0);
 		self.beams_shot = self.beams_shot + 1;
 	}
 	else
@@ -285,7 +285,7 @@ void()	gaunt_firebeam13	=[	$beam1,		gaunt_firebeam14	]
 		gaunt_run1();
 	}
 	if (self.beams_shot <= 1)
-		Firebeam_Muzzle();
+		Elebeam_Muzzle();
 };
 void()	gaunt_firebeam14	=[	$beam2,		gaunt_firebeam15	] 
 {
@@ -293,7 +293,7 @@ void()	gaunt_firebeam14	=[	$beam2,		gaunt_firebeam15	]
 	if (self.beams_shot < 30)
 	{
 		self.colormod = '5 0 0';
-		Firebeam(1, 12, 0);
+		Elebeam(1, 12, 0);
 		self.beams_shot = self.beams_shot + 1;
 	}
 	else
@@ -307,7 +307,7 @@ void()	gaunt_firebeam15	=[	$beam3,		gaunt_firebeam13	]
 	if (self.beams_shot < 30)
 	{
 		self.colormod = '5 0 0';
-		Firebeam (1,15, 0);
+		Elebeam(1,15, 0);
 		self.beams_shot = self.beams_shot + 1;
 	}
 	else

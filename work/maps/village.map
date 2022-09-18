@@ -8788,7 +8788,6 @@
 "classname" "fence"
 "origin" "3720 1268 -3832"
 "angle" "-0"
-"skin" "1"
 "frame" "1"
 "_phong" "1"
 }
@@ -8797,7 +8796,6 @@
 "classname" "fence"
 "origin" "3616 1260 -3832"
 "angle" "-0"
-"skin" "1"
 "frame" "1"
 "_phong" "1"
 }
@@ -8814,7 +8812,6 @@
 "classname" "fence"
 "origin" "2112 1272 -4008"
 "angle" "-0"
-"skin" "2"
 "_phong" "1"
 }
 // entity 190
@@ -8822,7 +8819,6 @@
 "classname" "fence"
 "origin" "2032 1272 -4000"
 "angle" "-0"
-"skin" "2"
 "frame" "3"
 "_phong" "1"
 }
@@ -8831,7 +8827,6 @@
 "classname" "fence"
 "origin" "1968 1272 -4000"
 "angle" "-0"
-"skin" "2"
 "frame" "3"
 "_phong" "1"
 }
@@ -8840,7 +8835,6 @@
 "classname" "fence"
 "origin" "1904 1272 -4000"
 "angle" "-0"
-"skin" "2"
 "frame" "3"
 "_phong" "1"
 }
@@ -8849,7 +8843,6 @@
 "classname" "fence"
 "origin" "1764 1272 -4008"
 "angle" "-0"
-"skin" "2"
 "frame" "1"
 "_phong" "1"
 }
@@ -13654,7 +13647,6 @@
 "classname" "fence"
 "origin" "1842 1272 -3999"
 "angle" "-0"
-"skin" "2"
 "frame" "3"
 "_phong" "1"
 }
@@ -14405,5 +14397,23 @@
 "origin" "3489 1265 -3855"
 "_color" "255 128 0"
 "style" "6"
+"_phong" "1"
+}
+// entity 479
+{
+"classname" "dlight_pflags"
+"origin" "-1638 1353 -3554"
+"light_lev" "188"
+"color" "1 0.33 0"
+"style" "1"
+"_phong" "1"
+}
+// entity 480
+{
+"classname" "dlight_pflags"
+"origin" "-1638 1173 -3554"
+"light_lev" "188"
+"color" "1 0.33 0"
+"style" "1"
 "_phong" "1"
 }
