@@ -25,21 +25,24 @@ void() grem_stand1	=[	$stand1,	grem_stand2		]
 	local float rs;
 
 	ai_stand();
-	if (self.voice_finished < time)
+	if (random() < 0.2)
 	{
-		rs = rint((random() * 3) + 1);
-		self.noise = "";
-		if (rs == 1)
-			self.noise = "gremlin/idle1.wav";
-		else if (rs == 2)
-			self.noise = "gremlin/idle2.wav";
-		else if (rs == 3)
-			self.noise = "gremlin/idle3.wav";
-		else
-			self.noise = "gremlin/idle4.wav";
-		sound (self, CHAN_VOICE, self.noise, 1, ATTN_NORM);
+		if (self.voice_finished < time)
+		{
+			rs = rint((random() * 3) + 1);
+			self.noise = "";
+			if (rs == 1)
+				self.noise = "gremlin/idle1.wav";
+			else if (rs == 2)
+				self.noise = "gremlin/idle2.wav";
+			else if (rs == 3)
+				self.noise = "gremlin/idle3.wav";
+			else
+				self.noise = "gremlin/idle4.wav";
+			sound (self, CHAN_VOICE, self.noise, 1, ATTN_NORM);
 
-		self.voice_finished = time + 5;
+			self.voice_finished = time + 5;
+		}
 	}
 };
 void() grem_stand2	=[	$stand2,	grem_stand3		] {ai_stand();};

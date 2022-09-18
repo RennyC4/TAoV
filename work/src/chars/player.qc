@@ -149,12 +149,10 @@ void() Setup_Dummy =
 	setmodel(dummy, "progs/plyr.mdl");
 	setsize(dummy, VEC_HULL_MIN, VEC_HULL_MAX);
 
-	dummy.solid = SOLID_TRIGGER;
-	//dummy.flags |= FL_FINDABLE_NONSOLID;
-	
-	dummy.flags = FL_FINDABLE_NONSOLID;
+	dummy.solid = SOLID_SLIDEBOX;
 	dummy.dimension_hit = 1;
-	dummy.dimension_solid = 1; // New
+	dummy.dimension_solid = 2;
+	dummy.flags |= FL_FINDABLE_NONSOLID;
 	dummy.hitcontentsmaski = CONTENTBIT_SOLID|0x00000002i|CONTENTBIT_BODY|CONTENTBIT_PLAYERCLIP;
 
 	dummy.owner = self;
@@ -1840,7 +1838,7 @@ void() player_think =
 						self.char.velocity = '0 0 0';
 						self.char.lastpos = self.char.origin; // for bottomless pits
 						self.charge_count = 0; // disallow charge attack in air
-						self.char.velocity_z = 425;
+						self.char.velocity_z = 425; // player jump height
 						self.char.frame = $jump1;
 						// Remove grab on jump
 						self.char.grabbed = FALSE;
@@ -3092,8 +3090,8 @@ void() player_fire =
 				//bprint ("Izuna Targ: ", self.char.izunatarg.classname, "\n");
 
 				// Upward velocity
-				self.char.velocity_z = 550;
-				self.char.izunatarg.velocity_z = 550;
+				self.char.velocity_z = 425;
+				self.char.izunatarg.velocity_z = 425;
 				//
 				self.char.takedamage = DAMAGE_NO; // Cannot be hit by others
 				self.char.izunaspin_speed = 0;
@@ -3467,6 +3465,10 @@ void() backflip_move =
 
 void() player_bflip1	=[	$bflip1,	player_bflip2	] 
 {
+	if (self.oangles)
+		self.angles = self.oangles;
+
+	self.angles_x = 0;
 	self.movetype = MOVETYPE_WALK;
 	self.takedamage = DAMAGE_NO;
 	self.angles_z = self.angles_x = 0;
@@ -6039,7 +6041,8 @@ void() player_twist    =[	$twist,	player_twist		]
 	//
 
 	v = self.angles;	  //
-	v_x = v_x - 25;       // Remove tilt on traceline!
+	//v_x = v_x + 25;       // Remove tilt on traceline!
+	v_x = 0;
 	makevectors (v);	  //
 
 	traceline(self.origin, self.origin - v_forward * 26, FALSE, self);
@@ -8387,7 +8390,6 @@ void() player_gizuna1   =[	$izuna1,	player_gizuna1	]
 		// Cancel out if water surface is hit
 		if (self.swimming)
 		{
-			self.angles = self.oangles; // restore correct angle
 			self.speedline_time = time;
 			self.owner.shadow_time = time;
 			self.owner.attack_finished = time;
@@ -8490,6 +8492,7 @@ void() player_gizuna1   =[	$izuna1,	player_gizuna1	]
 
 			self.think = player_gizuna2;
 			self.nextthink = time + 0.1;
+			return;
 		}
 	}
 
@@ -8499,11 +8502,6 @@ void() player_gizuna1   =[	$izuna1,	player_gizuna1	]
 
 void() player_gizuna2   =[	$izuna1,	player_bflip1	]
 {
-	self.angles = self.oangles; // restore correct angle
-
-	self.effects = self.oeffects; // restore old effects
-	self.izunatarg.effects = self.izunatarg.oeffects; // restore old effects on target
-
 	self.izunatarg.nowaterremove_finished = time + 1; // disable ai water check removal
 	
 	// Need to compensate for larger bounding box monsters
@@ -8542,11 +8540,16 @@ void() player_gizuna2   =[	$izuna1,	player_bflip1	]
 
 	self.owner.attack_finished = time;
 	self.izunatarg.angles_x = 0;
-	self.izunatarg = world;
 	self.grabbed = FALSE;
 
 	// Backflip setup
 	self.owner.doublejump = TRUE; // don't allow double jump out of a backflip
 	self.owner.backflip_finished = time + 0.7; // Perfect value! Player enters negative velocity by this itme...
 	self.aircombo_count = 0; // prevent animation glitch in player_jumpframe();
+
+	self.effects = self.oeffects; // restore old effects
+	self.izunatarg.effects = self.izunatarg.oeffects; // restore old effects on target
+
+	self.angles_y = self.oangles_y; // restore correct angle
+	self.izunatarg = world;
 };

@@ -1857,8 +1857,9 @@ void() enemy_start =
 	self.dimension_hit = 1;
 
 	// FTE: Monsters need to obey the rules of clip brushes with wrbrushes
-	if (self.movetype != MOVETYPE_NOCLIP)
-		self.hitcontentsmaski = CONTENTBIT_SOLID|0x00000002i|CONTENTBIT_BODY|CONTENTBIT_PLAYERCLIP;
+	//if (self.movetype != MOVETYPE_NOCLIP)
+	//	self.hitcontentsmaski = CONTENTBIT_SOLID|0x00000002i|CONTENTBIT_BODY|CONTENTBIT_PLAYERCLIP;
+
 	if (self.spawnflags & 64) // Ignore clip brushes
 		self.hitcontentsmaski = CONTENTBIT_SOLID|0x00000002i|CONTENTBIT_BODY;
 
