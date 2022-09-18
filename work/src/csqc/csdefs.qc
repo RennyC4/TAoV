@@ -598,7 +598,7 @@ const float FL_ONGROUND = 512;
 const float FL_PARTIALGROUND = 1024;
 const float FL_WATERJUMP = 2048;
 const float FL_JUMPRELEASED = 4096;
-const float FL_FINDABLE_NONSOLID = 16384;	/* Allows this entity to be found with findradius */
+const float FL_FINDABLE_NONSOLID = 16384;	/* Allows this entity to be found with searchradius */
 const float MOVE_NORMAL = 0;
 const float MOVE_NOMONSTERS = 1;	/* The trace will ignore all non-solid_bsp entities. */
 const float MOVE_MISSILE = 2;	/* The trace will use a bbox size of +/- 15 against entities with FL_MONSTER set. */
@@ -877,7 +877,7 @@ string(string s) precache_model = #20; /*
 		Precaches a model, making it known to clients and loading it from disk if it has a .bsp extension. This builtin (strongly) should be called during spawn functions. This must be called for each model name before setmodel may use that model name.
 		Modelindicies precached in SSQC will always be positive. CSQC precaches will be negative if they are not also on the server. */
 
-entity(vector org, float rad, optional .entity chainfield) findradius = #22; /*
+entity(vector org, float rad, optional .entity chainfield) searchradius = #22; /*
 		Finds all entities within a distance of the 'org' specified. One entity is returned directly, while other entities are returned via that entity's .chain field. */
 
 void(string s, ...) dprint = #25; /*

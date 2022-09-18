@@ -991,7 +991,7 @@ void() TwisterThink =
 		len = vlen(vdestdelta);
 		traveltime = len / 400; // second variable is the cyclespeed
 
-        head = findradius(self.origin, 115);
+        head = searchradius(self.origin, 115);
 		while (head)                      
 		{
 			self.enemy = head;

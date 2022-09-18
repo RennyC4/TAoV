@@ -977,7 +977,7 @@ const float FL_WATERJUMP = 2048;
 const float FL_JUMPRELEASED = 4096;
 #endif
 #if defined(CSQC) || defined(SSQC)
-const float FL_FINDABLE_NONSOLID = 16384;	/* Allows this entity to be found with findradius */
+const float FL_FINDABLE_NONSOLID = 16384;	/* Allows this entity to be found with searchradius */
 #endif
 #ifdef SSQC
 const float FL_LAGGEDMOVE = 65536;	/* Enables anti-lag on rockets etc. */

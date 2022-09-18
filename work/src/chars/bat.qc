@@ -16,7 +16,7 @@ void() bat_think =
 
 	if (!self.enemy)
 	{
-		head = findradius(self.origin, self.count);
+		head = searchradius(self.origin, self.count);
 		while (head)
 		{
 			if (head.classname == "player" && head.health > 0 && head.flypain == FALSE && visible(head) && head.origin_z < self.origin_z && !head.owner.flags & FL_NOTARGET)

@@ -1617,7 +1617,7 @@ void() boulder_think =
 {
 	local entity y, oself;
 
-	y = searchradius (self.origin, 35);
+	y = searchradius(self.origin, 35);
 	while (y)
 	{
 		if (y.classname == "breakable" || (y.netname == "solid" && y.takedamage))

@@ -42,6 +42,7 @@ void()	hydra_idle	=[	$hapan1,	hydra_idle	]
 
 void()	hydra_move	=[	$hswim1,	hydra_move	] 
 {
+	self.movetype = MOVETYPE_FLY; // Needs to be reinforced for some reason
 	if (self.walkframe >= 20)
 		self.walkframe = 0;
 	if (self.walkframe == 1)
@@ -49,7 +50,7 @@ void()	hydra_move	=[	$hswim1,	hydra_move	]
 
 	self.frame = $hswim1 + self.walkframe;
 	self.walkframe = self.walkframe + 1;
-	
+
 	ai_swim(5);
 };
 
@@ -164,7 +165,6 @@ void() monster_hydra =
 	
 	precache_model ("progs/hydra.mdl");
 
-	self.movetype = MOVETYPE_FLY;
 	setmodel (self, "progs/hydra.mdl");
 	setsize (self, VEC_HULL_MIN, VEC_HULL_MAX);
 	if (difficulty < 2)
@@ -173,12 +173,13 @@ void() monster_hydra =
 		self.health = 300; // hard health
 	self.netname = "solid";
 	self.takedamage = DAMAGE_AIM;
-	self.solid = SOLID_NOT;
+	self.solid = SOLID_SLIDEBOX;
 	self.classname = "hydra";
 	self.displayname = "Hydra";
 	self.flags = self.flags | FL_MONSTER | FL_SWIM;
 	self.experience = 25;
 	self.maxgold = 115;
+	self.movetype = MOVETYPE_FLY;
 
 	self.th_stand = hydra_idle;
 	self.th_walk = hydra_move;

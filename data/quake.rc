@@ -43,6 +43,7 @@ sv_gameplayfix_stepdown 1
 sys_clocktype 1
 //
 sv_gameplayfix_qwplayerphysics 0
+sv_gameplayfix_findradiusdistancetobox 1
 sv_nqplayerphysics 1
 sv_bigcoords 1
 // Fixes Vigil sliding on slopes

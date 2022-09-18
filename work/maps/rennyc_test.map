@@ -346,3 +346,8 @@
 "classname" "item_mana"
 "origin" "-454 -62 48"
 }
+// entity 17
+{
+"classname" "monster_hydra"
+"origin" "144 -32 -48"
+}

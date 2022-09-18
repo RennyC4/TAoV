@@ -642,14 +642,19 @@ void() boss1_death =
 
 void() boss1_awake =
 {
+	self.solid = SOLID_SLIDEBOX;
+	self.flags |= FL_FINDABLE_NONSOLID;
+	self.dimension_solid = 2;
+	self.dimension_hit = 1;
+
 	self.movetype = MOVETYPE_STEP; // Go
 
 	if (self.flags & FL_ONGROUND)
 		self.flags = self.flags - FL_ONGROUND;
-		
+
 	self.velocity = '0 500 0';
 	sound (self, CHAN_AUTO, "player/jump.wav", 1, ATTN_NONE);
-	
+
 	self.enemy = self.goalentity = activator;
 	self.bigfall_recovery_finished = time + 999;
 	sgk_think(); // start boss

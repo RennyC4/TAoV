@@ -805,7 +805,7 @@ void(float damg, float dist, float knokback, float rsize, float snd, float flsh,
 
 	makevectors(self.angles);
 
-	head = searchradius (self.origin + v_forward * dist + v_up * up, rsize);
+	head = searchradius(self.origin + v_forward * dist + v_up * up, rsize);
 
 	while (head)
 	{
