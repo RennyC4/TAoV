@@ -540,7 +540,8 @@ void() icefield_think =
 		if (self.frame < 17)
 		{
 			self.frame = self.frame + 1;
-			self.cnt2 = self.cnt2 + 4; // damage radius grows with model
+			self.scale = self.scale + 0.1;
+			self.cnt2 = self.cnt2 + 7; // damage radius grows with model
 		}
 		self.attack_finished = time + 0.08;
 	}
@@ -682,6 +683,7 @@ void() IceField =
 	effect.movetype = MOVETYPE_NONE;
 	effect.classname = "IceFieldHitGroundSprite";
 	effect.solid = SOLID_NOT;
+	effect.scale = 1;
 	effect.frame = 5;
 	effect.alpha = 0.6;
 	effect.effects = EF_ADDITIVE | EF_NODEPTHTEST | EF_FULLBRIGHT;
