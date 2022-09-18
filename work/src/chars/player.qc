@@ -5846,7 +5846,7 @@ void() player_knockedup1    =[	$walled1,	player_knockedup1 ]
 	if (self.swimming) // sink slower when hit than in normal air
 	{
 		self.velocity_z = self.velocity_z / 1.05;
-		if (self.inwater_pain > 300)
+		if (self.inwater_pain >= 150)
 		{
 			self.inwater_pain = 0;
 			player_move();
@@ -6018,8 +6018,7 @@ void() player_twist    =[	$twist,	player_twist		]
 	//
 
 	v = self.angles;	  //
-	//v_x = v_x + 25;       // Remove tilt on traceline!
-	v_x = 0;
+	v_x = v_x - 25;       // Remove tilt on traceline!
 	makevectors (v);	  //
 
 	traceline(self.origin, self.origin - v_forward * 26, FALSE, self);
@@ -6048,10 +6047,11 @@ void() player_twist    =[	$twist,	player_twist		]
 	{
 		self.owner.inwater_finished = time -1;
 		self.velocity_z = self.velocity_z / 1.05;
-		if (self.inwater_pain > 300)
+		if (self.inwater_pain >= 150)
 		{
 			self.inwater_pain = 0;
 			self.angles_z = 0;
+			self.angles_x = 0;
 			player_move();
 			return;
 		}
