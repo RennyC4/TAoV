@@ -22,10 +22,8 @@ $frame deathb1 deathb2 deathb3 deathb4 deathb5 deathb6 deathb7 deathb8 deathb9 d
 void() knight2_run1;
 void() knight2_block1	=[	$kneel3,	knight2_block1	] 
 {
-	if (!self.enemy.owner)
-		return;
-		
 	monster_removeslide();
+	ai_watercheck_removal();
 
 	if (self.origin_x < self.enemy.origin_x)
 		self.angles_y = 0;

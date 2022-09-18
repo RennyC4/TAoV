@@ -38,10 +38,8 @@ $frame magicc9 magicc10 magicc11
 void() hellknight_run1;
 void()	hellknight_block1	=[	$walk1,	hellknight_block1	] 
 {
-	if (!self.enemy.owner)
-		return;
-
 	monster_removeslide();
+	ai_watercheck_removal();
 
 	if (self.origin_x < self.enemy.origin_x)
 		self.angles_y = 0;

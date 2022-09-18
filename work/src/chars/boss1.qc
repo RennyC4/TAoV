@@ -732,14 +732,5 @@ void() monster_boss1 =
 	self.think = monster_boss1_remove;
 	self.nextthink = time + 0.1;
 
-//	self.th_block = knight_block1;
-//	if (!self.ai_blockfreq) // frequency on how much the enemy blocks
-//	{
-//		if (difficulty < 2)
-//			self.ai_blockfreq = 0.03; // 3% skill 1
-//		else
-//			self.ai_blockfreq = 0.7;  // 10% skill 2
-//	}
-
 //	spawn_shadow();
 };
