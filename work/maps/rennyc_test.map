@@ -310,9 +310,11 @@
 // entity 10
 {
 "classname" "monster_hell_knight"
-"origin" "-272 16 80"
+"origin" "-144 16 160"
 "angles" "0 180 0"
 "awareness" "4"
+"nodrop" "1"
+"spawnflags" "10"
 }
 // entity 11
 {

@@ -282,6 +282,8 @@ void() HuntTarget =
 {
 	if (self.enemy.owner.flags & FL_NOTARGET)
 		return;
+	if (self.movetype != MOVETYPE_NOCLIP)
+		self.movetype = MOVETYPE_STEP;
 
 	self.show_hostile = time + 1;
 	self.goalentity = self.enemy;
@@ -1653,10 +1655,8 @@ void() wakeup =
 			self.think = ghoul_rise1;
 		else
 			self.think = HuntTarget;
-		self.nextthink = time + 0.1;
-		return;
+		self.nextthink = time;
 	}
-	//player = find(player, classname, "player");
 };
 
 //
@@ -1860,11 +1860,18 @@ void() enemy_start =
 	//if (self.movetype != MOVETYPE_NOCLIP)
 	//	self.hitcontentsmaski = CONTENTBIT_SOLID|0x00000002i|CONTENTBIT_BODY|CONTENTBIT_PLAYERCLIP;
 
+	//
+	// Spawnflag setups
+	//
+
+	// * Spawnflag 4 is reserved for Hell Knight / progression (Map01) stuff *
+
 	if (self.spawnflags & 64) // Ignore clip brushes
 		self.hitcontentsmaski = CONTENTBIT_SOLID|0x00000002i|CONTENTBIT_BODY;
-
-	if (!self.spawnflags & 2)
-		self.flags = self.flags - (self.flags & FL_ONGROUND); // Allow drop when spawnflag 2 isn't set
+	if (!self.spawnflags & 2) // Allow drop when spawnflag 2 isn't set
+		self.flags = self.flags - (self.flags & FL_ONGROUND);
+	if (self.spawnflags & 8) // Monster stays in air until hit/woken up
+		self.movetype = MOVETYPE_FLY;
 	
 	if (pointcontents(self.origin) == CONTENT_WATER || pointcontents(self.origin) == CONTENT_SLIME || pointcontents(self.origin) == CONTENT_LAVA)
 	{

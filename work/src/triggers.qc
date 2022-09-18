@@ -86,6 +86,8 @@ void() trigger_push_touch =
 		other.think = other.th_jump;
 		other.nextthink = time + 0.1;
 	}
+	if (other.movetype == MOVETYPE_FLY && other.spawnflags & 8)
+		other.movetype = MOVETYPE_STEP;
 
 	if (self.spawnflags & PUSH_ONCE)
 	{
