@@ -643,7 +643,7 @@ void() lisa_chat =
 
 		if (self.cnt == 0)
 		{
-			if (!(game_progress & IT_PROGRESS2) || !(game_progress & IT_PROGRESS4)) // Cyclone & Diving Swallow
+			if (!(game_progress & IT_PROGRESS2) || !(game_progress & IT_PROGRESS4) || !(game_progress & IT_PROGRESS6)) // Cyclone Crush, Diving Swallow, Izuna Drop
 			{
 				if (!(game_progress & IT_PROGRESS2))
 				{
@@ -656,6 +656,12 @@ void() lisa_chat =
 					centerprint (self.enemy.owner, "/PHey Vigil, been a long time. Care to chat? or how about I teach you some new moves?\n\n===========================\n\n ^bLearn New Attack^b\n                 Leave");
 					aprice = 4000;
 					self.enemy.owner.display_price = 4000;
+				}
+				else if (!(game_progress & IT_PROGRESS6))
+				{
+					centerprint (self.enemy.owner, "/PHey Vigil, been a long time. Care to chat? or how about I teach you some new moves?\n\n===========================\n\n ^bLearn New Attack^b\n                 Leave");
+					aprice = 8000;
+					self.enemy.owner.display_price = 8000;
 				}
 			}
 			else
@@ -671,7 +677,7 @@ void() lisa_chat =
 		// User menu control
 		//
 
-		if (!(game_progress & IT_PROGRESS2) || !(game_progress & IT_PROGRESS4)) // Cyclone & Diving Swallow
+		if (!(game_progress & IT_PROGRESS2) || !(game_progress & IT_PROGRESS4) || !(game_progress & IT_PROGRESS6)) // Cyclone, Diving Swallow & Izuna Drop
 		{
 			if (self.enemy.owner.keyflags & KEY_UP)
 			{
@@ -708,7 +714,7 @@ void() lisa_chat =
 		{
 			if (self.selection == FALSE)
 			{
-				if (self.cnt == 0 && (!(game_progress & IT_PROGRESS2) || !(game_progress & IT_PROGRESS4))) // Cyclone & Diving Swallow
+				if (self.cnt == 0 && (!(game_progress & IT_PROGRESS2) || !(game_progress & IT_PROGRESS4)|| !(game_progress & IT_PROGRESS6))) // Cyclone, Diving Swallow, Izuna Drop
 				//if (self.cnt == 0 && (cycloneattack == FALSE || divingswallow == FALSE)) // User purchases an attack
 				{
 					if (self.enemy.owner.gold >= aprice)
@@ -737,6 +743,23 @@ void() lisa_chat =
 
 							if (!game_progress & IT_PROGRESS4) // Diving Swallow Attack
 								game_progress = game_progress | IT_PROGRESS4; // Add it (True)
+
+							self.enemy.owner.display_price = 0;
+							self.chatrefresh_finished = time + 3; // remove centerprint off player
+							sound (self.enemy.owner, CHAN_AUTO, "misc/levelup2.wav", 1, ATTN_NORM);
+							self.enemy.owner.gold = self.enemy.owner.gold - aprice; // remove gold
+							self.mode = 0; // Not chatting anymore
+							self.cnt = 0; // reset default topic
+							self.enemy.owner.conversation = FALSE;
+							self.pain_finished = time + 1; // Won't talk to user again for a second
+						}
+						else if (!game_progress & IT_PROGRESS6)
+						{
+							setpause (1);
+							centerprint (self.enemy.owner, "/P^bYou've learned Izuna Drop!^b\n\n===========================\n\n^1Perform this attack by pressing DOWN, DOWN, UP + ATTACK button combination after grabbing an opponent or hitting them while airborne\n\n\n\n^3Press ATTACK or JUMP to resume ...\n");
+
+							if (!game_progress & IT_PROGRESS6) // Izuna Drop Attack
+								game_progress = game_progress | IT_PROGRESS6; // Add it (True)
 
 							self.enemy.owner.display_price = 0;
 							self.chatrefresh_finished = time + 3; // remove centerprint off player

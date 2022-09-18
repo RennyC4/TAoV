@@ -789,11 +789,12 @@ nosave float SAVE_GAME_LOADED;
 //=======================
 
 float game_progress;
-float IT_PROGRESS1 = 1; // Reached Village / Update death menu
+float IT_PROGRESS1 = 1; // Reached Village + Update death menu
 float IT_PROGRESS2 = 2; // Cyclone Crush bought
 float IT_PROGRESS3 = 8; // Rock smashed in Map01 (Wilderness)
 float IT_PROGRESS4 = 16; // Diving Swallow bought
 float IT_PROGRESS5 = 32; // Vigil reached the Castle
+float IT_PROGRESS6 = 64; // Izuna Drop bought
 
 float shrine_progress;
 float shrineHUD_on; // Tells CSQC to draw the HUD for selection or not

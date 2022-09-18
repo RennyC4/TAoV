@@ -1443,7 +1443,7 @@ void() player_think =
 	// In-Air Izuna Drop
 	//
 
-	if (self.char.inair > 16 && !self.char.onground && self.char.izunatarg == world && self.char.enemy != world && self.char.frame != $izuna1 && self.char.pain_finished < time)
+	if (self.char.inair > 16 && !self.char.onground && self.char.izunatarg == world && self.char.enemy != world && self.char.frame != $izuna1 && self.char.pain_finished < time && game_progress & IT_PROGRESS6)
 	{
 			local float r = range(self.char, self.char.enemy);
 			local float cg = checkground(self.char.enemy);
@@ -3064,7 +3064,7 @@ void() player_fire =
 		else // grab attacks here
 		{
 			// Grab - izuna drop
-			if (self.moveprog1 > 0 && self.moveprog2 > 1)
+			if (self.moveprog1 > 0 && self.moveprog2 > 1 && game_progress & IT_PROGRESS6)
 			{
 				self.char.izunatarg = self.enemy; // record who gets izuna'd
 				self.enemy.izunatarg = self.char; // record on victim
