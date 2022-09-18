@@ -151,8 +151,7 @@ void() spinwindspiral_think =
 	else
 		self.cnt = 50; // stop at this height
 
-
-	if (self.cnt2 != 2)
+	if (self.cnt2 < 2)
 	{
 		self.angles_y = self.angles_y + 8; // spin speed
 		setorigin (self, self.owner.origin - v_up * 30 + (v_up * self.cnt));

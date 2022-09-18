@@ -3785,12 +3785,21 @@ void(float ver) spinatk_wind_spiral =
 		effect.scale = 2;
 		effect.think = spinwindspiralmini_think;
 	}
-	else // charge up spin attack
+	else if (ver == 2) // charge up spin attack
 	{
 		effect.attack_finished = time + 0.5;
 
 		effect.alpha = 1;
 		effect.scale = 2.88;
+		effect.angles_z = 90;	
+		effect.think = spinwindspiral_think;	
+	}
+	else if (ver == 3) // spin slash attack
+	{
+		effect.attack_finished = time + 0.25;
+
+		effect.alpha = 0.75;
+		effect.scale = 2;
 		effect.angles_z = 90;	
 		effect.think = spinwindspiral_think;	
 	}
@@ -7480,9 +7489,12 @@ void() player_doublejump1	=[	$djump,	player_doublejump1	]
 		}
 	}
 	
-	// Spin Slash Sound
+	// Sound
 	if (self.walkframe == 0 && (relics & IT_RELIC3 && world.model != "maps/village.bsp"))
+	{//asdf
 		sound (self, CHAN_BODY, "player/swrdspin.wav", 1, ATTN_NORM);
+		spinatk_wind_spiral(3); // spawn vfx
+	}
 	else if (self.walkframe == 2) // Spin slash damage
 	{
 		if (self.invunerability_finished < time && self.owner.safezone == FALSE)
