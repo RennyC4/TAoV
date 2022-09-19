@@ -791,20 +791,25 @@ void() SwordShadows =
 			shadows.skin = 1;
 		if (shadows.owner.swordlevel == 2)
 			shadows.skin = 2;
-		if (shadows.owner.swordlevel == 3)
+		if (shadows.owner.swordlevel == 3) // Quake's green pallet sucks
+		{
+			shadows.skin = 0;
+			shadows.colormod = '1 2 1';
+		}
+		if (shadows.owner.swordlevel == 4)
 			shadows.skin = 3;
 	}
 	else
 	{
-		shadows.skin = 4;
-		shadows.alpha = 0.50;
+		shadows.skin = 4; // pg skin
+		shadows.alpha = 0.5;
 	}
 
 	shadows.frame = self.char.frame;
 	shadows.angles = self.char.angles;
 	setorigin(shadows, self.char.origin);
 	shadows.think = SwordShadowsThink;
-	shadows.nextthink = time + 0.1;
+	shadows.nextthink = time;
 	self.nextshadow_time = time + 0.1;
 };
 

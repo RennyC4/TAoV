@@ -183,7 +183,9 @@ void() blacksmith_chat =
 			else if (self.enemy.owner.swordlevel == 1)
 				sprice = self.enemy.owner.display_price = 7000;
 			else if (self.enemy.owner.swordlevel == 2)
-				sprice = self.enemy.owner.display_price = 22000;
+				sprice = self.enemy.owner.display_price = 18000;
+			else if (self.enemy.owner.swordlevel == 3)
+				sprice = self.enemy.owner.display_price = 30000;
 			else
 				sprice = self.enemy.owner.display_price = 0;
 		}
@@ -263,7 +265,7 @@ void() blacksmith_chat =
 
 				if (self.cnt == 1) // User purchases Vol'Brand upgrade
 				{
-					if (self.enemy.owner.gold >= sprice && self.enemy.owner.swordlevel < 3)
+					if (self.enemy.owner.gold >= sprice && self.enemy.owner.swordlevel < 4)
 					{
 						self.enemy.owner.swordlevel = self.enemy.owner.swordlevel + 1;
 						DisplaySword(self.enemy);
