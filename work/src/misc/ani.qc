@@ -145,6 +145,11 @@ void() spinwindspiral_think =
 		remove(self);
 		return;
 	}
+	if (self.cnt2 == 3 && self.owner.frame != 241) // 241 is $djump1
+	{
+		remove(self);
+		return;
+	}
 
 	if (self.cnt < 50)
 		self.cnt = self.cnt + 1; // rising speed
@@ -176,7 +181,10 @@ void() spinwindspiral_think =
 		self.angles_x = self.angles_x - 12; // spin speed
 		setorigin (self, self.owner.origin);
 		if (self.attack_finished < time)
+		{
 			remove(self);
+			return;
+		}
 	}
 
 	frameskip (0.01);

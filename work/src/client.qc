@@ -137,9 +137,9 @@ void() InitCamera =
 	local float test;
 
 	source = self.origin;
-	dest = self.origin + v_up * 32;
+	dest = self.origin + v_up * 44;
 
-	tracebox (source, '-12 -12 -12', '12 12 12', dest, 1, self);
+	tracebox (source, '-24 -24 -12', '24 24 12', dest, 1, self);
 
 	if (trace_fraction < 1)
 		self.cam_zcheck = TRUE;

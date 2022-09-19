@@ -3756,7 +3756,6 @@ void(float ver) spinatk_wind_spiral =
 	makevectors (self.angles);
 
 	effect = spawn();
-	setorigin (effect, self.origin - v_up * 30);
 	setmodel(effect, "progs/spnatkspr.mdl");
 	
 	effect.cnt2 = ver;
@@ -3772,6 +3771,7 @@ void(float ver) spinatk_wind_spiral =
 	
 	if (ver == 0) // normal spin attack
 	{
+		setorigin (effect, self.origin - v_up * 30);
 		effect.angles_y = random()*360;
 		effect.attack_finished = time + 0.4;
 
@@ -3781,6 +3781,7 @@ void(float ver) spinatk_wind_spiral =
 	}
 	else if (ver == 1) // smaller spin attack (from foward attack)
 	{
+		setorigin (effect, self.origin);
 		effect.angles_y = random()*360;
 		effect.attack_finished = time + 0.4;
 
@@ -3790,6 +3791,7 @@ void(float ver) spinatk_wind_spiral =
 	}
 	else if (ver == 2) // charge up spin attack
 	{
+		setorigin (effect, self.origin);
 		effect.attack_finished = time + 0.5;
 
 		effect.alpha = 1;
@@ -3799,6 +3801,7 @@ void(float ver) spinatk_wind_spiral =
 	}
 	else if (ver == 3) // spin slash attack
 	{
+		setorigin (effect, self.origin);
 		effect.attack_finished = time + 0.25;
 
 		effect.alpha = 0.75;
