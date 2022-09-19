@@ -532,6 +532,7 @@ void() iced_particle =
 void() icefield_think =
 {
 	local entity head, effect, effect2;
+	local float vis;
 
 	droptofloor();
 
@@ -562,7 +563,16 @@ void() icefield_think =
 	head = searchradius(self.origin, (self.cnt2 * 1.5));
 	while (head)
 	{
-		if (self.owner != head && head.takedamage && head.iced_time < time && visible(head) && head.perfectguard_buff < time
+		if (world.model == "maps/boss2.bsp") // Special exception for Eternal Dragon, visible can't see his origin
+			vis = TRUE;
+		else
+		{
+			if (visible(head))
+				vis = TRUE;
+			else
+				vis = FALSE;
+		}
+		if (self.owner != head && head.takedamage && head.iced_time < time && head.perfectguard_buff < time && vis
 		&& ((coop == TRUE && head.classname != "player" && self.owner.classname == "player" || self.owner.flags & FL_MONSTER) || (coop == FALSE))) // coop
 		{
 			if (self.owner.flags & FL_MONSTER && !head.flags & FL_MONSTER || !self.owner.flags & FL_MONSTER) // fix monsters pretending to hit each other
@@ -588,7 +598,7 @@ void() icefield_think =
 					}
 					else
 					{
-						// cover the jerk in ice
+						// cover the enemy in ice
 						effect = spawn();
 						setorigin(effect, head.origin);
 						setmodel(effect, "progs/iced.mdl");
@@ -597,6 +607,11 @@ void() icefield_think =
 						effect.nextthink = time;
 						effect.solid = SOLID_NOT;
 						effect.alpha = 0.2;
+						if (head.flags & IT_BOSS2)
+						{
+							effect.alpha = 0.5;
+							effect.scale = 3;
+						}
 
 						// spray some particles
 						effect2 = spawn();
@@ -619,7 +634,13 @@ void() icefield_think =
 						{
 							if (head.classname == "player")
 								head.colormod = '0 2.5 5';
-							T_Damage (head, self, self.owner, 3, 0);
+							if (head.flags & IT_BOSS2) // Eternal Dragon is weak to Ice
+							{
+								head.colormod = '0 2.5 5';
+								T_Damage (head, self, self.owner, 16, 0);
+							}
+							else
+								T_Damage (head, self, self.owner, 3, 0);
 						}
 						else
 							T_Damage (head, self, self.owner, 1, 0);

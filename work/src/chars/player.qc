@@ -6035,11 +6035,11 @@ void() player_twist    =[	$twist,	player_twist		]
 	//
 
 	v = self.angles;	  //
-	//v_x = v_x - 25;       // Remove tilt on traceline!
-	v_x = 0;
+	v_x = v_x + 15;       // Remove tilt on traceline!
+	//v_x = 0;
 	makevectors (v);	  //
 
-	traceline(self.origin, self.origin - v_forward * 26, FALSE, self);
+	traceline(self.origin, self.origin + v_forward * 26, FALSE, self);
 	if (trace_fraction < 1 && trace_ent.solid == SOLID_BSP && !self.swimming)
 	{
 		self.owner.camshake_finished = time + 0.2;
@@ -6050,7 +6050,20 @@ void() player_twist    =[	$twist,	player_twist		]
 		player_walled2();
 		return;
 	}
-	
+
+	// Debugging purposes
+	/*
+	WriteByte (MSG_BROADCAST, SVC_TEMPENTITY);
+	WriteByte (MSG_BROADCAST, TE_LIGHTNING3);
+	WriteEntity (MSG_BROADCAST, trace_ent);
+	WriteCoord (MSG_BROADCAST, trace_endpos_x);
+	WriteCoord (MSG_BROADCAST, trace_endpos_y);
+	WriteCoord (MSG_BROADCAST, trace_endpos_z);
+	WriteCoord (MSG_BROADCAST, self.origin_x);
+	WriteCoord (MSG_BROADCAST, self.origin_y);
+	WriteCoord (MSG_BROADCAST, self.origin_z);
+	*/
+
 	if (self.velocity_z > 0)
 		self.angles_x = 25;
 	else

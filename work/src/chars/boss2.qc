@@ -625,6 +625,8 @@ void() monster_boss2 =
 	setmodel (self, "progs/boss.mdl");
 	setsize (self, '-121 -89 11', '120 83 277');
 	self.movetype = MOVETYPE_NONE;
+	self.onground = TRUE;
+	self.flags = FL_ONGROUND;
 	self.netname = "solid";
 	self.takedamage = DAMAGE_AIM;
 	self.solid = SOLID_NOT;
