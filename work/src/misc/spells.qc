@@ -263,6 +263,22 @@ void() FireBallThink =
 	frameskip(0.01);
 };
 
+void() FireballWallTouch =
+{
+	local entity effect;
+
+	effect = spawn();
+	setorigin(effect, self.origin);
+	setmodel(effect, "progs/fire.spr");
+	effect.movetype = MOVETYPE_NOCLIP;
+	effect.think = firesprite_think;
+	effect.nextthink = time;
+	effect.solid = SOLID_NOT;
+	sound (self, CHAN_BODY, "spells/fhit.wav", 1, ATTN_NORM);
+	remove(self);
+	return;
+};
+
 void(float damg, float hight) Fireball =
 {
 	local	entity missile;
@@ -284,9 +300,12 @@ void(float damg, float hight) Fireball =
 	missile.angles = vectoangles(missile.velocity);
 	missile.avelocity = '600 300 150';
 	missile.mode = damg;
-	//missile.touch = FireballWallTouch;
+	missile.touch = FireballWallTouch;
 	missile.attack_finished = time + 0.5;
 	missile.angles = self.angles;
+	// .touch should only work on BSP objects/walls
+	missile.dimension_hit = 0;
+	missile.dimension_solid = 0;
 
 	//missile.pflags = PFLAGS_FULLDYNAMIC | PFLAGS_NOSHADOW;
 	missile.light_lev = 40;
