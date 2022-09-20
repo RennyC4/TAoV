@@ -3088,7 +3088,7 @@
 {
 "classname" "light"
 "origin" "672 -96 -984"
-"light" "333"
+"light" "200"
 "wait" "3"
 "delay" "2"
 }
