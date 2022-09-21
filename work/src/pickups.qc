@@ -1127,7 +1127,10 @@ void() drop_gold =
 	setmodel (goldg, "progs/gold.mdl");
 	setsize (goldg, '-9 -12 -1', '10 10 5');
 	setsize (goldg, '0 0 0', '0 0 0');
+
 	goldg.solid = SOLID_TRIGGER;
+	goldg.health = 1; // Allow gold to use teledoor
+
 	goldg.classname = "gold";
 	goldg.effects = EF_FULLBRIGHT;
 	goldg.alpha = 1;
