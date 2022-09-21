@@ -6341,7 +6341,7 @@ void() player_pain =
 			self.think = player_knockedfar1;
 			self.nextthink = time + 0.1;
 		}
-		else if (self.knockback == 2)
+		else if (self.knockback == 2 || self.knockback == 8)
 		{
 			self.owner.camshake_finished = time + 0.2;
 			self.velocity_x = 0;

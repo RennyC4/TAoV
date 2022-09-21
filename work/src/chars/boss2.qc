@@ -230,7 +230,7 @@ void() Boss2Melee =
 	// '.char' refers to the Eternal Dragon itself as .owner is used for other means
 
 	local float calc = self.char.health - self.health;
-	local string s = ftos(calc);
+	//local string s = ftos(calc);
 
 	if (calc > 0 && calc != self.char.health)
 		self.char.health = self.char.health - calc;
@@ -435,8 +435,8 @@ void() boulder_thinker =
 	else
 	{
 		self.flags = self.flags | FL_MONSTER; // Don't hit boss
-		FireMelee(8,0,1,35,0,0,1,FALSE,0,0);
-		if (self.flags & FL_ONGROUND)
+		FireMelee(8,0,8,35,0,0,1,FALSE,0,0);
+		if (self.flags & FL_ONGROUND || checkground(self))
 			self.mode = 1;
 	}
 	if (self.attackedname == "player")
