@@ -1156,11 +1156,11 @@ void() PlayerPostThink =
 		else
 			self.combo = 0; // combo should always be zero in village and safe zones
 
-		// now do the movement
-		player_think(); // player.qc
-
 		// HP Bars
 		CheckEnemyHPBar();
+
+		// now do the movement
+		player_think(); // player.qc
 	}
 
 	// Enforce TAoV defaults
