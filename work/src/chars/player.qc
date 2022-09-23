@@ -1477,6 +1477,8 @@ void() player_think =
 
 				if (test_iz && self.char.izunatarg != world) // checks passed
 				{
+					self.char.velocity = '0 0 0';
+					self.char.movetype = MOVETYPE_WALK; // Fixes rare instance bug
 					player_yell(0); // yell
 
 					oself = self;
