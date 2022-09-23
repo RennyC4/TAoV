@@ -679,12 +679,20 @@ void(vector pos) DrawFlaskStatus =
 		drawstring (pos + '22 0', h, '8 8', '1 1 1', 1, DRAWFLAG_NORMAL);
 	}
 
-	// Draw "-"
-	drawstring (pos + '24 7', "=", '20 8', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
-	drawstring (pos + '23 6', "=", '20 8', '1 1 1', 1, DRAWFLAG_NORMAL);
-	
 	local float maxflask = getstatf(STAT_FLASK_MAX);
 	local string s = ftos(maxflask);
+
+	// Draw "-"/"--"
+	if (maxflask < 99)
+	{
+		drawstring (pos + '24 7', "=", '20 8', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
+		drawstring (pos + '23 6', "=", '20 8', '1 1 1', 1, DRAWFLAG_NORMAL);
+	}
+	else
+	{
+		drawstring (pos + '24 7', "==", '20 8', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
+		drawstring (pos + '23 6', "==", '20 8', '1 1 1', 1, DRAWFLAG_NORMAL);
+	}
 
 	// Draw max flask amount
 	drawstring (pos + '22 14', s, '8 8', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow

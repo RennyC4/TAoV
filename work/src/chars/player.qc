@@ -8319,34 +8319,60 @@ void() player_gizuna1   =[	$izuna1,	player_gizuna1	]
 
 	if (self.izunatarg)
 	{
-		if (self.velocity_z <= 0 || self.izuna_apex) // Izuna reached apex, start falling
+		if (self.velocity_z <= 0 || self.izuna_apex || self.velocity_x != 0) // Izuna reached apex, start falling. Check x velocity to fix minor sloped ceiling bug
 		{
 			if (self.angles_x > -180)
 			{
 				self.angles_x = self.angles_x - 4.5;
 				if (!self.izuna_apex)
 				{
+					self.movetype = MOVETYPE_FLY;
 					freeze_finished = time + (3 * frametime);
 
-					self.velocity = '0 0 300';
+					self.velocity = '0 0 0';
 					self.velocity = v_forward * - 80;
-					self.movetype = MOVETYPE_FLY;
+					self.velocity_z = 80;
 					player_yell(1);
 					sound (self, CHAN_AUTO, "player/motion1.wav", 1, ATTN_NORM);
 					self.izuna_apex = TRUE;
 					self.owner.zoom_mode = 1;
+
+					// Wind effect 1
+					makevectors(self.angles);
+					weffect = spawn();
+					setorigin(weffect, self.origin - v_up * 10 - v_forward * 30);
+					setmodel(weffect, "progs/windsprl.mdl");
+					weffect.angles_y = random()*360;
+					
+					weffect.effects = EF_ADDITIVE;
+					weffect.movetype = MOVETYPE_NOCLIP;
+					weffect.classname = "windspiral_weffect";
+					weffect.solid = SOLID_NOT;
+					weffect.owner = self;
+					weffect.alpha = 0.5;
+					weffect.scale = 0.15;
+					weffect.frame = 0;
+					weffect.velocity_z = 75;
+					weffect.attack_finished = time + 0.6;
+					weffect.drawflags = 7; // override lighting
+					weffect.abslight = -75;
+
+					setsize (weffect, '0 0 0', '0 0 0');
+
+					weffect.think = izuna_windspiral_think;
+					weffect.nextthink = time;
+					sound (self, CHAN_AUTO, "player/fast.wav", 1, ATTN_NORM);
 				}
 			}
 			else // Spin downward
 			{
-				if (self.velocity_z <= -180)
+				if (self.velocity_z <= 0)
 				{
 					if (self.velocity_x != 0 || self.velocity_y != 0)
 					{
 						self.velocity_x = self.velocity_y = 0; // head straight down
-						sound (self, CHAN_AUTO, "player/fast.wav", 1, ATTN_NORM);
 
-						// Effects
+						// Wind effect 2
 						weffect = spawn();
 						setorigin(weffect, self.origin + v_up * 100);
 						setmodel(weffect, "progs/windsprl.mdl");
@@ -8363,12 +8389,12 @@ void() player_gizuna1   =[	$izuna1,	player_gizuna1	]
 						weffect.velocity_z = 75;
 						weffect.attack_finished = time + 0.6;
 						weffect.drawflags = 7; // override lighting
-						weffect.abslight = -100;
+						weffect.abslight = -25;
 
 						setsize (weffect, '0 0 0', '0 0 0');
 
 						weffect.think = izuna_windspiral_think;
-						weffect.nextthink = time;						
+						weffect.nextthink = time;
 					}
 				}
 					
