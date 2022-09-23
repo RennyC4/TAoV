@@ -7093,7 +7093,7 @@ void() divingswallow_hit =
 						effect.angles_x = self.angles_x * -1;
 					else
 						effect.angles_x = self.angles_x;
-					effect.think = divingshit_think;
+					effect.think = divings_hit_think;
 					effect.nextthink = time;
 
 					effect2 = spawn();

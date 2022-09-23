@@ -178,8 +178,10 @@ void() spinwindspiral_think =
 	}
 	else
 	{
+		makevectors(self.owner.angles);
+		self.angles_y = self.owner.angles_y;
 		self.angles_x = self.angles_x - 12; // spin speed
-		setorigin (self, self.owner.origin);
+		setorigin (self, self.owner.origin - v_right * 6);
 		if (self.attack_finished < time)
 		{
 			remove(self);
@@ -283,7 +285,7 @@ void() izuna_windspiral_think =
 };
 
 // diving swallow hit ring model animation
-void() divingshit_think =
+void() divings_hit_think =
 {
 	if (self.alpha > 0.1)
 		self.alpha = self.alpha - 0.1;
