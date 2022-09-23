@@ -1,7 +1,7 @@
 #pragma warning disable Q207 // disable pos duplicate definition ignored warning
 
 .string message;
-entity head, gold, key1, potion;
+entity head, head2, gold, gold2, key1, potion;
 float pause_frame;
 
 void(vector pos, string str, float alph, vector med, vector color) Sbar_DrawString =
@@ -87,8 +87,9 @@ void(vector pos) DrawGoldStatus =
 
 void(float screenwidth, float screenheight) DrawPouchIcon =
 {
-	local vector pos2 = [(screenwidth - stringwidth("", TRUE, '20 20 0'))/5.8, (screenheight - 18)/254];
-	drawpic (pos2, "progs/pouch.png", '20 20', '1 1 1', 1, DRAWFLAG_NORMAL);
+	local vector pos = [(screenwidth - stringwidth("", TRUE, '20 20 0'))/5.8, (screenheight - 18)/254];
+	drawpic (pos + '1 1', "progs/pouch.png", '20 20', '0 0 0', 1, DRAWFLAG_NORMAL); // Shadow
+	drawpic (pos, "progs/pouch.png", '20 20', '1 1 1', 1, DRAWFLAG_NORMAL);
 };
 
 void(vector pos) DrawSwordStatus =
@@ -651,7 +652,18 @@ void(vector pos) DrawGoldHUD =
 		gold.origin = '0 0 -15';
 		gold.angles_x = -25;
 		gold.scale = 0.5;
+
+		gold2 = spawn();
+		precache_model("progs/gold.mdl");
+		setmodel(gold2, "progs/gold.mdl");
+		setorigin(gold2, '0 0 0');
+		gold2.frame = 0;
+		gold2.origin = '0 0 -15';
+		gold2.angles_x = -25;
+		gold2.colormod = '-255 -255 -255'; // Shadow
+		gold2.scale = 0.5;
 	}
+	entdraw(gold2, pos + '1 1', '14 100', -112); // Shadow
 	entdraw(gold, pos, '14 100', -112);
 };
 
@@ -852,7 +864,14 @@ void() AnimateHead =
 		head.angles_x = 60;
 	}
 };
- 
+
+// Animate head shadow
+void() AnimateHead_Shadow =
+{
+	head2.angles = head.angles;
+	head2.origin = head.origin;
+};
+
 float Draw_Head_Once;
 void(vector pos) Draw_Vigil_Head =
 {
@@ -865,9 +884,17 @@ void(vector pos) Draw_Vigil_Head =
         setmodel(head, "progs/hud_head.mdl");
         setorigin(head, '0 0 0');
 		head.skin = 0;
+
+        head2 = spawn();
+        precache_model("progs/hud_head.mdl");
+        setmodel(head2, "progs/hud_head.mdl");
+        setorigin(head2, '0 0 0');
+		head2.colormod = '-255 -255 -255';
     }
-    AnimateHead();
-    entdraw(head, pos,'36 36', -76);
+	AnimateHead(); // entity head
+	AnimateHead_Shadow(); // entity head2
+	entdraw(head2, pos + '0.3 0.3','37 37', -76); // Shadow
+	entdraw(head, pos,'36 36', -76);
 };
 
 //
@@ -953,14 +980,15 @@ void(vector pos) Draw_Level_Number =
 
 	if (h > -1 && h < 10)
 	{
-		drawstring (pos + '3 1', g, '8 8 0', '1 1 1', 1, DRAWFLAG_NORMAL); // drop shadow
+		drawstring (pos + '4 1', g, '8 8 0', '1 1 1', 1, DRAWFLAG_NORMAL); // drop shadow
 		drawstring (pos + '3 0', z, '8 8 0', '1 1 1', 1, DRAWFLAG_NORMAL);
 	}
 	if (h > 9 && h < 100)
 	{
-		drawstring (pos + '0 1', g, '8 8 0', '1 1 1', 1, DRAWFLAG_NORMAL); // drop shadow
+		drawstring (pos + '1 1', g, '8 8 0', '1 1 1', 1, DRAWFLAG_NORMAL); // drop shadow
 		drawstring (pos, z, '8 8 0', '1 1 1', 1, DRAWFLAG_NORMAL);
 	}
+	drawstring (pos + '-14 1', "Lv.", '8 8 0', '0 0 0', 1, DRAWFLAG_NORMAL); // Lv. text Shadow
 	drawstring (pos + '-15 0', "Lv.", '8 8 0', '1 1 1', 1, DRAWFLAG_NORMAL); // Lv. text
 };
 
