@@ -890,10 +890,12 @@ void(vector pos) Draw_Vigil_Head =
         setmodel(head2, "progs/hud_head.mdl");
         setorigin(head2, '0 0 0');
 		head2.colormod = '-255 -255 -255';
+		head2.scale = 1.075;
     }
 	AnimateHead(); // entity head
 	AnimateHead_Shadow(); // entity head2
-	entdraw(head2, pos + '0.3 0.3','37 37', -76); // Shadow
+	//entdraw(head2, pos + '0.3 0.3','37 37', -76); // Shadow
+	entdraw(head2, pos,'36 36', -76);
 	entdraw(head, pos,'36 36', -76);
 };
 

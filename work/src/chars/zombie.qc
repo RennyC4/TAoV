@@ -106,7 +106,13 @@ void() DarkBallThink =
 					head.owner.absorb_finished = time + 3;
 					if (head.owner.mana > head.owner.max_mana)
 						head.owner.mana = head.owner.max_mana;
+
+					if (self.origin_x > head.origin_x) // Bug fix vigil needs to face the proper angles
+						head.angles_y = 0; // Block victim faces left
+					else
+						head.angles_y = 180; // Block victim faces right
 					PerfectGuard(head);
+
 					// Check if Vigil is close, if so allow counter
 					if (range(self.owner, self.owner.enemy) == RANGE_CLOSE || range(self.owner, self.owner.enemy) == RANGE_MELEE || range(self.owner, self.owner.enemy) == RANGE_NEAR)
 					{
@@ -143,7 +149,7 @@ void() DarkBallThink =
 			setorigin (self, head.origin);
 			self.enemy = head;
 			self.think = DarkBallRemove;
-			self.nextthink = time + 0.1;
+			self.nextthink = time;
 			return;
 		}
 		head = head.chain;
