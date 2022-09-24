@@ -527,7 +527,6 @@ void() PlayerWaterPhysics =
 	// Tilt Vigil forward while moving/swimming
 	//
 
-	
 	if (self.char.health > 0 && self.char.pain_finished < time)
 	{
 		if ((self.char.velocity_x > -5 && self.char.velocity_x < 5) && (self.char.velocity_y > -5 && self.char.velocity_y < 5))
@@ -5869,6 +5868,7 @@ void() player_knockedup1    =[	$walled1,	player_knockedup1 ]
 		self.velocity_z = self.velocity_z / 1.05;
 		if (self.inwater_pain >= 150)
 		{
+			self.pain_finished = time; // needed, otherwise can't swim up?
 			self.inwater_pain = 0;
 			player_move();
 			return;
@@ -6084,6 +6084,7 @@ void() player_twist    =[	$twist,	player_twist		]
 		self.velocity_z = self.velocity_z / 1.05;
 		if (self.inwater_pain >= 150)
 		{
+			self.pain_finished = time; // needed, otherwise can't swim up?
 			self.inwater_pain = 0;
 			self.angles_z = 0;
 			self.angles_x = 0;

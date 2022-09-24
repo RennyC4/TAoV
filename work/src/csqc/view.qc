@@ -1,7 +1,7 @@
 #pragma warning disable Q207 // disable pos duplicate definition ignored warning
 
 .string message;
-entity head, head2, gold, gold2, key1, potion;
+entity head, head2, gold, gold2, key1, potion, potion2;
 float pause_frame;
 
 void(vector pos, string str, float alph, vector med, vector color) Sbar_DrawString =
@@ -764,13 +764,18 @@ void(vector pos) Draw_Health_Potion =
         precache_model("progs/hpot.mdl");
         setmodel(potion, "progs/hpot.mdl");
         setorigin(potion, '0 0 0');
-		//potion.flags = EF_FULLBRIGHT;
 		potion.drawflags = 7;
 		potion.abslight = 355;
 		potion.angles_y = 45;
+		
+        potion2 = spawn();
+        setmodel(potion2, "progs/hpot.mdl");
+        setorigin(potion2, '0 0 0');
+		potion2.colormod = '0 0 0';
     }
 	AnimateFlask();
-    entdraw(potion, pos, '25 45', -175);
+    entdraw(potion2, pos + '1 1', '25 45', -175); // Shadow
+	entdraw(potion, pos, '25 45', -175);
 };
 
 //
@@ -1319,8 +1324,8 @@ void(float width, float height, float menushown) CSQC_UpdateView =
 		DrawHeadBackground('20 10');				// Draw Head background border
 		DrawGoldHUD('145 -60');						// Draws 3D Gold model
 		Draw_Vigil_Head('18 16');					// Draws Vigil's 3D Head
-		Draw_Health_Potion('55 4');				// Draws Health Potion bottle
-		DrawFlaskStatus('55 4');
+		Draw_Health_Potion('51 2.5');					// Draws Health Potion bottle
+		DrawFlaskStatus('51 3');
 		DrawLevelName(width, height, '.9 .1 0');	// Draws level name at the beginning of a level
 		DrawXPBar('54 26');
 		DrawMPBar('18 48');
