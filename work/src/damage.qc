@@ -1013,7 +1013,8 @@ void(float damg, float dist, float knokback, float rsize, float snd, float flsh,
 						head.aircombo_finished = time + 0.5; // Allow the monster to be tracked!
 						if (!self.swimming)
 						{
-							self.velocity_x = head.velocity_x;
+							if (self.frame != 241) // $djump frame, fixes odd physics with spin slash hits
+								self.velocity_x = head.velocity_x;
 							self.velocity_z = self.velocity_y = 0;
 							if (head.ignoreaircombo == FALSE)
 								self.velocity_z = head.velocity_z = self.velocity_z + 150; // raise player/monsters in the air after each successful air hit
