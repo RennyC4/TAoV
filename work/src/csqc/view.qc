@@ -671,7 +671,6 @@ void(vector pos) DrawGoldHUD =
 // Draw Health Potion model on HUD
 //
 
-//TODO: Expand "-" on triple digits
 void(vector pos) DrawFlaskStatus =
 {
 	local float flask = getstatf(STAT_FLASK);
@@ -709,9 +708,9 @@ void(vector pos) DrawFlaskStatus =
 	// Draw max flask amount
 	drawstring (pos + '22 14', s, '8 8', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
 	drawstring (pos + '22 13', s, '8 8', '1 1 1', 1, DRAWFLAG_NORMAL);
-	
+
 	// Draw X over flask on certain conditions
-	
+
 	local float maxhp = getstatf(STAT_MAXHEALTH);
 	local float hp = getstatf(STAT_HEALTH);
     local float blind = getstatf(STAT_STATUS_BLIND);
@@ -738,7 +737,6 @@ void(vector pos) DrawFlaskStatus =
 			drawstring (pos + '5 8', "X", '16 16', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
 			drawstring (pos + '5 7', "X", '16 16', '1 1 1', 1, DRAWFLAG_NORMAL);
 		}
-
 	}
 };
 
@@ -766,7 +764,9 @@ void(vector pos) Draw_Health_Potion =
         precache_model("progs/hpot.mdl");
         setmodel(potion, "progs/hpot.mdl");
         setorigin(potion, '0 0 0');
-		potion.flags = EF_FULLBRIGHT;
+		//potion.flags = EF_FULLBRIGHT;
+		potion.drawflags = 7;
+		potion.abslight = 355;
 		potion.angles_y = 45;
     }
 	AnimateFlask();
