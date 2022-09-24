@@ -626,7 +626,7 @@ void() icefield_think =
 						effect.nextthink = time;
 						effect.solid = SOLID_NOT;
 						effect.alpha = 0.2;
-						if (head.flags & IT_BOSS2)
+						if (head.flags & FL_BOSS2)
 						{
 							effect.alpha = 0.5;
 							effect.scale = 3;
@@ -653,7 +653,7 @@ void() icefield_think =
 						{
 							if (head.classname == "player")
 								head.colormod = '0 2.5 5';
-							if (head.flags & IT_BOSS2) // Eternal Dragon is weak to Ice
+							if (head.flags & FL_BOSS2) // Eternal Dragon is weak to Ice
 							{
 								head.colormod = '0 2.5 5';
 								T_Damage (head, self, self.owner, 16, 0);
@@ -781,7 +781,7 @@ void() chargebeam_effect =
 		remove(self);
 		return;
 	}
-	if (self.owner.flags & IT_BOSS2) // Eternal Dragon difference
+	if (self.owner.flags & FL_BOSS2) // Eternal Dragon difference
 		setorigin (self, self.owner.origin + v_up * 100);
 	else
 		setorigin (self, self.owner.origin);

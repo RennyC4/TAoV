@@ -250,7 +250,7 @@ void(entity targ) SpawnHPBar =
 //	if (targ.max_health == 0)
 //		targ.max_health = targ.health;
 
-	if (targ.flags & IT_BOSS2)
+	if (targ.flags & FL_BOSS2)
 		e.view_ofs = '0 0 1'*targ.maxs_z + '0 0 -50'; // offset from enemy.origin
 	else
 		e.view_ofs = '0 0 1'*targ.maxs_z + '0 0 5'; // offset from enemy.origin

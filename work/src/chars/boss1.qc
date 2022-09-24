@@ -592,7 +592,7 @@ void() boss1_death =
 	self.takedamage = DAMAGE_NO;
 	self.velocity_x = self.velocity_y = 0;
 
-	bosses = bosses | IT_BOSS1; // Defeated Boss 1, record it
+	bosses = bosses | FL_BOSS1; // Defeated Boss 1, record it
 
 	//local string s = ftos(bosses);
 	//bprint ("Boss Flag: ", s, "\n");
@@ -691,7 +691,7 @@ void() boss1_awake =
 
 void() monster_boss1_remove =
 {
-	if (bosses & IT_BOSS1) // defeated
+	if (bosses & FL_BOSS1) // defeated
 	{
 		remove(self);
 		return;
@@ -712,7 +712,7 @@ can cause an event such as a door opening!
 */
 void() monster_boss1 =
 {
-	if (bosses & IT_BOSS1) // defeated
+	if (bosses & FL_BOSS1) // defeated
 	{
 		remove(self);
 		return;
@@ -746,7 +746,7 @@ void() monster_boss1 =
 
 	self.speed = 6;
 	self.noblood = TRUE;
-	self.flags = FL_MONSTER | FL_BOSS | IT_BOSS1;
+	self.flags = FL_MONSTER | FL_BOSS | FL_BOSS1;
 
 	self.th_die = boss1_death;
 	self.th_pain = boss1_pain;

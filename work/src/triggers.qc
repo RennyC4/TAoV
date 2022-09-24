@@ -200,9 +200,9 @@ void() multi_touch =
 {
 	// After bosses are defeated then the trigger_once
 	// needs to be disabled!
-	if (bosses & IT_BOSS1 && world.model == "maps/boss1.bsp")
+	if (bosses & FL_BOSS1 && world.model == "maps/boss1.bsp")
 		return;
-	if (bosses & IT_BOSS2 && world.model == "maps/boss2.bsp")
+	if (bosses & FL_BOSS2 && world.model == "maps/boss2.bsp")
 		return;
 
 	// default, player only
@@ -469,7 +469,7 @@ void() musicchange_use =
 	}
 	
 	// Boss defeated, boss music triggers perma-removed
-	if (bosses & IT_BOSS2 && world.model == "maps/boss2.bsp")
+	if (bosses & FL_BOSS2 && world.model == "maps/boss2.bsp")
 	{
 		remove(self);
 		return;
