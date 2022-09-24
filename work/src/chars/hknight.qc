@@ -294,19 +294,41 @@ void() hk_eball_think =
 	frameskip(0.01);
 };
 
+void() HellKnight_Lightning_BodyBlock =
+{
+	local float restore_solid;
+
+	local entity head = searchradius(self.origin, 370); // 370 matches origin+length of traceline
+	while (head)
+	{
+		if (head.flags & FL_MONSTER && head.grabbed == TRUE && head.enemy.onground && head.health > 0)
+			self.char = head; // record the ent
+		head = head.chain;
+	}
+};
+
 void() HellKnight_Lightning =
 {
 	local vector org;
 	local entity temp;
+	local float restore_player_solid, restore_monster_solid;
 
 	makevectors (self.angles);
 	self.colormod = '1 1 5';
 	sound (self, CHAN_WEAPON, "spells/thunder.wav", 1, ATTN_NORM);
 
-	org = self.origin + '0 0 20' + v_forward * 30;
-	
-	if (self.enemy.classname == "player")
+	org = self.origin + '0 0 20' + v_forward * 20;
+
+	restore_player_solid = self.enemy.dimension_solid;
+	if (self.enemy)
 		self.enemy.dimension_solid = 1;
+	
+	HellKnight_Lightning_BodyBlock(); // record monster grabbed
+	if (self.char)
+	{
+		restore_monster_solid = self.char.dimension_solid;
+		self.char.dimension_solid = 1;		
+	}
 
 	traceline (org, org + v_forward * 350, FALSE, self);
 
@@ -380,9 +402,9 @@ void() HellKnight_Lightning =
 			setmodel (temp2, "progs/lsprite.spr");
 			setsize (temp2, '0 0 0', '0 0 0');		
 			setorigin (temp2, self.origin);
-			
+
 			spawn_color_glow(0, 0, 5, 100, temp2);
-		
+
 			WriteByte (MSG_BROADCAST, SVC_TEMPENTITY);
 			WriteByte (MSG_BROADCAST, TE_LIGHTNING1);
 			WriteEntity (MSG_BROADCAST, trace_ent);
@@ -402,7 +424,7 @@ void() HellKnight_Lightning =
 				trace_ent.owner.mana = trace_ent.owner.max_mana;
 			trace_ent.owner.combo = trace_ent.owner.combo + 1; // raise combo counter
 
-			if (self.angles_y > 90 && self.angles_y < 270) // Attacker facing right
+			if (self.angles_y >= 90 && self.angles_y <= 270) // Attacker facing right
 				trace_ent.angles_y = 0; // victim faces left
 			else
 				trace_ent.angles_y = 180; // victim faces right
@@ -445,8 +467,13 @@ void() HellKnight_Lightning =
 	WriteCoord (MSG_BROADCAST, trace_endpos_y);
 	WriteCoord (MSG_BROADCAST, trace_endpos_z);
 
-	if (self.enemy.classname == "player")
-		self.enemy.dimension_solid = 2;
+	if (self.enemy)
+		self.enemy.dimension_solid = restore_player_solid;
+	if (self.char)
+	{
+		self.char.dimension_solid = restore_monster_solid;
+		self.char = world; // clean up
+	}
 };
 
 void() hellknight_lightning1	=[	$magicb1,	hellknight_lightning2	] 

@@ -1853,8 +1853,8 @@ void() enemy_start =
 
 	self.solid = SOLID_SLIDEBOX;
 	self.flags |= FL_FINDABLE_NONSOLID;
-	self.dimension_solid = 2;
 	self.dimension_hit = 1;
+	self.dimension_solid = 2;
 
 	// FTE: Monsters need to obey the rules of clip brushes with wrbrushes
 	//if (self.movetype != MOVETYPE_NOCLIP)
