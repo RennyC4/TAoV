@@ -1324,8 +1324,8 @@ void(float width, float height, float menushown) CSQC_UpdateView =
 		DrawHeadBackground('20 10');				// Draw Head background border
 		DrawGoldHUD('145 -60');						// Draws 3D Gold model
 		Draw_Vigil_Head('18 16');					// Draws Vigil's 3D Head
-		Draw_Health_Potion('51 2.5');					// Draws Health Potion bottle
-		DrawFlaskStatus('51 3');
+		Draw_Health_Potion('51 2.5');				// Draws Health Potion bottle
+		DrawFlaskStatus('51 5');
 		DrawLevelName(width, height, '.9 .1 0');	// Draws level name at the beginning of a level
 		DrawXPBar('54 26');
 		DrawMPBar('18 48');
