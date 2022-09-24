@@ -652,7 +652,7 @@ void() relic_touch =
 		setpause(1); // pause game on pickup
 
 		if (self.items & IT_RELIC1)
-			centerprint (other.owner, "/P^bIron Grip Obtained!^b\n\n===========================\n\n\n^1Grab and hoist up ledges\n\n\nPerformed by jumping towards a ledge and using UP direction to climb,\nto let go and fall press DOWN or BLOCK\n\n\n\n^3Press ATTACK or JUMP to resume ...");
+			centerprint (other.owner, "/P^bIron Grip Obtained!^b\n\n===========================\n\n\n^1Grab and hoist up ledges\n\n\nPerformed by jumping towards a ledge and using UP direction\nto climb, to let go and fall press DOWN or BLOCK\n\n\n\n^3Press ATTACK or JUMP to resume ...");
 		else if (self.items & IT_RELIC2)
 			centerprint (other.owner, "/P^bAscending Feather Obtained!^b\n\n===========================\n\n\n^1Perform a double jump\n\n\nPerformed by pressing JUMP again in mid-air\n\nYou may now perform Vigil's Uppercut Slice (UP + ATTACK in MID-AIR)\n\n\n\n^3Press ATTACK or JUMP to Resume ...");
 		else if (self.items & IT_RELIC3)
@@ -669,11 +669,17 @@ void() relic_touch =
 			centerprint (other.owner, "/P^bCube of Knowledge Obtained!^b\n\n===========================\n\n\n^1Shows enemies name\n\n\n\n^3Press ATTACK or JUMP to resume ...");
 		}
 		else if (self.items & IT_RELIC8)
-			centerprint (other.owner, "/P^bPerfect Guard Obtained!^b\n\n===========================\n\n\n^1Blocking an attack before it connects grants temporary invunerability as well as unblockable attacks, enemies are knocked back and any enhancements are negated\n\nPerfect Guarding a magic spell will absorb the mana cost and add it to Vigils MP\n\n\n\n^3Press ATTACK or JUMP to resume ...");
+			centerprint (other.owner, "/P^bPerfect Guard Obtained!^b\n\n===========================\n\n\n^1Blocking an attack before it connects grants temporary invunerability as well as unblockable attacks, enemies are knocked back and any enhancements are negated\n\n\n\n\n^3Press ATTACK or JUMP to resume ...");
 		else if (self.items & IT_RELIC9)
 			centerprint (other.owner, "/P^bSoul Candle Obtained!^b\n\n===========================\n\n\n^1Automatically lights up pitch black areas\n\n\n\n^3Press ATTACK or JUMP to resume ...");
 		else if (self.items & IT_RELIC10)
-			centerprint (other.owner, "/P^bBurning Epitome Obtained!^b\n\n===========================\n\n^1Flaming head smash unlocked\n\n\nPerformed by pressing DOWN + ATTACK MID-AIR after performing a Spin slash double jump or Uppercut Slice (UP + ATTACK in MID-AIR)\n\n\n^3Press ATTACK or JUMP to resume ...");
+			centerprint (other.owner, "/P^bBurning Epitome Obtained!^b\n\n===========================\n\n^1Flaming Head Smash Unlocked\n\n\nPerformed by pressing DOWN + ATTACK MID-AIR after performing Spin Slash or Uppercut Slice (UP + ATTACK in MID-AIR)\n\n\n^3Press ATTACK or JUMP to resume ...");
+		else if (self.items & IT_RELIC11)
+		{
+			centerprint (other.owner, "/P^bStalwart Perfect Guard Obtained!^b\n\n===========================\n\n^1Perfect Guarding a magic spell will absorb the mana cost and add it to Vigils mana pool\n\nPerfect Guard now lasts 5 seconds\n\n\n\n^3Press ATTACK or JUMP to resume ...");
+			if (relics != IT_RELIC8) // Auto-give regular perfect guard
+				relics = relics | IT_RELIC8;
+		}
 	}
 	sound (self, CHAN_BODY, "misc/relic.wav", 1, ATTN_NORM);
 
@@ -743,6 +749,11 @@ void() relic_think =
 	{
 		remove(self);
 		return;
+	}
+	if (self.cnt == 10 && relics & IT_RELIC11)
+	{
+		remove(self);
+		return;
 	}	
 	frameskip(0.05);
 };
@@ -807,6 +818,12 @@ void() item_relic =
 		precache_model ("progs/relic3.mdl");
 		setmodel (self, "progs/relic3.mdl");
 	}
+	else if (self.cnt == 10) // Stalwart Perfect Guard
+	{
+		precache_model ("progs/relic8.mdl");
+		setmodel (self, "progs/relic8.mdl");
+		self.colormod = '2 2 1';
+	}
 	else
 	{
 		precache_model ("progs/filler.spr");
@@ -842,6 +859,8 @@ void() item_relic =
 		self.items = IT_RELIC9;
 	else if (self.cnt == 9)
 		self.items = IT_RELIC10;
+	else if (self.cnt == 10)
+		self.items = IT_RELIC11;
 
 	// Give off RT Light
 	spawn_color_glow(3, 0, 5, 50, self);

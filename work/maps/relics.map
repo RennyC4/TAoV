@@ -377,3 +377,9 @@
 "origin" "-536 12 0"
 "mdl" "progs/relic3.mdl"
 }
+// entity 30
+{
+"classname" "item_relic"
+"origin" "-484 4 -20"
+"cnt" "10"
+}

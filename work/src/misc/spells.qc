@@ -155,7 +155,7 @@ void() FireBall_HitBox =
 				}
 				if (head.perfectblock > time)
 				{
-					if (head.owner) // Reward mana
+					if (head.owner && relics & IT_RELIC11) // Reward mana
 					{
 						head.owner.mana = head.owner.mana + 10;
 						head.owner.absorb_finished = time + 3;
@@ -395,7 +395,7 @@ void() LightningThink =
 							head.enemy = self.owner; // needed for counter attack to face the proper direction
 							head.counter_finished = time + 0.5;
 						}
-						if (head.owner) // Reward mana
+						if (head.owner && relics & IT_RELIC11) // Reward mana
 						{
 							head.owner.mana = head.owner.mana + 50;
 							head.owner.absorb_finished = time + 3;
@@ -605,7 +605,7 @@ void() icefield_think =
 							head.enemy = self.owner; // needed for counter attack to face the proper direction
 							head.counter_finished = time + 0.5;
 						}
-						if (head.owner) // Reward mana
+						if (head.owner && relics & IT_RELIC11) // Reward mana
 						{
 							head.owner.mana = head.owner.mana + 30;
 							head.owner.absorb_finished = time + 3;
@@ -833,7 +833,7 @@ void() elebeam_think =
 							head.enemy = self.owner; // needed for counter attack to face the proper direction
 							head.counter_finished = time + 0.5;
 						}
-						if (head.owner) // Reward mana
+						if (head.owner && relics & IT_RELIC11) // Reward mana
 						{
 							head.owner.mana = head.owner.mana + 100;
 							head.owner.absorb_finished = time + 3;
@@ -1092,7 +1092,7 @@ void() TwisterThink =
 						head.enemy = self.owner; // needed for counter attack to face the proper direction
 						head.counter_finished = time + 0.5;
 					}
-					if (head.owner) // Reward mana
+					if (head.owner && relics & IT_RELIC11) // Reward mana
 					{
 						head.owner.mana = head.owner.mana + 13;
 						head.owner.absorb_finished = time + 3;

@@ -102,10 +102,13 @@ void() DarkBallThink =
 			{
 				if (head.classname == "player" && head.perfectblock > time)
 				{
-					head.owner.mana = head.owner.mana + 10;
-					head.owner.absorb_finished = time + 3;
-					if (head.owner.mana > head.owner.max_mana)
-						head.owner.mana = head.owner.max_mana;
+					if (relics & IT_RELIC11) // Stalwart PG gives mana
+					{
+						head.owner.mana = head.owner.mana + 10;
+						head.owner.absorb_finished = time + 3;
+						if (head.owner.mana > head.owner.max_mana)
+							head.owner.mana = head.owner.max_mana;
+					}
 
 					if (self.origin_x > head.origin_x) // Bug fix vigil needs to face the proper angles
 						head.angles_y = 0; // Block victim faces left

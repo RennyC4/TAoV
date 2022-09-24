@@ -305,12 +305,14 @@ void(entity plyr) PerfectGuard	=
 	plyr.owner.screentint_finished = time + 0.01 * (frametime * 100);
 	stuffcmd (plyr.owner, "v_cshift 255 200 0 25\n"); // yellow tint quick
 
-
 	freeze_finished = time + 0.05 * (frametime * 100);
 	plyr.colormod = '2 2 1';
 	plyr.alpha = 0.625; // ghost effect
 	plyr.colormod = '5 5 0';
-	plyr.perfectguard_buff = plyr.owner.perfectguard_buff = time + 3; // disallow setting vigil to DAMAGE_AIM
+	if (relics & IT_RELIC11) // Stalwart
+		plyr.perfectguard_buff = plyr.owner.perfectguard_buff = time + 5; // disallow setting vigil to DAMAGE_AIM
+	else
+		plyr.perfectguard_buff = plyr.owner.perfectguard_buff = time + 3; // disallow setting vigil to DAMAGE_AIM
 	plyr.takedamage = DAMAGE_NO;
 	plyr.effects = EF_MUZZLEFLASH; // create light on melee impact
 	sound (plyr, CHAN_AUTO, "player/perfblok.wav", 1, ATTN_NONE);
