@@ -703,7 +703,7 @@ void() PlayerPreThink =
 
 	if (self.char != world)
 	{
-		// Angle fix
+		// Angle fix (!Important!)
 		if (self.char.angles_y >= 270)
 			self.char.angles_y = -90;
 
@@ -890,29 +890,30 @@ void() PlayerPreThink =
 		//
 		// Swimming Physics are applied
 		//
-		
+
 		// We use pointcontents due to MOVETYPE_STEP changes on Vigil
 		// causing 'waterlevel' not to update, that only happens on MOVETYPE_WALK entities
-		if ((pointcontents(self.char.origin) == CONTENT_WATER || pointcontents(self.char.origin) == CONTENT_LAVA || pointcontents(self.char.origin) == CONTENT_SLIME))
+		self.swimming = self.char.swimming;
+		if (pointcontents(self.char.origin) == CONTENT_WATER || pointcontents(self.char.origin) == CONTENT_LAVA || pointcontents(self.char.origin) == CONTENT_SLIME)
 		{
 			self.char.movetype = MOVETYPE_WALK; // Needed otherwise odd problems occur
-			
-			if (!self.char.swimming) // First entered water
+
+			if (!self.swimming) // First entered water
 			{
-				self.inwater_finished = time + 0.6;
-				// Fixes not allowing Left/Right movement in water
-				if (self.char.block_finished > time)
-					self.char.block_finished = time; // remove any left over block timers
 				self.char.aircombo_count = 0;
 				self.ledgegrab = FALSE;
 				self.walljump = FALSE;
+				self.char.flypain = FALSE;
 				self.wallrun = FALSE;
 				self.ledgegrab_finished = time;
 				self.attack_finished = time;
-				
+				self.char.block_finished = time; // remove any left over block timers
+
+				self.inwater_finished = time + 0.6;
 				self.char.velocity_x = self.char.velocity_x / 4 * (frametime * 100);
 				self.char.velocity_y = self.char.velocity_y / 4 * (frametime * 100);
 				self.char.velocity_z = self.char.velocity_z / 4 * (frametime * 100);
+
 				if (self.playersplash_finished < time)
 				{
 					watersplash_particle();
@@ -923,6 +924,8 @@ void() PlayerPreThink =
 					self.playersplash_finished = time + 0.5;
 				}
 			}
+			PlayerWaterPhysics();
+
 			if (self.char.waterlevel < 3) // Only drown on water level 3
 				self.char.dmgtime = time + 10; // 10 second breath holding
 
@@ -931,7 +934,8 @@ void() PlayerPreThink =
 				Bubbles(1);
 				self.bubble_count = time + 3;
 			}
-			//drowning
+
+			// Drowning
 			if (self.char.dmgtime < time && (!relics & IT_RELIC6) && !self.flags & FL_GODMODE && !self.char.flypain)
 			{
 				if (self.char.takedamage && self.char.invunerability_finished < time)
@@ -948,14 +952,13 @@ void() PlayerPreThink =
 				self.char.dmgtime = time + 0.5;
 			}
 			self.char.swimming = TRUE;
-			PlayerWaterPhysics();
 		}
 		else
 		{
 			self.char.swimming = FALSE;
 			self.char.speed = 120; // Vigil's default speed is set here...
 		}
-				
+
 		//
 		// FTE sometimes sets the roll angle when changing graphic options
 		//

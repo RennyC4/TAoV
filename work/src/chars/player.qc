@@ -494,12 +494,15 @@ void() PlayerWaterPhysics =
 		return;
 	}
 
-	if (self.button2 && self.ledgegrab == FALSE && self.inwater_finished < time && self.char.pain_finished < time) // Player actively swimming up
+	if (self.button2)
 	{
+		if (self.ledgegrab == FALSE && self.inwater_finished < time && self.char.pain_finished < time) // Player actively swimming up
+		{
 		if (self.char.velocity_z < 100)
 			self.char.velocity_z = self.char.velocity_z + 7 * (frametime * 100);
 		else
 			self.char.velocity_z = 100;
+		}
 	}
 	else
 	{
@@ -1206,7 +1209,6 @@ void() player_think =
 		if (self.char.bigfall == TRUE && self.char.health > 0)
 		{
 			self.attack_finished = time + 1;
-			//self.char.movetype = MOVETYPE_TOSS; // Lock Vigil down
 			self.camshake_finished = time + 0.2;
 			sound (self.char, CHAN_WEAPON, "player/jmpflor.wav", 1, ATTN_NORM);
 			self.char.movetype = MOVETYPE_WALK; // Allow Vigil to fall
@@ -1554,6 +1556,10 @@ void() player_think =
 			self.button2_buffer = FALSE;	
 	}
 
+	//
+	// Button0 stuff and attacking
+	//
+
 	if (self.button0 && self.char.tired_finished < time && self.char.deadflag != DEAD_DEAD && self.forcewalk_finished < time
 	&& self.char.fly_time < time && self.safezone == FALSE && self.char.guardbreak_finished < time && self.char.health > 0 && self.char.lowceil == FALSE)
 	{
@@ -1571,10 +1577,9 @@ void() player_think =
 			self.magicmenu = FALSE;
 		}
 
-		// HACK: Prevent quick firing Vigil's normal jump kick on Izuna Drop execution, but only in air
-		if (!self.char.izunatarg)
+		if (!self.char.izunatarg) // Prevent quick firing Vigil's normal jump kick on izuna drop execution
 			player_fire();
-		
+
 		if (self.char.purge_cooldown < time)
 		{
 			self.char.purge_finished = time + 0.06; // purge success window
@@ -1802,7 +1807,7 @@ void() player_think =
 			}
 		}
 	}
-	
+
 	//
 	// Finish movement speed
 	//
@@ -1975,10 +1980,8 @@ void() player_think =
 				self.char.movetype = MOVETYPE_STEP;		// STEP means no stupid slope-sliding, tracebox needed to make him fall if ground beneath his feet changes
 		}
 		self.oldorigin = self.origin;
-		
 	}
-	
-	
+
 	//
 	// Part of the Wall/Ledge Grabbing is done here, specifically the code to make Vigil jump in the other direction of the wall/ledge
 	//
@@ -2522,18 +2525,12 @@ void() player_move = [0, player_move]
 
 	if (self.tired_finished > time)
 		player_tired1();
-	
-	if (!self.shadow) // sprite shadow, drawn under Vigil
-	{
-		//spawn_shadow();
-		self.shadow = TRUE;
-	}
-	
+
 	// Reset X+Z angles
 	if (!self.swimming)
 		self.angles_x = self.angles_z = 0;
 
-	if (self.owner.magicmenu == FALSE)
+	if (!self.owner.magicmenu)
 	{
 		if (self.velocity_x || self.velocity_y && self.owner.keyflags & (KEY_LEFT | KEY_RIGHT | KEY_UP | KEY_DOWN) || self.owner.forcewalk_finished > time)
 		{
@@ -2668,25 +2665,28 @@ void() player_move = [0, player_move]
 						self.frame = $stand1 + self.walkframe;
 						if (self.swimming)
 							frameskip(0.2);
-						// Animation slow down on idle frames
-						if (self.idle_count > 0)
-							frameskip(0.085);
-						if (self.idle_count > 20)
-							frameskip(0.096);
-						if (self.idle_count > 50)
-							frameskip(0.11);
-						if (self.idle_count > 60)
-							frameskip(0.12);
-						if (self.idle_count > 80)
-							frameskip(0.13);
-						if (self.idle_count > 100)
-							frameskip(0.14);
-						if (self.idle_count > 120)
-							frameskip(0.16);
-						if (self.idle_count > 130)
-							frameskip(0.18);
-						if (self.idle_count > 135)
-							frameskip(0.2);
+						else
+						{
+							// Animation slow down on idle frames
+							if (self.idle_count > 0)
+								frameskip(0.085);
+							if (self.idle_count > 20)
+								frameskip(0.096);
+							if (self.idle_count > 50)
+								frameskip(0.11);
+							if (self.idle_count > 60)
+								frameskip(0.12);
+							if (self.idle_count > 80)
+								frameskip(0.13);
+							if (self.idle_count > 100)
+								frameskip(0.14);
+							if (self.idle_count > 120)
+								frameskip(0.16);
+							if (self.idle_count > 130)
+								frameskip(0.18);
+							if (self.idle_count > 135)
+								frameskip(0.2);
+						}
 					}
 					else
 					{
@@ -2729,10 +2729,14 @@ void() player_move = [0, player_move]
 		self.walkframe = self.walkframe + 1;
 	}
 	else // User entered the magic selection menu
+	{
+		if (self.swimming)
+			self.owner.magicmenu = FALSE;
 		self.frame = $magica1;
+	}
 
 	//
-	// clear stuff up ...
+	// clean stuff up ...
 	//
 
 	if (self.onground == TRUE)
@@ -2748,6 +2752,7 @@ void() player_move = [0, player_move]
 	self.izunatarg = world;
 	self.effects = self.oeffects = 0;
 	self.owner.purge_toggle = FALSE;
+	self.block_finished = time; // remove any left over block timers
 	self.pain_finished = time;
 	self.paincount = 0;
 	self.fly_time = time;
@@ -2785,6 +2790,8 @@ void() player_move = [0, player_move]
 	self.owner.button3 = self.owner.FL_BLKPRESSED = FALSE; // Reset block button flag
 	self.block_finished = time; // auto-block fix
 	self.lowceil = FALSE; // remove low ceiling flag
+	if (self.swimming)
+		self.ledgegrab = FALSE;
 };
 
 //*
@@ -5868,9 +5875,10 @@ void() player_knockedup1    =[	$walled1,	player_knockedup1 ]
 		self.velocity_z = self.velocity_z / 1.05;
 		if (self.inwater_pain >= 150)
 		{
-			self.pain_finished = time; // needed, otherwise can't swim up?
 			self.inwater_pain = 0;
-			player_move();
+			self.owner.pain_finished = self.pain_finished = time - 1; // needed, otherwise can't swim up?
+			self.think = player_move;
+			self.nextthink = time;
 			return;
 		}
 		self.inwater_pain = self.inwater_pain + 1;
@@ -6084,11 +6092,10 @@ void() player_twist    =[	$twist,	player_twist		]
 		self.velocity_z = self.velocity_z / 1.05;
 		if (self.inwater_pain >= 150)
 		{
-			self.pain_finished = time; // needed, otherwise can't swim up?
 			self.inwater_pain = 0;
-			self.angles_z = 0;
-			self.angles_x = 0;
-			player_move();
+			self.owner.pain_finished = self.pain_finished = time - 1; // needed, otherwise can't swim up?
+			self.think = player_move;
+			self.nextthink = time;
 			return;
 		}
 
@@ -6188,6 +6195,10 @@ void() player_getupb4	=[	$getup5,	player_move	] {};
 
 void() player_pain =
 {
+	// Disabled until weird bug is found
+	if (self.swimming)
+		return;
+
 	local float rs;
 
 	makevectors(self.angles);

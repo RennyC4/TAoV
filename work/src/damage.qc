@@ -810,7 +810,7 @@ void(float damg, float dist, float knokback, float rsize, float snd, float flsh,
 		if (head.takedamage && head != self && head.nopain_time < time && head.deadflag != DEAD_DEAD && visible(head) && head.dodge_finished < time && head.perfectguard_buff < time && !(head.flags & FL_BOSS2 && self.swimming)
 		&& ((coop == TRUE && head.classname != "player" && self.classname == "player") || (coop == FALSE || self.flags & FL_MONSTER))) // coop
 		{
-			if (head.block_finished < time || unblockable == TRUE || self.perfectguard_buff > time)
+			if (head.block_finished < time || unblockable == TRUE || self.perfectguard_buff > time || head.swimming)
 			{
 				if (self.flags & FL_MONSTER && !head.flags & FL_MONSTER || !self.flags & FL_MONSTER) // fix monsters pretending to hit each other
 				{						
