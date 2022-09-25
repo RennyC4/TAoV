@@ -7385,7 +7385,7 @@ void() player_wallgrab	=[	$wallgrab,	player_wallgrab 	]
 			self.velocity_x = 500;
 			self.angles_y = 0;
 		}
-		self.angles_x = -15;
+		self.angles_x = 15;
 
 		self.owner.walljump = TRUE;
 		self.owner.wallgrab = FALSE;
@@ -8037,7 +8037,7 @@ void() player_smashdown8    =[	$smash9,	player_move			] {smashdown_move();frames
 void() dodgea1_move =
 {
 	self.movetype = MOVETYPE_WALK;
-	if (self.angles_y == 0 || self.angles_y == 360)
+	if (self.angles_y == 0)
 		self.velocity_x = -175;
 	else
 		self.velocity_x = 175;

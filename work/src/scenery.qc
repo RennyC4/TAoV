@@ -501,6 +501,7 @@ void() chandelier =
 	self.think = chandelier_think;
 	self.nextthink = time;
 	self.use = chandelier_use;
+	self.dimension_hit = self.dimension_solid = 0;
 	setsize(self, '-74 -73 -17', '73 73 125');
 };
 
