@@ -181,7 +181,7 @@ void() firefx =
 	setorigin (self, self.origin);
 	self.skin = random()*19;
 	self.think = firefx_think;
-	self.nextthink = time;
+	self.nextthink = time + 0.1;
 };
 
 void() waterdrop_fallthink =
