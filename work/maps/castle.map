@@ -13580,7 +13580,7 @@
 // entity 426
 {
 "classname" "light_flame_brazier_short"
-"origin" "-2599 -81 -95"
+"origin" "-2599 -81 -93"
 "light" "1"
 "_phong" "1"
 }
