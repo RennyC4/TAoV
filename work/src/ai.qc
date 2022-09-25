@@ -136,7 +136,7 @@ just like it says, monster gets angry and becomes more powerful temporary and fa
 void() enrage_think =
 {
 	// Colormod removal is done through startframe now
-	
+	makevectors(self.owner.angles);
 	if (self.owner.berserk_finished > time)
 	{
 		if (self.pain_finished < time)
@@ -153,11 +153,11 @@ void() enrage_think =
 		remove(self);
 		return;
 	}
-	self.origin_x = self.owner.origin_x;
-	self.origin_y = self.owner.origin_y;
-	self.origin_z = self.owner.origin_z + 64;
+//	self.origin_x = self.owner.origin_x;
+//	self.origin_y = self.owner.origin_y;
+//	self.origin_z = self.owner.origin_z + 64;
 	
-	//setorigin (self, self.owner.origin + v_up * 64);
+	setorigin (self, self.owner.origin + v_up * 64);
 	
 	frameskip(0.01);
 };
@@ -1679,8 +1679,8 @@ void(entity attacker) monster_pain =
 		self.colormod = '3 1 1';
 
 	// Ignore air combo flag is on the monster
-	// My enemy isn't on the ground, otherwise physics are ran
-	if (self.ignoreaircombo && !self.enemy.onground)
+	// My enemy isn't on the ground, otherwise physics are ran 
+	if (self.ignoreaircombo && !self.enemy.onground && (!self.grabbed && !self.enemy.grabbed))
 		return;
 
 	if (pointcontents(self.origin) == CONTENT_WATER || pointcontents(self.origin) == CONTENT_SLIME || pointcontents(self.origin) == CONTENT_LAVA)
@@ -1715,7 +1715,7 @@ void(entity attacker) monster_pain =
 	else if (self.knockback == 2)
 	{
 		self.velocity = '0 0 0';
-		if (self.ignoreaircombo) // heavy weight enemy
+		if (self.ignoreaircombo && !self.grabbed) // heavy weight enemy
 			self.velocity_z = 212;
 		else
 			self.velocity_z = 425;

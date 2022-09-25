@@ -1008,7 +1008,7 @@ void(float damg, float dist, float knokback, float rsize, float snd, float flsh,
 					// Air Comboing physics, Y axis (Up/Down) is halted
 					//
 
-					if (!self.flags & FL_ONGROUND && ignoreair == FALSE) // If in air
+					if (!self.flags & FL_ONGROUND && ignoreair == FALSE && !self.grabbed) // If in air
 					{
 						head.aircombo_finished = time + 0.5; // Allow the monster to be tracked!
 						if (!self.swimming)
@@ -1220,7 +1220,7 @@ void(float damg, float dist, float knokback, float rsize, float snd, float flsh,
 							self = oself;
 
 							head.aircombo_finished = time + 0.5; // Tell monsters he's being air comboed
-							if (ignoreair == FALSE)
+							if (!ignoreair && !self.grabbed)
 							{
 								self.velocity_x = head.velocity_x;
 								self.velocity_z = 0; // reset Z velocity first

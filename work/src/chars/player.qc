@@ -2753,7 +2753,8 @@ void() player_move = [0, player_move]
 	self.effects = self.oeffects = 0;
 	self.owner.purge_toggle = FALSE;
 	self.block_finished = time; // remove any left over block timers
-	self.pain_finished = time;
+	if (self.owner.status_broken_finished < time)
+		self.pain_finished = time;
 	self.paincount = 0;
 	self.fly_time = time;
 	self.flypain = FALSE;
@@ -3375,7 +3376,7 @@ void() player_grabatk11	=[	$grabatk8,	player_grabatk12	]
 	self.takedamage = DAMAGE_NO;
 };
 void() player_grabatk12	=[	$grabatk9,	player_grabatk13	] 		
-{     // lift off here
+{   // lift off here
 	self.velocity = '0 0 0';
 	self.velocity_z = 200;
 	if (self.flags & FL_ONGROUND)
@@ -3384,13 +3385,8 @@ void() player_grabatk12	=[	$grabatk9,	player_grabatk13	]
 void() player_grabatk13	=[	$grabatk10,	player_grabatk14	] {player_yell(0);};
 void() player_grabatk14	=[	$grabatk11,	player_grabatk15	] 
 {
-	if (self.owner.bighit_freeze > time) // check if attack landed, needs to be called after FireMelee();
-	{
-		if (freeze_finished < time) // don't interefere with level up/etc
-			freeze_finished = time + (CONST_BIGHITSLOW * frametime);
-	}
 	sound (self, CHAN_BODY, "player/motion1.wav", 1, ATTN_NORM);
-	FireMelee(18,10,0,40,1,0,1,TRUE,0,0);
+	FireMelee(0,10,1,40,1,0,TRUE,TRUE,0,0);
 };
 void() player_grabatk15	=[	$grabatk12,	player_grabatk16	] 
 {
@@ -3400,7 +3396,7 @@ void() player_grabatk15	=[	$grabatk12,	player_grabatk16	]
 			freeze_finished = time + (CONST_BIGHITSLOW * frametime);
 	}
 	sound (self, CHAN_BODY, "player/motion2.wav", 1, ATTN_NORM);
-	FireMelee(1,10,3,40,4,0,1,TRUE,0,0);
+	FireMelee(25,10,3,40,4,0,TRUE,TRUE,0,0);
 };
 
 void() player_grabatk17;
@@ -3463,8 +3459,8 @@ void() backflip_move =
 
 void() player_bflip1	=[	$bflip1,	player_bflip2	] 
 {
-	if (self.oangles)
-		self.angles = self.oangles;
+//	if (self.oangles)
+//		self.angles = self.oangles;
 
 	self.angles_x = 0;
 	self.movetype = MOVETYPE_WALK;
