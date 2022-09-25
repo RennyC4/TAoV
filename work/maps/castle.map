@@ -14222,3 +14222,10 @@
 "origin" "388 -156 540"
 "_phong" "1"
 }
+// entity 502
+{
+"classname" "lionhead"
+"origin" "-7964 -212 284"
+"angle" "0"
+"_phong" "1"
+}
