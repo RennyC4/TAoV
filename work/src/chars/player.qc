@@ -5805,13 +5805,14 @@ void() player_hit4	=[	$pain4,	player_hit4	]
 	// Check for walls for Vigil to smack into
 	//
 
-	self.angles_x = 0;
-	self.inwater_pain = 0;
-	makevectors (self.angles);
-	
-	//
-	traceline(self.origin, self.origin - v_forward * 24, FALSE, self); // used to be 24 (prevent in-wall problem)
-	//
+	local vector v;
+
+	v = self.angles;	  //
+	v_x = 0;			  // Remove tilt on traceline!
+	v_x = v_x - 25;       // Remove tilt on traceline!
+	makevectors (v);	  //
+
+	traceline(self.origin, self.origin - v_forward * 24, FALSE, self);
 	
 	if (trace_fraction < 1 && trace_ent.solid == SOLID_BSP && !self.swimming)
 	{
@@ -5900,13 +5901,15 @@ void() player_knockedfar1    =[	$walled1,	player_knockedfar1 ]
 	//
 	// Check for walls for Vigil to smack into
 	//
+
 	local vector v;
+
 	v = self.angles;	  //
-	v_x = v_x + 15;       // Remove tilt on traceline!
-	//v_x = 0;
+	v_x = 0;			  // Remove tilt on traceline!
+	v_x = v_x - 25;       // Remove tilt on traceline!
 	makevectors (v);	  //
 
-	traceline(self.origin, self.origin + v_forward * 26, FALSE, self);
+	traceline(self.origin, self.origin - v_forward * 24, FALSE, self);
 
 	if (trace_fraction < 1 && trace_ent.solid == SOLID_BSP && !self.swimming)
 	{
@@ -6038,20 +6041,21 @@ void() twist_testxcheck =
 
 void() player_twist    =[	$twist,	player_twist		] 
 {
-	local vector v;
-
 	self.pain_finished = time + 999;
 
 	//
 	// Check for walls for Vigil to smack into
 	//
 
+	local vector v;
+
 	v = self.angles;	  //
-	v_x = v_x + 15;       // Remove tilt on traceline!
-	//v_x = 0;
+	v_x = 0;			  // Remove tilt on traceline!
+	v_x = v_x - 25;       // Remove tilt on traceline!
 	makevectors (v);	  //
 
-	traceline(self.origin, self.origin + v_forward * 26, FALSE, self);
+	traceline(self.origin, self.origin - v_forward * 24, FALSE, self);
+
 	if (trace_fraction < 1 && trace_ent.solid == SOLID_BSP && !self.swimming)
 	{
 		self.owner.camshake_finished = time + 0.2;

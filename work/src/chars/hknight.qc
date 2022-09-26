@@ -319,9 +319,12 @@ void() HellKnight_Lightning =
 
 	org = self.origin + '0 0 20' + v_forward * 20;
 
-	restore_player_solid = self.enemy.dimension_solid;
-	if (self.enemy)
+	// Make enemy solid for traceline to hit momentarily
+	if (self.enemy && self.enemy.dodge_finished < time)
+	{
+		restore_player_solid = self.enemy.dimension_solid;
 		self.enemy.dimension_solid = 1;
+	}
 	
 	HellKnight_Lightning_BodyBlock(); // record monster grabbed
 	if (self.char)
@@ -356,7 +359,7 @@ void() HellKnight_Lightning =
 		setorigin (temp, trace_ent.origin);
 		spawn_color_glow(0, 0, 5, 100, temp);
 		
-		if (self.angles_y > 90 && self.angles_y < 270) // Attacker facing right
+		if (self.angles_y >= 90 && self.angles_y <= 270)  // Attacker facing right
 			trace_ent.angles_y = 0; // victim faces left
 		else
 			trace_ent.angles_y = 180; // victim faces right
