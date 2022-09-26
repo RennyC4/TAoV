@@ -47,6 +47,27 @@ void() medusa_think =
 		}
 	}
 
+	// Do damage
+	local entity headdmg = searchradius(self.origin, 10);
+	while (headdmg)
+	{   // Frame241 = double jump
+		if (headdmg.takedamage && headdmg.classname == "player" && headdmg.health > 0 && self.combo_finished < time && headdmg.frame != 241 && !headdmg.owner.flags & FL_NOTARGET && !headdmg.flypain)
+		{
+			// spawn a hit sprite
+			effect = spawn();
+			setorigin(effect, headdmg.origin);
+			setmodel(effect, "progs/jhit.spr");
+			effect.movetype = MOVETYPE_NOCLIP;
+			effect.think = fx_think;
+			effect.effects = EF_NODEPTHTEST;
+			effect.nextthink = time;
+			effect.solid = SOLID_NOT;
+			FireMelee(13,0,1,15,5,0,TRUE,TRUE,0,0);
+			self.combo_finished = time + 3; // Allow re-hit after time passed
+		}
+		headdmg = headdmg.chain;
+	}
+
 	// Movement
 	if (self.flymode == 0) // up
 	{
@@ -71,30 +92,6 @@ void() medusa_think =
 			self.flymode = 0;
 
 		self.pain_finished = time + self.owner.flytime;
-	}
-
-	// Do damage
-	local entity head = searchradius(self.origin, 17);
-	while (head)
-	{   // Frame241 = double jump
-		if (head.takedamage && head.classname == "player" && head.health > 0 && self.cnt == FALSE && !head.flypain && head.frame != 241 && !head.owner.flags & FL_NOTARGET)
-		{
-			// spawn a hit sprite
-			effect = spawn();
-			setorigin(effect, head.origin);
-			setmodel(effect, "progs/jhit.spr");
-			effect.movetype = MOVETYPE_NOCLIP;
-			effect.think = fx_think;
-			effect.effects = EF_NODEPTHTEST;
-			effect.nextthink = time;
-			effect.solid = SOLID_NOT;
-					
-			sound (self, CHAN_WEAPON, "player/bigcut.wav", 1, ATTN_NORM);
-			head.knockback = 1; // knock Vigil down
-			T_Damage (head, self, self, 13, 0);
-			self.cnt = TRUE;
-		}
-		head = head.chain;
 	}
 
 	// Remove self after timer
@@ -151,13 +148,17 @@ void() medusa_spawn =
 	medusa.netname = "solid";
 	medusa.effects = self.effects;
 	medusa.alpha = 0.01;
+	medusa.dimension_hit = 1;
+	medusa.dimension_solid = 2;
+
 	medusa.health = 1;
 	setorigin (medusa, self.origin);
 	setsize (self, '-17 -7 3', '13 10 28');
 	medusa.th_die = medusa_die;
 	medusa.angles = self.angles;
 	medusa.experience = 25;
-	self.maxgold = 50;
+	medusa.maxgold = 50;
+	medusa.flags |= FL_MONSTER;
 	medusa.spawnflags = self.spawnflags; // carry over spawnflags
 	
 	if (self.lip)
