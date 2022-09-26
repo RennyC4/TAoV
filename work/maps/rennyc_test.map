@@ -7,7 +7,6 @@
 "wad" "C:/Games/TAoV/work/wads/alice.wad;C:/Games/TAoV/work/wads/apoc.wad;C:/Games/TAoV/work/wads/chicosruin.wad;C:/Games/TAoV/work/wads/kdmtex.wad;C:/Games/TAoV/work/wads/RuneResized.wad;C:/Games/TAoV/work/wads/hexen2.wad;C:/Games/TAoV/work/wads/QUAKE101.WAD;C:/Games/TAoV/work/wads/taov.wad;C:/Games/TAoV/work/wads/mapcols.wad"
 "message" "RennyC's Test Room"
 "wateralpha" ".6"
-"message2" "? ? ?"
 // brush 0
 {
 ( -16 224 -112 ) ( -16 -96 -112 ) ( -16 -96 -272 ) afloor3_1 32 -16 180 1 -1
