@@ -1251,6 +1251,7 @@ void() spawn_monster_use =
 		monster.th_melee = werewolf_atk;
 		monster.th_pain = werewolf_pain_decide;
 		monster.th_die = werewolf_die;
+		monster.th_grab = werewolf_grabbed1;
 		monster.ignoreaircombo = TRUE; // Aircombos do not raise werewolf off ground
 	}
 	
