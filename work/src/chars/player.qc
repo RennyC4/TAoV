@@ -102,6 +102,7 @@ void() swordstareffect4;
 
 .float rollforward_fstab2;
 .vector oangles;
+.float inwater_pain;
 
 // Remove me when FTE's MOVETYPE_FOLLOW is fixed
 void() volbrand_think =
@@ -386,7 +387,7 @@ void() StatusEffects =
 		{
 			self.char.colormod = '5 5 5';
 			self.noblock_finished = time + 1; // don't allow block
-			self.char.noblock_finished = time + 1; // don't allow block
+			self.char.block_finished = time; // remove block
 			self.nospinatk_finished = time + 1; // don't allow spin attack
 			self.nobackflip_finished = time + 1; // don't allow backflip
 			sound (self.char, CHAN_AUTO, "player/broken.wav", 1, ATTN_NORM);
@@ -486,9 +487,9 @@ void() HealthFlask =
 void() PlayerWaterPhysics =
 {
 	//
-	// in damage.qc Vigil is given knockback of 4 if swimming
+	// In damage.qc Vigil is given knockback of 4 if swimming, enforced in player_pain as well
 	//
-	if (self.char.pain_finished > time || self.char.health < 1)
+	if (self.char.inwater_pain > 0 || self.char.health < 1)
 	{
 		self.char.velocity_z = self.char.velocity_z - 6 * (frametime * 100);
 		return;
@@ -496,12 +497,12 @@ void() PlayerWaterPhysics =
 
 	if (self.button2)
 	{
-		if (self.ledgegrab == FALSE && self.inwater_finished < time && self.char.pain_finished < time) // Player actively swimming up
+		if (self.ledgegrab == FALSE && self.inwater_finished < time && self.char.inwater_pain < 1) // Player actively swimming up
 		{
-		if (self.char.velocity_z < 100)
-			self.char.velocity_z = self.char.velocity_z + 7 * (frametime * 100);
-		else
-			self.char.velocity_z = 100;
+			if (self.char.velocity_z < 100)
+				self.char.velocity_z = self.char.velocity_z + 7 * (frametime * 100);
+			else
+				self.char.velocity_z = 100;
 		}
 	}
 	else
@@ -530,7 +531,7 @@ void() PlayerWaterPhysics =
 	// Tilt Vigil forward while moving/swimming
 	//
 
-	if (self.char.health > 0 && self.char.pain_finished < time)
+	if (self.char.health > 0 && !self.char.inwater_pain < 1)
 	{
 		if ((self.char.velocity_x > -5 && self.char.velocity_x < 5) && (self.char.velocity_y > -5 && self.char.velocity_y < 5))
 		{
@@ -1721,7 +1722,7 @@ void() player_think =
 	&& self.wallgrab == FALSE && self.char.deadflag != DEAD_DEAD && self.char.movetype != MOVETYPE_FLY
 	&& self.ledgegrab == FALSE && self.ledgegrab_finished < time && self.char.fly_time < time
 	&& self.char.guardbreak_finished < time && self.char.dodge_finished < time && self.char.health > 0 && self.char.grabbed == FALSE
-	&& self.magicmenu == FALSE && self.char.tired_finished < time && self.wallrun == FALSE && self.char.izunatarg == world)
+	&& self.magicmenu == FALSE && self.char.tired_finished < time && self.wallrun == FALSE && self.char.izunatarg == world && self.char.inwater_pain < 1)
 	{
 		if (self.keyflags & (KEY_LEFT | KEY_RIGHT))
 		{
@@ -1883,7 +1884,7 @@ void() player_think =
 			if (self.keyflags & (KEY_LEFT | KEY_RIGHT) && self.char.pain_finished < time && self.char.block_finished < time &&
 			self.char.tired_finished < time && self.attack_finished < time && self.char.deadflag != DEAD_DEAD &&
 			self.wallgrab == FALSE && self.char.grabbed == FALSE && self.combo_finished < time && self.wallrun == FALSE
-			&& self.char.guardbreak_finished < time && self.char.dodge_finished < time && self.char.health > 0)
+			&& self.char.guardbreak_finished < time && self.char.dodge_finished < time && self.char.health > 0 && self.char.inwater_pain < 1)
 			{
 				if (self.keyflags & KEY_RIGHT)
 				{
@@ -1914,7 +1915,8 @@ void() player_think =
 			if (self.keyflags & (KEY_UP | KEY_DOWN) && self.char.pain_finished < time && self.char.block_finished < time &&
 			self.char.tired_finished < time && self.attack_finished < time && self.char.deadflag != DEAD_DEAD &&
 			self.wallgrab == FALSE && self.char.grabbed == FALSE && self.combo_finished < time && self.wallrun == FALSE
-			&& self.conversation == FALSE && self.char.guardbreak_finished < time && self.char.dodge_finished < time && self.char.health > 0)
+			&& self.conversation == FALSE && self.char.guardbreak_finished < time && self.char.dodge_finished < time && self.char.health > 0
+			&& self.char.inwater_pain < 1)
 			{
 				if (self.keyflags & KEY_UP)
 				{
@@ -2749,6 +2751,7 @@ void() player_move = [0, player_move]
 		self.owner.ledgegrab_finished = time;
 		self.djump_spincnt = 0; // remove double jump flag
 	}
+	self.inwater_pain = 0;
 	self.izunatarg = world;
 	self.effects = self.oeffects = 0;
 	self.owner.purge_toggle = FALSE;
@@ -5803,9 +5806,10 @@ void() player_hit4	=[	$pain4,	player_hit4	]
 	//
 
 	self.angles_x = 0;
+	self.inwater_pain = 0;
 	makevectors (self.angles);
 	
-	// asdf: tracebox me?
+	//
 	traceline(self.origin, self.origin - v_forward * 24, FALSE, self); // used to be 24 (prevent in-wall problem)
 	//
 	
@@ -5847,7 +5851,6 @@ void() player_hit4	=[	$pain4,	player_hit4	]
 	setorigin(testz, self.origin);
 };
 
-.float inwater_pain;
 void() player_knockedup1    =[	$walled1,	player_knockedup1 ] 
 {
 	self.inair = self.bigfall = 0; // remove BIG FALL
@@ -5871,22 +5874,23 @@ void() player_knockedup1    =[	$walled1,	player_knockedup1 ]
 		self.velocity_z = self.velocity_z / 1.05;
 		if (self.inwater_pain >= 150)
 		{
+			self.angles_x = 0;
 			self.inwater_pain = 0;
-			self.owner.pain_finished = self.pain_finished = time - 1; // needed, otherwise can't swim up?
-			self.think = player_move;
-			self.nextthink = time;
+			player_move();
 			return;
 		}
 		self.inwater_pain = self.inwater_pain + 1;
 	}
-	
-	if (self.onground == TRUE)
+	else
 	{
-		PainSound();
-		sound (self, CHAN_BODY, "player/jmpflor.wav", 1, ATTN_NORM);
-		self.angles_x = 0;
-		player_hit4();
-		return;
+		if (self.onground == TRUE)
+		{
+			PainSound();
+			sound (self, CHAN_BODY, "player/jmpflor.wav", 1, ATTN_NORM);
+			self.angles_x = 0;
+			player_hit4();
+			return;
+		}
 	}
 	frameskip(0.01);
 };
@@ -5897,13 +5901,13 @@ void() player_knockedfar1    =[	$walled1,	player_knockedfar1 ]
 	// Check for walls for Vigil to smack into
 	//
 	local vector v;
-	v = self.angles;
-	v_x = 0;
-	makevectors (v);
+	v = self.angles;	  //
+	v_x = v_x + 15;       // Remove tilt on traceline!
+	//v_x = 0;
+	makevectors (v);	  //
 
-	// Change to TraceBox?
-	traceline(self.origin, self.origin - v_forward * 24, FALSE, self); // used to be 17, upped to 32: prevent stuck in wall problem
-	
+	traceline(self.origin, self.origin + v_forward * 26, FALSE, self);
+
 	if (trace_fraction < 1 && trace_ent.solid == SOLID_BSP && !self.swimming)
 	{
 		PainSound();
@@ -6084,14 +6088,12 @@ void() player_twist    =[	$twist,	player_twist		]
 		self.angles_z = self.angles_z - 15; // spin Vigil
 	else
 	{
-		self.owner.inwater_finished = time -1;
 		self.velocity_z = self.velocity_z / 1.05;
 		if (self.inwater_pain >= 150)
 		{
+			self.angles_x = 0;
 			self.inwater_pain = 0;
-			self.owner.pain_finished = self.pain_finished = time - 1; // needed, otherwise can't swim up?
-			self.think = player_move;
-			self.nextthink = time;
+			player_move();
 			return;
 		}
 
@@ -6191,10 +6193,6 @@ void() player_getupb4	=[	$getup5,	player_move	] {};
 
 void() player_pain =
 {
-	// Disabled until weird bug is found
-	if (self.swimming)
-		return;
-
 	local float rs;
 
 	makevectors(self.angles);
@@ -6246,6 +6244,15 @@ void() player_pain =
 	PainSound();
 	self.perfectblock_cooldown = time + 1; // can't PG after being hit
 	self.purge_cooldown = time + 1; // can't purge right after being hit
+
+	// Disabled until weird bug is found
+	if (self.swimming)
+	{
+		self.think = player_knockedup1;
+		self.nextthink = time + 0.1;
+		self.pain_finished = time + 0.8;
+		return;
+	}
 
 	//
 	// Vigil's pain behavior works a bit differently in deathmatch
@@ -6762,8 +6769,11 @@ void() player_blockbrk5	=[	$blockbrk4,	player_block		] {};
 
 void() player_block =
 {
+	if (self.pain_finished > time)
+		self.pain_finished = time;
 	if (self.owner.noblock_finished > time)
 		self.owner.noblock_finished = time -1;
+
 	tracebox (self.origin, VEC_HULL_MIN, VEC_HULL_MAX, self.origin, 1, self);
 	if (trace_startsolid)
 	{
@@ -8044,7 +8054,7 @@ void() player_dodgea2	    =[	$dodgea2,	player_dodgea3		 	] {frameskip(0.05);play
 void() player_dodgea3	    =[	$dodgea3,	player_dodgea4		 	] {frameskip(0.05);};
 void() player_dodgea4	    =[	$dodgea4,	player_dodgea5		 	] {frameskip(0.05);dodgea1_move();};
 void() player_dodgea5	    =[	$dodgea5,	player_dodgea6		 	] {frameskip(0.05);dodgea1_move();};
-void() player_dodgea6	    =[	$dodgea6,	player_dodgea7		 	] {frameskip(0.05);dodgea1_move();FireMelee(0,0,1,30,1,0,0,TRUE,0,0);};
+void() player_dodgea6	    =[	$dodgea6,	player_dodgea7		 	] {frameskip(0.05);dodgea1_move();FireMelee(0,0,1,30,1,0,TRUE,TRUE,0,0);};
 void() player_dodgea7	    =[	$dodgea7,	player_dodgea8		 	] {frameskip(0.05);dodgea1_move();};
 void() player_dodgea8	    =[	$dodgea8,	player_dodgea9		 	] {frameskip(0.05);dodgea1_move();sound (self, CHAN_AUTO, "player/motion1.wav", 1, ATTN_NORM);};
 void() player_dodgea9	    =[	$dodgea9,	player_dodgea10		 	] {frameskip(0.05);dodgea1_move();};
