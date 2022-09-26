@@ -274,8 +274,7 @@ void() CheckImpulseButtons =
 			if (self.char.izunatarg)
 				return;
 
-			self.softshadow_time = time;
-			self.char.swing_count = 0; // Balance issue
+			self.char.swing_count = 0; // Reset
 
 			if (self.ledgegrab == TRUE) // blocking removes ledge grabbing flag
 			{

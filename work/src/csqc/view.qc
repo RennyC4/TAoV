@@ -7,6 +7,7 @@ float pause_frame;
 void(float screenwidth, float screenheight) DrawLevelName =
 {
 	local vector pos = [(screenwidth - stringwidth(world.message, TRUE, '18 18 0'))/2, (screenheight - 18)/3];
+
 	drawstring(pos + '1 1', world.message, '18 18', '0 0 0', (sin(cltime*0.95)*1), DRAWFLAG_NORMAL); // shadow
 	drawstring(pos, world.message, '18 18', '.9 .1 0', (sin(cltime*0.95)*1), DRAWFLAG_NORMAL);
 };

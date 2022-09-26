@@ -82,6 +82,30 @@ void() ghost2_think =
 
 void() ghost2_pain =
 {
+	if (self.damage_type == 2) // Hit by fire
+	{
+		local entity temp;
+
+		temp = spawn ();
+		temp.movetype = MOVETYPE_NOCLIP;
+		temp.solid = SOLID_NOT;
+		temp.classname = "3dsprite";
+
+		temp.alpha = 0.5;
+		temp.frame = 1;
+
+		temp.effects = EF_ADDITIVE;
+		temp.alpha = 0.5;
+		temp.scale = 1;
+		temp.angles_y = 90; // face screen
+		temp.think = fireweakness_firefx_think;
+		temp.nextthink = time + 0.1;
+
+		setmodel (temp, "progs/fire_fx.mdl");
+		setsize (temp, '0 0 0', '0 0 0');	
+		setorigin (temp, self.origin + v_up * 16);
+		spawn_color_glow(5, 3, 0, 100, temp);
+	}
 	self.cnt = time + 3;
 	monster_pain(self.enemy);
 	sound (self, CHAN_BODY, "ghost/pain.wav", 1, ATTN_NORM);

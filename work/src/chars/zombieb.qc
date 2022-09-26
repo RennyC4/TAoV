@@ -134,6 +134,30 @@ void()	zombie_boss_painb13	=[	$painb13,	zombie_boss_run1	] {monster_removeslide(
 
 void() zombie_boss_pain =
 {
+	if (self.damage_type == 2) // Hit by fire
+	{
+		local entity temp;
+
+		temp = spawn ();
+		temp.movetype = MOVETYPE_NOCLIP;
+		temp.solid = SOLID_NOT;
+		temp.classname = "3dsprite";
+
+		temp.alpha = 0.5;
+		temp.frame = 1;
+
+		temp.effects = EF_ADDITIVE;
+		temp.alpha = 0.5;
+		temp.scale = 1.25;
+		temp.angles_y = 90; // face screen
+		temp.think = fireweakness_firefx_think;
+		temp.nextthink = time + 0.1;
+
+		setmodel (temp, "progs/fire_fx.mdl");
+		setsize (temp, '0 0 0', '0 0 0');	
+		setorigin (temp, self.origin + v_up * 16);
+		spawn_color_glow(5, 3, 0, 100, temp);
+	}
 	if (random() < 0.25)
 	{
 		if (random() < 0.5)

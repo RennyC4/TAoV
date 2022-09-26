@@ -36,6 +36,22 @@ void() spawn_embers =
 	embers.velocity = '0 0 10';
 };
 
+//
+void() fireweakness_firefx_think =
+{
+	self.scale = self.scale - 0.08;
+	if (self.scale < 0)
+	{
+		remove(self);
+		return;
+	}
+	if (self.skin < 19)
+		self.skin = self.skin + 1;
+	else
+		self.skin = 0;
+	frameskip (0.05);
+};
+
 // spark effect for blocking
 void() sparkeffect =
 {

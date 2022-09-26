@@ -6769,6 +6769,9 @@ void() player_blockbrk5	=[	$blockbrk4,	player_block		] {};
 
 void() player_block =
 {
+	self.owner.softshadow_time = time;
+	self.owner.shadow_time = time;
+
 	if (self.pain_finished > time)
 		self.pain_finished = time;
 	if (self.owner.noblock_finished > time)

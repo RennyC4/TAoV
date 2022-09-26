@@ -179,6 +179,30 @@ void() wraith_pain6	=[	$pain6,	wraith_walk1		] {};
 
 void() wraith_pain =
 {
+	if (self.damage_type == 2) // Hit by fire
+	{
+		local entity temp;
+
+		temp = spawn ();
+		temp.movetype = MOVETYPE_NOCLIP;
+		temp.solid = SOLID_NOT;
+		temp.classname = "3dsprite";
+
+		temp.alpha = 0.5;
+		temp.frame = 1;
+
+		temp.effects = EF_ADDITIVE;
+		temp.alpha = 0.5;
+		temp.scale = 1.5;
+		temp.angles_y = 90; // face screen
+		temp.think = fireweakness_firefx_think;
+		temp.nextthink = time + 0.1;
+
+		setmodel (temp, "progs/fire_fx.mdl");
+		setsize (temp, '0 0 0', '0 0 0');	
+		setorigin (temp, self.origin + v_up * 16);
+		spawn_color_glow(5, 3, 0, 100, temp);
+	}
 	self.alpha = 1;
 
 	if (self.health < self.max_health / 2 && self.pain_finished < time || self.enemy.perfectguard_buff > time)

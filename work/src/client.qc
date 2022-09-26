@@ -1278,8 +1278,8 @@ Game camera spawn, be sure to give it enough zooming in / out
 room, you can set it's default zoom by how close you've put it
 to Vigil; seperated from the gameplay by a clip brush.
 */
-void() info_player_start = {};
 
+void() info_player_start = {};
 void() Setup_Dummy;
 void() PutClientInServer =
 {
