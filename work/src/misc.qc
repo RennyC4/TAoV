@@ -773,7 +773,7 @@ void() misc_title1_think =
 {
 	if (title1_finished > time)
 	{
-		self.velocity_y = -1000; // Shot back from title screen properly
+		self.velocity_y = -1000; // Shoot back from title screen properly
 		self.effects = 0;
 
 		self.scale = self.scale - 0.005;
@@ -822,9 +822,9 @@ void() misc_title1_think =
 
 void() misc_title1 =
 {
-	precache_sound ("misc/title.wav"); // precache this in here for ram saving
-	precache_sound ("misc/titlesay.wav"); // precache this in here for ram saving
-	precache_sound ("misc/title2.wav"); // precache this in here for ram saving
+	precache_sound ("misc/title.wav");
+	precache_sound ("misc/titlesay.wav");
+	precache_sound ("misc/title2.wav");
 	setmodel (self, "progs/title.spr");
 	self.mode = 0;
 	self.speed = 1;

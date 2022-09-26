@@ -7,12 +7,8 @@ float pause_frame;
 void(float screenwidth, float screenheight) DrawLevelName =
 {
 	local vector pos = [(screenwidth - stringwidth(world.message, TRUE, '18 18 0'))/2, (screenheight - 18)/3];
-	if (cltime < 3.3)
-	{
-		drawstring(pos + '1 1', world.message, '18 18', '0 0 0', (sin(cltime*0.95)*1), DRAWFLAG_NORMAL); // shadow
-		drawstring(pos, world.message, '18 18', '.9 .1 0', (sin(cltime*0.95)*1), DRAWFLAG_NORMAL);
-
-	}
+	drawstring(pos + '1 1', world.message, '18 18', '0 0 0', (sin(cltime*0.95)*1), DRAWFLAG_NORMAL); // shadow
+	drawstring(pos, world.message, '18 18', '.9 .1 0', (sin(cltime*0.95)*1), DRAWFLAG_NORMAL);
 };
 
 void(vector pos) DrawGoldStatus =
@@ -1284,8 +1280,8 @@ void(float width, float height, float menushown) CSQC_UpdateView =
 		Draw_Vigil_Head('18 16');					// Draws Vigil's 3D Head
 		Draw_Health_Potion('51 2.5');				// Draws Health Potion bottle
 		DrawFlaskStatus('51 5');
-		//DrawLevelName(width, height, '.9 .1 0');	// Draws level name at the beginning of a level
-		DrawLevelName(width, height);	// Draws level name at the beginning of a level
+		if (cltime < 3.3)
+			DrawLevelName(width, height);	// Draws level name at the beginning of a level
 		DrawXPBar('54 26');
 		DrawMPBar('18 48');
 		DrawHPBar('46 32');
