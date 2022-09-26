@@ -4,57 +4,15 @@
 entity head, head2, gold, gold2, key1, potion, potion2;
 float pause_frame;
 
-void(vector pos, string str, float alph, vector med, vector color) Sbar_DrawString =
-{
-	drawstring(pos, str, med, color, alph, DRAWFLAG_NORMAL);
-};
-
-void(float screenwidth, float screenheight, vector color) DrawLevelName =
+void(float screenwidth, float screenheight) DrawLevelName =
 {
 	local vector pos = [(screenwidth - stringwidth(world.message, TRUE, '18 18 0'))/2, (screenheight - 18)/3];
-
-	//
-	// Hardcoded alpha values because for some reason passing a variable into alpha isn't updating correctly	
-	//
 	if (cltime < 3.3)
 	{
-		Sbar_DrawString(pos + '1 1', world.message, 1, '18 18 0', '0 0 0'); // shadow
-	}
+		drawstring(pos + '1 1', world.message, '18 18', '0 0 0', (sin(cltime*0.95)*1), DRAWFLAG_NORMAL); // shadow
+		drawstring(pos, world.message, '18 18', '.9 .1 0', (sin(cltime*0.95)*1), DRAWFLAG_NORMAL);
 
-	if (cltime < 1)
-		Sbar_DrawString(pos, world.message, 0.1, '18 18 0', color);
-	else if (cltime < 1.1)
-		Sbar_DrawString(pos, world.message, 0.2, '18 18 0', color);
-	else if (cltime < 1.2)
-		Sbar_DrawString(pos, world.message, 0.3, '18 18 0', color);
-	else if (cltime < 1.3)
-		Sbar_DrawString(pos, world.message, 0.4, '18 18 0', color);
-	else if (cltime < 1.4)
-		Sbar_DrawString(pos, world.message, 0.5, '18 18 0', color);
-	else if (cltime < 1.5)
-		Sbar_DrawString(pos, world.message, 0.7, '18 18 0', color);
-	else if (cltime < 1.6)
-		Sbar_DrawString(pos, world.message, 0.8, '18 18 0', color);
-	else if (cltime < 1.7)
-		Sbar_DrawString(pos, world.message, 0.9, '18 18 0', color);
-	else if (cltime < 3.2)
-		Sbar_DrawString(pos, world.message, 1, '18 18 0', color);
-	else if (cltime < 3.3)
-		Sbar_DrawString(pos, world.message, 0.9, '18 18 0', color);
-	else if (cltime < 3.4)
-		Sbar_DrawString(pos, world.message, 0.8, '18 18 0', color);
-	else if (cltime < 3.5)
-		Sbar_DrawString(pos, world.message, 0.7, '18 18 0', color);
-	else if (cltime < 3.6)
-		Sbar_DrawString(pos, world.message, 0.6, '18 18 0', color);
-	else if (cltime < 3.7)
-		Sbar_DrawString(pos, world.message, 0.5, '18 18 0', color);
-	else if (cltime < 3.8)
-		Sbar_DrawString(pos, world.message, 0.3, '18 18 0', color);
-	else if (cltime < 3.9)
-		Sbar_DrawString(pos, world.message, 0.2, '18 18 0', color);
-	else if (cltime < 4)
-		Sbar_DrawString(pos, world.message, 0.1, '18 18 0', color);
+	}
 };
 
 void(vector pos) DrawGoldStatus =
@@ -1326,7 +1284,8 @@ void(float width, float height, float menushown) CSQC_UpdateView =
 		Draw_Vigil_Head('18 16');					// Draws Vigil's 3D Head
 		Draw_Health_Potion('51 2.5');				// Draws Health Potion bottle
 		DrawFlaskStatus('51 5');
-		DrawLevelName(width, height, '.9 .1 0');	// Draws level name at the beginning of a level
+		//DrawLevelName(width, height, '.9 .1 0');	// Draws level name at the beginning of a level
+		DrawLevelName(width, height);	// Draws level name at the beginning of a level
 		DrawXPBar('54 26');
 		DrawMPBar('18 48');
 		DrawHPBar('46 32');

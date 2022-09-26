@@ -6245,7 +6245,7 @@ void() player_pain =
 	self.perfectblock_cooldown = time + 1; // can't PG after being hit
 	self.purge_cooldown = time + 1; // can't purge right after being hit
 
-	// Disabled until weird bug is found
+	// Swimming damage routine, inwater_pain counter handles logic
 	if (self.swimming)
 	{
 		self.think = player_knockedup1;
