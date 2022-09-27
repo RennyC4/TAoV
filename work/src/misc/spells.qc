@@ -228,6 +228,8 @@ void() FireBallHomeIn =
 		if (self.origin_z < self.enemy.origin_z)
 			self.velocity_z = self.velocity_z + 25 * frametime * 75;
 	}
+	if (self.enemy.classname == "camera")
+		bprint ("Fireball targetted camera\n");
 
 	if (self.flags & FL_ONGROUND)
 		self.flags = self.flags - FL_ONGROUND;

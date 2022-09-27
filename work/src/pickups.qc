@@ -1014,7 +1014,7 @@ void() gold_think =
 	self.SendFlags |= 1; // send origin
 	self.SendFlags |= 2; // send frame #
 
-	if (checkground(self)) //vlen(self.velocity) < 1 || self.flags & FL_ONGROUND || self.velocity_z == 0 || self.origin == self.oldorigin)
+	if (checkground(self))
 	{
 		if (self.angles_x != 0 || self.angles_z != 0)
 		{

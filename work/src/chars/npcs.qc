@@ -650,8 +650,8 @@ void() lisa_chat =
 				if (!(game_progress & IT_PROGRESS2))
 				{
 					centerprint (self.enemy.owner, "/PHey Vigil, been a long time. Care to chat? or how about I teach you some new moves?\n\n===========================\n\nç ^bLearn New Attack^b\n                 Leave");
-					aprice = 2000;
-					self.enemy.owner.display_price = 2000;
+					aprice = 1000;
+					self.enemy.owner.display_price = 1000;
 				}
 				else if (!(game_progress & IT_PROGRESS4))
 				{
