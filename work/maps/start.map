@@ -1940,3 +1940,11 @@
 "delay" "2"
 "style" "6"
 }
+// entity 83
+{
+"classname" "misc_model"
+"origin" "-968 -736 -204"
+"model" "progs/menu1.spr"
+"angles" "0 0 0"
+"scale" "0.9"
+}
