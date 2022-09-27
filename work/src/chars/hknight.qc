@@ -320,11 +320,9 @@ void() HellKnight_Lightning =
 	org = self.origin + '0 0 20' + v_forward * 20;
 
 	// Make enemy solid for traceline to hit momentarily
-	if (self.enemy && self.enemy.dodge_finished < time)
-	{
-		restore_player_solid = self.enemy.dimension_solid;
+	restore_player_solid = self.enemy.dimension_solid;
+	if (self.enemy && self.enemy.takedamage)
 		self.enemy.dimension_solid = 1;
-	}
 	
 	HellKnight_Lightning_BodyBlock(); // record monster grabbed
 	if (self.char)
@@ -475,7 +473,12 @@ void() HellKnight_Lightning =
 	WriteCoord (MSG_BROADCAST, trace_endpos_z);
 
 	if (self.enemy)
-		self.enemy.dimension_solid = restore_player_solid;
+	{
+		if (restore_player_solid != 0)
+			self.enemy.dimension_solid = restore_player_solid;
+		else
+			self.enemy.dimension_solid = 2;
+	}
 	if (self.char)
 	{
 		self.char.dimension_solid = restore_monster_solid;

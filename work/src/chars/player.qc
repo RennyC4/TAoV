@@ -2055,6 +2055,7 @@ void() player_think =
 				self.char.think = player_dodgee1;
 				self.char.nextthink = time;
 			}
+			self.char.block_finished = time;
 			self.char.velocity = '0 0 0'; // BUG FIX: sliding while dodging under rare circumstances
 		}
 		else if (self.keyflags & KEY_DOWN)
@@ -2079,6 +2080,7 @@ void() player_think =
 				self.char.think = player_dodgef1;
 				self.char.nextthink = time;
 			}
+			self.char.block_finished = time;
 			self.char.velocity = '0 0 0'; // BUG FIX: sliding while dodging under rare circumstances
 		}
 		else if (self.keyflags & KEY_RIGHT) // Check facing direction also
@@ -2105,6 +2107,7 @@ void() player_think =
 				self.mashattack = FALSE;
 				self.char.nextthink = time;
 			}
+			self.char.block_finished = time;
 			self.char.velocity = '0 0 0'; // BUG FIX: sliding while dodging under rare circumstances
 		}
 		else if (self.keyflags & KEY_LEFT) // Check facing direction also
@@ -2146,6 +2149,7 @@ void() player_think =
 					self.char.nextthink = time;
 				}
 			}
+			self.char.block_finished = time;
 			self.char.velocity = '0 0 0'; // BUG FIX: sliding while dodging under rare circumstances
 		}
 	}
@@ -4848,7 +4852,10 @@ void() player_attacka16	=[	$attacka16,	player_attacka16	]
 	effect.nextthink = time;
 };
 
-void() player_attacka17	=[	$attacka17,	player_attacka18	] {};
+void() player_attacka17	=[	$attacka17,	player_attacka18	]
+{
+	self.ftspin_count = 0; // remove cam shake
+};
 void() player_attacka18	=[	$attacka18,	player_attacka19	] 
 {
 	sound (self, CHAN_WEAPON, "player/sword.wav", 1, ATTN_NORM);
@@ -8063,14 +8070,16 @@ void() player_dodgea4	    =[	$dodgea4,	player_dodgea5		 	] {frameskip(0.05);dodg
 void() player_dodgea5	    =[	$dodgea5,	player_dodgea6		 	] {frameskip(0.05);dodgea1_move();};
 void() player_dodgea6	    =[	$dodgea6,	player_dodgea7		 	] {frameskip(0.05);dodgea1_move();FireMelee(0,0,1,30,1,0,TRUE,TRUE,0,0);};
 void() player_dodgea7	    =[	$dodgea7,	player_dodgea8		 	] {frameskip(0.05);dodgea1_move();};
-void() player_dodgea8	    =[	$dodgea8,	player_dodgea9		 	] {frameskip(0.05);dodgea1_move();sound (self, CHAN_AUTO, "player/motion1.wav", 1, ATTN_NORM);};
-void() player_dodgea9	    =[	$dodgea9,	player_dodgea10		 	] 
+void() player_dodgea8	    =[	$dodgea8,	player_dodgea9		 	]
 {
 	if (self.perfectguard_buff < time)
 		self.takedamage = DAMAGE_AIM;
+
 	frameskip(0.05);
 	dodgea1_move();
+	sound (self, CHAN_AUTO, "player/motion1.wav", 1, ATTN_NORM);
 };
+void() player_dodgea9	    =[	$dodgea9,	player_dodgea10		 	] {frameskip(0.05);dodgea1_move();};
 void() player_dodgea10	    =[	$dodgea10,	player_dodgea11		 	] {frameskip(0.05);dodgea1_move();};
 void() player_dodgea11	    =[	$dodgea11,	player_block		 	] {frameskip(0.05);dodgea1_move();};
 
@@ -8099,13 +8108,16 @@ void() player_dodgeb3	    =[	$dodgeb3,	player_dodgeb4		 	] {frameskip(0.05);dodg
 void() player_dodgeb4	    =[	$dodgeb4,	player_dodgeb5		 	] {frameskip(0.05);dodgeb1_move();sound (self, CHAN_AUTO, "player/skid.wav", 1, ATTN_NORM);};
 void() player_dodgeb5	    =[	$dodgeb5,	player_dodgeb6		 	] {frameskip(0.05);dodgeb1_move();};
 void() player_dodgeb6	    =[	$dodgeb6,	player_dodgeb7		 	] {frameskip(0.05);dodgeb1_move();};
-void() player_dodgeb7	    =[	$dodgeb7,	player_dodgeb8		 	] {frameskip(0.05);dodgeb1_move();};
-void() player_dodgeb8	    =[	$dodgeb8,	player_dodgeb9		 	] {frameskip(0.05);dodgeb1_move();};
-void() player_dodgeb9	    =[	$dodgeb9,	player_block		 	]
+void() player_dodgeb7	    =[	$dodgeb7,	player_dodgeb8		 	] 
 {
 	if (self.perfectguard_buff < time)
 		self.takedamage = DAMAGE_AIM;
-
+	frameskip(0.05);
+	dodgeb1_move();
+};
+void() player_dodgeb8	    =[	$dodgeb8,	player_dodgeb9		 	] {frameskip(0.05);dodgeb1_move();};
+void() player_dodgeb9	    =[	$dodgeb9,	player_block		 	]
+{
 	tracebox (self.origin, VEC_HULL_MIN, VEC_HULL_MAX, self.origin, 1, self);
 	if (trace_startsolid)
 		self.lowceil = TRUE;
@@ -8157,12 +8169,14 @@ void() player_dodgec2	    =[	$dodgec2,	player_dodgec3		 	] {DodgeDown();frameski
 void() player_dodgec3	    =[	$dodgec3,	player_dodgec4		 	] {DodgeDown();frameskip(0.05);};
 void() player_dodgec4	    =[	$dodgec4,	player_dodgec5		 	] {DodgeDown();frameskip(0.05);};
 void() player_dodgec5	    =[	$dodgec5,	player_dodgec6		 	] {DodgeDown();frameskip(0.05);};
-void() player_dodgec6	    =[	$dodgec6,	player_dodgec7		 	] {DodgeDown();frameskip(0.05);};
-void() player_dodgec7	    =[	$dodgec7,	player_block		 	] 
+void() player_dodgec6	    =[	$dodgec6,	player_dodgec7		 	] 
 {
 	if (self.perfectguard_buff < time)
 		self.takedamage = DAMAGE_AIM;
+	DodgeDown();
+	frameskip(0.05);
 };
+void() player_dodgec7	    =[	$dodgec7,	player_block		 	] {};
 
 void() player_dodged1	    =[	$dodged1,	player_dodged2		 	] {player_yell(0);DodgeUp();frameskip(0.05);self.takedamage = DAMAGE_NO;};
 void() player_dodged2	    =[	$dodged2,	player_dodged3		 	] {DodgeUp();frameskip(0.05);sound (self, CHAN_AUTO, "player/skid.wav", 1, ATTN_NORM);};
@@ -8181,12 +8195,14 @@ void() player_dodgee2	    =[	$dodged2,	player_dodgee3		 	] {DodgeDown();frameski
 void() player_dodgee3	    =[	$dodged3,	player_dodgee4		 	] {DodgeDown();frameskip(0.05);};
 void() player_dodgee4	    =[	$dodged4,	player_dodgee5		 	] {DodgeDown();frameskip(0.05);};
 void() player_dodgee5	    =[	$dodged5,	player_dodgee6		 	] {DodgeDown();frameskip(0.05);};
-void() player_dodgee6	    =[	$dodged6,	player_dodgee7		 	] {DodgeDown();frameskip(0.05);};
-void() player_dodgee7	    =[	$dodged7,	player_block		 	] 
+void() player_dodgee6	    =[	$dodged6,	player_dodgee7		 	] 
 {
 	if (self.perfectguard_buff < time)
 		self.takedamage = DAMAGE_AIM;
+	DodgeDown();
+	frameskip(0.05);
 };
+void() player_dodgee7	    =[	$dodged7,	player_block		 	] {};
 
 void() player_dodgef1	    =[	$dodgec1,	player_dodgef2		 	] {player_yell(0);DodgeUp();frameskip(0.05);self.takedamage = DAMAGE_NO;};
 void() player_dodgef2	    =[	$dodgec2,	player_dodgef3		 	] {DodgeUp();frameskip(0.05);sound (self, CHAN_AUTO, "player/skid.wav", 1, ATTN_NORM);};

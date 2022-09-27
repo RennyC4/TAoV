@@ -273,6 +273,8 @@ void() CheckImpulseButtons =
 				return;
 			if (self.char.izunatarg)
 				return;
+			if (self.char.dodge_finished > time)
+				return;
 
 			self.char.swing_count = 0; // Reset
 
@@ -352,9 +354,9 @@ void() CheckImpulseButtons =
 				// Perfect Block
 				if (relics & IT_RELIC8)
 				{
-					if (self.char.perfectblock_cooldown < time)
+					if (self.char.perfectblock_cooldown < time && self.char.dodge_finished < time)
 					{
-						self.char.perfectblock = time + 0.135;
+						self.char.perfectblock = time + 0.135; // Perfect Guard success window
 						self.char.perfectblock_cooldown = time + 1;
 					}
 				}
