@@ -265,32 +265,19 @@ void(entity targ, entity inflictor, entity attacker, float damage, float statusr
 	local	entity	oldself;//, old_owner;
 	local	float	save, rs;
 
+	if (attacker.classname == "camera" || inflictor.classname == "camera" || targ.classname == "camera")
+		error ("T_Damage error! Camera/Client entity should never be hit!\n");
+	
 	save = 0; // fixes bug with save calculation, rare instance of Vigil being 'OHKO'
 	rs = random()*100;
 
-	if (!targ.takedamage && targ.nopain_time > time || targ.invunerability_finished > time) //|| targ.flypain == TRUE)
+	if (!targ.takedamage && targ.nopain_time > time || targ.invunerability_finished > time)
 		return;
 	if (targ.flags & FL_MONSTER && attacker.flags & FL_MONSTER) // monsters cannot damage each other
 		return;
 
 	// used by buttons and triggers to set activator for target firing
 	damage_attacker = attacker;
-
-	//
-	// Obsolete - Using FTE's dimension hit/solid
-	//
-
-	/*
-
-	// Allow entities to pass through each other while in combat, fixes odd stuck issues
-	// otherwise damage physics will be stopped. Barrels stay solid.
-	if (targ.classname != "player" && targ.classname != "breakable" && !deathmatch)
-	{
-		old_owner = targ.owner;
-		targ.owner = attacker;
-	}
-
-	*/
 
 	// save damage based on the players armor level
 	if (targ.owner.armorlevel > 0 && targ.classname == "player")
@@ -301,6 +288,7 @@ void(entity targ, entity inflictor, entity attacker, float damage, float statusr
 		damage = 1;
 		save = 0;
 	}
+
 	// Prevent underflow
 	if (damage < 0) damage = 0;
 	if (save < 0) save = 0;
@@ -319,8 +307,7 @@ void(entity targ, entity inflictor, entity attacker, float damage, float statusr
 		targ.owner.status_poison_finished = attacker.status_poison_finished;
 		targ.owner.status_blind_finished = attacker.status_blind_finished;
 		targ.owner.status_broken_finished = attacker.status_broken_finished;
-		if (targ.owner.status_broken_finished > time)
-			targ.owner.broken_tick_finished = time + 1 + ceil(random()*2 + 1);
+		targ.owner.broken_tick_finished = time + 1 + ceil(random()*2 + 1); // setup proper tic
 		/*
 		if (cvar("developer") == 1)
 		{
@@ -512,18 +499,6 @@ void(entity targ, entity inflictor, entity attacker, float damage, float statusr
 	targ.knockback = 0;
 	
 	self = oldself;
-
-	//
-	// Obsolete
-	//
-
-	/*
-	if (old_owner != world)
-	{
-		if (targ.classname != "breakable" && targ.classname != "player" && !deathmatch)
-			targ.owner = old_owner;
-	}
-	*/
 	// react to the damage - end
 };
 

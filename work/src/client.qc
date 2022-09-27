@@ -1013,6 +1013,7 @@ void() PlayerPreThink =
 		//
 		// Vigil's brace for Impact after a large fall
 		//
+
 		if (self.char.inair > 84 && self.char.velocity_z < -549 && (self.char.aircombo_count != 5 && self.char.aircombo_count != 6))
 			self.char.bigfall = TRUE;
 
@@ -1030,14 +1031,7 @@ void() PlayerPreThink =
 			HealthFlask();
 		if (self.char.perfectguard_buff < time && self.char.invunerability_finished < time &&self.char.alpha != 1)
 			self.char.alpha = 1;
-		
 
-		// For debugging status effects
-		//self.status_poison_finished = time + 3;
-		//self.status_blind_finished = time + 3;
-		//self.status_broken_finished = time + 3;
-		//self.char.purge_finished = time + 3;
-	
 		// Debug inair time
 		//local string f = ftos(self.char.inair);
 		//bprint ("In Air: ", f, "\n");
@@ -1083,7 +1077,7 @@ void() PlayerPreThink =
 			self.charcursor = world;
 		}
 		
-		// Secret entity that follows Vigil for smoother X camera movements
+		// Hidden entity that follows Vigil for smoother X camera movements
 		if (self.smooth_x_camera == world)
 		{
 			local entity smoothcamera_x;
@@ -1164,6 +1158,14 @@ void() PlayerPostThink =
 
 		// now do the movement
 		player_think(); // player.qc
+		
+		// For debugging status effects
+		//self.status_poison_finished = time + 3;
+		//self.status_blind_finished = time + 3;
+		//if (self.broken_tick_finished < time && framecount > 29) // Needed otherwise keys lock in safezones
+		//	self.broken_tick_finished = time + 1 + ceil(random()*4 + 1);
+		//self.status_broken_finished = time + 3;
+		//self.char.purge_finished = time + 3;
 	}
 
 	// Enforce TAoV defaults
@@ -1325,10 +1327,10 @@ void() PutClientInServer =
 	self.current_zoom = 0;
 	self.min_zoom = -30;
 	self.max_zoom = 23;
-	
+
 	if (players < 4)
 		Setup_Dummy();
-	
+
 	self.origin_zoom = self.origin;
 	self.new_zoom = self.origin; // store initial camera position
 

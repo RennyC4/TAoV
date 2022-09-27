@@ -249,7 +249,7 @@ void() CheckImpulseButtons =
 	// Block
 	//
 
-	if (self.button3)
+	if (self.button3 && self.noblock_finished < time)
 	{
 		if (self.FL_BLKPRESSED == FALSE)
 		{
@@ -266,8 +266,6 @@ void() CheckImpulseButtons =
 			if (self.char.bigfall_recovery_finished > time)
 				return;
 			if (deathmatch && self.char.pain_finished > time) // Deathmatch rules
-				return;
-			if (self.noblock_finished > time)
 				return;
 			if (self.char.deadflag == DEAD_DEAD)
 				return;

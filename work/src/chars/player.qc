@@ -398,7 +398,7 @@ void() StatusEffects =
 
 			if (self.char.perfectguard_buff < time) // remove i-frame stuff
 				self.char.takedamage = DAMAGE_AIM;
-			T_Damage (self.char, self, self, 0, 0); // do the annoying magic
+			T_Damage (self.char, self.char, self.char, 0, 0); // do the annoying magic
 			self.broken_tick_finished = time + 1 + ceil(random()*4 + 1);
 		}
 	}
@@ -6223,11 +6223,12 @@ void() player_pain =
 	self.grabbed = FALSE;
 	self.idle_count = 0; // reset pose
 
+	if (self.block_finished > time)
+		self.block_finished = time;
+
 	if (self.owner.status_broken_finished < time)
 	{
 		self.colormod = '3 1 1'; // flash red
-		if (self.block_finished > time)
-			self.block_finished = time;
 		if (self.owner.noblock_finished > time)
 			self.owner.noblock_finished = time; // Allow Vigil to block again
 	}

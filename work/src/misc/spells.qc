@@ -229,7 +229,10 @@ void() FireBallHomeIn =
 			self.velocity_z = self.velocity_z + 25 * frametime * 75;
 	}
 	if (self.enemy.classname == "camera")
-		bprint ("Fireball targetted camera\n");
+	{
+		bprint ("Fireball targetted camera: Switched to world\n");
+		self.enemy = world;
+	}
 
 	if (self.flags & FL_ONGROUND)
 		self.flags = self.flags - FL_ONGROUND;
@@ -244,7 +247,7 @@ void() FireBallThink =
 
 	FireBall_HitBox();
 
-	if (self.enemy && self.enemy.health > 0 && self.enemy.deadflag != DEAD_DEAD && self.enemy != self.owner)
+	if (self.enemy && self.enemy.health > 0 && self.enemy.deadflag != DEAD_DEAD && self.enemy != self.owner && self.enemy.classname != "camera")
 		FireBallHomeIn();
 
 	if (self.attack_finished < time)
@@ -309,7 +312,6 @@ void(float damg, float hight) Fireball =
 	missile.dimension_hit = 0;
 	missile.dimension_solid = 0;
 
-	//missile.pflags = PFLAGS_FULLDYNAMIC | PFLAGS_NOSHADOW;
 	missile.light_lev = 40;
 	missile.color = [2, 1, 0];
 	missile.hitcontentsmaski = CONTENTBIT_SOLID|0x00000002i|CONTENTBIT_PLAYERCLIP; // don't ignore clip brushes etc
@@ -810,7 +812,6 @@ void() elebeam_think =
 				self.alpha = self.alpha - 0.05;
 			else
 			{
-				setmodel (self, string_null);
 				remove(self);
 				return;
 			}
@@ -857,8 +858,10 @@ void() elebeam_think =
 						if (deathmatch == TRUE)
 							self.mode = 1;
 
-						//head.damage_type = 2; // Fire based damage
 						head.knockback = 1;
+
+						if (head.flags & FL_MONSTER) // Wake target up on hit
+							head.enemy = self.owner;
 	
 						T_Damage (head, self, self.owner, self.mode, 0);
 						
