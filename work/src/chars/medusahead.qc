@@ -157,7 +157,7 @@ void() medusa_spawn =
 	medusa.th_die = medusa_die;
 	medusa.angles = self.angles;
 	medusa.experience = 25;
-	medusa.maxgold = 50;
+	medusa.maxgold = 10;
 	medusa.flags |= FL_MONSTER;
 	medusa.spawnflags = self.spawnflags; // carry over spawnflags
 	
