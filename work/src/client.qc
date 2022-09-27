@@ -345,7 +345,7 @@ void() InitCamera =
 void() ClientKill = 
 {
 	if (self.char)
-		T_Damage (self.char, self, self, 9999, 0);
+		T_Damage (self.char, self.char, self.char, 9999, 0);
 };
 
 void(optional float csqcactive) ClientConnect = 
