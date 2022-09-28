@@ -104,7 +104,7 @@ void() swordstareffect4;
 .vector oangles;
 .float inwater_pain;
 
-// Remove me when FTE's MOVETYPE_FOLLOW is fixed
+/*
 void() volbrand_think =
 {
 	if (self.owner.perfectguard_buff < time)
@@ -123,6 +123,7 @@ void() volbrand_think =
 	self.frame = self.owner.frame;
 	frameskip(0.01);
 };
+*/
 
 void() Setup_Dummy =
 {
@@ -249,9 +250,9 @@ void() Setup_Dummy =
 	//cvar_set("skyroom", ""); // reset skyroom on level load
 	
 	//
-	// Spawn Vigil's sword - shader fun
+	// Spawn Vigil's sword - shader fun (Older setorigin method)
 	//
-	
+	/*
 	sword = spawn();
 	sword.owner = dummy;
 	sword.classname = "volbrand";
@@ -261,8 +262,9 @@ void() Setup_Dummy =
 	setmodel (sword, "progs/plyr2.mdl");
 	sword.think = volbrand_think;
 	sword.nextthink = time;
-	
-	/* - Removed until Spike fixes the angle_x invert bug
+	*/
+
+	// MOVETYPE_FOLLOW Method
 	sword = spawn();
 	sword.owner = self;
 	sword.classname = "volbrand";
@@ -272,7 +274,7 @@ void() Setup_Dummy =
 	setmodel (sword, "progs/plyr2.mdl");
 	dummy.vw_index = sword.modelindex;
 	remove(sword); // weird, removes after being binded to the player I suppose
-	*/
+	
 };
 
 //
