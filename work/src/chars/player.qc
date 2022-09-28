@@ -104,7 +104,6 @@ void() swordstareffect4;
 .vector oangles;
 .float inwater_pain;
 
-/*
 void() volbrand_think =
 {
 	if (self.owner.perfectguard_buff < time)
@@ -123,7 +122,6 @@ void() volbrand_think =
 	self.frame = self.owner.frame;
 	frameskip(0.01);
 };
-*/
 
 void() Setup_Dummy =
 {
@@ -248,11 +246,11 @@ void() Setup_Dummy =
 		stuffcmd (self, "con_notify_w 1\n"); // allowed in multiplayer
 		
 	//cvar_set("skyroom", ""); // reset skyroom on level load
-	
+
 	//
 	// Spawn Vigil's sword - shader fun (Older setorigin method)
 	//
-	/*
+
 	sword = spawn();
 	sword.owner = dummy;
 	sword.classname = "volbrand";
@@ -262,19 +260,24 @@ void() Setup_Dummy =
 	setmodel (sword, "progs/plyr2.mdl");
 	sword.think = volbrand_think;
 	sword.nextthink = time;
-	*/
 
+	/*
+
+	// Ignores light level stuff, disabled
 	// MOVETYPE_FOLLOW Method
 	sword = spawn();
 	sword.owner = self;
 	sword.classname = "volbrand";
 	sword.movetype  = MOVETYPE_FOLLOW;
 	sword.solid     = SOLID_NOT;
-	sword.effects   = EF_FULLBRIGHT;
+	//sword.effects   = EF_FULLBRIGHT;
+	//sword.drawflags = 7;
+	//sword.abslight = -100;
 	setmodel (sword, "progs/plyr2.mdl");
 	dummy.vw_index = sword.modelindex;
-	remove(sword); // weird, removes after being binded to the player I suppose
+	//remove(sword); // weird, removes after being binded to the player I suppose
 	
+	*/
 };
 
 //
