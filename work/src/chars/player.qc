@@ -3313,8 +3313,23 @@ void() player_grab1	=[	$grab1,	player_grab2	]
 	self.movetype = MOVETYPE_STEP;
 };
 
+
+float(entity grabtarg) check_grabbed_target =
+{
+	makevectors(self.angles);
+	local entity head = searchradius(self.origin + v_forward * 25, 5); // 25 being same dist enemys setorigin is at when grabbed
+	while (head)
+	{
+		if (head == self.enemy)
+			return TRUE;
+		head = head.chain;
+	}
+	return FALSE;
+};
+
 void() player_grab2	=[	$grab2,	player_grab2	] 
 {
+	local float check;
 	if (self.perfectguard_buff < time) // fixes perfect guard -> grab into invunerability glitch
 		self.takedamage = DAMAGE_AIM;
 
@@ -3328,7 +3343,10 @@ void() player_grab2	=[	$grab2,	player_grab2	]
 	else
 		self.angles_y = 180;
 
-	if (self.enemy.health < 1 || self.inair > 24 || self.owner.grab_finished < time || (self.owner.button2 && self.owner.nojump_finished < time))
+	check = check_grabbed_target(self.enemy); // See if grabbed target is still infront
+
+	// disengage
+	if (self.enemy.health < 1 || self.inair > 24 || self.owner.grab_finished < time || (self.owner.button2 && self.owner.nojump_finished < time) || !check)
 	{
 		self.grabbed = FALSE;
 		self.enemy.grabbed = FALSE;
