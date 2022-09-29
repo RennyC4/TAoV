@@ -1079,7 +1079,7 @@ void(float damg, float dist, float knokback, float rsize, float snd, float flsh,
 								effect.colormod = '6 1 1';
 								effect.scale = 1.5;
 							}
-							else if (head.blockcount == 3)
+							else if (head.blockcount == 3 || effect.knockback == 2 || effect.knockback == 3 || effect.knockback == 5)
 							{
 								sound (effect, CHAN_AUTO, "player/gardcrsh.wav", 1, ATTN_NORM);
 								effect.colormod = '8 1 1';
