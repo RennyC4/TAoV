@@ -1239,7 +1239,7 @@ void() player_think =
 	
 	// Reset block (guard crush) counter
 	if (self.char.blockcount_finished < time && self.char.blockcount > 0)
-		self.char.blockcount = 0;
+		self.char.blockcount = self.char.blockcount - 1;
 	
 	//
 	// Forced walking bit for trigger_walk, keys are locked and Vigil auto walks!
