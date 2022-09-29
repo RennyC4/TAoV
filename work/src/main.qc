@@ -285,6 +285,7 @@ void() worldspawn =
 		precache_sound ("misc/gold.wav");
 		precache_sound ("misc/teleport.wav");
 		precache_sound ("player/woosh.wav");
+		precache_sound ("player/gardcrsh.wav");
 	}
 
 	//

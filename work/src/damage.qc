@@ -1049,10 +1049,23 @@ void(float damg, float dist, float knokback, float rsize, float snd, float flsh,
 						if (head.perfectblock < time && head.perfectguard_buff < time && head.classname == "player")
 							effect.knockback = knokback; // For guard breaking
 						// block count updates below this
-						if (head.blockcount > 2 || effect.knockback == 2 || effect.knockback == 3 || effect.knockback == 5)
+						if (head.blockcount > 0 || effect.knockback == 2 || effect.knockback == 3 || effect.knockback == 5)
 						{
-							effect.colormod = '8 1 1';
-							effect.scale = 1.5;
+							if (head.blockcount == 1)
+							{
+								effect.colormod = '4 1 1';
+							}
+							else if (head.blockcount == 2)
+							{
+								effect.colormod = '6 1 1';
+								effect.scale = 1.5;
+							}
+							else if (head.blockcount == 3)
+							{
+								sound (effect, CHAN_AUTO, "player/gardcrsh.wav", 1, ATTN_NORM);
+								effect.colormod = '8 1 1';
+								effect.scale = 2;
+							}
 						}
 					}
 					head.knockback = 0; // remove knockback on block

@@ -93,8 +93,10 @@ void() perfectguard_fx_think =
 	frameskip(0.01);
 };
 
+// Blocking vfx
 void() fx_think =
 {
+	self.angles_z = self.angles_z + 20; // spin
 	if (self.frame < 3)
 		self.frame = self.frame + 1;
 	else
