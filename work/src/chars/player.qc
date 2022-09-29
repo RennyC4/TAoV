@@ -1237,6 +1237,10 @@ void() player_think =
 		self.char.onground = FALSE;
 	}
 	
+	// Reset block (guard crush) counter
+	if (self.char.blockcount_finished < time && self.char.blockcount > 0)
+		self.char.blockcount = 0;
+	
 	//
 	// Forced walking bit for trigger_walk, keys are locked and Vigil auto walks!
 	//
@@ -6784,10 +6788,15 @@ void() player_blockbrk_movement =
 		self.flags = self.flags - (self.flags & FL_ONGROUND);
 };
 
+// guard crushed
 void() player_blockbrk1	=[	$blockbrk1,	player_blockbrk2	] 
 {
+	self.owner.camshake_finished = time + 0.2;
+
 	if (freeze_finished < time) // don't interefere with level up/etc
 		freeze_finished = time + (CONST_BIGHITSLOW * frametime);
+
+	stuffcmd(self.owner, "bf\n");
 
 	self.movetype = MOVETYPE_WALK;
 	self.aircombo_count = 0; // reset combo count, fixes animation glitch as well

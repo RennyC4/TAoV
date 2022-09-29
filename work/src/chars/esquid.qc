@@ -249,6 +249,7 @@ void() lit_think =
 								head.purge_cooldown = time;
 								head.effects = EF_MUZZLEFLASH; // create light on melee impact
 								head.think = player_blockbrk1;
+								head.nextthink = time;
 							}
 						}
 						else // perfect block sends lightning back

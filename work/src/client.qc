@@ -58,19 +58,6 @@ void() InitCamera =
 	if (self.purge_toggle)
 		return;
 
-	//
-	// Camera shake effect
-	//
-	
-	if (self.camshake_finished > time)
-	{
-		r = random() * 4; // shake camera value
-		if (random() < 0.5)
-			self.punchangle_x = r;
-		else
-			self.punchangle_x = (r*-1);
-	}
-
 	view = vectoangles(self.goalentity.origin - self.origin);
 	view2 = vectoangles(self.smooth_x_camera.origin - self.origin);
 	ot = normalize(spot - self.origin);
@@ -707,6 +694,19 @@ void() PlayerPreThink =
 		if (self.char.angles_y >= 270)
 			self.char.angles_y = -90;
 
+		//
+		// Camera shake effect
+		//
+		
+		if (self.camshake_finished > time)
+		{
+			local float s = random() * 4; // shake camera value
+			if (random() < 0.5)
+				self.punchangle_x = s;
+			else
+				self.punchangle_x = (s * -1);
+		}
+
 		// Debugging
 		//self.char.angles_y = self.char.angles_y + 1;
 		//local string h = ftos(self.char.angles_y);
@@ -966,10 +966,11 @@ void() PlayerPreThink =
 		b = cvar("cl_rollangle");
 		if (b > 0)
 			stuffcmd (self, "cl_rollangle 0\n");
-		
+
 		//
 		// Fixes wrong water style on save game loads
 		//
+
 		if (framecount < 40)
 		{
 			local float r;

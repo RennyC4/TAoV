@@ -594,7 +594,7 @@ float SPELL_TWISTER = 8;
 .float guardbreak_finished; // guard breaking
 .float ignoreaircombo; // if TRUE monster isn't raised by Air Combo strikes from Vigil
 .string displayname; // Monsters display name in the bottom right corner (CSQC)
-.float displayname_finished;
+.float displayname_finished; // for monster name relic and CSQC
 .float rainbow_finished; // rainbow colormod effect to flash on player/vigil
 .float pouch; // boolean (True or False), does Vigil carry a pouch
 float hint_step; // how many hints Vigil has receieved
@@ -608,9 +608,11 @@ nosave .string music; // no save, so that it plays music on savegame load
 float turbo_mode; // Turbo mode boolean, saved in parms
 .float camera_forcezoom_finished; // if true, camera will force zoom out to help it get unstuck
 .float ftspin_count;
-.float lowceil;
-.float oeffects;
+.float lowceil; // low ceiling flag
+.float oeffects; // old effects
 .float nowaterremove_finished;
+.float blockcount; // how many blocks before guard break happens
+.float blockcount_finished; // timer to reset blockcount
 
 // Izuna drop
 .entity izunatarg; // izuna drop target

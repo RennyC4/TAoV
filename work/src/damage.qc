@@ -1019,14 +1019,13 @@ void(float damg, float dist, float knokback, float rsize, float snd, float flsh,
 						if (self.flags & FL_MONSTER) // Vigil's attack_type is set to 0 on each attack button press
 							self.attack_type = 0;
 					}
-					head.knockback = 0; // remove knockback on block
 					self.attackedname = head.classname; // record on every strike
 
 					// flip the player around to face attacker from behind, except if it's a breakable wall
 					// or a destroyable object - that'd just be silly...
 					if (head.solid != SOLID_BSP && head.classname != "breakable")
 					{
-						if (self.angles_y > 90 && self.angles_y < 270) // Attacker facing right
+						if (self.angles_y >= 90 && self.angles_y <= 270) // Attacker facing right
 							head.angles_y = 0; // Block victim faces left
 						else
 							head.angles_y = 180; // Block victim faces right
@@ -1045,7 +1044,18 @@ void(float damg, float dist, float knokback, float rsize, float snd, float flsh,
 						effect.think = fx_think;
 						effect.nextthink = time;
 						effect.solid = SOLID_NOT;
+						
+						// Guard break vfx
+						if (head.perfectblock < time && head.perfectguard_buff < time && head.classname == "player")
+							effect.knockback = knokback; // For guard breaking
+						// block count updates below this
+						if (head.blockcount > 2 || effect.knockback == 2 || effect.knockback == 3 || effect.knockback == 5)
+						{
+							effect.colormod = '8 1 1';
+							effect.scale = 1.5;
+						}
 					}
+					head.knockback = 0; // remove knockback on block
 
 					// throw particle effects
 					if (block_sparks_limit < 25)
@@ -1125,11 +1135,6 @@ void(float damg, float dist, float knokback, float rsize, float snd, float flsh,
 							// Set the knockback, deal the damage, then have the player run his animation in proper order
 							local float chip_d = floor(damg / 4); // Guard breaks have chip damage
 							self.knockback = head.knockback = 0; // Knockback movement is done by $blockbrk1
-							head.owner.camshake_finished = time + 0.2;
-
-							// Obsolete
-							//if (self.flags & FL_MONSTER) // Enforce entity-passthrough
-							//	self.owner = head;
 
 							T_Damage (head, self, self, chip_d, statusrand);
 
@@ -1140,14 +1145,26 @@ void(float damg, float dist, float knokback, float rsize, float snd, float flsh,
 						}
 						else
 						{
-							head.think = player_block;
-							if (head.onground == TRUE)
-								head.counter_finished = time + 0.3;
+							head.blockcount = head.blockcount + 1;
+							head.blockcount_finished = time + 0.75; // blockcount reset timer
+							if (head.blockcount > 3) // guard crushed
+							{
+								self.knockback = head.knockback = 0; // Knockback movement is done by $blockbrk1
+								head.owner.block_finished = time;
+								head.think = player_blockbrk1;
+								head.blockcount = 0; // reset guard crush
+							}
+							else
+							{
+								head.think = player_block;
+								if (head.onground == TRUE)
+									head.counter_finished = time + 0.3;
+							}
 						}
 						head.knockback = 0; // reset!
 						head.nextthink = time;
 					}
-					if (self.flags & FL_MONSTER) // Only monsters are pushed backwards if attack is blocked
+					if (self.flags & FL_MONSTER) // Only monsters are pushed backwards if attack is perfect guarded
 					{
 						self.velocity = '0 0 0'; // reset velocity
 						if (self.flags & FL_ONGROUND) // required
