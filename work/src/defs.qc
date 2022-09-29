@@ -613,6 +613,8 @@ float turbo_mode; // Turbo mode boolean, saved in parms
 .float nowaterremove_finished;
 .float blockcount; // how many blocks before guard break happens
 .float blockcount_finished; // timer to reset blockcount
+.float current_damage; // record current damage for HUD
+.float total_damage; // record total damage for HUD
 
 // Izuna drop
 .entity izunatarg; // izuna drop target
@@ -757,6 +759,10 @@ float FL_BOSS = 8192; // entity is a boss monster
 // Vigil's mug on HUD
 #define STAT_HEAD_PAIN 60
 #define STAT_HEAD_GOD 61
+
+// Total Damage on HUD
+#define STAT_CURRENT_DAMAGE 62
+#define STAT_TOTAL_DAMAGE 63
 
 //
 

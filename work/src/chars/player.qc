@@ -881,7 +881,14 @@ void() LegShadow =
 void() ComboMeter = // called from playerpostthink
 {
 	local string h;
-	
+
+	// Debugging
+	/*
+	local string f = ftos(self.current_damage);
+	local string z = ftos(self.total_damage);
+	centerprint (self, "Damage: ", f, " / Total: ", z, "\n");
+	*/
+
 	if (self.combometer_finished < time)
 	{
 		if (self.combocompare3 != self.combocompare2)
@@ -910,7 +917,9 @@ void() ComboMeter = // called from playerpostthink
 
 		if (self.combocompare1 > 0 && self.combocompare1 == self.combocompare2 && self.combocompare2 == self.combocompare3)
 		{
-			self.last_combo = self.combo; // record and store it
+			self.total_damage = self.current_damage; // store it
+			self.current_damage = 0; // reset damage display
+			self.last_combo = self.combo; // store it
 
 			// Congrats messages to the player
 			if (cvar("scratch2") == 0)

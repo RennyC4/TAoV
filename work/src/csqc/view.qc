@@ -457,67 +457,102 @@ static string anumber[10] =
 };
 
 void Hud_DrawLargeValue(vector pos, float value, float threshhold);
-void(float screenwidth, float screenheight) DrawComboCounter =
+void(float screenwidth, float screenheight) DrawComboDamageCounter =
 {
 	if (world.model == "maps/village.bsp")
 		return;
 
+	local float msg = getstatf(STAT_COMBOMSG);
 	local float h = getstatf(STAT_COMBO);
+	
+	local float dmg = getstatf(STAT_CURRENT_DAMAGE);
+	local float totaldmg = getstatf(STAT_TOTAL_DAMAGE);
+
+	// Combo counter position
 	local vector pos = [(screenwidth - stringwidth("", TRUE, '18 18 0'))/1.5, (screenheight - 18)/2.25];
 	local vector pos2 = [(screenwidth - stringwidth("", TRUE, '122 40.5 0'))/1.30, (screenheight - 18)/2.5];
+
+	// Damage text position
+	local string g = ftos(dmg);
+	local string f = ftos(totaldmg);
+	local vector pos3 = [(screenwidth - stringwidth("", TRUE, '122 40.5 0'))/1.25, (screenheight - 18)/1.95];
+	
+	// Draw damage
+	if (!msg)
+	{
+		if (dmg > 0 && h > 1)
+		{
+			// draw #
+			drawstring (pos3 + '1 1', g, '12 12', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
+			drawstring (pos3, g, '12 12', '0 2 0', 1, DRAWFLAG_NORMAL);
+			// draw "damage" text
+			drawstring (pos3 + '31 1', "Damage ", '12 12', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
+			drawstring (pos3 + '30 0', "Damage ", '12 12', '0 2 0', 1, DRAWFLAG_NORMAL);
+		}
+	}
+	else // Draw total damage
+	{
+		// draw #
+		drawstring (pos3 - '14 -1', f, '12 12', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
+		drawstring (pos3 - '15 0', f, '12 12', '0 2 0', 1, DRAWFLAG_NORMAL);
+		// draw "damage" text
+		drawstring (pos3 + '16 1', "Total Damage ", '12 12', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
+		drawstring (pos3 + '15 0', "Total Damage ", '12 12', '0 2 0', 1, DRAWFLAG_NORMAL);
+	}
+	
+
 	if (h > 1)
 	{
 		Hud_DrawLargeValue_Red(pos, h, 25);
-		drawpic (pos2 + '1 1', "progs/strikes.png", '122 40.5', '0 0 0', 1, DRAWFLAG_NORMAL); // Shadow
+		drawpic (pos2 + '1 1', "progs/strikes.png", '122 40.5', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
 		drawpic (pos2, "progs/strikes.png", '122 40.5', '1 1 1', 1, DRAWFLAG_NORMAL);
 	}
-	
-	local float msg = getstatf(STAT_COMBOMSG);
+
 	if (msg > 0 && h < 2)
 	{
 		if (msg == 1)
 		{
-			drawpic (pos2 + '1 1', "progs/cmbomsg1.png", '196 40.5', '0 0 0', 1, DRAWFLAG_NORMAL); // Shadow
+			drawpic (pos2 + '1 1', "progs/cmbomsg1.png", '196 40.5', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
 			drawpic (pos2, "progs/cmbomsg1.png", '196 40.5', '1 1 1', 1, DRAWFLAG_NORMAL);
 		}
 		if (msg == 2)
 		{
-			drawpic (pos2 + '1 1', "progs/cmbomsg2.png", '196 40.5', '0 0 0', 1, DRAWFLAG_NORMAL); // Shadow
+			drawpic (pos2 + '1 1', "progs/cmbomsg2.png", '196 40.5', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
 			drawpic (pos2, "progs/cmbomsg2.png", '196 40.5', '1 1 1', 1, DRAWFLAG_NORMAL);
 		}
 		if (msg == 3)
 		{
-			drawpic (pos2 + '1 1', "progs/cmbomsg3.png", '196 40.5', '0 0 0', 1, DRAWFLAG_NORMAL); // Shadow
+			drawpic (pos2 + '1 1', "progs/cmbomsg3.png", '196 40.5', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
 			drawpic (pos2, "progs/cmbomsg3.png", '196 40.5', '1 1 1', 1, DRAWFLAG_NORMAL);
 		}
 		if (msg == 4)
 		{
-			drawpic (pos2 + '1 1', "progs/cmbomsg4.png", '196 40.5', '0 0 0', 1, DRAWFLAG_NORMAL); // Shadow
+			drawpic (pos2 + '1 1', "progs/cmbomsg4.png", '196 40.5', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
 			drawpic (pos2, "progs/cmbomsg4.png", '196 40.5', '1 1 1', 1, DRAWFLAG_NORMAL);
 		}
 		if (msg == 5) // Adjust slightly
 		{
-			drawpic (pos2 - '14 1', "progs/cmbomsg5.png", '196 40.5', '0 0 0', 1, DRAWFLAG_NORMAL); // Shadow
+			drawpic (pos2 - '14 1', "progs/cmbomsg5.png", '196 40.5', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
 			drawpic (pos2 - '15 0', "progs/cmbomsg5.png", '196 40.5', '1 1 1', 1, DRAWFLAG_NORMAL);
 		}
 		if (msg == 6) // Adjust slightly
 		{
-			drawpic (pos2 - '9 1', "progs/cmbomsg6.png", '196 40.5', '0 0 0', 1, DRAWFLAG_NORMAL); // Shadow
+			drawpic (pos2 - '9 1', "progs/cmbomsg6.png", '196 40.5', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
 			drawpic (pos2 - '10 0', "progs/cmbomsg6.png", '196 40.5', '1 1 1', 1, DRAWFLAG_NORMAL);
 		}
 		if (msg == 7)
 		{
-			drawpic (pos2 + '1 1', "progs/cmbomsg7.png", '196 40.5', '0 0 0', 1, DRAWFLAG_NORMAL); // Shadow
+			drawpic (pos2 + '1 1', "progs/cmbomsg7.png", '196 40.5', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
 			drawpic (pos2, "progs/cmbomsg7.png", '196 40.5', '1 1 1', 1, DRAWFLAG_NORMAL);
 		}
 		if (msg == 8)
 		{
-			drawpic (pos2 + '1 1', "progs/cmbomsg8.png", '196 40.5', '0 0 0', 1, DRAWFLAG_NORMAL); // Shadow
+			drawpic (pos2 + '1 1', "progs/cmbomsg8.png", '196 40.5', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
 			drawpic (pos2, "progs/cmbomsg8.png", '196 40.5', '1 1 1', 1, DRAWFLAG_NORMAL);
 		}
 		if (msg == 9)
 		{
-			drawpic (pos2 + '1 1', "progs/cmbomsg9.png", '196 40.5', '0 0 0', 1, DRAWFLAG_NORMAL); // Shadow
+			drawpic (pos2 + '1 1', "progs/cmbomsg9.png", '196 40.5', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
 			drawpic (pos2, "progs/cmbomsg9.png", '196 40.5', '1 1 1', 1, DRAWFLAG_NORMAL);
 		}
 	}
@@ -526,7 +561,7 @@ void(float screenwidth, float screenheight) DrawComboCounter =
 void(float screenwidth, float screenheight) DrawPerfectGuard =
 {
 	local vector pos2 = [(screenwidth - stringwidth("", TRUE, '122 40.5 0'))/1.30, (screenheight - 18)/3];
-	drawpic (pos2 + '1 1', "progs/perfgrd.png", '122 40.5', '0 0 0', 1, DRAWFLAG_NORMAL); // Shadow
+	drawpic (pos2 + '1 1', "progs/perfgrd.png", '122 40.5', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
 	drawpic (pos2, "progs/perfgrd.png", '122 40.5', '1 1 1', 1, DRAWFLAG_NORMAL);
 };
 
@@ -1298,7 +1333,7 @@ void(float width, float height, float menushown) CSQC_UpdateView =
 			DrawKey1('8 425');
 		
 		if (cvar("scratch2") == 0)
-			DrawComboCounter(width, height);			// Draws the "Strikes!" sign
+			DrawComboDamageCounter(width, height);			// Draws the "Strikes!" sign
 		
 		local float pg = getstatf(STAT_PERFECTGUARD);
 		if (pg > time)

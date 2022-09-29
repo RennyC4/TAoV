@@ -86,6 +86,9 @@ void() CSEv_GrabCSQCValues =
 
 	clientstat(STAT_HEAD_PAIN, EV_FLOAT, pain_finished);
 	clientstat(STAT_HEAD_GOD, EV_FLOAT, god);
+
+	clientstat(STAT_CURRENT_DAMAGE, EV_FLOAT, current_damage);
+	clientstat(STAT_TOTAL_DAMAGE, EV_FLOAT, total_damage);
 };
 
 float framecount, developer, difficulty, deathmatch, coop;

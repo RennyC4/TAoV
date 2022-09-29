@@ -348,7 +348,7 @@ void(entity targ, entity inflictor, entity attacker, float damage, float statusr
 
 	if (targ.classname == "player")
 	{
-		if (difficulty == 0) // difficulty savings
+		if (difficulty == 0) // easy difficulty savings
 			damage = damage / 1.25;
 
 		if (!targ.owner.flags & FL_GODMODE && targ.perfectguard_buff < time)
@@ -378,23 +378,29 @@ void(entity targ, entity inflictor, entity attacker, float damage, float statusr
 			if (targ.damage_type != 2) // Not hit by fire
 			{
 				if (damage < targ.health)
+				{
 					targ.health = targ.health - damage;
+					if (attacker.owner)
+						attacker.owner.current_damage = attacker.owner.current_damage + ceil(damage); // Damage on HUD
+				}
 				if (targ.health < targ.state) // set zombie bosses health back to 1/3 if under
 					targ.health = targ.state;
 				if (attacker.classname == "player")
 				{
-					attacker.owner.bighit_freeze = time + 0.3; // hit an enemy within this alloted time for freeze effects
+					attacker.owner.bighit_freeze = time + 0.3; // hit an enemy within this allotted time for freeze effects
 					attacker.owner.displayname = targ.displayname;
 					attacker.owner.displayname_finished = time + 3;
 				}
 			}
 			else
 			{
-				targ.health = targ.health - damage * 1.5;
+				targ.health = targ.health - (damage * 1.5);
+				if (attacker.owner)
+					attacker.owner.current_damage = attacker.owner.current_damage + ceil(damage * 1.5); // Damage on HUD
 				targ.state = targ.health; // lowered over all health due to fire damage
 				if (attacker.classname == "player")
 				{
-					attacker.owner.bighit_freeze = time + 0.3; // hit an enemy within this alloted time for freeze effects
+					attacker.owner.bighit_freeze = time + 0.3; // hit an enemy within this allotted time for freeze effects
 					attacker.owner.displayname = targ.displayname;
 					attacker.owner.displayname_finished = time + 3;
 				}
@@ -403,13 +409,21 @@ void(entity targ, entity inflictor, entity attacker, float damage, float statusr
 		else // normal damage, every other monster
 		{
 			if (targ.berserk_finished < time)
+			{
 				targ.health = targ.health - damage;
+				if (attacker.owner)
+					attacker.owner.current_damage = attacker.owner.current_damage + ceil(damage); // Damage on HUD
+			}
 			else
-				targ.health = targ.health - (damage / 2); // berserk savings
+			{
+				targ.health = targ.health - ceil(damage / 2); // berserk savings
+				if (attacker.owner)
+					attacker.owner.current_damage = attacker.owner.current_damage + ceil(damage / 2); // Damage on HUD
+			}
 			
 			if (attacker.classname == "player")
 			{
-				attacker.owner.bighit_freeze = time + 0.3; // hit an enemy within this alloted time for freeze effects
+				attacker.owner.bighit_freeze = time + 0.3; // hit an enemy within this allotted time for freeze effects
 				attacker.owner.displayname = targ.displayname;
 				attacker.owner.displayname_finished = time + 3;
 			}
@@ -449,7 +463,10 @@ void(entity targ, entity inflictor, entity attacker, float damage, float statusr
 		return;
 	}
 
+	//
 	// react to the damage - start
+	//
+
 	oldself = self;
 	self = targ;
 
@@ -473,10 +490,6 @@ void(entity targ, entity inflictor, entity attacker, float damage, float statusr
 		self.th_pain();
 	}
 
-	//
-	//
-	//
-
 	if (self.flags & FL_MONSTER)
 	{
 		if (self.th_pain && self.health > 0 && (self.invunerability_finished < time && self.berserk_finished < time))
@@ -488,7 +501,10 @@ void(entity targ, entity inflictor, entity attacker, float damage, float statusr
 		}
 	}
 
-	// lets clear some values
+	//
+	// clean up
+	//
+
 	self.knockback = 0; // clear physics stuff
 	if (attacker.classname != "player") // manually cleared on player
 		attacker.attack_type = 0;
@@ -497,9 +513,12 @@ void(entity targ, entity inflictor, entity attacker, float damage, float statusr
 
 	targ.damage_type = 0;
 	targ.knockback = 0;
-	
+
 	self = oldself;
+
+	//
 	// react to the damage - end
+	//
 };
 
 vector() wall_velocity =

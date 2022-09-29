@@ -2231,3 +2231,7 @@ const float DRAWFLAG_MIPMAP = 0x100; // only for R_BeginPolygon
 // Vigil's mug on HUD
 #define STAT_HEAD_PAIN 60
 #define STAT_HEAD_GOD 61
+
+// Total Damage on HUD
+#define STAT_CURRENT_DAMAGE 62
+#define STAT_TOTAL_DAMAGE 63
