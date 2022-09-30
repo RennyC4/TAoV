@@ -2558,7 +2558,8 @@ void() player_move = [0, player_move]
 	{
 		if (self.velocity_x || self.velocity_y && self.owner.keyflags & (KEY_LEFT | KEY_RIGHT | KEY_UP | KEY_DOWN) || self.owner.forcewalk_finished > time)
 		{
-			self.block_finished = time; // auto-block fix
+			if (self.block_finished > time)
+				self.block_finished = time; // auto-block fix
 			if (self.swimming)
 			{
 				self.running = FALSE; // don't easily wake up monsters!
@@ -2777,7 +2778,8 @@ void() player_move = [0, player_move]
 	self.izunatarg = world;
 	self.effects = self.oeffects = 0;
 	self.owner.purge_toggle = FALSE;
-	self.block_finished = time; // remove any left over block timers
+	if (self.block_finished > time)
+		self.block_finished = time; // remove left over block timer
 	if (self.owner.status_broken_finished < time)
 		self.pain_finished = time;
 	self.paincount = 0;
@@ -2814,7 +2816,6 @@ void() player_move = [0, player_move]
 		self.owner.button2_buffer = FALSE; // Reset short hop flag/button2 buffer
 
 	self.owner.button3 = self.owner.FL_BLKPRESSED = FALSE; // Reset block button flag
-	self.block_finished = time; // auto-block fix
 	self.lowceil = FALSE; // remove low ceiling flag
 	if (self.swimming)
 		self.ledgegrab = FALSE;
@@ -5788,7 +5789,8 @@ void() PainSound =
 void() player_knockedup1;
 void() player_hit5;
 
-void() player_hit1	=[	$pain1,	player_move	] 
+.float playerhitframe_finished;
+void() player_hit1	=[	$pain1,	player_hit1	] 
 {
 	if (deathmatch == TRUE)
 	{
@@ -5797,10 +5799,11 @@ void() player_hit1	=[	$pain1,	player_move	]
 	}
 	self.movetype = MOVETYPE_STEP;
 	self.velocity = '0 0 0';
-	self.nextthink = time + 1;
+	if (self.playerhitframe_finished < time)
+		player_move();
 };
 
-void() player_hit2	=[	$pain2,	player_move	] 
+void() player_hit2	=[	$pain2,	player_hit2	] 
 {
 	if (deathmatch == TRUE)
 	{
@@ -5809,13 +5812,15 @@ void() player_hit2	=[	$pain2,	player_move	]
 	}
 	self.movetype = MOVETYPE_STEP;
 	self.velocity = '0 0 0';
-	self.nextthink = time + 1;
+	if (self.playerhitframe_finished < time)
+		player_move();
 };
 
 void() player_hit3	=[	$pain3,	player_hit4	]
 {
 	self.angles_z = 0;
-	self.nextthink = time + 0.3;
+	frameskip(0.3);
+
 	if (!deathmatch)
 		self.takedamage = DAMAGE_NO;
 };
@@ -6262,8 +6267,9 @@ void() player_pain =
 	if (self.owner.attack_finished > time || self.attack_finished > time)
 		self.owner.attack_finished = self.attack_finished = time;
 
-	if (self.block_finished > time)
-		self.block_finished = time;
+	// asdf
+	//if (self.block_finished > time)
+	//	self.block_finished = time;
 
 	if (self.owner.status_broken_finished < time)
 	{
@@ -6314,9 +6320,15 @@ void() player_pain =
 		if (self.knockback == 0)
 		{
 			if (random() < 0.5)
+			{
+				self.playerhitframe_finished = time + 1;
 				player_hit1();
+			}
 			else
+			{
+				self.playerhitframe_finished = time + 1;
 				player_hit2();
+			}
 			self.fly_time = time + 0.8;
 			self.pain_finished = time + 0.8;
 		}
@@ -6326,9 +6338,15 @@ void() player_pain =
 			if (self.onground == FALSE)
 			{
 				if (random() < 0.5)
+				{
+					self.playerhitframe_finished = time + 1;
 					player_hit1();
+				}
 				else
+				{
+					self.playerhitframe_finished = time + 1;
 					player_hit2();
+				}
 				self.fly_time = time + 1.3;
 				self.pain_finished = time + 1.3;
 			}
@@ -6380,9 +6398,15 @@ void() player_pain =
 			else
 			{
 				if (random() < 0.5)
+				{
+					self.playerhitframe_finished = time + 1;
 					player_hit1();
+				}
 				else
+				{
+					self.playerhitframe_finished = time + 1;
 					player_hit2();
+				}
 			}
 			self.fly_time = time + 1;
 			self.pain_finished = time + 1;
@@ -6396,11 +6420,13 @@ void() player_pain =
 
 	if (self.paincount == 0)
 	{
+		self.playerhitframe_finished = time + 1;
 		player_hit1();
 		self.pain_finished = time + 1;
 	}
 	if (self.paincount == 1)
 	{
+		self.playerhitframe_finished = time + 1;
 		player_hit2();
 		self.pain_finished = time + 1;
 	}
@@ -6441,8 +6467,9 @@ void() player_pain =
 			if (freeze_finished < time) // don't interefere with level up/etc
 				freeze_finished = time + (CONST_BIGHITSLOW * frametime);
 		}
-		else // FIXME: Below can bump the player in the air during a guard break (fixed below (paincount))
+		else // FIXME: Below can bump the player in the air during a guard break (fixed below (paincount stuff))
 		{
+			self.playerhitframe_finished = time + 1;
 			player_hit3();
 			self.velocity = '0 0 0';
 			if (self.flags & FL_ONGROUND)
@@ -6671,7 +6698,7 @@ void() player_block1	=[	$block1,	player_block1	]
 	{
 		if (self.perfectguard_buff < time)
 			self.takedamage = DAMAGE_AIM;
-		self.block_finished = time - 1;
+		self.block_finished = time;
 		player_move();
 		return;
 	}
@@ -6694,7 +6721,7 @@ void() player_block2	=[	$block2,	player_block2	]
 	{
 		if (self.perfectguard_buff < time)
 			self.takedamage = DAMAGE_AIM;
-		self.block_finished = time - 1;
+		self.block_finished = time;
 		player_move();
 		return;
 	}
@@ -6730,7 +6757,7 @@ void() player_block3	=[	$block3,	player_block3	]
 	{
 		if (self.perfectguard_buff < time)
 			self.takedamage = DAMAGE_AIM;
-		self.block_finished = time - 1;
+		self.block_finished = time;
 		player_move();
 		return;
 	}

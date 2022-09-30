@@ -275,15 +275,14 @@ void() CheckImpulseButtons =
 				return;
 
 			self.char.swing_count = 0; // Reset
+			self.char.angles_x = 0; // fix rare angle bug
 
 			if (self.ledgegrab == TRUE) // blocking removes ledge grabbing flag
 			{
 				self.ledgegrab = FALSE;
 				self.char.velocity_x = 0; // stop sideways movement
 			}
-			
-			self.char.angles_x = 0; // fix rare angle bug
-			
+
 			if (self.char.enemy) // remove grab on enemy
 				self.char.grabbed =	self.char.enemy.grabbed = FALSE;
 
@@ -341,11 +340,9 @@ void() CheckImpulseButtons =
 				self.dodge_finished = time;
 				self.purge_toggle = FALSE;
 
-				// needed to fix "blocking while getting up"
-				self.char.flypain = FALSE;
+				self.char.flypain = FALSE; // needed to fix "blocking while getting up"
 				if (self.char.perfectguard_buff < time)
 					self.char.takedamage = DAMAGE_AIM;
-				// needed to fix "blocking while getting up"
 
 				self.char.movetype = MOVETYPE_WALK; // FIXME: Stop mid-air hangup on ledgegrabs
 
@@ -358,15 +355,10 @@ void() CheckImpulseButtons =
 						self.char.perfectblock_cooldown = time + 1;
 					}
 				}
-				
-				//self.char.think = player_block;
-				//self.char.nextthink = time;
 
-				local entity oself = self;
-				self = self.char;
-				self.block_finished = time + 99999;
-				player_block();
-				self = oself;
+				self.char.block_finished = time + 99999;
+				self.char.think = player_block;
+				self.char.nextthink = time;
 
 				if (self.char.lowceil == FALSE)
 					sound (self, CHAN_BODY, "player/motion2.wav", 1, ATTN_NORM);
@@ -376,14 +368,17 @@ void() CheckImpulseButtons =
 	}
 	else
 	{
-		if (self.attack_finished < time && self.FL_BLKPRESSED && self.char.dodge_finished < time && self.char.pain_finished < time && !self.char.flypain && self.char.lowceil == FALSE)
+		if (self.attack_finished < time && self.FL_BLKPRESSED && self.char.dodge_finished < time && !self.char.flypain && !self.char.lowceil)
+		{
+			self.char.block_finished = time - 1; // Fixes blocking while in player hit frames
 			sound (self, CHAN_BODY, "player/motion1.wav", 1, ATTN_NORM);
+		}
 
 		self.FL_BLKPRESSED = FALSE;
 		self.button3 = FALSE;
 
-		if (self.char.block_finished > time && self.char.lowceil == FALSE)
-			self.char.block_finished = time - 1; // -1 fixes blocking being active during pain frames
+		if (self.char.block_finished > time && !self.char.lowceil)
+			self.char.block_finished = time - 1;
 	}
 
 	//

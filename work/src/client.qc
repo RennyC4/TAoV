@@ -690,6 +690,14 @@ void() PlayerPreThink =
 
 	if (self.char != world)
 	{
+		// Debugging
+		/*
+		if (self.char.block_finished > time)
+			centerprint (self, "Block: ON\n");
+		else
+			centerprint (self, "Block: OFF\n");
+		*/
+
 		// Angle fix (!Important!)
 		if (self.char.angles_y >= 270)
 			self.char.angles_y = -90;
