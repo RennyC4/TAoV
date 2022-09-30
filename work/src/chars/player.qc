@@ -392,7 +392,7 @@ void() StatusEffects =
 		{
 			self.char.colormod = '5 5 5';
 			self.noblock_finished = time + 1; // don't allow block
-			self.char.block_finished = time; // remove block
+			self.char.block_finished = time - 1; // remove block
 			self.nospinatk_finished = time + 1; // don't allow spin attack
 			self.nobackflip_finished = time + 1; // don't allow backflip
 			sound (self.char, CHAN_AUTO, "player/broken.wav", 1, ATTN_NORM);
@@ -2073,7 +2073,7 @@ void() player_think =
 				self.char.think = player_dodgee1;
 				self.char.nextthink = time;
 			}
-			self.char.block_finished = time;
+			self.char.block_finished = time -1;
 			self.char.velocity = '0 0 0'; // BUG FIX: sliding while dodging under rare circumstances
 		}
 		else if (self.keyflags & KEY_DOWN)
@@ -2098,7 +2098,7 @@ void() player_think =
 				self.char.think = player_dodgef1;
 				self.char.nextthink = time;
 			}
-			self.char.block_finished = time;
+			self.char.block_finished = time -1;
 			self.char.velocity = '0 0 0'; // BUG FIX: sliding while dodging under rare circumstances
 		}
 		else if (self.keyflags & KEY_RIGHT) // Check facing direction also
@@ -2125,7 +2125,7 @@ void() player_think =
 				self.mashattack = FALSE;
 				self.char.nextthink = time;
 			}
-			self.char.block_finished = time;
+			self.char.block_finished = time -1;
 			self.char.velocity = '0 0 0'; // BUG FIX: sliding while dodging under rare circumstances
 		}
 		else if (self.keyflags & KEY_LEFT) // Check facing direction also
@@ -2167,7 +2167,7 @@ void() player_think =
 					self.char.nextthink = time;
 				}
 			}
-			self.char.block_finished = time;
+			self.char.block_finished = time -1;
 			self.char.velocity = '0 0 0'; // BUG FIX: sliding while dodging under rare circumstances
 		}
 	}
@@ -2376,7 +2376,7 @@ void() wallgrab_check =
 void() player_jumpframe =
 {
 	if (self.block_finished > time) // FIX: end block on jump frames
-		self.block_finished = time;
+		self.block_finished = time -1;
 	self.charge_count = 4; // set charge up attack somewhat when in air
 
 	if ((self.onground == FALSE && self.inair > 17) || self.velocity_z > 100) // Keep inAir for slightly troublesome instances
@@ -2559,7 +2559,7 @@ void() player_move = [0, player_move]
 		if (self.velocity_x || self.velocity_y && self.owner.keyflags & (KEY_LEFT | KEY_RIGHT | KEY_UP | KEY_DOWN) || self.owner.forcewalk_finished > time)
 		{
 			if (self.block_finished > time)
-				self.block_finished = time; // auto-block fix
+				self.block_finished = time - 1; // - 1 auto-block fix
 			if (self.swimming)
 			{
 				self.running = FALSE; // don't easily wake up monsters!
@@ -2779,7 +2779,7 @@ void() player_move = [0, player_move]
 	self.effects = self.oeffects = 0;
 	self.owner.purge_toggle = FALSE;
 	if (self.block_finished > time)
-		self.block_finished = time; // remove left over block timer
+		self.block_finished = time - 1; // remove left over block timer
 	if (self.owner.status_broken_finished < time)
 		self.pain_finished = time;
 	self.paincount = 0;
@@ -2950,7 +2950,7 @@ void() player_fire =
 	{
 		self.noblock_finished = time + 3;
 		self.char.takedamage = DAMAGE_NO; // iframes
-		self.char.block_finished = time;
+		self.char.block_finished = time -1;
 		self.char.dodge_finished = time;
 		self.char.think = player_counter1;
 		self.char.nextthink = time;
@@ -5900,6 +5900,21 @@ void() player_hit4	=[	$pain4,	player_hit4	]
 	setorigin(testz, self.origin);
 };
 
+
+void() player_swim_recover    =[	$djump,	player_swim_recover ] 
+{
+	if (self.swimming)
+		self.velocity_z = self.velocity_z / 1.05;
+
+	self.angles_x = self.angles_x + 1.5;
+	if (self.angles_x >= 0)
+	{
+		self.inwater_pain = 0;
+		player_move();
+	}
+	frameskip(0.01);
+};
+
 void() player_knockedup1    =[	$walled1,	player_knockedup1 ] 
 {
 	self.inair = self.bigfall = 0; // remove BIG FALL
@@ -5923,9 +5938,9 @@ void() player_knockedup1    =[	$walled1,	player_knockedup1 ]
 		self.velocity_z = self.velocity_z / 1.05;
 		if (self.inwater_pain >= 150)
 		{
-			self.angles_x = 0;
-			self.inwater_pain = 0;
-			player_move();
+			player_swim_recover();
+			//self.angles_x = 0; // TODO: Make Vigil do a spin underwater to recover
+			//self.inwater_pain = 0;
 			return;
 		}
 		self.inwater_pain = self.inwater_pain + 1;
@@ -6249,6 +6264,20 @@ void() player_pain =
 
 	makevectors(self.angles);
 
+	// Fixes weird blocking under water issue
+	if (self.block_finished > time)
+		self.block_finished = time - 1;
+	
+	// Swimming damage routine, inwater_pain counter handles logic
+	// moving this below will sometimes break Vigil's button2 swimming oddly
+	if (self.swimming)
+	{
+		self.think = player_knockedup1;
+		self.nextthink = time + 0.1;
+		self.pain_finished = time + 0.8;
+		return;
+	}
+
 	// clear some stuff up on getting hurt
 	self.owner.purge_toggle = FALSE;
 	self.owner.goalentity = self; // reset camera back to Vigil
@@ -6266,10 +6295,6 @@ void() player_pain =
 
 	if (self.owner.attack_finished > time || self.attack_finished > time)
 		self.owner.attack_finished = self.attack_finished = time;
-
-	// asdf
-	//if (self.block_finished > time)
-	//	self.block_finished = time;
 
 	if (self.owner.status_broken_finished < time)
 	{
@@ -6302,15 +6327,6 @@ void() player_pain =
 	self.perfectblock_cooldown = time + 1; // can't PG after being hit
 	self.purge_cooldown = time + 1; // can't purge right after being hit
 
-	// Swimming damage routine, inwater_pain counter handles logic
-	if (self.swimming)
-	{
-		self.think = player_knockedup1;
-		self.nextthink = time + 0.1;
-		self.pain_finished = time + 0.8;
-		return;
-	}
-
 	//
 	// Vigil's pain behavior works a bit differently in deathmatch
 	//
@@ -6322,12 +6338,14 @@ void() player_pain =
 			if (random() < 0.5)
 			{
 				self.playerhitframe_finished = time + 1;
-				player_hit1();
+				self.think = player_hit1;
+				self.nextthink = time;
 			}
 			else
 			{
 				self.playerhitframe_finished = time + 1;
-				player_hit2();
+				self.think = player_hit2;
+				self.nextthink = time;
 			}
 			self.fly_time = time + 0.8;
 			self.pain_finished = time + 0.8;
@@ -6340,12 +6358,14 @@ void() player_pain =
 				if (random() < 0.5)
 				{
 					self.playerhitframe_finished = time + 1;
-					player_hit1();
+					self.think = player_hit1;
+					self.nextthink = time;
 				}
 				else
 				{
 					self.playerhitframe_finished = time + 1;
-					player_hit2();
+					self.think = player_hit2;
+					self.nextthink = time;
 				}
 				self.fly_time = time + 1.3;
 				self.pain_finished = time + 1.3;
@@ -6387,25 +6407,33 @@ void() player_pain =
 				self.nextthink = time;
 			}
 			else
-				player_hit3();
+			{
+				self.think = player_hit3;
+				self.nextthink = time;
+			}
 			self.fly_time = time + 999;
 			self.pain_finished = time + 999;
 		}
 		else if (self.knockback == 4)
 		{
 			if (self.onground == FALSE)
-				player_knockedup1();
+			{
+				self.think = player_knockedup1;
+				self.nextthink = time;
+			}
 			else
 			{
 				if (random() < 0.5)
 				{
 					self.playerhitframe_finished = time + 1;
-					player_hit1();
+					self.think = player_hit1;
+					self.nextthink = time;
 				}
 				else
 				{
 					self.playerhitframe_finished = time + 1;
-					player_hit2();
+					self.think = player_hit2;
+					self.nextthink = time;
 				}
 			}
 			self.fly_time = time + 1;
@@ -6421,13 +6449,15 @@ void() player_pain =
 	if (self.paincount == 0)
 	{
 		self.playerhitframe_finished = time + 1;
-		player_hit1();
+		self.think = player_hit1;
+		self.nextthink = time;
 		self.pain_finished = time + 1;
 	}
 	if (self.paincount == 1)
 	{
 		self.playerhitframe_finished = time + 1;
-		player_hit2();
+		self.think = player_hit2;
+		self.nextthink = time;
 		self.pain_finished = time + 1;
 	}
 	if (self.paincount == 2)
@@ -6470,7 +6500,8 @@ void() player_pain =
 		else // FIXME: Below can bump the player in the air during a guard break (fixed below (paincount stuff))
 		{
 			self.playerhitframe_finished = time + 1;
-			player_hit3();
+			self.think = player_hit3;
+			self.nextthink = time;
 			self.velocity = '0 0 0';
 			if (self.flags & FL_ONGROUND)
 				self.flags = self.flags - (self.flags & FL_ONGROUND);

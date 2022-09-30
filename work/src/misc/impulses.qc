@@ -306,7 +306,6 @@ void() CheckImpulseButtons =
 				if (self.attack_finished < time)
 				{
 					self.char.aircombo_count = 9; // can only do it once in air
-					//self.char.purge_cooldown = time;
 					self.purge_toggle = FALSE;
 					self.char.enemy = world;
 					
