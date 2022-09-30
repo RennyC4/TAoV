@@ -329,12 +329,15 @@ void() CheckImpulseButtons =
 			}
 			else if (self.char.dodge_finished < time)
 			{
-				self.swordshadow_time = time; // sword shadow remove
-				self.shadow_time = time;
+				if (self.swordshadow_time > time)
+					self.swordshadow_time = time; // sword shadow remove
+				if (self.shadow_time > time)
+					self.shadow_time = time;
 				self.char.djump_spincnt = 1; // reset double jump, do not allow it to be used again however
 				self.char.swing_count = 0; // reset sword swing
 				self.char.idle_count = 0; // reset pose
-				self.attack_finished = time;
+				if (self.attack_finished > time)
+					self.attack_finished = time;
 				self.dodge_finished = time;
 				self.purge_toggle = FALSE;
 
@@ -346,9 +349,6 @@ void() CheckImpulseButtons =
 
 				self.char.movetype = MOVETYPE_WALK; // FIXME: Stop mid-air hangup on ledgegrabs
 
-				self.char.block_finished = time + 99999;
-				self.char.think = player_block;
-
 				// Perfect Block
 				if (relics & IT_RELIC8)
 				{
@@ -358,7 +358,16 @@ void() CheckImpulseButtons =
 						self.char.perfectblock_cooldown = time + 1;
 					}
 				}
-				self.char.nextthink = time;
+				
+				//self.char.think = player_block;
+				//self.char.nextthink = time;
+
+				local entity oself = self;
+				self = self.char;
+				self.block_finished = time + 99999;
+				player_block();
+				self = oself;
+
 				if (self.char.lowceil == FALSE)
 					sound (self, CHAN_BODY, "player/motion2.wav", 1, ATTN_NORM);
 			}
@@ -374,7 +383,7 @@ void() CheckImpulseButtons =
 		self.button3 = FALSE;
 
 		if (self.char.block_finished > time && self.char.lowceil == FALSE)
-			self.char.block_finished = time;
+			self.char.block_finished = time - 1; // -1 fixes blocking being active during pain frames
 	}
 
 	//
@@ -386,8 +395,8 @@ void() CheckImpulseButtons =
 
 	if (self.impulse == 6 && self.level < 99)
 	{
-		local entity oself;
-		oself = self;
+		local entity coself;
+		coself = self;
 		self = self.char;
 
 		sound (self, CHAN_AUTO, "misc/levelup.wav", 1, ATTN_NORM);
@@ -405,7 +414,7 @@ void() CheckImpulseButtons =
 		DisplayLevel(); // display sprite sign
 		freeze_finished = time + 5 * frametime;
 		
-		self = oself;
+		self = coself;
 	}
 	if (self.impulse == 7)
 		self.gold = 99999;

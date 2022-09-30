@@ -221,7 +221,7 @@ void() lit_think =
 						setorigin (temp, head.origin);
 						temp.think = SUB_Remove;
 						temp.nextthink = time + 0.1;
-						
+
 						spawn_color_glow(0, 0, 5, 100, temp);
 
 						if (self.origin_x > head.origin_x)
@@ -248,6 +248,7 @@ void() lit_think =
 							{
 								head.purge_cooldown = time;
 								head.effects = EF_MUZZLEFLASH; // create light on melee impact
+								sound (head, CHAN_AUTO, "player/gardcrsh.wav", 1, ATTN_NORM);
 								head.think = player_blockbrk1;
 								head.nextthink = time;
 							}

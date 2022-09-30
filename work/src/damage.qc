@@ -1073,13 +1073,14 @@ void(float damg, float dist, float knokback, float rsize, float snd, float flsh,
 							if (head.blockcount == 1)
 							{
 								effect.colormod = '4 1 1';
+								effect.scale = 1.25;
 							}
-							else if (head.blockcount == 2)
+							if (head.blockcount == 2)
 							{
 								effect.colormod = '6 1 1';
 								effect.scale = 1.5;
 							}
-							else if (head.blockcount == 3 || effect.knockback == 2 || effect.knockback == 3 || effect.knockback == 5)
+							if (head.blockcount == 3 || effect.knockback == 2 || effect.knockback == 3 || effect.knockback == 5)
 							{
 								sound (effect, CHAN_AUTO, "player/gardcrsh.wav", 1, ATTN_NORM);
 								effect.colormod = '8 1 1';
@@ -1170,7 +1171,7 @@ void(float damg, float dist, float knokback, float rsize, float snd, float flsh,
 
 							T_Damage (head, self, self, chip_d, statusrand);
 
-							if (head.health > 0) // Don't override death routine						
+							if (head.health > 0) // Don't override death routine
 								head.think = player_blockbrk1;
 							else
 								return; // needed otherwise death physics on chip-damage death get overwritten

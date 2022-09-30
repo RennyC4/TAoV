@@ -6259,6 +6259,9 @@ void() player_pain =
 	self.grabbed = FALSE;
 	self.idle_count = 0; // reset pose
 
+	if (self.owner.attack_finished > time || self.attack_finished > time)
+		self.owner.attack_finished = self.attack_finished = time;
+
 	if (self.block_finished > time)
 		self.block_finished = time;
 
@@ -6438,7 +6441,7 @@ void() player_pain =
 			if (freeze_finished < time) // don't interefere with level up/etc
 				freeze_finished = time + (CONST_BIGHITSLOW * frametime);
 		}
-		else
+		else // FIXME: Below can bump the player in the air during a guard break (fixed below (paincount))
 		{
 			player_hit3();
 			self.velocity = '0 0 0';
@@ -6452,8 +6455,10 @@ void() player_pain =
 		self.flypain = TRUE;
 		self.knockback = 0;
 	}
-	self.owner.attack_finished = self.attack_finished = time;
-	self.paincount = self.paincount + 1;
+	if (self.block_finished < time && self.guardbreak_finished < time)
+		self.paincount = self.paincount + 1;
+	else
+		self.paincount = 0; // Don't allow Z air velocity on guard breaks
 };
 
 //*
@@ -6666,7 +6671,7 @@ void() player_block1	=[	$block1,	player_block1	]
 	{
 		if (self.perfectguard_buff < time)
 			self.takedamage = DAMAGE_AIM;
-		self.block_finished = time;
+		self.block_finished = time - 1;
 		player_move();
 		return;
 	}
@@ -6689,7 +6694,7 @@ void() player_block2	=[	$block2,	player_block2	]
 	{
 		if (self.perfectguard_buff < time)
 			self.takedamage = DAMAGE_AIM;
-		self.block_finished = time;
+		self.block_finished = time - 1;
 		player_move();
 		return;
 	}
@@ -6725,7 +6730,7 @@ void() player_block3	=[	$block3,	player_block3	]
 	{
 		if (self.perfectguard_buff < time)
 			self.takedamage = DAMAGE_AIM;
-		self.block_finished = time;
+		self.block_finished = time - 1;
 		player_move();
 		return;
 	}
@@ -6754,45 +6759,30 @@ void() player_blockbrk_movement =
 	local entity effect;
 
 	makevectors(self.angles);
-	if (self.onground == TRUE)
+	if (self.onground)
 	{
-		if (random() < 0.5)
-		{
-			effect = spawn();
-			setorigin(effect, self.origin - v_up*16 - v_forward * 24); // back foot
-			setmodel(effect, "progs/dust.spr");
-			effect.solid = SOLID_NOT;
-			effect.owner = self;
-			effect.drawonlytoclient = self.owner.owner; // reduce network traffic
-			effect.movetype = MOVETYPE_FLY;
-			effect.velocity_z = 100;
-			effect.think = dust_think;
-			effect.nextthink = time;
-		}
-		else
-		{
-			effect = spawn();
-			setorigin(effect, self.origin - v_up*16 + v_forward * 4); // front foot
-			setmodel(effect, "progs/dust.spr");
-			effect.solid = SOLID_NOT;
-			effect.owner = self;
-			effect.drawonlytoclient = self.owner.owner; // reduce network traffic
-			effect.movetype = MOVETYPE_FLY;
-			effect.velocity_z = 100;
-			effect.think = dust_think;
-			effect.nextthink = time;
-		}
+		effect = spawn();
+		setorigin(effect, self.origin - v_up*16);
+		setmodel(effect, "progs/dust.spr");
+		effect.solid = SOLID_NOT;
+		effect.owner = self;
+		effect.drawonlytoclient = self.owner.owner; // reduce network traffic
+		effect.movetype = MOVETYPE_FLY;
+		effect.velocity_z = 100;
+		effect.think = dust_think;
+		effect.nextthink = time;
 	}
-	self.block_finished = time;
 	self.owner.noblock_finished = time + 999;
-	self.guardbreak_finished = time + 0.2;
+	self.block_finished = time;
+	self.paincount = 0; // don't bump player in air
+	self.guardbreak_finished = time + 0.5;
 
 	self.velocity_time = time + 0.2;
 	self.velocity_y = 0; // no foreground or background movement
 	if (self.angles_y == 180)
-		self.velocity_x = self.speed * 2;
+		self.velocity_x = self.speed * 1.15;
 	else if (self.angles_y == 0)
-		self.velocity_x = 0 - (self.speed * 2);
+		self.velocity_x = 0 - (self.speed * 1.15);
 	if (self.flags & FL_ONGROUND)
 		self.flags = self.flags - (self.flags & FL_ONGROUND);
 };
@@ -6815,10 +6805,15 @@ void() player_blockbrk1	=[	$blockbrk1,	player_blockbrk2	]
 		sound (self, CHAN_BODY, "player/skid.wav", 1, ATTN_NORM);
 	PainSound();
 };
+
 void() player_blockbrk2	=[	$blockbrk1,	player_blockbrk3	] {player_blockbrk_movement();};
-void() player_blockbrk3	=[	$blockbrk2,	player_blockbrk4	] {player_blockbrk_movement();};
-void() player_blockbrk4	=[	$blockbrk3,	player_blockbrk5	] {};
-void() player_blockbrk5	=[	$blockbrk4,	player_block		] {};
+void() player_blockbrk3	=[	$blockbrk1,	player_blockbrk4	] {player_blockbrk_movement();};
+void() player_blockbrk4	=[	$blockbrk1,	player_blockbrk5	] {player_blockbrk_movement();};
+void() player_blockbrk5	=[	$blockbrk1,	player_blockbrk6	] {player_blockbrk_movement();};
+void() player_blockbrk6	=[	$blockbrk1,	player_blockbrk7	] {};
+void() player_blockbrk7	=[	$blockbrk2,	player_blockbrk8	] {};
+void() player_blockbrk8	=[	$blockbrk3,	player_blockbrk9	] {};
+void() player_blockbrk9	=[	$blockbrk4,	player_block		] {};
 
 void() player_block =
 {
@@ -6828,7 +6823,7 @@ void() player_block =
 	if (self.pain_finished > time)
 		self.pain_finished = time;
 	if (self.owner.noblock_finished > time)
-		self.owner.noblock_finished = time -1;
+		self.owner.noblock_finished = time;
 
 	tracebox (self.origin, VEC_HULL_MIN, VEC_HULL_MAX, self.origin, 1, self);
 	if (trace_startsolid)
@@ -7591,7 +7586,7 @@ void() player_doublejump1	=[	$djump,	player_doublejump1	]
 	
 	// Sound
 	if (self.walkframe == 0 && (relics & IT_RELIC3 && world.model != "maps/village.bsp"))
-	{//asdf
+	{
 		sound (self, CHAN_BODY, "player/swrdspin.wav", 1, ATTN_NORM);
 		spinatk_wind_spiral(3); // spawn vfx
 	}

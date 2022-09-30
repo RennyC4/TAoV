@@ -650,7 +650,7 @@ void() BlockCancel =
 				return;
 			}
 		}
-		else if (random() < self.ai_blockfreq && self.enemy.owner.attack_finished > time && self.enemy.angles_y != self.angles_y)
+		else if (random() < self.ai_blockfreq && (self.enemy.owner.attack_finished > time && self.enemy.pain_finished < time) && self.enemy.angles_y != self.angles_y)
 		{
 			self.think = self.th_block;
 			self.nextthink = time;
