@@ -483,23 +483,22 @@ void(float screenwidth, float screenheight) DrawComboDamageCounter =
 		if (dmg > 0 && h > 1)
 		{
 			// draw #
-			drawstring (pos3 + '1 1', g, '12 12', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
-			drawstring (pos3, g, '12 12', '0 2 0', 1, DRAWFLAG_NORMAL);
+			drawstring (pos3 - '5.5 0.5', g, '16 16', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
+			drawstring (pos3 - '5 0', g, '16 16', '1 1 1', 1, DRAWFLAG_NORMAL);
 			// draw "damage" text
-			drawstring (pos3 + '31 1', "Damage ", '12 12', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
-			drawstring (pos3 + '30 0', "Damage ", '12 12', '0 2 0', 1, DRAWFLAG_NORMAL);
+			drawstring (pos3 + '31 6', "Damage ", '12 12', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
+			drawstring (pos3 + '30 5', "Damage ", '12 12', '1 0 0', 1, DRAWFLAG_NORMAL);
 		}
 	}
 	else // Draw total damage
 	{
 		// draw #
-		drawstring (pos3 - '14 -1', f, '12 12', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
-		drawstring (pos3 - '15 0', f, '12 12', '0 2 0', 1, DRAWFLAG_NORMAL);
+		drawstring (pos3 - '12.5 -0.5', f, '16 16', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
+		drawstring (pos3 - '12 0', f, '16 16', '1 1 1', 1, DRAWFLAG_NORMAL);
 		// draw "damage" text
-		drawstring (pos3 + '16 1', "Total Damage ", '12 12', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
-		drawstring (pos3 + '15 0', "Total Damage ", '12 12', '0 2 0', 1, DRAWFLAG_NORMAL);
+		drawstring (pos3 + '21 6', "Total Damage ", '12 12', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
+		drawstring (pos3 + '20 5', "Total Damage ", '12 12', '1 0 0', 1, DRAWFLAG_NORMAL);
 	}
-	
 
 	if (h > 1)
 	{

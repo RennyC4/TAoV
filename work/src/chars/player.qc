@@ -5789,7 +5789,6 @@ void() PainSound =
 void() player_knockedup1;
 void() player_hit5;
 
-.float playerhitframe_finished;
 void() player_hit1	=[	$pain1,	player_hit1	] 
 {
 	if (deathmatch == TRUE)
