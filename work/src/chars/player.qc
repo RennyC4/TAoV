@@ -1545,7 +1545,7 @@ void() player_think =
 					self.noblock_finished = time + 999; // don't allow block
 
 					self.char.oangles = self.char.angles; // store original angle
-					
+
 					if (vel)
 					{
 						sound (self.char, CHAN_AUTO, "player/jump.wav", 1, ATTN_NORM);
@@ -1925,7 +1925,10 @@ void() player_think =
 			else
 			{
 				if (self.char.running != FALSE)
+				{
 					self.char.running = FALSE;
+					self.char.grabcooldown_finished = time + 1.5;
+				}
 				if (self.char.velocity_time < time)
 					self.char.velocity_x = 0;
 			}
@@ -2487,7 +2490,7 @@ void() player_grab =
 					if (cg) // can grab
 					{
 						self.counter_finished = time; // remove counter attack timer
-						self.grabcooldown_finished = time + 1.5;
+						self.grabcooldown_finished = time + 2;
 						if (self.owner.camera_forcezoom_finished < time)
 							self.owner.zoom_mode = 0; // no zoom
 						self.movetype = MOVETYPE_STEP; // Disable slope-slide
@@ -8164,16 +8167,15 @@ void() player_dodgea4	    =[	$dodgea4,	player_dodgea5		 	] {frameskip(0.05);dodg
 void() player_dodgea5	    =[	$dodgea5,	player_dodgea6		 	] {frameskip(0.05);dodgea1_move();};
 void() player_dodgea6	    =[	$dodgea6,	player_dodgea7		 	] {frameskip(0.05);dodgea1_move();FireMelee(0,0,1,30,1,0,TRUE,TRUE,0,0);};
 void() player_dodgea7	    =[	$dodgea7,	player_dodgea8		 	] {frameskip(0.05);dodgea1_move();};
-void() player_dodgea8	    =[	$dodgea8,	player_dodgea9		 	]
+void() player_dodgea8	    =[	$dodgea8,	player_dodgea9		 	] {frameskip(0.05);dodgea1_move();sound (self, CHAN_AUTO, "player/motion1.wav", 1, ATTN_NORM);};
+void() player_dodgea9	    =[	$dodgea9,	player_dodgea10		 	] 
 {
 	if (self.perfectguard_buff < time)
 		self.takedamage = DAMAGE_AIM;
 
 	frameskip(0.05);
 	dodgea1_move();
-	sound (self, CHAN_AUTO, "player/motion1.wav", 1, ATTN_NORM);
 };
-void() player_dodgea9	    =[	$dodgea9,	player_dodgea10		 	] {frameskip(0.05);dodgea1_move();};
 void() player_dodgea10	    =[	$dodgea10,	player_dodgea11		 	] {frameskip(0.05);dodgea1_move();};
 void() player_dodgea11	    =[	$dodgea11,	player_block		 	] {frameskip(0.05);dodgea1_move();};
 
