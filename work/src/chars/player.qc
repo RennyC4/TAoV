@@ -7767,7 +7767,7 @@ void() player_airdivings1 =
 	frameskip(0.05);
 };
 
-// Need to check for wall grabbing during his wall running frames!
+// Need to check for wall grabbing during his wall running frames
 void() wallrunning_think =
 {
 	local float n = 0;
@@ -8008,13 +8008,13 @@ void() player_wallrunningjumpkick3	=[	$jumpatkb1,	player_wallrunningjumpkick3	]
 	makevectors(self.angles);
 
 	self.oldorigin = self.origin;
-	self.owner.noblock_finished = time + 5;
+	self.owner.noblock_finished = time + 1;
 	self.inair = 16; // fixes rare issue
 
 	self.velocity = aim(self, 500);
 	self.velocity = self.velocity * 500;
 	self.velocity_z = -250;
-	self.angles_x = -15;
+	self.angles_x = 15;
 
 	//
 	// Check if his X origin (left/right) moved
