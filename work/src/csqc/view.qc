@@ -772,6 +772,8 @@ void(vector pos) Draw_Health_Potion =
 //
 
 .float cnt;
+.float blink;
+.float blink_finished;
 void() AnimateHead =
 {
 	local float blind = getstatf(STAT_STATUS_BLIND);
@@ -841,8 +843,23 @@ void() AnimateHead =
 				}
 				else
 				{
+					// Add blinking, skin = 5;
 					head.cnt = FALSE;
-					head.skin = 0;
+					if (head.blink)
+					{
+						head.skin = 5;
+						if (head.blink_finished < time)
+							head.blink = FALSE;
+					}
+					else
+					{
+						if (random() < 0.0025)
+						{
+							head.blink = TRUE;
+							head.blink_finished = time + 0.225;
+						}
+						head.skin = 0;
+					}
 					head.angles_x = sin(cltime*0.65)*8;
 					head.angles_y = 180 + sin(cltime*0.45)*25;
 				}
