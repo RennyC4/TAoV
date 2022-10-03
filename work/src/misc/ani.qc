@@ -257,12 +257,11 @@ void() spinwindspiralmini_think =
 // sword spin attack spiral
 void() player_swordspin_fx_think =
 {
-	if (self.owner.pain_finished > time || self.attack_finished < time || self.owner.health < 1)
+	if (self.owner.pain_finished > time || self.owner.health < 1 || (self.owner.frame < 256 || self.owner.frame > 267))
 	{
 		remove(self);
 		return;
 	}
-	
 	self.avelocity = '2500 0 0';
 
 	frameskip (0.01);

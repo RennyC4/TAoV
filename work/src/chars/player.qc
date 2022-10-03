@@ -8072,13 +8072,7 @@ void(float grab) player_swordspin_fx =
 	effect.abslight = -100;
 
 	setmodel(effect, "progs/spnatkspr.mdl");
-	setsize (effect, '0 0 0', '0 0 0');
-
-	if (grab)
-		effect.attack_finished = time + 0.5;
-	else
-		effect.attack_finished = time + 1.25;
-	
+	setsize (effect, '0 0 0', '0 0 0');	
 
 	effect.think = player_swordspin_fx_think;
 	effect.nextthink = time;

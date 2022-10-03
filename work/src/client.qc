@@ -50,6 +50,19 @@ void() InitCamera =
 	local float bt, r;
 	local entity y;
 
+	//
+	// Camera shake effect
+	//
+
+	if (self.camshake_finished > time)
+	{
+		local float s = random() * 4; // shake camera value
+		if (random() < 0.5)
+			self.punchangle_x = s;
+		else
+			self.punchangle_x = (s * -1);
+	}
+	
 	spot = self.goalentity.origin;
 	spot_y = 0;
 
@@ -690,35 +703,28 @@ void() PlayerPreThink =
 
 	if (self.char != world)
 	{
-		// Debugging
-		/*
-		if (self.char.block_finished > time)
-			centerprint (self, "Block: ON\n");
-		else
-			centerprint (self, "Block: OFF\n");
-		*/
-
 		// Angle fix (!Important!)
 		if (self.char.angles_y >= 270)
 			self.char.angles_y = -90;
-
-		//
-		// Camera shake effect
-		//
 		
-		if (self.camshake_finished > time)
+		// Hidden entity that follows Vigil for smoother X camera movements
+		if (!self.smooth_x_camera)
 		{
-			local float s = random() * 4; // shake camera value
-			if (random() < 0.5)
-				self.punchangle_x = s;
-			else
-				self.punchangle_x = (s * -1);
-		}
+			local entity smoothcamera_x;
 
-		// Debugging
-		//self.char.angles_y = self.char.angles_y + 1;
-		//local string h = ftos(self.char.angles_y);
-		//bprint ("Y: ", h, "\n");
+			smoothcamera_x = spawn();
+			setmodel(smoothcamera_x, string_null);
+			setsize (smoothcamera_x, '0 0 0', '0 0 0');
+			setorigin (smoothcamera_x, self.char.origin);
+			smoothcamera_x.movetype = MOVETYPE_NOCLIP;
+			smoothcamera_x.owner = self.char;
+			smoothcamera_x.think = smoothcamera_x_follow;
+			smoothcamera_x.nextthink = time;
+			self.smooth_x_camera = smoothcamera_x; // binded
+			smoothcamera_x.drawonlytoclient = self; // reduce network traffic
+		}
+		InitCamera(); // Main game camera
+		//
 
 		// Send Vigil's origin to CSQC for Blind status mainly
 		self.vigil_x = self.char.origin_x;
@@ -860,8 +866,6 @@ void() PlayerPreThink =
 		// HACK: Quake/FTE engine will not check SOLID_TRIGGER entities for .push,
 		//		 causes issues where plats will go through Vigil and set his bbox to null
 		//
-
-		//if (self.char.mins != VEC_HULL_MIN && self.char.maxs != VEC_HULL_MAX && self.char.dodge_finished < time && self.char.lowceil == FALSE)
 		if (self.char.dodge_finished < time && self.char.lowceil == FALSE)
 			setsize(self.char, VEC_HULL_MIN, VEC_HULL_MAX);
 	
@@ -1085,30 +1089,11 @@ void() PlayerPreThink =
 			remove(self.charcursor);
 			self.charcursor = world;
 		}
-		
-		// Hidden entity that follows Vigil for smoother X camera movements
-		if (self.smooth_x_camera == world)
-		{
-			local entity smoothcamera_x;
 
-			smoothcamera_x = spawn();
-			setmodel(smoothcamera_x, string_null);
-			setsize (smoothcamera_x, '0 0 0', '0 0 0');
-			setorigin (smoothcamera_x, self.char.origin);
-			smoothcamera_x.movetype = MOVETYPE_NOCLIP;
-			smoothcamera_x.owner = self.char;
-			smoothcamera_x.think = smoothcamera_x_follow;
-			smoothcamera_x.nextthink = time;
-			self.smooth_x_camera = smoothcamera_x; // binded
-			smoothcamera_x.drawonlytoclient = self; // reduce network traffic
-		}
-		
 		if (self.char.health > 0)
 			self.health = self.char.health;
 		else
 			self.health = 9999; // Anything under 1 will stop the death menu from working with keys (keyflags are disabled engine-wise)
-
-		InitCamera(); // Main game camera
 	}
 	else if (title1_finished < time)
 	{

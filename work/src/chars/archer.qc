@@ -73,7 +73,7 @@ void() ArcherArrowThink =
 	{
 		if (head.takedamage && self.owner != head && self.owner.enemy == head && head.perfectguard_buff < time)
 		{
-			if (head.origin_x < self.owner.origin_x)
+			if (head.origin_x < self.owner.origin_x && !head.grabbed)
 				head.angles_y = 0;
 			else
 				head.angles_y = 180;

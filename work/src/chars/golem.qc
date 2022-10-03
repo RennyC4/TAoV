@@ -379,11 +379,15 @@ void() golem_die1	=[	$death1,	golem_die1	]
 	if (self.walkframe >= 21)
 	{
 		if (!self.cnt2) // initial shake when head smacks ground
-			shake_camera(0.1);
+		{
+			if (range(self, self.enemy) != RANGE_FAR)
+				shake_camera(0.1);
+		}
 			
 		if (self.cnt2 == 5 || self.cnt2 == 10 || self.cnt2 == 15)
 		{
-			shake_camera(0.1);
+			if (range(self, self.enemy) != RANGE_FAR)
+				shake_camera(0.1);
 			ox = self.origin_x + random() * 64 - 64;
 			oy = self.origin_y;
 			oz = self.origin_z - 16;
@@ -398,7 +402,8 @@ void() golem_die1	=[	$death1,	golem_die1	]
 		}
 		else if (self.cnt2 > 20)
 		{
-			self.enemy.owner.screenflash_finished = time + 0.5;
+			if (range(self, self.enemy) != RANGE_FAR)
+				self.enemy.owner.screenflash_finished = time + 0.5;
 
 			effect = spawn();
 			setorigin(effect, self.origin);
@@ -432,7 +437,10 @@ void() golem_die1	=[	$death1,	golem_die1	]
 	}
 
 	if (self.walkframe == 6)
-		shake_camera(0.1);
+	{
+		if (range(self, self.enemy) != RANGE_FAR)
+			shake_camera(0.1);
+	}
 
 	self.frame = $death1 + self.walkframe;
 	self.walkframe = self.walkframe + 1;
@@ -456,15 +464,6 @@ void() golem_die =
 		self.walkframe = 0;
 		sound (self, CHAN_VOICE, "golem/death.wav", 1, ATTN_NORM);
 	}
-	/*
-	if (self.knockback != 2 && self.knockback != 3)
-	{
-		self.velocity = '0 0 0';
-		self.flags = self.flags - (self.flags & FL_ONGROUND);
-		self.velocity = self.velocity + 9 * v_forward * 8;
-		self.velocity = self.velocity + 90 * '0 0 3';
-	}
-	*/
 	golem_die1();
 };
 
