@@ -123,7 +123,7 @@ void() volbrand_think =
 	frameskip(0.01);
 };
 
-void() Setup_Dummy =
+void() Setup_Vigil =
 {
 	local entity dummy, sword, spoint;
 	local float f;
@@ -144,6 +144,11 @@ void() Setup_Dummy =
 			dummy.fixangle = TRUE;
 		}
 		spoint = find(spoint, classname, "player_spawn");
+	}
+
+	if (world.model == "maps/village.bsp" && f == 99) // Teleport back to town
+	{
+		bprint ("Do something cool\n");
 	}
 
 	setmodel(dummy, "progs/plyr.mdl");

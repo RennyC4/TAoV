@@ -1276,7 +1276,7 @@ to Vigil; seperated from the gameplay by a clip brush.
 */
 
 void() info_player_start = {};
-void() Setup_Dummy;
+void() Setup_Vigil;
 void() PutClientInServer =
 {
 	local entity spawn_spot;
@@ -1323,7 +1323,7 @@ void() PutClientInServer =
 	self.max_zoom = 23;
 
 	if (players < 4)
-		Setup_Dummy();
+		Setup_Vigil();
 
 	self.origin_zoom = self.origin;
 	self.new_zoom = self.origin; // store initial camera position
