@@ -8161,15 +8161,16 @@ void() player_dodgea4	    =[	$dodgea4,	player_dodgea5		 	] {frameskip(0.05);dodg
 void() player_dodgea5	    =[	$dodgea5,	player_dodgea6		 	] {frameskip(0.05);dodgea1_move();};
 void() player_dodgea6	    =[	$dodgea6,	player_dodgea7		 	] {frameskip(0.05);dodgea1_move();FireMelee(0,0,1,30,1,0,TRUE,TRUE,0,0);};
 void() player_dodgea7	    =[	$dodgea7,	player_dodgea8		 	] {frameskip(0.05);dodgea1_move();};
-void() player_dodgea8	    =[	$dodgea8,	player_dodgea9		 	] {frameskip(0.05);dodgea1_move();sound (self, CHAN_AUTO, "player/motion1.wav", 1, ATTN_NORM);};
-void() player_dodgea9	    =[	$dodgea9,	player_dodgea10		 	] 
+void() player_dodgea8	    =[	$dodgea8,	player_dodgea9		 	] 
 {
 	if (self.perfectguard_buff < time)
 		self.takedamage = DAMAGE_AIM;
 
 	frameskip(0.05);
 	dodgea1_move();
+	sound (self, CHAN_AUTO, "player/motion1.wav", 1, ATTN_NORM);
 };
+void() player_dodgea9	    =[	$dodgea9,	player_dodgea10		 	] {frameskip(0.05);dodgea1_move();};
 void() player_dodgea10	    =[	$dodgea10,	player_dodgea11		 	] {frameskip(0.05);dodgea1_move();};
 void() player_dodgea11	    =[	$dodgea11,	player_block		 	] {frameskip(0.05);dodgea1_move();};
 
