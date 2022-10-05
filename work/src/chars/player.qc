@@ -8541,7 +8541,7 @@ void() player_gizuna1   =[	$izuna1,	player_gizuna1	]
 				self.movetype = MOVETYPE_WALK;
 
 				if (self.izunaspin_speed < 15)
-					self.izunaspin_speed = self.izunaspin_speed + 0.35;
+					self.izunaspin_speed = self.izunaspin_speed + 0.2;
 			}
 			self.angles_y = self.angles_y + self.izunaspin_speed; // Spin speed
 			self.owner.shadow_time = time + 0.1; // red shadows

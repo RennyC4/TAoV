@@ -701,8 +701,12 @@ void() PlayerPreThink =
 		}
 	}
 
-	if (self.char != world)
+	if (self.char)
 	{
+		CheckImpulseButtons();
+		if (self.impulse != 0)
+			self.impulse = 0;
+
 		// Angle fix (!Important!)
 		if (self.char.angles_y >= 270)
 			self.char.angles_y = -90;
@@ -868,10 +872,6 @@ void() PlayerPreThink =
 		//
 		if (self.char.dodge_finished < time && self.char.lowceil == FALSE)
 			setsize(self.char, VEC_HULL_MIN, VEC_HULL_MAX);
-	
-		CheckImpulseButtons();
-		if (self.impulse != 0)
-			self.impulse = 0;
 
 		if (cvar("developer") < 1) // Attract demo recording mode
 		{

@@ -249,119 +249,105 @@ void() CheckImpulseButtons =
 	// Block
 	//
 
-	if (self.button3 && self.noblock_finished < time)
+	if (self.button3)
 	{
-		if (self.FL_BLKPRESSED == FALSE)
+		// Perfect Block
+		if (relics & IT_RELIC8 && self.char.pain_finished < time)
 		{
-			if (self.forcewalk_finished > time)
-				return;
-			if (self.purge_toggle == TRUE)
-				return;
-			if (pointcontents(self.char.origin) == CONTENT_WATER || pointcontents(self.owner.origin) == CONTENT_LAVA || pointcontents(self.owner.origin) == CONTENT_SLIME || self.char.swimming)
-				return;
-			if (self.char.flypain || self.char.tired_finished > time || self.wallrun == TRUE)
-				return;
-			if (self.char.health < 1)
-				return;
-			if (self.char.bigfall_recovery_finished > time)
-				return;
-			if (deathmatch && self.char.pain_finished > time) // Deathmatch rules
-				return;
-			if (self.char.deadflag == DEAD_DEAD)
-				return;
-			if (self.char.izunatarg)
-				return;
-			if (self.char.dodge_finished > time)
-				return;
+			if (self.char.perfectblock_cooldown < time)
+				self.char.perfectblock = time + 0.135; // Perfect Guard success window
+			self.char.perfectblock_cooldown = time + 0.8;
+		}
 
-			self.char.swing_count = 0; // Reset
-			self.char.angles_x = 0; // fix rare angle bug
-
-			if (self.ledgegrab == TRUE) // blocking removes ledge grabbing flag
+		if (self.noblock_finished < time)
+		{
+			if (self.FL_BLKPRESSED == FALSE && self.forcewalk_finished < time && !self.purge_toggle && (!(pointcontents(self.char.origin) == CONTENT_WATER || pointcontents(self.owner.origin) == CONTENT_LAVA || pointcontents(self.owner.origin) == CONTENT_SLIME || self.char.swimming))
+			&& !self.char.flypain && self.char.tired_finished < time && !self.wallrun && self.char.health > 0 && self.char.bigfall_recovery_finished < time && !self.char.izunatarg && self.char.dodge_finished < time)
 			{
-				self.ledgegrab = FALSE;
-				self.char.velocity_x = 0; // stop sideways movement
-			}
+				if (deathmatch && self.char.pain_finished > time) // Deathmatch rules
+					return;
 
-			if (self.char.enemy) // remove grab on enemy
-				self.char.grabbed =	self.char.enemy.grabbed = FALSE;
+				self.char.swing_count = 0; // Reset
+				self.char.angles_x = 0; // fix rare angle bug
 
-			if (self.magicmenu == TRUE)
-			{
-				self.char.angles_y = self.char.turn_y;
-				sound (self, CHAN_ITEM, "player/mmenu1.wav", 1, ATTN_NORM);
-				self.magicmenu = FALSE;
-			}
-
-			// Get out of turning angles
-			if (self.char.angles_y == 45 || self.char.angles_y == -45)
-				self.char.angles_y = 0;
-			if (self.char.angles_y == 225 || self.char.angles_y == -225)
-				self.char.angles_y = 180;
-
-			// round house kick can now be put into an air combo
-			if ((self.keyflags & (KEY_LEFT) && self.char.angles_y == 0) || (self.keyflags & (KEY_RIGHT) && self.char.angles_y == 180) 
-			&& self.char.aircombo_count != 9 && self.char.aircombo_count != 8 && self.wallgrab == FALSE && self.safezone == FALSE && self.trigger_spincut_finished < time)
-			{
-				if (self.attack_finished < time)
+				if (self.ledgegrab == TRUE) // blocking removes ledge grabbing flag
 				{
-					self.char.aircombo_count = 9; // can only do it once in air
-					self.purge_toggle = FALSE;
-					self.char.enemy = world;
-					
-					self.char.perform_divingswallow = FALSE; // remove flag on new kick
-					
-					self.noblock_finished = time + 0.4; // don't allow block for a split second on round house
-					self.char.idle_count = 0; // reset pose
-					self.char.attack_type = 0; // reset attack type
-					self.char.velocity_y = 0; // remove foreground/backgound velocity
-					self.char.movetype = MOVETYPE_WALK; // fix flying vigil from ledge grab -> kick
-					self.char.inair = self.char.bigfall = 0; // remove any big fall flags
-					self.char.grabbed = FALSE;
-
-					self.attack_finished = time + 1;
-
-					self.char.think = player_kick1;
-					self.char.nextthink = time;
+					self.ledgegrab = FALSE;
+					self.char.velocity_x = 0; // stop sideways movement
 				}
-			}
-			else if (self.char.dodge_finished < time)
-			{
-				if (self.swordshadow_time > time)
-					self.swordshadow_time = time; // sword shadow remove
-				if (self.shadow_time > time)
-					self.shadow_time = time;
-				self.char.djump_spincnt = 1; // reset double jump, do not allow it to be used again however
-				self.char.swing_count = 0; // reset sword swing
-				self.char.idle_count = 0; // reset pose
-				if (self.attack_finished > time)
-					self.attack_finished = time;
-				self.dodge_finished = time;
-				self.purge_toggle = FALSE;
 
-				self.char.flypain = FALSE; // needed to fix "blocking while getting up"
-				if (self.char.perfectguard_buff < time)
-					self.char.takedamage = DAMAGE_AIM;
+				if (self.char.enemy) // remove grab on enemy
+					self.char.grabbed =	self.char.enemy.grabbed = FALSE;
 
-				self.char.movetype = MOVETYPE_WALK; // FIXME: Stop mid-air hangup on ledgegrabs
-
-				// Perfect Block
-				if (relics & IT_RELIC8)
+				if (self.magicmenu == TRUE)
 				{
-					if (self.char.perfectblock_cooldown < time && self.char.dodge_finished < time)
+					self.char.angles_y = self.char.turn_y;
+					sound (self, CHAN_ITEM, "player/mmenu1.wav", 1, ATTN_NORM);
+					self.magicmenu = FALSE;
+				}
+
+				// Get out of turning angles
+				if (self.char.angles_y == 45 || self.char.angles_y == -45)
+					self.char.angles_y = 0;
+				if (self.char.angles_y == 225 || self.char.angles_y == -225)
+					self.char.angles_y = 180;
+
+				// round house kick can now be put into an air combo
+				if ((self.keyflags & (KEY_LEFT) && self.char.angles_y == 0) || (self.keyflags & (KEY_RIGHT) && self.char.angles_y == 180) 
+				&& self.char.aircombo_count != 9 && self.char.aircombo_count != 8 && self.wallgrab == FALSE && self.safezone == FALSE && self.trigger_spincut_finished < time)
+				{
+					if (self.attack_finished < time)
 					{
-						self.char.perfectblock = time + 0.135; // Perfect Guard success window
-						self.char.perfectblock_cooldown = time + 1;
+						self.char.aircombo_count = 9; // can only do it once in air
+						self.purge_toggle = FALSE;
+						self.char.enemy = world;
+						
+						self.char.perform_divingswallow = FALSE; // remove flag on new kick
+						
+						self.noblock_finished = time + 0.4; // don't allow block for a split second on round house
+						self.char.idle_count = 0; // reset pose
+						self.char.attack_type = 0; // reset attack type
+						self.char.velocity_y = 0; // remove foreground/backgound velocity
+						self.char.movetype = MOVETYPE_WALK; // fix flying vigil from ledge grab -> kick
+						self.char.inair = self.char.bigfall = 0; // remove any big fall flags
+						self.char.grabbed = FALSE;
+
+						self.attack_finished = time + 1;
+
+						self.char.think = player_kick1;
+						self.char.nextthink = time;
 					}
 				}
+				else if (self.char.dodge_finished < time)
+				{
+					if (self.swordshadow_time > time)
+						self.swordshadow_time = time; // sword shadow remove
+					if (self.shadow_time > time)
+						self.shadow_time = time;
+					if (self.attack_finished > time)
+						self.attack_finished = time;
+					if (self.dodge_finished > time)
+						self.dodge_finished = time;
 
-				self.char.grabcooldown_finished = time + 1.5;
-				self.char.block_finished = time + 99999;
-				self.char.think = player_block;
-				self.char.nextthink = time;
+					self.char.djump_spincnt = 1; // reset double jump
+					self.char.swing_count = 0; // reset sword swing
+					self.char.idle_count = 0; // reset pose
+					self.purge_toggle = FALSE;
 
-				if (self.char.lowceil == FALSE)
-					sound (self, CHAN_BODY, "player/motion2.wav", 1, ATTN_NORM);
+					self.char.flypain = FALSE; // needed to fix "blocking while getting up"
+					if (self.char.perfectguard_buff < time)
+						self.char.takedamage = DAMAGE_AIM;
+
+					self.char.movetype = MOVETYPE_WALK; // FIXME: Stop mid-air hangup on ledgegrabs
+
+					self.char.grabcooldown_finished = time + 1.5;
+					self.char.block_finished = time + 99999;
+					self.char.think = player_block;
+					self.char.nextthink = time;
+
+					if (self.char.lowceil == FALSE)
+						sound (self, CHAN_BODY, "player/motion2.wav", 1, ATTN_NORM);
+				}
 			}
 		}
 		self.FL_BLKPRESSED = TRUE;

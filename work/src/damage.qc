@@ -509,7 +509,10 @@ void(entity targ, entity inflictor, entity attacker, float damage, float statusr
 	if (attacker.classname != "player") // manually cleared on player
 		attacker.attack_type = 0;
 	else
-		attacker.perfectblock_cooldown = time; // remove perfect guard cooldown on vigils strikes
+	{
+		if (attacker.perfectblock_cooldown > time)
+			attacker.perfectblock_cooldown = time; // remove perfect guard cooldown on vigils strikes
+	}
 
 	targ.damage_type = 0;
 	targ.knockback = 0;
