@@ -102,6 +102,12 @@ void() swordstareffect4;
 
 void() volbrand_think =
 {
+	if (self.owner.classname != "player")
+	{
+		remove(self);
+		return;
+	}
+
 	if (self.owner.perfectguard_buff < time)
 	{
 		setmodel (self, "progs/plyr2.mdl");
@@ -151,13 +157,13 @@ void() OrbTransportThink =
 		sound (self, CHAN_BODY, "orb/move.wav", 1, ATTN_NONE);
 		self.sound_finished = time + 3;
 	}
-	
-	self.owner.camerastyle = 4;
 
+	self.owner.camerastyle = 4;
 
 	if (checkground(self))
 	{
 		self.owner.telecam = TRUE;
+
 		// effects
 		WriteByte (MSG_BROADCAST, SVC_TEMPENTITY);
 		WriteByte (MSG_BROADCAST, TE_TELEPORT);
@@ -207,9 +213,76 @@ void() OrbTransportThink =
 		self.th_die = player_die;
 		self.th_stand = player_move;
 
-		self.nextthink = time;		
+		self.nextthink = time;
+
+		if (world.model == "maps/teleporter.bsp")
+		{
+			float b = fopen("teleport.txt", FILE_WRITE);
+			if (b >= 0)
+			{
+				fputs(b, "castle", "\n");
+				fclose(b);
+			}		
+		}
 		return;	
 	}
+	frameskip(0.01);
+};
+
+void() OrbTransportThinkUp =
+{
+	local string line;
+
+	self.scale = 1.5 + sin(time*32)*0.1; 
+
+	makevectors(self.angles);
+	particle(self.origin - v_up * 24, '0 0 0', 192, 25);	
+
+	if (self.sound_finished < time)
+	{
+		sound (self, CHAN_BODY, "orb/move.wav", 1, ATTN_NONE);
+		self.sound_finished = time + 3;
+	}
+
+	self.owner.camerastyle = 4;
+	self.owner.campos_x = self.origin_x;
+	//self.owner.campos_z = self.origin_z;
+
+	if (self.cnt < 250)
+	{
+		if (self.pain_finished < time)
+		{
+			if (self.frame < 6)
+				self.frame = self.frame + 1;
+			else
+				self.frame = 0;
+
+			if (self.cnt < 50)
+				self.pain_finished = time + 0.1;
+			else if (self.cnt < 100)
+				self.pain_finished = time + 0.05;
+			else
+				self.pain_finished = time + 0.01;
+		}
+	}
+	else if (self.cnt > 250 && !self.cnt2)
+	{
+		self.frame = 0;
+		self.velocity_z = 1000;
+		sound (self, CHAN_VOICE, "player/fast.wav", 1, ATTN_NONE);
+		self.cnt2 = TRUE;
+	}
+	else if (self.cnt > 450)
+	{
+		cvar_set("gamecfg", "99");
+
+		// Open "teleport" file for reading
+		float f = fopen("teleport.txt", FILE_READ);
+		if((line = fgets(f)))
+			changelevel (line);
+		fclose(f);
+	}
+	self.cnt = self.cnt + 1;
 	frameskip(0.01);
 };
 
@@ -226,21 +299,17 @@ void() Setup_Vigil =
 	while (spoint)
 	{
 		if (world.model == "maps/teleporter.bsp" || deathmatch)
-			f = 0; // teleporter room doesn't require different spawn locations
+			cvar_set("gamecfg", "99");
 		if (spoint.cnt == f)
 		{
 			setorigin(dummy, spoint.origin);
-
-			self.campos_x = spoint.origin_x;
-			self.campos_z = spoint.origin_z;
-			
-			//self.campos_x = self.origin_x;
-			//self.campos_y = self.origin_y;
-			//self.campos_z = self.origin_z;
-
 			dummy.oangles = spoint.angles;
 			dummy.angles = spoint.angles;
 			dummy.fixangle = TRUE;
+			dummy.spawnflags = spoint.spawnflags;
+
+			self.campos_x = spoint.origin_x;
+			self.campos_z = spoint.origin_z;
 		}
 		spoint = find(spoint, classname, "player_spawn");
 	}
@@ -311,7 +380,8 @@ void() Setup_Vigil =
 		stuffcmd (self, "con_notify_w 1\n"); // allowed in multiplayer
 
 	// Teleport Down
-	if (world.model == "maps/village.bsp" && f == 99)
+	//if (world.model == "maps/village.bsp" && f == 99)
+	if (dummy.spawnflags & 1)
 	{
 		setmodel(dummy, "progs/orb.mdl");
 		setsize(dummy, VEC_HULL_MIN, VEC_HULL_MAX);
@@ -319,7 +389,7 @@ void() Setup_Vigil =
 		dummy.classname = "tran_orb";		
 		dummy.colormod = '2.5 2.5 1';
 		dummy.alpha = 0.75;
-		dummy.effects = EF_ADDITIVE | EF_NODEPTHTEST;
+		dummy.effects = EF_ADDITIVE | EF_NODEPTHTEST | EF_DIMLIGHT;
 		dummy.movetype = MOVETYPE_FLY;
 		dummy.hitcontentsmaski = CONTENTBIT_SOLID|0x00000002i|CONTENTBIT_BODY|CONTENTBIT_PLAYERCLIP;
 

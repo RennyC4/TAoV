@@ -4876,7 +4876,7 @@
 {
 "classname" "trigger_changelevel"
 "map" "teleporter"
-"cnt" "99"
+"cnt" "0"
 "_phong" "1"
 // brush 0
 {

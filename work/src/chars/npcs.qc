@@ -889,16 +889,14 @@ void() wizard_chat =
 				{
 					if (shrine_progress & IT_SHRINE1)
 					{
-						if (self.enemy.owner.gold >= aprice)
+						if (self.enemy.owner.gold >= aprice) // warp vigil
 						{
 							float f = fopen("teleport.txt", FILE_WRITE);
 							if (f >= 0)
 							{
-								fputs(f, "castle", "\n");
+								fputs(f, "teleporter", "\n");
 								fclose(f);
 							}
-							cvar_set("gamecfg", "99");
-							changelevel("teleporter");
 							centerprint (self.enemy.owner, "");
 							self.enemy.owner.gold = self.enemy.owner.gold - aprice; // remove gold
 							self.mode = 0; // Not chatting anymore
@@ -906,6 +904,33 @@ void() wizard_chat =
 							self.enemy.owner.conversation = FALSE;
 							self.enemy.owner.display_price = 0;
 							self.pain_finished = time + 1; // Won't talk to user again for a second
+							
+							// Become Orb
+							sound (self.enemy, CHAN_VOICE, "spells/charge.wav", 1, ATTN_NONE);
+							WriteByte (MSG_BROADCAST, SVC_TEMPENTITY);
+							WriteByte (MSG_BROADCAST, TE_TELEPORT);
+							WriteCoord (MSG_BROADCAST, self.enemy.origin_x);
+							WriteCoord (MSG_BROADCAST, self.enemy.origin_y);
+							WriteCoord (MSG_BROADCAST, self.enemy.origin_z);
+							setmodel(self.enemy, "progs/orb.mdl");
+							setsize(self.enemy, VEC_HULL_MIN, VEC_HULL_MAX);
+
+							self.enemy.classname = "tran_orb";		
+							self.enemy.colormod = '2.5 2.5 1';
+							self.enemy.alpha = 0.75;
+							self.enemy.effects = EF_ADDITIVE | EF_NODEPTHTEST | EF_DIMLIGHT;
+							self.enemy.movetype = MOVETYPE_NOCLIP;
+
+							self.enemy.velocity = '0 0 0';
+							self.enemy.cnt = 0;
+							self.enemy.cnt2 = 0;
+							self.enemy.pain_finished = time;
+							self.enemy.owner.campos_z = self.enemy.origin_z;
+							self.enemy.owner.campos_x = self.enemy.origin_x;
+							self.enemy.think = OrbTransportThinkUp;
+							self.enemy.nextthink = time;
+
+							self.pain_finished = time + 999; // Won't talk to user again forever
 						}
 						else
 							sound (self, CHAN_AUTO, "misc/menu2.wav", 1, ATTN_NORM);

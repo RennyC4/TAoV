@@ -210,13 +210,38 @@ void() transporter_touch =
 			cvar_set("gamecfg", "99");
 			
 			if (other.owner.currentshrine == IT_SHRINE0) // Woosh!
-			{				
+			{
 				float v = fopen("teleport.txt", FILE_WRITE);
 				if (v >= 0)
 				{
 					fputs(v, "village", "\n");
 					fclose(v);
 				}
+
+				// Become Orb
+				sound (other, CHAN_VOICE, "spells/charge.wav", 1, ATTN_NONE);
+				WriteByte (MSG_BROADCAST, SVC_TEMPENTITY);
+				WriteByte (MSG_BROADCAST, TE_TELEPORT);
+				WriteCoord (MSG_BROADCAST, other.origin_x);
+				WriteCoord (MSG_BROADCAST, other.origin_y);
+				WriteCoord (MSG_BROADCAST, other.origin_z);
+				setmodel(other, "progs/orb.mdl");
+				setsize(other, VEC_HULL_MIN, VEC_HULL_MAX);
+
+				other.classname = "tran_orb";		
+				other.colormod = '2.5 2.5 1';
+				other.alpha = 0.75;
+				other.effects = EF_ADDITIVE | EF_NODEPTHTEST | EF_DIMLIGHT;
+				other.movetype = MOVETYPE_NOCLIP;
+
+				other.velocity = '0 0 0';
+				other.cnt = 0;
+				other.cnt2 = 0;
+				other.pain_finished = time;
+				other.owner.campos_z = other.origin_z;
+				other.owner.campos_x = other.origin_x;
+				other.think = OrbTransportThinkUp;
+				other.nextthink = time;
 			}
 			if (other.owner.currentshrine == IT_SHRINE1) // Woosh!
 			{				

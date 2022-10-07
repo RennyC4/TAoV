@@ -1305,7 +1305,8 @@ void() PutClientInServer =
 	
 	self.movetype = MOVETYPE_NOCLIP;
 	self.flags = FL_CLIENT;
-	self.origin = self.campos = spawn_spot.origin;
+	self.origin = spawn_spot.origin;
+	self.campos = spawn_spot.origin;
 	setmodel (self, "progs/null.spr");
 	setsize (self, '0 0 0', '0 0 0');
 	self.view_ofs = '0 0 22';
