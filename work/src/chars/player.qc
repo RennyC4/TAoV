@@ -100,10 +100,6 @@ void() swordstareffect2;
 void() swordstareffect3;
 void() swordstareffect4;
 
-.float rollforward_fstab2;
-.vector oangles;
-.float inwater_pain;
-
 void() volbrand_think =
 {
 	if (self.owner.perfectguard_buff < time)
@@ -123,12 +119,12 @@ void() volbrand_think =
 	frameskip(0.01);
 };
 
-void() spawn_volbrand =
+void(entity own) spawn_volbrand =
 {
 	local entity sword;
 
 	sword = spawn();
-	sword.owner = self;
+	sword.owner = own;
 	sword.classname = "volbrand";
 	sword.movetype  = MOVETYPE_NOCLIP;
 	sword.solid     = SOLID_NOT;
@@ -140,15 +136,45 @@ void() spawn_volbrand =
 
 void() OrbTransportThink =
 {
-	self.scale = 1.5 + sin(time*32)*0.1;
+	local vector v = self.angles * -1;
+	self.scale = 1.5 + sin(time*32)*0.1; 
+	self.angles_y = self.angles_y + 3;
+
+	makevectors(v);
+	particle(self.origin + v_forward * 24 - v_up * 20, '0 0 0', 192, 25);
+
+	makevectors(self.angles);
+	particle(self.origin - v_forward * 24 - v_up * 20, '0 0 0', 192, 25);	
+
+	if (self.sound_finished < time)
+	{
+		sound (self, CHAN_BODY, "orb/move.wav", 1, ATTN_NONE);
+		self.sound_finished = time + 3;
+	}
+	
+	self.owner.camerastyle = 4;
+
+
 	if (checkground(self))
 	{
+		self.owner.telecam = TRUE;
 		// effects
+		WriteByte (MSG_BROADCAST, SVC_TEMPENTITY);
+		WriteByte (MSG_BROADCAST, TE_TELEPORT);
+		WriteCoord (MSG_BROADCAST, self.origin_x);
+		WriteCoord (MSG_BROADCAST, self.origin_y);
+		WriteCoord (MSG_BROADCAST, self.origin_z);
+
 		stuffcmd(self.owner, "wf\n");
-		
+		sound (self, CHAN_BODY, string_null, 1, ATTN_NONE); // clear sound channel
+		sound (self, CHAN_AUTO, "orb/land.wav", 1, ATTN_NONE);
+
 		// clear up Orb
+		self.angles = self.oangles;
 		self.scale = 0;
-		spawn_volbrand();
+		self.owner.camerastyle = 0;
+
+		spawn_volbrand(self);
 
 		// become vigil
 		setmodel(self, "progs/plyr.mdl");
@@ -204,6 +230,15 @@ void() Setup_Vigil =
 		if (spoint.cnt == f)
 		{
 			setorigin(dummy, spoint.origin);
+
+			self.campos_x = spoint.origin_x;
+			self.campos_z = spoint.origin_z;
+			
+			//self.campos_x = self.origin_x;
+			//self.campos_y = self.origin_y;
+			//self.campos_z = self.origin_z;
+
+			dummy.oangles = spoint.angles;
 			dummy.angles = spoint.angles;
 			dummy.fixangle = TRUE;
 		}
@@ -291,13 +326,15 @@ void() Setup_Vigil =
 		dummy.owner = self;
 		self.char = dummy;
 
-		setorigin(dummy, dummy.origin + v_up*128);
-		dummy.velocity_z = -50;
+		dummy.velocity_z = -75;
 
 		dummy.think = OrbTransportThink;
 		dummy.nextthink = time;
+		raisetoroof(dummy);
 		return;
 	}
+
+	spawn_volbrand(dummy);
 
 	setmodel(dummy, "progs/plyr.mdl");
 	setsize(dummy, VEC_HULL_MIN, VEC_HULL_MAX);
@@ -335,41 +372,6 @@ void() Setup_Vigil =
 	dummy.nextthink = time;
 
 	//cvar_set("skyroom", ""); // reset skyroom on level load
-
-	spawn_volbrand();
-
-
-	/*
-	//
-	// Spawn Vigil's sword - shader fun
-	//
-
-	sword = spawn();
-	sword.owner = dummy;
-	sword.classname = "volbrand";
-	sword.movetype  = MOVETYPE_NOCLIP;
-	sword.solid     = SOLID_NOT;
-	sword.effects   = EF_FULLBRIGHT;
-	setmodel (sword, "progs/plyr2.mdl");
-	sword.think = volbrand_think;
-	sword.nextthink = time;
-
-
-	// Ignores light level stuff, disabled
-	// MOVETYPE_FOLLOW Method
-	sword = spawn();
-	sword.owner = self;
-	sword.classname = "volbrand";
-	sword.movetype  = MOVETYPE_FOLLOW;
-	sword.solid     = SOLID_NOT;
-	//sword.effects   = EF_FULLBRIGHT;
-	//sword.drawflags = 7;
-	//sword.abslight = -100;
-	setmodel (sword, "progs/plyr2.mdl");
-	dummy.vw_index = sword.modelindex;
-	//remove(sword); // weird, removes after being binded to the player I suppose
-	
-	*/
 };
 
 //
@@ -3745,7 +3747,6 @@ void() player_counter8	=[	$counter8,	player_counter9		] {frameskip(0.05);};
 void() player_counter9	=[	$counter9,	player_counter10	] {frameskip(0.05);};
 void() player_counter10	=[	$counter10,	player_move 		] {frameskip(0.2);};
 
-.vector rel_height;
 void() spinattack_particle_think =
 {
 	if (self.attack_finished < time)

@@ -199,7 +199,8 @@ void() worldspawn =
 		// Sounds
 		//
 
-		//precache_sound ("weapons/lstart.wav");
+		precache_sound ("orb/land.wav");
+		precache_sound ("orb/move.wav");
 		precache_sound ("hydra/swim.wav");
 		precache_sound ("weapons/lhit.wav");
 		precache_sound ("player/kickswng.wav");
@@ -786,6 +787,36 @@ float (entity targ) visible =
  		return TRUE;
 	else
 	 	return FALSE;
+};
+
+/*
+=============
+raisetoroof
+
+traceboxes to the ceiling to put an entity as far up as 9999qu, a reverse droptofloor
+
+0 is false
+1 is true
+=============
+*/
+
+float(entity e) raisetoroof =
+{
+	local vector source, dest;
+
+	source = e.origin;
+	dest = e.origin + v_up * 9999;
+		
+	tracebox (source, e.mins, e.maxs, dest, TRUE, e);
+
+	if (trace_fraction == 1) // Hit nothing
+		return FALSE;
+	else
+	{
+		dest = trace_endpos;
+		setorigin(e, dest);
+		return TRUE;
+	}
 };
 
 /*

@@ -394,10 +394,15 @@ void(vector o, vector d, float color, float count) particle = #48;// start a par
 // TAOV SPECIFIC DEFINES
 //======================================================
 
+.float sound_finished;
+
 //
 // These are Vigil specific and used to belong to the top of player.qc
 //
-
+.float rollforward_fstab2;
+.vector oangles; // old angles
+.float inwater_pain; // in water pain handler
+.vector rel_height; // for spin attack particles
 .float wallhit_count; // how long to sticky on wall
 .float charge_count; // Vigil's charge up attack counter
 .float idle_count; // count frames during standing animation to go into idle frames
