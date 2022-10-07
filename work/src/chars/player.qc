@@ -246,7 +246,6 @@ void() OrbTransportThinkUp =
 
 	self.owner.camerastyle = 4;
 	self.owner.campos_x = self.origin_x;
-	//self.owner.campos_z = self.origin_z;
 
 	if (self.cnt < 250)
 	{
@@ -264,6 +263,7 @@ void() OrbTransportThinkUp =
 			else
 				self.pain_finished = time + 0.01;
 		}
+		self.angles_y = self.angles_y + 10;
 	}
 	else if (self.cnt > 250 && !self.cnt2)
 	{
@@ -299,7 +299,11 @@ void() Setup_Vigil =
 	while (spoint)
 	{
 		if (world.model == "maps/teleporter.bsp" || deathmatch)
+		{
 			cvar_set("gamecfg", "99");
+			if (deathmatch)
+				f = 0; // DM only needs 1 spawn point
+		}
 		if (spoint.cnt == f)
 		{
 			setorigin(dummy, spoint.origin);
