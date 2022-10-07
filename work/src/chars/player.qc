@@ -123,6 +123,70 @@ void() volbrand_think =
 	frameskip(0.01);
 };
 
+void() spawn_volbrand =
+{
+	local entity sword;
+
+	sword = spawn();
+	sword.owner = self;
+	sword.classname = "volbrand";
+	sword.movetype  = MOVETYPE_NOCLIP;
+	sword.solid     = SOLID_NOT;
+	sword.effects   = EF_FULLBRIGHT;
+	setmodel (sword, "progs/plyr2.mdl");
+	sword.think = volbrand_think;
+	sword.nextthink = time;
+};
+
+void() OrbTransportThink =
+{
+	self.scale = 1.5 + sin(time*32)*0.1;
+	if (checkground(self))
+	{
+		// effects
+		stuffcmd(self.owner, "wf\n");
+		
+		// clear up Orb
+		self.scale = 0;
+		spawn_volbrand();
+
+		// become vigil
+		setmodel(self, "progs/plyr.mdl");
+		setsize(self, VEC_HULL_MIN, VEC_HULL_MAX);
+
+		self.solid = SOLID_SLIDEBOX;
+		self.dimension_hit = 1;
+		self.dimension_solid = 2;
+		self.flags |= FL_FINDABLE_NONSOLID;
+		self.hitcontentsmaski = CONTENTBIT_SOLID|0x00000002i|CONTENTBIT_BODY|CONTENTBIT_PLAYERCLIP;
+
+		if (self.health > self.max_health)     // bug fix: don't allow health values to exceed max health values
+			self.health = self.max_health;     // on a changelevel if player was dead (0 health = 255 on next level, now fixed)
+
+		self.takedamage = DAMAGE_AIM;
+		self.classname = "player";
+		self.netname = "solid";
+		self.speed = 120; // Maintained by client.qc
+		self.view_ofs = '0 0 28'; // Set at eye level for Vigil not to drown
+		
+		if (cvar("developer") == 2)
+			self.movetype = MOVETYPE_NONE;
+		else
+			self.movetype = MOVETYPE_WALK;
+
+		self.colormap = self.colormap; // set colors to the owners
+		self.think = player_move;
+		self.th_pain = player_pain;
+		self.th_grab = player_grab1;
+		self.th_die = player_die;
+		self.th_stand = player_move;
+
+		self.nextthink = time;		
+		return;	
+	}
+	frameskip(0.01);
+};
+
 void() Setup_Vigil =
 {
 	local entity dummy, sword, spoint;
@@ -146,21 +210,10 @@ void() Setup_Vigil =
 		spoint = find(spoint, classname, "player_spawn");
 	}
 
-	if (world.model == "maps/village.bsp" && f == 99) // Teleport back to town
-	{
-		bprint ("Do something cool\n");
-	}
-
-	setmodel(dummy, "progs/plyr.mdl");
-	setsize(dummy, VEC_HULL_MIN, VEC_HULL_MAX);
-
-	dummy.solid = SOLID_SLIDEBOX;
-	dummy.dimension_hit = 1;
-	dummy.dimension_solid = 2;
-	dummy.flags |= FL_FINDABLE_NONSOLID;
-	dummy.hitcontentsmaski = CONTENTBIT_SOLID|0x00000002i|CONTENTBIT_BODY|CONTENTBIT_PLAYERCLIP;
-
-	dummy.owner = self;
+	if (self.spawnflags & 2)
+		self.telecam = FALSE; // don't teleport camera to vigil at map start, used for transition rooms
+	else
+		self.telecam = TRUE; // teleport camera to vigil at map start
 
 	if (deathmatch == FALSE) // Setup Dummy Parms for coop/sp
 	{
@@ -192,35 +245,7 @@ void() Setup_Vigil =
 		game_progress = game_progress | IT_PROGRESS2; // Add Cyclone Crush
 		game_progress = game_progress | IT_PROGRESS4; // Add Diving Swallow
 	}
-
-	if (dummy.health > dummy.max_health)     // bug fix: don't allow health values to exceed max health values
-		dummy.health = dummy.max_health;     // on a changelevel if player was dead (0 health = 255 on next level, now fixed)
-
-	dummy.takedamage = DAMAGE_AIM;
-	dummy.classname = "player";
-	dummy.netname = "solid";
-	dummy.speed = 120; // Maintained by client.qc
-	dummy.view_ofs = '0 0 28'; // Set at eye level for Vigil not to drown
 	
-	if (cvar("developer") == 2)
-		dummy.movetype = MOVETYPE_NONE;
-	else
-		dummy.movetype = MOVETYPE_WALK;
-
-	dummy.colormap = self.colormap; // set colors to the owners
-	self.char = dummy;
-	dummy.think = player_move;
-	dummy.nextthink = time;
-	dummy.th_pain = player_pain;
-	dummy.th_grab = player_grab1;
-	dummy.th_die = player_die;
-	dummy.th_stand = player_move;
-
-	if (self.spawnflags & 2)
-		self.telecam = FALSE; // don't teleport camera to vigil at map start, used for transition rooms
-	else
-		self.telecam = TRUE; // teleport camera to vigil at map start
-
 	//
 	// Game Progression Checks - Also occurs in ai.qc for specific monsters
 	//
@@ -249,11 +274,74 @@ void() Setup_Vigil =
 		stuffcmd (self, "con_notify_w 0\n"); // Disallow sprint to show
 	else
 		stuffcmd (self, "con_notify_w 1\n"); // allowed in multiplayer
-		
+
+	// Teleport Down
+	if (world.model == "maps/village.bsp" && f == 99)
+	{
+		setmodel(dummy, "progs/orb.mdl");
+		setsize(dummy, VEC_HULL_MIN, VEC_HULL_MAX);
+
+		dummy.classname = "tran_orb";		
+		dummy.colormod = '2.5 2.5 1';
+		dummy.alpha = 0.75;
+		dummy.effects = EF_ADDITIVE | EF_NODEPTHTEST;
+		dummy.movetype = MOVETYPE_FLY;
+		dummy.hitcontentsmaski = CONTENTBIT_SOLID|0x00000002i|CONTENTBIT_BODY|CONTENTBIT_PLAYERCLIP;
+
+		dummy.owner = self;
+		self.char = dummy;
+
+		setorigin(dummy, dummy.origin + v_up*128);
+		dummy.velocity_z = -50;
+
+		dummy.think = OrbTransportThink;
+		dummy.nextthink = time;
+		return;
+	}
+
+	setmodel(dummy, "progs/plyr.mdl");
+	setsize(dummy, VEC_HULL_MIN, VEC_HULL_MAX);
+
+	dummy.solid = SOLID_SLIDEBOX;
+	dummy.dimension_hit = 1;
+	dummy.dimension_solid = 2;
+	dummy.flags |= FL_FINDABLE_NONSOLID;
+	dummy.hitcontentsmaski = CONTENTBIT_SOLID|0x00000002i|CONTENTBIT_BODY|CONTENTBIT_PLAYERCLIP;
+
+	dummy.owner = self;
+
+	if (dummy.health > dummy.max_health)     // bug fix: don't allow health values to exceed max health values
+		dummy.health = dummy.max_health;     // on a changelevel if player was dead (0 health = 255 on next level, now fixed)
+
+	dummy.takedamage = DAMAGE_AIM;
+	dummy.classname = "player";
+	dummy.netname = "solid";
+	dummy.speed = 120; // Maintained by client.qc
+	dummy.view_ofs = '0 0 28'; // Set at eye level for Vigil not to drown
+	
+	if (cvar("developer") == 2)
+		dummy.movetype = MOVETYPE_NONE;
+	else
+		dummy.movetype = MOVETYPE_WALK;
+
+	dummy.colormap = self.colormap; // set colors to the owners
+	self.char = dummy;
+	dummy.think = player_move;
+	dummy.th_pain = player_pain;
+	dummy.th_grab = player_grab1;
+	dummy.th_die = player_die;
+	dummy.th_stand = player_move;
+
+	dummy.nextthink = time;
+
 	//cvar_set("skyroom", ""); // reset skyroom on level load
 
+	spawn_volbrand();
+
+
+	/*
 	//
-	// Spawn Vigil's sword - shader fun (Older setorigin method)
+	// Spawn Vigil's sword - shader fun
 	//
 
 	sword = spawn();
@@ -266,7 +354,6 @@ void() Setup_Vigil =
 	sword.think = volbrand_think;
 	sword.nextthink = time;
 
-	/*
 
 	// Ignores light level stuff, disabled
 	// MOVETYPE_FOLLOW Method

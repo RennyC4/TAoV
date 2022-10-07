@@ -730,327 +730,311 @@ void() PlayerPreThink =
 		InitCamera(); // Main game camera
 		//
 
-		// Send Vigil's origin to CSQC for Blind status mainly
-		self.vigil_x = self.char.origin_x;
-		self.vigil_y = self.char.origin_y;
-		self.vigil_z = self.char.origin_z;
-
-		if (self.char.pain_finished > time) // Send to CSQC
-			self.pain_finished = time = self.char.pain_finished;
-		else
-			self.pain_finished = time - 1;
-
-		//
-		//	Full Mana visual indicator
-		//
-
-		if (self.mana >= self.max_mana)
+		if (self.char.classname == "player")
 		{
-			if (self.fullmana_display == FALSE)
+			// Send Vigil's origin to CSQC for Blind status mainly
+			self.vigil_x = self.char.origin_x;
+			self.vigil_y = self.char.origin_y;
+			self.vigil_z = self.char.origin_z;
+
+			if (self.char.pain_finished > time) // Send to CSQC
+				self.pain_finished = time = self.char.pain_finished;
+			else
+				self.pain_finished = time - 1;
+
+			//
+			//	Full Mana visual indicator
+			//
+
+			if (self.mana >= self.max_mana)
 			{
-				if (self.fullmana_display_timer < time)
+				if (self.fullmana_display == FALSE)
 				{
-					manashadow = spawn();
-					manashadow.owner = self.char;
-					manashadow.classname = "manashadow";
-					manashadow.movetype = MOVETYPE_NOCLIP;
-					manashadow.solid = SOLID_NOT;
-					manashadow.scale = 1;
-					manashadow.alpha = 0.5;
-					manashadow.colormod = '0 255 255';
-					manashadow.drawonlytoclient = self; // reduce network traffic
-					manashadow.effects = EF_ADDITIVE | EF_FULLBRIGHT | EF_NODEPTHTEST;
-					manashadow.attack_finished = time + 0.35;
-					setmodel (manashadow, "progs/plyr.mdl");
+					if (self.fullmana_display_timer < time)
+					{
+						manashadow = spawn();
+						manashadow.owner = self.char;
+						manashadow.classname = "manashadow";
+						manashadow.movetype = MOVETYPE_NOCLIP;
+						manashadow.solid = SOLID_NOT;
+						manashadow.scale = 1;
+						manashadow.alpha = 0.5;
+						manashadow.colormod = '0 255 255';
+						manashadow.drawonlytoclient = self; // reduce network traffic
+						manashadow.effects = EF_ADDITIVE | EF_FULLBRIGHT | EF_NODEPTHTEST;
+						manashadow.attack_finished = time + 0.35;
+						setmodel (manashadow, "progs/plyr.mdl");
 
-					manashadow.frame = self.char.frame;
-					manashadow.angles = self.char.angles;
-					setorigin(manashadow, self.char.origin);
-					self.fullmana_display_timer = time + 0.5; // cooldown
-					sound (self, CHAN_AUTO, "player/fullmp.wav", 1, ATTN_NORM);
+						manashadow.frame = self.char.frame;
+						manashadow.angles = self.char.angles;
+						setorigin(manashadow, self.char.origin);
+						self.fullmana_display_timer = time + 0.5; // cooldown
+						sound (self, CHAN_AUTO, "player/fullmp.wav", 1, ATTN_NORM);
 
-					manashadow.think = manashadows_think;
-					manashadow.nextthink = time;
-					
+						manashadow.think = manashadows_think;
+						manashadow.nextthink = time;
+						
+					}
+					self.fullmana_display = TRUE; // Only do this once
 				}
-				self.fullmana_display = TRUE; // Only do this once
 			}
-		}
-		else if (self.fullmana_display == TRUE)
-			self.fullmana_display = FALSE;
-	
-		//
-		//	Spell Absorption visual indicator
-		//
+			else if (self.fullmana_display == TRUE)
+				self.fullmana_display = FALSE;
+		
+			//
+			//	Spell Absorption visual indicator
+			//
 
-		if (self.absorb_finished > time && self.absorb_display_timer < time)
-		{
-			self.fullmana_display = FALSE; // Allow it to remind the player again
-			
-			manashadow = spawn();
-			manashadow.owner = self.char;
-			manashadow.classname = "manashadow";
-			manashadow.movetype = MOVETYPE_NOCLIP;
-			manashadow.solid = SOLID_NOT;
-			manashadow.scale = 1;
-			manashadow.alpha = 0.5;
-			manashadow.colormod = '218 0 218'; // purple
-			manashadow.drawonlytoclient = self; // reduce network traffic
-			manashadow.effects = EF_ADDITIVE | EF_FULLBRIGHT | EF_NODEPTHTEST;
-			manashadow.attack_finished = time + 0.35;
-			setmodel (manashadow, "progs/plyr.mdl");
-
-			manashadow.frame = self.char.frame;
-			manashadow.angles = self.char.angles;
-			setorigin(manashadow, self.char.origin);
-
-			manashadow.think = manashadows_think;
-			manashadow.nextthink = time;
-
-			self.absorb_display_timer = time + 3.5; // Display once as the display timer is normally 3 seconds
-			sound (self, CHAN_AUTO, "spells/absorb.wav", 1, ATTN_NORM);
-		}
-
-		//
-		// ColorMod Rainbow for HP Max Up bottles and slowly reverting Vigil's colormod to default when changed
-		//
-
-		if (self.char.rainbow_finished > time)
-		{
-			if (self.char.rainbow_stage == 0)
+			if (self.absorb_finished > time && self.absorb_display_timer < time)
 			{
-				if (self.char.colormod_x < 2)
-					self.char.colormod_x = 1 + self.char.colormod_x + (0.075 * 100) * frametime;
-				else
+				self.fullmana_display = FALSE; // Allow it to remind the player again
+				
+				manashadow = spawn();
+				manashadow.owner = self.char;
+				manashadow.classname = "manashadow";
+				manashadow.movetype = MOVETYPE_NOCLIP;
+				manashadow.solid = SOLID_NOT;
+				manashadow.scale = 1;
+				manashadow.alpha = 0.5;
+				manashadow.colormod = '218 0 218'; // purple
+				manashadow.drawonlytoclient = self; // reduce network traffic
+				manashadow.effects = EF_ADDITIVE | EF_FULLBRIGHT | EF_NODEPTHTEST;
+				manashadow.attack_finished = time + 0.35;
+				setmodel (manashadow, "progs/plyr.mdl");
+
+				manashadow.frame = self.char.frame;
+				manashadow.angles = self.char.angles;
+				setorigin(manashadow, self.char.origin);
+
+				manashadow.think = manashadows_think;
+				manashadow.nextthink = time;
+
+				self.absorb_display_timer = time + 3.5; // Display once as the display timer is normally 3 seconds
+				sound (self, CHAN_AUTO, "spells/absorb.wav", 1, ATTN_NORM);
+			}
+
+			//
+			// ColorMod Rainbow for HP Max Up bottles and slowly reverting Vigil's colormod to default when changed
+			//
+
+			if (self.char.rainbow_finished > time)
+			{
+				if (self.char.rainbow_stage == 0)
 				{
-					self.char.rainbow_stage = 1;
+					if (self.char.colormod_x < 2)
+						self.char.colormod_x = 1 + self.char.colormod_x + (0.075 * 100) * frametime;
+					else
+					{
+						self.char.rainbow_stage = 1;
+						self.char.colormod_x = 1;
+					}
+				}
+				else if (self.char.rainbow_stage == 1)
+				{
+					if (self.char.colormod_y < 2)
+						self.char.colormod_y = 1 + self.char.colormod_y + (0.075 * 100) * frametime;
+					else
+					{
+						self.char.rainbow_stage = 2;
+						self.char.colormod_y = 1;
+					}
+				}
+				else if (self.char.rainbow_stage == 2)
+				{
+					if (self.char.colormod_z < 2)
+						self.char.colormod_z = 1 + self.char.colormod_z + (0.075 * 100) * frametime;
+					else
+					{
+						self.char.rainbow_stage = 0;
+						self.char.colormod_y = 1;
+					}		
+				}
+			}
+			else if (self.char.colormod != '1 1 1' && self.char.perfectguard_buff < time) // perfect guard is off
+			{
+				if (self.char.colormod_x > 1)
+					self.char.colormod_x = self.char.colormod_x - (0.03 * 100) * frametime;
+				else
 					self.char.colormod_x = 1;
-				}
-			}
-			else if (self.char.rainbow_stage == 1)
-			{
-				if (self.char.colormod_y < 2)
-					self.char.colormod_y = 1 + self.char.colormod_y + (0.075 * 100) * frametime;
+
+				if (self.char.colormod_y > 1)
+					self.char.colormod_y = self.char.colormod_y - (0.03 * 100) * frametime;
 				else
-				{
-					self.char.rainbow_stage = 2;
 					self.char.colormod_y = 1;
-				}
-			}
-			else if (self.char.rainbow_stage == 2)
-			{
-				if (self.char.colormod_z < 2)
-					self.char.colormod_z = 1 + self.char.colormod_z + (0.075 * 100) * frametime;
+
+				if (self.char.colormod_z > 1)
+					self.char.colormod_z = self.char.colormod_z - (0.03 * 100) * frametime;
 				else
-				{
-					self.char.rainbow_stage = 0;
-					self.char.colormod_y = 1;
-				}		
+					self.char.colormod_z = 1;
 			}
-		}
-		else if (self.char.colormod != '1 1 1' && self.char.perfectguard_buff < time) // perfect guard is off
-		{
-			if (self.char.colormod_x > 1)
-				self.char.colormod_x = self.char.colormod_x - (0.03 * 100) * frametime;
-			else
-				self.char.colormod_x = 1;
+			
+			//
+			// HACK: Quake/FTE engine will not check SOLID_TRIGGER entities for .push,
+			//		 causes issues where plats will go through Vigil and set his bbox to null
+			//
+			if (self.char.dodge_finished < time && self.char.lowceil == FALSE)
+				setsize(self.char, VEC_HULL_MIN, VEC_HULL_MAX);
 
-			if (self.char.colormod_y > 1)
-				self.char.colormod_y = self.char.colormod_y - (0.03 * 100) * frametime;
-			else
-				self.char.colormod_y = 1;
-
-			if (self.char.colormod_z > 1)
-				self.char.colormod_z = self.char.colormod_z - (0.03 * 100) * frametime;
-			else
-				self.char.colormod_z = 1;
-		}
-	
-		//
-		// HACK: Quake/FTE engine will not check SOLID_TRIGGER entities for .push,
-		//		 causes issues where plats will go through Vigil and set his bbox to null
-		//
-		if (self.char.dodge_finished < time && self.char.lowceil == FALSE)
-			setsize(self.char, VEC_HULL_MIN, VEC_HULL_MAX);
-
-		if (cvar("developer") < 1) // Attract demo recording mode
-		{
-			if (freeze_finished > time)
+			if (cvar("developer") < 1) // Attract demo recording mode
 			{
-				if (turbo_mode)
-					localcmd ("sv_gamespeed 0.25\n");
-				else
-					localcmd ("sv_gamespeed 0.1\n");
-
-				if (self.freeze_done != FALSE)
-					self.freeze_done = FALSE;
-			}
-			else
-			{
-				if (self.freeze_done == FALSE)
+				if (freeze_finished > time)
 				{
 					if (turbo_mode)
-						localcmd ("sv_gamespeed 1.25\n");
+						localcmd ("sv_gamespeed 0.25\n");
 					else
-						localcmd ("sv_gamespeed 1\n");
-					if (self.freeze_done != TRUE)
-						self.freeze_done = TRUE;
+						localcmd ("sv_gamespeed 0.1\n");
+
+					if (self.freeze_done != FALSE)
+						self.freeze_done = FALSE;
 				}
-			}
-		}
-
-		//
-		// Swimming Physics are applied
-		//
-
-		// We use pointcontents due to MOVETYPE_STEP changes on Vigil
-		// causing 'waterlevel' not to update, that only happens on MOVETYPE_WALK entities
-		self.swimming = self.char.swimming;
-		if (pointcontents(self.char.origin) == CONTENT_WATER || pointcontents(self.char.origin) == CONTENT_LAVA || pointcontents(self.char.origin) == CONTENT_SLIME)
-		{
-			self.char.movetype = MOVETYPE_WALK; // Needed otherwise odd problems occur
-
-			if (!self.swimming) // First entered water
-			{
-				self.char.aircombo_count = 0;
-				self.ledgegrab = FALSE;
-				self.walljump = FALSE;
-				self.char.flypain = FALSE;
-				self.wallrun = FALSE;
-				self.ledgegrab_finished = time;
-				self.attack_finished = time;
-				self.char.block_finished = time; // remove any left over block timers
-
-				self.inwater_finished = time + 0.6;
-				self.char.velocity_x = self.char.velocity_x / 4 * (frametime * 100);
-				self.char.velocity_y = self.char.velocity_y / 4 * (frametime * 100);
-				self.char.velocity_z = self.char.velocity_z / 4 * (frametime * 100);
-
-				if (self.playersplash_finished < time)
+				else
 				{
-					watersplash_particle();
-					watersplash_particle();
-					watersplash_particle();
-					self.bubble_count = time + 3;
-					sound (self.char, CHAN_AUTO, "misc/h2ohit1.wav", 1, ATTN_NORM);
-					self.playersplash_finished = time + 0.5;
-				}
-			}
-			PlayerWaterPhysics();
-
-			if (self.char.waterlevel < 3) // Only drown on water level 3
-				self.char.dmgtime = time + 10; // 10 second breath holding
-
-			if (self.bubble_count < time) // spawn bubbles
-			{
-				Bubbles(1);
-				self.bubble_count = time + 3;
-			}
-
-			// Drowning
-			if (self.char.dmgtime < time && (!relics & IT_RELIC6) && !self.flags & FL_GODMODE && !self.char.flypain)
-			{
-				if (self.char.takedamage && self.char.invunerability_finished < time)
-				{
-					if (self.char.liquidsound_finished < time)
+					if (self.freeze_done == FALSE)
 					{
-						PainSound();
-						self.char.liquidsound_finished = time + 1;
+						if (turbo_mode)
+							localcmd ("sv_gamespeed 1.25\n");
+						else
+							localcmd ("sv_gamespeed 1\n");
+						if (self.freeze_done != TRUE)
+							self.freeze_done = TRUE;
 					}
-					self.char.health = self.char.health - 1;
-					if (self.char.health < 1)
-						Killed(self.char, world);
 				}
-				self.char.dmgtime = time + 0.5;
 			}
-			self.char.swimming = TRUE;
-		}
-		else
-		{
-			self.char.swimming = FALSE;
-			self.char.speed = 120; // Vigil's default speed is set here...
-		}
 
-		//
-		// FTE sometimes sets the roll angle when changing graphic options
-		//
-		local float b;
-		b = cvar("cl_rollangle");
-		if (b > 0)
-			stuffcmd (self, "cl_rollangle 0\n");
+			//
+			// Swimming Physics are applied
+			//
 
-		//
-		// Fixes wrong water style on save game loads
-		//
-
-		if (framecount < 40)
-		{
-			local float r;
-			r = cvar("r_waterstyle");
-			if (r != 2)
-				stuffcmd (self, "r_waterstyle 2\n");
-		}
-
-		//
-		// Red screen tint, applies on near-death
-		//
-		
-		if (self.screentint_finished < time)
-		{
-			if (self.char.health <= (self.char.max_health / 4))
+			// We use pointcontents due to MOVETYPE_STEP changes on Vigil
+			// causing 'waterlevel' not to update, that only happens on MOVETYPE_WALK entities
+			self.swimming = self.char.swimming;
+			if (pointcontents(self.char.origin) == CONTENT_WATER || pointcontents(self.char.origin) == CONTENT_LAVA || pointcontents(self.char.origin) == CONTENT_SLIME)
 			{
-				if (self.neardeath_tint == FALSE)
+				self.char.movetype = MOVETYPE_WALK; // Needed otherwise odd problems occur
+
+				if (!self.swimming) // First entered water
 				{
-					if (framecount > 10) // Don't play sound again on level load
-						sound (self, CHAN_AUTO, "player/lowhealth.wav", 1, ATTN_NORM);
-					stuffcmd (self, "v_cshift 255 0 0 25\n");
-					self.neardeath_tint = TRUE;
+					self.char.aircombo_count = 0;
+					self.ledgegrab = FALSE;
+					self.walljump = FALSE;
+					self.char.flypain = FALSE;
+					self.wallrun = FALSE;
+					self.ledgegrab_finished = time;
+					self.attack_finished = time;
+					self.char.block_finished = time; // remove any left over block timers
+
+					self.inwater_finished = time + 0.6;
+					self.char.velocity_x = self.char.velocity_x / 4 * (frametime * 100);
+					self.char.velocity_y = self.char.velocity_y / 4 * (frametime * 100);
+					self.char.velocity_z = self.char.velocity_z / 4 * (frametime * 100);
+
+					if (self.playersplash_finished < time)
+					{
+						watersplash_particle();
+						watersplash_particle();
+						watersplash_particle();
+						self.bubble_count = time + 3;
+						sound (self.char, CHAN_AUTO, "misc/h2ohit1.wav", 1, ATTN_NORM);
+						self.playersplash_finished = time + 0.5;
+					}
 				}
-				if (self.vcshift_ok == TRUE)
-					stuffcmd (self, "v_cshift 255 0 0 25\n");
+				PlayerWaterPhysics();
+
+				if (self.char.waterlevel < 3) // Only drown on water level 3
+					self.char.dmgtime = time + 10; // 10 second breath holding
+
+				if (self.bubble_count < time) // spawn bubbles
+				{
+					Bubbles(1);
+					self.bubble_count = time + 3;
+				}
+
+				// Drowning
+				if (self.char.dmgtime < time && (!relics & IT_RELIC6) && !self.flags & FL_GODMODE && !self.char.flypain)
+				{
+					if (self.char.takedamage && self.char.invunerability_finished < time)
+					{
+						if (self.char.liquidsound_finished < time)
+						{
+							PainSound();
+							self.char.liquidsound_finished = time + 1;
+						}
+						self.char.health = self.char.health - 1;
+						if (self.char.health < 1)
+							Killed(self.char, world);
+					}
+					self.char.dmgtime = time + 0.5;
+				}
+				self.char.swimming = TRUE;
 			}
 			else
 			{
-				if (self.vcshift_ok == TRUE)
-					stuffcmd (self, "v_cshift 0 0 0 0\n");
+				self.char.swimming = FALSE;
+				self.char.speed = 120; // Vigil's default speed is set here...
+			}
+
+			//
+			// Red screen tint, applies on near-death
+			//
+			
+			if (self.screentint_finished < time)
+			{
+				if (self.char.health <= (self.char.max_health / 4))
+				{
+					if (self.neardeath_tint == FALSE)
+					{
+						if (framecount > 10) // Don't play sound again on level load
+							sound (self, CHAN_AUTO, "player/lowhealth.wav", 1, ATTN_NORM);
+						stuffcmd (self, "v_cshift 255 0 0 25\n");
+						self.neardeath_tint = TRUE;
+					}
+					if (self.vcshift_ok == TRUE)
+						stuffcmd (self, "v_cshift 255 0 0 25\n");
+				}
 				else
 				{
-					if (self.char.health > (self.char.max_health / 4) && self.neardeath_tint == TRUE)
+					if (self.vcshift_ok == TRUE)
 						stuffcmd (self, "v_cshift 0 0 0 0\n");
+					else
+					{
+						if (self.char.health > (self.char.max_health / 4) && self.neardeath_tint == TRUE)
+							stuffcmd (self, "v_cshift 0 0 0 0\n");
+					}
+					self.neardeath_tint = FALSE;
 				}
-				self.neardeath_tint = FALSE;
+				self.vcshift_ok = FALSE;
 			}
-			self.vcshift_ok = FALSE;
+
+			//
+			// Vigil's brace for Impact after a large fall
+			//
+
+			if (self.char.inair > 84 && self.char.velocity_z < -549 && (self.char.aircombo_count != 5 && self.char.aircombo_count != 6))
+				self.char.bigfall = TRUE;
+
+			if (self.shadow_time > time)
+				Shadows();
+			if (self.softshadow_time > time)
+				SoftShadows();
+			if (self.swordshadow_time > time)
+				SwordShadows();
+			if (self.speedline_time > time)
+				SpeedLine();
+			if (self.displayname_finished < time && self.displayname != "")
+				self.displayname = "";
+			if (self.hflask_drink_finished > time)
+				HealthFlask();
+			if (self.char.perfectguard_buff < time && self.char.invunerability_finished < time &&self.char.alpha != 1)
+				self.char.alpha = 1;
+
+			// Debug inair time
+			//local string f = ftos(self.char.inair);
+			//bprint ("In Air: ", f, "\n");
+
+			if (self.forcewalk_finished < time && (self.status_blind_finished > time || self.status_poison_finished > time || self.status_broken_finished > time))
+				StatusEffects();
+
 		}
-
-		//
-		// Vigil's brace for Impact after a large fall
-		//
-
-		if (self.char.inair > 84 && self.char.velocity_z < -549 && (self.char.aircombo_count != 5 && self.char.aircombo_count != 6))
-			self.char.bigfall = TRUE;
-
-		if (self.shadow_time > time)
-			Shadows();
-		if (self.softshadow_time > time)
-			SoftShadows();
-		if (self.swordshadow_time > time)
-			SwordShadows();
-		if (self.speedline_time > time)
-			SpeedLine();
-		if (self.displayname_finished < time && self.displayname != "")
-			self.displayname = "";
-		if (self.hflask_drink_finished > time)
-			HealthFlask();
-		if (self.char.perfectguard_buff < time && self.char.invunerability_finished < time &&self.char.alpha != 1)
-			self.char.alpha = 1;
-
-		// Debug inair time
-		//local string f = ftos(self.char.inair);
-		//bprint ("In Air: ", f, "\n");
-
-		if (self.forcewalk_finished < time && (self.status_blind_finished > time || self.status_poison_finished > time || self.status_broken_finished > time))
-			StatusEffects();
 
 		//
 		// Vigil overhead cursor / perfect guard buff symbol
@@ -1100,6 +1084,29 @@ void() PlayerPreThink =
 		self.angles_y = -90;
 		self.fixangle = TRUE;
 	}
+
+	//
+	// FTE sometimes sets the roll angle when changing graphic options
+	//
+
+	local float b;
+	b = cvar("cl_rollangle");
+	if (b > 0)
+		stuffcmd (self, "cl_rollangle 0\n");
+
+	/* Obsolete
+	//
+	// Fixes wrong water style on save game loads
+	//
+
+	if (framecount < 40)
+	{
+		local float r;
+		r = cvar("r_waterstyle");
+		if (r != 2)
+			stuffcmd (self, "r_waterstyle 2\n");
+	}
+	*/
 };
 
 float title1_finished;
@@ -1151,7 +1158,8 @@ void() PlayerPostThink =
 		CheckEnemyHPBar();
 
 		// now do the movement
-		player_think(); // player.qc
+		if (self.char.classname == "player")
+			player_think(); // player.qc
 		
 		// For debugging status effects
 		//self.status_poison_finished = time + 3;

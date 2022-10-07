@@ -160,7 +160,8 @@ void() worldspawn =
 		precache_model ("progs/embers.mdl");
 		precache_model ("progs/windsprl.mdl");
 		precache_model ("progs/fire_fx.mdl");
-		
+		precache_model ("progs/orb.mdl");
+
 		//
 		// 2D Sprites
 		//
@@ -524,7 +525,7 @@ void() StartFrame =
 	// Custom Lighting - Stops monsters / players from going pitch black
 	// + colormod shifting + soul candle relic
 	//
-	
+
 	for (entity v = world; (v=nextent(v));)
 	{
 		if (!v.flags & FL_MONSTER && !v.classname == "player" && !v.classname == "guard")
@@ -578,7 +579,7 @@ void() StartFrame =
 					v.colormod_z = 1;
 			}
 		}
-		
+
 		local vector x;
 		x = getlight(v.origin);
 
@@ -650,7 +651,7 @@ void() StartFrame =
 			v.abslight = 0;
 		}
 	}
-	
+
 	frameskip_delay = 0;
 	developer = cvar("developer");
 	framecount = framecount + 1;
