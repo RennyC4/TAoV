@@ -1144,7 +1144,7 @@ void() drop_gold =
 	goldg.movetype = MOVETYPE_TOSS;
 	setorigin (goldg, self.origin);
 	setmodel (goldg, "progs/gold.mdl");
-	setsize (goldg, '-9 -12 -1', '10 10 5');
+	setsize (goldg, '-1 -1 -1', '1 1 1');
 	//setsize (goldg, '0 0 0', '0 0 0');
 
 	goldg.solid = SOLID_TRIGGER;

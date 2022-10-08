@@ -5,7 +5,7 @@
 "classname" "worldspawn"
 "mapversion" "220"
 "_tb_mod" "data"
-"wad" "C:/Games/TAoV/work/wads/hexen2.wad;C:/Games/TAoV/work/wads/QUAKE101.WAD;C:/Games/TAoV/work/wads/taov.wad"
+"wad" "C:/Games/TAoV/work/wads/hexen2.wad;C:/Games/TAoV/work/wads/QUAKE101.WAD;C:/Games/TAoV/work/wads/taov.wad;../wads/mapcols.wad"
 "message" "Transporter"
 "_dirt" "1"
 "_dirtdepth" "128"
@@ -15,6 +15,7 @@
 "_minlight_dirt" "1"
 "_lightmap_scale" "4"
 "_phong" "1"
+"_wateralpha" "0.25"
 // brush 0
 {
 ( -100 184 16 ) ( -102 184 216 ) ( -102 -416 216 ) clip [ 0 -1 0 -8 ] [ 0 0 -1 0 ] 0 1 1
@@ -118,7 +119,7 @@
 {
 ( -248 -296 240 ) ( -248 -295 240 ) ( -248 -296 241 ) rtex437 [ 0 -1 0 0 ] [ 0 0 -1 0 ] 0 1 1
 ( -248 -296 240 ) ( -248 -296 241 ) ( -247 -296 240 ) rtex437 [ 1 0 0 0 ] [ 0 0 -1 0 ] 0 1 1
-( -248 -296 240 ) ( -247 -296 240 ) ( -248 -295 240 ) rtex437 [ -1 0 0 0 ] [ 0 -1 0 0 ] 0 1 1
+( -248 -296 240 ) ( -247 -296 240 ) ( -248 -295 240 ) cix015 [ -1 0 0 0 ] [ 0 -1 0 0 ] 0 1 1
 ( -96 -168 248 ) ( -96 -167 248 ) ( -95 -168 248 ) rtex437 [ 1 0 0 0 ] [ 0 -1 0 0 ] 0 1 1
 ( -96 -168 248 ) ( -95 -168 248 ) ( -96 -168 249 ) rtex437 [ -1 0 0 0 ] [ 0 0 -1 0 ] 0 1 1
 ( -96 -168 248 ) ( -96 -168 249 ) ( -96 -167 248 ) rtex437 [ 0 1 0 0 ] [ 0 0 -1 0 ] 0 1 1

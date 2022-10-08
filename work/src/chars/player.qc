@@ -5784,6 +5784,9 @@ void() player_jumpatkb6	=[	$jumpatkb6,	player_jumpatkb7 	] {if (self.onground ==
 void() player_jumpatkb7	=[	$jumpatkb7,	player_jumpatkb8 	] {if (self.onground == TRUE) player_move();frameskip(0.04);};
 void() player_jumpatkb8	=[	$jumpatkb8,	player_move		] 
 {
+	if (freeze_finished < time) // don't interefere with level up/etc
+		freeze_finished = time + (CONST_BIGHITSLOW * frametime);
+
 	sound (self, CHAN_WEAPON, "player/sword.wav", 1, ATTN_NORM);
 	FireMelee(10,25,1,30,5,0,0,FALSE,24,0);
 

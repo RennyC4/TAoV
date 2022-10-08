@@ -18,12 +18,12 @@
 "_lightmap_scale" "8"
 "_fog" "0 0 0.15"
 "_sunlight2" "70"
-"_wateralpha" "0.77"
 "_lavaalpha" "0.3"
 "_tb_def" "builtin:taov.fgd"
 "light" "33"
 "_bounce" "1"
 "_phong" "1"
+"_wateralpha" "0.2"
 // brush 0
 {
 ( -80 -56 288 ) ( -80 -72 288 ) ( -80 -72 0 ) swrl_brick_tran [ 0 1 0 0 ] [ 0 0 -1 24 ] 0 1 1
