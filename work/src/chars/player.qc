@@ -452,6 +452,8 @@ void() Setup_Vigil =
 
 void(entity plyr) PerfectGuard	=
 {
+	bprint (plyr.classname, "\n");
+
 	makevectors(plyr.angles);
 
 	local vector x = plyr.origin + v_forward * 30 + v_up * 12;

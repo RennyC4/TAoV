@@ -1201,7 +1201,7 @@ void(float damg, float dist, float knokback, float rsize, float snd, float flsh,
 						head.knockback = 0; // reset!
 						head.nextthink = time;
 					}
-					if (self.flags & FL_MONSTER) // Only monsters are pushed backwards if attack is perfect guarded
+					if (self.flags & FL_MONSTER || deathmatch) // Only monsters are pushed backwards if attack is perfect guarded, unless deathmatch
 					{
 						self.velocity = '0 0 0'; // reset velocity
 						if (self.flags & FL_ONGROUND) // required
@@ -1269,8 +1269,8 @@ void(float damg, float dist, float knokback, float rsize, float snd, float flsh,
 					}
 					if (head.perfectblock < time)
 						sound (self, CHAN_BODY, "player/block.wav", 1, ATTN_NORM);
-					else
-						sound (self, CHAN_BODY, "player/perfblok.wav", 1, ATTN_NONE);
+					//else
+					//	sound (self, CHAN_BODY, "player/perfblok.wav", 1, ATTN_NONE);
 				}
 			}
 		}
