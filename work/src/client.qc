@@ -710,7 +710,9 @@ void() PlayerPreThink =
 		// Angle fix (!Important!)
 		if (self.char.angles_y >= 270)
 			self.char.angles_y = -90;
-		
+		if (self.angles_y >= 270)
+			self.angles_y = -90;
+			
 		// Hidden entity that follows Vigil for smoother X camera movements
 		if (!self.smooth_x_camera)
 		{
@@ -875,7 +877,7 @@ void() PlayerPreThink =
 			if (self.char.dodge_finished < time && self.char.lowceil == FALSE)
 				setsize(self.char, VEC_HULL_MIN, VEC_HULL_MAX);
 
-			if (cvar("developer") < 1) // Attract demo recording mode
+			if (cvar("developer") < 1 && !deathmatch && !coop) // Disable slow-mo during attract demo recording mode, deathmatch and coop
 			{
 				if (freeze_finished > time)
 				{

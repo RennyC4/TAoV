@@ -352,6 +352,7 @@ void() Setup_Vigil =
 
 		game_progress = game_progress | IT_PROGRESS2; // Add Cyclone Crush
 		game_progress = game_progress | IT_PROGRESS4; // Add Diving Swallow
+		game_progress = game_progress | IT_PROGRESS6; // Add Izuna Drop
 	}
 	
 	//
@@ -508,7 +509,7 @@ void(entity plyr) PerfectGuard	=
 	effect.think = perfectguard_fx_think;
 	effect.nextthink = time;
 	effect.solid = SOLID_NOT;
-	
+
 	if (plyr.classname != "player")
 		error("Perfect Guard should only be set on Vigil entity\n");
 };
@@ -1786,15 +1787,7 @@ void() player_think =
 		}
 		self.char.charge_count = 0;
 	}
-	
-	/* Debugging timers
-	//Remove Me
-	if (self.char.perfectblock_cooldown > time)
-		centerprint (self, "PG Cooldown Running\n");
-	else
-		centerprint (self, "\n");
-	*/
-	
+
 	//
 	// Players launcher attack (attack (hold) + forward + forward)
 	//
@@ -1904,7 +1897,7 @@ void() player_think =
 	// also give minor air jumping control
 	//
 
-	if (self.char.onground == FALSE && !self.char.flypain && self.attack_finished < time && self.backflip_finished < time
+	if (self.char.onground == FALSE	&& !self.char.flypain && self.attack_finished < time && self.backflip_finished < time
 	&& self.wallgrab == FALSE && self.char.deadflag != DEAD_DEAD && self.char.movetype != MOVETYPE_FLY
 	&& self.ledgegrab == FALSE && self.ledgegrab_finished < time && self.char.fly_time < time
 	&& self.char.guardbreak_finished < time && self.char.dodge_finished < time && self.char.health > 0 && self.char.grabbed == FALSE
@@ -2069,7 +2062,7 @@ void() player_think =
 		{			
 			if (self.keyflags & (KEY_LEFT | KEY_RIGHT) && self.char.pain_finished < time && self.char.block_finished < time &&
 			self.char.tired_finished < time && self.attack_finished < time && self.char.deadflag != DEAD_DEAD &&
-			self.wallgrab == FALSE && self.char.grabbed == FALSE && self.combo_finished < time && self.wallrun == FALSE
+			self.wallgrab == FALSE && self.char.grabbed == FALSE && self.combo_finished < time && self.wallrun == FALSE 
 			&& self.char.guardbreak_finished < time && self.char.dodge_finished < time && self.char.health > 0 && self.char.inwater_pain < 1)
 			{
 				if (self.keyflags & KEY_RIGHT)
@@ -2095,7 +2088,7 @@ void() player_think =
 				if (self.char.running != FALSE)
 				{
 					self.char.running = FALSE;
-					self.char.grabcooldown_finished = time + 1.5;
+					self.char.grabcooldown_finished = time + 1;
 				}
 				if (self.char.velocity_time < time)
 					self.char.velocity_x = 0;
@@ -6508,13 +6501,13 @@ void() player_pain =
 			{
 				self.playerhitframe_finished = time + 1;
 				self.think = player_hit1;
-				self.nextthink = time;
+				self.nextthink = time + 0.1;
 			}
 			else
 			{
 				self.playerhitframe_finished = time + 1;
 				self.think = player_hit2;
-				self.nextthink = time;
+				self.nextthink = time + 0.1;
 			}
 			self.fly_time = time + 0.8;
 			self.pain_finished = time + 0.8;
@@ -6528,13 +6521,13 @@ void() player_pain =
 				{
 					self.playerhitframe_finished = time + 1;
 					self.think = player_hit1;
-					self.nextthink = time;
+					self.nextthink = time + 0.1;
 				}
 				else
 				{
 					self.playerhitframe_finished = time + 1;
 					self.think = player_hit2;
-					self.nextthink = time;
+					self.nextthink = time + 0.1;
 				}
 				self.fly_time = time + 1.3;
 				self.pain_finished = time + 1.3;
@@ -6542,7 +6535,7 @@ void() player_pain =
 			else // hit on ground
 			{
 				self.think = player_knockedfar1;
-				self.nextthink = time;
+				self.nextthink = time + 0.1;
 				self.fly_time = time + 999;
 				self.pain_finished = time + 999;
 				self.velocity = '0 0 0';
@@ -6558,27 +6551,27 @@ void() player_pain =
 			if (self.knockback == 2)
 			{
 				self.think = player_knockedup1;
-				self.nextthink = time;
+				self.nextthink = time + 0.1;
 			}
 			else if (self.knockback == 3)
 			{
 				self.think = player_twist;
-				self.nextthink = time;
+				self.nextthink = time + 0.1;
 			}
 			else if (self.knockback == 5)
 			{
 				self.think = player_knockedfar1;
-				self.nextthink = time;
+				self.nextthink = time + 0.1;
 			}
 			else if (self.knockback == 7)
 			{
 				self.think = player_knockedup1;
-				self.nextthink = time;
+				self.nextthink = time + 0.1;
 			}
 			else
 			{
 				self.think = player_hit3;
-				self.nextthink = time;
+				self.nextthink = time + 0.1;
 			}
 			self.fly_time = time + 999;
 			self.pain_finished = time + 999;
@@ -6588,7 +6581,7 @@ void() player_pain =
 			if (self.onground == FALSE)
 			{
 				self.think = player_knockedup1;
-				self.nextthink = time;
+				self.nextthink = time + 0.1;
 			}
 			else
 			{
@@ -6596,13 +6589,13 @@ void() player_pain =
 				{
 					self.playerhitframe_finished = time + 1;
 					self.think = player_hit1;
-					self.nextthink = time;
+					self.nextthink = time + 0.1;
 				}
 				else
 				{
 					self.playerhitframe_finished = time + 1;
 					self.think = player_hit2;
-					self.nextthink = time;
+					self.nextthink = time + 0.1;
 				}
 			}
 			self.fly_time = time + 1;
