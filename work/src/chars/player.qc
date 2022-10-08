@@ -317,6 +317,7 @@ void() Setup_Vigil =
 		}
 		spoint = find(spoint, classname, "player_spawn");
 	}
+	dummy.owner = self;
 
 	if (self.spawnflags & 2)
 		self.telecam = FALSE; // don't teleport camera to vigil at map start, used for transition rooms
@@ -385,7 +386,6 @@ void() Setup_Vigil =
 		stuffcmd (self, "con_notify_w 1\n"); // allowed in multiplayer
 
 	// Teleport Down
-	//if (world.model == "maps/village.bsp" && f == 99)
 	if (dummy.spawnflags & 1)
 	{
 		setmodel(dummy, "progs/orb.mdl");
@@ -398,7 +398,6 @@ void() Setup_Vigil =
 		dummy.movetype = MOVETYPE_FLY;
 		dummy.hitcontentsmaski = CONTENTBIT_SOLID|0x00000002i|CONTENTBIT_BODY|CONTENTBIT_PLAYERCLIP;
 
-		dummy.owner = self;
 		self.char = dummy;
 
 		dummy.velocity_z = -75;
@@ -419,8 +418,6 @@ void() Setup_Vigil =
 	dummy.dimension_solid = 2;
 	dummy.flags |= FL_FINDABLE_NONSOLID;
 	dummy.hitcontentsmaski = CONTENTBIT_SOLID|0x00000002i|CONTENTBIT_BODY|CONTENTBIT_PLAYERCLIP;
-
-	dummy.owner = self;
 
 	if (dummy.health > dummy.max_health)     // bug fix: don't allow health values to exceed max health values
 		dummy.health = dummy.max_health;     // on a changelevel if player was dead (0 health = 255 on next level, now fixed)
@@ -1639,7 +1636,7 @@ void() player_think =
 	// In-Air Izuna Drop
 	//
 
-	if (self.char.inair > 16 && !self.char.onground && self.char.izunatarg == world && self.char.enemy != world && self.char.frame != $izuna1 && self.char.pain_finished < time && game_progress & IT_PROGRESS6)
+	if (self.char.inair > 16 && !self.char.onground && self.char.izunatarg == world && self.char.enemy != world && self.char.frame != $izuna1 && self.char.pain_finished < time && game_progress & IT_PROGRESS6 && ((deathmatch && self.char.enemy.health > 0) || !deathmatch))
 	{
 			local float r = range(self.char, self.char.enemy);
 			local float cg = checkground(self.char.enemy);
@@ -5957,11 +5954,6 @@ void() player_hit5;
 
 void() player_hit1	=[	$pain1,	player_hit1	] 
 {
-	if (deathmatch == TRUE)
-	{
-		self.nextthink = time + 0.5;
-		return;
-	}
 	self.movetype = MOVETYPE_STEP;
 	self.velocity = '0 0 0';
 	if (self.playerhitframe_finished < time)
@@ -5970,11 +5962,6 @@ void() player_hit1	=[	$pain1,	player_hit1	]
 
 void() player_hit2	=[	$pain2,	player_hit2	] 
 {
-	if (deathmatch == TRUE)
-	{
-		self.nextthink = time + 0.5;
-		return;
-	}
 	self.movetype = MOVETYPE_STEP;
 	self.velocity = '0 0 0';
 	if (self.playerhitframe_finished < time)

@@ -804,8 +804,8 @@ void(float damg, float dist, float knokback, float rsize, float snd, float flsh,
 
 	while (head)
 	{
-		if (head.takedamage && head != self && head.nopain_time < time && head.deadflag != DEAD_DEAD && visible(head) &&/* head.dodge_finished < time &&*/ head.perfectguard_buff < time && !(head.flags & FL_BOSS2 && self.swimming)
-		&& ((coop == TRUE && head.classname != "player" && self.classname == "player") || (coop == FALSE || self.flags & FL_MONSTER))) // coop
+		if (head.takedamage && head != self && head.nopain_time < time && head.deadflag != DEAD_DEAD && visible(head) && head.perfectguard_buff < time && !(head.flags & FL_BOSS2 && self.swimming)
+		&& ((coop && head.classname != "player" && self.classname == "player") || (!coop || self.flags & FL_MONSTER))) // coop
 		{
 			if (head.block_finished < time || unblockable == TRUE || self.perfectguard_buff > time || head.swimming)
 			{
@@ -1068,10 +1068,10 @@ void(float damg, float dist, float knokback, float rsize, float snd, float flsh,
 						effect.solid = SOLID_NOT;
 						
 						// Guard break vfx
-						if (head.perfectblock < time && head.perfectguard_buff < time && head.classname == "player")
+						if (head.perfectblock < time && head.perfectguard_buff < time && head.classname == "player" && !deathmatch)
 							effect.knockback = knokback; // For guard breaking
 						// block count updates below this
-						if (head.blockcount > 0 || effect.knockback == 2 || effect.knockback == 3 || effect.knockback == 5)
+						if (!deathmatch && head.blockcount > 0 || effect.knockback == 2 || effect.knockback == 3 || effect.knockback == 5)
 						{
 							if (head.blockcount == 1)
 							{
@@ -1181,7 +1181,8 @@ void(float damg, float dist, float knokback, float rsize, float snd, float flsh,
 						}
 						else
 						{
-							head.blockcount = head.blockcount + 1;
+							if (!deathmatch)
+								head.blockcount = head.blockcount + 1;
 							head.blockcount_finished = time + 0.75; // blockcount reset timer
 							if (head.blockcount > 3) // guard crushed
 							{

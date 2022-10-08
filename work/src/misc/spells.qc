@@ -428,7 +428,12 @@ void() LightningThink =
 					|| head.classname == "wraith" || head.classname == "zombie" || head.classname == "zombieboss" || head.classname == "skeleton") // undead enemies aren't affected much
 						T_Damage (head, self, self.owner, 1, 0);						
 					else
-						T_Damage (head, self, self.owner, 3, 0); // normal damage
+					{
+						if (deathmatch)
+							T_Damage (head, self, self.owner, 1, 0); // deathmatch damage
+						else
+							T_Damage (head, self, self.owner, 3, 0); // normal damage
+					}
 				}
 				else
 				{
@@ -653,7 +658,7 @@ void() icefield_think =
 						effect.angles_x = effect.angles_y = effect.angles_z = random()*360;
 						head.knockback = 0;
 						head.damage_type = 3; // Ice based damage
-						if (deathmatch == FALSE)
+						if (!deathmatch)
 						{
 							if (head.classname == "player")
 								head.colormod = '0 2.5 5';
