@@ -536,14 +536,14 @@
 // entity 14
 {
 "classname" "candle2"
-"origin" "-36 -132 47"
+"origin" "-36 -132 49"
 "_minlight_exclude" ""
 "_phong" "1"
 }
 // entity 15
 {
 "classname" "candle2"
-"origin" "-14 -122 47"
+"origin" "-14 -122 49"
 "angle" "135"
 "_minlight_exclude" ""
 "_phong" "1"
@@ -551,7 +551,7 @@
 // entity 16
 {
 "classname" "candle2"
-"origin" "-26 -114 47"
+"origin" "-26 -114 49"
 "angle" "270"
 "_minlight_exclude" ""
 "_phong" "1"
@@ -559,7 +559,7 @@
 // entity 17
 {
 "classname" "candle2"
-"origin" "-42 -120 47"
+"origin" "-42 -120 49"
 "angle" "75"
 "_minlight_exclude" ""
 "_phong" "1"
@@ -567,21 +567,21 @@
 // entity 18
 {
 "classname" "candle2"
-"origin" "-2 -138 47"
+"origin" "-2 -138 49"
 "_minlight_exclude" ""
 "_phong" "1"
 }
 // entity 19
 {
 "classname" "candle2"
-"origin" "-24 -142 47"
+"origin" "-24 -142 49"
 "_minlight_exclude" ""
 "_phong" "1"
 }
 // entity 20
 {
 "classname" "candle2"
-"origin" "6 -116 47"
+"origin" "6 -116 49"
 "angle" "270"
 "_minlight_exclude" ""
 "_phong" "1"
@@ -589,7 +589,7 @@
 // entity 21
 {
 "classname" "candle2"
-"origin" "-8 -108 49"
+"origin" "-8 -108 51"
 "angle" "75"
 "_minlight_exclude" ""
 "_phong" "1"
@@ -655,7 +655,7 @@
 // entity 29
 {
 "classname" "candle2"
-"origin" "-392 -130 45"
+"origin" "-392 -130 49"
 "angle" "285"
 "_minlight_exclude" ""
 "_phong" "1"
@@ -663,7 +663,7 @@
 // entity 30
 {
 "classname" "candle2"
-"origin" "-386 -118 45"
+"origin" "-386 -118 49"
 "angle" "-0"
 "_minlight_exclude" ""
 "_phong" "1"
@@ -671,7 +671,7 @@
 // entity 31
 {
 "classname" "candle2"
-"origin" "-374 -108 45"
+"origin" "-374 -108 49"
 "angle" "-0"
 "_minlight_exclude" ""
 "_phong" "1"
@@ -679,7 +679,7 @@
 // entity 32
 {
 "classname" "candle2"
-"origin" "-352 -112 45"
+"origin" "-352 -112 49"
 "angle" "-0"
 "_minlight_exclude" ""
 "_phong" "1"
@@ -700,7 +700,7 @@
 // entity 34
 {
 "classname" "candle2"
-"origin" "-376 -136 45"
+"origin" "-376 -136 49"
 "angle" "90"
 "_minlight_exclude" ""
 "_phong" "1"
@@ -708,7 +708,7 @@
 // entity 35
 {
 "classname" "candle2"
-"origin" "-358 -142 47"
+"origin" "-358 -142 51"
 "angle" "285"
 "_minlight_exclude" ""
 "_phong" "1"
@@ -716,7 +716,7 @@
 // entity 36
 {
 "classname" "candle2"
-"origin" "-344 -134 45"
+"origin" "-344 -134 49"
 "angle" "90"
 "_minlight_exclude" ""
 "_phong" "1"
@@ -724,7 +724,7 @@
 // entity 37
 {
 "classname" "candle2"
-"origin" "-364 -128 45"
+"origin" "-364 -128 49"
 "angle" "225"
 "_minlight_exclude" ""
 "_phong" "1"
