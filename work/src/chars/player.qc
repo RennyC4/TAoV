@@ -452,8 +452,6 @@ void() Setup_Vigil =
 
 void(entity plyr) PerfectGuard	=
 {
-	bprint (plyr.classname, "\n");
-
 	makevectors(plyr.angles);
 
 	local vector x = plyr.origin + v_forward * 30 + v_up * 12;
@@ -670,7 +668,7 @@ void() PlayerWaterPhysics =
 
 	if (self.button2)
 	{
-		if (self.ledgegrab == FALSE && self.inwater_finished < time && self.char.inwater_pain < 1) // Player actively swimming up
+		if (!self.ledgegrab && self.inwater_finished < time && self.char.inwater_pain < 1) // Player actively swimming up
 		{
 			if (self.char.velocity_z < 100)
 				self.char.velocity_z = self.char.velocity_z + 7 * (frametime * 100);
@@ -682,7 +680,7 @@ void() PlayerWaterPhysics =
 	{
 		if (self.char.velocity_z > -100)
 		{
-			if (self.ledgegrab == FALSE)
+			if (!self.ledgegrab)
 				self.char.velocity_z = self.char.velocity_z - 6 * (frametime * 100);
 		}
 		else
@@ -1403,7 +1401,7 @@ void() player_think =
 	}
 	else
 	{
-		if (self.ledgegrab == FALSE && self.char.pain_finished < time && self.wallgrab == FALSE && self.char.wallrun_height < 1 && !self.char.swimming)
+		if (!self.ledgegrab && self.char.pain_finished < time && self.wallgrab == FALSE && self.char.wallrun_height < 1 && !self.char.swimming)
 		{
 			self.char.inair = self.char.inair + 1 * (frametime * 100); // add 1 to the counter
 			//local string s = ftos (self.char.inair);
@@ -1586,7 +1584,7 @@ void() player_think =
 	// Vigil's Ledge Grabbing routine ran under these circumstances
 	//
 
-	if (self.keyflags & (KEY_LEFT) || (self.keyflags & (KEY_RIGHT)) && self.ledgegrab == FALSE && self.char.onground == FALSE || self.wallgrab == TRUE)
+	if (self.keyflags & (KEY_LEFT) || (self.keyflags & (KEY_RIGHT)) && !self.ledgegrab && !self.char.onground || self.wallgrab == TRUE)
 	{
 		if (self.char.health > 0 && self.char.aircombo_count < 5 && self.attack_finished < time && self.char.block_finished < time && self.char.pain_finished < time)
 		{
@@ -1600,7 +1598,7 @@ void() player_think =
 	//
 
 	if (self.button0 && self.button2 && self.button2_buffer == FALSE && self.safezone == FALSE && self.attack_finished < time && self.char.tired_finished < time
-	&& self.ledgegrab == FALSE && self.wallgrab == FALSE && self.char.deadflag != DEAD_DEAD && self.char.movetype != MOVETYPE_FLY
+	&& !self.ledgegrab && self.wallgrab == FALSE && self.char.deadflag != DEAD_DEAD && self.char.movetype != MOVETYPE_FLY
 	&& self.wallrun == FALSE && self.forcewalk_finished < time && self.char.fly_time < time && self.char.guardbreak_finished < time
 	&& self.char.dodge_finished < time && !self.char.swimming && self.char.health > 0 && self.nospinatk_finished < time &&
 	self.char.lowceil == FALSE && self.trigger_spincut_finished < time && self.char.izunatarg == world)
@@ -1851,7 +1849,7 @@ void() player_think =
 	// Vigil's backflip / double jump - start
 	//
 
-	if (self.char.onground == FALSE && self.ledgegrab == FALSE && self.char.health > 0) // not on ground
+	if (self.char.onground == FALSE && !self.ledgegrab && self.char.health > 0) // not on ground
 	{
 		if (self.button2)
 		{
@@ -1898,7 +1896,7 @@ void() player_think =
 
 	if (self.char.onground == FALSE	&& !self.char.flypain && self.attack_finished < time && self.backflip_finished < time
 	&& self.wallgrab == FALSE && self.char.deadflag != DEAD_DEAD && self.char.movetype != MOVETYPE_FLY
-	&& self.ledgegrab == FALSE && self.ledgegrab_finished < time && self.char.fly_time < time
+	&& !self.ledgegrab && self.ledgegrab_finished < time && self.char.fly_time < time
 	&& self.char.guardbreak_finished < time && self.char.dodge_finished < time && self.char.health > 0 && self.char.grabbed == FALSE
 	&& self.magicmenu == FALSE && self.char.tired_finished < time && self.wallrun == FALSE && self.char.izunatarg == world && self.char.inwater_pain < 1)
 	{
@@ -2169,7 +2167,7 @@ void() player_think =
 	// Part of the Wall/Ledge Grabbing is done here, specifically the code to make Vigil jump in the other direction of the wall/ledge
 	//
 
-	if (!self.char.swimming && (self.wallgrab == TRUE || (self.ledgegrab == TRUE && self.char.frame >= $ledgeg1 && self.char.frame <= $ledgeg8)))
+	if (!self.char.swimming && (self.wallgrab == TRUE || (self.ledgegrab && self.char.frame >= $ledgeg1 && self.char.frame <= $ledgeg8)))
 	{
 		self.walljump = FALSE;
 		self.doublejump = FALSE;
@@ -2484,7 +2482,7 @@ void() wallgrab_check =
 	makevectors(self.angles);
 
 	// wall grab
-	if (self.angles_y == 0 || self.angles_y == 180 && self.wallgrab == FALSE && self.owner.ledgegrab == FALSE && self.owner.trigger_spincut_finished < time
+	if (self.angles_y == 0 || self.angles_y == 180 && self.wallgrab == FALSE && !self.owner.ledgegrab && self.owner.trigger_spincut_finished < time
 	&& self.onground == FALSE && ((self.frame == $jump1 || self.frame == $jump2) || self.frame == $djump))
 	{
 		traceline (source, source + v_forward*25 + v_up*22, FALSE, self);
@@ -3076,7 +3074,7 @@ void() player_fire =
 	local float r;
 	local entity oself;
 
-	if (self.FL_ATKPRESSED == TRUE || self.char.flypain || self.char.pain_finished > time || self.ledgegrab == TRUE
+	if (self.FL_ATKPRESSED == TRUE || self.char.flypain || self.char.pain_finished > time || self.ledgegrab
 	|| self.char.movetype == MOVETYPE_FLY)
 		return;
 	if (self.wallrun == TRUE && self.doublejump == TRUE || self.char.invunerability_finished > time)

@@ -68,7 +68,7 @@ void()	dragon_pain =[	$pain1,		dragon_pain	]
 		else
 			temp.frame = 1;
 
-		temp.effects = EF_MUZZLEFLASH | EF_ADDITIVE;
+		temp.effects = EF_MUZZLEFLASH | EF_ADDITIVE | EF_NODEPTHTEST; // Huge model, needs depth test
 		temp.alpha = 0.75;
 		temp.think = SUB_Remove;
 		temp.nextthink = time + 0.1;

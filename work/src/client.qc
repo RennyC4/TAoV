@@ -49,7 +49,7 @@ void() InitCamera =
 	local vector view, view2, ot, spot;
 	local float bt, r;
 	local entity y;
-
+			
 	//
 	// Camera shake effect
 	//
@@ -710,8 +710,6 @@ void() PlayerPreThink =
 		// Angle fix (!Important!)
 		if (self.char.angles_y >= 270)
 			self.char.angles_y = -90;
-		if (self.angles_y >= 270)
-			self.angles_y = -90;
 			
 		// Hidden entity that follows Vigil for smoother X camera movements
 		if (!self.smooth_x_camera)

@@ -72,7 +72,6 @@ cfg_save_auto 1 // fte auto saves configs after certain times
 s_al_disable 2 // sound fix (disable OpenAL) for non-mono sounds
 r_meshpitch 1 // required
 pr_droptofloorunits 9999 // match raisetoroof
-r_mirroralpha 0.25 // quake mirrors
 
 // Fonts
 con_textfont "fonts/console"

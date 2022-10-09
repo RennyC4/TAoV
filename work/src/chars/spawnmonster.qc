@@ -969,7 +969,7 @@ void() spawn_monster_use =
 			monster.scale = 1;
 		monster.flags = monster.flags | FL_MONSTER;
 		monster.experience = 20;
-		monster.maxgold = 76;
+		monster.maxgold = 30;
 		monster.noblood = TRUE;
 	
 		monster.th_die = needles_die;

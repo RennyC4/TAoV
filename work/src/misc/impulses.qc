@@ -356,7 +356,7 @@ void() CheckImpulseButtons =
 	}
 	else
 	{
-		if (self.attack_finished < time && self.FL_BLKPRESSED && self.char.dodge_finished < time && !self.char.flypain && !self.char.lowceil)
+		if (self.attack_finished < time && self.FL_BLKPRESSED && self.char.dodge_finished < time && !self.char.flypain && !self.char.lowceil && !self.char.ledgegrab)
 		{
 			self.char.block_finished = time - 1; // Fixes blocking while in player hit frames
 			sound (self, CHAN_BODY, "player/motion1.wav", 1, ATTN_NORM);
