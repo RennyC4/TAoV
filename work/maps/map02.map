@@ -13,7 +13,7 @@
 "_dirtdepth" "128"
 "_sunlight_dirt" "1"
 "_tb_def" "builtin:taov.fgd"
-"_wateralpha" "0.73"
+"_wateralpha" "0.3"
 "_telealpha" "0.8"
 "alpha" "0.25"
 "sky" "dragonvale"
@@ -15688,19 +15688,19 @@
 // entity 416
 {
 "classname" "barrel"
-"origin" "-1480 -280 664"
+"origin" "-1480 -280 666"
 "_phong" "1"
 }
 // entity 417
 {
 "classname" "barrel"
-"origin" "-1512 -264 664"
+"origin" "-1512 -264 666"
 "_phong" "1"
 }
 // entity 418
 {
 "classname" "barrel"
-"origin" "-1544 -288 664"
+"origin" "-1544 -288 666"
 "_phong" "1"
 }
 // entity 419

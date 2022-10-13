@@ -75,11 +75,11 @@ void() dog_leap2	=[	$leap2,		dog_leap3	]
 		self.flags = self.flags - FL_ONGROUND;
 };
 
-void() dog_leap3	=[	$leap3,		dog_leap4	] {FireMelee(2,0,1,30,0,0,1,TRUE,-22,0);};
+void() dog_leap3	=[	$leap3,		dog_leap4	] {FireMelee(1,0,1,30,0,0,1,TRUE,-22,0);};
 void() dog_leap4	=[	$leap4,		dog_leap5	] {FireMelee(2,0,1,30,0,0,1,TRUE,-22,0);};
-void() dog_leap5	=[	$leap5,		dog_leap6	] {FireMelee(2,0,1,30,0,0,1,TRUE,-22,0);};
+void() dog_leap5	=[	$leap5,		dog_leap6	] {FireMelee(1,0,1,30,0,0,1,TRUE,-22,0);};
 void() dog_leap6	=[	$leap6,		dog_leap7	] {FireMelee(2,0,1,30,0,0,1,TRUE,-22,0);};
-void() dog_leap7	=[	$leap7,		dog_leap8	] {FireMelee(2,0,1,30,0,0,1,TRUE,-22,0);};
+void() dog_leap7	=[	$leap7,		dog_leap8	] {FireMelee(1,0,1,30,0,0,1,TRUE,-22,0);};
 void() dog_leap8	=[	$leap8,		dog_leap9	] {FireMelee(2,0,1,30,0,0,1,TRUE,-22,0);};
 void() dog_leap9	=[	$leap9,		dog_leap9	] 
 {

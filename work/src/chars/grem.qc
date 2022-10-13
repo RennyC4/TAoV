@@ -80,7 +80,7 @@ void() grem_run15	      =[	$run15,	grem_run1		] {ai_walk(10);frameskip(0.05);};
 
 void() grem_leap_attack =
 {
-	FireMelee(3,0,1,30,0,0,1,TRUE,-22,0);
+	FireMelee(2,0,1,30,0,0,1,TRUE,-22,0);
 	if (self.flags & FL_ONGROUND)
 		self.think = grem_run1;
 };
