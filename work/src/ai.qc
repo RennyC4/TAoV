@@ -1808,6 +1808,8 @@ void() monster_death =
 
 			effect.think = dust_think;
 			effect.nextthink = time;
+
+			self.velocity_x = 0;
 		}
 
 		if (self.classname == "horror")

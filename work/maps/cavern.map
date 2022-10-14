@@ -14,7 +14,7 @@
 "_dirtgain" "1"
 "_lightmap_scale" "8"
 "_phong" "1"
-"_wateralpha" "0.3"
+"_wateralpha" "3"
 // brush 0
 {
 ( -48 128 100 ) ( -48 -56 100 ) ( -48 -56 16 ) city6_7 [ 0 1 0 -16 ] [ 0 0 -1 0 ] 0 1 1

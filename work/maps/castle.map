@@ -7848,7 +7848,7 @@
 // entity 190
 {
 "classname" "dlight_pflags"
-"origin" "-5288 -244 1480"
+"origin" "-5344 -244 1512"
 "light_lev" "325"
 "_phong" "1"
 }
