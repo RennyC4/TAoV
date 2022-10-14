@@ -56,18 +56,14 @@ void()	hydra_move	=[	$hswim1,	hydra_move	]
 
 void()	hydra_attack	=[	$htent1,	hydra_attack	] 
 {
-	if (self.attack_finished > time)
-		return;
-
 	if (self.walkframe >= 24)
 	{
-		self.attack_finished = time + 2;
 		self.walkframe = 0;
 		self.think = self.th_walk;
 		self.nextthink = time;
 		return;
 	}
-	if (self.attack_finished < time && (self.walkframe == 6 || self.walkframe == 9 || self.walkframe == 6 || self.walkframe == 13 || self.walkframe == 17 || self.walkframe == 20 || self.walkframe == 22))
+	if (self.walkframe == 6 || self.walkframe == 9 || self.walkframe == 6 || self.walkframe == 13 || self.walkframe == 17 || self.walkframe == 20 || self.walkframe == 22)
 	{
 		FireMelee(6,5,0,45,0,0,0,FALSE,0,0);
 		sound (self, CHAN_BODY, "hydra/attack.wav", 1, ATTN_NORM);
@@ -77,6 +73,7 @@ void()	hydra_attack	=[	$htent1,	hydra_attack	]
 	self.walkframe = self.walkframe + 1;
 
 	self.velocity = '0 0 0';
+	frameskip(0.2);
 };
 
 void() hydra_die1	=[	$hadie1,	hydra_die1	]

@@ -61,11 +61,16 @@ void() InitCamera =
 			sound (self, CHAN_VOICE, "player/camh2o.wav", 1, ATTN_NORM);
 			self.sound_finished = time + 9.9;
 		}
+		self.swimming = TRUE; // Send to CSQC
 	}
-	else if (self.sound_finished > time)
+	else
 	{
+		if (self.sound_finished > time)
+		{
 			sound (self, CHAN_VOICE, "misc/null.wav", 1, ATTN_NORM);
 			self.sound_finished = time;
+		}
+		self.swimming = FALSE; // Send to CSQC
 	}
 	
 	//

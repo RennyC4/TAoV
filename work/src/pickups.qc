@@ -458,7 +458,7 @@ void() item_mana_touch =
 	self.pain_finished = time + 1; // pick up time
 
 	SUB_UseTargets(); // fire any activators
-	
+
 	if (other.owner.mana >= other.owner.char.max_mana)
 		return;
 
@@ -470,7 +470,7 @@ void() item_mana_touch =
 
 	if (other.owner.mana > other.owner.max_mana)
 		other.owner.mana = other.owner.max_mana;
-	
+
 	if (deathmatch)
 	{
 		self.model = string_null;

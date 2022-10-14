@@ -846,7 +846,7 @@ void() SpeedLine =
 // called from client.qc
 void() manashadows_think =
 {
-	if (self.attack_finished < time)
+	if (self.attack_finished < time || self.owner.classname != "player")
 	{
 		remove(self);
 		return;
@@ -6075,6 +6075,7 @@ void() player_hit4	=[	$pain4,	player_hit4	]
 
 void() player_swim_recover    =[	$djump,	player_swim_recover ] 
 {
+	self.movetype = MOVETYPE_WALK;
 	if (self.swimming)
 		self.velocity_z = self.velocity_z / 1.05;
 
@@ -6111,8 +6112,6 @@ void() player_knockedup1    =[	$walled1,	player_knockedup1 ]
 		if (self.inwater_pain >= 150)
 		{
 			player_swim_recover();
-			//self.angles_x = 0; // TODO: Make Vigil do a spin underwater to recover
-			//self.inwater_pain = 0;
 			return;
 		}
 		self.inwater_pain = self.inwater_pain + 1;
@@ -6125,7 +6124,6 @@ void() player_knockedup1    =[	$walled1,	player_knockedup1 ]
 			sound (self, CHAN_BODY, "player/jmpflor.wav", 1, ATTN_NORM);
 			self.angles_x = 0;
 			player_hit4();
-			return;
 		}
 	}
 	frameskip(0.01);
@@ -6447,7 +6445,7 @@ void() player_pain =
 	self.owner.wallgrab = self.wallgrab = FALSE;
 	self.owner.wallrun = self.wallrun = FALSE;
 	self.owner.combo_finished = time;
-	
+
 	self.owner.swordshadow_time = time; // disable sword shadow
 	self.grabbed = FALSE;
 	self.idle_count = 0; // reset pose
@@ -6461,9 +6459,10 @@ void() player_pain =
 		if (self.owner.noblock_finished > time)
 			self.owner.noblock_finished = time; // Allow Vigil to block again
 	}
-		
-	self.movetype = MOVETYPE_WALK; // reset movetype (stops ledge grab flying up)
-	self.angles_x = self.angles_z = 0; // angle fixed up
+
+	if (self.movetype != MOVETYPE_WALK)
+		self.movetype = MOVETYPE_WALK; // reset movetype (stops ledge grab flying up)
+	self.angles_x = self.angles_z = 0; // angles fixed up
 	self.charge_count = 0;
 	if (self.owner.camera_forcezoom_finished < time)
 		self.owner.zoom_mode = 0; // no zoom
@@ -6471,7 +6470,7 @@ void() player_pain =
 
 	rs = random()*100;
 
-	if (self.angles_y > 90 && self.angles_y < 270)
+	if (self.angles_y >= 90 && self.angles_y <= 270)
 		self.angles_y = 180;
 	else
 		self.angles_y = 0;
@@ -6479,7 +6478,8 @@ void() player_pain =
 	if (self.enemy != world && deathmatch == FALSE)
 		self.enemy.grabbed = FALSE;
 
-	self.tired_finished = time;
+	if (self.tired_finished > time)
+		self.tired_finished = time;
 	self.owner.magicmenu = FALSE;
 
 	// Fixes weird blocking under water issue
@@ -6493,6 +6493,7 @@ void() player_pain =
 		self.think = player_knockedup1;
 		self.nextthink = time + 0.1;
 		self.pain_finished = time + 0.8;
+		PainSound();
 		return;
 	}
 
