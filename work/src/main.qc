@@ -54,7 +54,7 @@ void() CSEv_GrabCSQCValues =
 	clientstat(STAT_GOLD, EV_FLOAT, gold);
 	clientstat(STAT_SWORD, EV_FLOAT, swordlevel);
 	clientstat(STAT_ARMOR2, EV_FLOAT, armorlevel);
-	clientstat(STAT_MONSTER, EV_STRING, displayname);
+	clientstat(STAT_MONSTER_NAME, EV_STRING, displayname);
 	clientstat(STAT_SPELL, EV_FLOAT, currentspell);
 	clientstat(STAT_COMBO, EV_FLOAT, combo);
 	clientstat(STAT_PRICE, EV_FLOAT, display_price);
@@ -89,6 +89,9 @@ void() CSEv_GrabCSQCValues =
 
 	clientstat(STAT_CURRENT_DAMAGE, EV_FLOAT, current_damage);
 	clientstat(STAT_TOTAL_DAMAGE, EV_FLOAT, total_damage);
+
+	clientstat(STAT_MON_HEALTH, EV_FLOAT, monster_health);
+	clientstat(STAT_MON_MAXHEALTH, EV_FLOAT, monster_max_health);
 };
 
 float framecount, developer, difficulty, deathmatch, coop;

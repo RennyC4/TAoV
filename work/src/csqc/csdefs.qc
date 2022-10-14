@@ -2196,7 +2196,7 @@ const float DRAWFLAG_MIPMAP = 0x100; // only for R_BeginPolygon
 #define STAT_GOLD 32
 #define STAT_SWORD 33
 #define STAT_ARMOR2 34
-#define STAT_MONSTER 35
+#define STAT_MONSTER_NAME 35
 #define STAT_SPELL 36
 #define STAT_COMBO 37
 #define STAT_PRICE 38
@@ -2235,3 +2235,7 @@ const float DRAWFLAG_MIPMAP = 0x100; // only for R_BeginPolygon
 // Total Damage on HUD
 #define STAT_CURRENT_DAMAGE 62
 #define STAT_TOTAL_DAMAGE 63
+
+// Monster stats on HUD
+#define STAT_MON_HEALTH 64
+#define STAT_MON_MAXHEALTH 65

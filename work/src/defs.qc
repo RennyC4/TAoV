@@ -600,6 +600,8 @@ float SPELL_TWISTER = 8;
 .float ignoreaircombo; // if TRUE monster isn't raised by Air Combo strikes from Vigil
 .string displayname; // Monsters display name in the bottom right corner (CSQC)
 .float displayname_finished; // for monster name relic and CSQC
+.float monster_health; // for monster health CSQC display
+.float monster_max_health; // for monster max health CSQC display
 .float rainbow_finished; // rainbow colormod effect to flash on player/vigil
 .float pouch; // boolean (True or False), does Vigil carry a pouch
 float hint_step; // how many hints Vigil has receieved
@@ -731,7 +733,7 @@ float FL_BOSS = 8192; // entity is a boss monster
 #define STAT_GOLD 32
 #define STAT_SWORD 33
 #define STAT_ARMOR2 34
-#define STAT_MONSTER 35
+#define STAT_MONSTER_NAME 35
 #define STAT_SPELL 36
 #define STAT_COMBO 37
 #define STAT_PRICE 38
@@ -769,6 +771,10 @@ float FL_BOSS = 8192; // entity is a boss monster
 // Total Damage on HUD
 #define STAT_CURRENT_DAMAGE 62
 #define STAT_TOTAL_DAMAGE 63
+
+// Monster stats on HUD
+#define STAT_MON_HEALTH 64
+#define STAT_MON_MAXHEALTH 65
 
 //
 

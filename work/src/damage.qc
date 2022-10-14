@@ -388,6 +388,8 @@ void(entity targ, entity inflictor, entity attacker, float damage, float statusr
 				if (attacker.classname == "player")
 				{
 					attacker.owner.bighit_freeze = time + 0.3; // hit an enemy within this allotted time for freeze effects
+					attacker.owner.monster_health = targ.health;
+					attacker.owner.monster_max_health = targ.max_health;
 					attacker.owner.displayname = targ.displayname;
 					attacker.owner.displayname_finished = time + 3;
 				}
@@ -401,6 +403,8 @@ void(entity targ, entity inflictor, entity attacker, float damage, float statusr
 				if (attacker.classname == "player")
 				{
 					attacker.owner.bighit_freeze = time + 0.3; // hit an enemy within this allotted time for freeze effects
+					attacker.owner.monster_health = targ.health;
+					attacker.owner.monster_max_health = targ.max_health;
 					attacker.owner.displayname = targ.displayname;
 					attacker.owner.displayname_finished = time + 3;
 				}
@@ -424,6 +428,8 @@ void(entity targ, entity inflictor, entity attacker, float damage, float statusr
 			if (attacker.classname == "player")
 			{
 				attacker.owner.bighit_freeze = time + 0.3; // hit an enemy within this allotted time for freeze effects
+				attacker.owner.monster_health = targ.health;
+				attacker.owner.monster_max_health = targ.max_health;
 				attacker.owner.displayname = targ.displayname;
 				attacker.owner.displayname_finished = time + 3;
 			}
@@ -431,14 +437,6 @@ void(entity targ, entity inflictor, entity attacker, float damage, float statusr
 		if (!attacker.onground || !attacker.flags & FL_ONGROUND)
 			targ.izuna_exec_finished = time + 0.5; // can be air izuna dropped after being hit
 	}
-
-	//
-	// Health Bars
-	//
-	if (targ.classname != "player" && targ.flags & FL_MONSTER)
-		UpdateHPBar(targ);
-	else if (coop)
-		UpdateHPBar(targ);
 
 	//
 	// Damage handling - end

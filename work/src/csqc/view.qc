@@ -3,6 +3,9 @@
 .string message;
 entity head, head2, gold, gold2, key1, potion, potion2;
 float pause_frame;
+float hpbar_old_frac;
+float hpbar_draw_frac;
+float hpbar_draw_delay;
 
 void(float screenwidth, float screenheight) DrawLevelName =
 {
@@ -73,17 +76,32 @@ void(vector pos) DrawArmorStatus =
 	Hud_DrawLargeValue_Items(pos - '45 0', armor, 25); // 1st digit
 };
 
-void(vector pos) DrawMonsterNameDisplay =
+void(vector pos) DrawMonsterStats =
 {
-	local string display = getstats(STAT_MONSTER);
+	local string display = getstats(STAT_MONSTER_NAME);
+
+	local float maxhp = getstatf(STAT_MON_MAXHEALTH);
+	local float hp = getstatf(STAT_MON_HEALTH);
+
+	local float hpfrac = hp/maxhp;
+	local float minfrac = min(hpbar_draw_frac,hpfrac);
+	local float maxfrac = max(hpbar_draw_frac,hpfrac);
 
 	pos_x = 3;
 	pos_y = 460;
 
+	local vector barpos = pos;
 	if (display != "") // monster names on show
 	{
-		drawstring (pos+'1 1', display, '16 16 0', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
-		drawstring (pos, display, '16 16 0', '.9 .1 0', 1, DRAWFLAG_NORMAL);
+
+		drawsubpic(barpos, '164 16', "gfx/hpbar/new/hpbar_background", '0 0', '1 1', '0 0 0', 1, DRAWFLAG_NORMAL); 	//background
+		drawsubpic(barpos, [164*minfrac, 16], "gfx/hpbar/new/monbar", '0 0', [minfrac, 1], '1 1 1', 1, DRAWFLAG_NORMAL); 	//hpbar
+		drawsubpic(barpos, '164 16', "gfx/hpbar/new/hpbar_foreground", '0 0', '1 1', '1 1 1', 1, DRAWFLAG_NORMAL); 	//foreground
+
+		// Draw Text
+		drawstring (pos+'6.5 3.5', display, '16 16', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
+		drawstring (pos+'5.5 2.5', display, '16 16', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
+		drawstring (pos+'6 3', display, '16 16', '1 0 0', 1, DRAWFLAG_NORMAL);
 	}
 };
 
@@ -218,10 +236,6 @@ void(float screenwidth, float screenheight) DrawPriceDisplay =
 		Hud_DrawLargeValue(pos+'166 0 0', price, 25); // 8th digit
 };
 
-float hpbar_old_frac;
-float hpbar_draw_frac;
-float hpbar_draw_delay;
-
 void(vector pos) DrawHPBar =
 {
 	local float maxhp = getstatf(STAT_MAXHEALTH);
@@ -293,7 +307,7 @@ void(vector pos) DrawHPBar =
     // Max hp
     drawstring (textpos + '1 1', maxhp_str, [8*scale, 8], '0 0 0', 1, DRAWFLAG_NORMAL); // Max HP text shadow
     drawstring (textpos, maxhp_str, [8*scale, 8], '1 1 1', 1, DRAWFLAG_NORMAL);
-}
+};
 
 float mpbar_old_frac;
 float mpbar_draw_frac;
@@ -1361,7 +1375,7 @@ void(float width, float height, float menushown) CSQC_UpdateView =
 
 		local float relics = getstatf(STAT_RELIC);
 		if (relics & IT_RELIC7) 
-			DrawMonsterNameDisplay('0 0');				// Draws monster display name
+			DrawMonsterStats('0 0');				// Draws monster display name
 
 		local float price = getstatf(STAT_PRICE);
 		if (price > 0)

@@ -56,6 +56,7 @@ ai_strafe
 Strafe sideways, but stay at aproximately the same range
 =============
 */
+.float lefty;
 void(float dist) ai_strafe =
 {
 	local float	ofs;

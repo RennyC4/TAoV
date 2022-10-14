@@ -1154,9 +1154,6 @@ void() PlayerPostThink =
 		else
 			self.combo = 0; // combo should always be zero in village and safe zones
 
-		// HP Bars
-		CheckEnemyHPBar();
-
 		// now do the movement
 		if (self.char.classname == "player")
 			player_think(); // player.qc

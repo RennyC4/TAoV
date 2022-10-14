@@ -7,7 +7,6 @@ main.qc
 misc/ani.qc
 misc/math.qc
 misc.qc
-misc/hpbar.qc
 damage.qc
 client.qc
 dummys.qc
