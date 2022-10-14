@@ -826,7 +826,8 @@ void(float damg, float dist, float knokback, float rsize, float snd, float flsh,
 					// Purge
 					//
 					
-					if (head.classname == "player" && head.purge_finished > time && head.owner && self.flags & FL_MONSTER && !deathmatch && self.health > 0 && !head.swimming && !head.owner.button3 && !head.grabbed && !head.izunatarg)
+					if (head.classname == "player" && head.purge_finished > time && head.owner && self.flags & FL_MONSTER && !deathmatch && self.health > 0 && !head.swimming && !head.owner.button3 && !head.grabbed && !head.izunatarg &&
+					(!(pointcontents(self.origin) == CONTENT_WATER || pointcontents(self.origin) == CONTENT_LAVA || pointcontents(self.origin) == CONTENT_SLIME)))
 					{
 						head.purge_oldorigin = head.origin; // hold original position before warp
 						head.purge_targ = self;
