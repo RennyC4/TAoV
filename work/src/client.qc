@@ -51,6 +51,24 @@ void() InitCamera =
 	local entity y;
 			
 	//
+	// Camera Underwater sound
+	//
+
+	if (pointcontents(self.origin) == CONTENT_WATER || pointcontents(self.origin) == CONTENT_LAVA || pointcontents(self.origin) == CONTENT_SLIME)
+	{
+		if (self.sound_finished < time)
+		{
+			sound (self, CHAN_VOICE, "player/camh2o.wav", 1, ATTN_NORM);
+			self.sound_finished = time + 9.9;
+		}
+	}
+	else if (self.sound_finished > time)
+	{
+			sound (self, CHAN_VOICE, "misc/null.wav", 1, ATTN_NORM);
+			self.sound_finished = time;
+	}
+	
+	//
 	// Camera shake effect
 	//
 
@@ -956,7 +974,8 @@ void() PlayerPreThink =
 					{
 						if (self.char.liquidsound_finished < time)
 						{
-							PainSound();
+							//PainSound();
+							sound (self.char, CHAN_VOICE, "player/drown.wav", 1, ATTN_NORM);
 							self.char.liquidsound_finished = time + 1;
 						}
 						self.char.health = self.char.health - 1;

@@ -2740,9 +2740,19 @@ void() player_move = [0, player_move]
 						if (self.onground == TRUE)
 						{
 							if (self.new_walkframe == 1)
-								sound (self, CHAN_BODY, "player/run.wav", 0.5, ATTN_NORM);
+							{
+								if (self.waterlevel > 0)
+									sound (self, CHAN_AUTO, "player/waterstep1.wav", 0.5, ATTN_NORM);
+								else
+									sound (self, CHAN_BODY, "player/run.wav", 0.5, ATTN_NORM);
+							}
 							if (self.new_walkframe == 6)
-								sound (self, CHAN_BODY, "player/run2.wav", 0.5, ATTN_NORM);
+							{
+								if (self.waterlevel > 0)
+									sound (self, CHAN_AUTO, "player/waterstep2.wav", 0.5, ATTN_NORM);
+								else
+									sound (self, CHAN_BODY, "player/run2.wav", 0.5, ATTN_NORM);
+							}
 						}
 						self.new_walkframe = self.new_walkframe + 1;
 						self.walkani_finished = time + 0.05;
@@ -2763,9 +2773,19 @@ void() player_move = [0, player_move]
 					if (self.onground == TRUE)
 					{
 						if (self.walkframe == 1)
-							sound (self, CHAN_BODY, "player/run.wav", 0.5, ATTN_NORM);
+						{
+							if (self.waterlevel > 0)
+								sound (self, CHAN_AUTO, "player/waterstep1.wav", 1, ATTN_NORM);
+							else
+								sound (self, CHAN_BODY, "player/run.wav", 1, ATTN_NORM);
+						}
 						if (self.walkframe == 4)
-							sound (self, CHAN_BODY, "player/run2.wav", 0.5, ATTN_NORM);
+						{
+							if (self.waterlevel > 0)
+								sound (self, CHAN_AUTO, "player/waterstep1.wav", 1, ATTN_NORM);
+							else
+								sound (self, CHAN_BODY, "player/run2.wav", 1, ATTN_NORM);
+						}
 					}
 					if (self.walkframe > 5) // foot step sound, keep it in sync
 						self.walkframe = 0;
@@ -6416,20 +6436,6 @@ void() player_pain =
 
 	makevectors(self.angles);
 
-	// Fixes weird blocking under water issue
-	if (self.block_finished > time)
-		self.block_finished = time - 1;
-	
-	// Swimming damage routine, inwater_pain counter handles logic
-	// moving this below will sometimes break Vigil's button2 swimming oddly
-	if (self.swimming)
-	{
-		self.think = player_knockedup1;
-		self.nextthink = time + 0.1;
-		self.pain_finished = time + 0.8;
-		return;
-	}
-
 	// clear some stuff up on getting hurt
 	self.owner.purge_toggle = FALSE;
 	self.owner.goalentity = self; // reset camera back to Vigil
@@ -6440,6 +6446,7 @@ void() player_pain =
 	self.owner.ledgegrab = self.ledgegrab = FALSE;
 	self.owner.wallgrab = self.wallgrab = FALSE;
 	self.owner.wallrun = self.wallrun = FALSE;
+	self.owner.combo_finished = time;
 	
 	self.owner.swordshadow_time = time; // disable sword shadow
 	self.grabbed = FALSE;
@@ -6474,6 +6481,20 @@ void() player_pain =
 
 	self.tired_finished = time;
 	self.owner.magicmenu = FALSE;
+
+	// Fixes weird blocking under water issue
+	if (self.block_finished > time)
+		self.block_finished = time - 1;
+	
+	// Swimming damage routine, inwater_pain counter handles logic
+	// moving this below will sometimes break Vigil's button2 swimming oddly
+	if (self.swimming)
+	{
+		self.think = player_knockedup1;
+		self.nextthink = time + 0.1;
+		self.pain_finished = time + 0.8;
+		return;
+	}
 
 	PainSound();
 	self.perfectblock_cooldown = time + 1; // can't PG after being hit

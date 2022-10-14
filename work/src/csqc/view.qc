@@ -1270,7 +1270,8 @@ void(float width, float height, float menushown) CSQC_UpdateView =
 				if (z.alpha > 0)
 				{
 					z.alpha = z.alpha - 0.005;
-					drawstring(twodcoord + '1 1', strcat("+", h, "\n"), '10 10 0', '0 0 0', z.alpha, DRAWFLAG_NORMAL);
+					drawstring(twodcoord + '1 1', strcat("+", h, "\n"), '10 10 0', '0 0 0', z.alpha, DRAWFLAG_NORMAL); // shadow
+					drawstring(twodcoord - '1 1', strcat("+", h, "\n"), '10 10 0', '0 0 0', z.alpha, DRAWFLAG_NORMAL); // shadow
 					drawstring(twodcoord, strcat("+", h, "\n"), '10 10 0', '1 .8 0', z.alpha, DRAWFLAG_NORMAL);
 				}
 			}
@@ -1292,11 +1293,13 @@ void(float width, float height, float menushown) CSQC_UpdateView =
 					if (a.cnt > 0)
 					{
 						drawstring(twodcoord2 + '1 1', strcat("+", h, "\n"), '10 10 0', '0 0 0', a.alpha, DRAWFLAG_NORMAL); // shadow
+						drawstring(twodcoord2 - '1 1', strcat("+", h, "\n"), '10 10 0', '0 0 0', a.alpha, DRAWFLAG_NORMAL); // shadow
 						drawstring(twodcoord2, strcat("+", h, "\n"), '12 12 0', '1 0 0', a.alpha, DRAWFLAG_NORMAL);
 					}
 					else
 					{
 						drawstring(twodcoord2 + '1 1', "Empty\n", '10 10 0', '0 0 0', a.alpha, DRAWFLAG_NORMAL); // shadow
+						drawstring(twodcoord2 - '1 1', "Empty\n", '10 10 0', '0 0 0', a.alpha, DRAWFLAG_NORMAL); // shadow
 						drawstring(twodcoord2, "Empty\n", '10 10 0', '1 0 0', a.alpha, DRAWFLAG_NORMAL);
 					}
 				}
@@ -1317,6 +1320,7 @@ void(float width, float height, float menushown) CSQC_UpdateView =
 				{
 					b.alpha = b.alpha - 0.005;
 					drawstring(twodcoord2 + '1 1', strcat("+", h, "\n"), '10 10 0', '0 0 0', b.alpha, DRAWFLAG_NORMAL); // shadow
+					drawstring(twodcoord2 - '1 1', strcat("+", h, "\n"), '10 10 0', '0 0 0', b.alpha, DRAWFLAG_NORMAL); // shadow
 					drawstring(twodcoord2, strcat("+", h, "\n"), '10 10 0', '0 0 1', b.alpha, DRAWFLAG_NORMAL);
 				}
 			}
