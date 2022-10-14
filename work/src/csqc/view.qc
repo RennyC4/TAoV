@@ -11,6 +11,7 @@ void(float screenwidth, float screenheight) DrawLevelName =
 {
 	local vector pos = [(screenwidth - stringwidth(world.message, TRUE, '18 18 0'))/2, (screenheight - 18)/3];
 
+	drawstring(pos - '1 1', world.message, '18 18', '0 0 0', (sin(cltime*0.95)*1), DRAWFLAG_NORMAL); // shadow
 	drawstring(pos + '1 1', world.message, '18 18', '0 0 0', (sin(cltime*0.95)*1), DRAWFLAG_NORMAL); // shadow
 	drawstring(pos, world.message, '18 18', '.9 .1 0', (sin(cltime*0.95)*1), DRAWFLAG_NORMAL);
 };
@@ -442,6 +443,7 @@ void(vector pos) DrawXPBar =
 //
 // Wad image names in array form, for easier access.
 //
+
 static string number[10] =
 {
 	"gfx/num_0",
@@ -497,20 +499,24 @@ void(float screenwidth, float screenheight) DrawComboDamageCounter =
 		if (dmg > 0 && h > 1)
 		{
 			// draw #
-			drawstring (pos3 - '5.5 0.5', g, '16 16', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
+			drawstring (pos3 - '6 1', g, '16 16', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
+			drawstring (pos3 - '4 -1', g, '16 16', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
 			drawstring (pos3 - '5 0', g, '16 16', '1 1 1', 1, DRAWFLAG_NORMAL);
 			// draw "damage" text
 			drawstring (pos3 + '31 6', "Damage ", '12 12', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
+			drawstring (pos3 + '29 4', "Damage ", '12 12', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
 			drawstring (pos3 + '30 5', "Damage ", '12 12', '1 0 0', 1, DRAWFLAG_NORMAL);
 		}
 	}
 	else // Draw total damage
 	{
 		// draw #
-		drawstring (pos3 - '12.5 -0.5', f, '16 16', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
+		drawstring (pos3 - '13 1', f, '16 16', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
+		drawstring (pos3 - '11 -1', f, '16 16', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
 		drawstring (pos3 - '12 0', f, '16 16', '1 1 1', 1, DRAWFLAG_NORMAL);
 		// draw "damage" text
 		drawstring (pos3 + '21 6', "Total Damage ", '12 12', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
+		drawstring (pos3 + '19.5 4', "Total Damage ", '12 12', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
 		drawstring (pos3 + '20 5', "Total Damage ", '12 12', '1 0 0', 1, DRAWFLAG_NORMAL);
 	}
 

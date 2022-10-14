@@ -474,7 +474,7 @@ void Settings_Create()
 	gamma.north = maxfps;
 	
 	// crunchy
-	local menuElement *crunchy = addCheckbox(MENU_Sett_Video,[-96, yoff], "v_crunchy"); crunchy.text = "Nearest Filter"; crunchy.textfield = "gl_texturemode";
+	local menuElement *crunchy = addCheckbox(MENU_Sett_Video,[-96, yoff], "v_crunchy"); crunchy.text = "Crunchy Textures (default on)"; crunchy.textfield = "gl_texturemode";
 	crunchy.justify = '0.5 0.5'; crunchy.keydown = crunchy_toggle;
 	if (autocvar_gl_texturemode == "nll")
 		crunchy.fvalue = 1;
