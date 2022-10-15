@@ -1790,17 +1790,17 @@ void() player_think =
 	//
 
 	if ((self.keyflags & (KEY_LEFT) && self.char.angles_y == 0) || (self.keyflags & (KEY_RIGHT) && self.char.angles_y == 180)
-	&& self.magicmenu == FALSE && self.char.tired_finished < time && self.char.deadflag != DEAD_DEAD && self.char.grabbed == FALSE
-	&& self.char.invunerability_finished < time && self.safezone == FALSE && self.char.dodge_finished < time && !self.char.swimming && self.char.health > 0 && self.char.lowceil == FALSE)
+	&& !self.magicmenu && self.char.tired_finished < time && self.char.deadflag != DEAD_DEAD && !self.char.grabbed
+	&& self.char.invunerability_finished < time && !self.safezone && self.char.dodge_finished < time && !self.char.swimming && self.char.health > 0 && !self.char.lowceil)
 	{
 		// Double tap dash attack - Begin
 		if (self.dbltime == 0)
 			self.dbltime = time + 0.5;
 		else if (self.dbltime < 0)
 		{
-			if ((0 - self.dbltime) >= time && self.char.pain_finished < time && self.char.onground == TRUE && (self.attack_finished < time || (self.char.frame >= $stabs1 && self.char.frame <= $stabs12)))
+			if ((0 - self.dbltime) >= time && self.char.pain_finished < time && (self.attack_finished < time || (self.char.frame >= $stabs1 && self.char.frame <= $stabs12)))
 			{
-				if (self.button0)
+				if (self.button0 && self.char.onground)
 				{
 					// character dash attack here
 					if (self.char.angles_y == 45 || self.char.angles_y == -45)
@@ -1839,8 +1839,8 @@ void() player_think =
 		}
 		else if (self.dbltime < 0)
 		{
-		if ((0 - self.dbltime) < time)
-			self.dbltime = 0;
+			if ((0 - self.dbltime) < time)
+				self.dbltime = 0;
 		}
 		// Double tap run - End
 	}
@@ -2210,6 +2210,7 @@ void() player_think =
 	//
 	// Vigil's Evasive Manuvers
 	//
+
 	if (self.char.block_finished > time && self.char.dodge_finished < time && self.char.onground == TRUE && self.char.health > 0 && self.char.bigfall_recovery_finished < time)
 	{
 		if (self.keyflags & KEY_UP)
