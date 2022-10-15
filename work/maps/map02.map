@@ -7147,6 +7147,7 @@
 "cnt" "100"
 "angle" "90"
 "_phong" "1"
+"killtarget" "kill_returntrip"
 }
 // entity 41
 {
@@ -7154,6 +7155,7 @@
 "classname" "item_health"
 "cnt" "100"
 "_phong" "1"
+"killtarget" "kill_returntrip"
 }
 // entity 42
 {
