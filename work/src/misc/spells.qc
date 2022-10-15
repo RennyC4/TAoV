@@ -427,6 +427,13 @@ void() LightningThink =
 					else if (head.classname == "ethskull" || head.classname == "ghost" || head.classname == "ghost2" || head.classname == "ghoul" || head.classname == "lesserwraith"
 					|| head.classname == "wraith" || head.classname == "zombie" || head.classname == "zombieboss" || head.classname == "skeleton") // undead enemies aren't affected much
 						T_Damage (head, self, self.owner, 1, 0);						
+					else if (head.classname == "esquid") // electric squid gains health
+					{
+						T_Damage (head, self, self.owner, 0, 0);
+						head.health = head.health + 1;
+						if (head.health > head.max_health)
+							head.health = head.max_health;
+					}
 					else
 					{
 						if (deathmatch)
