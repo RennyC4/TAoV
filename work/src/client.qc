@@ -1350,7 +1350,6 @@ void() PutClientInServer =
 	self.view_ofs = '0 0 22';
 	self.velocity = '0 0 0';
 	self.modelindex = 0;
-	self.view_ofs = '0 0 0';
 	self.fullmana_display = TRUE; // Don't spam on level load
 	self.spawntime = time + 0.1;
 	self.fog = self.ofog = "0";

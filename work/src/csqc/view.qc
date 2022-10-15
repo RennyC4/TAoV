@@ -94,15 +94,14 @@ void(vector pos) DrawMonsterStats =
 	local vector barpos = pos;
 	if (display != "") // monster names on show
 	{
-
 		drawsubpic(barpos, '164 16', "gfx/hpbar/new/hpbar_background", '0 0', '1 1', '0 0 0', 1, DRAWFLAG_NORMAL); 	//background
 		drawsubpic(barpos, [164*minfrac, 16], "gfx/hpbar/new/monbar", '0 0', [minfrac, 1], '1 1 1', 1, DRAWFLAG_NORMAL); 	//hpbar
 		drawsubpic(barpos, '164 16', "gfx/hpbar/new/hpbar_foreground", '0 0', '1 1', '1 1 1', 1, DRAWFLAG_NORMAL); 	//foreground
 
 		// Draw Text
-		drawstring (pos+'6.5 3.5', display, '16 16', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
-		drawstring (pos+'5.5 2.5', display, '16 16', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
-		drawstring (pos+'6 3', display, '16 16', '1 0 0', 1, DRAWFLAG_NORMAL);
+		drawstring (pos+'9.5 4.5', display, '8 8', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
+		drawstring (pos+'10.5 5.5', display, '8 8', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
+		drawstring (pos+'10 5', display, '8 8', '1 0 0', 1, DRAWFLAG_NORMAL);
 	}
 };
 
@@ -1165,11 +1164,7 @@ void(float isnew) CSQC_Ent_Update =
 	}
 };
 
-void() CSQC_Ent_Remove =
-{
-	remove(self);
-};
-
+void() CSQC_Ent_Remove = {remove(self);};
 void() SUB_Remove = {remove(self);return;};
 
 //
@@ -1330,7 +1325,7 @@ void(float width, float height, float menushown) CSQC_UpdateView =
 		//
 		// Draw Entity Numbers on Screen (Health / Gold / Mana) - END -
 		//
-		
+
 		local float blind = getstatf(STAT_STATUS_BLIND);
 		local float swim = getstatf(STAT_CAM_INWATER);
 
@@ -1338,7 +1333,7 @@ void(float width, float height, float menushown) CSQC_UpdateView =
 			blindness_fade = min(1,blindness_fade + frametime*7.5);
 		else if (blindness_fade > 0 || swim)
 			blindness_fade = max(0,blindness_fade - frametime*3);
-        
+
 		if (blindness_fade > 0 || swim)
 		{
 			local vector draw = [getstatf(STAT_ORIGINX), getstatf(STAT_ORIGINY), getstatf(STAT_ORIGINZ)];
@@ -1347,7 +1342,7 @@ void(float width, float height, float menushown) CSQC_UpdateView =
 			else
 				DrawBlindness(draw, '320 270' + ('640 640'*(1-blindness_fade)), width, height, blindness_fade);
 		}
-		
+	
 		// Draw the shrine selection HUD when in use
 		local float shrine_hud = getstatf(STAT_SHRINEHUD);	// Draw Shrine HUD on screen
 		if (world.model == "maps/teleporter.bsp" && shrine_hud == TRUE)
