@@ -4,7 +4,7 @@
 {
 "classname" "worldspawn"
 "_tb_mod" "data"
-"wad" "../wads/taov.wad;../wads/alice.wad;../wads/RuneResized.wad"
+"wad" "../wads/taov.wad;../wads/alice.wad;../wads/RuneResized.wad;../wads/QUAKE101.wad"
 "message" "RennyC's Test Room"
 "wateralpha" ".6"
 // brush 0
@@ -171,12 +171,12 @@
 }
 // brush 18
 {
-( -64 224 8 ) ( -64 -96 8 ) ( -64 -96 -208 ) *waterpx 0 0 0 1 1
-( -64 -96 8 ) ( 352 -96 8 ) ( 352 -96 -208 ) *waterpx 0 0 0 1 1
-( 352 -96 -208 ) ( 352 224 -208 ) ( -64 224 -208 ) *waterpx 0 0 0 1 1
-( -64 224 8 ) ( 352 224 8 ) ( 352 -96 8 ) *waterpx 0 0 0 1 1
-( 352 224 -208 ) ( 352 224 8 ) ( -64 224 8 ) *waterpx 0 0 0 1 1
-( 352 -96 8 ) ( 352 224 8 ) ( 352 224 -208 ) *waterpx 0 0 0 1 1
+( -64 224 8 ) ( -64 -96 8 ) ( -64 -96 -208 ) *swater4 0 0 0 1 1
+( -64 -96 8 ) ( 352 -96 8 ) ( 352 -96 -208 ) *swater4 0 0 0 1 1
+( 352 -96 -208 ) ( 352 224 -208 ) ( -64 224 -208 ) *swater4 0 0 0 1 1
+( -64 224 8 ) ( 352 224 8 ) ( 352 -96 8 ) *swater4 0 0 0 1 1
+( 352 224 -208 ) ( 352 224 8 ) ( -64 224 8 ) *swater4 0 0 0 1 1
+( 352 -96 8 ) ( 352 224 8 ) ( 352 224 -208 ) *swater4 0 0 0 1 1
 }
 // brush 19
 {

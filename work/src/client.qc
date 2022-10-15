@@ -43,7 +43,6 @@ float (float y1, float y2) angcomp =
 .float stylechange_time;
 .float stylechange_length;
 .float stylechange_angle;
-
 void() InitCamera =
 {
 	local vector view, view2, ot, spot;
@@ -51,7 +50,7 @@ void() InitCamera =
 	local entity y;
 			
 	//
-	// Camera Underwater sound
+	// Camera Underwater sound + fog
 	//
 
 	if (pointcontents(self.origin) == CONTENT_WATER || pointcontents(self.origin) == CONTENT_LAVA || pointcontents(self.origin) == CONTENT_SLIME)
@@ -61,7 +60,21 @@ void() InitCamera =
 			sound (self, CHAN_VOICE, "player/camh2o.wav", 1, ATTN_NORM);
 			self.sound_finished = time + 9.9;
 		}
-		self.swimming = TRUE; // Send to CSQC
+		if (!self.cam_inwater)
+		{
+			if (self.fog != "0" && self.fog != "1 0 0 0.3 0.5 0" && self.fog != "1 1 0 0 0.5 0" && self.fog != "1 0 0.5 0 0.5 0")
+				self.ofog = self.fog; // record old fog value that isn't water/lava/slime
+
+			if (pointcontents(self.origin) == CONTENT_WATER)
+				self.fog = "1 0 0 0.3 0.5 0";
+			else if (pointcontents(self.origin) == CONTENT_LAVA)
+				self.fog = "1 1 0 0 0.5 0";
+			else if (pointcontents(self.origin) == CONTENT_SLIME)
+				self.fog = "1 0 0.5 0 0.5 0";
+
+			stuffcmd(self, sprintf("fog %s\n", self.fog));
+			self.cam_inwater = TRUE; // Send to CSQC
+		}
 	}
 	else
 	{
@@ -70,7 +83,11 @@ void() InitCamera =
 			sound (self, CHAN_VOICE, "misc/null.wav", 1, ATTN_NORM);
 			self.sound_finished = time;
 		}
-		self.swimming = FALSE; // Send to CSQC
+		if (self.cam_inwater)
+		{
+			self.cam_inwater = FALSE; // Send to CSQC
+			stuffcmd(self, sprintf("fog %s\n", self.ofog));
+		}
 	}
 	
 	//
@@ -1333,8 +1350,10 @@ void() PutClientInServer =
 	self.view_ofs = '0 0 22';
 	self.velocity = '0 0 0';
 	self.modelindex = 0;
+	self.view_ofs = '0 0 0';
 	self.fullmana_display = TRUE; // Don't spam on level load
 	self.spawntime = time + 0.1;
+	self.fog = self.ofog = "0";
 
 	DecodeLevelParms();
 
@@ -1368,7 +1387,6 @@ void() PutClientInServer =
 	}
 
 	stuffcmd (self, "v_cshift\n"); // remove cshift effects
-	
 	// Remove any left over sticky centerprints
 	centerprint (self, "\n");
 };

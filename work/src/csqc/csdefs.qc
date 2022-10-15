@@ -2239,3 +2239,5 @@ const float DRAWFLAG_MIPMAP = 0x100; // only for R_BeginPolygon
 // Monster stats on HUD
 #define STAT_MON_HEALTH 64
 #define STAT_MON_MAXHEALTH 65
+
+#define STAT_CAM_INWATER 66

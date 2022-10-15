@@ -347,7 +347,7 @@ void() CheckImpulseButtons =
 					self.char.think = player_block;
 					self.char.nextthink = time;
 
-					if (self.char.lowceil == FALSE)
+					if (!self.char.lowceil && !self.char.swimming)
 						sound (self, CHAN_BODY, "player/motion2.wav", 1, ATTN_NORM);
 				}
 			}
@@ -356,7 +356,7 @@ void() CheckImpulseButtons =
 	}
 	else
 	{
-		if (self.attack_finished < time && self.FL_BLKPRESSED && self.char.dodge_finished < time && !self.char.flypain && !self.char.lowceil && !self.char.ledgegrab)
+		if (self.attack_finished < time && self.FL_BLKPRESSED && self.char.dodge_finished < time && !self.char.flypain && !self.char.lowceil && !self.char.ledgegrab && !self.char.swimming)
 		{
 			self.char.block_finished = time - 1; // Fixes blocking while in player hit frames
 			sound (self, CHAN_BODY, "player/motion1.wav", 1, ATTN_NORM);

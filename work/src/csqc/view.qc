@@ -1332,15 +1332,20 @@ void(float width, float height, float menushown) CSQC_UpdateView =
 		//
 		
 		local float blind = getstatf(STAT_STATUS_BLIND);
-		if (blind > time)    
+		local float swim = getstatf(STAT_CAM_INWATER);
+
+		if (blind > time || swim)    
 			blindness_fade = min(1,blindness_fade + frametime*7.5);
-		else if (blindness_fade > 0)
+		else if (blindness_fade > 0 || swim)
 			blindness_fade = max(0,blindness_fade - frametime*3);
         
-		if (blindness_fade > 0)
+		if (blindness_fade > 0 || swim)
 		{
 			local vector draw = [getstatf(STAT_ORIGINX), getstatf(STAT_ORIGINY), getstatf(STAT_ORIGINZ)];
-			DrawBlindness(draw, '320 270' + ('640 640'*(1-blindness_fade)), width, height, blindness_fade);
+			if (swim)
+				DrawBlindness(draw, '640 540' + ('640 640'*(1-blindness_fade)), width, height, blindness_fade);
+			else
+				DrawBlindness(draw, '320 270' + ('640 640'*(1-blindness_fade)), width, height, blindness_fade);
 		}
 		
 		// Draw the shrine selection HUD when in use

@@ -508,6 +508,7 @@ entity frameskip_ent;
 .float wallrun_finished; // finished his wall running
 .float ledgegrab; // ledgegrab
 .float swimming; // swimming boolean for Vigil
+.float cam_inwater;
 .float cnt;
 .float cnt2;
 .float ai_reattack; // tells AI to throw another attack immediately after the previous one
@@ -542,6 +543,8 @@ entity frameskip_ent;
 .float forcewalk_finished; // used for trigger_walk
 .float inair; // how long Vigil's been considered 'in air'
 .float bigfall; // Boolean for if Vigil fell from a massive height
+.string fog;
+.string ofog; // record fog value
 
 // Health flask
 .float hflask_amt;
@@ -775,6 +778,8 @@ float FL_BOSS = 8192; // entity is a boss monster
 // Monster stats on HUD
 #define STAT_MON_HEALTH 64
 #define STAT_MON_MAXHEALTH 65
+
+#define STAT_CAM_INWATER 66
 
 //
 

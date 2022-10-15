@@ -399,7 +399,6 @@ void() trigger_changemap =
 // trigger fog - Allows mappers to adjust fog when trigger is touched by player
 //===
 
-.string fog;
 void() fogchange_touch =
 {
 	if (other.classname != "player")
@@ -409,6 +408,7 @@ void() fogchange_touch =
 	{
 		stuffcmd(other.owner, sprintf("fog %s\n", self.fog));
 		other.fog = self.fog;
+		other.owner.ofog = self.fog;
 	}
 };
 

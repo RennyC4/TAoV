@@ -92,6 +92,8 @@ void() CSEv_GrabCSQCValues =
 
 	clientstat(STAT_MON_HEALTH, EV_FLOAT, monster_health);
 	clientstat(STAT_MON_MAXHEALTH, EV_FLOAT, monster_max_health);
+
+	clientstat(STAT_CAM_INWATER, EV_FLOAT, cam_inwater);
 };
 
 float framecount, developer, difficulty, deathmatch, coop;
