@@ -61,12 +61,14 @@ void() dog_atta6	=[	$attack6,	dog_atta7	] {FireMelee(5,45,0,25,0,0,0,FALSE,0,0);
 void() dog_atta7	=[	$attack7,	dog_atta8	] {};
 void() dog_atta8	=[	$attack8,	dog_walk1	] {};
 
-void() dog_leap1	=[	$leap1,		dog_leap2	] 
+void() dog_leap1	=[	$pain1,		dog_leap2	] 
 {
 	sound (self, CHAN_VOICE, "dog/growl.wav", 1, ATTN_NORM);
 	self.nextthink = time + 0.8; // give chance to dodge
 };
-void() dog_leap2	=[	$leap2,		dog_leap3	]
+
+void() dog_leap2	=[	$leap1,		dog_leap3	] {};
+void() dog_leap3	=[	$leap2,		dog_leap4	]
 {	
 	makevectors (self.angles);
 	self.origin_z = self.origin_z + 1;
@@ -75,13 +77,13 @@ void() dog_leap2	=[	$leap2,		dog_leap3	]
 		self.flags = self.flags - FL_ONGROUND;
 };
 
-void() dog_leap3	=[	$leap3,		dog_leap4	] {FireMelee(1,0,1,30,0,0,1,TRUE,-22,0);};
-void() dog_leap4	=[	$leap4,		dog_leap5	] {FireMelee(2,0,1,30,0,0,1,TRUE,-22,0);};
-void() dog_leap5	=[	$leap5,		dog_leap6	] {FireMelee(1,0,1,30,0,0,1,TRUE,-22,0);};
-void() dog_leap6	=[	$leap6,		dog_leap7	] {FireMelee(2,0,1,30,0,0,1,TRUE,-22,0);};
-void() dog_leap7	=[	$leap7,		dog_leap8	] {FireMelee(1,0,1,30,0,0,1,TRUE,-22,0);};
-void() dog_leap8	=[	$leap8,		dog_leap9	] {FireMelee(2,0,1,30,0,0,1,TRUE,-22,0);};
-void() dog_leap9	=[	$leap9,		dog_leap9	] 
+void() dog_leap4	=[	$leap3,		dog_leap5	] {FireMelee(1,0,1,30,0,0,1,TRUE,-22,0);};
+void() dog_leap5	=[	$leap4,		dog_leap6	] {FireMelee(2,0,1,30,0,0,1,TRUE,-22,0);};
+void() dog_leap6	=[	$leap5,		dog_leap7	] {FireMelee(1,0,1,30,0,0,1,TRUE,-22,0);};
+void() dog_leap7	=[	$leap6,		dog_leap8	] {FireMelee(2,0,1,30,0,0,1,TRUE,-22,0);};
+void() dog_leap8	=[	$leap7,		dog_leap9	] {FireMelee(1,0,1,30,0,0,1,TRUE,-22,0);};
+void() dog_leap9	=[	$leap8,		dog_leap10	] {FireMelee(2,0,1,30,0,0,1,TRUE,-22,0);};
+void() dog_leap10	=[	$leap9,		dog_leap10	] 
 {
 	if (self.flags & FL_ONGROUND)
 		self.think = dog_walk1;

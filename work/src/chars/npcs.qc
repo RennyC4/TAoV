@@ -166,7 +166,7 @@ void() blacksmith_chat =
 		if (self.cnt == 0)
 		{
 			if (self.enemy.owner.armorlevel == 0)
-				aprice = self.enemy.owner.display_price = 1250;
+				aprice = self.enemy.owner.display_price = 1000;
 			else if (self.enemy.owner.armorlevel == 1)
 				aprice = self.enemy.owner.display_price = 5000;
 			else if (self.enemy.owner.armorlevel == 2)
@@ -179,7 +179,7 @@ void() blacksmith_chat =
 		else if (self.cnt == 1)
 		{
 			if (self.enemy.owner.swordlevel == 0)
-				sprice = self.enemy.owner.display_price = 1500;
+				sprice = self.enemy.owner.display_price = 1000;
 			else if (self.enemy.owner.swordlevel == 1)
 				sprice = self.enemy.owner.display_price = 7000;
 			else if (self.enemy.owner.swordlevel == 2)
