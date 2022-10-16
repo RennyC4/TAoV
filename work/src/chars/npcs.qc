@@ -802,6 +802,11 @@ void() lisa_chat =
 	}
 };
 
+void() wizard_cast =
+{
+	self.frame = 1;
+};
+
 // Mode 0, not chatting
 // Mode 1, chatting
 void() wizard_chat =
@@ -931,6 +936,8 @@ void() wizard_chat =
 							self.enemy.nextthink = time;
 
 							self.pain_finished = time + 999; // Won't talk to user again forever
+							self.think = wizard_cast;
+							self.nextthink = time;
 						}
 						else
 							sound (self, CHAN_AUTO, "misc/menu2.wav", 1, ATTN_NORM);

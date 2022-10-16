@@ -1182,6 +1182,24 @@ void() bed =
 	droptofloor();
 };
 
+/*QUAKED bed2 (0 1 0) (-7 -7 0) (7 7 18)
+A bed that sits on the ground, is solid
+drops to floor automatically
+*/
+void() bed2 =
+{
+	precache_model ("progs/bed2.mdl");
+
+	setmodel (self, "progs/bed2.mdl");
+	setsize(self, '-28 -20 0', '35 16 33');
+	self.movetype = MOVETYPE_NONE;
+	self.solid = SOLID_SLIDEBOX;
+	self.takedamage = DAMAGE_NO;
+	self.classname = "bed2";
+	self.touch = onground_touch;
+	droptofloor();
+};
+
 /*QUAKED chair (0 1 0) (-8 -0 -24) (17 18 30)
 A chair that sits on the ground, is solid
 drops to floor automatically
