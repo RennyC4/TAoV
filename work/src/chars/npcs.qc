@@ -832,18 +832,18 @@ void() wizard_chat =
 			{
 				if (!shrine_progress & IT_SHRINE1)
 				{
-					centerprint (self.enemy.owner, "/PHmph! It's you Vigil, you need to attack the castle and take back our nation. When you've shown some valour I may decide to help you..\n\n===========================\n\nç ^bLeave^b");
+					centerprint (self.enemy.owner, "/PHmph! Unwise to bother a wizard in meditation Knightja, go seek our unresting Kings soul and perhaps I'll bother myself in helping you...\n\n===========================\n\nç ^bLeave^b");
 					self.enemy.owner.display_price = 0;
 				}
 				else
 				{
-					centerprint (self.enemy.owner, "/PGood, you've found our dead kings spirit and have proved your worth for my service. Whenever you wish to warp back to the castle shrine come find me...\n\n===========================\n\nç ^bWarp to Transport^b\n                 Leave\n");
+					centerprint (self.enemy.owner, "/PNot unexpected, you've found our where ours Kings soul is hiding and have proved your worth. Whenever you wish to warp back to the castle shrine come find me...\n\n===========================\n\nç ^bWarp to Transport^b\n                 Leave\n");
 					self.enemy.owner.display_price = aprice;
 				}
 			}
 			else
 			{
-				centerprint (self.enemy.owner, "/PGood, you've found our dead kings spirit and have proved your worth for my service. Whenever you wish to warp back to the castle shrine come find me...\n\n===========================\n\n   Warp to Transport\nç ^b              Leave^b\n");
+				centerprint (self.enemy.owner, "/PNot unexpected, you've found our where ours Kings soul is hiding and have proved your worth. Whenever you wish to warp back to the castle shrine come find me...\n\n===========================\n\n   Warp to Transport\nç ^b              Leave^b\n");
 				self.enemy.owner.display_price = 0;
 			}
 			self.chatrefresh_finished = time + 0.1;

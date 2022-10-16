@@ -2382,8 +2382,8 @@
 {
 "classname" "func_door2"
 "cnt" "1"
-"speed" "15"
-"height" "200"
+"speed" "20"
+"height" "175"
 "targetname" "castle_open"
 "_phong" "1"
 // brush 0

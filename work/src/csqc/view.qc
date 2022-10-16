@@ -7,6 +7,10 @@ float hpbar_old_frac;
 float hpbar_draw_frac;
 float hpbar_draw_delay;
 
+float mon_hpbar_old_frac;
+float mon_hpbar_draw_frac;
+float mon_hpbar_draw_delay;
+
 void(float screenwidth, float screenheight) DrawLevelName =
 {
 	local vector pos = [(screenwidth - stringwidth(world.message, TRUE, '18 18 0'))/2, (screenheight - 18)/3];
@@ -85,8 +89,8 @@ void(vector pos) DrawMonsterStats =
 	local float hp = getstatf(STAT_MON_HEALTH);
 
 	local float hpfrac = hp/maxhp;
-	local float minfrac = min(hpbar_draw_frac,hpfrac);
-	local float maxfrac = max(hpbar_draw_frac,hpfrac);
+	local float minfrac = min(mon_hpbar_draw_frac,hpfrac);
+	local float maxfrac = max(mon_hpbar_draw_frac,hpfrac);
 
 	pos_x = 3;
 	pos_y = 460;
@@ -94,6 +98,30 @@ void(vector pos) DrawMonsterStats =
 	local vector barpos = pos;
 	if (display != "") // monster names on show
 	{
+		local float hpfrac = hp; ///maxhp;
+		if (hpfrac != mon_hpbar_old_frac)
+		{
+			mon_hpbar_draw_delay = cltime + 0.1;
+			mon_hpbar_old_frac = hpfrac;
+		}
+		if (cltime > mon_hpbar_draw_delay)
+		{
+			local float barspeed = frametime*0.65;
+		
+			if ((mon_hpbar_draw_frac-hpfrac) > barspeed)
+			{
+				mon_hpbar_draw_frac -= barspeed;
+			} 
+			else if ((hpfrac-mon_hpbar_draw_frac) > barspeed)
+			{
+				mon_hpbar_draw_frac += barspeed;
+			} 
+			else
+			{
+				mon_hpbar_draw_frac = hpfrac;
+			}
+		}
+	
 		drawsubpic(barpos, '164 16', "gfx/hpbar/new/hpbar_background", '0 0', '1 1', '0 0 0', 1, DRAWFLAG_NORMAL); 	//background
 		drawsubpic(barpos, [164*minfrac, 16], "gfx/hpbar/new/monbar", '0 0', [minfrac, 1], '1 1 1', 1, DRAWFLAG_NORMAL); 	//hpbar
 		drawsubpic(barpos, '164 16', "gfx/hpbar/new/hpbar_foreground", '0 0', '1 1', '1 1 1', 1, DRAWFLAG_NORMAL); 	//foreground
@@ -283,7 +311,7 @@ void(vector pos) DrawHPBar =
 			hpbar_draw_frac = hpfrac;
 		}
 	}
-	
+
 	local vector barpos = pos;
 	local float minfrac = min(hpbar_draw_frac,hpfrac);
 	local float maxfrac = max(hpbar_draw_frac,hpfrac);
@@ -937,7 +965,6 @@ void(vector pos) DrawHeadBackground =
 {
 	drawpic (pos - '7 10', "progs/head_bg.png", '44 66 0', '1 1 1', 0.5, DRAWFLAG_NORMAL);
 };
-
 
 //
 // Draw player status on HUD
