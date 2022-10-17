@@ -4027,6 +4027,7 @@ void(float ver) spinatk_wind_spiral =
 	}
 	else if (ver == 2) // charge up spin attack
 	{
+		effect.effects = EF_ADDITIVE | EF_NODEPTHTEST;
 		setorigin (effect, self.origin);
 		effect.attack_finished = time + 0.5;
 

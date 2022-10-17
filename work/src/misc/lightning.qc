@@ -12,6 +12,40 @@ void() lightning;
 float lightning_strikes; // only allow so many lightning strikes (one) at a time
 				         // otherwise dire consequences can occur
 
+void() light_reset =
+{
+	lightstyle(0, "m");
+	lightstyle(1, "mmnmmommommnonmmonqnmmo");
+	lightstyle(2, "abcdefghijklmnopqrstuvwxyzyxwvutsrqponmlkjihgfedcba");
+	lightstyle(3, "mmmmmaaaaammmmmaaaaaabcdefgabcdefg");
+	lightstyle(4, "mamamamamama");
+	lightstyle(5,"jklmnopqrstuvwxyzyxwvutsrqponmlkj");
+	lightstyle(6, "nmonqnmomnmomomno");
+	lightstyle(7, "mmmaaaabcdefgmmmmaaaammmaamm");
+	lightstyle(8, "mmmaaammmaaammmabcdefaaaammmmabcdefmmmaaaa");
+	lightstyle(9, "aaaaaaaazzzzzzzz");
+	lightstyle(10, "mmamammmmammamamaaamammma");
+	lightstyle(11, "abcdefghijklmnopqrrqponmlkjihgfedcba");
+	lightstyle(63, "a");
+};
+
+void() full_bright =
+{
+	lightstyle(0, "z");
+	lightstyle(1, "z");
+	lightstyle(2, "z");
+	lightstyle(3, "z");
+	lightstyle(4, "z");
+	lightstyle(5,"z");
+	lightstyle(6, "z");
+	lightstyle(7, "z");
+	lightstyle(8, "z");
+	lightstyle(9, "z");
+	lightstyle(10, "z");
+	lightstyle(11, "z");
+	lightstyle(63, "z");
+};
+
 void() lightning_strike =
 {
 	local vector targ;
@@ -56,6 +90,10 @@ void() lightning_strike =
 		lightning_strikes = FALSE;
 		self.cnt = FALSE;
 	}
+
+	if (!deathmatch && !coop)
+		light_reset();
+
 	self.think = lightning;
 	self.nextthink = time + 0.1;
 };
@@ -65,6 +103,10 @@ Lightning entity effective for stormy weather ambience
 */
 void() lightning =
 {
+	local float f = cvar("r_shadow_realtime_dlight");
+	if (random() < 0.1 && !coop && !deathmatch && !f && framecount > 30)
+		full_bright();
+
 	self.think = lightning_strike;
 	self.nextthink = time + 5 + random()*15;
 };

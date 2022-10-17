@@ -14462,3 +14462,25 @@
 "classname" "light"
 "origin" "-5288 -244 1480"
 }
+// entity 520
+{
+"classname" "light"
+"origin" "492 -464 140"
+"light" "450"
+"_color" "255 128 0"
+"wait" "4"
+"delay" "2"
+"style" "6"
+"_phong" "1"
+}
+// entity 521
+{
+"classname" "light"
+"origin" "690 -464 140"
+"light" "450"
+"_color" "255 128 0"
+"wait" "4"
+"delay" "2"
+"style" "6"
+"_phong" "1"
+}

@@ -5,7 +5,7 @@
 "classname" "worldspawn"
 "message" "Tower of Ascension"
 "sounds" "1"
-"light" "10"
+"light" "33"
 "wad" "C:/Games/TAoV/work/wads/taov.wad;C:/Games/TAoV/work/wads/alice.wad"
 "_tb_def" "builtin:taov.fgd"
 "_dirt" "1"
@@ -2998,12 +2998,12 @@
 }
 // brush 324
 {
-( -1328 32 -1168 ) ( -1328 -32 -1168 ) ( -1328 -32 -1216 ) brick6_8 [ 0 1 0 0.000102997 ] [ 0 0 -1 0 ] 0 1 1
-( -1328 -32 -1168 ) ( -1296 -32 -1168 ) ( -1296 -32 -1216 ) brick6_8 [ 1 0 0 0.00012207 ] [ 0 0 -1 0.00012207 ] 0 1 1
-( -1296 -32 -1216 ) ( -1296 32 -1216 ) ( -1328 32 -1216 ) brick6_8 [ 1 0 0 0 ] [ 0 -1 0 0.000112534 ] 0 1 1
-( -1328 -32 -1168 ) ( -1328 32 -1168 ) ( -1296 32 -1168 ) brick6_8 [ 1 0 0 0 ] [ 0 -1 0 0.000116348 ] 0 1 1
-( -1328 32 -1216 ) ( -1296 32 -1216 ) ( -1296 32 -1168 ) brick6_8 [ 1 0 0 0.00012207 ] [ 0 0 -1 0.00012207 ] 0 1 1
-( -1296 32 -1216 ) ( -1296 -32 -1216 ) ( -1296 -32 -1168 ) brick6_8 [ 0 1 0 0.000106812 ] [ 0 0 -1 0 ] 0 1 1
+( -1328 64 -1168 ) ( -1328 0 -1168 ) ( -1328 0 -1216 ) brick6_8 [ 0 1 0 -31.999897 ] [ 0 0 -1 0 ] 0 1 1
+( -1328 0 -1168 ) ( -1296 0 -1168 ) ( -1296 0 -1216 ) brick6_8 [ 1 0 0 0 ] [ 0 0 -1 0 ] 0 1 1
+( -1296 0 -1216 ) ( -1296 64 -1216 ) ( -1328 64 -1216 ) brick6_8 [ 1 0 0 0 ] [ 0 -1 0 32.000114 ] 0 1 1
+( -1328 0 -1168 ) ( -1328 64 -1168 ) ( -1296 64 -1168 ) brick6_8 [ 1 0 0 0 ] [ 0 -1 0 32.000114 ] 0 1 1
+( -1328 64 -1216 ) ( -1296 64 -1216 ) ( -1296 64 -1168 ) brick6_8 [ 1 0 0 0 ] [ 0 0 -1 0 ] 0 1 1
+( -1296 64 -1216 ) ( -1296 0 -1216 ) ( -1296 0 -1168 ) brick6_8 [ 0 1 0 -31.999893 ] [ 0 0 -1 0 ] 0 1 1
 }
 // brush 325
 {
@@ -5587,7 +5587,7 @@
 "angle" "90"
 "light" "175"
 "wait" "0.5"
-"origin" "3392 144 -2512"
+"origin" "3392 144 -2510"
 "_phong" "1"
 }
 // entity 18
@@ -6779,7 +6779,7 @@
 "angle" "90"
 "light" "175"
 "wait" "0.5"
-"origin" "3392 -64 -2992"
+"origin" "3392 -64 -2988"
 "_phong" "1"
 }
 // entity 92
@@ -6880,39 +6880,32 @@
 }
 // entity 104
 {
-"classname" "lionhead"
-"angle" "180"
-"origin" "-1896 40 -944"
-"_phong" "1"
-}
-// entity 105
-{
 "classname" "monster_baron"
 "angle" "180"
 "origin" "-2240 40 -1016"
 "_phong" "1"
 }
-// entity 106
+// entity 105
 {
 "classname" "monster_hell_knight"
 "origin" "1016 0 -1624"
 "_phong" "1"
 }
-// entity 107
+// entity 106
 {
 "classname" "monster_ghost"
 "angle" "90"
 "origin" "1808 -96 -2064"
 "_phong" "1"
 }
-// entity 108
+// entity 107
 {
 "classname" "monster_ghost"
 "angle" "90"
 "origin" "1872 -96 -2064"
 "_phong" "1"
 }
-// entity 109
+// entity 108
 {
 "classname" "light_torch_long_walltorch"
 "angle" "180"
@@ -6921,7 +6914,7 @@
 "origin" "-1898 112 -1022"
 "_phong" "1"
 }
-// entity 110
+// entity 109
 {
 "classname" "light_torch_long_walltorch"
 "angle" "180"
@@ -6930,7 +6923,7 @@
 "origin" "-1898 -32 -1022"
 "_phong" "1"
 }
-// entity 111
+// entity 110
 {
 "classname" "trigger_camstyle"
 "camerastyle" "0"
@@ -6945,14 +6938,14 @@
 ( 1520 48 -1696 ) ( 1520 -48 -1696 ) ( 1520 -48 -1536 ) trigger [ 0 1 0 0.000148773 ] [ 0 0 -1 0 ] 0 1 1
 }
 }
-// entity 112
+// entity 111
 {
 "classname" "item_health"
 "cnt" "75"
 "origin" "-1712 32 -872"
 "_phong" "1"
 }
-// entity 113
+// entity 112
 {
 "classname" "light"
 "light" "75"
@@ -6960,7 +6953,7 @@
 "origin" "3352 -48 -3448"
 "_phong" "1"
 }
-// entity 114
+// entity 113
 {
 "classname" "light"
 "light" "75"
@@ -6968,67 +6961,67 @@
 "origin" "3432 -48 -3448"
 "_phong" "1"
 }
-// entity 115
+// entity 114
 {
 "classname" "barrel"
 "origin" "3328 -64 -2488"
 "_phong" "1"
 }
-// entity 116
+// entity 115
 {
 "classname" "barrel"
 "origin" "3360 -64 -2488"
 "_phong" "1"
 }
-// entity 117
+// entity 116
 {
 "classname" "barrel"
 "origin" "3168 104 -2152"
 "_phong" "1"
 }
-// entity 118
+// entity 117
 {
 "classname" "barrel"
 "origin" "3168 64 -2152"
 "_phong" "1"
 }
-// entity 119
+// entity 118
 {
 "classname" "barrel"
 "origin" "3168 24 -2152"
 "_phong" "1"
 }
-// entity 120
+// entity 119
 {
 "classname" "barrel"
 "origin" "3208 104 -2152"
 "_phong" "1"
 }
-// entity 121
+// entity 120
 {
 "classname" "barrel"
 "origin" "3208 66 -2152"
 "_phong" "1"
 }
-// entity 122
+// entity 121
 {
 "classname" "barrel"
 "origin" "3208 24 -2152"
 "_phong" "1"
 }
-// entity 123
+// entity 122
 {
 "classname" "barrel"
 "origin" "2120 -40 -1640"
 "_phong" "1"
 }
-// entity 124
+// entity 123
 {
 "classname" "barrel"
 "origin" "2088 -72 -1640"
 "_phong" "1"
 }
-// entity 125
+// entity 124
 {
 "classname" "light"
 "light" "100"
@@ -7036,7 +7029,7 @@
 "origin" "-1248 -16 -1312"
 "_phong" "1"
 }
-// entity 126
+// entity 125
 {
 "classname" "trigger_changelevel"
 "map" "transit4"
@@ -7052,7 +7045,7 @@
 ( 2792 64 -3584 ) ( 2792 -8 -3584 ) ( 2792 -8 -3504 ) trigger [ 0 1 0 -32 ] [ 0 0 -1 0 ] 0 1 1
 }
 }
-// entity 127
+// entity 126
 {
 "classname" "light_torch_small_walltorch"
 "angle" "90"
@@ -7062,14 +7055,14 @@
 "origin" "2928 -40 -3424"
 "_phong" "1"
 }
-// entity 128
+// entity 127
 {
 "classname" "info_player_start"
 "angle" "270"
 "origin" "2848 176 -3560"
 "_phong" "1"
 }
-// entity 129
+// entity 128
 {
 "classname" "light"
 "origin" "3232 -88 -3456"
@@ -7080,7 +7073,7 @@
 "style" "6"
 "_phong" "1"
 }
-// entity 130
+// entity 129
 {
 "classname" "light"
 "origin" "3552 -88 -3456"
@@ -7091,7 +7084,7 @@
 "style" "6"
 "_phong" "1"
 }
-// entity 131
+// entity 130
 {
 "classname" "light"
 "origin" "3392 -80 -3456"
@@ -7102,7 +7095,7 @@
 "style" "6"
 "_phong" "1"
 }
-// entity 132
+// entity 131
 {
 "classname" "light"
 "origin" "3552 -88 -3168"
@@ -7113,7 +7106,7 @@
 "style" "6"
 "_phong" "1"
 }
-// entity 133
+// entity 132
 {
 "classname" "light"
 "origin" "3552 -86 -2880"
@@ -7124,7 +7117,7 @@
 "style" "6"
 "_phong" "1"
 }
-// entity 134
+// entity 133
 {
 "classname" "light"
 "origin" "3552 -88 -2592"
@@ -7135,7 +7128,7 @@
 "style" "6"
 "_phong" "1"
 }
-// entity 135
+// entity 134
 {
 "classname" "light"
 "origin" "3392 144 -2520"
@@ -7146,7 +7139,7 @@
 "style" "6"
 "_phong" "1"
 }
-// entity 136
+// entity 135
 {
 "classname" "light"
 "origin" "3232 -92 -2884"
@@ -7157,7 +7150,7 @@
 "style" "6"
 "_phong" "1"
 }
-// entity 137
+// entity 136
 {
 "classname" "light"
 "origin" "3232 -92 -3172"
@@ -7168,7 +7161,7 @@
 "style" "6"
 "_phong" "1"
 }
-// entity 138
+// entity 137
 {
 "classname" "light"
 "origin" "3392 32 -2020"
@@ -7179,7 +7172,7 @@
 "style" "6"
 "_phong" "1"
 }
-// entity 139
+// entity 138
 {
 "classname" "light"
 "origin" "3008 -8 -2316"
@@ -7190,7 +7183,7 @@
 "style" "6"
 "_phong" "1"
 }
-// entity 140
+// entity 139
 {
 "classname" "light"
 "origin" "2752 -8 -2320"
@@ -7201,7 +7194,7 @@
 "style" "6"
 "_phong" "1"
 }
-// entity 141
+// entity 140
 {
 "classname" "light"
 "origin" "2496 -8 -2320"
@@ -7212,7 +7205,7 @@
 "style" "6"
 "_phong" "1"
 }
-// entity 142
+// entity 141
 {
 "classname" "light"
 "origin" "2240 -12 -2316"
@@ -7223,7 +7216,7 @@
 "style" "6"
 "_phong" "1"
 }
-// entity 143
+// entity 142
 {
 "classname" "light"
 "origin" "1952 -88 -2168"
@@ -7234,7 +7227,7 @@
 "style" "6"
 "_phong" "1"
 }
-// entity 144
+// entity 143
 {
 "classname" "light"
 "origin" "1728 -88 -2160"
@@ -7245,7 +7238,7 @@
 "style" "6"
 "_phong" "1"
 }
-// entity 145
+// entity 144
 {
 "classname" "light"
 "origin" "2136 16 -1916"
@@ -7256,7 +7249,7 @@
 "style" "6"
 "_phong" "1"
 }
-// entity 146
+// entity 145
 {
 "classname" "light"
 "origin" "1952 -88 -1784"
@@ -7267,7 +7260,7 @@
 "style" "6"
 "_phong" "1"
 }
-// entity 147
+// entity 146
 {
 "classname" "light"
 "origin" "1724 -88 -1776"
@@ -7278,7 +7271,7 @@
 "style" "6"
 "_phong" "1"
 }
-// entity 148
+// entity 147
 {
 "classname" "light"
 "origin" "1408 -40 -1612"
@@ -7289,7 +7282,7 @@
 "style" "6"
 "_phong" "1"
 }
-// entity 149
+// entity 148
 {
 "classname" "light"
 "origin" "1152 -40 -1616"
@@ -7300,7 +7293,7 @@
 "style" "6"
 "_phong" "1"
 }
-// entity 150
+// entity 149
 {
 "classname" "light"
 "origin" "896 -40 -1612"
@@ -7311,7 +7304,7 @@
 "style" "6"
 "_phong" "1"
 }
-// entity 151
+// entity 150
 {
 "classname" "light"
 "origin" "-80 -44 -1612"
@@ -7322,7 +7315,7 @@
 "style" "6"
 "_phong" "1"
 }
-// entity 152
+// entity 151
 {
 "classname" "light"
 "origin" "-288 -44 -1616"
@@ -7333,7 +7326,7 @@
 "style" "6"
 "_phong" "1"
 }
-// entity 153
+// entity 152
 {
 "classname" "light"
 "origin" "-432 -72 -1596"
@@ -7344,7 +7337,7 @@
 "style" "6"
 "_phong" "1"
 }
-// entity 154
+// entity 153
 {
 "classname" "light"
 "origin" "-664 -72 -1596"
@@ -7355,7 +7348,7 @@
 "style" "6"
 "_phong" "1"
 }
-// entity 155
+// entity 154
 {
 "classname" "light"
 "origin" "-1176 -72 -1596"
@@ -7366,7 +7359,7 @@
 "style" "6"
 "_phong" "1"
 }
-// entity 156
+// entity 155
 {
 "classname" "light"
 "origin" "-1424 -72 -1596"
@@ -7377,7 +7370,7 @@
 "style" "6"
 "_phong" "1"
 }
-// entity 157
+// entity 156
 {
 "classname" "light"
 "origin" "-1580 96 -1596"
@@ -7388,7 +7381,7 @@
 "style" "6"
 "_phong" "1"
 }
-// entity 158
+// entity 157
 {
 "classname" "light"
 "origin" "-1696 -40 -1500"
@@ -7399,7 +7392,7 @@
 "style" "6"
 "_phong" "1"
 }
-// entity 159
+// entity 158
 {
 "classname" "light"
 "origin" "-1696 -40 -1308"
@@ -7410,7 +7403,7 @@
 "style" "6"
 "_phong" "1"
 }
-// entity 160
+// entity 159
 {
 "classname" "light"
 "origin" "-1696 -40 -1120"
@@ -7421,7 +7414,7 @@
 "style" "6"
 "_phong" "1"
 }
-// entity 161
+// entity 160
 {
 "classname" "light"
 "origin" "-1848 96 -1032"
@@ -7432,7 +7425,7 @@
 "style" "6"
 "_phong" "1"
 }
-// entity 162
+// entity 161
 {
 "classname" "light"
 "origin" "-1844 -16 -1032"
@@ -7443,7 +7436,7 @@
 "style" "6"
 "_phong" "1"
 }
-// entity 163
+// entity 162
 {
 "classname" "light"
 "origin" "-1896 112 -1020"
@@ -7454,7 +7447,7 @@
 "style" "6"
 "_phong" "1"
 }
-// entity 164
+// entity 163
 {
 "classname" "light"
 "origin" "-1896 -32 -1028"
@@ -7465,7 +7458,7 @@
 "style" "6"
 "_phong" "1"
 }
-// entity 165
+// entity 164
 {
 "classname" "light"
 "origin" "2928 -40 -3416"
@@ -7476,7 +7469,7 @@
 "style" "6"
 "_phong" "1"
 }
-// entity 166
+// entity 165
 {
 "classname" "func_illusionary"
 "alpha" "0.5"
@@ -7518,7 +7511,7 @@
 ( 3408 160 -2960 ) ( 3424 160 -2944 ) ( 3424 1160 -2944 ) bricka2_6 [ 1 0 0 0 ] [ 0 -1 0 -0.000305176 ] 0 1 1
 }
 }
-// entity 167
+// entity 166
 {
 "classname" "func_illusionary"
 "alpha" "0.5"
@@ -7533,7 +7526,7 @@
 ( 3424 128 -3392 ) ( 3424 160 -3392 ) ( 3424 160 -3520 ) bricka2_4 [ 0 1 0 0.000297546 ] [ 0 0 -1 0 ] 0 1 1
 }
 }
-// entity 168
+// entity 167
 {
 "classname" "func_illusionary"
 "alpha" "0.5"
@@ -7557,7 +7550,7 @@
 ( 3104 96 -3616 ) ( 3104 128 -3360 ) ( 3104 128 -3616 ) city6_8 [ 0 1 0 -32 ] [ 0 0 -1 32 ] 0 1 1
 }
 }
-// entity 169
+// entity 168
 {
 "classname" "func_illusionary"
 "alpha" "0.5"
@@ -7572,7 +7565,7 @@
 ( 3136 160 -2368 ) ( 3136 80 -2368 ) ( 3136 80 -2224 ) 19 [ 0 1 0 0.000213623 ] [ 0 0 -1 0 ] 0 1 1
 }
 }
-// entity 170
+// entity 169
 {
 "classname" "func_illusionary"
 "alpha" "0.5"
@@ -7604,7 +7597,7 @@
 ( 2208 144 -6830 ) ( 2144 80 -6830 ) ( 2144 80 -258 ) 19 [ 0 1 0 0.000595093 ] [ 0 0 -1 0.000488281 ] 0 1 1
 }
 }
-// entity 171
+// entity 170
 {
 "classname" "func_illusionary"
 "alpha" "0.5"
@@ -7628,7 +7621,7 @@
 ( 1584 160 -9848 ) ( 1536 112 -9848 ) ( 1536 112 -1483 ) 19 [ 0 1 0 0.000854492 ] [ 0 0 -1 0 ] 0 1 1
 }
 }
-// entity 172
+// entity 171
 {
 "classname" "func_illusionary"
 "alpha" "0.5"
@@ -7642,7 +7635,7 @@
 ( -336 64 404 ) ( -320 48 404 ) ( -320 48 1654 ) wizmet1_2 [ 0 1 0 0 ] [ 0 0 -1 -2 ] 0 1 1.2
 }
 }
-// entity 173
+// entity 172
 {
 "classname" "func_illusionary"
 "alpha" "0.5"
@@ -7666,7 +7659,7 @@
 ( -1536 64 16 ) ( -1520 48 16 ) ( -1520 48 1016 ) wizmet1_2 [ 0 1 0 0 ] [ 0 0 -1 -2 ] 0 1 1.2
 }
 }
-// entity 174
+// entity 173
 {
 "classname" "func_illusionary"
 "alpha" "0.5"
@@ -7690,14 +7683,14 @@
 ( -1888 88 -1080 ) ( -1888 72 -1080 ) ( -1888 72 -968 ) 1_block1 [ 0 1 0 0 ] [ 0 0 -1 0 ] 0 1 1
 }
 }
-// entity 175
+// entity 174
 {
 "classname" "item_spellbook"
 "origin" "3376 44 -2148"
 "cnt" "2"
 "_phong" "1"
 }
-// entity 176
+// entity 175
 {
 "classname" "func_group"
 "_phong" "1"
@@ -7740,7 +7733,7 @@
 ( 3488 -64 -3424 ) ( 3488 -32 -3424 ) ( 3488 -32 -3456 ) bricka2_4 [ 0 1 0 0.000297546 ] [ 0 0 -1 0 ] 0 1 1
 }
 }
-// entity 177
+// entity 176
 {
 "classname" "func_group"
 "_phong" "1"
@@ -7767,7 +7760,7 @@
 ( 2048 -64 -2400 ) ( 2048 -112 -2400 ) ( 2048 -112 -1728 ) wizmet1_2 [ 0 1 0 0.000213623 ] [ 0 0 -1 0 ] 0 1 1
 }
 }
-// entity 178
+// entity 177
 {
 "classname" "func_swing"
 "cnt" "0.26"
@@ -7793,7 +7786,7 @@
 ( 2808 0 -3576 ) ( 2808 0 -3575 ) ( 2808 1 -3576 ) origin [ 0 1 0 0 ] [ 0 0 -1 -16 ] 0 1 1
 }
 }
-// entity 179
+// entity 178
 {
 "classname" "trigger_once"
 "target" "doorswing_2"
@@ -7808,7 +7801,7 @@
 ( 2824 64 -3584 ) ( 2824 -8 -3584 ) ( 2824 -8 -3576 ) trigger [ 0 1 0 0 ] [ 0 0 -1 -48 ] 0 1 1
 }
 }
-// entity 180
+// entity 179
 {
 "classname" "trigger_music"
 "music" "sound/music/track10.ogg"
@@ -7823,14 +7816,14 @@
 ( 2872 64 -3584 ) ( 2872 -8 -3584 ) ( 2872 -8 -3512 ) trigger [ 0 1 0 -56 ] [ 0 0 -1 0 ] 0 1 1
 }
 }
-// entity 181
+// entity 180
 {
 "classname" "func_group"
 "_tb_type" "_tb_group"
 "_tb_name" "Bell"
 "_tb_id" "1"
 }
-// entity 182
+// entity 181
 {
 "classname" "func_bell"
 "_phong" "1"
@@ -8009,7 +8002,7 @@
 ( 1842 18 -1120 ) ( 1842 18 -1119 ) ( 1842 19 -1120 ) origin [ 0 1 0 0 ] [ 0 0 -1 -4 ] 0 1 1
 }
 }
-// entity 183
+// entity 182
 {
 "classname" "dlight_pflags"
 "origin" "3232 -94 -3452"
@@ -8018,7 +8011,7 @@
 "style" "0"
 "_phong" "1"
 }
-// entity 184
+// entity 183
 {
 "classname" "dlight_pflags"
 "origin" "3392 -90 -3446"
@@ -8027,7 +8020,7 @@
 "style" "0"
 "_phong" "1"
 }
-// entity 185
+// entity 184
 {
 "classname" "dlight_pflags"
 "origin" "3552 -94 -3452"
@@ -8036,7 +8029,7 @@
 "style" "0"
 "_phong" "1"
 }
-// entity 186
+// entity 185
 {
 "classname" "dlight_pflags"
 "origin" "3552 -94 -3162"
@@ -8045,7 +8038,7 @@
 "style" "0"
 "_phong" "1"
 }
-// entity 187
+// entity 186
 {
 "classname" "dlight_pflags"
 "origin" "3232 -94 -3164"
@@ -8054,7 +8047,7 @@
 "style" "0"
 "_phong" "1"
 }
-// entity 188
+// entity 187
 {
 "classname" "dlight_pflags"
 "origin" "3232 -94 -2876"
@@ -8063,7 +8056,7 @@
 "style" "0"
 "_phong" "1"
 }
-// entity 189
+// entity 188
 {
 "classname" "dlight_pflags"
 "origin" "3392 -64 -2988"
@@ -8072,7 +8065,7 @@
 "style" "0"
 "_phong" "1"
 }
-// entity 190
+// entity 189
 {
 "classname" "dlight_pflags"
 "origin" "3552 -94 -2874"
@@ -8081,7 +8074,7 @@
 "style" "0"
 "_phong" "1"
 }
-// entity 191
+// entity 190
 {
 "classname" "dlight_pflags"
 "origin" "3552 -94 -2588"
@@ -8090,7 +8083,7 @@
 "style" "0"
 "_phong" "1"
 }
-// entity 192
+// entity 191
 {
 "classname" "dlight_pflags"
 "origin" "3392 144 -2508"
@@ -8099,7 +8092,7 @@
 "style" "0"
 "_phong" "1"
 }
-// entity 193
+// entity 192
 {
 "classname" "dlight_pflags"
 "origin" "3008 -14 -2310"
@@ -8108,7 +8101,7 @@
 "style" "0"
 "_phong" "1"
 }
-// entity 194
+// entity 193
 {
 "classname" "dlight_pflags"
 "origin" "2752 -14 -2314"
@@ -8117,7 +8110,7 @@
 "style" "0"
 "_phong" "1"
 }
-// entity 195
+// entity 194
 {
 "classname" "dlight_pflags"
 "origin" "2496 -14 -2314"
@@ -8126,7 +8119,7 @@
 "style" "0"
 "_phong" "1"
 }
-// entity 196
+// entity 195
 {
 "classname" "dlight_pflags"
 "origin" "2240 -14 -2316"
@@ -8135,7 +8128,7 @@
 "style" "0"
 "_phong" "1"
 }
-// entity 197
+// entity 196
 {
 "classname" "dlight_pflags"
 "origin" "1950 -94 -2164"
@@ -8144,7 +8137,7 @@
 "style" "0"
 "_phong" "1"
 }
-// entity 198
+// entity 197
 {
 "classname" "dlight_pflags"
 "origin" "1728 -94 -2154"
@@ -8153,7 +8146,7 @@
 "style" "0"
 "_phong" "1"
 }
-// entity 199
+// entity 198
 {
 "classname" "dlight_pflags"
 "origin" "2142 16 -1910"
@@ -8162,7 +8155,7 @@
 "style" "0"
 "_phong" "1"
 }
-// entity 200
+// entity 199
 {
 "classname" "dlight_pflags"
 "origin" "1724 -94 -1774"
@@ -8171,7 +8164,7 @@
 "style" "0"
 "_phong" "1"
 }
-// entity 201
+// entity 200
 {
 "classname" "dlight_pflags"
 "origin" "1950 -94 -1782"
@@ -8180,7 +8173,7 @@
 "style" "0"
 "_phong" "1"
 }
-// entity 202
+// entity 201
 {
 "classname" "dlight_pflags"
 "origin" "1408 -46 -1608"
@@ -8189,7 +8182,7 @@
 "style" "0"
 "_phong" "1"
 }
-// entity 203
+// entity 202
 {
 "classname" "dlight_pflags"
 "origin" "1152 -46 -1610"
@@ -8198,7 +8191,7 @@
 "style" "0"
 "_phong" "1"
 }
-// entity 204
+// entity 203
 {
 "classname" "dlight_pflags"
 "origin" "896 -46 -1608"
@@ -8207,7 +8200,7 @@
 "style" "0"
 "_phong" "1"
 }
-// entity 205
+// entity 204
 {
 "classname" "dlight_pflags"
 "origin" "-80 -46 -1606"
@@ -8216,7 +8209,7 @@
 "style" "0"
 "_phong" "1"
 }
-// entity 206
+// entity 205
 {
 "classname" "dlight_pflags"
 "origin" "-288 -46 -1610"
@@ -8225,7 +8218,7 @@
 "style" "0"
 "_phong" "1"
 }
-// entity 207
+// entity 206
 {
 "classname" "dlight_pflags"
 "origin" "-432 -78 -1594"
@@ -8234,7 +8227,7 @@
 "style" "0"
 "_phong" "1"
 }
-// entity 208
+// entity 207
 {
 "classname" "dlight_pflags"
 "origin" "-666 -78 -1594"
@@ -8243,7 +8236,7 @@
 "style" "0"
 "_phong" "1"
 }
-// entity 209
+// entity 208
 {
 "classname" "dlight_pflags"
 "origin" "-1176 -78 -1594"
@@ -8252,7 +8245,7 @@
 "style" "0"
 "_phong" "1"
 }
-// entity 210
+// entity 209
 {
 "classname" "dlight_pflags"
 "origin" "-1426 -78 -1594"
@@ -8261,7 +8254,7 @@
 "style" "0"
 "_phong" "1"
 }
-// entity 211
+// entity 210
 {
 "classname" "dlight_pflags"
 "origin" "-1580 96 -1600"
@@ -8270,7 +8263,7 @@
 "style" "0"
 "_phong" "1"
 }
-// entity 212
+// entity 211
 {
 "classname" "dlight_pflags"
 "origin" "-1700 -44 -1494"
@@ -8279,7 +8272,7 @@
 "style" "0"
 "_phong" "1"
 }
-// entity 213
+// entity 212
 {
 "classname" "dlight_pflags"
 "origin" "-1696 -46 -1304"
@@ -8288,7 +8281,7 @@
 "style" "0"
 "_phong" "1"
 }
-// entity 214
+// entity 213
 {
 "classname" "dlight_pflags"
 "origin" "-1698 -46 -1120"
@@ -8297,7 +8290,7 @@
 "style" "0"
 "_phong" "1"
 }
-// entity 215
+// entity 214
 {
 "classname" "dlight_pflags"
 "origin" "-1854 96 -1028"
@@ -8306,7 +8299,7 @@
 "style" "0"
 "_phong" "1"
 }
-// entity 216
+// entity 215
 {
 "classname" "dlight_pflags"
 "origin" "-1854 -20 -1028"
@@ -8315,7 +8308,7 @@
 "style" "0"
 "_phong" "1"
 }
-// entity 217
+// entity 216
 {
 "classname" "dlight_pflags"
 "origin" "-1890 112 -1018"
@@ -8324,7 +8317,7 @@
 "style" "0"
 "_phong" "1"
 }
-// entity 218
+// entity 217
 {
 "classname" "dlight_pflags"
 "origin" "-1892 -32 -1020"
@@ -8333,13 +8326,13 @@
 "style" "0"
 "_phong" "1"
 }
-// entity 219
+// entity 218
 {
 "classname" "player_spawn"
 "origin" "2856 28 -3556"
 "_phong" "1"
 }
-// entity 220
+// entity 219
 {
 "classname" "dlight_pflags"
 "origin" "2929 -46 -3418"
@@ -8347,4 +8340,20 @@
 "color" "1 0.33 0"
 "style" "0"
 "_phong" "1"
+}
+// entity 220
+{
+"classname" "light"
+"origin" "3391 -64 -3000"
+"light" "500"
+"_color" "255 128 0"
+"wait" "4"
+"delay" "2"
+"style" "6"
+"_phong" "1"
+}
+// entity 221
+{
+"classname" "lionhead"
+"origin" "-3004 42 -872"
 }
