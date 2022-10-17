@@ -2681,7 +2681,7 @@ void() player_grab =
 						self.attack_finished = time + 0.25; // Fix any sillyness
 						self.owner.grab_finished = time + 1.5;
 						self.owner.nojump_finished = time + 0.5;
-						self.combo_message_finished = time + 3; // give leniency for combos
+						self.combo_message_finished = time + 1.5; // give leniency for combos
 					}
 				}
 				if (check != world)
@@ -5480,7 +5480,7 @@ void() player_jumpatk2	=[	$jumpatk2,	player_jumpatk2	]
 	local vector h;
 	local float damg_calc;
 
-	self.owner.combometer_finished = time + 3; // give leniency for combos
+	self.owner.combometer_finished = time + 1.5; // give leniency for combos
 	self.owner.speedline_time = time + 0.05; // speedline
 
 	if (self.aircombo_count == 6) // add a tad of forward velocity
