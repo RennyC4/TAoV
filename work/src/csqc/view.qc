@@ -1092,6 +1092,50 @@ void(vector pos) DrawShrineHud =
 	drawpic (pos-'-352 -192', "gfx/shrine/cursor_d.png", '50 50', '1 1 1', 1, DRAWFLAG_NORMAL);
 };
 
+float lightning_fullbright;
+float lightning_fullbright_finished;
+
+void() DrawLightning =
+{
+	local float f = cvar("r_shadow_realtime_dlight");
+	if (random() < 0.0025 && !f && !lightning_fullbright) // full bright
+	{
+		lightstyle(0, "z");
+		lightstyle(1, "z");
+		lightstyle(2, "z");
+		lightstyle(3, "z");
+		lightstyle(4, "z");
+		lightstyle(5,"z");
+		lightstyle(6, "z");
+		lightstyle(7, "z");
+		lightstyle(8, "z");
+		lightstyle(9, "z");
+		lightstyle(10, "z");
+		lightstyle(11, "z");
+		lightstyle(63, "z");
+		lightning_fullbright = TRUE;
+		lightning_fullbright_finished = time + 0.2;
+	}
+	if (lightning_fullbright_finished < time && lightning_fullbright)
+	{
+		lightstyle(0, "m");
+		lightstyle(1, "mmnmmommommnonmmonqnmmo");
+		lightstyle(2, "abcdefghijklmnopqrstuvwxyzyxwvutsrqponmlkjihgfedcba");
+		lightstyle(3, "mmmmmaaaaammmmmaaaaaabcdefgabcdefg");
+		lightstyle(4, "mamamamamama");
+		lightstyle(5,"jklmnopqrstuvwxyzyxwvutsrqponmlkj");
+		lightstyle(6, "nmonqnmomnmomomno");
+		lightstyle(7, "mmmaaaabcdefgmmmmaaaammmaamm");
+		lightstyle(8, "mmmaaammmaaammmabcdefaaaammmmabcdefmmmaaaa");
+		lightstyle(9, "aaaaaaaazzzzzzzz");
+		lightstyle(10, "mmamammmmammamamaaamammma");
+		lightstyle(11, "abcdefghijklmnopqrrqponmlkjihgfedcba");
+		lightstyle(63, "a");		
+		lightning_fullbright = FALSE;
+		lightning_fullbright_finished = time;
+	}
+};
+
 //
 //CSQC - INPUT EVENTS (Keyboard/Mouse Handling)
 //
@@ -1394,6 +1438,8 @@ void(float width, float height, float menushown) CSQC_UpdateView =
 		DrawCurrentSelectedSpell('132 38');			// Draws the selected spell on HUD
 		DrawPlayerStatus('0 0');					// Draw "Status: " Text
 		Draw_Level_Number('38 10');					// Draw Vigil's Level
+		if (world.model == "maps/castle.bsp")
+			DrawLightning();							// Fake lightning strikes
 
 		local float keys = getstatf(STAT_KEYS);	// Draw Keys on screen
 		if (keys == 1) // 1 = Gold, 2 = Silver
