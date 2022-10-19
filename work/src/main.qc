@@ -171,9 +171,6 @@ void() worldspawn =
 		// 2D Sprites
 		//
 
-		// hp bar (mostly for monsters)
-		precache_model ("progs/hpbar/hpbar.spr");
-
 		precache_model ("progs/bubble.spr");
 		precache_model ("progs/hflask.spr");
 		precache_model ("progs/speed.spr");
