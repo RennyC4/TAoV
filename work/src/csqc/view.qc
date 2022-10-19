@@ -1094,14 +1094,15 @@ void(vector pos) DrawShrineHud =
 
 float lightning_fullbright;
 float lightning_fullbright_finished;
-
 void() DrawLightning =
 {
+	// Light style 1 is reserved for castle introduction
+
 	local float f = cvar("r_shadow_realtime_dlight");
 	if (random() < 0.0025 && !f && !lightning_fullbright) // full bright
 	{
 		lightstyle(0, "z");
-		lightstyle(1, "z");
+		//lightstyle(1, "z");
 		lightstyle(2, "z");
 		lightstyle(3, "z");
 		lightstyle(4, "z");
@@ -1119,7 +1120,7 @@ void() DrawLightning =
 	if (lightning_fullbright_finished < time && lightning_fullbright)
 	{
 		lightstyle(0, "m");
-		lightstyle(1, "mmnmmommommnonmmonqnmmo");
+		//lightstyle(1, "mmnmmommommnonmmonqnmmo");
 		lightstyle(2, "abcdefghijklmnopqrstuvwxyzyxwvutsrqponmlkjihgfedcba");
 		lightstyle(3, "mmmmmaaaaammmmmaaaaaabcdefgabcdefg");
 		lightstyle(4, "mamamamamama");

@@ -333,7 +333,8 @@
 // entity 8
 {
 "classname" "light"
-"origin" "-472 56 146"
+"origin" "-472 56 130"
+"style" "1"
 }
 // entity 9
 {
@@ -377,12 +378,4 @@
 {
 "classname" "monster_hydra"
 "origin" "144 -32 -48"
-}
-// entity 17
-{
-"classname" "monster_knight"
-"origin" "-336 -32 96"
-"awareness" "4"
-"angle" "180"
-"spawnflags" "64"
 }

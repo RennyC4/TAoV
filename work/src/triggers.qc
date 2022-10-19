@@ -821,6 +821,35 @@ void() trigger_walk =
 	self.touch = walktrigger_touch;
 };
 
+///
+
+void() trigger_special_lightstyle1_touch =
+{
+	if (other.classname == "player")
+	{
+		if (self.spawnflags & 1)
+			lightstyle(1, "mmnmmommommnonmmonqnmmo");
+		else
+			lightstyle(1, "a");
+		remove(self);
+		return;
+	}
+};
+
+
+/*QUAKED trigger_special_lightson (.5 .5 .5) ?
+Turns light style 1 on 
+*/
+void() trigger_lightstyle1 =
+{
+	InitTrigger ();
+	self.touch = trigger_special_lightstyle1_touch;
+};
+
+//
+// Safe zone, player can't attack nor be attacked
+//
+
 void() safezonetrigger_touch =
 {
 	if (other.classname != "player")
