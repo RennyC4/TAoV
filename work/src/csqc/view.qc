@@ -1413,7 +1413,7 @@ void(float width, float height, float menushown) CSQC_UpdateView =
 		DrawCurrentSelectedSpell('132 38');			// Draws the selected spell on HUD
 		DrawPlayerStatus('0 0');					// Draw "Status: " Text
 		Draw_Level_Number('38 10');					// Draw Vigil's Level
-		if (world.model == "maps/castle.bsp")
+		if (world.model == "maps/castle.bsp" || world.model == "maps/boss1.bsp")
 			DrawLightning();							// Fake lightning strikes
 
 		local float keys = getstatf(STAT_KEYS);	// Draw Keys on screen

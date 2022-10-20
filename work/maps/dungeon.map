@@ -7,7 +7,7 @@
 "message" "Dungeon of Decay"
 "wad" "C:/Games/TAoV/work/wads/fence_tex.wad;C:/Games/TAoV/work/wads/alice.wad;C:/Games/TAoV/work/wads/taov.wad"
 "_tb_def" "builtin:taov.fgd"
-"_wateralpha" "0.7"
+"_wateralpha" "0.5"
 "_dirt" "1"
 "_dirtdepth" "128"
 "_dirtscale" "1"
