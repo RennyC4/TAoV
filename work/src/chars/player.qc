@@ -404,7 +404,7 @@ void() Setup_Vigil =
 
 		dummy.think = OrbTransportThink;
 		dummy.nextthink = time;
-		raisetoroof(dummy);
+		raisetoroof(dummy, 9999);
 		return;
 	}
 

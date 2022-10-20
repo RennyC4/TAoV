@@ -800,19 +800,19 @@ float (entity targ) visible =
 =============
 raisetoroof
 
-traceboxes to the ceiling to put an entity as far up as 9999qu, a reverse droptofloor
+traceboxes to the ceiling to put an entity as far up as determined (default 9999qu), a reverse droptofloor
 
 0 is false
 1 is true
 =============
 */
 
-float(entity e) raisetoroof =
+float(entity e, float dist) raisetoroof =
 {
 	local vector source, dest;
 
 	source = e.origin;
-	dest = e.origin + v_up * 9999;
+	dest = e.origin + v_up * dist;
 		
 	tracebox (source, e.mins, e.maxs, dest, TRUE, e);
 
