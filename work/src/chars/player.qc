@@ -1746,7 +1746,7 @@ void() player_think =
 	//
 
 	if (self.button0 && self.char.tired_finished < time && self.char.deadflag != DEAD_DEAD && self.forcewalk_finished < time
-	&& self.char.fly_time < time && self.safezone == FALSE && self.char.guardbreak_finished < time && self.char.health > 0 && self.char.lowceil == FALSE)
+	&& self.char.fly_time < time && !self.safezone && self.char.guardbreak_finished < time && self.char.health > 0 && !self.char.lowceil && self.char.inwater_pain < 1)
 	{
 		// Get out of turning angles
 		if (self.char.angles_y == 45 || self.char.angles_y == -45)

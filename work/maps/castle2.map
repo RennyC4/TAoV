@@ -19,7 +19,7 @@
 "_minlight_dirt" "1"
 "_lightmap_scale" "32"
 "_phong" "1"
-"_wateralpha" "0.2"
+"_wateralpha" "0.3"
 // brush 0
 {
 ( 3552 -416 -288 ) ( 3552 -64 -288 ) ( 3552 -64 -256 ) wall3_4 [ 0 1 0 0 ] [ 0 0 -1 0 ] 0 1 1

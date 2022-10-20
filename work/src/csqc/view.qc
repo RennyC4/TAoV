@@ -7,9 +7,7 @@ float hpbar_old_frac;
 float hpbar_draw_frac;
 float hpbar_draw_delay;
 
-float mon_hpbar_old_frac;
 float mon_hpbar_draw_frac;
-float mon_hpbar_draw_delay;
 
 void(float screenwidth, float screenheight) DrawLevelName =
 {
@@ -89,8 +87,7 @@ void(vector pos) DrawMonsterStats =
 	local float hp = getstatf(STAT_MON_HEALTH);
 
 	local float hpfrac = hp/maxhp;
-	local float minfrac = min(mon_hpbar_draw_frac,hpfrac);
-	local float maxfrac = max(mon_hpbar_draw_frac,hpfrac);
+	local float monfrac = max(mon_hpbar_draw_frac,hpfrac);
 
 	pos_x = 3;
 	pos_y = 460;
@@ -98,32 +95,9 @@ void(vector pos) DrawMonsterStats =
 	local vector barpos = pos;
 	if (display != "") // monster names on show
 	{
-		local float hpfrac = hp; ///maxhp;
-		if (hpfrac != mon_hpbar_old_frac)
-		{
-			mon_hpbar_draw_delay = cltime + 0.1;
-			mon_hpbar_old_frac = hpfrac;
-		}
-		if (cltime > mon_hpbar_draw_delay)
-		{
-			local float barspeed = frametime*0.65;
-		
-			if ((mon_hpbar_draw_frac-hpfrac) > barspeed)
-			{
-				mon_hpbar_draw_frac -= barspeed;
-			} 
-			else if ((hpfrac-mon_hpbar_draw_frac) > barspeed)
-			{
-				mon_hpbar_draw_frac += barspeed;
-			} 
-			else
-			{
-				mon_hpbar_draw_frac = hpfrac;
-			}
-		}
 	
 		drawsubpic(barpos, '164 16', "gfx/hpbar/new/hpbar_background", '0 0', '1 1', '0 0 0', 1, DRAWFLAG_NORMAL); 	//background
-		drawsubpic(barpos, [164*minfrac, 16], "gfx/hpbar/new/monbar", '0 0', [minfrac, 1], '1 1 1', 1, DRAWFLAG_NORMAL); 	//hpbar
+		drawsubpic(barpos, [164*monfrac, 16], "gfx/hpbar/new/monbar", '0 0', [monfrac, 1], '1 1 1', 1, DRAWFLAG_NORMAL); 	//hpbar
 		drawsubpic(barpos, '164 16', "gfx/hpbar/new/hpbar_foreground", '0 0', '1 1', '1 1 1', 1, DRAWFLAG_NORMAL); 	//foreground
 
 		// Draw Text

@@ -8,7 +8,7 @@
 	{
 		map textures/water.png
 		rgbGen identityLighting
-		rgbGen const (0.25 0.25 0.25)
+		rgbGen const (0.03 0.03 0.03)
 		tcMod rotate 5
         tcGen environment
 		blendFunc GL_ONE GL_ONE
@@ -16,13 +16,9 @@
 	{
 		map textures/water.png
 		rgbGen identityLighting
-		rgbGen const (0.25 0.25 0.25)
+		rgbGen const (0.03 0.03 0.03)
 		tcMod rotate -5
         tcGen environment
 		blendFunc GL_ONE GL_ONE
-	}
-    {
-		map $lightmap
-		blendFunc GL_DST_COLOR GL_ZERO
 	}
 }
