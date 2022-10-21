@@ -942,79 +942,6 @@ void() PlayerPreThink =
 			}
 
 			//
-			// Swimming Physics are applied
-			//
-
-			// We use pointcontents due to MOVETYPE_STEP changes on Vigil
-			// causing 'waterlevel' not to update, that only happens on MOVETYPE_WALK entities
-			self.swimming = self.char.swimming;
-			if (pointcontents(self.char.origin) == CONTENT_WATER || pointcontents(self.char.origin) == CONTENT_LAVA || pointcontents(self.char.origin) == CONTENT_SLIME)
-			{
-				self.char.movetype = MOVETYPE_WALK; // Needed otherwise odd problems occur
-
-				if (!self.swimming) // First entered water
-				{
-					self.char.aircombo_count = 0;
-					self.ledgegrab = FALSE;
-					self.walljump = FALSE;
-					self.char.flypain = FALSE;
-					self.wallrun = FALSE;
-					self.ledgegrab_finished = time;
-					self.attack_finished = time;
-					self.char.block_finished = time; // remove any left over block timers
-
-					self.inwater_finished = time + 0.6;
-					self.char.velocity_x = self.char.velocity_x / 4 * (frametime * 100);
-					self.char.velocity_y = self.char.velocity_y / 4 * (frametime * 100);
-					self.char.velocity_z = self.char.velocity_z / 4 * (frametime * 100);
-
-					if (self.playersplash_finished < time)
-					{
-						watersplash_particle();
-						watersplash_particle();
-						watersplash_particle();
-						self.bubble_count = time + 3;
-						sound (self.char, CHAN_AUTO, "misc/h2ohit1.wav", 1, ATTN_NORM);
-						self.playersplash_finished = time + 0.5;
-					}
-				}
-				PlayerWaterPhysics();
-
-				if (self.char.waterlevel < 3) // Only drown on water level 3
-					self.char.dmgtime = time + 10; // 10 second breath holding
-
-				if (self.bubble_count < time) // spawn bubbles
-				{
-					Bubbles(1);
-					self.bubble_count = time + 3;
-				}
-
-				// Drowning
-				if (self.char.dmgtime < time && (!relics & IT_RELIC6) && !self.flags & FL_GODMODE && !self.char.flypain)
-				{
-					if (self.char.takedamage && self.char.invunerability_finished < time)
-					{
-						if (self.char.liquidsound_finished < time)
-						{
-							//PainSound();
-							sound (self.char, CHAN_VOICE, "player/drown.wav", 1, ATTN_NORM);
-							self.char.liquidsound_finished = time + 1;
-						}
-						self.char.health = self.char.health - 1;
-						if (self.char.health < 1)
-							Killed(self.char, world);
-					}
-					self.char.dmgtime = time + 0.5;
-				}
-				self.char.swimming = TRUE;
-			}
-			else
-			{
-				self.char.swimming = FALSE;
-				self.char.speed = 120; // Vigil's default speed is set here...
-			}
-
-			//
 			// Red screen tint, applies on near-death
 			//
 			
@@ -1190,6 +1117,79 @@ void() PlayerPostThink =
 	
 	if (self.char)
 	{
+		//
+		// Swimming Physics are applied
+		//
+
+		// We use pointcontents due to MOVETYPE_STEP changes on Vigil
+		// causing 'waterlevel' not to update, that only happens on MOVETYPE_WALK entities
+		self.swimming = self.char.swimming;
+		if (pointcontents(self.char.origin) == CONTENT_WATER || pointcontents(self.char.origin) == CONTENT_LAVA || pointcontents(self.char.origin) == CONTENT_SLIME)
+		{
+			self.char.movetype = MOVETYPE_WALK; // Needed otherwise odd problems occur
+
+			if (!self.swimming) // First entered water
+			{
+				self.char.aircombo_count = 0;
+				self.ledgegrab = FALSE;
+				self.walljump = FALSE;
+				self.char.flypain = FALSE;
+				self.wallrun = FALSE;
+				self.ledgegrab_finished = time;
+				self.attack_finished = time;
+				self.char.block_finished = time; // remove any left over block timers
+
+				self.inwater_finished = time + 0.6;
+				self.char.velocity_x = self.char.velocity_x / 4 * (frametime * 100);
+				self.char.velocity_y = self.char.velocity_y / 4 * (frametime * 100);
+				self.char.velocity_z = self.char.velocity_z / 4 * (frametime * 100);
+
+				if (self.playersplash_finished < time)
+				{
+					watersplash_particle();
+					watersplash_particle();
+					watersplash_particle();
+					self.bubble_count = time + 3;
+					sound (self.char, CHAN_AUTO, "misc/h2ohit1.wav", 1, ATTN_NORM);
+					self.playersplash_finished = time + 0.5;
+				}
+			}
+			PlayerWaterPhysics();
+
+			if (self.char.waterlevel < 3) // Only drown on water level 3
+				self.char.dmgtime = time + 10; // 10 second breath holding
+
+			if (self.bubble_count < time) // spawn bubbles
+			{
+				Bubbles(1);
+				self.bubble_count = time + 3;
+			}
+
+			// Drowning
+			if (self.char.dmgtime < time && (!relics & IT_RELIC6) && !self.flags & FL_GODMODE && !self.char.flypain)
+			{
+				if (self.char.takedamage && self.char.invunerability_finished < time)
+				{
+					if (self.char.liquidsound_finished < time)
+					{
+						//PainSound();
+						sound (self.char, CHAN_VOICE, "player/drown.wav", 1, ATTN_NORM);
+						self.char.liquidsound_finished = time + 1;
+					}
+					self.char.health = self.char.health - 1;
+					if (self.char.health < 1)
+						Killed(self.char, world);
+				}
+				self.char.dmgtime = time + 0.5;
+			}
+			self.char.swimming = TRUE;
+		}
+		else
+		{
+			self.char.swimming = FALSE;
+			self.char.speed = 120; // Vigil's default speed is set here...
+		}
+		
 		if (world.model != "maps/village.bsp" || self.safezone || self.char.safezone)
 			ComboMeter(); // display combo count
 		else

@@ -262,7 +262,7 @@ T_Damage
 
 void(entity targ, entity inflictor, entity attacker, float damage, float statusrand) T_Damage =
 {
-	local	entity	oldself;//, old_owner;
+	local	entity	oldself;
 	local	float	save, rs;
 
 	if (attacker.classname == "camera" || inflictor.classname == "camera" || targ.classname == "camera")
@@ -787,13 +787,13 @@ void()	sparks_fade4 = [0, SUB_Remove]
 //
 
 void() player_purge1;
-void() player_prop;
+void(entity e) player_prop;
 void() player_block;
 void() player_blockbrk1;
 void(entity y) monster_pain;
 void(float damg, float dist, float knokback, float rsize, float snd, float flsh, float ignoreair, float unblockable, float up, float statusrand) FireMelee =
 {
-	local entity head, effect, oself;
+	local entity head, effect;
 	local vector dir, h;
 
 	makevectors(self.angles);
@@ -833,10 +833,7 @@ void(float damg, float dist, float knokback, float rsize, float snd, float flsh,
 						head.purge_targ = self;
 						head.owner.purge_toggle = TRUE; // stops camera from moving during purge
 						
-						oself = self;
-						self = head;
-						player_prop(); // spawn fading clone
-						self = oself;
+						player_prop(head); // spawn fading clone
 						
 						// spawn a hit sprite
 						effect = spawn();
@@ -1241,11 +1238,8 @@ void(float damg, float dist, float knokback, float rsize, float snd, float flsh,
 						head.knockback = knokback;
 						if (head.flags & FL_MONSTER) // apply monster physics
 						{
-							oself = self;
-							self = head;
-							monster_pain(oself);
-							self.knockback = 0; // reset
-							self = oself;
+							monster_pain(head);
+							head.knockback = 0; // reset
 
 							head.aircombo_finished = time + 0.5; // Tell monsters he's being air comboed
 							if (!ignoreair && !self.grabbed)
@@ -1259,17 +1253,12 @@ void(float damg, float dist, float knokback, float rsize, float snd, float flsh,
 						// apply player physics
 						else if (head.classname == "player" && head.onground == FALSE)
 						{
-							oself = self;
-							self = head;
-							player_damage_physics(oself);
-							self.knockback = 0; // reset
-							self = oself;
+							player_damage_physics(head);
+							head.knockback = 0; // reset
 						}
 					}
 					if (head.perfectblock < time)
 						sound (self, CHAN_BODY, "player/block.wav", 1, ATTN_NORM);
-					//else
-					//	sound (self, CHAN_BODY, "player/perfblok.wav", 1, ATTN_NONE);
 				}
 			}
 		}

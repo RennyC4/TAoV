@@ -1669,11 +1669,8 @@ void() player_think =
 					self.char.movetype = MOVETYPE_WALK; // Fixes rare instance bug
 					player_yell(0); // yell
 
-					oself = self;
-					self = self.char; // become vigil real fast
-					player_prop(); // spawn fading clone
+					player_prop(self.char); // spawn fading clone
 					sound (self, CHAN_AUTO, "player/grab.wav", 1, ATTN_NORM);
-					self = oself; // revert self
 
 					WriteByte (MSG_BROADCAST, SVC_TEMPENTITY);
 					WriteByte (MSG_BROADCAST, TE_TELEPORT);
@@ -5976,7 +5973,7 @@ void() player_hit5;
 
 void() player_hit1	=[	$pain1,	player_hit1	] 
 {
-	self.movetype = MOVETYPE_STEP;
+	//self.movetype = MOVETYPE_STEP;
 	self.velocity = '0 0 0';
 	if (self.playerhitframe_finished < time)
 		player_move();
@@ -5984,7 +5981,7 @@ void() player_hit1	=[	$pain1,	player_hit1	]
 
 void() player_hit2	=[	$pain2,	player_hit2	] 
 {
-	self.movetype = MOVETYPE_STEP;
+	//self.movetype = MOVETYPE_STEP;
 	self.velocity = '0 0 0';
 	if (self.playerhitframe_finished < time)
 		player_move();
@@ -6081,6 +6078,7 @@ void() player_swim_recover    =[	$djump,	player_swim_recover ]
 	if (self.swimming)
 		self.velocity_z = self.velocity_z / 1.05;
 
+	self.angles_z = 0;
 	self.angles_x = self.angles_x + 1.5;
 	if (self.angles_x >= 0)
 	{
@@ -6311,7 +6309,7 @@ void() player_twist    =[	$twist,	player_twist		]
 	if (!self.swimming)
 	{
 		self.angles_z = self.angles_z - 15; // spin Vigil
-		self.pain_finished = time + 999;
+		self.pain_finished = time + 1;
 	}
 	else
 	{
@@ -8482,13 +8480,13 @@ void() player_purge_prop_think =
 	frameskip(0.01);
 };
 
-void() player_prop =
+void(entity e) player_prop =
 {
 	local entity effect;
 	
 	// spawn
 	effect = spawn();
-	effect.owner = self;
+	effect.owner = e;
 	setorigin(effect, self.origin);
 	setmodel(effect, "progs/plyr.mdl");
 	effect.effects = EF_NODEPTHTEST;
@@ -8526,7 +8524,7 @@ void() player_purge1	=[	$attacka4,	player_purge2	]
 
 void() player_purge2	=[	$attacka4,	player_move	]
 {
-	player_prop();
+	player_prop(self);
 	self.movetype = MOVETYPE_WALK;
 	if (self.perfectguard_buff < time)
 		self.takedamage = DAMAGE_AIM;
