@@ -262,12 +262,12 @@ void() Fire_MermanSpit =
 	missile.velocity = missile.velocity * 300;
 	missile.angles = vectoangles(missile.velocity);
 	missile.angles_y = self.owner.angles_y;
-	
 	missile.touch = MermanSpitTouch;
-
 	missile.think = MermanSpitThink;
-	missile.nextthink = time + 0.1;
-	
+	missile.dimension_hit = 1;
+	missile.dimension_solid = 2;
+	missile.nextthink = time;
+
 	setmodel (missile, "progs/spit.mdl");
 	setsize (missile, '0 0 0', '0 0 0');		
 	setorigin (missile, self.origin + v_up*20 + v_forward*22);
