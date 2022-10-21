@@ -1092,7 +1092,7 @@ void() gold_touch =
 	else
 	{
 		if (other.owner.gold < aprice)
-			self.cnt = other.owner.level * 18 + ceil(random()*9); // normal calc
+			self.cnt = (other.owner.level * 18 + ceil(random()*9) / 2); // normal calc divided by 2
 		else
 			self.cnt = 1 + random()*11; // give cheap change after reaching teleporter price
 	}
