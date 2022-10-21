@@ -16,6 +16,9 @@
 "_minlight_dirt" "1"
 "_lightmap_scale" "8"
 "_phong" "1"
+"_sky" "bluecloud_"
+"_skyaxis" "1 0 0"
+"_skyrotate" "1"
 // brush 0
 {
 ( -3200 8192 8192 ) ( -3200 -8192 8192 ) ( -3200 8192 -8192 ) skyik1 [ 0 -1 0 0 ] [ 0 0 1 0 ] 0 1 1
