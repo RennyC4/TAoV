@@ -8470,7 +8470,7 @@ void() player_dodgef7	    =[	$dodgec7,	player_block		 	]
 //
 void() player_purge_prop_think =
 {
-	if (self.alpha > 0 || self.attack_finished < time)
+	if (self.alpha > 0)
 		self.alpha = self.alpha - 0.01;
 	else
 	{
@@ -8483,19 +8483,18 @@ void() player_purge_prop_think =
 void(entity e) player_prop =
 {
 	local entity effect;
-	
+
 	// spawn
 	effect = spawn();
 	effect.owner = e;
-	setorigin(effect, self.origin);
+	setorigin(effect, e.origin);
 	setmodel(effect, "progs/plyr.mdl");
 	effect.effects = EF_NODEPTHTEST;
 	effect.movetype = MOVETYPE_NOCLIP;
-	effect.frame = self.frame;
+	effect.frame = e.frame;
 	effect.solid = SOLID_NOT;
-	effect.angles = self.angles;
+	effect.angles = e.angles;
 	effect.alpha = 1;
-	effect.attack_finished = time + 0.25;
 	effect.skin = 1;
 	effect.effects = EF_NODEPTHTEST | EF_ADDITIVE | EF_FULLBRIGHT;
 	effect.think = player_purge_prop_think;
