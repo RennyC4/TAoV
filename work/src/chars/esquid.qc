@@ -277,7 +277,7 @@ void() lit_think =
 							head.owner.combo = head.owner.combo + 1; // raise combo counter
 						}
 						head.knockback = 0;
-						sound (self, CHAN_WEAPON, "esquid/attack.wav", 1, ATTN_NORM);
+						sound (self, CHAN_WEAPON, "spells/lightn.wav", 1, ATTN_NORM);
 						self.owner.colormod = '1 1 10';
 					}
 				}
@@ -347,7 +347,6 @@ void() monster_esquid =
 	precache_sound ("esquid/death.wav");
 	precache_sound ("esquid/deflate.wav");
 	precache_sound ("esquid/charge.wav");
-	precache_sound ("esquid/attack.wav");
 
 	self.solid = SOLID_SLIDEBOX;
 	self.movetype = MOVETYPE_STEP;
