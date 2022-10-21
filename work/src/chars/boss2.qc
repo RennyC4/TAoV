@@ -412,7 +412,7 @@ void() boss_pain =
 
 void() boss_die =
 {
-	bosses = bosses | FL_BOSS2; // Defeated Boss 2, record it
+	bosses = bosses | IT_BOSS2; // Defeated Boss 2, record it
 
 	self.solid = SOLID_NOT;
 	self.deadflag = DEAD_DEAD;
@@ -571,7 +571,7 @@ void() boss_rise17	=[	$rise17, boss_idle1 ]  {boss_face();};
 
 void() boss2_awake =
 {
-	if (bosses & FL_BOSS2) // defeated
+	if (bosses & IT_BOSS2) // defeated
 	{
 		remove(self);
 		return;
@@ -590,7 +590,7 @@ void() boss2_awake =
 
 void() boss2_removalcheck
 {
-	if (bosses & FL_BOSS2) // defeated
+	if (bosses & IT_BOSS2) // defeated
 	{
 		remove(self);
 		return;
@@ -635,7 +635,7 @@ void() monster_boss2 =
 	self.health = self.max_health = 1333;
 	self.deadflag = DEAD_NO;
 	self.noblood = TRUE;
-	self.flags = FL_MONSTER | FL_BOSS | FL_BOSS2;
+	self.flags = FL_MONSTER | FL_BOSS | IT_BOSS2;
 
 	self.th_die = boss_die;
 	self.th_stand = boss_idle1;

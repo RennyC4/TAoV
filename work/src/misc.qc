@@ -442,12 +442,12 @@ void() ambience_suffering =
 void() ambience_heartbeat_think =
 {
 	// Boss defeated, heart beat sound perma-removed
-	if (bosses & FL_BOSS1 && world.model == "maps/boss1.bsp")
+	if (bosses & IT_BOSS1 && world.model == "maps/boss1.bsp")
 	{
 		remove(self);
 		return;
 	}
-	if (bosses & FL_BOSS2 && world.model == "maps/boss2.bsp")
+	if (bosses & IT_BOSS2 && world.model == "maps/boss2.bsp")
 	{
 		remove(self);
 		return;

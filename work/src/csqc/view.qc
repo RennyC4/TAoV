@@ -368,7 +368,7 @@ void(vector pos) DrawMPBar =
 	// Current mp
 	local string str = sprintf("%d", mp);
 	local vector textpos = pos + '8 3.5 0';
-	drawstring (textpos + '1 1', str, '7 7', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
+	drawstring (textpos + '0.5 0.5', str, '7 7', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
 	drawstring (textpos, str, '7 7', '1 1 1', 1, DRAWFLAG_NORMAL);
 
 	textpos_x += (stringwidth(str,1)*7) + 1;
@@ -376,7 +376,7 @@ void(vector pos) DrawMPBar =
 	
 	// Max mp
 	local string str = sprintf(" / %d", maxmp);
-	drawstring (textpos + '1 1', str, '7 7', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
+	drawstring (textpos + '0.5 0.5', str, '7 7', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
 	drawstring (textpos, str, '7 7', '1 1 1', 1, DRAWFLAG_NORMAL);
 }
 

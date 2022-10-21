@@ -164,7 +164,9 @@ void() archer_arrow =
 	missile.movetype = MOVETYPE_TOSS;
 	missile.solid = SOLID_TRIGGER;
 	missile.hitcontentsmaski = CONTENTBIT_SOLID|0x00000002i|CONTENTBIT_BODY; // ignore clip
-	
+	missile.dimension_hit = 1;
+	missile.dimension_solid = 2;
+
 	makevectors (self.angles);
 	missile.velocity = normalize(self.enemy.origin - self.origin);
 	missile.velocity = missile.velocity * 600;

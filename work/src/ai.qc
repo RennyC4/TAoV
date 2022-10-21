@@ -970,6 +970,8 @@ void() check_for_ledge =
 
 	if (self.origin_z - 5 < self.enemy.origin_z)
 		return;
+	if (self.enemy.swimming)
+		return;
 
 	makevectors(self.angles);
 

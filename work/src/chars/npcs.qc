@@ -489,9 +489,6 @@ void() priest_chat =
 // Mode 1, chatting
 void() guard_chat =
 {
-	local float aprice;
-	local string h;
-	
 	if (!self.enemy)
 		return;
 	
@@ -524,6 +521,22 @@ void() guard_chat =
 				centerprint (self.enemy.owner, "/POur kingdom has been known as a pioneer of magic spell books and ability enhancing relics, mayhaps you should seek them out?");
 			else if (self.cnt == 5)
 				centerprint (self.enemy.owner, "/PSome good news in cruel times as Prince Ithael has been born from our neighboring kingdom.");
+			else if (self.cnt == 6)
+				centerprint (self.enemy.owner, "/PAs you can tell our kingdom has suffered greatly in such a short time, some areas have become completely unrecognizable as if changed by wicked magic");
+			else if (self.cnt == 7)
+				centerprint (self.enemy.owner, "/PI hear the subterranean bowels of Kharlia have hidden secrets, but be wary of danger!");
+			else if (self.cnt == 8)
+				centerprint (self.enemy.owner, "/PA resounding crash was heard throughout the land, hast something happened? I feel a sense of joy ...");
+			else if (self.cnt == 9)
+				centerprint (self.enemy.owner, "/PWicked howls of wolves have been heard recently, perhaps investigating will yeild rewards?");
+			else if (self.cnt == 10)
+				centerprint (self.enemy.owner, "/PA Dragon, here you say? Odd, they've only been seen out east across the sea...");
+			else if (self.cnt == 11)
+				centerprint (self.enemy.owner, "/PNot a single soul has been brave enough to investigate the Aqueducts, perhaps a man of your skill should");
+			else if (self.cnt == 12)
+				centerprint (self.enemy.owner, "/PBe wary of thick brush, there must be a way to slice through such thickness");
+			else if (self.cnt == 13)
+				centerprint (self.enemy.owner, "/PRumours are spreading of our great cathedral being defiled, it's sanctity fouled!");
 
 			if (self.cnt >= 2)
 			{
@@ -578,15 +591,43 @@ void() guard_chat =
 			if (self.selection == FALSE)
 			{
 				if (self.cnt == 0)
-				{ // self.cnt > 2 // Rumors enabled.
-						if (random() < 0.25)
-							self.cnt = 2;
-						else if (random() < 0.5)
-							self.cnt = 3;
-						else if (random() < 0.75)
-							self.cnt = 4;
-						else if (random() < 1)
-							self.cnt = 5;
+				{ 	// self.cnt > 1 // Rumors enabled
+					local float ranrum;
+					if (!bosses)
+						ranrum = random();
+					else
+					{
+						if (bosses & IT_BOSS1)
+							ranrum = random()*2;
+						if (bosses & IT_BOSS2)
+							ranrum = random()*3; // reroll
+					}
+
+					if (ranrum < 0.25)
+						self.cnt = 2;
+					else if (ranrum < 0.5)
+						self.cnt = 3;
+					else if (ranrum < 0.75)
+						self.cnt = 4;
+					else if (ranrum < 1)
+						self.cnt = 5;
+					else if (ranrum < 1.25) // After SGK defeated rumors
+						self.cnt = 6;
+					else if (ranrum < 1.5)
+						self.cnt = 7;
+					else if (ranrum < 1.75)
+						self.cnt = 8;
+					else if (ranrum < 2)
+						self.cnt = 9;
+					else if (ranrum < 2.25) // After Eternal Dragon
+						self.cnt = 10;
+					else if (ranrum < 2.5)
+						self.cnt = 11;
+					else if (ranrum < 2.75)
+						self.cnt = 12;
+					else if (ranrum < 3)
+						self.cnt = 13;
+		
 					sound (self, CHAN_AUTO, "misc/menu2.wav", 1, ATTN_NORM);
 				}
 				if (self.cnt == 1) // User leaves conversation screen

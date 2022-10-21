@@ -6274,6 +6274,8 @@ void() twist_testxcheck =
 
 void() player_twist    =[	$twist,	player_twist		] 
 {
+	self.pain_finished = time + 3;
+
 	//
 	// Check for walls for Vigil to smack into
 	//
@@ -6309,11 +6311,9 @@ void() player_twist    =[	$twist,	player_twist		]
 	if (!self.swimming)
 	{
 		self.angles_z = self.angles_z - 15; // spin Vigil
-		self.pain_finished = time + 1;
 	}
 	else
 	{
-		self.pain_finished = time + 1;
 		self.velocity_z = self.velocity_z / 1.05;
 		if (self.inwater_pain >= 150)
 		{

@@ -198,6 +198,8 @@ void(float hight) Darkball =
 	missile.movetype = MOVETYPE_FLYMISSILE;
 	missile.solid = SOLID_SLIDEBOX;
 	missile.classname = "darkball";
+	missile.dimension_hit = 1;
+	missile.dimension_solid = 2;
 		
 	// set missile speed
 	makevectors (self.angles);

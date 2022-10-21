@@ -866,8 +866,8 @@ float IT_SPELL4 = 8; // twister
 
 // Bosses
 float bosses;
-float FL_BOSS1 = 1024; // Weird results with anything lower
-float FL_BOSS2 = 2048;
+float IT_BOSS1 = 1024; // Weird results with anything lower
+float IT_BOSS2 = 2048;
 float IT_BOSS3 = 4096;
 float IT_BOSS4 = 8192;
 
