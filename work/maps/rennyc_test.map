@@ -378,4 +378,11 @@
 {
 "classname" "monster_hydra"
 "origin" "144 -32 -48"
+"awareness" "4"
+}
+// entity 17
+{
+"classname" "monster_hell_knight"
+"origin" "-176 80 96"
+"awareness" "4"
 }

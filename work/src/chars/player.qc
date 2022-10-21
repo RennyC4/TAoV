@@ -6276,8 +6276,6 @@ void() twist_testxcheck =
 
 void() player_twist    =[	$twist,	player_twist		] 
 {
-	self.pain_finished = time + 999;
-
 	//
 	// Check for walls for Vigil to smack into
 	//
@@ -6302,19 +6300,6 @@ void() player_twist    =[	$twist,	player_twist		]
 		return;
 	}
 
-	// Debugging purposes
-	/*
-	WriteByte (MSG_BROADCAST, SVC_TEMPENTITY);
-	WriteByte (MSG_BROADCAST, TE_LIGHTNING3);
-	WriteEntity (MSG_BROADCAST, trace_ent);
-	WriteCoord (MSG_BROADCAST, trace_endpos_x);
-	WriteCoord (MSG_BROADCAST, trace_endpos_y);
-	WriteCoord (MSG_BROADCAST, trace_endpos_z);
-	WriteCoord (MSG_BROADCAST, self.origin_x);
-	WriteCoord (MSG_BROADCAST, self.origin_y);
-	WriteCoord (MSG_BROADCAST, self.origin_z);
-	*/
-
 	if (self.velocity_z > 0)
 		self.angles_x = 25;
 	else
@@ -6324,18 +6309,19 @@ void() player_twist    =[	$twist,	player_twist		]
 	}
 
 	if (!self.swimming)
+	{
 		self.angles_z = self.angles_z - 15; // spin Vigil
+		self.pain_finished = time + 999;
+	}
 	else
 	{
+		self.pain_finished = time + 1;
 		self.velocity_z = self.velocity_z / 1.05;
 		if (self.inwater_pain >= 150)
 		{
-			self.angles_x = 0;
-			self.inwater_pain = 0;
-			player_move();
+			player_swim_recover();
 			return;
 		}
-
 		self.inwater_pain = self.inwater_pain + 1;
 		self.angles_z = self.angles_z - 8; // spin Vigil underwater slower
 	}
