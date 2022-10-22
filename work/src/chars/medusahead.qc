@@ -125,7 +125,7 @@ void() medusa_die =
 	effect.think = firesprite_think;
 	effect.nextthink = time;
 	effect.solid = SOLID_NOT;
-	sound (self, CHAN_VOICE, "medusa/headdie.wav", 0.5, ATTN_NORM);
+	sound (self, CHAN_VOICE, "medusa/headdie.wav", 1, ATTN_NORM);
 	sound (self, CHAN_BODY, "spells/fhit.wav", 1, ATTN_NORM);
 	ThrowGib("progs/gib3.mdl");
 	spawn_embers();

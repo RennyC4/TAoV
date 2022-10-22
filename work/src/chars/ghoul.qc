@@ -15,7 +15,14 @@ $frame rise1 rise2 rise3 rise4 rise5 rise6 rise7 rise8 rise9 rise10 rise11 rise1
 $frame hit1 hit2 hit3 hit4 hit5 hit6 hit7 hit8 hit9 hit10 hit11 hit12 hit13 hit14 hit15 hit16 hit17 hit18 hit19
 $frame hit20 hit21 hit22 hit23 hit24 hit25 hit26 hit27 hit28 hit29 hit30 hit31 hit32 hit33 hit34 hit35
 
-void() ghoul_stand1	=[	$stand1,	ghoul_stand2	] {ai_stand();monster_removeslide();};
+void() ghoul_grabbed1;
+void() ghoul_stand1	=[	$stand1,	ghoul_stand2	] 
+{
+	if (!self.th_grab) // Disallow grabbing while playing wakeup animation
+		self.th_grab = ghoul_grabbed1;
+	ai_stand();
+	monster_removeslide();
+};
 void() ghoul_stand2	=[	$stand2,	ghoul_stand3	] {ai_stand();monster_removeslide();};
 void() ghoul_stand3	=[	$stand3,	ghoul_stand4	] {ai_stand();monster_removeslide();};
 void() ghoul_stand4	=[	$stand4,	ghoul_stand5	] {ai_stand();monster_removeslide();};
@@ -259,7 +266,6 @@ void() monster_ghoul =
 	self.th_die = ghoul_die;
 	self.th_melee = ghoul_melee;
 	self.th_missile = ghoul_melee;
-	self.th_grab = ghoul_grabbed1;
 
 	enemy_start();
 };
