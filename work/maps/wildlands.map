@@ -9324,6 +9324,7 @@
 "classname" "monster_knight"
 "origin" "3184 -576 -224"
 "_phong" "1"
+"maxgold" "43"
 }
 // entity 66
 {
@@ -9903,6 +9904,7 @@
 "classname" "monster_knight"
 "origin" "3108 -524 -232"
 "_phong" "1"
+"maxgold" "42"
 }
 // entity 143
 {

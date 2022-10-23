@@ -897,7 +897,7 @@ void() Shadows =
 	setorigin(shadows, self.char.origin);
 
 	shadows.think = shadows_think;
-	shadows.nextthink = time + 0.04;
+	shadows.nextthink = time;
 	self.nextshadow_time = time + 0.1;
 };
 
@@ -926,7 +926,7 @@ void() SoftShadows = // same as red shadows, but more transparent and uses Vigil
 	shadows.colormap = self.char.owner.colormap;
 
 	shadows.think = shadows_think;
-	shadows.nextthink = time + 0.04;
+	shadows.nextthink = time;
 	self.nextsoftshadow_time = time + 0.1;
 };
 
@@ -6346,7 +6346,7 @@ void() player_twist    =[	$twist,	player_twist		]
 		setorigin(testx, self.origin);
 	}
 
-	if (self.onground == TRUE)
+	if (self.onground && !self.swimming)
 	{
 		self.pain_finished = time + 999;
 		self.velocity = '0 0 0';

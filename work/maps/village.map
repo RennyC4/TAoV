@@ -611,7 +611,7 @@
 ( 1133 1571 -3872 ) ( 1133 982 -3872 ) ( 1120 982 -3888 ) black [ 0 1 0 0.000366211 ] [ 0 0 -1 -0.000244141 ] 0 1 1
 ( 1198 1083 -3776 ) ( 1198 1083 -4008 ) ( 1122 1083 -4008 ) black [ 1 0 0 0.000366211 ] [ 0 0 -1 -8 ] 0 1 1
 ( 1200 1086 -4016 ) ( 1120 1086 -4016 ) ( 1120 1021 -4016 ) black [ 1 0 0 -0.00012207 ] [ 0 -1 0 -0.00012207 ] 0 1 1
-( 1120 1086 -4016 ) ( 1200 1086 -4016 ) ( 1200 1086 -3770 ) black [ 1 0 0 0.000366211 ] [ 0 0 -1 -7.99976 ] 0 1 1
+( 1120 1086 -4016 ) ( 1200 1086 -4016 ) ( 1200 1086 -3770 ) cix088 [ 1 0 0 0.000366211 ] [ 0 0 -1 -7.99976 ] 0 1 1
 ( 1200 982 -3888 ) ( 1187 982 -3872 ) ( 1187 1571 -3872 ) black [ 0 1 0 0.000366211 ] [ 0 0 -1 0 ] 0 1 1
 ( 1200 1086 -3770 ) ( 1200 1086 -4016 ) ( 1200 1021 -4016 ) black [ 0 1 0 0.000366211 ] [ 0 0 -1 -7.99976 ] 0 1 1
 }
@@ -14529,4 +14529,126 @@
 {
 "classname" "pinetree_dead"
 "origin" "1405 659 -3840"
+}
+// entity 482
+{
+"classname" "candle2"
+"origin" "1252 1102 -3976"
+"_phong" "1"
+}
+// entity 483
+{
+"classname" "candle2"
+"origin" "1220 1116 -3976"
+"_phong" "1"
+}
+// entity 484
+{
+"classname" "candle2"
+"origin" "1232 1158 -3984"
+"_phong" "1"
+}
+// entity 485
+{
+"classname" "candle2"
+"origin" "1116 1164 -3984"
+"_phong" "1"
+}
+// entity 486
+{
+"classname" "candle2"
+"origin" "1084 1164 -3984"
+"_phong" "1"
+}
+// entity 487
+{
+"classname" "candle2"
+"origin" "1092 1132 -3976"
+"_phong" "1"
+}
+// entity 488
+{
+"classname" "candle2"
+"origin" "1068 1116 -3976"
+"_phong" "1"
+}
+// entity 489
+{
+"classname" "candle2"
+"origin" "1052 1124 -3976"
+"_phong" "1"
+}
+// entity 490
+{
+"classname" "candle2"
+"origin" "1316 1132 -3976"
+"_phong" "1"
+}
+// entity 491
+{
+"classname" "candle2"
+"origin" "1348 1156 -3984"
+"_phong" "1"
+}
+// entity 492
+{
+"classname" "candle2"
+"origin" "1292 1108 -3976"
+"_phong" "1"
+}
+// entity 493
+{
+"classname" "candle2"
+"origin" "1292 1156 -3984"
+"_phong" "1"
+}
+// entity 494
+{
+"classname" "light"
+"origin" "1176 1248 -4000"
+"light" "100"
+"_color" "255 128 0"
+"wait" "4"
+"delay" "2"
+"style" "6"
+"_phong" "1"
+}
+// entity 495
+{
+"classname" "light"
+"origin" "1296 1128 -3976"
+"light" "100"
+"_color" "255 128 0"
+"wait" "4"
+"delay" "2"
+"style" "6"
+"_phong" "1"
+}
+// entity 496
+{
+"classname" "light"
+"origin" "1240 1128 -3976"
+"light" "100"
+"_color" "255 128 0"
+"wait" "4"
+"delay" "2"
+"style" "6"
+"_phong" "1"
+}
+// entity 497
+{
+"classname" "light"
+"origin" "1096 1144 -3984"
+"light" "100"
+"_color" "255 128 0"
+"wait" "4"
+"delay" "2"
+"style" "6"
+"_phong" "1"
+}
+// entity 498
+{
+"classname" "candle2"
+"origin" "964 1172 -3984"
+"_phong" "1"
 }

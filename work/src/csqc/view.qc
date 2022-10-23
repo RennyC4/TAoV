@@ -100,7 +100,7 @@ void(vector pos) DrawMonsterStats =
 		drawsubpic(barpos, [164*monfrac, 16], "gfx/hpbar/new/monbar", '0 0', [monfrac, 1], '1 1 1', 1, DRAWFLAG_NORMAL); 	//hpbar
 		drawsubpic(barpos, '164 16', "gfx/hpbar/new/hpbar_foreground", '0 0', '1 1', '1 1 1', 1, DRAWFLAG_NORMAL); 	//foreground
 
-		// Draw Text
+		// Draw text
 		drawstring (pos+'9.5 4.5', display, '8 8', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
 		drawstring (pos+'10.5 5.5', display, '8 8', '0 0 0', 1, DRAWFLAG_NORMAL); // shadow
 		drawstring (pos+'10 5', display, '8 8', '1 0 0', 1, DRAWFLAG_NORMAL);
@@ -649,7 +649,7 @@ void(vector pos) DrawGoldHUD =
 	if (cvar("deathmatch") > 0)
 		return;
 
-	if (!Draw_Gold_Once) // Call this one time so we're not spawning infinite gold entities
+	if (!Draw_Gold_Once)
 	{
 		Draw_Gold_Once = 1;
 		
@@ -766,7 +766,7 @@ void() AnimateFlask =
 float Draw_Potion_Once;
 void(vector pos) Draw_Health_Potion =
 {
-    if (!Draw_Potion_Once) // Call this one time so we're not spawning infinite potion entities
+    if (!Draw_Potion_Once)
     {
         Draw_Potion_Once = 1;
  
@@ -926,7 +926,6 @@ void(vector pos) Draw_Vigil_Head =
     }
 	AnimateHead(); // entity head
 	AnimateHead_Shadow(); // entity head2
-	//entdraw(head2, pos + '0.3 0.3','37 37', -76); // Shadow
 	entdraw(head2, pos,'36 36', -76);
 	entdraw(head, pos,'36 36', -76);
 };
@@ -1221,9 +1220,12 @@ float loaded_settings;
 .float mode;
 float IT_RELIC7 = 64; // cube of knowledge
 float blindness_fade;
+float framecount;
 
 void(float width, float height, float menushown) CSQC_UpdateView =
 {
+	framecount = framecount + 1;
+
 	clearscene();												//wipe entity lists. reset view properties to their defaults.
 	Camera_Smooth();
 	addentities((intermission?0:MASK_VIEWMODEL)|MASK_ENGINE);	//add various entities to the scene's lists.
@@ -1237,8 +1239,7 @@ void(float width, float height, float menushown) CSQC_UpdateView =
 	if (pausestate > 0)
 	{
 		pause_frame = pause_frame + 1;
-		//local vector pos = [(width - stringwidth("", TRUE, '321 28.5 0'))/3.5, (height - 50)];
-		
+
 		local vector pos = [(width)/3.25, (height - 50)];
 		drawpic (pos + '1 1', "progs/gamepause.png", '321 28.5', '0 0 0', .1-(sin(cltime*3.5)*1), DRAWFLAG_NORMAL); // shadow
 		drawpic (pos, "progs/gamepause.png", '321 28.5', '1 1 1', .1-(sin(cltime*3.5)*1), DRAWFLAG_NORMAL);
@@ -1303,7 +1304,7 @@ void(float width, float height, float menushown) CSQC_UpdateView =
 		local entity z = find(world, classname, "DrawGoldEntity");
 		while (z)
 		{
-			if (z != world)
+			if (z)
 			{
 				h = ftos(z.cnt);
 				twodcoord = project(z.origin);
@@ -1322,7 +1323,7 @@ void(float width, float height, float menushown) CSQC_UpdateView =
 		local entity a = find(world, classname, "DrawHealthEntity");
 		while (a)
 		{
-			if (a != world)
+			if (a)
 			{	
 				h = ftos(a.cnt);
 				twodcoord2 = project(a.origin);
@@ -1351,7 +1352,7 @@ void(float width, float height, float menushown) CSQC_UpdateView =
 		local entity b = find(world, classname, "DrawManaEntity");
 		while (b)
 		{
-			if (b != world)
+			if (b)
 			{	
 				h = ftos(b.cnt);
 				twodcoord2 = project(b.origin);
