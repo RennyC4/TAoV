@@ -11,9 +11,6 @@
 void() player_miniswordspin1;
 void() CheckImpulseButtons =
 {
-	if (self.char.health <= 0 || self.char.classname != "player")
-		return;
-
 	//
 	// Magic Menu
 	//

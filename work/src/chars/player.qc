@@ -863,71 +863,70 @@ void() manashadows_think =
 void() shadows_think =
 {
 	if (self.alpha > 0)
-		self.alpha = self.alpha - 0.05;
+		self.alpha = self.alpha - 0.01;
 	else
 	{
 		remove(self);
 		return;
 	}
-	frameskip(0.04);
+	frameskip(0.01);
 };
 
 // called from playerprethink
 .float nextshadow_time;
-void() Shadows =
+void(entity own) Shadows =
 {
-	if (self.nextshadow_time > time)
-		return;
+	if (self.nextshadow_time < time)
+	{
+		local entity shadows;
 
-	local entity shadows;
+		shadows = spawn();
+		shadows.owner = own;
+		shadows.classname = "shadows";
+		shadows.movetype = MOVETYPE_NOCLIP;
+		shadows.solid = SOLID_NOT;
+		shadows.skin = 1; // shadow skin
+		shadows.alpha = 1;
+		shadows.drawonlytoclient = self; // reduce network traffic
+		shadows.effects = EF_ADDITIVE | EF_FULLBRIGHT;
+		setmodel (shadows, "progs/plyr.mdl");
 
-	shadows = spawn();
-	shadows.owner = self.char;
-	shadows.classname = "shadows";
-	shadows.movetype  = MOVETYPE_NOCLIP;
-	shadows.solid     = SOLID_NOT;
-	shadows.skin = 1; // shadow skin
-	shadows.alpha = 0.65;
-	shadows.drawonlytoclient = self; // reduce network traffic
-	shadows.effects   = EF_ADDITIVE | EF_FULLBRIGHT;
-	setmodel (shadows, "progs/plyr.mdl");
+		shadows.frame = shadows.owner.frame;
+		shadows.angles = shadows.owner.angles;
+		setorigin(shadows, shadows.owner.origin);
 
-	shadows.frame = self.char.frame;
-	shadows.angles = self.char.angles;
-	setorigin(shadows, self.char.origin);
-
-	shadows.think = shadows_think;
-	shadows.nextthink = time;
-	self.nextshadow_time = time + 0.1;
+		shadows.think = shadows_think;
+		shadows.nextthink = time;
+		self.nextshadow_time = time + 0.1;
+	}
 };
 
 .float nextsoftshadow_time;
-void() SoftShadows = // same as red shadows, but more transparent and uses Vigil's skin
+void(entity own) SoftShadows = // same as red shadows, but more transparent and uses Vigil's skin
 {
-	if (self.nextsoftshadow_time > time)
-		return;
+	if (self.nextsoftshadow_time < time)
+	{
+		local entity shadows;
 
-	local entity shadows;
+		shadows = spawn();
+		shadows.owner = own;
+		shadows.classname = "shadows";
+		shadows.movetype = MOVETYPE_NOCLIP;
+		shadows.solid = SOLID_NOT;
+		shadows.skin = 0; // soft shadow skin
+		shadows.alpha = 0.5;
+		shadows.drawonlytoclient = self; // reduce network traffic
+		shadows.effects = EF_ADDITIVE | EF_FULLBRIGHT;
+		setmodel (shadows, "progs/plyr.mdl");
 
-	shadows = spawn();
-	shadows.owner = self.char;
-	shadows.classname = "shadows";
-	shadows.movetype  = MOVETYPE_NOCLIP;
-	shadows.solid     = SOLID_NOT;
-	shadows.effects   = EF_ADDITIVE | EF_FULLBRIGHT;
-	shadows.alpha = 0.35;
-	shadows.drawonlytoclient = self; // reduce network traffic
-	shadows.skin = self.owner.skin;
-	setmodel (shadows, "progs/plyr.mdl");
+		shadows.frame = shadows.owner.frame;
+		shadows.angles = shadows.owner.angles;
+		setorigin(shadows, shadows.owner.origin);
 
-	shadows.frame = self.char.frame;
-	shadows.angles = self.char.angles;
-	setorigin(shadows, self.char.origin);
-	shadows.colormap = self.char.owner.colormap;
-
-	shadows.think = shadows_think;
-	shadows.nextthink = time;
-	self.nextsoftshadow_time = time + 0.1;
+		shadows.think = shadows_think;
+		shadows.nextthink = time;
+		self.nextsoftshadow_time = time + 0.1;
+	}
 };
 
 void() SwordShadowsThink =

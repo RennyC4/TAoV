@@ -640,12 +640,12 @@ void(float num_bubbles) Bubbles =
 // END
 //
 
-void() Shadows;
+void(entity own) Shadows;
 void() manashadows_think;
 void() SwordShadows;
 void() StatusEffects;
 void() HealthFlask;
-void() SoftShadows;
+void(entity own) SoftShadows;
 void() SpeedLine;
 void() PlayerWaterPhysics;
 .float screenflash_mode;
@@ -743,7 +743,17 @@ void() PlayerPreThink =
 
 	if (self.char)
 	{
-		CheckImpulseButtons();
+		if (self.shadow_time > time)
+			Shadows(self.char);
+		if (self.softshadow_time > time)
+			SoftShadows(self.char);
+		if (self.swordshadow_time > time)
+			SwordShadows();
+		if (self.speedline_time > time)
+			SpeedLine();
+
+		if (self.char.classname == "player" && self.char.health > 0)
+			CheckImpulseButtons();
 		if (self.impulse != 0)
 			self.impulse = 0;
 
@@ -980,14 +990,6 @@ void() PlayerPreThink =
 			if (self.char.inair > 84 && self.char.velocity_z < -549 && (self.char.aircombo_count != 5 && self.char.aircombo_count != 6))
 				self.char.bigfall = TRUE;
 
-			if (self.shadow_time > time)
-				Shadows();
-			if (self.softshadow_time > time)
-				SoftShadows();
-			if (self.swordshadow_time > time)
-				SwordShadows();
-			if (self.speedline_time > time)
-				SpeedLine();
 			if (self.displayname_finished < time && self.displayname != "")
 				self.displayname = "";
 			if (self.hflask_drink_finished > time)
@@ -1001,7 +1003,6 @@ void() PlayerPreThink =
 
 			if (self.forcewalk_finished < time && (self.status_blind_finished > time || self.status_poison_finished > time || self.status_broken_finished > time))
 				StatusEffects();
-
 		}
 
 		//
