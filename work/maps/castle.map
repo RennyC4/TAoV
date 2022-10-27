@@ -16,7 +16,7 @@
 "_dirtmode" "0"
 "_dirtgain" "1"
 "_dirtscale" "1"
-"_lightmap_scale" "8"
+"_lightmap_scale" "16"
 "light" "33"
 "_minlight_dirt" "1"
 "_phong" "1"

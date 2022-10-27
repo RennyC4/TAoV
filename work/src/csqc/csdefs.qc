@@ -2193,6 +2193,8 @@ const float DRAWFLAG_2XMODULATE = 3;
 const float DRAWFLAG_SCREEN = 4;
 const float DRAWFLAG_MIPMAP = 0x100; // only for R_BeginPolygon
 
+float framecount;
+
 #define STAT_GOLD 32
 #define STAT_SWORD 33
 #define STAT_ARMOR2 34
