@@ -59,7 +59,7 @@ void()	merman_swim	=[	$swim1,	merman_swim	]
 	self.walkframe = self.walkframe + 1;
 
 	if (self.walkframe == 1)
-		sound (self, CHAN_BODY, "hydra/swim.wav", 1, ATTN_NORM);
+		sound (self, CHAN_BODY, "misc/swim.wav", 1, ATTN_NORM);
 
 	if (self.movetype != MOVETYPE_FLY)
 		self.movetype = MOVETYPE_FLY;
@@ -459,7 +459,6 @@ void() monster_merman =
 	}
 	precache_model ("progs/spit.mdl");
 	precache_model ("progs/merman.mdl");
-	precache_sound ("hydra/swim.wav");
 	precache_sound ("merman/die.wav");
 	precache_sound ("merman/pain.wav");
 	precache_sound ("merman/spit.wav");

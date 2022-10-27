@@ -2725,7 +2725,7 @@ void() player_move = [0, player_move]
 				if (self.walkframe > 7)
 					self.walkframe = 0;
 				if (self.walkframe == 0)
-					sound (self, CHAN_BODY, "hydra/swim.wav", 1, ATTN_NORM);
+					sound (self, CHAN_BODY, "misc/swim.wav", 1, ATTN_NORM);
 				self.frame = $swim1 + self.walkframe;
 				frameskip(0.2);
 			}

@@ -46,7 +46,7 @@ void()	hydra_move	=[	$hswim1,	hydra_move	]
 	if (self.walkframe >= 20)
 		self.walkframe = 0;
 	if (self.walkframe == 1)
-		sound (self, CHAN_BODY, "hydra/swim.wav", 1, ATTN_NORM);
+		sound (self, CHAN_BODY, "misc/swim.wav", 1, ATTN_NORM);
 
 	self.frame = $hswim1 + self.walkframe;
 	self.walkframe = self.walkframe + 1;
@@ -162,7 +162,6 @@ void() monster_hydra =
 	precache_sound ("hydra/die.wav");
 	precache_sound ("hydra/pain.wav");
 	precache_sound ("hydra/spit.wav");
-	precache_sound ("hydra/swim.wav");
 	precache_sound ("hydra/attack.wav");
 	
 	precache_model ("progs/hydra.mdl");

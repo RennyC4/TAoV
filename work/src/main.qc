@@ -204,7 +204,7 @@ void() worldspawn =
 		precache_sound ("misc/null.wav");
 		precache_sound ("orb/land.wav");
 		precache_sound ("orb/move.wav");
-		precache_sound ("hydra/swim.wav");
+		precache_sound ("misc/swim.wav");
 		precache_sound ("weapons/lhit.wav");
 		precache_sound ("player/drown.wav");
 		precache_sound ("player/camh2o.wav");

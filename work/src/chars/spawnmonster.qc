@@ -916,7 +916,6 @@ void() spawn_monster_use =
 		precache_sound ("hydra/die.wav");
 		precache_sound ("hydra/pain.wav");
 		precache_sound ("hydra/spit.wav");
-		precache_sound ("hydra/swim.wav");
 		precache_sound ("hydra/attack.wav");
 		
 		precache_model ("progs/hydra.mdl");
@@ -989,7 +988,6 @@ void() spawn_monster_use =
 	{
 		precache_model ("progs/spit.mdl");
 		precache_model ("progs/merman.mdl");
-		precache_sound ("hydra/swim.wav");
 		precache_sound ("merman/die.wav");
 		precache_sound ("merman/pain.wav");
 		precache_sound ("merman/spit.wav");
