@@ -4133,7 +4133,10 @@ void() runattack_forward = // push player forward during animation
 	makevectors(self.angles);
 
 	if (self.enemy) // enemy matches vigils speed for easier full hits
+	{
+		self.enemy.velocity = '0 0 0';
 		self.enemy.velocity_y = self.velocity_y;
+	}
 
 	self.movetype = MOVETYPE_WALK;
 	if (self.onground == TRUE)
@@ -4167,6 +4170,8 @@ void() runattack_forward = // push player forward during animation
 	}
 	self.velocity_time = time + 0.2;
 	self.runatk_speed = self.runatk_speed + 70;
+	if (self.runatk_speed > 470) // Cap to disallow backwards velocity vs direction
+		self.runatk_speed = 470;	
 	self.owner.speedline_time = time + 0.1;
 	model_tilt();
 
