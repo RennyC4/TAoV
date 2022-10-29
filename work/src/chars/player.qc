@@ -1635,7 +1635,7 @@ void() player_think =
 	// In-Air Izuna Drop
 	//
 
-	if (self.char.inair > 16 && !self.char.onground && !self.char.izunatarg && !self.char.enemy && self.char.frame != $izuna1 && self.char.pain_finished < time && game_progress & IT_PROGRESS6 && ((deathmatch && self.char.enemy.health > 0) || !deathmatch))
+	if (self.char.inair > 16 && !self.char.onground && !self.char.izunatarg && self.char.enemy && self.char.frame != $izuna1 && self.char.pain_finished < time && game_progress & IT_PROGRESS6 && ((deathmatch && self.char.enemy.health > 0) || !deathmatch))
 	{
 			local float r = range(self.char, self.char.enemy);
 			local float cg = checkground(self.char.enemy);
