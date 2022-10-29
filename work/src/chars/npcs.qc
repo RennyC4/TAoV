@@ -873,7 +873,7 @@ void() wizard_chat =
 			{
 				if (!shrine_progress & IT_SHRINE1)
 				{
-					centerprint (self.enemy.owner, "/PHmph! Unwise to bother a wizard in meditation Knightja, go seek our unresting Kings soul and perhaps I'll bother myself in helping you...\n\n===========================\n\nç ^bLeave^b");
+					centerprint (self.enemy.owner, "/PHmph! Unwise to bother a Master Wizard in meditation ''Knightja'', go seek our unresting Kings soul and perhaps I'll bother myself in helping you...\n\n===========================\n\nç ^bLeave^b");
 					self.enemy.owner.display_price = 0;
 				}
 				else

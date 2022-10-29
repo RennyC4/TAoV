@@ -1600,7 +1600,7 @@ void() player_think =
 	&& !self.ledgegrab && self.wallgrab == FALSE && self.char.deadflag != DEAD_DEAD && self.char.movetype != MOVETYPE_FLY
 	&& self.wallrun == FALSE && self.forcewalk_finished < time && self.char.fly_time < time && self.char.guardbreak_finished < time
 	&& self.char.dodge_finished < time && !self.char.swimming && self.char.health > 0 && self.nospinatk_finished < time &&
-	self.char.lowceil == FALSE && self.trigger_spincut_finished < time && self.char.izunatarg == world)
+	self.char.lowceil == FALSE && self.trigger_spincut_finished < time && !self.char.izunatarg)
 	{
 		if (!self.char.flypain)
 		{
@@ -1635,7 +1635,7 @@ void() player_think =
 	// In-Air Izuna Drop
 	//
 
-	if (self.char.inair > 16 && !self.char.onground && self.char.izunatarg == world && self.char.enemy != world && self.char.frame != $izuna1 && self.char.pain_finished < time && game_progress & IT_PROGRESS6 && ((deathmatch && self.char.enemy.health > 0) || !deathmatch))
+	if (self.char.inair > 16 && !self.char.onground && !self.char.izunatarg && !self.char.enemy && self.char.frame != $izuna1 && self.char.pain_finished < time && game_progress & IT_PROGRESS6 && ((deathmatch && self.char.enemy.health > 0) || !deathmatch))
 	{
 			local float r = range(self.char, self.char.enemy);
 			local float cg = checkground(self.char.enemy);
@@ -3284,7 +3284,7 @@ void() player_fire =
 		else // grab attacks here
 		{
 			// Grab - izuna drop
-			if (self.moveprog1 > 0 && self.moveprog2 > 1 && game_progress & IT_PROGRESS6)
+			if (self.moveprog1 > 0 && self.moveprog2 > 1)// && game_progress & IT_PROGRESS6)
 			{
 				self.char.izunatarg = self.enemy; // record who gets izuna'd
 				self.enemy.izunatarg = self.char; // record on victim
