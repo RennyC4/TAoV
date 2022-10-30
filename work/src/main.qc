@@ -553,7 +553,7 @@ void() StartFrame =
 			if (contents >= CONTENT_LAVA && contents <= CONTENT_WATER) v.waterlevel = 1;
 
 			// get the medium water depth (waterlevel 2)
-			point_z = point_z + v.maxs_z / 2;
+			point_z = point_z + (self.mins_z + self.maxs_z) / 2;
 			contents = pointcontents (point);
 
 			if (contents >= CONTENT_LAVA && contents <= CONTENT_WATER) v.waterlevel = 2;

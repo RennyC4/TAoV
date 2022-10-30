@@ -195,6 +195,7 @@ void() waterdrop_ripple_think =
 	}
 	if (self.alpha > 0)
 		self.alpha = self.alpha - 0.0031;
+	self.angles_y = self.angles_y + 5;
 	frameskip(0.01);
 };
 
@@ -219,6 +220,7 @@ void() waterdrop_ripple_vfx =
 	ripple.alpha = 1;
 	ripple.effects = EF_ADDITIVE;
 	ripple.colormod = '1 1 1';
+	ripple.angles_y = random()*360;
 	ripple.think = waterdrop_ripple_think;
 	ripple.nextthink = time;
 };
