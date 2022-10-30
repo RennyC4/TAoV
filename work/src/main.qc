@@ -7,6 +7,8 @@
 //| does much, except to setup basic variables and entities.                   |
 //+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-+
 
+void(entity own) ripple_vfx;
+
 //
 // FTE - Only - Begin
 //
@@ -538,6 +540,12 @@ void() StartFrame =
 	{
 		if (!v.flags & FL_MONSTER && !v.classname == "player" && !v.classname == "guard")
 			continue;
+
+		if (v.waterlevel > 0 && v.waterlevel < 3 && v.waterripple_finished < time && v.health > 0)
+		{
+			ripple_vfx(v);
+			v.waterripple_finished = time + 0.2;
+		}
 
 		// Colormod smooth removal on monsters
 		if (v.flags & FL_MONSTER)

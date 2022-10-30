@@ -255,6 +255,8 @@ void() CheckImpulseButtons =
 				self.char.perfectblock = time + 0.135; // Perfect Guard success window
 			self.char.perfectblock_cooldown = time + 0.8;
 		}
+		if (self.char.purge_cooldown < time)
+			self.char.purge_cooldown = time + 0.25;
 
 		if (self.noblock_finished < time)
 		{

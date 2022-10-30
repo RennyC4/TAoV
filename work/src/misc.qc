@@ -7,6 +7,70 @@
 //+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-+
 
 //
+// Water ripple effect
+//
+
+void() ripple_think =
+{
+	local vector source, dest;
+
+	source = self.origin;
+	dest = self.origin - v_up * 200;
+		
+	tracebox (source, self.mins, self.maxs, dest, TRUE, self);
+
+	if (trace_fraction == 1) // Hit nothing
+	{
+		remove(self);
+		return;
+	}
+	else
+	{
+		if (self.hitcontentsmaski)
+		{
+			dest = trace_endpos;
+			setorigin(self, dest);
+		}
+	}
+	if (self.scale < 3)
+		self.scale = self.scale + 0.01;
+	else
+	{
+		remove(self);
+		return;
+	}
+	if (self.alpha > 0)
+		self.alpha = self.alpha - 0.0031;
+	frameskip(0.01);
+};
+
+void(entity own) ripple_vfx =
+{
+	local entity ripple;
+	
+	ripple = spawn();
+
+	ripple.owner = own;
+
+	precache_model ("progs/ripple.spr");
+	setmodel (ripple, "progs/ripple.spr");
+	setsize(ripple, '-1 -1 -1', '1 1 1');
+	setorigin(ripple, own.origin);
+
+	ripple.movetype = MOVETYPE_NOCLIP;
+	ripple.solid = SOLID_NOT;
+
+	ripple.hitcontentsmaski = CONTENTBIT_WATER | CONTENTBIT_SLIME | CONTENTBIT_LAVA;
+	ripple.angles_x = 90;
+	ripple.scale = 0.1;
+	ripple.alpha = 1;
+	ripple.effects = EF_ADDITIVE;
+	ripple.colormod = '1 1 1';
+	ripple.think = ripple_think;
+	ripple.nextthink = time;
+};
+
+//
 // Spawns a dynamic light for colored light glowing
 //
 

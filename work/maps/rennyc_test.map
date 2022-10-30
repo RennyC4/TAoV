@@ -386,3 +386,8 @@
 "origin" "-176 80 96"
 "awareness" "4"
 }
+// entity 18
+{
+"classname" "test_ripple"
+"origin" "162 -2 24"
+}

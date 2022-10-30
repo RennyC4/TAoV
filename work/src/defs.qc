@@ -626,6 +626,7 @@ float turbo_mode; // Turbo mode boolean, saved in parms
 .float current_damage; // record current damage for HUD
 .float total_damage; // record total damage for HUD
 .float playerhitframe_finished;
+.float waterripple_finished;
 
 // Izuna drop
 .entity izunatarg; // izuna drop target

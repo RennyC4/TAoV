@@ -1889,4 +1889,5 @@ void() enemy_start =
 		self.th_stand();
 
 	self.max_health = self.health; // Set max health for half-health trigger checks
+	self.view_ofs = '0 0 1';
 };
