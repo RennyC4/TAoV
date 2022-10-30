@@ -541,6 +541,24 @@ void() StartFrame =
 		if (!v.flags & FL_MONSTER && !v.classname == "player" && !v.classname == "guard")
 			continue;
 
+		if (v.flags & FL_MONSTER && v.movetype == MOVETYPE_STEP) // Update waterlevel on MOVETYPE_STEP entities
+		{
+			vector point = v.origin;
+			float contents;
+
+			// get the minimum water depth (waterlevel 1)
+			point_z = point_z + v.mins_z + 1;
+			contents = pointcontents (point);
+
+			if (contents >= CONTENT_LAVA && contents <= CONTENT_WATER) v.waterlevel = 1;
+
+			// get the medium water depth (waterlevel 2)
+			point_z = point_z + v.maxs_z / 2;
+			contents = pointcontents (point);
+
+			if (contents >= CONTENT_LAVA && contents <= CONTENT_WATER) v.waterlevel = 2;
+		}
+
 		if (v.waterlevel > 0 && v.waterlevel < 3 && v.waterripple_finished < time && v.health > 0)
 		{
 			ripple_vfx(v);

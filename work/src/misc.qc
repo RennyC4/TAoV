@@ -15,8 +15,8 @@ void() ripple_think =
 	local vector source, dest;
 
 	source = self.origin;
-	dest = self.origin - v_up * 200;
-		
+	dest = self.origin - v_up * 100;
+
 	tracebox (source, self.mins, self.maxs, dest, TRUE, self);
 
 	if (trace_fraction == 1) // Hit nothing

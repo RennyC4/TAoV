@@ -184,9 +184,48 @@ void() firefx =
 	self.nextthink = time + 0.1;
 };
 
+void() waterdrop_ripple_think =
+{
+	if (self.scale < 3)
+		self.scale = self.scale + 0.01;
+	else
+	{
+		remove(self);
+		return;
+	}
+	if (self.alpha > 0)
+		self.alpha = self.alpha - 0.0031;
+	frameskip(0.01);
+};
+
+void() waterdrop_ripple_vfx =
+{
+	local entity ripple;
+	
+	ripple = spawn();
+
+	ripple.owner = self;
+
+	precache_model ("progs/ripple.spr");
+	setmodel (ripple, "progs/ripple.spr");
+	setsize(ripple, '-1 -1 -1', '1 1 1');
+	setorigin(ripple, self.origin);
+
+	ripple.movetype = MOVETYPE_NOCLIP;
+	ripple.solid = SOLID_NOT;
+
+	ripple.angles_x = 90;
+	ripple.scale = 0.1;
+	ripple.alpha = 1;
+	ripple.effects = EF_ADDITIVE;
+	ripple.colormod = '1 1 1';
+	ripple.think = waterdrop_ripple_think;
+	ripple.nextthink = time;
+};
+
 void() waterdrop_fallthink =
 {
-	if (self.velocity_z == 0)
+	if (!self.velocity_z)
 	{
 		if (random() < 0.25)
 			sound (self, CHAN_AUTO, "misc/drip1.wav", 1, ATTN_NORM);
@@ -194,11 +233,11 @@ void() waterdrop_fallthink =
 			sound (self, CHAN_AUTO, "misc/drip2.wav", 1, ATTN_NORM);
 		else
 			sound (self, CHAN_AUTO, "misc/drip3.wav", 1, ATTN_NORM);
-
-		frameskip (0.1);
+		waterdrop_ripple_vfx();
 		remove(self);
+		return;
 	}
-	frameskip(0.2);
+	frameskip(0.01);
 };
 
 void() waterdrop_think =
@@ -215,11 +254,11 @@ void() waterdrop_think =
 	part.classname = "waterdrop_particle";
 	part.effects = EF_ADDITIVE;
 	part.alpha = 0.5;
+	part.hitcontentsmaski = CONTENTBIT_WATER | CONTENTBIT_SLIME | CONTENTBIT_LAVA;
 	part.think = waterdrop_fallthink;
 	part.nextthink = time + 0.1;
 	setorigin (part, self.origin);
-	setsize(part, '0 0 0', '0 0 0');
-
+	setsize(part, '-1 -1 -1', '1 1 1');
 	self.nextthink = time + 0.1 + random()*3;
 };
 
