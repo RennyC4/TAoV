@@ -40,15 +40,14 @@ void() ripple_think =
 		return;
 	}
 	if (self.alpha > 0)
-		self.alpha = self.alpha - 0.0031;
-	self.angles_y = self.angles_y + 5;
+		self.alpha = self.alpha - 0.0003;
 	frameskip(0.01);
 };
 
 void(entity own) ripple_vfx =
 {
 	local entity ripple;
-	
+
 	ripple = spawn();
 
 	ripple.owner = own;
@@ -64,8 +63,7 @@ void(entity own) ripple_vfx =
 	ripple.hitcontentsmaski = CONTENTBIT_WATER | CONTENTBIT_SLIME | CONTENTBIT_LAVA;
 	ripple.angles_x = 90;
 	ripple.scale = 0.1;
-	ripple.angles_y = random()*360;
-	ripple.alpha = 1;
+	ripple.alpha = 0.4;
 	ripple.effects = EF_ADDITIVE;
 	ripple.colormod = '1 1 1';
 	ripple.think = ripple_think;

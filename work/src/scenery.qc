@@ -186,16 +186,15 @@ void() firefx =
 
 void() waterdrop_ripple_think =
 {
-	if (self.scale < 3)
-		self.scale = self.scale + 0.01;
+	if (self.scale < 2)
+		self.scale = self.scale + 0.005;
 	else
 	{
 		remove(self);
 		return;
 	}
 	if (self.alpha > 0)
-		self.alpha = self.alpha - 0.0031;
-	self.angles_y = self.angles_y + 5;
+		self.alpha = self.alpha - 0.005;
 	frameskip(0.01);
 };
 
