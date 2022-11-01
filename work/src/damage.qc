@@ -40,7 +40,7 @@ void(entity attackerb) player_damage_physics =
 		else
 			self.velocity_x = 100;
 		
-		if (deathmatch == FALSE)
+		if (!deathmatch)
 			self.paincount = 2;
 	}
 	else if (self.knockback == 2) // Guard breaks, pop up Vigil
@@ -48,7 +48,7 @@ void(entity attackerb) player_damage_physics =
 		self.velocity = '0 0 0';
 		self.velocity_z = 490;
 
-		if (deathmatch == FALSE)
+		if (!deathmatch)
 			self.paincount = 2;
 	}
 	else if (self.knockback == 3) // Guard breaks, hit backwards (big)
@@ -61,7 +61,7 @@ void(entity attackerb) player_damage_physics =
 		else
 			self.velocity_x = 300;
 
-		if (deathmatch == FALSE)
+		if (!deathmatch)
 			self.paincount = 2;
 	}
 	else if (self.knockback == 4) // Only knock down pain state to be used underwater
@@ -78,7 +78,7 @@ void(entity attackerb) player_damage_physics =
 		else
 			self.velocity_x = 50;
 
-		if (deathmatch == FALSE)
+		if (!deathmatch)
 			self.paincount = 2;
 	}
 	else if (self.knockback == 5) // Guard breaks
@@ -91,7 +91,7 @@ void(entity attackerb) player_damage_physics =
 		else
 			self.velocity_x = 200;
 
-		if (deathmatch == FALSE)
+		if (!deathmatch)
 			self.paincount = 2;
 	}
 	else if (self.knockback == 6)
@@ -113,7 +113,7 @@ void(entity attackerb) player_damage_physics =
 	{
 		self.velocity = '0 0 0';
 		self.velocity_z = -25;
-		if (deathmatch == FALSE)
+		if (!deathmatch)
 			self.paincount = 2;
 	}
 };
@@ -123,7 +123,6 @@ void(entity attackerb) player_damage_physics =
 Killed
 ============
 */
-.float bump_kills;
 .float gold_dropped;
 void(entity targ, entity attacker) Killed =
 {
@@ -135,19 +134,12 @@ void(entity targ, entity attacker) Killed =
 	self.enemy = attacker;
 	self.targetname = ""; // remove being activated by triggers
 
-	// bump the monster counter
-	if (self.flags & FL_MONSTER && self.bump_kills == FALSE)
+	if (self.flags & FL_MONSTER)
 	{
 		if (self.target || self.target2 || self.target3 || self.target4 || self.target5 || self.target6 || self.target7 || self.target8 || self.target9)
 			SUB_UseTargets();
-		if (self.classname != "archer" && self.mode != 1) // background archers do not increase monster kill counter
-		{
-			killed_monsters = killed_monsters + 1;
-			WriteByte (MSG_ALL, SVC_KILLEDMONSTER);
-		}
 		if (random() < 0.5) // 50% chance of gold drop
 			drop_gold();
-		self.bump_kills = TRUE; // kill counter was bumped, do not do it again!
 	}
 
 	//
@@ -161,7 +153,7 @@ void(entity targ, entity attacker) Killed =
 	}
 
 	// give frags, display who killed who
-	if (deathmatch == TRUE && targ.classname == "player" && attacker.classname == "player")
+	if (deathmatch && targ.classname == "player" && attacker.classname == "player")
 	{
 		bprint (attacker.owner.netname);
 		bprint (" has slayen ");
@@ -547,7 +539,7 @@ void() BloodSplatThink =
 {
 	if (self.flags & FL_ONGROUND || self.flags & FL_PARTIALGROUND || self.mode > 999)
 	{
-		if (self.cnt == FALSE)
+		if (!self.cnt)
 		{
 			sound (self, CHAN_AUTO, "misc/blood.wav", 1, ATTN_NORM);
 			self.origin_z = self.origin_z + 1;
@@ -566,7 +558,7 @@ void() BloodSplatThink =
 		self.angles = self.angles * -1; // reverse angles otherwise blood looks odd
 	}
 		
-	if (self.cnt == TRUE)
+	if (self.cnt)
 	{
 		self.scale = self.scale + 0.02;
 
@@ -628,7 +620,7 @@ void(vector org, entity own) ThrowBloodSplat =
 void() ThrowBodyPart_HitFloor =
 {
 	// if the body part hangs on something, fade it out of the world
-	if (self.mode == TRUE)
+	if (self.mode)
 	{
 		self.alpha = self.alpha - 0.05;
 		if (self.alpha < 0.1)
@@ -653,23 +645,6 @@ void() ThrowBodyPart_HitFloor =
 	self.cnt = self.cnt + 1;
 	self.nextthink = time + 0.1;
 };
-
-/*
-void() ThrowBodyPart_Touch =
-{
-	if (other.solid != SOLID_BSP || self.velocity_z > 0)
-		return;
-
-	sound (self, CHAN_BODY, "misc/hitgrond.wav", 1, ATTN_NORM);
-	self.angles_x = 0;
-	self.angles_z = 0;
-	self.avelocity = '0 0 0';
-	// remove thinking
-	self.touch = SUB_Null;
-	self.think = SUB_Null;
-	self.nextthink = time;
-};
-*/
 
 void(string gibname) ThrowBodyPart =
 {
@@ -805,7 +780,7 @@ void(float damg, float dist, float knokback, float rsize, float snd, float flsh,
 		if (head.takedamage && head != self && head.nopain_time < time && head.deadflag != DEAD_DEAD && visible(head) && head.perfectguard_buff < time && !(head.flags & IT_BOSS2 && self.swimming)
 		&& ((coop && head.classname != "player" && self.classname == "player") || (!coop || self.flags & FL_MONSTER))) // coop
 		{
-			if (head.block_finished < time || unblockable == TRUE || self.perfectguard_buff > time || head.swimming)
+			if (head.block_finished < time || unblockable || self.perfectguard_buff > time || head.swimming)
 			{
 				if (self.flags & FL_MONSTER && !head.flags & FL_MONSTER || !self.flags & FL_MONSTER) // fix monsters pretending to hit each other
 				{
@@ -891,7 +866,7 @@ void(float damg, float dist, float knokback, float rsize, float snd, float flsh,
 					// Deathmatch properties
 					//
 
-					if (deathmatch == TRUE) // All damage in deathmatch is divided by 3, aside from certain attacks
+					if (deathmatch) // All damage in deathmatch is divided by 3, aside from certain attacks
 						damg = damg / 3;
 
 					//
@@ -936,10 +911,10 @@ void(float damg, float dist, float knokback, float rsize, float snd, float flsh,
 						sound (self, CHAN_AUTO, "player/hugekick.wav", 1, ATTN_NORM);
 					// over 6 is blank
 
-					if (head.grabbed == TRUE)
+					if (head.grabbed)
 						head.grabbed = FALSE;
 
-					if (head.noblood == FALSE)
+					if (!head.noblood)
 					{
 						ThrowBloodSplat(head.origin, head);
 						// Throw particle blood
@@ -953,7 +928,7 @@ void(float damg, float dist, float knokback, float rsize, float snd, float flsh,
 					{
 						if (self.owner.mana < self.owner.max_mana)
 							self.owner.mana = self.owner.mana + 1;
-						if (deathmatch == FALSE)
+						if (!deathmatch)
 							self.owner.combo = self.owner.combo + 1; // raise combo counter
 					}
 
@@ -1001,18 +976,24 @@ void(float damg, float dist, float knokback, float rsize, float snd, float flsh,
 					// Air Comboing physics, Y axis (Up/Down) is halted
 					//
 
-					if (!self.flags & FL_ONGROUND && ignoreair == FALSE && !self.grabbed) // If in air
+					if (!self.flags & FL_ONGROUND && !ignoreair && !self.grabbed) // If in air
 					{
 						head.aircombo_finished = time + 0.5; // Allow the monster to be tracked!
 						if (!self.swimming)
 						{
-							if (self.frame != 241) // $djump frame, fixes odd physics with spin slash hits
-								self.velocity_x = head.velocity_x;
+							if (self.frame != 241) // non-spin cut physics
+							{
+								self.velocity_x = 0; // reset x velocity
+								if (self.angles_y >= 90 && self.angles_y <= 270)
+									self.velocity_x = head.velocity_x = -100;
+								else
+									self.velocity_x = head.velocity_x = 100;
+							}
 							else
-								head.velocity = self.velocity;
+								head.velocity = self.velocity; // spin cut physics
 
 							self.velocity_z = self.velocity_y = 0;
-							if (head.ignoreaircombo == FALSE)
+							if (!head.ignoreaircombo)
 								self.velocity_z = head.velocity_z = self.velocity_z + 150; // raise player/monsters in the air after each successful air hit
 							else
 								self.velocity_z = self.velocity_z + 150; // Only raise player
@@ -1190,7 +1171,7 @@ void(float damg, float dist, float knokback, float rsize, float snd, float flsh,
 							else
 							{
 								head.think = player_block;
-								if (head.onground == TRUE)
+								if (head.onground)
 									head.counter_finished = time + 0.3;
 							}
 						}
@@ -1244,14 +1225,24 @@ void(float damg, float dist, float knokback, float rsize, float snd, float flsh,
 							head.aircombo_finished = time + 0.5; // Tell monsters he's being air comboed
 							if (!ignoreair && !self.grabbed)
 							{
-								self.velocity_x = head.velocity_x;
+								if (self.frame != 241) // non-spin cut physics
+								{
+									self.velocity_x = 0; // reset x velocity
+									if (self.angles_y >= 90 && self.angles_y <= 270)
+										self.velocity_x = head.velocity_x = -100;
+									else
+										self.velocity_x = head.velocity_x = 100;
+								}
+								else
+									head.velocity = self.velocity; // spin cut physics
+
 								self.velocity_z = 0; // reset Z velocity first
 								self.velocity_z = head.velocity_z = self.velocity_z + 150; // raise vigil/monsters in the air after each successful air hit
 							}
 							self.velocity_y = 0; // remove Vigil's foreground / background movement
 						}
 						// apply player physics
-						else if (head.classname == "player" && head.onground == FALSE)
+						else if (head.classname == "player" && !head.onground)
 						{
 							player_damage_physics(head);
 							head.knockback = 0; // reset

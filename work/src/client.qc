@@ -186,7 +186,7 @@ void() InitCamera =
 	else
 		self.cam_zcheck = FALSE;
 
-	if (self.cam_zcheck == TRUE) // Camera hit ceiling
+	if (self.cam_zcheck) // Camera hit ceiling
 	{
 		if (self.goalentity.origin_z > self.origin_z)
 		{
@@ -234,9 +234,9 @@ void() InitCamera =
 	if (self.camerastyle != 3)
 		view_x = (ot_x / 2) + view_x; // dividing by 2 made the camera smoother..
 
-	if (self.cam_zcheck == FALSE)
+	if (!self.cam_zcheck)
 	{
-		if (self.goalentity.lowceil == FALSE)
+		if (!self.goalentity.lowceil)
 		{
 			if (self.camerastyle == 0 || self.camerastyle == 3 || self.camerastyle == 5)
 				view_z = ot_z + view_z + (80 * frametime); // note: if this line is removed, camera will raise up slowly on certain camstyles
@@ -319,13 +319,13 @@ void() InitCamera =
 	// Teleport the camera exactly to the players (x,z) position and turn off immediately
 	//
 
-	if (self.telecam == TRUE)
+	if (self.telecam)
 	{
 		view_x = self.goalentity.origin_x;
 		view_z = self.goalentity.origin_z;
 		self.stylechange_time = 0; // remove slow Y turn
 
-		if (self.force_final_campos == FALSE)
+		if (!self.force_final_campos)
 			view_y = self.origin_zoom_y; // reset to default position
 		else
 		{
@@ -665,7 +665,7 @@ void() PlayerPreThink =
 	//
 	// Fixes bug for loading the proper music during save game load
 	//
-	if (framecount > 9 && SAVE_GAME_LOADED == TRUE && world.model == "maps/village.bsp" && self.music != "chuch_load")
+	if (framecount > 9 && SAVE_GAME_LOADED && world.model == "maps/village.bsp" && self.music != "chuch_load")
 	{
 		self.music = "chuch_load"; // do it once
 		self.char.music = "sound/music/track17.ogg"; // same value as the triggers inside the church, prevents it from restarting when trigger is hit
@@ -687,7 +687,7 @@ void() PlayerPreThink =
 
 	if (self.screenflash_finished > time && (cvar("scratch1") == 0))
 	{
-		if (self.screenflash_mode == FALSE)
+		if (!self.screenflash_mode)
 		{
 			if (freeze_finished < time || self.purge_toggle) // Don't spam screen with flashes
 			{
@@ -701,7 +701,7 @@ void() PlayerPreThink =
 		else
 			self.screenflash_mode = FALSE;
 	}
-	else if (self.screenflash_mode == TRUE)
+	else if (self.screenflash_mode)
 		self.screenflash_mode = FALSE;
 
 	//
@@ -798,7 +798,7 @@ void() PlayerPreThink =
 
 			if (self.mana >= self.max_mana)
 			{
-				if (self.fullmana_display == FALSE)
+				if (!self.fullmana_display)
 				{
 					if (self.fullmana_display_timer < time)
 					{
@@ -828,7 +828,7 @@ void() PlayerPreThink =
 					self.fullmana_display = TRUE; // Only do this once
 				}
 			}
-			else if (self.fullmana_display == TRUE)
+			else if (self.fullmana_display)
 				self.fullmana_display = FALSE;
 		
 			//
@@ -922,7 +922,7 @@ void() PlayerPreThink =
 			// HACK: Quake/FTE engine will not check SOLID_TRIGGER entities for .push,
 			//		 causes issues where plats will go through Vigil and set his bbox to null
 			//
-			if (self.char.dodge_finished < time && self.char.lowceil == FALSE)
+			if (self.char.dodge_finished < time && !self.char.lowceil)
 				setsize(self.char, VEC_HULL_MIN, VEC_HULL_MAX);
 
 			if (cvar("developer") < 1 && !deathmatch && !coop) // Disable slow-mo during attract demo recording mode, deathmatch and coop
@@ -939,7 +939,7 @@ void() PlayerPreThink =
 				}
 				else
 				{
-					if (self.freeze_done == FALSE)
+					if (!self.freeze_done)
 					{
 						if (turbo_mode)
 							localcmd ("sv_gamespeed 1.25\n");
@@ -959,23 +959,23 @@ void() PlayerPreThink =
 			{
 				if (self.char.health <= (self.char.max_health / 4))
 				{
-					if (self.neardeath_tint == FALSE)
+					if (!self.neardeath_tint)
 					{
 						if (framecount > 10) // Don't play sound again on level load
 							sound (self, CHAN_AUTO, "player/lowhealth.wav", 1, ATTN_NORM);
 						stuffcmd (self, "v_cshift 255 0 0 25\n");
 						self.neardeath_tint = TRUE;
 					}
-					if (self.vcshift_ok == TRUE)
+					if (self.vcshift_ok)
 						stuffcmd (self, "v_cshift 255 0 0 25\n");
 				}
 				else
 				{
-					if (self.vcshift_ok == TRUE)
+					if (self.vcshift_ok)
 						stuffcmd (self, "v_cshift 0 0 0 0\n");
 					else
 					{
-						if (self.char.health > (self.char.max_health / 4) && self.neardeath_tint == TRUE)
+						if (self.char.health > (self.char.max_health / 4) && self.neardeath_tint)
 							stuffcmd (self, "v_cshift 0 0 0 0\n");
 					}
 					self.neardeath_tint = FALSE;
@@ -1212,7 +1212,7 @@ void() PlayerPostThink =
 	//* title screen *
 	if (world.model == "maps/start.bsp")
 	{
-		if (self.button0 && framecount > 79 && self.cnt == FALSE)
+		if (self.button0 && framecount > 79 && !self.cnt)
 		{
 			if (title1_finished > time)
 				return;
@@ -1273,7 +1273,7 @@ void() PlayerPostThink =
 	{
 		local entity e;
 
-		if (self.cnt == FALSE)
+		if (!self.cnt)
 		{
 			if (self.button0) // skip
 			{
@@ -1472,7 +1472,7 @@ void(float amount) GiveExperience =
 {
 	local entity temp;
 	
-	if (self.enemy.classname != "player" || deathmatch == TRUE)
+	if (self.enemy.classname != "player" || deathmatch)
 		return;
 	if (cvar("developer") == 3)
 		return;

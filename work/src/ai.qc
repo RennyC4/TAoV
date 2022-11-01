@@ -471,8 +471,6 @@ void() ai_watercheck_removal =
 			GiveExperience(self.experience);
 
 		SUB_UseTargets();
-		killed_monsters = killed_monsters + 1;
-		WriteByte (MSG_ALL, SVC_KILLEDMONSTER);
 		remove(self);
 	}
 };

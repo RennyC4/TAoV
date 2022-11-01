@@ -688,11 +688,6 @@ void() pit_touch =
 		SUB_UseTargets();
 		self = temp;
 
-		if (other.health > 0)
-		{
-			killed_monsters = killed_monsters + 1;
-			WriteByte (MSG_ALL, SVC_KILLEDMONSTER);
-		}
 		if (other.enemy.classname == "player" && other.enemy.health > 0) // reward for death
 		{
 			local entity oself;
