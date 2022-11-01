@@ -363,7 +363,8 @@ void(entity targ, entity inflictor, entity attacker, float damage, float statusr
 			}
 		}
 		targ.enemy = attacker; // update who attacked Vigil last
-		attacker.izuna_exec_finished = time; // remove izuna ability on attacker hitting player
+		if (attacker)
+			attacker.izuna_exec_finished = time; // remove izuna ability on attacker hitting player
 		
 		if (deathmatch)
 			targ.izuna_exec_finished = time + 0.5; // can be air izuna dropped after being hit
@@ -434,7 +435,7 @@ void(entity targ, entity inflictor, entity attacker, float damage, float statusr
 				attacker.owner.displayname_finished = time + 3;
 			}
 		}
-		if (!attacker.onground || !attacker.flags & FL_ONGROUND)
+		if (attacker && (!attacker.onground || !attacker.flags & FL_ONGROUND))
 			targ.izuna_exec_finished = time + 0.5; // can be air izuna dropped after being hit
 	}
 
@@ -504,14 +505,16 @@ void(entity targ, entity inflictor, entity attacker, float damage, float statusr
 	//
 
 	self.knockback = 0; // clear physics stuff
-	if (attacker.classname != "player") // manually cleared on player
-		attacker.attack_type = 0;
-	else
+	if (attacker)
 	{
-		if (attacker.perfectblock_cooldown > time)
-			attacker.perfectblock_cooldown = time; // remove perfect guard cooldown on vigils strikes
+		if (attacker.classname != "player") // manually cleared on player
+			attacker.attack_type = 0;
+		else
+		{
+			if (attacker.perfectblock_cooldown > time)
+				attacker.perfectblock_cooldown = time; // remove perfect guard cooldown on vigils strikes
+		}
 	}
-
 	targ.damage_type = 0;
 	targ.knockback = 0;
 
@@ -605,16 +608,13 @@ void(vector org, entity own) ThrowBloodSplat =
 		splat.movetype = MOVETYPE_TOSS;
 		splat.solid = SOLID_NOT;
 
-		//dir = normalize(dir);
-		//splat.velocity = 0 * (450 + 50*random());
 		splat.velocity_x = splat.velocity_x + crandom()*40;
 		splat.velocity_y = splat.velocity_y + crandom()*40;
 		splat.velocity_z = splat.velocity_z + 120 + 50*random();
-		//splat.avelocity = '0 1000 0';
 		
 		splat.alpha = 1;
 		splat.think = BloodSplatThink;
-		splat.nextthink = time + 0.1;
+		splat.nextthink = time;
 		splat.classname = "blood";
 		splat.effects = EF_FULLBRIGHT;
 

@@ -194,7 +194,11 @@ void() waterdrop_ripple_think =
 		return;
 	}
 	if (self.alpha > 0)
+	{
 		self.alpha = self.alpha - 0.005;
+		self.colormod = '1 1 1' * self.alpha; // Allow transparency without additive
+	}
+
 	frameskip(0.01);
 };
 
@@ -217,7 +221,6 @@ void() waterdrop_ripple_vfx =
 	ripple.angles_x = 90;
 	ripple.scale = 0.1;
 	ripple.alpha = 1;
-	ripple.effects = EF_ADDITIVE;
 	ripple.colormod = '1 1 1';
 	ripple.angles_y = random()*360;
 	ripple.think = waterdrop_ripple_think;

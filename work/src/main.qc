@@ -533,7 +533,7 @@ void() StartFrame =
 	
 	//
 	// Custom Lighting - Stops monsters / players from going pitch black
-	// + colormod shifting + soul candle relic
+	// + colormod shifting + soul candle relic + water level updates on MOVETYPE_STEP
 	//
 
 	for (entity v = world; (v=nextent(v));)
@@ -552,6 +552,8 @@ void() StartFrame =
 
 			if (contents >= CONTENT_LAVA && contents <= CONTENT_WATER)
 				v.waterlevel = 1;
+			else
+				v.waterlevel = 0;
 
 			// get the medium water depth (waterlevel 2)
 			point_z = point_z + (self.mins_z + self.maxs_z) / 2;

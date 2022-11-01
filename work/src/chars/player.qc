@@ -558,7 +558,7 @@ void() StatusEffects =
 		{
 			self.char.colormod = '5 5 5';
 			self.noblock_finished = time + 1; // don't allow block
-			self.char.block_finished = time - 1; // remove block
+			self.char.block_finished = time; // remove block
 			self.nospinatk_finished = time + 1; // don't allow spin attack
 			self.nobackflip_finished = time + 1; // don't allow backflip
 			sound (self.char, CHAN_AUTO, "player/broken.wav", 1, ATTN_NORM);
@@ -569,7 +569,8 @@ void() StatusEffects =
 
 			if (self.char.perfectguard_buff < time) // remove i-frame stuff
 				self.char.takedamage = DAMAGE_AIM;
-			T_Damage (self.char, self.char, self.char, 0, 0); // do the annoying magic
+			//T_Damage (self.char, self.char, self.char, 0, 0); // do the annoying magic
+			T_Damage (self.char, world, world, 0, 0); // do the annoying magic (TEST)
 			self.broken_tick_finished = time + 1 + ceil(random()*4 + 1);
 		}
 	}

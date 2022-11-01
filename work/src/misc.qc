@@ -40,7 +40,10 @@ void() ripple_think =
 		return;
 	}
 	if (self.alpha > 0)
-		self.alpha = self.alpha - 0.0003;
+	{
+		self.alpha = self.alpha - 0.005;
+		self.colormod = '1 1 1' * self.alpha; // Allow transparency without additive
+	}
 	frameskip(0.01);
 };
 
@@ -63,11 +66,13 @@ void(entity own) ripple_vfx =
 	ripple.hitcontentsmaski = CONTENTBIT_WATER | CONTENTBIT_SLIME | CONTENTBIT_LAVA;
 	ripple.angles_x = 90;
 	ripple.scale = 0.1;
-	ripple.alpha = 0.4;
-	ripple.effects = EF_ADDITIVE;
+	ripple.alpha = 1;
+	//ripple.effects = EF_ADDITIVE;
 	ripple.colormod = '1 1 1';
 	ripple.think = ripple_think;
 	ripple.nextthink = time;
+	if (own.classname == "player" && own.owner)
+		ripple.drawonlytoclient = own.owner; // reduce network traffic
 };
 
 //

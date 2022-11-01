@@ -1191,9 +1191,11 @@ void() PlayerPostThink =
 		// For debugging status effects
 		//self.status_poison_finished = time + 3;
 		//self.status_blind_finished = time + 3;
+		
 		//if (self.broken_tick_finished < time && framecount > 29) // Needed otherwise keys lock in safezones
 		//	self.broken_tick_finished = time + 1 + ceil(random()*4 + 1);
 		//self.status_broken_finished = time + 3;
+		
 		//self.char.purge_finished = time + 3;
 	}
 
