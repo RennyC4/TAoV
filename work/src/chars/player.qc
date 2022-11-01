@@ -7600,6 +7600,11 @@ void() player_walljumpkick1	=[	$jumpatkb1,	player_walljumpkick1	]
 .float wallsound_finished;
 void() player_wallgrab	=[	$wallgrab,	player_wallgrab 	] 
 {
+	if (self.swimming)
+	{
+		player_move();
+		return;
+	}
 	local entity spark;
 	local vector source, org;
 
