@@ -541,7 +541,7 @@ void() StartFrame =
 		if (!v.flags & FL_MONSTER && !v.classname == "player" && !v.classname == "guard")
 			continue;
 
-		if (v.movetype == MOVETYPE_STEP) // Update waterlevel on MOVETYPE_STEP entities
+		if (v.movetype == MOVETYPE_STEP) // Update waterlevel on MOVETYPE_STEP entities (credit to mankrip)
 		{
 			vector point = v.origin;
 			float contents;

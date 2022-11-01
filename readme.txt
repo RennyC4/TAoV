@@ -307,6 +307,8 @@ Sock - Used his book.mdl
 
 Spirit - Sunset skybox used in Wild Lands
 
+Mankrip - Update waterlevel on MOVETYPE_STEP entities
+
 Wazat - Helped with the armor pickup code so each player in multiplayer is able to
 grab it, a great balancing issue. Armor was removed but his code was then applied to
 gold & other pick ups. I also used his HP Bars from his Conquest mod. Miss you dude.
@@ -316,25 +318,22 @@ is the author of the castle level before I hacked/revised it to pieces and then
 finally turning it into a deathmatch arena (Arena2.bsp).
 
 Bl1tz for mapping / sound effects / awesome music work, he created all of dungeon.bsp
-along with most the original music you hear in this game. He hates lighting his maps,
-but I suppose the glass is always half full in others minds.
+along with most the original music you hear in this game. Hates lighting his maps.
 
 Authors of rubicon2 (czg/metlslime) for their sparks model and code, I used it for effects
 when attacks are blocked.
 
 RPG for helping with graphic decisions / mapping / helping the mod along and being
-on the TAoV team originally. He created the first 2 areas of the game. He disappeared.
+on the TAoV team originally. He created the first 2 areas of the game. Went MIA.
 
 speeds - Mapping, general support, bug reporting and more
 
 Evilbastard & Mindcrime, they made the Nehahra models that are used within the mod such
-as the damned Baron!
+as the Baron
 
-Special thanks to Gokuma for helping with the sound from guardian heroes for the spell
-charging up; it fits nicely, and thanks Treasure for making the spell charging sfx. This
-is a person I communicated with over ICQ, he was awesome. I wish him well, if he's AMOGUS.
+Gokuma - Testing and sound (now replaced) SFX
 
-LORDHavoc for helping with me code-wise with searchradius(); which replaces findradius();
+LordHavoc for helping with me code-wise with searchradius(); which replaces the vanilla Quake findradius(); function
 
 FrikaC for the frame skipping code to keep things in sync, blacksmiths skin, camera fix
 and more. Sensei.
@@ -351,14 +350,11 @@ some various things/ideas used from progs_dump to move things along
 
 law56ker - Support, suggestions, and reporting bugs
 
-Tomaz for the new font (conchars) replacement that's actually readable and straight
-compared to the old one
-
 PeachesTheDemon for his 'tall grass' sprite which replaced my ugly attempt, which was
 then replaced with a 3D grass model
 
 Seth Galbraith (sgalbrai@krl.org), I used some of his GPL models but not that many, pretty
-talented person! He also invented dithered water for Quake :)
+talented person! Fun fact: he also invented sprite based dithered water for Quake :)
 
 MauveBib - Helped with coding shadows tilting on sloped ground, new vigil skins on the
 old poly model, angular slope work, and also helped with the armor pickup code for
@@ -379,4 +375,4 @@ Khurasan - Great Fighter font
 https://www.fontspace.com/great-fighter-font-f39648
 
 Enjoy the game,
-     - 'Tyne' / 'RenegadeC' / 'RennyC' Jeremy Sneep (jsnipez@gmail.com)
+     - 'RenegadeC' / 'RennyC' Jeremy Sneep (jsnipez@gmail.com)
