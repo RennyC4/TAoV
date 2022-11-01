@@ -341,7 +341,7 @@ void() CheckImpulseButtons =
 
 					self.char.movetype = MOVETYPE_WALK; // FIXME: Stop mid-air hangup on ledgegrabs
 
-					self.char.grabcooldown_finished = time + 1;
+					//self.char.grabcooldown_finished = time + 0.5;
 					self.char.block_finished = time + 99999;
 					self.char.think = player_block;
 					self.char.nextthink = time;
@@ -359,7 +359,7 @@ void() CheckImpulseButtons =
 		{
 			self.char.block_finished = time - 1; // Fixes blocking while in player hit frames
 			sound (self, CHAN_BODY, "player/motion1.wav", 1, ATTN_NORM);
-			self.char.grabcooldown_finished = time + 1;
+			//self.char.grabcooldown_finished = time + 0.5;
 		}
 
 		self.FL_BLKPRESSED = FALSE;
