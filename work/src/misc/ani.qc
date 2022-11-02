@@ -283,6 +283,7 @@ void() windspiral_think =
 		self.angles_y = self.angles_y + 10;
 	else
 		self.angles_z = self.angles_z + 10;
+	self.colormod = '1 1 1' * self.alpha;
 	frameskip (0.01);
 };
 

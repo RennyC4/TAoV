@@ -5913,12 +5913,13 @@ void() player_airkick15		=[	$airkick15,	player_airkick16 	]
 	setmodel(effect, "progs/windsprl.mdl");
 	effect.angles_y = random()*360;
 	
-	effect.effects = EF_ADDITIVE | EF_NODEPTHTEST;
+	effect.effects = EF_NODEPTHTEST | EF_ADDITIVE;
 	effect.movetype = MOVETYPE_NOCLIP;
 	effect.classname = "windspiral_effect";
 	effect.solid = SOLID_NOT;
 	effect.owner = self;
 	effect.alpha = 1;
+	effect.colormod = '1 1 1';
 	effect.scale = 0.25;
 	effect.frame = 0;
 	effect.drawflags = 7; // override lighting
