@@ -124,6 +124,7 @@ Killed
 ============
 */
 .float gold_dropped;
+.float killed;
 void(entity targ, entity attacker) Killed =
 {
 	local entity oself;
@@ -134,12 +135,13 @@ void(entity targ, entity attacker) Killed =
 	self.enemy = attacker;
 	self.targetname = ""; // remove being activated by triggers
 
-	if (self.flags & FL_MONSTER)
+	if (self.flags & FL_MONSTER && !self.killed)
 	{
 		if (self.target || self.target2 || self.target3 || self.target4 || self.target5 || self.target6 || self.target7 || self.target8 || self.target9)
 			SUB_UseTargets();
 		if (random() < 0.5) // 50% chance of gold drop
 			drop_gold();
+		self.killed = TRUE; // Run once
 	}
 
 	//
