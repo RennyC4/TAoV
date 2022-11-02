@@ -123,6 +123,7 @@ void(entity attackerb) player_damage_physics =
 Killed
 ============
 */
+
 .float gold_dropped;
 .float killed;
 void(entity targ, entity attacker) Killed =

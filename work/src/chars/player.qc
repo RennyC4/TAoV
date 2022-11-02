@@ -4570,9 +4570,9 @@ void() fstab3_muzzle_think =
 	makevectors(self.owner.angles);
 
 	if (self.owner.angles_y == 180)
-		setorigin(self, self.owner.origin + v_forward * 74 + v_up * 16.5);
+		setorigin(self, self.owner.origin + v_forward * 74 + v_up * 18.5);
 	else if (self.owner.angles_y == 0)
-		setorigin(self, self.owner.origin + v_forward * 70 + v_up * 16.5);
+		setorigin(self, self.owner.origin + v_forward * 70 + v_up * 18.5);
 
 	frameskip(0.01);
 };
@@ -4598,12 +4598,12 @@ void() fstab3_muzzle =
 	if (s.owner.angles_y == 180)
 	{
 		s.angles_z = 90;
-		setorigin(s, self.origin + v_forward * 74 + v_up * 16.5);
+		setorigin(s, self.origin + v_forward * 74 + v_up * 18.5);
 	}
 	else if (s.owner.angles_y == 0)
 	{
 		s.angles_z = -90;
-		setorigin(s, self.origin + v_forward * 70 + v_up * 16.5);
+		setorigin(s, self.origin + v_forward * 70 + v_up * 18.5);
 	}
 	else
 	{
