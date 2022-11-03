@@ -8872,9 +8872,12 @@ void() player_gizuna2   =[	$izuna1,	player_bflip1	]
 	{
 		local float i;
 		for (i = 0; i < 6; i = i+1)
-			watersplash_particle(self, TRUE);
+			watersplash_particle(self, 2);
 		sound (self, CHAN_AUTO, "player/izunah2o.wav", 1, ATTN_NORM);
 	}
+	else
+		sound (self, CHAN_AUTO, "player/hugekick.wav", 1, ATTN_NORM);
+
 
 	// Calculate dammage
 	local float calc;
@@ -8893,7 +8896,6 @@ void() player_gizuna2   =[	$izuna1,	player_bflip1	]
 	self.izunatarg.takedamage = DAMAGE_AIM; // reactivate damage on target
 	self.takedamage = DAMAGE_AIM; // reactivate damage on self
 	self.attack_type = 5; // Cut in half!
-	sound (self, CHAN_AUTO, "player/hugekick.wav", 1, ATTN_NORM);
 	self.owner.screenflash_finished = time + 0.1; // hard hit -> screen flashes
 	FireMelee(calc,0,3,50,7,FALSE,1,TRUE,0,0); // silent sound / silent flash
 

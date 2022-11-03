@@ -477,9 +477,11 @@ void() SoulCandle_Think =
 	frameskip(0.01);
 };
 
+void(entity own, float style) watersplash_particle;
 void() StartFrame =
 {
 	local entity h;
+	local float i;
 
 	if (world.model == "maps/start.bsp")
 	{
@@ -541,7 +543,7 @@ void() StartFrame =
 		if (!v.flags & FL_MONSTER && !v.classname == "player" && !v.classname == "guard")
 			continue;
 
-		if (v.movetype == MOVETYPE_STEP) // Update waterlevel on MOVETYPE_STEP entities (credit to mankrip)
+		if (v.movetype == MOVETYPE_STEP && v.flags & FL_MONSTER) // Update waterlevel on MOVETYPE_STEP entities (credit to mankrip)
 		{
 			vector point = v.origin;
 			float contents;
@@ -556,7 +558,7 @@ void() StartFrame =
 				v.waterlevel = 0;
 
 			// get the medium water depth (waterlevel 2)
-			point_z = point_z + (self.mins_z + self.maxs_z) / 2;
+			point_z = point_z + (v.mins_z + v.maxs_z) / 2;
 			contents = pointcontents (point);
 
 			if (contents >= CONTENT_LAVA && contents <= CONTENT_WATER)
@@ -565,9 +567,18 @@ void() StartFrame =
 
 		if (v.waterlevel > 0 && v.waterlevel < 3 && v.waterripple_finished < time && v.health > 0)
 		{
+			if (v.waterlevel == 1 && v.splash_finished < time)
+			{
+				for (i = 0; i < 3; i = i+1)
+					watersplash_particle(v, 0);
+				sound (v, CHAN_AUTO, "misc/h2ohit1.wav", 1, ATTN_NORM);
+				v.splash_finished = time + 99999;
+			}
 			ripple_vfx(v);
 			v.waterripple_finished = time + 0.2;
 		}
+		if (!v.waterlevel && v.splash_finished > time)
+			v.splash_finished = time;
 
 		// Colormod smooth removal on monsters
 		if (v.flags & FL_MONSTER)

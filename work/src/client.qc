@@ -492,7 +492,7 @@ void() splash_particle_think =
 	frameskip(0.01);
 };
 
-void(entity own, float izuna) watersplash_particle =
+void(entity own, float style) watersplash_particle =
 {
 		local entity splash;
 
@@ -508,15 +508,21 @@ void(entity own, float izuna) watersplash_particle =
 		setmodel (splash, string_null);
 		setsize (splash, '0 0 0', '0 0 0');
 		setorigin (splash, own.origin);
-		if (izuna)
+
+		if (style == 0) // Small splash
 		{
-			splash.attack_finished = time + 0.75;
-			splash.velocity_z = 450;
+			splash.attack_finished = time + 0.3;
+			splash.velocity_z = 125;
 		}
-		else
+		else if (style == 1) // Medium splash
 		{
 			splash.attack_finished = time + 0.3;
 			splash.velocity_z = 250;
+		}
+		else // Big splash
+		{
+			splash.attack_finished = time + 0.75;
+			splash.velocity_z = 450;
 		}
 				
 		splash.think = splash_particle_think;
@@ -661,7 +667,6 @@ void() SpeedLine;
 void() PlayerWaterPhysics;
 .float screenflash_mode;
 .float freeze_done;
-.float playersplash_finished;
 .float rainbow_stage; // stages for colormod rainbow effect on Vigil
 .float neardeath_tint; // boolean if the screen gets tinted red near death
 .float fullmana_display; // boolean to have an effect not spammed
@@ -1115,6 +1120,8 @@ void() PlayerPostThink =
 	
 	if (self.char)
 	{
+		local float i;
+
 		//
 		// Swimming Physics are applied
 		//
@@ -1144,14 +1151,11 @@ void() PlayerPostThink =
 					self.char.velocity_y = self.char.velocity_y / 4 * (frametime * 100);
 					self.char.velocity_z = self.char.velocity_z / 4 * (frametime * 100);
 
-					if (self.playersplash_finished < time)
+					if (self.splash_finished < time)
 					{
-						local float i;
 						for (i = 0; i < 4; i = i+1)
-							watersplash_particle(self.char, FALSE);
+							watersplash_particle(self.char, 1);
 						self.bubble_count = time + 3;
-						sound (self.char, CHAN_AUTO, "misc/h2ohit1.wav", 1, ATTN_NORM);
-						self.playersplash_finished = time + 0.5;
 					}
 				}
 				PlayerWaterPhysics();
