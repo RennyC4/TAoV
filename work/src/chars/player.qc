@@ -8813,12 +8813,6 @@ void() player_gizuna1   =[	$izuna1,	player_gizuna1	]
 				effect.think = dust_think;
 				effect.nextthink = time;
 			}
-			else // Check water
-			{
-				local float i;
-				for (i = 0; i < 6; i = i+1)
-					watersplash_particle(self, TRUE);
-			}
 
 			//
 			// Clean up
@@ -8874,6 +8868,14 @@ void() player_gizuna2   =[	$izuna1,	player_bflip1	]
 	else
 		setorigin (self.izunatarg, self.origin);
 	
+	if (self.waterlevel) // Check water
+	{
+		local float i;
+		for (i = 0; i < 6; i = i+1)
+			watersplash_particle(self, TRUE);
+		sound (self, CHAN_AUTO, "player/izunah2o.wav", 1, ATTN_NORM);
+	}
+
 	// Calculate dammage
 	local float calc;
 	if (self.owner.swordlevel == 0)

@@ -208,6 +208,7 @@ void() worldspawn =
 		precache_sound ("misc/swim.wav");
 		precache_sound ("weapons/lhit.wav");
 		precache_sound ("player/drown.wav");
+		precache_sound ("player/izunah2o.wav");
 		precache_sound ("player/camh2o.wav");
 		precache_sound ("player/waterstep1.wav");
 		precache_sound ("player/waterstep2.wav");
