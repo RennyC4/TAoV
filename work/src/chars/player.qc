@@ -1814,12 +1814,11 @@ void() player_think =
 						self.char.angles_y = 180;
 					self.char.movetype = MOVETYPE_WALK; // Fixes getting hung up on MOVETYPE_STEP
 					self.char.think = player_dashatk1;
-					self.char.nextthink = time + 0.1;
 					self.char.angles_x = 0;
 					self.char.charge_count = 0;
-					self.char.nextthink = time + 0.1;
-					self.swordshadow_time = time + 0.4; // sword shadow
-					self.attack_finished = time + 0.5;
+					self.char.nextthink = time;
+					self.swordshadow_time = time + 0.6; // sword shadow
+					self.attack_finished = time + 0.6;
 					self.mashattack = FALSE;
 				}
 				else if (self.char.block_finished < time)
@@ -5201,7 +5200,7 @@ void() player_dashatk2	=[	$dashatk2,	player_dashatk3	] {frameskip(0.07);dashatta
 void() player_dashatk3	=[	$dashatk3,	player_dashatk4	] {frameskip(0.07);dashattack_forward();sound (self, CHAN_WEAPON, "player/sword3.wav", 1, ATTN_NORM);};
 void() player_dashatk4	=[	$dashatk4,	player_dashatk5	] {frameskip(0.07);dashattack_forward();self.attack_type = 5;FireMelee(10,25,2,30,2,0,1,FALSE,0,0);};
 void() player_dashatk5	=[	$dashatk5,	player_dashatk6	] {frameskip(0.07);dashattack_forward();self.attack_type = 5;FireMelee(10,25,2,30,2,0,1,FALSE,0,0);};
-void() player_dashatk6	=[	$dashatk6,	player_move 	] {frameskip(0.1);self.attack_type = 5;FireMelee(10,25,2,30,2,0,1,FALSE,0,0);};
+void() player_dashatk6	=[	$dashatk6,	player_move 	] {frameskip(0.2);self.attack_type = 5;FireMelee(10,25,2,30,2,0,1,FALSE,0,0);};
 
 //*
 // charge up attack
@@ -8801,17 +8800,25 @@ void() player_gizuna1   =[	$izuna1,	player_gizuna1	]
 
 			// Effects
 			jumpatk_grounded();
-
-			effect = spawn();
-			setorigin(effect, self.origin - v_up * 18);
-			setmodel(effect, "progs/dust.spr");	
-			effect.solid = SOLID_NOT;
-			effect.owner = self;
-			effect.drawonlytoclient = self.owner; // reduce network traffic
-			effect.movetype = MOVETYPE_NOCLIP;
-				
-			effect.think = dust_think;
-			effect.nextthink = time;
+			if (!self.waterlevel)
+			{
+				effect = spawn();
+				setorigin(effect, self.origin - v_up * 18);
+				setmodel(effect, "progs/dust.spr");	
+				effect.solid = SOLID_NOT;
+				effect.owner = self;
+				effect.drawonlytoclient = self.owner; // reduce network traffic
+				effect.movetype = MOVETYPE_NOCLIP;
+					
+				effect.think = dust_think;
+				effect.nextthink = time;
+			}
+			else // Check water
+			{
+				local float i;
+				for (i = 0; i < 6; i = i+1)
+					watersplash_particle(self, TRUE);
+			}
 
 			//
 			// Clean up
@@ -8866,7 +8873,7 @@ void() player_gizuna2   =[	$izuna1,	player_bflip1	]
 	}
 	else
 		setorigin (self.izunatarg, self.origin);
-				
+	
 	// Calculate dammage
 	local float calc;
 	if (self.owner.swordlevel == 0)

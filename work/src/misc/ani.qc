@@ -320,6 +320,11 @@ void() divings_hit_think =
 // dust cloud animation / movement on vigils feet
 void() dust_think =
 {
+	if (self.owner.waterlevel > 0)
+	{
+		remove(self);
+		return;
+	}
 	// Used for when a monster dies and hits the floor
 	if (self.owner.flags & FL_MONSTER)
 		droptofloor();

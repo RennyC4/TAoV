@@ -484,12 +484,15 @@ void() splash_particle_think =
 		particle (self.origin, '0 0 0', 232, 10); // red particles
 	if (pointcontents(self.owner.origin) == CONTENT_SLIME)
 		particle (self.origin, '0 0 0', 61, 10); // green particles
+	if (pointcontents(self.owner.origin) == CONTENT_EMPTY)
+		particle (self.origin, '0 0 0', 45, 10); // blue particles
+	
 	if (self.attack_finished < time)
 		remove(self);
-	self.nextthink = time + 0.01;
+	frameskip(0.01);
 };
 
-void() watersplash_particle =
+void(entity own, float izuna) watersplash_particle =
 {
 		local entity splash;
 
@@ -497,19 +500,27 @@ void() watersplash_particle =
 		splash.angles_y = random() * 360;
 		makevectors (splash.angles);
 		splash.velocity = v_forward * 100;
-		splash.velocity_z = 250;
-		splash.owner = self.char;
+		splash.owner = own;
 		splash.movetype = MOVETYPE_BOUNCE;
+		splash.hitcontentsmaski = 0; // No collision
 		splash.solid = SOLID_NOT;
 		splash.classname = "splash";
 		setmodel (splash, string_null);
 		setsize (splash, '0 0 0', '0 0 0');
-		makevectors (self.char.angles);
-		setorigin (splash, self.char.origin);
-		splash.attack_finished = time + 0.3;
+		setorigin (splash, own.origin);
+		if (izuna)
+		{
+			splash.attack_finished = time + 0.75;
+			splash.velocity_z = 450;
+		}
+		else
+		{
+			splash.attack_finished = time + 0.3;
+			splash.velocity_z = 250;
+		}
 				
 		splash.think = splash_particle_think;
-		splash.nextthink = time + 0.01;
+		splash.nextthink = time;
 };
 
 void() bubble_remove =
@@ -1135,9 +1146,9 @@ void() PlayerPostThink =
 
 					if (self.playersplash_finished < time)
 					{
-						watersplash_particle();
-						watersplash_particle();
-						watersplash_particle();
+						local float i;
+						for (i = 0; i < 4; i = i+1)
+							watersplash_particle(self.char, FALSE);
 						self.bubble_count = time + 3;
 						sound (self.char, CHAN_AUTO, "misc/h2ohit1.wav", 1, ATTN_NORM);
 						self.playersplash_finished = time + 0.5;
