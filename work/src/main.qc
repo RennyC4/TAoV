@@ -139,7 +139,6 @@ void() worldspawn =
 
 		precache_model ("progs/plyr.mdl");
 		precache_model ("progs/plyr2.mdl");
-		precache_model ("progs/plyr2pg.mdl");
 		precache_model ("progs/plyr_armstab.mdl");
 		precache_model ("progs/particle.mdl");
 		precache_model ("progs/spnatkspr.mdl");

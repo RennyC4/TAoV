@@ -107,18 +107,31 @@ void() volbrand_think =
 		remove(self);
 		return;
 	}
-
 	if (self.owner.perfectguard_buff < time)
 	{
-		setmodel (self, "progs/plyr2.mdl");
-		self.colormod = '1 1 1';
+		if (self.colormod_x > 1)
+			self.colormod_x = self.colormod_x - 0.02;
+		else
+			self.colormod_x = 1;
+		
+		if (self.colormod_y > 1)
+			self.colormod_y = self.colormod_y - 0.02;
+		else
+			self.colormod_y = 1;
+	
+		if (self.colormod_z < 1)
+			self.colormod_z = self.colormod_z + 0.02;
+		else
+			self.colormod_z = 1;
+
+		if (self.colormod == '1 1 1')
+			setmodel (self, "progs/plyr2.mdl");
 	}
 	else
 	{
-		setmodel (self, "progs/plyr2pg.mdl");
-		self.colormod = '5 5 0';
+		self.colormod = '5 5 0.5';
+		setmodel (self, "progs/swordfx.mdl");	
 	}
-
 	setorigin (self, self.owner.origin);
 	self.angles = self.owner.angles;
 	self.frame = self.owner.frame;
@@ -937,8 +950,25 @@ void() SwordShadowsThink =
 		remove(self);
 		return;
 	}
-	self.alpha = self.alpha - 0.1;
-	frameskip(0.1);
+
+	if (self.owner.char.perfectguard_buff < time)
+	{
+		if (self.owner.swordlevel == 0)
+			self.colormod = '1 1 1';
+		if (self.owner.swordlevel == 1)
+			self.colormod = '5 1 1';
+		if (self.owner.swordlevel == 2)
+			self.colormod = '1 1 5';
+		if (self.owner.swordlevel == 3) // Quake's green pallet sucks
+			self.colormod = '1 5 1';
+		if (self.owner.swordlevel == 4)
+			self.colormod = '4 4 1';
+	}
+	else
+		self.colormod = '5 5 0';
+
+	self.alpha = self.alpha - 0.025;
+	frameskip(0.01);
 };
 
 // called from playerprethink
@@ -957,29 +987,7 @@ void() SwordShadows =
 	shadows.drawonlytoclient = self; // reduce network traffic
 	shadows.effects   = EF_ADDITIVE | EF_FULLBRIGHT;
 	setmodel (shadows, "progs/swordfx.mdl");
-
-	if (shadows.owner.char.perfectguard_buff < time)
-	{
-		shadows.alpha     = 0.25;
-		if (shadows.owner.swordlevel == 0)
-			shadows.skin = 0;
-		if (shadows.owner.swordlevel == 1)
-			shadows.skin = 1;
-		if (shadows.owner.swordlevel == 2)
-			shadows.skin = 2;
-		if (shadows.owner.swordlevel == 3) // Quake's green pallet sucks
-		{
-			shadows.skin = 0;
-			shadows.colormod = '1 2 1';
-		}
-		if (shadows.owner.swordlevel == 4)
-			shadows.skin = 3;
-	}
-	else
-	{
-		shadows.skin = 4; // pg skin
-		shadows.alpha = 0.5;
-	}
+	shadows.alpha = 0.75;
 
 	shadows.frame = self.char.frame;
 	shadows.angles = self.char.angles;
@@ -5179,7 +5187,7 @@ void() swordstareffect4 =
 void() dashattack_forward = // push player forward during animation
 {
 	self.movetype = MOVETYPE_WALK;
-	self.velocity_time = time + 0.3;
+	self.velocity_time = time + 0.1;
 	self.velocity_y = 0; // no foreground or background movement
 
 	if (self.angles_y == 0)
@@ -5188,12 +5196,12 @@ void() dashattack_forward = // push player forward during animation
 		self.velocity_x = 0 - (self.speed * 1.8 / 1.8);
 };
 
-void() player_dashatk1	=[	$dashatk1,	player_dashatk2	] {frameskip(0.07);dashattack_forward();};
+void() player_dashatk1	=[	$dashatk1,	player_dashatk2	] {frameskip(0.1);dashattack_forward();};
 void() player_dashatk2	=[	$dashatk2,	player_dashatk3	] {frameskip(0.07);dashattack_forward();};
 void() player_dashatk3	=[	$dashatk3,	player_dashatk4	] {frameskip(0.07);dashattack_forward();sound (self, CHAN_WEAPON, "player/sword3.wav", 1, ATTN_NORM);};
 void() player_dashatk4	=[	$dashatk4,	player_dashatk5	] {frameskip(0.07);dashattack_forward();self.attack_type = 5;FireMelee(10,25,2,30,2,0,1,FALSE,0,0);};
 void() player_dashatk5	=[	$dashatk5,	player_dashatk6	] {frameskip(0.07);dashattack_forward();self.attack_type = 5;FireMelee(10,25,2,30,2,0,1,FALSE,0,0);};
-void() player_dashatk6	=[	$dashatk6,	player_move 	] {frameskip(0.07);dashattack_forward();self.attack_type = 5;FireMelee(10,25,2,30,2,0,1,FALSE,0,0);};
+void() player_dashatk6	=[	$dashatk6,	player_move 	] {frameskip(0.1);self.attack_type = 5;FireMelee(10,25,2,30,2,0,1,FALSE,0,0);};
 
 //*
 // charge up attack
