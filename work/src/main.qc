@@ -481,7 +481,6 @@ void() SoulCandle_Think =
 };
 
 void(entity own, float style, float type) watersplash_particle;
-.float whatliquid;
 void() StartFrame =
 {
 	local entity h;
@@ -584,7 +583,7 @@ void() StartFrame =
 			}
 		}
 
-		if (v.waterlevel > 0 && v.waterlevel < 3 && v.waterripple_finished < time && v.health > 0)
+		if (v.waterlevel > 0 && v.waterlevel < 3 && v.waterripple_finished < time && v.deadflag != DEAD_DEAD) // v.health > 0)
 		{
 			if (v.waterlevel == 1 && v.splash_finished < time)
 			{
@@ -601,11 +600,20 @@ void() StartFrame =
 				v.splash_finished = time + 99999;
 			}
 			if (liquidtype == CONTENT_WATER)
+			{
 				ripple_vfx(v, 0);
+				v.inwater_type = CONTENT_WATER;
+			}
 			else if (liquidtype == CONTENT_LAVA)
+			{
 				ripple_vfx(v, 1);
+				v.inwater_type = CONTENT_LAVA;
+			}
 			else if (liquidtype == CONTENT_SLIME)
+			{
 				ripple_vfx(v, 2);
+				v.inwater_type = CONTENT_SLIME;
+			}
 			v.waterripple_finished = time + 0.2;
 		}
 		if (!v.waterlevel && v.splash_finished > time)

@@ -628,6 +628,7 @@ float turbo_mode; // Turbo mode boolean, saved in parms
 .float playerhitframe_finished;
 .float waterripple_finished;
 .float splash_finished;
+.float inwater_type; // last type of liquid player/monster was in
 
 // Izuna drop
 .entity izunatarg; // izuna drop target

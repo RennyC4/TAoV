@@ -540,23 +540,21 @@ float() crandom =
 float max_blood_ents;
 void() BloodSplatThink =
 {
-	//if (self.flags & FL_ONGROUND || self.flags & FL_PARTIALGROUND || self.mode > 999)
-	
 	if (pointcontents(self.origin) == CONTENT_WATER || pointcontents(self.origin) == CONTENT_SLIME || pointcontents(self.origin) == CONTENT_LAVA)
 	{
 		self.origin_z = self.origin_z + 1;
 		self.attack_finished = time + 0.75;
 		self.angles_y = random() * 360;
-		self.cnt = TRUE;
 		self.cnt2 = TRUE; // Hit water
-		self.alpha = 0.25;
+		self.cnt = TRUE;
+		self.alpha = 0.5;
 		self.movetype = MOVETYPE_NOCLIP;
 		self.velocity = '0 0 0';
 		setmodel (self, "progs/bloodsplat.mdl");
 		setsize (self, '0 0 0', '0 0 0');
 	}
 
-	if (checkground(self))
+	if (checkground(self) && !self.cnt2)
 	{
 		if (!self.cnt)
 		{
@@ -571,10 +569,10 @@ void() BloodSplatThink =
 			setsize (self, '0 0 0', '0 0 0');
 		}
 	}
-	else // falling
+	else if (!self.cnt2) // falling
 	{
 		self.angles = vectoangles(self.velocity);
-		self.angles = self.angles * -1; // reverse angles otherwise blood looks odd
+		self.angles = self.angles * -1; // reverse angles otherwise blood looks backwards
 	}
 		
 	if (self.cnt)
@@ -622,6 +620,8 @@ void(vector org, entity own) ThrowBloodSplat =
 		splat.think = BloodSplatThink;
 		splat.nextthink = time;
 		splat.classname = "blood";
+		splat.dimension_hit = 0;
+		splat.dimension_solid = 0;
 
 		setmodel (splat, "progs/blooddrop.mdl");
 		setsize (splat, '1 1 1', '1 1 1');     
