@@ -540,22 +540,38 @@ float() crandom =
 float max_blood_ents;
 void() BloodSplatThink =
 {
-	if (self.flags & FL_ONGROUND || self.flags & FL_PARTIALGROUND || self.mode > 999)
+	//if (self.flags & FL_ONGROUND || self.flags & FL_PARTIALGROUND || self.mode > 999)
+	
+	if (pointcontents(self.origin) == CONTENT_WATER || pointcontents(self.origin) == CONTENT_SLIME || pointcontents(self.origin) == CONTENT_LAVA)
+	{
+		self.origin_z = self.origin_z + 1;
+		self.attack_finished = time + 0.75;
+		self.angles_y = random() * 360;
+		self.cnt = TRUE;
+		self.cnt2 = TRUE; // Hit water
+		self.alpha = 0.25;
+		self.movetype = MOVETYPE_NOCLIP;
+		self.velocity = '0 0 0';
+		setmodel (self, "progs/bloodsplat.mdl");
+		setsize (self, '0 0 0', '0 0 0');
+	}
+
+	if (checkground(self))
 	{
 		if (!self.cnt)
 		{
 			sound (self, CHAN_AUTO, "misc/blood.wav", 1, ATTN_NORM);
 			self.origin_z = self.origin_z + 1;
 			self.attack_finished = time + 0.5;
-			self.avelocity = '0 0 0';
-			self.angles_x = self.angles_z = 0;
 			self.angles_y = random() * 360;
 			self.cnt = TRUE;
+			self.movetype = MOVETYPE_NOCLIP;
+			self.velocity = '0 0 0';
 			setmodel (self, "progs/bloodsplat.mdl");
 			setsize (self, '0 0 0', '0 0 0');
 		}
 	}
-	else
+	else // falling
 	{
 		self.angles = vectoangles(self.velocity);
 		self.angles = self.angles * -1; // reverse angles otherwise blood looks odd
@@ -563,6 +579,9 @@ void() BloodSplatThink =
 		
 	if (self.cnt)
 	{
+		self.avelocity = '0 0 0';
+		self.angles_x = self.angles_z = 0;
+
 		self.scale = self.scale + 0.02;
 
 		if (self.attack_finished < time)
@@ -585,14 +604,6 @@ void() BloodSplatThink =
 	frameskip(0.01);
 };
 
-void() BloodSplatTouch =
-{
-	self.touch = SUB_Null;
-	self.mode = 1000;
-	self.think = BloodSplatThink;
-	self.nextthink = time + 0.1;
-};
-
 void(vector org, entity own) ThrowBloodSplat =
 {
 	if (max_blood_ents < 10)
@@ -611,7 +622,6 @@ void(vector org, entity own) ThrowBloodSplat =
 		splat.think = BloodSplatThink;
 		splat.nextthink = time;
 		splat.classname = "blood";
-		splat.effects = EF_FULLBRIGHT;
 
 		setmodel (splat, "progs/blooddrop.mdl");
 		setsize (splat, '1 1 1', '1 1 1');     
