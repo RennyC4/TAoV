@@ -8872,7 +8872,7 @@ void() player_gizuna2   =[	$izuna1,	player_bflip1	]
 	{
 		local float i;
 		for (i = 0; i < 8; i = i+1)
-			watersplash_particle(self, 2);
+			watersplash_particle(self, 2, 0);
 		sound (self, CHAN_AUTO, "player/izunah2o.wav", 1, ATTN_NORM);
 	}
 	else

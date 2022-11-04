@@ -478,6 +478,14 @@ void() PainSound;
 
 void() splash_particle_think =
 {
+	if (!self.cnt)
+		setmodel (self, "progs/splash_w.spr");
+	else if (self.cnt == 1)
+		setmodel (self, "progs/splash_l.spr");
+	else
+		setmodel (self, "progs/splash_s.spr");
+
+	/*
 	if (pointcontents(self.owner.origin) == CONTENT_WATER)
 		setmodel (self, "progs/splash_w.spr");
 	if (pointcontents(self.owner.origin) == CONTENT_LAVA)
@@ -486,6 +494,7 @@ void() splash_particle_think =
 		setmodel (self, "progs/splash_s.spr");
 	if (pointcontents(self.owner.origin) == CONTENT_EMPTY)
 		setmodel (self, "progs/splash_w.spr");
+	*/
 
 	if (self.attack_finished < time)
 	{
@@ -495,7 +504,7 @@ void() splash_particle_think =
 	frameskip(0.1);
 };
 
-void(entity own, float style) watersplash_particle =
+void(entity own, float style, float type) watersplash_particle =
 {
 		local entity splash;
 
@@ -508,6 +517,7 @@ void(entity own, float style) watersplash_particle =
 		splash.hitcontentsmaski = 0; // No collision
 		splash.solid = SOLID_NOT;
 		splash.classname = "splash";
+		splash.cnt = type;
 		setmodel (splash, string_null);
 		setsize (splash, '0 0 0', '0 0 0');
 		setorigin (splash, own.origin);
@@ -1157,7 +1167,14 @@ void() PlayerPostThink =
 					if (self.splash_finished < time)
 					{
 						for (i = 0; i < 4; i = i+1)
-							watersplash_particle(self.char, 1);
+						{
+							if (pointcontents(self.char.origin) == CONTENT_WATER)
+								watersplash_particle(self.char, 1, 0);
+							if (pointcontents(self.char.origin) == CONTENT_LAVA)
+								watersplash_particle(self.char, 1, 1);
+							if (pointcontents(self.char.origin) == CONTENT_SLIME)
+								watersplash_particle(self.char, 1, 2);
+						}
 						self.bubble_count = time + 3;
 					}
 				}

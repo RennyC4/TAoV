@@ -42,17 +42,21 @@ void() ripple_think =
 	if (self.alpha > 0)
 	{
 		self.alpha = self.alpha - 0.005;
-		self.colormod = '1 1 1' * self.alpha; // Allow transparency without additive
+		if (!self.cnt)
+			self.colormod = '1 1 1.25' * self.alpha; // Allow transparency without additive (water)
+		else if (self.cnt == 1)
+			self.colormod = '1 .25 .25' * self.alpha; // Allow transparency without additive (lava)
+		else
+			self.colormod = '.25 1 .25' * self.alpha; // Allow transparency without additive (slime)
 	}
 	frameskip(0.01);
 };
 
-void(entity own) ripple_vfx =
+void(entity own, float type) ripple_vfx =
 {
 	local entity ripple;
 
 	ripple = spawn();
-
 	ripple.owner = own;
 
 	precache_model ("progs/ripple.spr");
@@ -67,8 +71,15 @@ void(entity own) ripple_vfx =
 	ripple.angles_x = 90;
 	ripple.scale = 0.1;
 	ripple.alpha = 1;
-	//ripple.effects = EF_ADDITIVE;
-	ripple.colormod = '1 1 1';
+	ripple.cnt = type;
+
+	if (!self.cnt)
+		ripple.colormod = '1 1 1.25';
+	else if (self.cnt == 1)
+		ripple.colormod = '1 .25 .25';
+	else
+		ripple.colormod = '.25 1 .25';
+
 	ripple.think = ripple_think;
 	ripple.nextthink = time;
 	if (own.classname == "player" && own.owner)

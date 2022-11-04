@@ -7,7 +7,7 @@
 //| does much, except to setup basic variables and entities.                   |
 //+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-+
 
-void(entity own) ripple_vfx;
+void(entity own, float type) ripple_vfx;
 
 //
 // FTE - Only - Begin
@@ -480,7 +480,8 @@ void() SoulCandle_Think =
 	frameskip(0.01);
 };
 
-void(entity own, float style) watersplash_particle;
+void(entity own, float style, float type) watersplash_particle;
+.float whatliquid;
 void() StartFrame =
 {
 	local entity h;
@@ -546,26 +547,41 @@ void() StartFrame =
 		if (!v.flags & FL_MONSTER && !v.classname == "player" && !v.classname == "guard")
 			continue;
 
-		if (v.movetype == MOVETYPE_STEP && v.flags & FL_MONSTER) // Update waterlevel on MOVETYPE_STEP entities (credit to mankrip)
+		if (v.movetype == MOVETYPE_STEP || v.movetype == MOVETYPE_WALK) // Update waterlevel on MOVETYPE_STEP entities (credit to mankrip)
 		{
 			vector point = v.origin;
-			float contents;
+			local float contents;
+			local float liquidtype;
 
 			// get the minimum water depth (waterlevel 1)
 			point_z = point_z + v.mins_z + 1;
 			contents = pointcontents (point);
 
 			if (contents >= CONTENT_LAVA && contents <= CONTENT_WATER)
+			{
+				if (contents == CONTENT_WATER)
+					liquidtype = CONTENT_WATER;
+				if (contents == CONTENT_LAVA)
+					liquidtype = CONTENT_LAVA;
+				if (contents == CONTENT_SLIME)
+					liquidtype = CONTENT_SLIME;
 				v.waterlevel = 1;
+			}
 			else
+			{
+				liquidtype = 0;
 				v.waterlevel = 0;
+			}
+			
+			if (v.flags & FL_MONSTER) // Let the engine handle this for monsters
+			{
+				// get the medium water depth (waterlevel 2)
+				point_z = point_z + (v.mins_z + v.maxs_z) / 2;
+				contents = pointcontents (point);
 
-			// get the medium water depth (waterlevel 2)
-			point_z = point_z + (v.mins_z + v.maxs_z) / 2;
-			contents = pointcontents (point);
-
-			if (contents >= CONTENT_LAVA && contents <= CONTENT_WATER)
-				v.waterlevel = 2;
+				if (contents >= CONTENT_LAVA && contents <= CONTENT_WATER)
+					v.waterlevel = 2;
+			}
 		}
 
 		if (v.waterlevel > 0 && v.waterlevel < 3 && v.waterripple_finished < time && v.health > 0)
@@ -573,11 +589,23 @@ void() StartFrame =
 			if (v.waterlevel == 1 && v.splash_finished < time)
 			{
 				for (i = 0; i < 6; i = i+1)
-					watersplash_particle(v, 0);
+				{
+					if (liquidtype == CONTENT_WATER)
+						watersplash_particle(v, 0, 0);
+					else if (liquidtype == CONTENT_LAVA)
+						watersplash_particle(v, 0, 1);
+					else if (liquidtype == CONTENT_SLIME)
+						watersplash_particle(v, 0, 2);
+				}
 				sound (v, CHAN_AUTO, "misc/h2ohit1.wav", 1, ATTN_NORM);
 				v.splash_finished = time + 99999;
 			}
-			ripple_vfx(v);
+			if (liquidtype == CONTENT_WATER)
+				ripple_vfx(v, 0);
+			else if (liquidtype == CONTENT_LAVA)
+				ripple_vfx(v, 1);
+			else if (liquidtype == CONTENT_SLIME)
+				ripple_vfx(v, 2);
 			v.waterripple_finished = time + 0.2;
 		}
 		if (!v.waterlevel && v.splash_finished > time)
