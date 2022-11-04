@@ -479,16 +479,19 @@ void() PainSound;
 void() splash_particle_think =
 {
 	if (pointcontents(self.owner.origin) == CONTENT_WATER)
-		particle (self.origin, '0 0 0', 45, 10); // blue particles
+		setmodel (self, "progs/splash_w.spr");
 	if (pointcontents(self.owner.origin) == CONTENT_LAVA)
 		particle (self.origin, '0 0 0', 232, 10); // red particles
 	if (pointcontents(self.owner.origin) == CONTENT_SLIME)
 		particle (self.origin, '0 0 0', 61, 10); // green particles
 	if (pointcontents(self.owner.origin) == CONTENT_EMPTY)
-		particle (self.origin, '0 0 0', 45, 10); // blue particles
+		setmodel (self, "progs/splash_w.spr");
 	
 	if (self.attack_finished < time)
+	{
 		remove(self);
+		return;
+	}
 	frameskip(0.01);
 };
 

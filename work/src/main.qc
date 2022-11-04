@@ -197,6 +197,9 @@ void() worldspawn =
 		precache_model ("progs/enrage.spr");
 		precache_model ("progs/twisti.spr");
 		precache_model ("progs/smoke.spr");
+		precache_model ("progs/splash_w.spr");
+		precache_model ("progs/splash_l.spr");
+		precache_model ("progs/splash_s.spr");
 
 		//
 		// Sounds
@@ -569,7 +572,7 @@ void() StartFrame =
 		{
 			if (v.waterlevel == 1 && v.splash_finished < time)
 			{
-				for (i = 0; i < 3; i = i+1)
+				for (i = 0; i < 6; i = i+1)
 					watersplash_particle(v, 0);
 				sound (v, CHAN_AUTO, "misc/h2ohit1.wav", 1, ATTN_NORM);
 				v.splash_finished = time + 99999;
