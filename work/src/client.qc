@@ -481,18 +481,18 @@ void() splash_particle_think =
 	if (pointcontents(self.owner.origin) == CONTENT_WATER)
 		setmodel (self, "progs/splash_w.spr");
 	if (pointcontents(self.owner.origin) == CONTENT_LAVA)
-		particle (self.origin, '0 0 0', 232, 10); // red particles
+		setmodel (self, "progs/splash_l.spr");
 	if (pointcontents(self.owner.origin) == CONTENT_SLIME)
-		particle (self.origin, '0 0 0', 61, 10); // green particles
+		setmodel (self, "progs/splash_s.spr");
 	if (pointcontents(self.owner.origin) == CONTENT_EMPTY)
 		setmodel (self, "progs/splash_w.spr");
-	
+
 	if (self.attack_finished < time)
 	{
 		remove(self);
 		return;
 	}
-	frameskip(0.01);
+	frameskip(0.1);
 };
 
 void(entity own, float style) watersplash_particle =
