@@ -78,7 +78,6 @@ void() fountain_particlethink =
 		self.cnt = TRUE;
 		self.pain_finished = time + 0.75;
 	}
-	//particle (self.origin, '0 0 0', 45, 20);
 	frameskip(0.01);
 };
 
@@ -612,6 +611,23 @@ void() pinetree =
 	setsize(self, '-93 -90 -16', '94 97 175');
 	droptofloor();
 };
+
+/*QUAKED telescope (0 1 0) (-93 -90 -16) (94 97 175)
+Regular old telescope
+*/
+void() telescope =
+{
+	precache_model ("progs/telescope.mdl");
+	setmodel (self, "progs/telescope.mdl");
+
+	self.movetype = MOVETYPE_NONE;
+	self.solid = SOLID_NOT;
+	self.takedamage = DAMAGE_NO;
+	self.classname = "telescope";
+	setsize(self, '-25 -7 -17', '19 7 40');
+	droptofloor();
+};
+
 
 /*QUAKED pinetree_small (0 1 0) (-60 -68 -16) (61 63 128)
 Normal (small) pinetree
