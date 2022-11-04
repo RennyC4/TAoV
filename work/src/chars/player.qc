@@ -4355,24 +4355,26 @@ void() plyr_armstab_think =
 
 	if (self.owner.frame >= $stabs1 && self.owner.frame <= $stabs12)
 	{
-	
 		if (self.owner.frame == $stabs4 || self.owner.frame == $stabs8) // reduce particle dust spawn
 		{		
 			makevectors (self.angles);
 			setorigin(self, self.owner.origin - v_forward*2 - v_up*2); // Keep arm stab graphic on Vigil
 			
-			effect = spawn();
-			setorigin(effect, self.origin + v_forward * 48); //- v_up*28 + v_forward * 48);
-			setmodel(effect, "progs/dust.spr");
+			if (!self.owner.waterlevel)
+			{
+				effect = spawn();
+				setorigin(effect, self.origin + v_forward * 48); //- v_up*28 + v_forward * 48);
+				setmodel(effect, "progs/dust.spr");
 
-			effect.solid = SOLID_NOT;
-			effect.owner = self;
-			effect.drawonlytoclient = self.owner.owner; // reduce network traffic
-			effect.movetype = MOVETYPE_NOCLIP;
-			effect.flags = FL_MONSTER; // Run droptofloor in dust_think
-			effect.think = dust_think;
-			effect.nextthink = time;
-			effect.origin_z = effect.origin_z - 35;
+				effect.solid = SOLID_NOT;
+				effect.owner = self;
+				effect.drawonlytoclient = self.owner.owner; // reduce network traffic
+				effect.movetype = MOVETYPE_NOCLIP;
+				effect.flags = FL_MONSTER; // Run droptofloor in dust_think
+				effect.think = dust_think;
+				effect.nextthink = time;
+				effect.origin_z = effect.origin_z - 35;
+			}
 		}
 
 		if (self.frame > 0)
@@ -4682,16 +4684,29 @@ void() player_fstab3	=[	$fstab3,	player_fstab3	]
 	{
 		if (self.fstab_cnt == 1) // spawn once
 			fstab3_muzzle();
-			
-		effect = spawn();
-		setorigin(effect, self.origin - v_up*28);
-		setmodel(effect, "progs/dust.spr");	
-		effect.solid = SOLID_NOT;
-		effect.owner = self;
-		effect.drawonlytoclient = self.owner; // reduce network traffic
-		effect.movetype = MOVETYPE_NOCLIP;
-		effect.think = dust_think;
-		effect.nextthink = time;
+
+		if (self.waterlevel > 0)
+		{
+			if (self.inwater_type == CONTENT_WATER)
+				watersplash_particle(self, 0, 0);
+			else if (self.inwater_type == CONTENT_LAVA)
+				watersplash_particle(self, 0, 1);
+			else if (self.inwater_type == CONTENT_SLIME)
+				watersplash_particle(self, 0, 2);
+			sound (self, CHAN_AUTO, "player/waterstep1.wav", 0.5, ATTN_NORM);
+		}
+		else
+		{
+			effect = spawn();
+			setorigin(effect, self.origin - v_up*28);
+			setmodel(effect, "progs/dust.spr");	
+			effect.solid = SOLID_NOT;
+			effect.owner = self;
+			effect.drawonlytoclient = self.owner; // reduce network traffic
+			effect.movetype = MOVETYPE_NOCLIP;
+			effect.think = dust_think;
+			effect.nextthink = time;
+		}
 	}
 	
 	if (self.fstab_cnt == 5) // Do it once
