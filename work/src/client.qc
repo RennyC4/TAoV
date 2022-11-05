@@ -273,6 +273,15 @@ void() InitCamera =
 				view_y = view_y + 2; // zoom out
 			if (self.new_zoom_y < self.lock_view.origin_y)
 				view_y = view_y - 2; // zoom in
+
+			// Teleport camera to proper zoom distance on level changes set by level designer
+			if (framecount <= 10)
+			{
+				if (self.new_zoom_y < self.lock_view.origin_y)
+					view_y = self.new_zoom_y + self.min_zoom;
+				else
+					view_y = self.new_zoom_y + self.max_zoom;
+			}
 		}
 		else
 		{

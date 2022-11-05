@@ -27,6 +27,7 @@ Transit 5 = Dungeon.bsp to Cavern.bsp
 Transit 6 = Outerwall.bsp to GCathedrl.bsp
 Transit 7 = GCathedrl.bsp to Skyway.bsp
 Transit 8 = Cavern.bsp to Aqueduct.bsp
+Transit 9 = Outerwall.bsp to Library.bsp
 
 // ===============
 // Long-Term goals

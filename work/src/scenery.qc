@@ -612,7 +612,7 @@ void() pinetree =
 	droptofloor();
 };
 
-/*QUAKED telescope (0 1 0) (-93 -90 -16) (94 97 175)
+/*QUAKED telescope (0 1 0) (-25 -7 -17) (19 7 40)
 Regular old telescope
 */
 void() telescope =
