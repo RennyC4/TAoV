@@ -694,7 +694,7 @@ void() PlayerWaterPhysics =
 	{
 		if (self.char.velocity_z > -100)
 		{
-			if (!self.ledgegrab)
+			if (!self.ledgegrab && !checkground(self.char)) // checkground to stop applying friction when touching floor
 				self.char.velocity_z = self.char.velocity_z - 6 * (frametime * 100);
 		}
 		else
@@ -2722,17 +2722,17 @@ void() player_move = [0, player_move]
 
 	if (!self.owner.magicmenu)
 	{
-		if (self.velocity_x || self.velocity_y && self.owner.keyflags & (KEY_LEFT | KEY_RIGHT | KEY_UP | KEY_DOWN) || self.owner.forcewalk_finished > time)
+		if (self.velocity_x || self.velocity_y && self.owner.keyflags & (KEY_LEFT | KEY_RIGHT | KEY_UP | KEY_DOWN) || self.owner.forcewalk_finished > time || (self.swimming && self.velocity_z != 0 && !checkground(self)))
 		{
 			if (self.block_finished > time)
 				self.block_finished = time - 1; // - 1 auto-block fix
 			if (self.swimming)
 			{
 				self.running = FALSE; // don't easily wake up monsters!
+				if (self.walkframe == 1)
+					sound (self, CHAN_BODY, "misc/swim.wav", 1, ATTN_NORM);
 				if (self.walkframe > 7)
 					self.walkframe = 0;
-				if (self.walkframe == 0)
-					sound (self, CHAN_BODY, "misc/swim.wav", 1, ATTN_NORM);
 				self.frame = $swim1 + self.walkframe;
 				frameskip(0.2);
 			}
