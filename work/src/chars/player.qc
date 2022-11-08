@@ -2022,7 +2022,7 @@ void() player_think =
 				if (self.magicmenu == FALSE)
 				{
 					traceline (self.char.origin, self.char.origin + v_up*45, FALSE, self);
-					if (trace_fraction == TRUE && self.char.waterlevel < 2) // there isn't an object blocking Vigil's jump and he's not in water
+					if (trace_fraction == TRUE && !self.char.swimming) // there isn't an object blocking Vigil's jump and he's not swimming
 					{
 						if (self.char.movetype != MOVETYPE_WALK) // fix a potential ledge grab glitch that can RARELY but still happen
 							self.char.movetype = MOVETYPE_WALK;
@@ -6305,6 +6305,12 @@ void() player_walled3    =[	0,	player_walled3	]
 		self.velocity = '0 0 0';
 		return;
 	}
+	if (self.swimming)
+	{
+		self.angles_x = 0;
+		player_move();
+		return;
+	}
 	frameskip(0.01);
 };
 
@@ -6545,7 +6551,6 @@ void() player_pain =
 		self.block_finished = time - 1;
 	
 	// Swimming damage routine, inwater_pain counter handles logic
-	// moving this below will sometimes break Vigil's button2 swimming oddly
 	if (self.swimming)
 	{
 		self.think = player_knockedup1;
