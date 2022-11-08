@@ -4,7 +4,6 @@ void() plat_trigger_use;
 void() plat_go_up;
 void() plat_go_down;
 void() plat_crush;
-//void() player_trainplat_fix;
 float PLAT_LOW_TRIGGER = 1;
 
 void() plat_spawn_inside_trigger =
@@ -14,7 +13,8 @@ void() plat_spawn_inside_trigger =
 
 	//
 	// middle trigger
-	//	
+	//
+
 	trigger = spawn();
 	trigger.touch = plat_center_touch;
 	trigger.movetype = MOVETYPE_NONE;
@@ -250,22 +250,6 @@ void() func_train =
 		self.speed = 100;
 	if (!self.target)
 		objerror ("func_train without a target");
-
-//	if (self.sounds == 0)
-//	{
-//		self.noise = ("misc/null.wav");
-//		precache_sound ("misc/null.wav");
-//		self.noise1 = ("misc/null.wav");
-//		precache_sound ("misc/null.wav");
-//	}
-
-//	if (self.sounds == 1)
-//	{
-//		self.noise = ("plats/train2.wav");
-//		precache_sound ("plats/train2.wav");
-//		self.noise1 = ("plats/train1.wav");
-//		precache_sound ("plats/train1.wav");
-//	}
 
 	self.solid = SOLID_BSP;
 	self.movetype = MOVETYPE_PUSH;

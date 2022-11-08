@@ -319,10 +319,13 @@ void() monster_wraith =
 	self.solid = SOLID_SLIDEBOX;
 	self.movetype = MOVETYPE_NOCLIP;
 	setmodel (self, "progs/wraith.mdl");
-	if (difficulty < 2)
-		self.health = self.max_health = 175; // regular health
-	else
-		self.health = self.max_health = 263; // hard health (50% tougher)
+	if (!self.health)
+	{
+		if (difficulty < 2)
+			self.health = self.max_health = 175; // regular health
+		else
+			self.health = self.max_health = 263; // hard health (50% tougher)
+	}
 	self.netname = "solid";
 	self.takedamage = DAMAGE_AIM;
 	self.solid = SOLID_NOT;
