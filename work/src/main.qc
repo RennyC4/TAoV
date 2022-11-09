@@ -44,7 +44,6 @@ void(float n) frameskip =
 	}
 };
 
-
 //
 // Used by CSQC to resend all the data, fixes save game loading
 //
@@ -538,7 +537,7 @@ void() StartFrame =
 	
 	//
 	// Custom Lighting - Stops monsters / players from going pitch black
-	// + colormod shifting + soul candle relic + water level updates on MOVETYPE_STEP
+	// + colormod shifting + soul candle relic + water splash/ripples
 	//
 
 	for (entity v = world; (v=nextent(v));)
@@ -572,7 +571,7 @@ void() StartFrame =
 				v.waterlevel = 0;
 			}
 			
-			if (v.flags & FL_MONSTER) // Let the engine handle this for monsters
+			if (v.flags & FL_MONSTER) // Engine can handle waterlevel 2 on Vigil
 			{
 				// get the medium water depth (waterlevel 2)
 				point_z = point_z + (v.mins_z + v.maxs_z) / 2;
@@ -581,9 +580,10 @@ void() StartFrame =
 				if (contents >= CONTENT_LAVA && contents <= CONTENT_WATER)
 					v.waterlevel = 2;
 			}
+			// We ignore waterlevel 3 entirely, just use a regular pointscontents
 		}
 
-		if (v.waterlevel > 0 && v.waterlevel < 3 && v.waterripple_finished < time && v.deadflag != DEAD_DEAD) // v.health > 0)
+		if (v.waterlevel > 0 && v.waterlevel < 3 && v.deadflag != DEAD_DEAD) // v.health > 0)
 		{
 			if (v.waterlevel == 1 && v.splash_finished < time)
 			{
@@ -599,22 +599,25 @@ void() StartFrame =
 				sound (v, CHAN_AUTO, "misc/h2ohit1.wav", 1, ATTN_NORM);
 				v.splash_finished = time + 99999;
 			}
-			if (liquidtype == CONTENT_WATER)
+			if (v.waterripple_finished < time)
 			{
-				ripple_vfx(v, 0);
-				v.inwater_type = CONTENT_WATER;
+				if (liquidtype == CONTENT_WATER)
+				{
+					ripple_vfx(v, 0);
+					v.inwater_type = CONTENT_WATER;
+				}
+				else if (liquidtype == CONTENT_LAVA)
+				{
+					ripple_vfx(v, 1);
+					v.inwater_type = CONTENT_LAVA;
+				}
+				else if (liquidtype == CONTENT_SLIME)
+				{
+					ripple_vfx(v, 2);
+					v.inwater_type = CONTENT_SLIME;
+				}
+				v.waterripple_finished = time + 0.2;
 			}
-			else if (liquidtype == CONTENT_LAVA)
-			{
-				ripple_vfx(v, 1);
-				v.inwater_type = CONTENT_LAVA;
-			}
-			else if (liquidtype == CONTENT_SLIME)
-			{
-				ripple_vfx(v, 2);
-				v.inwater_type = CONTENT_SLIME;
-			}
-			v.waterripple_finished = time + 0.2;
 		}
 		if (!v.waterlevel && v.splash_finished > time)
 			v.splash_finished = time;
@@ -671,7 +674,7 @@ void() StartFrame =
 		local vector x;
 		x = getlight(v.origin);
 
-		// Uncomment for lighting levels adjustment
+		// Uncomment for lighting level adjustments
 		/*
 		local string s;
 		
@@ -685,10 +688,11 @@ void() StartFrame =
 		bprint ("z: ", s, "\n"); 
 		bprint ("\n");
 		*/
-	
+
 		//
-		// Soul Candle Relic - On
-		//		
+		// Soul candle relic
+		//
+
 		if (v.classname == "player" && (relics & IT_RELIC9))
 		{
 			if (x_x <= 14 || x_y <= 14 || x_z <= 14)
@@ -727,7 +731,11 @@ void() StartFrame =
 				}
 			}
 		}
-		
+
+		//
+		// Cap light level, disable pitch black actors
+		//
+
 		if (x_x < 44 || x_y < 44 || x_z < 44)
 		{
 			v.drawflags = 7; // override lighting
