@@ -1626,13 +1626,13 @@ void() player_think =
 					self.char.flypain = FALSE;
 					self.char.takedamage = DAMAGE_NO; // invunerability frames
 					self.char.movetype = MOVETYPE_WALK; // very minor bug fix
-					self.char.think = player_spinatk1;
 					self.char.block_finished = time;
 					self.char.charge_count = 0;
 					self.char.bflipwall_finished = time; // minor bug fix
 					self.char.angles_x = self.char.angles_z = 0; // bug fix: reset angle X/Z
-					self.char.nextthink = time + 0.1;
 					self.char.idle_count = 0; // reset pose
+					self.char.think = player_spinatk1;
+					self.char.nextthink = time;
 					self.magicmenu = FALSE;
 					self.attack_finished = time + 1;
 				}
@@ -1883,6 +1883,7 @@ void() player_think =
 						self.doublejump = TRUE; // don't allow double jump out of a backflip
 						self.backflip_finished = time + 0.7; // Perfect value! Player enters negative velocity by this itme...
 						self.char.think = player_bflip1;
+						self.char.nextthink = time;
 						self.char.aircombo_count = 0; // prevent animation glitch in player_jumpframe();
 					}
 				}
@@ -3738,7 +3739,11 @@ void() player_bflip2	=[	$bflip2,	player_bflip3	]
 	sound (self, CHAN_AUTO, "player/motion2.wav", 1, ATTN_NORM);
 };
 void() player_bflip3	=[	$bflip3,	player_bflip4	] {backflip_move();};
-void() player_bflip4	=[	$bflip4,	player_move		] {sound (self, CHAN_AUTO, "player/motion1.wav", 1, ATTN_NORM);};
+void() player_bflip4	=[	$bflip4,	player_move		] 
+{
+	self.pain_finished = self.fly_time = time; // allow blocking etc
+	sound (self, CHAN_AUTO, "player/motion1.wav", 1, ATTN_NORM);
+};
 
 // player casted a spell without full mana requirements and is now tired
 void() tired_check =
