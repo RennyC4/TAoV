@@ -892,10 +892,12 @@ traceboxes to the ceiling to put an entity as far up as determined (default 9999
 
 0 is false
 1 is true
+
+type will teleport the entity regardless to the end of raisetoroof
 =============
 */
 
-float(entity e, float dist) raisetoroof =
+float(entity e, float dist, optional float type) raisetoroof =
 {
 	local vector source, dest;
 
@@ -905,7 +907,14 @@ float(entity e, float dist) raisetoroof =
 	tracebox (source, e.mins, e.maxs, dest, TRUE, e);
 
 	if (trace_fraction == 1) // Hit nothing
+	{
+		if (type) // move entity to spot anyways
+		{
+			dest = trace_endpos;
+			setorigin(e, dest);
+		}
 		return FALSE;
+	}
 	else
 	{
 		dest = trace_endpos;

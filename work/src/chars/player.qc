@@ -3741,7 +3741,7 @@ void() player_bflip2	=[	$bflip2,	player_bflip3	]
 void() player_bflip3	=[	$bflip3,	player_bflip4	] {backflip_move();};
 void() player_bflip4	=[	$bflip4,	player_move		] 
 {
-	self.pain_finished = self.fly_time = time; // allow blocking etc
+	self.pain_finished = self.fly_time = time; // Fixes players keys being locked after backflipping when broken is inflicted
 	sound (self, CHAN_AUTO, "player/motion1.wav", 1, ATTN_NORM);
 };
 
