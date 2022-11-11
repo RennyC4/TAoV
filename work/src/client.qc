@@ -108,7 +108,7 @@ void() InitCamera =
 
 	if (self.spawnflags & 2) // Camera doesn't move in transition rooms
 		return;
-	if (self.purge_toggle)
+	if (self.purge_toggle) // Camera doesn't move during purge attack
 		return;
 
 	view = vectoangles(self.goalentity.origin - self.origin);
@@ -130,15 +130,15 @@ void() InitCamera =
 			if (self.camerastyle != 4)
 			{
 				local float view_y_bound = bound(250, view_y, 290);
-				
-				// if we're switching away from cinematic cam, we have to smooth properly
+
+				// if we're switching away from cinematic camera, we have to smooth properly
 				if (self.camerastyle_old == 4)
 				{
 					self.stylechange_angle = self.angles_y;
-					
+
 					// turn rate (in degrees per second)
 					local float turn_rate = 85;
-					
+
 					self.stylechange_length = angle_diff(view_y_bound, self.angles_y) / turn_rate;
 					self.stylechange_time = time + self.stylechange_length;
 				}
@@ -146,10 +146,10 @@ void() InitCamera =
 				// if we're still in the process of smoothing, we ignore the true view_y to avoid snapping
 				if (self.stylechange_time)
 				{
-					local float frac = (self.stylechange_time - time)/self.stylechange_length; 
-					
+					local float frac = (self.stylechange_time - time) / self.stylechange_length; 
+
 					if (frac > 0)
-						self.angles_y = view_y_bound + angle_diff(view_y_bound, self.stylechange_angle)*frac;
+						self.angles_y = view_y_bound + angle_diff(view_y_bound, self.stylechange_angle) * frac;
 					else
 					{
 						self.angles_y = view_y_bound;
@@ -270,9 +270,11 @@ void() InitCamera =
 		if (self.lock_view.origin_y < (self.new_zoom_y + self.min_zoom) || self.lock_view.origin_y > (self.new_zoom_y + self.max_zoom))
 		{
 			if (self.new_zoom_y > self.lock_view.origin_y)
-				view_y = view_y + 2; // zoom out
+				view_y = view_y + 6; // zoom out
+				//view_y = view_y + 2; // zoom out
 			if (self.new_zoom_y < self.lock_view.origin_y)
-				view_y = view_y - 2; // zoom in
+				view_y = view_y - 6; // zoom in
+				//view_y = view_y - 2; // zoom in
 
 			// Teleport camera to proper zoom distance on level changes set by level designer
 			if (framecount <= 10)

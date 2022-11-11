@@ -302,12 +302,12 @@ void(vector pos) DrawHPBar =
 	// Current hp
     local vector textpos = pos + '10 5 0';
 
-    drawstring (textpos + '1 1', hp_str, [8*scale, 8], '0 0 0', 1, DRAWFLAG_NORMAL); // HP text shadow
+    drawstring (textpos + '0.5 0.5', hp_str, [8*scale, 8], '0 0 0', 1, DRAWFLAG_NORMAL); // HP text shadow
     drawstring (textpos, hp_str, [8*scale, 8], '1 1 1', 1, DRAWFLAG_NORMAL);
     textpos_x += (stringwidth(hp_str, TRUE, [8*scale, 8])) + 1;
     
     // Max hp
-    drawstring (textpos + '1 1', maxhp_str, [8*scale, 8], '0 0 0', 1, DRAWFLAG_NORMAL); // Max HP text shadow
+    drawstring (textpos + '0.5 0.5', maxhp_str, [8*scale, 8], '0 0 0', 1, DRAWFLAG_NORMAL); // Max HP text shadow
     drawstring (textpos, maxhp_str, [8*scale, 8], '1 1 1', 1, DRAWFLAG_NORMAL);
 };
 
