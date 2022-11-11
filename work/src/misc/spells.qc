@@ -887,7 +887,7 @@ void() elebeam_think =
 								head.owner.nobackflip_finished = time + 0.5; // don't allow backflip on hit
 							}
 						}
-						if (self.owner.classname == "player")
+						if (self.owner.classname == "player" && head.flags & FL_MONSTER)
 						{ // owner.owner == Vigil -> Camera
 							if (self.owner.owner.camera_forcezoom_finished < time)
 								self.owner.owner.zoom_mode = 1; // zoom in camera
@@ -990,7 +990,7 @@ void(float damg, float hight, float fwd) Elebeam =
 	beam.owner = self;
 	beam.movetype = MOVETYPE_NOCLIP;
 	beam.solid = SOLID_NOT;
-	beam.classname = "firebeam";
+	beam.classname = "elebeam";
 		
 	// set beam speed	
 	beam.velocity = aim(self, 500);
