@@ -7,7 +7,7 @@
 //| does much, except to setup basic variables and entities.                   |
 //+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-+
 
-void(entity own, float type) ripple_vfx;
+void(entity own, float type, vector org) ripple_vfx;
 
 //
 // FTE - Only - Begin
@@ -479,7 +479,7 @@ void() SoulCandle_Think =
 	frameskip(0.01);
 };
 
-void(entity own, float style, float type) watersplash_particle;
+void(entity own, float style, float type, vector org) watersplash_particle;
 void() StartFrame =
 {
 	local entity h;
@@ -590,11 +590,11 @@ void() StartFrame =
 				for (i = 0; i < 6; i = i+1)
 				{
 					if (liquidtype == CONTENT_WATER)
-						watersplash_particle(v, 0, 0);
+						watersplash_particle(v, 0, 0, v.origin);
 					else if (liquidtype == CONTENT_LAVA)
-						watersplash_particle(v, 0, 1);
+						watersplash_particle(v, 0, 1, v.origin);
 					else if (liquidtype == CONTENT_SLIME)
-						watersplash_particle(v, 0, 2);
+						watersplash_particle(v, 0, 2, v.origin);
 				}
 				sound (v, CHAN_AUTO, "misc/h2ohit1.wav", 1, ATTN_NORM);
 				v.splash_finished = time + 99999;
@@ -603,17 +603,17 @@ void() StartFrame =
 			{
 				if (liquidtype == CONTENT_WATER)
 				{
-					ripple_vfx(v, 0);
+					ripple_vfx(v, 0, v.origin);
 					v.inwater_type = CONTENT_WATER;
 				}
 				else if (liquidtype == CONTENT_LAVA)
 				{
-					ripple_vfx(v, 1);
+					ripple_vfx(v, 1, v.origin);
 					v.inwater_type = CONTENT_LAVA;
 				}
 				else if (liquidtype == CONTENT_SLIME)
 				{
-					ripple_vfx(v, 2);
+					ripple_vfx(v, 2, v.origin);
 					v.inwater_type = CONTENT_SLIME;
 				}
 				v.waterripple_finished = time + 0.2;

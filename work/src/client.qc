@@ -513,7 +513,7 @@ void() splash_particle_think =
 	frameskip(0.1);
 };
 
-void(entity own, float style, float type) watersplash_particle =
+void(entity own, float style, float type, optional vector org) watersplash_particle =
 {
 		local entity splash;
 
@@ -529,7 +529,10 @@ void(entity own, float style, float type) watersplash_particle =
 		splash.cnt = type;
 		setmodel (splash, string_null);
 		setsize (splash, '0 0 0', '0 0 0');
-		setorigin (splash, own.origin);
+		if (!org)
+			setorigin (splash, own.origin);
+		else
+			setorigin (splash, org);
 
 		if (style == 0) // Small splash
 		{
@@ -1178,11 +1181,11 @@ void() PlayerPostThink =
 						for (i = 0; i < 4; i = i+1)
 						{
 							if (pointcontents(self.char.origin) == CONTENT_WATER)
-								watersplash_particle(self.char, 1, 0);
+								watersplash_particle(self.char, 1, 0, self.char.origin);
 							if (pointcontents(self.char.origin) == CONTENT_LAVA)
-								watersplash_particle(self.char, 1, 1);
+								watersplash_particle(self.char, 1, 1, self.char.origin);
 							if (pointcontents(self.char.origin) == CONTENT_SLIME)
-								watersplash_particle(self.char, 1, 2);
+								watersplash_particle(self.char, 1, 2, self.char.origin);
 						}
 						self.bubble_count = time + 3;
 					}

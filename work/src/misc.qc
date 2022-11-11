@@ -52,7 +52,7 @@ void() ripple_think =
 	frameskip(0.01);
 };
 
-void(entity own, float type) ripple_vfx =
+void(entity own, float type, vector org) ripple_vfx =
 {
 	local entity ripple;
 
@@ -62,7 +62,7 @@ void(entity own, float type) ripple_vfx =
 	precache_model ("progs/ripple.spr");
 	setmodel (ripple, "progs/ripple.spr");
 	setsize(ripple, '-1 -1 -1', '1 1 1');
-	setorigin(ripple, own.origin);
+		setorigin (ripple, org);
 
 	ripple.movetype = MOVETYPE_NOCLIP;
 	ripple.solid = SOLID_NOT;

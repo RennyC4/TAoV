@@ -2750,11 +2750,11 @@ void() player_move = [0, player_move]
 								if (self.waterlevel > 0)
 								{
 									if (self.inwater_type == CONTENT_WATER)
-										watersplash_particle(self, 0, 0);
+										watersplash_particle(self, 0, 0, self.origin);
 									else if (self.inwater_type == CONTENT_LAVA)
-										watersplash_particle(self, 0, 1);
+										watersplash_particle(self, 0, 1, self.origin);
 									else if (self.inwater_type == CONTENT_SLIME)
-										watersplash_particle(self, 0, 2);
+										watersplash_particle(self, 0, 2, self.origin);
 									sound (self, CHAN_AUTO, "player/waterstep1.wav", 0.5, ATTN_NORM);
 								}
 								else
@@ -2765,11 +2765,11 @@ void() player_move = [0, player_move]
 								if (self.waterlevel > 0)
 								{
 									if (self.inwater_type == CONTENT_WATER)
-										watersplash_particle(self, 0, 0);
+										watersplash_particle(self, 0, 0, self.origin);
 									else if (self.inwater_type == CONTENT_LAVA)
-										watersplash_particle(self, 0, 1);
+										watersplash_particle(self, 0, 1, self.origin);
 									else if (self.inwater_type == CONTENT_SLIME)
-										watersplash_particle(self, 0, 2);
+										watersplash_particle(self, 0, 2, self.origin);
 									sound (self, CHAN_AUTO, "player/waterstep2.wav", 0.5, ATTN_NORM);
 								}
 								else
@@ -2799,11 +2799,11 @@ void() player_move = [0, player_move]
 							if (self.waterlevel > 0)
 							{
 								if (self.inwater_type == CONTENT_WATER)
-									watersplash_particle(self, 0, 0);
+									watersplash_particle(self, 0, 0, self.origin);
 								else if (self.inwater_type == CONTENT_LAVA)
-									watersplash_particle(self, 0, 1);
+									watersplash_particle(self, 0, 1, self.origin);
 								else if (self.inwater_type == CONTENT_SLIME)
-									watersplash_particle(self, 0, 2);
+									watersplash_particle(self, 0, 2, self.origin);
 								sound (self, CHAN_AUTO, "player/waterstep1.wav", 1, ATTN_NORM);
 							}
 							else
@@ -2814,11 +2814,11 @@ void() player_move = [0, player_move]
 							if (self.waterlevel > 0)
 							{
 								if (self.inwater_type == CONTENT_WATER)
-									watersplash_particle(self, 0, 0);
+									watersplash_particle(self, 0, 0, self.origin);
 								else if (self.inwater_type == CONTENT_LAVA)
-									watersplash_particle(self, 0, 1);
+									watersplash_particle(self, 0, 1, self.origin);
 								else if (self.inwater_type == CONTENT_SLIME)
-									watersplash_particle(self, 0, 2);
+									watersplash_particle(self, 0, 2, self.origin);
 								sound (self, CHAN_AUTO, "player/waterstep1.wav", 1, ATTN_NORM);
 							}
 							else
@@ -4218,11 +4218,11 @@ void() runattack_forward = // push player forward during animation
 		else
 		{
 			if (self.inwater_type == CONTENT_WATER)
-				watersplash_particle(self, 0, 0);
+				watersplash_particle(self, 0, 0, self.origin);
 			else if (self.inwater_type == CONTENT_LAVA)
-				watersplash_particle(self, 0, 1);
+				watersplash_particle(self, 0, 1, self.origin);
 			else if (self.inwater_type == CONTENT_SLIME)
-				watersplash_particle(self, 0, 2);		 
+				watersplash_particle(self, 0, 2, self.origin);		 
 		}
 	}
 	self.velocity_time = time + 0.2;
@@ -4379,6 +4379,25 @@ void() plyr_armstab_think =
 				effect.think = dust_think;
 				effect.nextthink = time;
 				effect.origin_z = effect.origin_z - 35;
+			}
+			else
+			{
+				makevectors (self.owner.angles);
+				if (self.owner.inwater_type == CONTENT_WATER)
+				{
+					watersplash_particle(self.owner, 0, 0, self.owner.origin + v_forward * 48);
+					ripple_vfx(self.owner, 0, self.owner.origin + v_forward * 48);
+				}
+				else if (self.owner.inwater_type == CONTENT_LAVA)
+				{
+					watersplash_particle(self.owner, 0, 1, self.owner.origin + v_forward * 48);
+					ripple_vfx(self.owner, 1, self.owner.origin + v_forward * 48);
+				}
+				else if (self.owner.inwater_type == CONTENT_SLIME)
+				{
+					watersplash_particle(self.owner, 0, 2, self.owner.origin + v_forward * 48);
+					ripple_vfx(self.owner, 2, self.owner.origin + v_forward * 48);
+				}
 			}
 		}
 
@@ -4693,11 +4712,11 @@ void() player_fstab3	=[	$fstab3,	player_fstab3	]
 		if (self.waterlevel > 0)
 		{
 			if (self.inwater_type == CONTENT_WATER)
-				watersplash_particle(self, 0, 0);
+				watersplash_particle(self, 0, 0, self.origin);
 			else if (self.inwater_type == CONTENT_LAVA)
-				watersplash_particle(self, 0, 1);
+				watersplash_particle(self, 0, 1, self.origin);
 			else if (self.inwater_type == CONTENT_SLIME)
-				watersplash_particle(self, 0, 2);
+				watersplash_particle(self, 0, 2, self.origin);
 			sound (self, CHAN_AUTO, "player/waterstep1.wav", 0.5, ATTN_NORM);
 		}
 		else
@@ -8411,11 +8430,11 @@ void() player_dodgea8	    =[	$dodgea8,	player_dodgea9		 	]
 	if (self.waterlevel > 0)
 	{
 		if (self.inwater_type == CONTENT_WATER)
-			watersplash_particle(self, 0, 0);
+			watersplash_particle(self, 0, 0, self.origin);
 		else if (self.inwater_type == CONTENT_LAVA)
-			watersplash_particle(self, 0, 1);
+			watersplash_particle(self, 0, 1, self.origin);
 		else if (self.inwater_type == CONTENT_SLIME)
-			watersplash_particle(self, 0, 2);
+			watersplash_particle(self, 0, 2, self.origin);
 		sound (self, CHAN_AUTO, "player/waterstep1.wav", 1, ATTN_NORM);
 	}
 	if (self.perfectguard_buff < time)
@@ -8432,11 +8451,11 @@ void() player_dodgea11	    =[	$dodgea11,	player_block		 	]
 	if (self.waterlevel > 0)
 	{
 		if (self.inwater_type == CONTENT_WATER)
-			watersplash_particle(self, 0, 0);
+			watersplash_particle(self, 0, 0, self.origin);
 		else if (self.inwater_type == CONTENT_LAVA)
-			watersplash_particle(self, 0, 1);
+			watersplash_particle(self, 0, 1, self.origin);
 		else if (self.inwater_type == CONTENT_SLIME)
-			watersplash_particle(self, 0, 2);
+			watersplash_particle(self, 0, 2, self.origin);
 		sound (self, CHAN_AUTO, "player/waterstep1.wav", 1, ATTN_NORM);
 	}
 	frameskip(0.05);
@@ -8470,11 +8489,11 @@ void() player_dodgeb4	    =[	$dodgeb4,	player_dodgeb5		 	]
 	if (self.waterlevel > 0)
 	{
 		if (self.inwater_type == CONTENT_WATER)
-			watersplash_particle(self, 0, 0);
+			watersplash_particle(self, 0, 0, self.origin);
 		else if (self.inwater_type == CONTENT_LAVA)
-			watersplash_particle(self, 0, 1);
+			watersplash_particle(self, 0, 1, self.origin);
 		else if (self.inwater_type == CONTENT_SLIME)
-			watersplash_particle(self, 0, 2);
+			watersplash_particle(self, 0, 2, self.origin);
 		sound (self, CHAN_AUTO, "player/waterstep1.wav", 1, ATTN_NORM);frameskip(0.05);
 	}
 	else
@@ -8545,11 +8564,11 @@ void() player_dodgec2	    =[	$dodgec2,	player_dodgec3		 	]
 	if (self.waterlevel > 0)
 	{
 		if (self.inwater_type == CONTENT_WATER)
-			watersplash_particle(self, 0, 0);
+			watersplash_particle(self, 0, 0, self.origin);
 		else if (self.inwater_type == CONTENT_LAVA)
-			watersplash_particle(self, 0, 1);
+			watersplash_particle(self, 0, 1, self.origin);
 		else if (self.inwater_type == CONTENT_SLIME)
-			watersplash_particle(self, 0, 2);
+			watersplash_particle(self, 0, 2, self.origin);
 		sound (self, CHAN_AUTO, "player/waterstep1.wav", 1, ATTN_NORM);frameskip(0.05);
 	}
 	else
@@ -8575,11 +8594,11 @@ void() player_dodged2	    =[	$dodged2,	player_dodged3		 	]
 	if (self.waterlevel > 0)
 	{
 		if (self.inwater_type == CONTENT_WATER)
-			watersplash_particle(self, 0, 0);
+			watersplash_particle(self, 0, 0, self.origin);
 		else if (self.inwater_type == CONTENT_LAVA)
-			watersplash_particle(self, 0, 1);
+			watersplash_particle(self, 0, 1, self.origin);
 		else if (self.inwater_type == CONTENT_SLIME)
-			watersplash_particle(self, 0, 2);
+			watersplash_particle(self, 0, 2, self.origin);
 		sound (self, CHAN_AUTO, "player/waterstep1.wav", 1, ATTN_NORM);frameskip(0.05);
 	}
 	else
@@ -8603,11 +8622,11 @@ void() player_dodgee2	    =[	$dodged2,	player_dodgee3		 	]
 	if (self.waterlevel > 0)
 	{
 		if (self.inwater_type == CONTENT_WATER)
-			watersplash_particle(self, 0, 0);
+			watersplash_particle(self, 0, 0, self.origin);
 		else if (self.inwater_type == CONTENT_LAVA)
-			watersplash_particle(self, 0, 1);
+			watersplash_particle(self, 0, 1, self.origin);
 		else if (self.inwater_type == CONTENT_SLIME)
-			watersplash_particle(self, 0, 2);
+			watersplash_particle(self, 0, 2, self.origin);
 		sound (self, CHAN_AUTO, "player/waterstep1.wav", 1, ATTN_NORM);frameskip(0.05);
 	}
 	else
@@ -8633,11 +8652,11 @@ void() player_dodgef2	    =[	$dodgec2,	player_dodgef3		 	]
 	if (self.waterlevel > 0)
 	{
 		if (self.inwater_type == CONTENT_WATER)
-			watersplash_particle(self, 0, 0);
+			watersplash_particle(self, 0, 0, self.origin);
 		else if (self.inwater_type == CONTENT_LAVA)
-			watersplash_particle(self, 0, 1);
+			watersplash_particle(self, 0, 1, self.origin);
 		else if (self.inwater_type == CONTENT_SLIME)
-			watersplash_particle(self, 0, 2);
+			watersplash_particle(self, 0, 2, self.origin);
 		sound (self, CHAN_AUTO, "player/waterstep1.wav", 1, ATTN_NORM);frameskip(0.05);
 	}
 	else
@@ -9053,11 +9072,11 @@ void() player_gizuna2   =[	$izuna1,	player_bflip1	]
 		for (i = 0; i < 8; i = i+1)
 		{
 			if (contents == CONTENT_WATER)
-				watersplash_particle(self, 2, 0);
+				watersplash_particle(self, 2, 0, self.origin);
 			else if (contents == CONTENT_LAVA)
-				watersplash_particle(self, 2, 1);
+				watersplash_particle(self, 2, 1, self.origin);
 			else
-				watersplash_particle(self, 2, 3);
+				watersplash_particle(self, 2, 3, self.origin);
 		}
 		sound (self, CHAN_AUTO, "player/izunah2o.wav", 1, ATTN_NORM);
 	}
