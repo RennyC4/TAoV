@@ -464,9 +464,9 @@ void() smoothcamera_x_follow =
 	self.origin_y = self.owner.origin_y;
 
 	if (self.origin_z < self.owner.origin_z)
-		self.origin_z = self.origin_z + 1 * frametime * x;
+		self.origin_z = self.origin_z + 4 * frametime * x;
 	if (self.origin_z > self.owner.origin_z)
-		self.origin_z = self.origin_z - 1 * frametime * x;
+		self.origin_z = self.origin_z - 4 * frametime * x;
 
 	setorigin (self, self.origin);
 	frameskip(0.01);
