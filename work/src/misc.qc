@@ -46,21 +46,18 @@ void() watersplash_think =
 
 	if (!self.combo)
 	{
-		bprint ("Small\n");
 		self.alpha = self.alpha - 0.005;
 		self.scale = self.scale + 0.0025;
 		self.origin_z = self.origin_z + 0.025;
 	}
 	else if (self.combo == 1)
 	{
-		bprint ("Medium\n");
 		self.alpha = self.alpha - 0.015;
 		self.scale = self.scale + 0.01;
 		self.origin_z = self.origin_z + 0.075;
 	}
 	else
 	{
-		bprint ("Large\n");
 		self.alpha = self.alpha - 0.0075;
 		self.scale = self.scale + 0.01;
 		self.origin_z = self.origin_z + 0.1;
