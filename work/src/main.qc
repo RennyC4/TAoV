@@ -199,6 +199,7 @@ void() worldspawn =
 		precache_model ("progs/splash_w.spr");
 		precache_model ("progs/splash_l.spr");
 		precache_model ("progs/splash_s.spr");
+		precache_model ("progs/watersplash.spr");
 
 		//
 		// Sounds
@@ -595,11 +596,11 @@ void() StartFrame =
 				for (i = 0; i < 6; i = i+1)
 				{
 					if (liquidtype == CONTENT_WATER)
-						watersplash_particle(v, 0, 0, v.origin);
+						watersplash_particle(v, 1, 0, v.origin);
 					else if (liquidtype == CONTENT_LAVA)
-						watersplash_particle(v, 0, 1, v.origin);
+						watersplash_particle(v, 1, 1, v.origin);
 					else if (liquidtype == CONTENT_SLIME)
-						watersplash_particle(v, 0, 2, v.origin);
+						watersplash_particle(v, 1, 2, v.origin);
 				}
 				sound (v, CHAN_AUTO, "misc/h2ohit1.wav", 1, ATTN_NORM);
 				v.splash_finished = time + 99999;

@@ -7,6 +7,84 @@
 //+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-+
 
 //
+// Water splash effect
+//
+
+void() watersplash_think =
+{
+	local vector source, dest;
+
+	if (!self.cnt2)
+	{
+		source = self.origin;
+		dest = self.origin - v_up * 100;
+
+		tracebox (source, self.mins, self.maxs, dest, TRUE, self);
+
+		if (trace_fraction == 1) // Hit nothing
+		{
+			remove(self);
+			return;
+		}
+		else
+		{
+			if (self.hitcontentsmaski)
+			{
+				
+				if (!self.combo)
+					dest = trace_endpos + v_up * 8;
+				else if (self.combo == 1)
+					dest = trace_endpos + v_up * 16;
+				else
+					dest = trace_endpos + v_up * 32;
+				
+				setorigin(self, dest);
+				self.cnt2 = TRUE;
+			}
+		}
+	}
+
+	if (!self.combo)
+	{
+		bprint ("Small\n");
+		self.alpha = self.alpha - 0.005;
+		self.scale = self.scale + 0.0025;
+		self.origin_z = self.origin_z + 0.025;
+	}
+	else if (self.combo == 1)
+	{
+		bprint ("Medium\n");
+		self.alpha = self.alpha - 0.015;
+		self.scale = self.scale + 0.01;
+		self.origin_z = self.origin_z + 0.075;
+	}
+	else
+	{
+		bprint ("Large\n");
+		self.alpha = self.alpha - 0.0075;
+		self.scale = self.scale + 0.01;
+		self.origin_z = self.origin_z + 0.1;
+	}
+
+	if (self.alpha > 0)
+	{
+		if (!self.cnt)
+			self.colormod = '1 1 1.5' * self.alpha; // Allow transparency without additive (water)
+		else if (self.cnt == 1)
+			self.colormod = '1 .25 .25' * self.alpha; // Allow transparency without additive (lava)
+		else
+			self.colormod = '.25 1 .25' * self.alpha; // Allow transparency without additive (slime)
+	}
+	else
+	{
+		remove(self);
+		return;
+	}
+
+	frameskip(0.01);
+};
+
+//
 // Water ripple effect
 //
 
@@ -62,7 +140,7 @@ void(entity own, float type, vector org) ripple_vfx =
 	precache_model ("progs/ripple.spr");
 	setmodel (ripple, "progs/ripple.spr");
 	setsize(ripple, '-1 -1 -1', '1 1 1');
-		setorigin (ripple, org);
+	setorigin (ripple, org);
 
 	ripple.movetype = MOVETYPE_NOCLIP;
 	ripple.solid = SOLID_NOT;

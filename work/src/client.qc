@@ -496,17 +496,6 @@ void() splash_particle_think =
 	else
 		setmodel (self, "progs/splash_s.spr");
 
-	/*
-	if (pointcontents(self.owner.origin) == CONTENT_WATER)
-		setmodel (self, "progs/splash_w.spr");
-	if (pointcontents(self.owner.origin) == CONTENT_LAVA)
-		setmodel (self, "progs/splash_l.spr");
-	if (pointcontents(self.owner.origin) == CONTENT_SLIME)
-		setmodel (self, "progs/splash_s.spr");
-	if (pointcontents(self.owner.origin) == CONTENT_EMPTY)
-		setmodel (self, "progs/splash_w.spr");
-	*/
-
 	if (self.attack_finished < time)
 	{
 		remove(self);
@@ -517,42 +506,70 @@ void() splash_particle_think =
 
 void(entity own, float style, float type, optional vector org) watersplash_particle =
 {
-		local entity splash;
+		local entity splash, particle;
 
-		splash = spawn ();
-		splash.angles_y = random() * 360;
+		// Spawn particle
+		particle = spawn();
+		particle.angles_y = random() * 360;
+		makevectors (particle.angles);
+		particle.velocity = v_forward * 100;
+		particle.owner = own;
+		particle.movetype = MOVETYPE_BOUNCE;
+		particle.hitcontentsmaski = 0; // No collision
+		particle.solid = SOLID_NOT;
+		particle.classname = "splashparticle";
+		particle.cnt = type;
+		setmodel (particle, string_null);
+		setsize (particle, '0 0 0', '0 0 0');
+		if (!org)
+			setorigin (particle, own.origin);
+		else
+			setorigin (particle, org);
+
+		// Spawn splash
+		splash = spawn();
 		makevectors (splash.angles);
-		splash.velocity = v_forward * 100;
 		splash.owner = own;
-		splash.movetype = MOVETYPE_BOUNCE;
-		splash.hitcontentsmaski = 0; // No collision
+		splash.angles_y = -90;
+		splash.movetype = MOVETYPE_NOCLIP;
+		splash.hitcontentsmaski = CONTENTBIT_WATER | CONTENTBIT_SLIME | CONTENTBIT_LAVA;
 		splash.solid = SOLID_NOT;
-		splash.classname = "splash";
+		splash.effects = EF_NODEPTHTEST;
+		splash.classname = "watersplash";
 		splash.cnt = type;
-		setmodel (splash, string_null);
+		setmodel (splash, "progs/watersplash.spr");
 		setsize (splash, '0 0 0', '0 0 0');
 		if (!org)
 			setorigin (splash, own.origin);
 		else
 			setorigin (splash, org);
 
-		if (style == 0) // Small splash
+		if (style == 0) // Small particle splash
 		{
-			splash.attack_finished = time + 0.3;
-			splash.velocity_z = 125;
+			splash.alpha = 0.5;
+			splash.scale = 0.5;
+			particle.attack_finished = time + 0.3;
+			particle.velocity_z = 125;
 		}
-		else if (style == 1) // Medium splash
+		else if (style == 1) // Medium particle splash
 		{
-			splash.attack_finished = time + 0.3;
-			splash.velocity_z = 250;
+			splash.alpha = 0.75;
+			splash.scale = 1;
+			particle.attack_finished = time + 0.3;
+			particle.velocity_z = 250;
 		}
-		else // Big splash
+		else // Big particle splash
 		{
-			splash.attack_finished = time + 0.75;
-			splash.velocity_z = 450;
+			splash.alpha = 1;
+			splash.scale = 2.5;
+			particle.attack_finished = time + 0.75;
+			particle.velocity_z = 450;
 		}
-				
-		splash.think = splash_particle_think;
+		splash.combo = style;
+
+		particle.think = splash_particle_think;
+		particle.nextthink = time;
+		splash.think = watersplash_think;
 		splash.nextthink = time;
 };
 
