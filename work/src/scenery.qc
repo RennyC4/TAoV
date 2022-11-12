@@ -808,7 +808,7 @@ void() statue6 =
 	setmodel (self, "progs/statue6.mdl");
 
 	self.movetype = MOVETYPE_NONE;
-	self.solid = SOLID_SLIDEBOX;
+	self.solid = SOLID_NOT;
 	self.takedamage = DAMAGE_NO;
 	self.classname = "statue6";
 //	self.touch = onground_touch;

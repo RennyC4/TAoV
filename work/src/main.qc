@@ -550,7 +550,7 @@ void() StartFrame =
 		{
 			vector point = v.origin;
 			local float contents;
-			local float liquidtype;
+			local float liquidtype = 0;
 
 			// get the minimum water depth (waterlevel 1)
 			point_z = point_z + v.mins_z + 1;
@@ -573,7 +573,7 @@ void() StartFrame =
 				if (v.movetype == MOVETYPE_STEP)
 					v.waterlevel = 0;
 			}
-			
+
 			if (v.flags & FL_MONSTER) // Engine can handle waterlevel 2 on Vigil
 			{
 				// get the medium water depth (waterlevel 2)
@@ -582,6 +582,12 @@ void() StartFrame =
 
 				if (contents >= CONTENT_LAVA && contents <= CONTENT_WATER)
 				{
+					if (contents == CONTENT_WATER)
+						liquidtype = CONTENT_WATER;
+					if (contents == CONTENT_LAVA)
+						liquidtype = CONTENT_LAVA;
+					if (contents == CONTENT_SLIME)
+						liquidtype = CONTENT_SLIME;
 					if (v.movetype == MOVETYPE_STEP)
 						v.waterlevel = 2;
 				}
@@ -589,9 +595,9 @@ void() StartFrame =
 			// We ignore waterlevel 3 entirely, just use a regular pointscontents
 		}
 
-		if (v.waterlevel > 0 && v.waterlevel < 3 && v.deadflag != DEAD_DEAD) // v.health > 0)
+		if (v.waterlevel > 0 && v.waterlevel != 3 && v.deadflag != DEAD_DEAD && liquidtype)
 		{
-			if (v.waterlevel == 1 && v.splash_finished < time)
+			if (v.splash_finished < time)
 			{
 				for (i = 0; i < 6; i = i+1)
 				{
@@ -609,17 +615,17 @@ void() StartFrame =
 			{
 				if (liquidtype == CONTENT_WATER)
 				{
-					ripple_vfx(v, 0, v.origin);
+					ripple_vfx(v, 0, v.origin + v_up * 32);
 					v.inwater_type = CONTENT_WATER;
 				}
 				else if (liquidtype == CONTENT_LAVA)
 				{
-					ripple_vfx(v, 1, v.origin);
+					ripple_vfx(v, 1, v.origin + v_up * 32);
 					v.inwater_type = CONTENT_LAVA;
 				}
 				else if (liquidtype == CONTENT_SLIME)
 				{
-					ripple_vfx(v, 2, v.origin);
+					ripple_vfx(v, 2, v.origin + v_up * 32);
 					v.inwater_type = CONTENT_SLIME;
 				}
 				v.waterripple_finished = time + 0.2;

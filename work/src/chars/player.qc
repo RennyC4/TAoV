@@ -694,8 +694,8 @@ void() PlayerWaterPhysics =
 	{
 		if (self.char.velocity_z > -100)
 		{
-			if (!self.ledgegrab && !checkground(self.char)) // checkground to stop applying friction when touching floor
-				self.char.velocity_z = self.char.velocity_z - 6 * (frametime * 100);
+			if (!self.ledgegrab && !checkground(self.char))
+					self.char.velocity_z = self.char.velocity_z - 6 * (frametime * 100);
 		}
 		else
 			self.char.velocity_z = 0;
@@ -2723,7 +2723,7 @@ void() player_move = [0, player_move]
 
 	if (!self.owner.magicmenu)
 	{
-		if (self.velocity_x || self.velocity_y && self.owner.keyflags & (KEY_LEFT | KEY_RIGHT | KEY_UP | KEY_DOWN) || self.owner.forcewalk_finished > time || (self.swimming && self.velocity_z != 0 && !checkground(self)))
+		if (self.velocity_x || self.velocity_y && self.owner.keyflags & (KEY_LEFT | KEY_RIGHT | KEY_UP | KEY_DOWN) || self.owner.forcewalk_finished > time || (self.swimming && self.velocity_z != 0))
 		{
 			if (self.block_finished > time)
 				self.block_finished = time - 1; // - 1 auto-block fix
@@ -2963,9 +2963,27 @@ void() player_move = [0, player_move]
 					player_jumpframe();
 				else
 				{
-					if (self.walkframe > 7)
-						self.walkframe = 0;
-					self.frame = $swim1 + self.walkframe;
+					if (!checkground(self))
+					{
+						if (self.walkframe > 7)
+							self.walkframe = 0;
+						self.frame = $swim1 + self.walkframe;
+					}
+					else
+					{
+						if (!self.owner.keyflags)
+						{
+							if (self.walkframe > 5)
+								self.walkframe = 0;
+							self.frame = $stand1 + self.walkframe;
+						}
+						else
+						{
+							if (self.walkframe > 7)
+								self.walkframe = 0;
+							self.frame = $swim1 + self.walkframe;
+						}
+					}
 					frameskip(0.2);
 				}
 			}
