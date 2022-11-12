@@ -8466,15 +8466,17 @@ void() player_dodgea11	    =[	$dodgea11,	player_block		 	]
 // Forward Roll
 //
 void() dodgeb1_move = 
-{	
-	setsize(self, VEC_HULL_MIN, '16 16 12');
+{
+	if (!self.owner.safezone)
+	{
+		setsize(self, VEC_HULL_MIN, '16 16 12');
 
-	tracebox (self.origin, VEC_HULL_MIN, VEC_HULL_MAX, self.origin, 1, self);
-	if (trace_startsolid)
-		self.lowceil = TRUE;
-	else
-		self.lowceil = FALSE;
-
+		tracebox (self.origin, VEC_HULL_MIN, VEC_HULL_MAX, self.origin, 1, self);
+		if (trace_startsolid)
+			self.lowceil = TRUE;
+		else
+			self.lowceil = FALSE;
+	}
 	if (self.angles_y == 0 || self.angles_y == 360)
 		self.velocity_x = 175;
 	else
