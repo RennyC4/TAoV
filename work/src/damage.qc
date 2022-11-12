@@ -864,14 +864,15 @@ void(float damg, float dist, float knokback, float rsize, float snd, float flsh,
 						head.think = player_purge1; // Do something cool
 						head.nextthink = time;
 						head.owner.combo = head.owner.combo + 1; // raise combo counter
-				
+
 						if (head.owner.mana < head.owner.max_mana)
 							head.owner.mana = head.owner.mana + (head.owner.max_mana / 4);
 						if (head.owner.mana > head.owner.max_mana)
 							head.owner.mana = head.owner.max_mana;
-						
+
 						head.owner.screenflash_finished = time + 0.015;
-						
+						head.pain_finished = head.fly_time = time; // Fixes players keys being locked if broken is inflicted and a purge happens
+
 						return;
 					}
 

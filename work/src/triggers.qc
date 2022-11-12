@@ -51,8 +51,6 @@ void() InitTrigger =
 };
 
 float PUSH_ONCE = 1;
-.float fly_time;
-.float fly_sound;
 void() trigger_push_touch =
 {
 	if (other.fly_time > time || self.cnt == TRUE)
