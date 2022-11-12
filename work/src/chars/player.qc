@@ -5884,15 +5884,15 @@ void() player_airuppercut5	=[	$uppercut3,	player_airuppercut6	] {airuppercut();}
 void() player_airuppercut6	=[	$uppercut4,	player_airuppercut7	] {self.velocity_x = 0;}; 
 void() player_airuppercut7	=[	$uppercut5,	player_move			] {};
 
-void() player_jumpatkb1	=[	$jumpatkb1,	player_move 	] {if (self.onground == TRUE) player_move();self.attack_type = 6;FireMelee(3,25,1,25,1,0,0,FALSE,24,0);sound (self, CHAN_AUTO, "player/motion1.wav", 1, ATTN_NORM);};
-void() player_jumpatkb2	=[	$jumpatkb2,	player_jumpatkb3] {if (self.onground == TRUE) player_move();self.attack_type = 7;frameskip(0.08);};
-void() player_jumpatkb3	=[	$jumpatkb3,	player_move 	] {if (self.onground == TRUE) player_move();FireMelee(3,25,1,25,1,0,0,FALSE,24,0);sound (self, CHAN_AUTO, "player/motion2.wav", 1, ATTN_NORM);};
+void() player_jumpatkb1	=[	$jumpatkb1,	player_move 	] {if (self.onground) player_move();self.attack_type = 6;FireMelee(3,25,1,25,1,0,0,FALSE,24,0);sound (self, CHAN_AUTO, "player/motion1.wav", 1, ATTN_NORM);};
+void() player_jumpatkb2	=[	$jumpatkb2,	player_jumpatkb3] {if (self.onground) player_move();self.attack_type = 7;frameskip(0.08);};
+void() player_jumpatkb3	=[	$jumpatkb3,	player_move 	] {if (self.onground) player_move();FireMelee(3,25,1,25,1,0,0,FALSE,24,0);sound (self, CHAN_AUTO, "player/motion2.wav", 1, ATTN_NORM);};
 
 void() player_airkick1;
-void() player_jumpatkb4	=[	$jumpatkb4,	player_jumpatkb5 	] {if (self.onground == TRUE) player_move();frameskip(0.04);};
-void() player_jumpatkb5	=[	$jumpatkb5,	player_jumpatkb6 	] {if (self.onground == TRUE) player_move();frameskip(0.04);};
-void() player_jumpatkb6	=[	$jumpatkb6,	player_jumpatkb7 	] {if (self.onground == TRUE) player_move();frameskip(0.04);};
-void() player_jumpatkb7	=[	$jumpatkb7,	player_jumpatkb8 	] {if (self.onground == TRUE) player_move();frameskip(0.04);};
+void() player_jumpatkb4	=[	$jumpatkb4,	player_jumpatkb5 	] {if (self.onground) player_move();frameskip(0.1);};
+void() player_jumpatkb5	=[	$jumpatkb5,	player_jumpatkb6 	] {if (self.onground) player_move();frameskip(0.025);};
+void() player_jumpatkb6	=[	$jumpatkb6,	player_jumpatkb7 	] {if (self.onground) player_move();frameskip(0.025);};
+void() player_jumpatkb7	=[	$jumpatkb7,	player_jumpatkb8 	] {if (self.onground) player_move();frameskip(0.025);};
 void() player_jumpatkb8	=[	$jumpatkb8,	player_move		] 
 {
 	if (freeze_finished < time) // don't interefere with level up/etc

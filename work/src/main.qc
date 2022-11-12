@@ -563,12 +563,14 @@ void() StartFrame =
 					liquidtype = CONTENT_LAVA;
 				if (contents == CONTENT_SLIME)
 					liquidtype = CONTENT_SLIME;
-				v.waterlevel = 1;
+				if (v.movetype == MOVETYPE_STEP)
+					v.waterlevel = 1;
 			}
 			else
 			{
 				liquidtype = 0;
-				v.waterlevel = 0;
+				if (v.movetype == MOVETYPE_STEP)
+					v.waterlevel = 0;
 			}
 			
 			if (v.flags & FL_MONSTER) // Engine can handle waterlevel 2 on Vigil
@@ -578,7 +580,10 @@ void() StartFrame =
 				contents = pointcontents (point);
 
 				if (contents >= CONTENT_LAVA && contents <= CONTENT_WATER)
-					v.waterlevel = 2;
+				{
+					if (v.movetype == MOVETYPE_STEP)
+						v.waterlevel = 2;
+				}
 			}
 			// We ignore waterlevel 3 entirely, just use a regular pointscontents
 		}
