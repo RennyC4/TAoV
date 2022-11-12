@@ -534,7 +534,6 @@ void(entity own, float style, float type, optional vector org) watersplash_parti
 		splash.movetype = MOVETYPE_NOCLIP;
 		splash.hitcontentsmaski = CONTENTBIT_WATER | CONTENTBIT_SLIME | CONTENTBIT_LAVA;
 		splash.solid = SOLID_NOT;
-		splash.effects = EF_NODEPTHTEST;
 		splash.classname = "watersplash";
 		splash.cnt = type;
 		setmodel (splash, "progs/watersplash.spr");
@@ -1245,9 +1244,9 @@ void() PlayerPostThink =
 			}
 		}
 		
-		if (world.model != "maps/village.bsp" || self.safezone || self.char.safezone)
+		if (world.model != "maps/village.bsp")
 			ComboMeter(); // display combo count
-		else
+		else if (!self.safezone && self.combo)
 			self.combo = 0; // combo should always be zero in village and safe zones
 
 		// now do the movement
