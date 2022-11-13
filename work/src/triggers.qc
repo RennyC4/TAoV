@@ -50,7 +50,6 @@ void() InitTrigger =
 	self.model = "";
 };
 
-float PUSH_ONCE = 1;
 void() trigger_push_touch =
 {
 	if (other.fly_time > time || self.cnt == TRUE)
@@ -75,11 +74,13 @@ void() trigger_push_touch =
 	other.velocity = '0 0 0';
 	other.velocity = self.speed * self.movedir;
 	other.velocity_z = self.height;
+	other.awareness = 2; // See all on awake,
 
 	if (other.flags & FL_ONGROUND)
 		other.flags = other.flags - FL_ONGROUND;
 
-	if (other.th_jump)
+	// Merman has a very specific programmed jump
+	if (other.th_jump && other.classname != "merman")
 	{
 		other.think = other.th_jump;
 		other.nextthink = time + 0.1;
@@ -87,11 +88,12 @@ void() trigger_push_touch =
 	if (other.movetype == MOVETYPE_FLY && other.spawnflags & 8)
 		other.movetype = MOVETYPE_STEP;
 
-	if (self.spawnflags & PUSH_ONCE)
+	if (self.spawnflags & 1)
 	{
 		remove(self);
 		return;
 	}
+
 	other.fly_time = time + self.state;
 };
 

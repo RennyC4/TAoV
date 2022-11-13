@@ -6087,7 +6087,6 @@ void() player_hit5;
 
 void() player_hit1	=[	$pain1,	player_hit1	] 
 {
-	//self.movetype = MOVETYPE_STEP;
 	self.velocity = '0 0 0';
 	if (self.playerhitframe_finished < time)
 		player_move();
@@ -6095,7 +6094,6 @@ void() player_hit1	=[	$pain1,	player_hit1	]
 
 void() player_hit2	=[	$pain2,	player_hit2	] 
 {
-	//self.movetype = MOVETYPE_STEP;
 	self.velocity = '0 0 0';
 	if (self.playerhitframe_finished < time)
 		player_move();
@@ -6104,8 +6102,6 @@ void() player_hit2	=[	$pain2,	player_hit2	]
 void() player_hit3	=[	$pain3,	player_hit4	]
 {
 	self.angles_z = 0;
-	frameskip(0.3);
-
 	if (!deathmatch)
 		self.takedamage = DAMAGE_NO;
 };
@@ -6321,7 +6317,6 @@ void() player_walled4 	 =[     $walled5,        player_getupb1 ]
 	model_tilt();
 	self.owner.softshadow_time = time;
 	self.angles_z = 0;
-	self.nextthink = time + 0.5;
 };
 
 void() player_walled3    =[	0,	player_walled3	] 
@@ -6429,9 +6424,7 @@ void() player_twist    =[	$twist,	player_twist		]
 	}
 
 	if (!self.swimming)
-	{
 		self.angles_z = self.angles_z - 15; // spin Vigil
-	}
 	else
 	{
 		self.velocity_z = self.velocity_z / 1.05;
@@ -6505,7 +6498,7 @@ void() player_hit5	=[	$pain5,	player_hit6 	]
 	self.velocity_x = self.velocity_y = 0;
 	model_tilt();
 	self.owner.softshadow_time = time;
-	frameskip (0.7);
+	//frameskip (0.1);
 };
 
 void() player_hit6	=[	$pain5,	player_hit6 	]
@@ -6526,7 +6519,7 @@ void() player_hit6	=[	$pain5,	player_hit6 	]
 	}
 	else
 		player_getup1();
-	self.nextthink = time + 0.1;
+	//self.nextthink = time + 0.1;
 };
 
 void() player_getupb1	=[	$getupb1,	player_getupb2	] {self.angles_z = self.angles_x = 0;};

@@ -37,15 +37,16 @@ void()	merman_idle	=[	$stand1,	merman_idle	]
 
 	self.frame = $stand1 + self.walkframe;
 	self.walkframe = self.walkframe + 1;
-	
+
 	if (!self.enemy.flypain)
 		ai_stand();
 
-	self.movetype = MOVETYPE_STEP;
+	if (self.enemy) // Fix for enemy_start(); spawnflag setup
+		self.movetype = MOVETYPE_STEP;
 
 	if (self.flags & FL_SWIM)
 		self.flags = self.flags - (self.flags & FL_SWIM);
-	
+
 	monster_removeslide();
 	self.count = FALSE;
 };

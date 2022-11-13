@@ -1217,6 +1217,7 @@ void() SUB_Remove = {remove(self);return;};
 //
 
 float loaded_settings;
+float developer2;
 .float mode;
 float IT_RELIC7 = 64; // cube of knowledge
 float blindness_fade;
@@ -1253,6 +1254,15 @@ void(float width, float height, float menushown) CSQC_UpdateView =
 	if (world.model == "maps/start.bsp" && cltime < 1)
 		localcmd ("closemenu\n");
 
+	// Setup Developer 2 properly
+	if (cvar("developer") == 2 && !developer2)
+	{
+		print ("Loaded Developer 2 Settings\n");
+		localcmd("viewsize 110\n");
+		localcmd ("exec developer2.cfg\n");
+		developer2 = TRUE;
+	}
+	
 	// Draw DEMO signs on demo playback
 	if (isdemo() > 0 || world.model == "maps/intro.bsp")
 	{
@@ -1277,20 +1287,17 @@ void(float width, float height, float menushown) CSQC_UpdateView =
 	}
 	else
 	{
-		if (cltime > 1 && loaded_settings == FALSE)
+		if (cltime > 1 && loaded_settings == FALSE && !developer2)
 		{
 			// Execute command scripts
 			if (world.model == "maps/start.bsp")
 				localcmd("sensitivity 0;crosshair 0;exec settings.cfg;exec gfx.cfg;exec haze.cfg\n");
 			else
 				localcmd("sensitivity 0;crosshair 0;exec gfx.cfg;exec haze.cfg\n");
-			
-			if (cvar("developer") == 2)
-				localcmd("viewsize 110\n");
-
 			loaded_settings = TRUE;
 		}
 	}
+
 	// Draw 2D elements
 	if (world.model != "maps/start.bsp" && world.model != "maps/intro.bsp" && world.model != "maps/menu.bsp" && isdemo() == 0)
 	{

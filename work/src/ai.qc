@@ -10,7 +10,6 @@
 .float show_hostile; // set to time+0.2 whenever a client fires a
 					 // weapon or takes damage.  Used to alert
 					 // monsters that otherwise would let the player go
-.float awareness;    // Which method is used to check for a player
 
 .float monster_running; // TRUE or FALSE, variable checks if the monster is currently running or not, it also stops running the same function
 						// over and over
@@ -1844,7 +1843,7 @@ void() enemy_start =
 		dprint (vtos(self.origin));
 		dprint ("\n");
 	}
-	if (self.movetype == MOVETYPE_STEP && self.nodrop == 0 && !self.flags & FL_SWIM)
+	if (self.movetype == MOVETYPE_STEP && !self.nodrop && !self.flags & FL_SWIM)
 	{
 		self.origin_z = self.origin_z + 1; // raise then drop
 		droptofloor();
