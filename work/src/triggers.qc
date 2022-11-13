@@ -679,7 +679,7 @@ void() pit_touch =
 		WriteCoord (MSG_BROADCAST, other.origin_z);
 		other.owner.telecam = TRUE;
 
-		if (!self.flags & FL_GODMODE)
+		if (!other.owner.flags & FL_GODMODE)
 			other.health = other.health - self.cnt;
 		if (other.health < 1)
 			Killed (other, self);
