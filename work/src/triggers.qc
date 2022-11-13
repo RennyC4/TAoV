@@ -644,8 +644,7 @@ void() trigger_camstyle =
 .vector pitplacement;
 void() pit_touch =
 {
-	local entity temp;
-	local entity spoint;
+	local entity temp, spoint, oself;
 	local float f;
 
 	if (other.pitdeath == TRUE || other.movetype == MOVETYPE_FLY || other.movetype == MOVETYPE_NOCLIP)
@@ -679,6 +678,14 @@ void() pit_touch =
 		WriteCoord (MSG_BROADCAST, other.origin_y);
 		WriteCoord (MSG_BROADCAST, other.origin_z);
 		other.owner.telecam = TRUE;
+
+		if (!self.flags & FL_GODMODE)
+			other.health = other.health - self.cnt;
+		if (other.health < 1)
+			Killed (other, self);
+
+		//T_Damage (other, self, self, self.cnt, 0);
+		other.telecam = TRUE;
 	}
 	// Monster hits trigger_hit
 	if (other.flags & FL_MONSTER)
@@ -690,7 +697,6 @@ void() pit_touch =
 
 		if (other.enemy.classname == "player" && other.enemy.health > 0) // reward for death
 		{
-			local entity oself;
 			oself = self;
 			self = other;
 			GiveExperience(self.experience);
@@ -700,8 +706,6 @@ void() pit_touch =
 		return;
 	}
 	other.pitdeath = TRUE;
-	if (other.health > 0)
-		T_Damage (other, self, self, self.cnt, 0);
 };
 
 /*QUAKED trigger_pit (.5 .5 .5) ?
