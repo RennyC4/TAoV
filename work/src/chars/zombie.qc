@@ -127,6 +127,10 @@ void() DarkBallThink =
 				}
 				if (head.classname == "player" && head.owner)
 				{
+					if (self.origin_x > head.origin_x) // Bug fix vigil needs to face the proper angles
+						head.angles_y = 0; // Block victim faces left
+					else
+						head.angles_y = 180; // Block victim faces right
 					local float r = random();
 					if (self.owner.classname == "zombieboss")
 					{
