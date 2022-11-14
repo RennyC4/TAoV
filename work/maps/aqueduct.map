@@ -5887,7 +5887,7 @@
 // entity 143
 {
 "classname" "spawn_monster"
-"origin" "-4232 -224 -852"
+"origin" "-4232 -224 -884"
 "nodrop" "1"
 "cnt" "20"
 "angle" "90"
@@ -5897,7 +5897,7 @@
 // entity 144
 {
 "classname" "spawn_monster"
-"origin" "-4672 -120 -852"
+"origin" "-4672 -120 -884"
 "nodrop" "1"
 "cnt" "20"
 "angle" "90"
@@ -5907,7 +5907,7 @@
 // entity 145
 {
 "classname" "spawn_monster"
-"origin" "-4448 -96 -852"
+"origin" "-4448 -96 -884"
 "nodrop" "1"
 "cnt" "20"
 "angle" "90"
