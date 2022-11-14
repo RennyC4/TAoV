@@ -684,7 +684,6 @@ void() pit_touch =
 		if (other.health < 1)
 			Killed (other, self);
 
-		//T_Damage (other, self, self, self.cnt, 0);
 		other.telecam = TRUE;
 	}
 	// Monster hits trigger_hit

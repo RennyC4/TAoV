@@ -10774,7 +10774,7 @@
 // entity 348
 {
 "classname" "item_relic"
-"cnt" "2"
+"cnt" "8"
 "origin" "-2980 -248 468"
 "mdl" "progs/relic3.mdl"
 }

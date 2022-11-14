@@ -2011,7 +2011,7 @@ void() player_think =
 	// Vigil's Jumping
 	//
 
-	if (self.char.onground == TRUE && self.char.deadflag != DEAD_DEAD && self.char.health > 0)
+	if (self.char.onground && self.char.deadflag != DEAD_DEAD && self.char.health > 0)
 	{
 		self.char.aircombo_count = 0;
 		if (self.button2 && self.char.pain_finished < time && self.attack_finished < time && self.char.block_finished < time
@@ -2032,7 +2032,6 @@ void() player_think =
 							self.char.grabbed =	self.char.enemy.grabbed = FALSE;
 						self.char.idle_count = 0; // reset pose
 						self.char.velocity = '0 0 0';
-						self.char.lastpos = self.char.origin; // for bottomless pits
 						self.charge_count = 0; // disallow charge attack in air
 						self.char.velocity_z = 425; // player jump height
 						self.char.frame = $jump1;
@@ -2839,6 +2838,9 @@ void() player_move = [0, player_move]
 		}
 		else // stand frames
 		{
+			if (self.lastpos != self.origin && checkground(self))
+				self.lastpos = self.origin; // for bottomless pits
+
 			// Vigil's charge up attack, standing still only
 			if (self.owner.button0 && self.invunerability_finished < time && self.safezone == FALSE && self.forcewalk_finished < time && self.char.fly_time < time)
 			{
@@ -4297,7 +4299,6 @@ void() player_runatk7	=[	$runatk5,	player_runatk8 	]
 			self.movetype = MOVETYPE_WALK;
 		self.owner.doublejump = FALSE;
 		self.idle_count = 0; // reset pose
-		self.lastpos = self.char.origin; // for bottomless pits
 		self.owner.charge_count = 0; // disallow charge attack in air
 		self.inair = 16;
 		self.velocity_z = 325;
@@ -8808,7 +8809,6 @@ void() player_miniswordspin22   =[	$dfattack2,		player_move					]
 		self.movetype = MOVETYPE_WALK;
 	self.owner.doublejump = FALSE;
 	self.idle_count = 0; // reset pose
-	self.lastpos = self.char.origin; // for bottomless pits
 	self.owner.charge_count = 0; // disallow charge attack in air
 	self.inair = 16;
 	if (self.flags & FL_ONGROUND)

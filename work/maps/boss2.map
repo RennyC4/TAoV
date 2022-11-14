@@ -282,7 +282,7 @@
 {
 "classname" "item_relic"
 "origin" "-1544 -256 -106"
-"cnt" "8"
+"cnt" "2"
 "_bounce" "0"
 "_phong" "1"
 }
