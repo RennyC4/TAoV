@@ -1452,9 +1452,9 @@ void() player_think =
 				self.char.liquidsound_finished = time + 2;
 			}
 			if (self.char.watertype == CONTENT_LAVA)
-				self.dmgtime = time + 0.35;
+				self.dmgtime = time + 0.15;
 			else
-				self.dmgtime = time + 0.7;
+				self.dmgtime = time + 0.5;
 			self.char.health = self.char.health - 1;
 			if (self.char.health < 1)
 				Killed(self.char, world);
@@ -5507,8 +5507,7 @@ void() player_jatkspecial6	=[	$jatkspc6,	player_jatkspecial7	] {jatkspecial();fr
 void() player_jatkspecial7	=[	$jatkspc7,	player_jumpatk2		]
 {
 	self.velocity = '0 0 0';
-	if (self.velocity_z > -500)
-		self.velocity_z = - 500;
+	self.velocity_z = - 500;
 	player_yell(1);
 	sound (self, CHAN_BODY, "player/fast.wav", 1, ATTN_NORM);
 	jatkspecial_muzzle();
@@ -5606,7 +5605,7 @@ void() player_jumpatk2	=[	$jumpatk2,	player_jumpatk2	]
 	head = searchradius(self.origin - v_up*20, 50); // 50 radius hit box on head smash
 	while (head)
 	{
-		if (head.takedamage && head.nopain_time < time && head != self && visible(head)
+		if (head.takedamage && head.nopain_time < time && head != self && visible(head) && head.deadflag != DEAD_DEAD
 		&& ((coop == TRUE && head.classname != "player" && self.classname == "player") || (coop == FALSE || self.flags & FL_MONSTER))) // coop
 		{
 			if (head.block_finished < time || head.dodge_finished > time || self.perfectguard_buff > time)
@@ -7426,32 +7425,6 @@ void() player_twister3	=[	$magica4,	player_twister3	]
 };
 void() player_twister4	=[	$magica4,	player_move	] {};
 
-
-//
-// Function is used for testx checking to see if the players x origin
-// changed and if it hasn't bail them out of the swallow attacks, situational due to Z velocity
-//
-
-void() swallow_testxcheck =
-{
-	local entity oself;
-
-	if (self.owner)
-	{
-		if (self.owner.origin_x == self.origin_x && self.owner.onground == FALSE && self.owner.velocity_z < 1)
-		{
-			oself = self;
-			self = self.owner;
-			self.owner.backflip_finished = time + 0.7; // Perfect value
-			player_bflip1();
-			self.aircombo_count = 0; // prevent animation glitch in player_jumpframe();
-			self = oself;
-		}
-	}
-	remove(self);
-	return;
-};
-
 void() divingswallow_hit =
 {
 	local entity head, effect, effect2;
@@ -7673,26 +7646,6 @@ void() player_walljumpkick1	=[	$jumpatkb1,	player_walljumpkick1	]
 	divingswallow_hit();
 	self.owner.attack_finished = time + 0.2;
 	self.owner.shadow_time = time + 0.1;
-
-	//
-	// Check if his X origin (left/right) moved
-	//
-
-	local entity testx, oself;
-	local float cg;
-
-	makevectors(self.angles);
-
-	testx = spawn();
-	testx.owner = self;
-	testx.drawonlytoclient = self.owner.owner; // reduce network usage
-	testx.movetype = MOVETYPE_NOCLIP;
-	testx.solid = SOLID_NOT;
-	testx.think = swallow_testxcheck;
-	testx.nextthink = time + 0.05;
-	setmodel(testx, string_null); // debug return to string null
-	setsize(testx, '0 0 0', '0 0 0');
-	setorigin(testx, self.origin);
 
 	if (self.onground == TRUE)
 	{
@@ -7994,7 +7947,6 @@ void() player_airdivings1 =
 	self.velocity = aim(self, 750);
 	self.velocity = self.velocity * 750;
 	self.angles = vectoangles(self.velocity);
-	//self.angles_y = view_y;
 
 	// keep vigil inline with his target just incase
 	if (self.enemy != world)
@@ -8018,27 +7970,7 @@ void() player_airdivings1 =
 	self.owner.shadow_time = time + 0.1;
 	self.owner.speedline_time = time + 0.2; // speedline
 
-/*
-	//
-	// Check if his X origin (left/right) moved
-	//
-
-	local entity testx, oself;
-	local float cg;
-
-	makevectors(self.angles);
-
-	testx = spawn();
-	testx.owner = self;
-	testx.drawonlytoclient = self.owner.owner; // reduce network traffic
-	testx.movetype = MOVETYPE_NOCLIP;
-	testx.solid = SOLID_NOT;
-	testx.think = swallow_testxcheck;
-	testx.nextthink = time + 0.05;
-	setmodel(testx, string_null);
-	setsize(testx, '0 0 0', '0 0 0');
-	setorigin(testx, self.origin);
-*/
+	self.oldorigin = self.origin;
 
 	frameskip(0.05);
 };
@@ -8298,19 +8230,6 @@ void() player_wallrunningjumpkick3	=[	$jumpatkb1,	player_wallrunningjumpkick3	]
 
 	local entity testx, oself;
 	local float cg;
-
-	makevectors(self.angles);
-
-	testx = spawn();
-	testx.owner = self;
-	testx.drawonlytoclient = self.owner.owner; // reduce network traffic
-	testx.movetype = MOVETYPE_NOCLIP;
-	testx.solid = SOLID_NOT;
-	testx.think = swallow_testxcheck;
-	testx.nextthink = time + 0.05;
-	setmodel(testx, string_null);
-	setsize(testx, '0 0 0', '0 0 0');
-	setorigin(testx, self.origin);
 
 	if (self.onground == TRUE)
 	{

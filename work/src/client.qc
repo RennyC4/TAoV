@@ -1211,7 +1211,7 @@ void() PlayerPostThink =
 				PlayerWaterPhysics();
 
 				if (self.char.waterlevel < 3) // Only drown on water level 3
-					self.char.dmgtime = time + 10; // 10 second breath holding
+					self.char.dmgtime = time + 8; // 8 second breath holding
 
 				if (self.bubble_count < time) // spawn bubbles
 				{
@@ -1233,7 +1233,7 @@ void() PlayerPostThink =
 						if (self.char.health < 1)
 							Killed(self.char, world);
 					}
-					self.char.dmgtime = time + 0.5;
+					self.char.dmgtime = time + 0.25;
 				}
 				self.char.swimming = TRUE;
 			}

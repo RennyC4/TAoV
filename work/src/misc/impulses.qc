@@ -313,6 +313,9 @@ void() CheckImpulseButtons =
 
 						self.attack_finished = time + 1;
 
+						if (self.char.perfectblock > time) // Remove PG window
+							self.char.perfectblock = time;
+
 						self.char.think = player_kick1;
 						self.char.nextthink = time;
 					}
