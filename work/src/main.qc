@@ -956,7 +956,7 @@ float(entity e) checkground =
 		
 	tracebox (source, e.mins, e.maxs, dest, TRUE, e);
 
-	if (trace_fraction == 1) // Hit nothing
+	if (trace_fraction == 1 || trace_ent.classname == "func_fall" || trace_ent.classname == "breakable") // Hit nothing
 		return FALSE;
 
 	return TRUE;

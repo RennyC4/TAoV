@@ -1924,8 +1924,6 @@
 // entity 2
 {
 "classname" "trigger_pit"
-"pitplacement" "992 -544 416"
-"_phong" "1"
 // brush 0
 {
 ( 640 -416 80 ) ( 640 -832 80 ) ( 640 -832 64 ) trigger [ 0 1 0 0 ] [ 0 0 -1 0 ] 0 1 1
@@ -2590,8 +2588,7 @@
 "noise" "misc/creak.wav"
 "noise2" "misc/fireout.wav"
 "avelocity" "0 0 100"
-"cnt" "0"
-"_phong" "1"
+"cnt" "1"
 // brush 0
 {
 ( 800 -584 352 ) ( 800 -632 352 ) ( 800 -632 240 ) black [ 0 1 0 0 ] [ 0 0 -1 0 ] 0 1 1

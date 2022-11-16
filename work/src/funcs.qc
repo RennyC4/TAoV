@@ -131,7 +131,7 @@ spawnflags:
  
 Able to .target other entities, including other func_falls
 */
- 
+
 void() func_fall =
 {
 	//
@@ -161,6 +161,7 @@ void() func_fall =
 	self.alpha = 1;
 	self.solid = SOLID_BSP;
 	self.movetype = MOVETYPE_PUSH;
+	self.classname = "func_fall";
  
 	if (!self.pain_finished)
 		self.pain_finished = 0.01;

@@ -632,6 +632,7 @@ float turbo_mode; // Turbo mode boolean, saved in parms
 .float fly_time;
 .float fly_sound;
 .float awareness;    // Which method is used to check for a player
+.float dontupdate_lastpos_finished;
 
 // Izuna drop
 .entity izunatarg; // izuna drop target

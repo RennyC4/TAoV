@@ -2761,6 +2761,8 @@ void() player_move = [0, player_move]
 							}
 							if (self.new_walkframe == 6)
 							{
+								if (self.lastpos != self.origin && checkground(self) && self.dontupdate_lastpos_finished < time)
+									self.lastpos = self.origin; // for bottomless pits
 								if (self.waterlevel > 0)
 								{
 									if (self.inwater_type == CONTENT_WATER)
@@ -2810,6 +2812,8 @@ void() player_move = [0, player_move]
 						}
 						if (self.walkframe == 4)
 						{
+							if (self.lastpos != self.origin && checkground(self) && self.dontupdate_lastpos_finished < time)
+								self.lastpos = self.origin; // for bottomless pits
 							if (self.waterlevel > 0)
 							{
 								if (self.inwater_type == CONTENT_WATER)
@@ -2838,9 +2842,6 @@ void() player_move = [0, player_move]
 		}
 		else // stand frames
 		{
-			if (self.lastpos != self.origin && checkground(self))
-				self.lastpos = self.origin; // for bottomless pits
-
 			// Vigil's charge up attack, standing still only
 			if (self.owner.button0 && self.invunerability_finished < time && self.safezone == FALSE && self.forcewalk_finished < time && self.char.fly_time < time)
 			{
@@ -6079,7 +6080,6 @@ void() PainSound =
 		self.noise = "player/pain4.wav";
 
 	sound (self, CHAN_VOICE, self.noise, 1, ATTN_NORM);
-	return;
 };
 
 void() player_knockedup1;
