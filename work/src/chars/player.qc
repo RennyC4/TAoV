@@ -4196,6 +4196,13 @@ void() runattack_forward = // push player forward during animation
 {
 	local entity effect;
 
+	if (self.swimming)
+	{
+		self.angles_x = 0;
+		player_move();
+		return;
+	}
+
 	makevectors(self.angles);
 
 	if (self.enemy) // enemy matches vigils speed for easier full hits

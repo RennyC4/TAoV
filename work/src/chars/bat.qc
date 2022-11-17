@@ -34,6 +34,7 @@ void() bat_think =
 						self.angles_y = 180;
 						self.velocity_x = self.speed * -1;
 					}
+					self.lip = self.velocity_x; // store it
 				}
 			}
 			head = head.chain;
@@ -87,6 +88,8 @@ void() bat_think =
 				self.frame = 1;
 			self.pain_finished = time + 0.08; // how fast to animate
 		}
+		if (self.velocity_x != self.lip) // fixes bug where bats could get stuck flying still
+			self.velocity_x = self.lip; // restore it
 	}
 	frameskip(0.01);
 };
@@ -107,7 +110,7 @@ void() bat_use =
 		self.angles_y = 180;
 		self.velocity_x = self.speed * -1;
 	}
-	
+
 	self.think = bat_think;
 	self.nextthink = time;
 };
@@ -163,8 +166,6 @@ void() monster_bat =
 	self.displayname = "Bat";
 	self.netname = "solid";
 	self.use = bat_use;
-	self.dimension_hit = 1;
-	self.dimension_solid = 2;
 	setsize(self, '-6 -6 7', '6 4 16');
 	self.experience = 18;
 	self.maxgold = 10;
