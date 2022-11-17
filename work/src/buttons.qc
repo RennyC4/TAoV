@@ -78,7 +78,7 @@ When a button is touched, it moves some distance in the direction of it's angle,
 "lip"		override the default 4 pixel lip remaining at end of move
 "health"	if set, the button must be killed instead of touched
 "sounds"
-0) steam metal
+0) default
 1) wooden clunk
 2) metallic click
 3) in-out
@@ -89,24 +89,10 @@ void() func_button =
 
 	if (self.sounds == 0)
 	{
-		precache_sound ("buttons/airbut1.wav");
-		self.noise = "buttons/airbut1.wav";
+		precache_sound ("doors/close1.wav");
+		self.noise = "doors/close1.wav";
 	}
-	if (self.sounds == 1)
-	{
-		precache_sound ("buttons/switch21.wav");
-		self.noise = "buttons/switch21.wav";
-	}
-	if (self.sounds == 2)
-	{
-		precache_sound ("buttons/switch02.wav");
-		self.noise = "buttons/switch02.wav";
-	}
-	if (self.sounds == 3)
-	{
-		precache_sound ("buttons/switch04.wav");
-		self.noise = "buttons/switch04.wav";
-	}
+
 	
 	SetMovedir ();
 
