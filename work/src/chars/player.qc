@@ -16,8 +16,7 @@ $frame base
 $frame slash1 slash2 slash3 slash4 slash5 slash6 slash7
 $frame stabs1 stabs2 stabs3 stabs4 stabs5 stabs6 stabs7 stabs8 stabs9 stabs10 stabs11 stabs12
 $frame fstab1 fstab2 fstab3 fstab4 fstab5 fstab6 fstab7
-$frame airkick1 airkick2 airkick3 airkick4 airkick5 airkick6 airkick7 airkick8 airkick9 airkick10 airkick11 airkick12 airkick13 airkick14
-$frame airkick15 airkick16 airkick17
+$frame airkick1 airkick2 airkick3 airkick4 airkick5 airkick6 airkick7 airkick8 airkick9 airkick10 airkick11 airkick12 airkick13 airkick14 airkick15 airkick16 airkick17
 $frame bflip1 bflip2 bflip3 bflip4
 $frame tired1 tired2 tired3 tired4 tired5 tired6
 $frame stand1 stand2 stand3 stand4 stand5 stand6
@@ -3674,13 +3673,13 @@ void() player_grabatk14	=[	$grabatk11,	player_grabatk15	]
 };
 void() player_grabatk15	=[	$grabatk12,	player_grabatk16	] 
 {
+	sound (self, CHAN_BODY, "player/motion2.wav", 1, ATTN_NORM);
+	FireMelee(25,10,3,40,4,0,TRUE,TRUE,0,0);
 	if (self.owner.bighit_freeze > time) // check if attack landed, needs to be called after FireMelee();
 	{
 		if (freeze_finished < time) // don't interefere with level up/etc
 			freeze_finished = time + (CONST_BIGHITSLOW * frametime);
 	}
-	sound (self, CHAN_BODY, "player/motion2.wav", 1, ATTN_NORM);
-	FireMelee(25,10,3,40,4,0,TRUE,TRUE,0,0);
 };
 
 void() player_grabatk17;
@@ -5921,19 +5920,21 @@ void() player_jumpatkb6	=[	$jumpatkb6,	player_jumpatkb7 	] {if (self.onground) p
 void() player_jumpatkb7	=[	$jumpatkb7,	player_jumpatkb8 	] {if (self.onground) player_move();frameskip(0.025);};
 void() player_jumpatkb8	=[	$jumpatkb8,	player_move		] 
 {
-	if (freeze_finished < time) // don't interefere with level up/etc
-		freeze_finished = time + (CONST_BIGHITSLOW * frametime);
-
 	sound (self, CHAN_WEAPON, "player/sword.wav", 1, ATTN_NORM);
 	FireMelee(10,25,1,30,5,0,0,FALSE,24,0);
 
+	if (self.owner.bighit_freeze > time) // check if attack landed, needs to be called after FireMelee();
+	{
+		if (freeze_finished < time) // don't interefere with level up/etc
+			freeze_finished = time + (CONST_BIGHITSLOW * frametime);
+	}
 	if (self.owner.mashattack == TRUE)
 	{
 		self.aircombo_count = 5;
 		self.owner.aircombo_finished = time + 0.35;
 		self.owner.mashattack = FALSE;
 		self.think = player_airkick1;
-		self.nextthink = time + 0.1;
+		frameskip(0.05); // Deliberate timing, don't touch
 		return;
 	}
 	if (self.onground == TRUE)
@@ -5962,7 +5963,7 @@ void() player_airkick6		=[	$airkick6,	player_airkick6 	]
 		self.owner.aircombo_finished = time + 0.4;
 		self.owner.mashattack = FALSE;
 		self.think = player_airkick6b;
-		self.nextthink = time + 0.1;
+		self.nextthink = time;
 		return;
 	}
 	frameskip(0.08);
@@ -5983,7 +5984,7 @@ void() player_airkick10		=[	$airkick10,	player_airkick10	]
 	if (self.owner.mashattack == TRUE)
 	{
 		self.think = player_airkick10b;
-		self.nextthink = time;// + 0.1;
+		self.nextthink = time;
 		self.aircombo_count = 7;
 		self.owner.aircombo_finished = time + 0.4;
 		self.owner.mashattack = FALSE;
@@ -6006,7 +6007,7 @@ void() player_airkick12		=[	$airkick12,	player_airkick12 	]
 	{
 		self.aircombo_count = 7;
 		self.think = player_airkick12b;
-		self.nextthink = time + 0.1;
+		self.nextthink = time;
 		self.owner.aircombo_finished = time + 999;
 		self.owner.mashattack = FALSE;
 		return;
