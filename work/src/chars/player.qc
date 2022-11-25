@@ -2225,6 +2225,8 @@ void() player_think =
 				self.char.dodge_finished = time + 0.5;
 				self.softshadow_time = time + 0.5;
 				self.char.velocity_time = time + 0.5;
+				if (self.char.perfectblock > time) // Remove PG window
+					self.char.perfectblock = time;
 				self.char.think = player_dodgec1;
 				self.char.nextthink = time;
 			}
@@ -2235,6 +2237,8 @@ void() player_think =
 				self.char.dodge_finished = time + 0.5;
 				self.softshadow_time = time + 0.5;
 				self.char.velocity_time = time + 0.5;
+				if (self.char.perfectblock > time) // Remove PG window
+					self.char.perfectblock = time;
 				self.char.think = player_dodgee1;
 				self.char.nextthink = time;
 			}
@@ -2250,6 +2254,8 @@ void() player_think =
 				self.char.dodge_finished = time + 0.5;
 				self.softshadow_time = time + 0.5;
 				self.char.velocity_time = time + 0.5;
+				if (self.char.perfectblock > time) // Remove PG window
+					self.char.perfectblock = time;
 				self.char.think = player_dodged1;
 				self.char.nextthink = time;
 			}
@@ -2260,6 +2266,8 @@ void() player_think =
 				self.char.dodge_finished = time + 0.5;
 				self.softshadow_time = time + 0.5;
 				self.char.velocity_time = time + 0.5;
+				if (self.char.perfectblock > time) // Remove PG window
+					self.char.perfectblock = time;
 				self.char.think = player_dodgef1;
 				self.char.nextthink = time;
 			}
@@ -2275,6 +2283,8 @@ void() player_think =
 				self.char.dodge_finished = time + 0.6;
 				self.softshadow_time = time + 0.5;
 				self.char.velocity_time = time + 0.6;
+				if (self.char.perfectblock > time) // Remove PG window
+					self.char.perfectblock = time;
 				self.char.think = player_dodgea1;
 				self.char.nextthink = time;
 			}
@@ -2286,6 +2296,8 @@ void() player_think =
 				self.char.dodge_finished = time + 0.5;
 				self.softshadow_time = time + 0.5;
 				self.char.velocity_time = time + 0.4;
+				if (self.char.perfectblock > time) // Remove PG window
+					self.char.perfectblock = time;
 				self.char.think = player_dodgeb1;
 				self.mashattack = FALSE;
 				self.char.nextthink = time;
@@ -2303,6 +2315,8 @@ void() player_think =
 				self.char.dodge_finished = time + 0.5;
 				self.softshadow_time = time + 0.5;
 				self.char.velocity_time = time + 0.4;
+				if (self.char.perfectblock > time) // Remove PG window
+					self.char.perfectblock = time;
 				self.char.think = player_dodgeb1;
 				self.mashattack = FALSE;
 				self.char.nextthink = time;
@@ -2316,6 +2330,8 @@ void() player_think =
 					self.char.dodge_finished = time + 0.6;
 					self.softshadow_time = time + 0.5;
 					self.char.velocity_time = time + 0.6;
+					if (self.char.perfectblock > time) // Remove PG window
+						self.char.perfectblock = time;
 					self.char.think = player_dodgea1;
 					self.char.nextthink = time;
 				}
@@ -2327,8 +2343,10 @@ void() player_think =
 					self.char.dodge_finished = time + 0.5;
 					self.softshadow_time = time + 0.5;
 					self.char.velocity_time = time + 0.4;
-					self.char.think = player_dodgeb1;
 					self.mashattack = FALSE;
+					if (self.char.perfectblock > time) // Remove PG window
+						self.char.perfectblock = time;
+					self.char.think = player_dodgeb1;
 					self.char.nextthink = time;
 				}
 			}
