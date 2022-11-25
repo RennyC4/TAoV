@@ -120,10 +120,17 @@ void() spawn_monster_use =
 		monster.movetype = MOVETYPE_STEP;
 		setmodel (monster, "progs/knight.mdl");
 		setsize (monster, '-16 -16 -24', '16 16 40');
-		if (difficulty < 2)
-			monster.health = 100; // regular health
+
+		if (!self.health)
+		{
+			if (difficulty < 2)
+				monster.health = 100; // regular health
+			else
+				monster.health = 150; // hard health (50% tougher)
+		}
 		else
-			monster.health = 150; // hard health (50% tougher)
+			monster.health = self.health;
+
 		monster.netname = "solid";
 		monster.takedamage = DAMAGE_AIM;
 		monster.solid = SOLID_NOT;
@@ -174,10 +181,16 @@ void() spawn_monster_use =
 		setmodel (monster, "progs/dog.mdl");
 		setsize(monster, VEC_HULL_MIN, VEC_HULL_MAX);
 
-		if (difficulty < 2)
-			monster.health = 51; // regular health, add 1 so fire headsmash doesn't kill in 1 hit every time
+		if (!self.health)
+		{
+			if (difficulty < 2)
+				monster.health = 51; // regular health, add 1 so fire headsmash doesn't kill in 1 hit every time
+			else
+				monster.health = 100; // hard health (50% tougher)
+		}
 		else
-			monster.health = 100; // hard health (50% tougher)
+			monster.health = self.health;
+
 		monster.netname = "solid";
 		monster.takedamage = DAMAGE_AIM;
 		monster.solid = SOLID_NOT;
@@ -221,10 +234,15 @@ void() spawn_monster_use =
 		setmodel (monster, "progs/hknight.mdl");
 		setsize (monster, '-16 -16 -24', '16 16 40');
 
-		if (difficulty < 2)
-			monster.health = monster.max_health = 220; // regular health
+		if (!self.health)
+		{
+			if (difficulty < 2)
+				monster.health = 220; // regular health, add 1 so fire headsmash doesn't kill in 1 hit every time
+			else
+				monster.health = 330; // hard health (50% tougher)
+		}
 		else
-			monster.health = monster.max_health = 330; // hard health (50% tougher)
+			monster.health = self.health;
 
 		monster.netname = "solid";
 		monster.takedamage = DAMAGE_AIM;
@@ -275,10 +293,15 @@ void() spawn_monster_use =
 		monster.movetype = MOVETYPE_STEP;
 		setmodel (monster, "progs/baron.mdl");
 
-		if (difficulty < 2)
-			monster.health = 300; // regular health
+		if (!self.health)
+		{
+			if (difficulty < 2)
+				monster.health = 300; // regular health, add 1 so fire headsmash doesn't kill in 1 hit every time
+			else
+				monster.health = 450; // hard health (50% tougher)
+		}
 		else
-			monster.health = 450; // hard health (50% tougher)
+			monster.health = self.health;
 
 		monster.netname = "solid";
 		monster.takedamage = DAMAGE_AIM;
@@ -324,10 +347,17 @@ void() spawn_monster_use =
 		monster.movetype = MOVETYPE_STEP;
 		setmodel (monster, "progs/skeleton.mdl");
 		setsize(monster, VEC_HULL_MIN, VEC_HULL_MAX);
-		if (difficulty < 2)
-			monster.health = 160; // regular health
+
+		if (!self.health)
+		{
+			if (difficulty < 2)
+				monster.health = 160; // regular health, add 1 so fire headsmash doesn't kill in 1 hit every time
+			else
+				monster.health = 240; // hard health (50% tougher)
+		}
 		else
-			monster.health = 240; // hard health (50% tougher)
+			monster.health = self.health;
+
 		monster.netname = "solid";
 		monster.takedamage = DAMAGE_AIM;
 		monster.solid = SOLID_NOT;
@@ -362,10 +392,17 @@ void() spawn_monster_use =
 		monster.movetype = MOVETYPE_FLY;
 		setmodel (monster, "progs/horror.mdl");
 		setsize(monster, '-21 -31 -16', '22 33 35');
-		if (difficulty < 2)
-			monster.health = 75; // regular health
+
+		if (!self.health)
+		{
+			if (difficulty < 2)
+				monster.health = 75; // regular health, add 1 so fire headsmash doesn't kill in 1 hit every time
+			else
+				monster.health = 113; // hard health (50% tougher)
+		}
 		else
-			monster.health = 113; // hard health (50% tougher)
+			monster.health = self.health;
+
 		monster.netname = "solid";
 		monster.takedamage = DAMAGE_AIM;
 		monster.solid = SOLID_NOT;
@@ -420,10 +457,17 @@ void() spawn_monster_use =
 		monster.solid = SOLID_SLIDEBOX;
 		monster.movetype = MOVETYPE_STEP;
 		setmodel (monster, "progs/gaunt.mdl");
-		if (difficulty < 2)
-			monster.health = 175; // regular health
+
+		if (!self.health)
+		{
+			if (difficulty < 2)
+				monster.health = 175; // regular health
+			else
+				monster.health = 263; // hard health (50% tougher)
+		}
 		else
-			monster.health = 263; // hard health (50% tougher)
+			monster.health = self.health;
+
 		monster.netname = "solid";
 		monster.takedamage = DAMAGE_AIM;
 		monster.solid = SOLID_NOT;
@@ -457,10 +501,17 @@ void() spawn_monster_use =
 		monster.solid = SOLID_SLIDEBOX;
 		monster.movetype = MOVETYPE_STEP;
 		setmodel (monster, "progs/archg.mdl");
-		if (difficulty < 2)
-			monster.health = 225; // regular health
+
+		if (!self.health)
+		{
+			if (difficulty < 2)
+				monster.health = 225; // regular health
+			else
+				monster.health = 338; // hard health (50% tougher)
+		}
 		else
-			monster.health = 338; // hard health (50% tougher)
+			monster.health = self.health;
+
 		monster.netname = "solid";
 		monster.takedamage = DAMAGE_AIM;
 		monster.solid = SOLID_NOT;
@@ -533,10 +584,17 @@ void() spawn_monster_use =
 		monster.solid = SOLID_SLIDEBOX;
 		monster.movetype = MOVETYPE_NOCLIP;
 		setmodel (monster, "progs/wraith.mdl");
-		if (difficulty < 2)
-			monster.health = 175; // regular health
+
+		if (!self.health)
+		{
+			if (difficulty < 2)
+				monster.health = 175; // regular health
+			else
+				monster.health = 263; // hard health (50% tougher)
+		}
 		else
-			monster.health = 263; // hard health (50% tougher)
+			monster.health = self.health;
+
 		monster.netname = "solid";
 		monster.takedamage = DAMAGE_AIM;
 		monster.solid = SOLID_NOT;
@@ -576,10 +634,15 @@ void() spawn_monster_use =
 		setmodel (monster, "progs/esquid.mdl");
 		setsize(monster, VEC_HULL_MIN, VEC_HULL_MAX);
 		
-		if (difficulty < 2)
-			monster.health = 215; // regular health
+		if (!self.health)
+		{
+			if (difficulty < 2)
+				monster.health = 215; // regular health
+			else
+				monster.health = 247; // hard health (50% tougher)
+		}
 		else
-			monster.health = 247; // hard health (50% tougher)
+			monster.health = self.health;
 			
 		monster.experience = 66;
 		monster.maxgold = 141;
@@ -622,10 +685,15 @@ void() spawn_monster_use =
 		monster.movetype = MOVETYPE_STEP;
 		setmodel (monster, "progs/grem.mdl");
 
-		if (difficulty < 2)
-			monster.health = 80; // regular health
+		if (!self.health)
+		{
+			if (difficulty < 2)
+				monster.health = 80; // regular health
+			else
+				monster.health = 120; // hard health (50% tougher)
+		}
 		else
-			monster.health = 120; // hard health (50% tougher)
+			monster.health = self.health;
 
 		monster.netname = "solid";
 		monster.takedamage = DAMAGE_AIM;
@@ -659,10 +727,15 @@ void() spawn_monster_use =
 		monster.movetype = MOVETYPE_STEP;
 		setmodel (monster, "progs/ghoul.mdl");
 
-		if (difficulty < 2)
-			monster.health = 115; // regular health
+		if (!self.health)
+		{
+			if (difficulty < 2)
+				monster.health = 115; // regular health
+			else
+				monster.health = 173; // hard health (50% tougher)
+		}
 		else
-			monster.health = 173; // hard health (50% tougher)
+			monster.health = self.health;
 
 		monster.netname = "solid";
 		monster.takedamage = DAMAGE_AIM;
@@ -703,20 +776,16 @@ void() spawn_monster_use =
 		monster.movetype = MOVETYPE_STEP;
 		setmodel (monster, "progs/archer.mdl");
 
-		if (difficulty < 2)
+
+		if (!self.health)
 		{
-			if (monster.mode == 0)
+			if (difficulty < 2)
 				monster.health = 75; // regular health
 			else
-				monster.health = 25; // regular health
+				monster.health = 113; // hard health (50% tougher)
 		}
 		else
-		{
-			if (monster.mode == 0)
-				monster.health = 113; // hard health (50% tougher)
-			else
-				monster.health = 45;
-		}
+			monster.health = self.health;
 
 		monster.netname = "solid";
 		monster.takedamage = DAMAGE_AIM;
@@ -765,10 +834,17 @@ void() spawn_monster_use =
 		monster.movetype = MOVETYPE_STEP;
 		setmodel (monster, "progs/zombie.mdl");
 		setsize(monster, VEC_HULL_MIN, VEC_HULL_MAX);
-		if (difficulty < 2)
-			monster.health = 150; // regular health
+		
+		if (!self.health)
+		{
+			if (difficulty < 2)
+				monster.health = 150; // regular health
+			else
+				monster.health = 225; // hard health (50% tougher)
+		}
 		else
-			monster.health = 225; // hard health (50% tougher)
+			monster.health = self.health;
+
 		monster.state = monster.health / 3; // Hold 1/3 health value for testing in damage.qc
 		monster.netname = "solid";
 		monster.takedamage = DAMAGE_AIM;
@@ -810,10 +886,17 @@ void() spawn_monster_use =
 		monster.movetype = MOVETYPE_STEP;
 		setmodel (monster, "progs/zombieb.mdl");
 		setsize(monster, VEC_HULL2_MIN, VEC_HULL2_MAX);
-		if (difficulty < 2)
-			monster.health = monster.max_health = 225; // regular health
+
+		if (!self.health)
+		{
+			if (difficulty < 2)
+				monster.health = 225; // regular health
+			else
+				monster.health = 383; // hard health (50% tougher)
+		}
 		else
-			monster.health = monster.max_health = 383; // hard health (50% tougher)
+			monster.health = self.health;
+
 		monster.state = monster.max_health / 3; // Hold 1/3 health value for testing in damage.qc
 		monster.netname = "solid";
 		monster.takedamage = DAMAGE_AIM;
@@ -850,10 +933,17 @@ void() spawn_monster_use =
 		monster.movetype = MOVETYPE_NONE;
 		setmodel (monster, "progs/troglod.mdl");
 		setsize(monster, VEC_HULL_MIN, VEC_HULL_MAX);
-		if (difficulty < 2)
-			monster.health = 160; // regular health
+
+		if (!self.health)
+		{
+			if (difficulty < 2)
+				monster.health = 160; // regular health
+			else
+				monster.health = 240; // hard health (50% tougher)
+		}
 		else
-			monster.health = 240; // hard health (50% tougher)
+			monster.health = self.health;
+
 		monster.mana = 200; // mana, 200 is max for troglod
 
 		monster.netname = "solid";
@@ -887,10 +977,17 @@ void() spawn_monster_use =
 		monster.movetype = MOVETYPE_STEP;
 		setmodel (monster, "progs/dragon.mdl");
 		setsize (monster, VEC_HULL2_MIN, VEC_HULL2_MAX);
-		if (difficulty < 2)
-			monster.health = 250; // regular health
+
+		if (!self.health)
+		{
+			if (difficulty < 2)
+				monster.health = 250; // regular health
+			else
+				monster.health = 375; // hard health (50% tougher)
+		}
 		else
-			monster.health = 375; // hard health (50% tougher)
+			monster.health = self.health;
+
 		monster.netname = "solid";
 		monster.takedamage = DAMAGE_AIM;
 		monster.solid = SOLID_NOT;
@@ -923,10 +1020,17 @@ void() spawn_monster_use =
 		monster.movetype = MOVETYPE_FLY;
 		setmodel (monster, "progs/hydra.mdl");
 		setsize (monster, VEC_HULL_MIN, VEC_HULL_MAX);
-		if (difficulty < 2)
-			monster.health = 2; // regular health
+
+		if (!self.health)
+		{
+			if (difficulty < 2)
+				monster.health = 2; // regular health
+			else
+				monster.health = 5; // hard health (50% tougher)
+		}
 		else
-			monster.health = 5; // hard health (50% tougher)
+			monster.health = self.health;
+
 		monster.netname = "solid";
 		monster.takedamage = DAMAGE_AIM;
 		monster.solid = SOLID_NOT;
@@ -997,10 +1101,17 @@ void() spawn_monster_use =
 
 		setmodel (monster, "progs/merman.mdl");
 		setsize (monster, VEC_HULL_MIN, VEC_HULL_MAX);
-		if (difficulty < 2)
-			monster.health = monster.oldhealth = 77; // regular health
+
+		if (!self.health)
+		{
+			if (difficulty < 2)
+				monster.health = monster.oldhealth = 77; // regular health
+			else
+				monster.health = monster.oldhealth = 132; // hard health (50% tougher)
+		}
 		else
-			monster.health = monster.oldhealth = 132; // hard health (50% tougher)
+			monster.health = self.health;
+
 		monster.netname = "solid";
 		monster.takedamage = DAMAGE_AIM;
 		monster.solid = SOLID_NOT;
@@ -1037,10 +1148,17 @@ void() spawn_monster_use =
 		monster.solid = SOLID_SLIDEBOX;
 		monster.movetype = MOVETYPE_NOCLIP;
 		setmodel (monster, "progs/ethskull.mdl");
-		if (difficulty < 2)
-			monster.health = 100; // regular health
+		
+		if (!self.health)
+		{
+			if (difficulty < 2)
+				monster.health = 100; // regular health
+			else
+				monster.health = 150; // hard health (50% tougher)
+		}
 		else
-			monster.health = 150; // hard health (50% tougher)
+			monster.health = self.health;
+
 		monster.netname = "solid";
 		monster.takedamage = DAMAGE_AIM;
 		monster.solid = SOLID_NOT;
@@ -1086,10 +1204,17 @@ void() spawn_monster_use =
 		monster.solid = SOLID_SLIDEBOX;
 		monster.movetype = MOVETYPE_NOCLIP;
 		setmodel (monster, "progs/lwraith.mdl");
-		if (difficulty < 2)
-			monster.health = 88; // regular health
+		
+		if (!self.health)
+		{
+			if (difficulty < 2)
+				monster.health = 88; // regular health
+			else
+				monster.health = 132; // hard health (50% tougher)
+		}
 		else
-			monster.health = 132; // hard health (50% tougher)
+			monster.health = self.health;
+
 		monster.netname = "solid";
 		monster.takedamage = DAMAGE_AIM;
 		monster.solid = SOLID_NOT;
@@ -1181,10 +1306,17 @@ void() spawn_monster_use =
 		monster.movetype = MOVETYPE_STEP;
 		setmodel (monster, "progs/knight2.mdl");
 		setsize (monster, '-16 -16 -24', '16 16 40');
-		if (difficulty < 2)
-			monster.health = 150; // regular health
+
+		if (!self.health)
+		{
+			if (difficulty < 2)
+				monster.health = 150; // regular health
+			else
+				monster.health = 200; // hard health (50% tougher)
+		}
 		else
-			monster.health = 200; // hard health (50% tougher)
+			monster.health = self.health;
+
 		monster.netname = "solid";
 		monster.takedamage = DAMAGE_AIM;
 		monster.solid = SOLID_NOT;
@@ -1231,10 +1363,17 @@ void() spawn_monster_use =
 		monster.movetype = MOVETYPE_STEP;
 		setmodel (monster, "progs/werewolf.mdl");
 		setsize (monster, VEC_HULL2_MIN, VEC_HULL2_MAX);
-		if (difficulty < 2)
-			monster.health = 200; // regular health
+		
+		if (!self.health)
+		{
+			if (difficulty < 2)
+				monster.health = 200; // regular health
+			else
+				monster.health = 300; // hard health (50% tougher)
+		}
 		else
-			monster.health = 300; // hard health (50% tougher)
+			monster.health = self.health;
+			
 		monster.netname = "solid";
 		monster.takedamage = DAMAGE_AIM;
 		monster.solid = SOLID_NOT;
@@ -1310,10 +1449,17 @@ void() spawn_monster_use =
 		monster.movetype = MOVETYPE_STEP;
 		setmodel (monster, "progs/golem.mdl");
 		setsize (monster, VEC_HULL2_MIN, VEC_HULL2_MAX);
-		if (difficulty < 2)
-			monster.health = monster.max_health = 138; // regular health
+		
+		if (!self.health)
+		{
+			if (difficulty < 2)
+				monster.health = monster.max_health = 138; // regular health
+			else
+				monster.health = monster.max_health = 207; // hard health (50% tougher)
+		}
 		else
-			monster.health = monster.max_health = 207; // hard health (50% tougher)
+			monster.health = self.health;
+
 		monster.netname = "solid";
 		monster.takedamage = DAMAGE_AIM;
 		monster.solid = SOLID_NOT;
