@@ -14,6 +14,7 @@ Castle2 - Hidden behind the pillar at the start(spawnflag 2)
 Cavern - In the water section (spawnflag 4)
 Outerwall - Up the tower section (spawnflag 8)
 Grand Cathedral - On top of the ledge near the baron (spawnflag 16)
+Aqueducts - Hidden in a small tunnel after snake room fight (spawnflag 32)
 
 ==========
 Transition Rooms
