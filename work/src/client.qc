@@ -594,13 +594,9 @@ void() bubble_split =
 	bubble.think = bubble_bob;
 	bubble.touch = bubble_remove;
 	bubble.classname = "bubble";
-	bubble.frame = 1;
-	bubble.alpha = 0.75;
-	bubble.scale = 0.5;
 	bubble.effects = EF_ADDITIVE;
 	bubble.cnt = 10;
 	setsize (bubble, '-8 -8 -8', '8 8 8');
-	self.frame = 1;
 	self.cnt = 10;
 	if (self.waterlevel != 3)
 		remove(self);
@@ -667,10 +663,7 @@ void() BubblesSpawn =
 	bubble.nextthink = time + 0.5;
 	bubble.think = bubble_bob;
 	bubble.classname = "bubble";
-	bubble.frame = 0;
 	bubble.cnt = 0;
-	bubble.alpha = 0.75;
-	bubble.scale = 0.5;
 	bubble.effects = EF_ADDITIVE;
 	setsize (bubble, '-8 -8 -8', '8 8 8');
 	self.nextthink = time + 0.1;
