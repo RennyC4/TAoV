@@ -1790,7 +1790,7 @@ void() monster_death =
 	if (self.deadflag == DEAD_DEAD)
 		return;
 
-	if (vlen(self.velocity) < 1 || self.flags & FL_ONGROUND || self.flags & FL_PARTIALGROUND || self.origin == self.oldorigin)
+	if (vlen(self.velocity) < 1 || self.flags & FL_ONGROUND || self.flags & FL_PARTIALGROUND || self.origin == self.oldorigin || checkground(self))
 	{
 		if (self.movetype != MOVETYPE_NOCLIP)
 		{
@@ -1814,15 +1814,16 @@ void() monster_death =
 		if (self.classname == "horror")
 		{
 			sound (self, CHAN_AUTO, "horror/crunch.wav", 1, ATTN_NORM);
-			ThrowGib("progs/gib1.mdl");ThrowGib("progs/gib3.mdl");
+			ThrowGib("progs/gib1.mdl");
+			ThrowGib("progs/gib3.mdl");
 		}
 		else
 			sound (self, CHAN_BODY, "misc/hitgrond.wav", 1, ATTN_NORM);
+
 		self.avelocity = '0 0 0';
 		self.angles_x = 0;
 		self.takedamage = DAMAGE_NO;
 		self.deadflag = DEAD_DEAD;
-		return;
 	}
 	if (self.flags & FL_SWIM)
 	{

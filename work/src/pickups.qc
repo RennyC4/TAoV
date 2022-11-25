@@ -108,7 +108,14 @@ void() item_hpmaxup_think =
 			return;
 		}
 	}
-
+	if (self.spawnflags & 32)
+	{
+		if (hp_max_ups & IT_HPMAXUP7) // HP Max UP 7
+		{
+			remove(self);
+			return;
+		}
+	}
 	frameskip (0.1);
 };
 
@@ -193,6 +200,8 @@ void() item_hpmaxup_touch =
 			hp_max_ups = hp_max_ups | IT_HPMAXUP5; // Add it
 	else if (self.spawnflags & 16)
 			hp_max_ups = hp_max_ups | IT_HPMAXUP6; // Add it
+	else if (self.spawnflags & 32)
+			hp_max_ups = hp_max_ups | IT_HPMAXUP7; // Add it
 
 
 	freeze_finished = time + 10 * frametime; // slow-mo

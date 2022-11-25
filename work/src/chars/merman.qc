@@ -408,21 +408,24 @@ void()	merman_grabbed2	=[	$pain1,		merman_grabbed2	]
 
 void() merman_die1	=[	$death1,	merman_die1	]
 {
-	if (self.walkframe >= 11)
-	{
-		self.walkframe = 11;
-		self.movetype = MOVETYPE_STEP;
-		self.think = SUB_Null; // Do something cool
-	}
+	self.movetype = MOVETYPE_STEP;
+	monster_death();
+
 	self.frame = $death1 + self.walkframe;
 	self.walkframe = self.walkframe + 1;
 
-	monster_death();
+	if (self.walkframe >= 11)
+	{
+		self.walkframe = 11;
+		self.think = SUB_Null; // Do something cool
+		self.nextthink = time + 0.1;
+		return;
+	}
 };
-
 
 void() merman_die =
 {
+	monster_death();
 	// Used to set walkframe to zero on new animation
 	if (self.count == FALSE)
 	{

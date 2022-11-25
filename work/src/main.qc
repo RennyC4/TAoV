@@ -595,7 +595,7 @@ void() StartFrame =
 			// We ignore waterlevel 3 entirely, just use a regular pointscontents
 		}
 
-		if (v.waterlevel > 0 && v.waterlevel != 3 && v.deadflag != DEAD_DEAD && liquidtype)
+		if (v.waterlevel > 0 && v.waterlevel != 3 && (v.deadflag != DEAD_DEAD || v.health > 0) && liquidtype)
 		{
 			if (v.splash_finished < time)
 			{
@@ -609,7 +609,7 @@ void() StartFrame =
 						watersplash_particle(v, 1, 2, v.origin);
 				}
 				sound (v, CHAN_AUTO, "misc/h2ohit1.wav", 1, ATTN_NORM);
-				v.splash_finished = time + 99999;
+				v.splash_finished = time + 9999999;
 			}
 			if (v.waterripple_finished < time)
 			{

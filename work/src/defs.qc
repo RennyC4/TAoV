@@ -844,6 +844,7 @@ float IT_HPMAXUP3 = 4;
 float IT_HPMAXUP4 = 8;
 float IT_HPMAXUP5 = 16;
 float IT_HPMAXUP6 = 32;
+float IT_HPMAXUP7 = 64;
 
 // Keys
 float keys;
