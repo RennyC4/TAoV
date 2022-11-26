@@ -8,13 +8,13 @@
 
 void() onground_touch =
 {
-	if (!other.flags & FL_ONGROUND)
+	if (!other.flags & FL_ONGROUND && other.origin_z > self.absmax_z + 23)
 		other.flags = other.flags | FL_ONGROUND;
 };
 
 void() SceneryGibRemove =
 {
-        if (self.alpha > 0.1)
+	if (self.alpha > 0.1)
 		self.alpha = self.alpha - 0.1;
 	else
 	{
@@ -658,7 +658,7 @@ void() statue =
 	self.solid = SOLID_SLIDEBOX;
 	self.takedamage = DAMAGE_NO;
 	self.classname = "statue";
-//	self.touch = onground_touch;
+	self.touch = onground_touch;
 	setsize(self, '-14 -38 -1', '41 55 136');
 	droptofloor();
 };
@@ -675,7 +675,7 @@ void() statue4 =
 	self.solid = SOLID_SLIDEBOX;
 	self.takedamage = DAMAGE_NO;
 	self.classname = "statue4";
-//	self.touch = onground_touch;
+	self.touch = onground_touch;
 	setsize(self, '-15 -16 -27', '30 32 59');
 	droptofloor();
 };
@@ -759,7 +759,7 @@ void() statue2 =
 	self.solid = SOLID_SLIDEBOX;
 	self.takedamage = DAMAGE_NO;
 	self.classname = "statue2";
-	//self.touch = onground_touch;
+	self.touch = onground_touch;
 	setsize(self, '-39 -23 -6', '10 6 96');
 	droptofloor();
 };
@@ -777,7 +777,7 @@ void() statue3 =
 	self.solid = SOLID_SLIDEBOX;
 	self.takedamage = DAMAGE_NO;
 	self.classname = "statue2";
-//	self.touch = onground_touch;
+	self.touch = onground_touch;
 	setsize(self, '-39 -136 -1', '94 85 295');
 	droptofloor();
 };
@@ -794,7 +794,7 @@ void() statue5 =
 	self.solid = SOLID_SLIDEBOX;
 	self.takedamage = DAMAGE_NO;
 	self.classname = "statue5";
-//	self.touch = onground_touch;
+	self.touch = onground_touch;
 	setsize(self, '-28 -25 -1', '59 50 128');
 	droptofloor();
 };
@@ -827,7 +827,7 @@ void() statue7 =
 	self.solid = SOLID_SLIDEBOX;
 	self.takedamage = DAMAGE_NO;
 	self.classname = "statue7";
-//	self.touch = onground_touch;
+	self.touch = onground_touch;
 	setsize(self, '-13 -11 -1', '17 12 56');
 	droptofloor();
 
@@ -845,7 +845,7 @@ void() statue8 =
 	self.solid = SOLID_SLIDEBOX;
 	self.takedamage = DAMAGE_NO;
 	self.classname = "statue8";
-//	self.touch = onground_touch;
+	self.touch = onground_touch;
 	setsize(self, '-13 -11 -1', '22 12 56');
 	droptofloor();
 };
@@ -862,8 +862,102 @@ void() statue9 =
 	self.solid = SOLID_SLIDEBOX;
 	self.takedamage = DAMAGE_NO;
 	self.classname = "statue9";
-//	self.touch = onground_touch;
+	self.touch = onground_touch;
 	setsize(self, '-14 -17 0', '15 15 97');
+	droptofloor();
+};
+
+void() golem_particle;
+void() statue10_death =
+{
+	local float ox, oy, oz, i;
+	local entity effect, fx;
+
+	self.takedamage = DAMAGE_NO;
+
+	if (range(self, self.enemy) != RANGE_FAR && self.enemy)
+		shake_camera(0.1);
+	ox = self.origin_x + random() * 128 - 64;
+	oy = self.origin_y;
+	oz = self.origin_z + 16;
+
+	sound (self, CHAN_BODY, "misc/explode.wav", 1, ATTN_NORM);
+	WriteByte (MSG_BROADCAST, SVC_TEMPENTITY);
+	WriteByte (MSG_BROADCAST, TE_EXPLOSION);
+	WriteCoord (MSG_BROADCAST, ox);
+	WriteCoord (MSG_BROADCAST, oy);
+	WriteCoord (MSG_BROADCAST, oz);
+
+	if (self.cnt >= 13)
+	{
+		if (range(self, self.enemy) != RANGE_FAR)
+			self.enemy.owner.screenflash_finished = time + 0.5;
+
+		effect = spawn();
+		setorigin(effect, self.origin + v_up * 22);
+		setmodel(effect, "progs/explode1.mdl");
+		effect.movetype = MOVETYPE_NOCLIP;
+		effect.think = explodemodel_think;
+		effect.effects = EF_NODEPTHTEST | EF_FULLBRIGHT;
+		effect.nextthink = time;
+		effect.alpha = 1;
+		effect.solid = SOLID_NOT;
+		sound (self, CHAN_BODY, "spells/fhit.wav", 1, ATTN_NORM);
+
+		fx = spawn(); // special flash
+		setorigin(fx, self.origin + v_up * 22);
+		setmodel(fx, "progs/efxflash.mdl");
+		fx.movetype = MOVETYPE_NOCLIP;
+		fx.alpha = 1;
+		fx.effects = EF_NODEPTHTEST | EF_FULLBRIGHT;
+		fx.think = efxflashe_think;
+		fx.nextthink = time;
+		fx.solid = SOLID_NOT;
+			
+		for (i = 0; i < 12; i = i+1)
+			golem_particle();
+
+		if (!(game_progress & IT_PROGRESS7)) // Dragon Statue smashed
+			game_progress = game_progress | IT_PROGRESS7; // Add it (True)
+
+		remove(self);
+		return;
+	}
+	self.cnt = self.cnt + 1;
+	self.think = statue10_death;
+	frameskip(0.25);
+};
+
+/*QUAKED statue10 (0 1 0) (-80 -52 -2) (58 42 67)
+Dragon Head statue - spawnflag adds special condition
+*/
+void() statue10 =
+{
+	precache_sound ("misc/explode.wav");
+	precache_model ("progs/statue10.mdl");
+	precache_model ("progs/rubble1.mdl");
+	precache_model ("progs/rubble2.mdl");
+	precache_model ("progs/rubble3.mdl");
+	setmodel (self, "progs/statue10.mdl");
+
+	if (!self.spawnflags)
+	{
+		self.takedamage = DAMAGE_NO;
+		self.classname = "statue10";
+	}
+	else
+	{
+		self.takedamage = DAMAGE_AIM;
+		self.health = 1; // 333
+		self.classname = "breakable";
+		self.th_die = statue10_death;
+		bprint ("Hittable\n");
+	}
+	self.netname = "solid";
+	self.movetype = MOVETYPE_NONE;
+	self.solid = SOLID_SLIDEBOX;
+	self.touch = onground_touch;
+	setsize(self, '-80 -52 -2', '58 42 67');
 	droptofloor();
 };
 
@@ -876,10 +970,9 @@ void() lionhead =
 	setmodel (self, "progs/lionhead.mdl");
 
 	self.movetype = MOVETYPE_NONE;
-	//self.solid = SOLID_SLIDEBOX;
+	self.solid = SOLID_NOT;
 	self.takedamage = DAMAGE_NO;
 	self.classname = "lionhead";
-	//self.touch = onground_touch;
 	setsize(self, '-1 -29 -22', '47 28 31');
 	makestatic(self);
 };

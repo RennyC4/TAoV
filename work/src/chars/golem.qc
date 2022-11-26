@@ -398,7 +398,6 @@ void() golem_die1	=[	$death1,	golem_die1	]
 			WriteCoord (MSG_BROADCAST, ox);
 			WriteCoord (MSG_BROADCAST, oy);
 			WriteCoord (MSG_BROADCAST, oz);
-			
 		}
 		else if (self.cnt2 > 20)
 		{

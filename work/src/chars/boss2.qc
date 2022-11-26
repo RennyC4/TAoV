@@ -606,7 +606,6 @@ void() monster_boss2 =
 	}
 
 	precache_model ("progs/boss.mdl");
-	precache_model ("progs/bossh.mdl");
 	precache_model ("progs/boulder.mdl");
 	precache_model ("progs/rubble1.mdl");
 	precache_model ("progs/rubble2.mdl");
