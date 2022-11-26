@@ -145,7 +145,7 @@ void() hurt_touch =
 /*QUAKED trigger_hurt (.5 .5 .5) ?
 Any object touching this will be hurt
 set dmg to damage amount
-defalt dmg = 5
+default dmg = 5
 */
 void() trigger_hurt =
 {

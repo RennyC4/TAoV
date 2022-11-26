@@ -2507,15 +2507,11 @@ void() wallgrab_check =
 	if (self.angles_y == 0 || self.angles_y == 180 && self.wallgrab == FALSE && !self.owner.ledgegrab && self.owner.trigger_spincut_finished < time
 	&& self.onground == FALSE && ((self.frame == $jump1 || self.frame == $jump2) || self.frame == $djump))
 	{
-		traceline (source, source + v_forward*25 + v_up*22, FALSE, self);
+		traceline (source, source + v_forward * 25 + v_up * 12, FALSE, self);
 		if (trace_fraction == TRUE || trace_ent.solid != SOLID_BSP)
 			return;
 
-		traceline (source, source + v_forward*25 - v_up*22, FALSE, self);
-		if (trace_fraction == TRUE || trace_ent.solid != SOLID_BSP)
-			return;
-
-		if (trace_plane_normal_z == FALSE) // Flat wall
+		if (!trace_plane_normal_z) // Flat wall
 			local float OK = TRUE;
 
 		// Get Wall Texture
@@ -5847,7 +5843,7 @@ void() player_jumpatk2	=[	$jumpatk2,	player_jumpatk2	]
 	setsize(testx, '0 0 0', '0 0 0');
 	setorigin(testx, self.origin);
 
-	if (self.onground == TRUE)
+	if (self.onground)
 	{	
 		self.owner.speedline_time = time;
 		makevectors (self.angles);
@@ -7458,7 +7454,7 @@ void() divingswallow_hit =
 
 	makevectors(self.angles);
 
-	head = searchradius(self.origin + v_forward * 16, 40);
+	head = searchradius(self.origin + v_forward * 16, 25);
 	while (head)
 	{
 		if (head != self && visible(head)
@@ -7476,7 +7472,6 @@ void() divingswallow_hit =
 
 				if (self.aircombo_count == 8 && head == self.enemy) // for air diving swallow
 				{
-					//head.damage_type = self.attack_type = 5; // Cut in half!
 					if (head.noblood == FALSE)
 					{
 						ThrowBloodSplat(head.origin, head);
@@ -7693,12 +7688,12 @@ void() player_wallgrab	=[	$wallgrab,	player_wallgrab 	]
 		return;
 	}
 	local entity spark;
-	local vector source, org;
+
+	makevectors(self.angles);
 
 	self.aircombo_count = 0; // this needs to be set to 0, prevents a weird looking animation glitch
 							 // if the user is air comboing then wall jumps
 	self.owner.softshadow_time = time;
-
 	self.owner.FL_JMPPRESSED = FALSE; // Release jump pressed flag
 
 	if (self.owner.wallgrab == FALSE)
@@ -7714,14 +7709,9 @@ void() player_wallgrab	=[	$wallgrab,	player_wallgrab 	]
 	if (self.angles_y == 225 || self.angles_y == -225)
 		self.angles_y = 180;
 
-
 	spark = spawn ();
 	spark.owner = self;
-
 	spark.angles = self.owner.angles;
-
-	makevectors(self.angles);
-
 	spark.drawonlytoclient = self.owner.owner; // reduce network traffic
 	spark.movetype = MOVETYPE_BOUNCE;
 	spark.solid = SOLID_NOT;
@@ -7729,10 +7719,8 @@ void() player_wallgrab	=[	$wallgrab,	player_wallgrab 	]
 	setmodel (spark, string_null);
 	spark.think = spark_think;
 	spark.nextthink = time;
-	spark.velocity_z = 25;
-	
+	spark.velocity_z = 25;	
 	spark.velocity = v_forward * (50 + random()*50) * -1;
-	
 	spark.attack_finished = time + 0.5;
 	setorigin(spark, self.origin + v_forward * 20 + v_up * 10);
 
@@ -7741,11 +7729,11 @@ void() player_wallgrab	=[	$wallgrab,	player_wallgrab 	]
 
 	self.velocity = '0 0 15';
 
-	if (self.onground == TRUE)
+	if (self.onground)
 		player_move();
 
 	// attack_finished in this case is a brief pause to allow wall hang animation to play
-	if (self.owner.button0 && self.attack_finished < time && self.invunerability_finished < time && self.safezone == FALSE)
+	if (self.owner.button0 && self.attack_finished < time && self.invunerability_finished < time && !self.safezone)
 	{
 		if (self.angles_y == 0)
 		{
@@ -7758,7 +7746,6 @@ void() player_wallgrab	=[	$wallgrab,	player_wallgrab 	]
 			self.angles_y = 0;
 		}
 		self.angles_x = 15;
-
 		self.owner.walljump = TRUE;
 		self.owner.wallgrab = FALSE;
 		self.divingswallow_wallcheck_finished = time + 0.2;
@@ -7776,10 +7763,9 @@ void() player_wallgrab	=[	$wallgrab,	player_wallgrab 	]
 	}
 
 	makevectors(self.angles);
-	source = self.origin;
+	local vector source = self.origin;
 
-	traceline (source, source + v_forward*35, FALSE, self);
-	org = trace_endpos + v_up*4;
+	traceline (source, source + v_forward * 25 + v_up * 12, FALSE, self);
 
 	if (trace_fraction == 1)
 	{
@@ -7937,8 +7923,8 @@ void() player_doublejump1	=[	$djump,	player_doublejump1	]
 
 void() player_airdivings1 =
 {
-	local vector view;
-	local float bt;
+	local vector view, source, dest;
+	local float bt, test;
 
 	self.owner.noblock_finished = time + 0.2; // Can't block cancel out of air diving swallow
 	self.movetype = MOVETYPE_WALK;
@@ -7956,17 +7942,31 @@ void() player_airdivings1 =
 	self.inair = 0;
 	self.bigfall = FALSE; // remove bigfall
 
+	//
+	// TraceBox: Check if Vigil hasn't hit any geometry
+	//
+
+	source = self.origin;
+	dest = self.origin + v_forward * 8;
+
+	tracebox (source, VEC_HULL_MIN, VEC_HULL_MAX, dest, 1, self);
+
+	if (trace_fraction == 1) // Hit nothing
+		test = FALSE;
+	else // break out, hit something
+		test = TRUE;
+
 	// a noclip monster may of exited the level, so just get out of this...
 	// also make sure that vigil hasn't somehow gone passed his target or it hasn't died anyways, if so break out
 	if (!visible(self.enemy) || (self.origin_x > self.enemy.origin_x && self.angles_y == 0) || (self.origin_x < self.enemy.origin_x && self.angles_y == 180)
-	|| self.origin == self.oldorigin || (self.enemy.deadflag == DEAD_DEAD || self.enemy == world) || (pointcontents(self.origin) == CONTENT_WATER || pointcontents(self.origin) == CONTENT_SLIME || pointcontents(self.origin) == CONTENT_LAVA))
+	|| (self.enemy.deadflag == DEAD_DEAD || self.enemy == world) || self.waterlevel > 1 || self.swimming || test)
 	{
 		self.owner.backflip_finished = time + 0.7; // Perfect value! Player enters negative velocity by this itme...
 		self.think = player_bflip1;
 		self.nextthink = time;
+		bprint ("DS Broke out\n");
 		return;
 	}
-
 	self.angles_x = view_x;
 
 	makevectors (self.angles);
@@ -7975,12 +7975,12 @@ void() player_airdivings1 =
 	self.angles = vectoangles(self.velocity);
 
 	// keep vigil inline with his target just incase
-	if (self.enemy != world)
+	if (self.enemy)
 	{
 		if (self.enemy.origin_y > self.origin_y)
 			self.velocity_y = self.velocity_y + (bt * 100) * frametime; // the speed
 		else
-			self.velocity_y = self.velocity_y + (bt * 100) * frametime * -1; // the speed
+			self.velocity_y = (self.velocity_y + (bt * 100) * -1) * frametime; // the speed
 	}
 	else
 		self.velocity_y = 0;
@@ -7996,9 +7996,7 @@ void() player_airdivings1 =
 	self.owner.shadow_time = time + 0.1;
 	self.owner.speedline_time = time + 0.2; // speedline
 
-	self.oldorigin = self.origin;
-
-	frameskip(0.05);
+	frameskip(0.01);
 };
 
 // Need to check for wall grabbing during his wall running frames

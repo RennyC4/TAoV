@@ -314,6 +314,24 @@
 ( -320 -112 -48 ) ( -320 -112 368 ) ( -352 -112 368 ) brickground 0 0 0 1 1
 ( -320 -240 368 ) ( -320 -112 368 ) ( -320 -112 -48 ) brickground 0 0 0 1 1
 }
+// brush 34
+{
+( -448 168 80 ) ( -448 -24 80 ) ( -448 -24 48 ) brick2_2 -24 16 180 1 -1
+( -448 -24 80 ) ( -192 -24 80 ) ( -192 -24 48 ) brick2_2 0 16 0 1 1
+( -192 -24 48 ) ( -192 168 48 ) ( -448 168 48 ) brick2_2 0 -24 180 1 -1
+( -448 168 80 ) ( -192 168 80 ) ( -192 -24 80 ) brick2_2 0 -24 0 1 1
+( -192 168 48 ) ( -192 168 80 ) ( -448 168 80 ) brick2_2 0 16 180 1 -1
+( -192 -24 80 ) ( -192 168 80 ) ( -192 168 48 ) brick2_2 24 16 0 1 1
+}
+// brush 35
+{
+( -240 168 96 ) ( -240 -16 96 ) ( -240 -16 80 ) brick2_2 0 0 0 1 1
+( -240 -16 96 ) ( -224 -16 96 ) ( -224 -16 80 ) brick2_2 0 0 0 1 1
+( -224 -16 80 ) ( -224 168 80 ) ( -240 168 80 ) brick2_2 0 0 0 1 1
+( -240 168 96 ) ( -224 168 96 ) ( -224 -16 96 ) brick2_2 0 0 0 1 1
+( -224 168 80 ) ( -224 168 96 ) ( -240 168 96 ) brick2_2 0 0 0 1 1
+( -224 -16 96 ) ( -224 168 96 ) ( -224 168 80 ) brick2_2 0 0 0 1 1
+}
 }
 // entity 1
 {
@@ -356,21 +374,11 @@
 }
 // entity 4
 {
-"classname" "light"
-"origin" "504 -72 24"
-}
-// entity 5
-{
-"classname" "light"
-"origin" "72 56 90"
-}
-// entity 6
-{
 "classname" "player_spawn"
-"origin" "112 -40 152"
+"origin" "-32 8 80"
 "angle" "180"
 }
-// entity 7
+// entity 5
 {
 "classname" "trigger_once"
 "target" "1"
@@ -385,68 +393,49 @@
 ( 128 -64 120 ) ( 128 -8 120 ) ( 128 -8 112 ) trigger -24 40 0 1 1
 }
 }
-// entity 8
-{
-"classname" "light"
-"origin" "-472 56 130"
-"style" "1"
-}
-// entity 9
-{
-"classname" "misc_sound"
-"origin" "-112 152 72"
-"noise" "ambience/chbells1"
-"targetname" "churchbell"
-"cnt" "1"
-}
-// entity 10
+// entity 6
 {
 "classname" "item_mana"
 "origin" "-454 -82 48"
 }
-// entity 11
+// entity 7
 {
 "classname" "item_mana"
 "origin" "-474 -82 48"
 }
-// entity 12
+// entity 8
 {
 "classname" "item_mana"
 "origin" "-494 -82 48"
 }
-// entity 13
+// entity 9
 {
 "classname" "item_mana"
 "origin" "-494 -62 48"
 }
-// entity 14
+// entity 10
 {
 "classname" "item_mana"
 "origin" "-474 -62 48"
 }
-// entity 15
+// entity 11
 {
 "classname" "item_mana"
 "origin" "-454 -62 48"
 }
-// entity 16
+// entity 12
 {
 "classname" "monster_hydra"
 "origin" "144 -32 -48"
 "awareness" "4"
 }
-// entity 17
-{
-"classname" "test_ripple"
-"origin" "162 -2 24"
-}
-// entity 18
+// entity 13
 {
 "classname" "monster_hell_knight"
 "origin" "664 40 32"
 "awareness" "4"
 }
-// entity 19
+// entity 14
 {
 "classname" "monster_merman"
 "origin" "-256 -24 160"
@@ -455,16 +444,15 @@
 "spawnflags" "10"
 "targetname" "merman"
 }
-// entity 20
+// entity 15
 {
 "classname" "monster_knight"
-"origin" "-144 -48 144"
-"angles" "0 90 0"
+"origin" "-184 24 112"
+"angles" "0 -180 0"
 "awareness" "4"
-"nodrop" "1"
-"spawnflags" "10"
+"health" "9999"
 }
-// entity 21
+// entity 16
 {
 "height" "100"
 "speed" "400"
@@ -483,17 +471,31 @@
 ( -232 -47.82572769764079 192 ) ( -232 0 192 ) ( -232 0 128 ) trigger 47.709717 0 0 1 1
 }
 }
-// entity 22
+// entity 17
+{
+"classname" "trigger_hurt"
+"dmg" "1000"
+// brush 0
+{
+( -320 -112 48 ) ( -320 -111 48 ) ( -320 -112 49 ) trigger 0 0 0 1 1
+( -320 -112 48 ) ( -320 -112 49 ) ( -319 -112 48 ) trigger 0 0 0 1 1
+( -320 -112 48 ) ( -319 -112 48 ) ( -320 -111 48 ) trigger 0 0 0 1 1
+( -192 -96 56 ) ( -192 -95 56 ) ( -191 -96 56 ) trigger 0 0 0 1 1
+( -192 -96 56 ) ( -191 -96 56 ) ( -192 -96 57 ) trigger 0 0 0 1 1
+( -192 -96 56 ) ( -192 -96 57 ) ( -192 -95 56 ) trigger 0 0 0 1 1
+}
+}
+// entity 18
 {
 "classname" "trigger_once"
 "target" "merman_start"
 // brush 0
 {
-( -368 16 48 ) ( -368 17 48 ) ( -368 16 49 ) trigger 0 0 0 1 1
-( -368 16 48 ) ( -368 16 49 ) ( -367 16 48 ) trigger 0 0 0 1 1
-( -368 16 48 ) ( -367 16 48 ) ( -368 17 48 ) trigger 0 0 0 1 1
-( -336 144 64 ) ( -336 145 64 ) ( -335 144 64 ) trigger 0 0 0 1 1
-( -336 144 64 ) ( -335 144 64 ) ( -336 144 65 ) trigger 0 0 0 1 1
-( -336 144 64 ) ( -336 144 65 ) ( -336 145 64 ) trigger 0 0 0 1 1
+( -192 -24 64 ) ( -192 -96 64 ) ( -192 -96 48 ) trigger -16 0 0 1 1
+( -192 -96 64 ) ( -160 -96 64 ) ( -160 -96 48 ) trigger 16 0 0 1 1
+( -160 -96 48 ) ( -160 -24 48 ) ( -192 -24 48 ) trigger 16 16 0 1 1
+( -192 -24 64 ) ( -160 -24 64 ) ( -160 -96 64 ) trigger 16 16 0 1 1
+( -160 -24 48 ) ( -160 -24 64 ) ( -192 -24 64 ) trigger 16 0 0 1 1
+( -160 -96 64 ) ( -160 -24 64 ) ( -160 -24 48 ) trigger -16 0 0 1 1
 }
 }
