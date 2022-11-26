@@ -7964,7 +7964,6 @@ void() player_airdivings1 =
 		self.owner.backflip_finished = time + 0.7; // Perfect value! Player enters negative velocity by this itme...
 		self.think = player_bflip1;
 		self.nextthink = time;
-		bprint ("DS Broke out\n");
 		return;
 	}
 	self.angles_x = view_x;
