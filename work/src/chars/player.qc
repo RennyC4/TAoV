@@ -7461,7 +7461,7 @@ void() divingswallow_hit =
 		&& ((coop == TRUE && head.classname != "player" && self.classname == "player")
 		|| (coop == FALSE || self.flags & FL_MONSTER))) // coop
 		{
-			if (head.th_pain)
+			if (head.th_pain || head.classname == "breakable")
 			{
 				if (self.owner.wallrun == FALSE)
 					self.bflipwall_finished = time + 0.3;
