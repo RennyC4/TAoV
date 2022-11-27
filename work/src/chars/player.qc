@@ -7569,10 +7569,11 @@ void() divingswallow_hit =
 					effect.nextthink = time;
 					effect.solid = SOLID_NOT;
 
-					if (deathmatch == FALSE)
-						T_Damage (head, self, self, 8, 0);
-					else
-						T_Damage (head, self, self, 3, 0);
+//					if (deathmatch == FALSE)
+//						T_Damage (head, self, self, 4, 0);
+//					else
+
+					T_Damage (head, self, self, 1, 0);
 					sound (self, CHAN_WEAPON, "player/kickhit.wav", 1, ATTN_NORM);
 					if (deathmatch == FALSE)
 						self.owner.mana = self.owner.mana + 1;

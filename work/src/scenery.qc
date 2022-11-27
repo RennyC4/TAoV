@@ -917,6 +917,12 @@ void() statue10_death =
 		for (i = 0; i < 12; i = i+1)
 			golem_particle();
 
+		if (self.enemy.owner)
+		{
+			setpause(1);
+			centerprint (self.enemy.owner, "/P^bDragon Worship Statue Destroyed^b\n\n===========================\n\nYou hear a rumbling in the distance... The Eternal Dragon awaits!\n\n\n^3Press ATTACK or JUMP to resume ...");
+		}
+
 		if (!(game_progress & IT_PROGRESS7)) // Dragon Statue smashed
 			game_progress = game_progress | IT_PROGRESS7; // Add it (True)
 
@@ -948,10 +954,9 @@ void() statue10 =
 	else
 	{
 		self.takedamage = DAMAGE_AIM;
-		self.health = 1; // 333
+		self.health = 333;
 		self.classname = "breakable";
 		self.th_die = statue10_death;
-		bprint ("Hittable\n");
 	}
 	self.netname = "solid";
 	self.movetype = MOVETYPE_NONE;

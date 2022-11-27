@@ -242,7 +242,6 @@ void() func_destroy_map01 =
 	setmodel (self, self.model);
 };
 
-
 void() destroy_think =
 {
 	if (self.alpha > 0.1)
@@ -377,6 +376,29 @@ void() func_destroy =
 	self.use = destroy_destroy;
 	self.ignoreaircombo = TRUE; // bugfix, don't allow air combos to lift object off ground
 	setmodel (self, self.model);
+};
+
+void() func_dragongate_think =
+{
+	if (game_progress & IT_PROGRESS7)
+	{
+		remove(self);
+		return;
+	}
+};
+
+/*QUAKED func_bell (0 .5 .8) ?
+Gate that removes when IT_PROGRESS7 flag is enabled
+*/
+
+void() func_dragongate =
+{
+	self.angles = '0 0 0';
+	self.movetype = MOVETYPE_PUSH;
+	self.solid = SOLID_BSP;
+	setmodel (self, self.model);
+	self.think = func_dragongate_think;
+	self.nextthink = self.ltime + 0.3;
 };
 
 /*QUAKED func_bell (0 .5 .8) ?
