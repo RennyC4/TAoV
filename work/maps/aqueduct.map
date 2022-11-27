@@ -5495,12 +5495,13 @@
 {
 "classname" "item_mana"
 "origin" "-42 34 128"
+"cnt" "100"
 }
 // entity 11
 {
 "classname" "item_gold"
 "origin" "-51 51 128"
-"maxgold" "128"
+"maxgold" "95"
 }
 // entity 12
 {
@@ -8742,4 +8743,10 @@
 "classname" "monster_baron"
 "origin" "-6448 -16 -1448"
 "angle" "0"
+}
+// entity 256
+{
+"classname" "item_health"
+"origin" "-350 26 -816"
+"cnt" "100"
 }

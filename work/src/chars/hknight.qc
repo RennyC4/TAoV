@@ -427,7 +427,8 @@ void() HellKnight_Lightning =
 				if (trace_ent.owner.mana > trace_ent.owner.max_mana)
 					trace_ent.owner.mana = trace_ent.owner.max_mana;
 			}
-			trace_ent.owner.combo = trace_ent.owner.combo + 1; // raise combo counter
+			if (trace_ent.owner)
+				trace_ent.owner.combo = trace_ent.owner.combo + 1; // raise combo counter
 
 			if (self.angles_y >= 90 && self.angles_y <= 270) // Attacker facing right
 				trace_ent.angles_y = 0; // victim faces left

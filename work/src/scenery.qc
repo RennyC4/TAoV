@@ -867,7 +867,7 @@ void() statue9 =
 	droptofloor();
 };
 
-void() golem_particle;
+void() ThrowRubble;
 void() statue10_death =
 {
 	local float ox, oy, oz, i;
@@ -915,7 +915,8 @@ void() statue10_death =
 		fx.solid = SOLID_NOT;
 			
 		for (i = 0; i < 12; i = i+1)
-			golem_particle();
+			ThrowRubble();
+			//golem_particle();
 
 		if (self.enemy.owner)
 		{
