@@ -10711,3 +10711,8 @@
 "classname" "light_lantern2"
 "origin" "-2168 -126 -360.685"
 }
+// entity 341
+{
+"classname" "item_health"
+"origin" "-1050 -70 -912"
+}

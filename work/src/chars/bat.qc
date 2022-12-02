@@ -48,7 +48,7 @@ void() bat_think =
 		// Do damage
 		local entity headdmg = searchradius(self.origin, 5);
 		while (headdmg)
-		{   	// Frame241 = double jump
+		{	// Frame241 = double jump
 			if (headdmg.takedamage && headdmg.classname == "player" && headdmg.health > 0 && self.combo_finished < time && headdmg.frame != 241 && !headdmg.owner.flags & FL_NOTARGET && !headdmg.flypain)
 			{
 				// spawn a hit sprite

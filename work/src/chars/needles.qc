@@ -53,7 +53,7 @@ void() needles_think =
 			sound (self, CHAN_BODY, "needles/die.wav", 1, ATTN_NORM);
 
 			head.knockback = 4; // always fall, even if on ground
-			T_Damage (head, self, self, 50,0);
+			T_Damage (head, self, self, self.dmg, 0);
 			WriteByte (MSG_BROADCAST, SVC_TEMPENTITY);
 			WriteByte (MSG_BROADCAST, TE_TAREXPLOSION);
 			WriteCoord (MSG_BROADCAST, self.origin_x);
@@ -105,6 +105,8 @@ void() monster_needles =
 	self.netname = "solid";
 	self.avelocity = '0 50 0';
 	self.cnt = 0;
+	if (!self.dmg)
+		self.dmg = 35;
 	if (!self.scale)
 		self.scale = 1;
 	self.flags = self.flags | FL_MONSTER;

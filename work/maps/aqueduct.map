@@ -5960,6 +5960,9 @@
 {
 "classname" "barrel"
 "origin" "-360 -24 -798"
+"spawnflags" "1"
+"maxgold" "10"
+"cnt" "73"
 }
 // entity 63
 {
@@ -8253,7 +8256,7 @@
 // entity 216
 {
 "classname" "trigger_pit"
-"cnt" "44"
+"cnt" "22"
 // brush 0
 {
 ( -6440 40 -1176 ) ( -6440 -184 -1176 ) ( -6440 -184 -1272 ) trigger [ 0 -1 0 -48 ] [ 0 0 -1 0 ] 0 1 1
@@ -8574,6 +8577,8 @@
 {
 "classname" "barrel"
 "origin" "-5480 -56 -1456"
+"spawnflags" "1"
+"cnt" "55"
 }
 // entity 227
 {
@@ -8630,7 +8635,7 @@
 // entity 237
 {
 "classname" "monster_horror"
-"origin" "-6280 -24 -808"
+"origin" "-6280 -24 -792"
 "angle" "0"
 }
 // entity 238
@@ -8746,7 +8751,15 @@
 }
 // entity 256
 {
-"classname" "item_health"
-"origin" "-350 26 -816"
-"cnt" "100"
+"classname" "barrel"
+"origin" "-2544 48 -1232"
+"spawnflags" "1"
+"cnt" "10"
+}
+// entity 257
+{
+"classname" "barrel"
+"origin" "-1504 -16 -1720"
+"spawnflags" "1"
+"cnt" "80"
 }

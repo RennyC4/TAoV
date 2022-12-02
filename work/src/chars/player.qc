@@ -6243,6 +6243,7 @@ void() player_knockedup1    =[	$walled1,	player_knockedup1 ]
 		self.velocity_z = self.velocity_z / 1.05;
 		if (self.inwater_pain >= 150)
 		{
+			self.angles_x = 0;
 			player_swim_recover();
 			return;
 		}
@@ -6250,7 +6251,7 @@ void() player_knockedup1    =[	$walled1,	player_knockedup1 ]
 	}
 	else
 	{
-		if (self.onground == TRUE)
+		if (self.onground)
 		{
 			PainSound();
 			sound (self, CHAN_BODY, "player/jmpflor.wav", 1, ATTN_NORM);
