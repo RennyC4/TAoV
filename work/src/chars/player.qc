@@ -7246,7 +7246,14 @@ void() player_fireball2	=[	$magicb2,	player_move	]
 {
 	self.angles_y = self.turn_y;
 	self.colormod = '3 2 1';
-	Fireball(25,21);
+	if (self.owner.level < 20)
+		Fireball(25,21);
+	else // Launch 2 fireballs over level 20 for 1.5x damage
+	{
+		local float i;
+		for (i = 0; i < 2; i = i+1)
+			Fireball(19,21);
+	}
 
 	// Subtract mana for the spell accordingly
 	if (self.owner.mana >= 10)

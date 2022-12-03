@@ -654,18 +654,6 @@ void() pit_touch =
 	{
 		local float rs = rint((random() * 3) + 1);
 
-		self.noise = "";
-		if (rs == 1)
-			self.noise = "player/pain1.wav";
-		else if (rs == 2)
-			self.noise = "player/pain2.wav";
-		else if (rs == 3)
-			self.noise = "player/pain3.wav";
-		else
-			self.noise = "player/pain4.wav";
-
-		sound (other, CHAN_VOICE, self.noise, 1, ATTN_NORM);
-		
 		other.dontupdate_lastpos_finished = time + 1.5;
 		other.inair = 16;
 		other.bigfall = FALSE;
@@ -690,6 +678,19 @@ void() pit_touch =
 			else
 				setorigin (other, other.lastpos);
 		}
+
+		self.noise = "";
+		if (rs == 1)
+			self.noise = "player/pain1.wav";
+		else if (rs == 2)
+			self.noise = "player/pain2.wav";
+		else if (rs == 3)
+			self.noise = "player/pain3.wav";
+		else
+			self.noise = "player/pain4.wav";
+
+		sound (other, CHAN_VOICE, self.noise, 1, ATTN_NORM);
+
 		WriteByte (MSG_BROADCAST, SVC_TEMPENTITY);
 		WriteByte (MSG_BROADCAST, TE_TELEPORT);
 		WriteCoord (MSG_BROADCAST, other.origin_x);
