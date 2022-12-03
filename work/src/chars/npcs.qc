@@ -686,7 +686,7 @@ void() lisa_chat =
 
 		if (self.cnt == 0)
 		{
-			if (!(game_progress & IT_PROGRESS2) || !(game_progress & IT_PROGRESS4) || !(game_progress & IT_PROGRESS6)) // Cyclone Crush, Diving Swallow, Air Izuna Drop
+			if (!(game_progress & IT_PROGRESS2) || !(game_progress & IT_PROGRESS4) || !(game_progress & IT_PROGRESS6)) // Cyclone Crush, Diving Swallow, Airzuna Drop
 			{
 				if (!(game_progress & IT_PROGRESS2))
 				{
@@ -720,7 +720,7 @@ void() lisa_chat =
 		// User menu control
 		//
 
-		if (!(game_progress & IT_PROGRESS2) || !(game_progress & IT_PROGRESS4) || !(game_progress & IT_PROGRESS6)) // Cyclone, Diving Swallow & Air Izuna Drop
+		if (!(game_progress & IT_PROGRESS2) || !(game_progress & IT_PROGRESS4) || !(game_progress & IT_PROGRESS6)) // Cyclone, Diving Swallow & Airzuna Drop
 		{
 			if (self.enemy.owner.keyflags & KEY_UP)
 			{
@@ -757,7 +757,7 @@ void() lisa_chat =
 		{
 			if (self.selection == FALSE)
 			{
-				if (self.cnt == 0 && (!(game_progress & IT_PROGRESS2) || !(game_progress & IT_PROGRESS4)|| !(game_progress & IT_PROGRESS6))) // Cyclone, Diving Swallow, Air Izuna Drop
+				if (self.cnt == 0 && (!(game_progress & IT_PROGRESS2) || !(game_progress & IT_PROGRESS4)|| !(game_progress & IT_PROGRESS6))) // Cyclone, Diving Swallow, Airzuna Drop
 				//if (self.cnt == 0 && (cycloneattack == FALSE || divingswallow == FALSE)) // User purchases an attack
 				{
 					if (self.enemy.owner.gold >= aprice)
@@ -799,7 +799,7 @@ void() lisa_chat =
 						else if (!game_progress & IT_PROGRESS6)
 						{
 							setpause (1);
-							centerprint (self.enemy.owner, "/P^bYou've learned Air Izuna Drop!^b\n\n===========================\n\n^1Perform this attack by pressing DOWN, DOWN, UP + ATTACK button combination after grabbing an opponent or landing a strike whilst airborne, damage scales with strike meter\n\n\n\n^3Press ATTACK or JUMP to resume ...\n");
+							centerprint (self.enemy.owner, "/P^bYou've learned Airzuna Drop!^b\n\n===========================\n\n^1Perform this attack by pressing DOWN, DOWN, UP + ATTACK button combination after grabbing an opponent or landing a strike whilst airborne, damage scales with strike meter\n\n\n\n^3Press ATTACK or JUMP to resume ...\n");
 
 							if (!game_progress & IT_PROGRESS6) // Izuna Drop Attack
 								game_progress = game_progress | IT_PROGRESS6; // Add it (True)

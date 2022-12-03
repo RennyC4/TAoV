@@ -9051,15 +9051,15 @@ void() player_gizuna2   =[	$izuna1,	player_bflip1	]
 	// Calculate dammage
 	local float calc;
 	if (self.owner.swordlevel == 0)
-		calc = 15 + ceil(self.owner.combo);
+		calc = 25 + ceil(self.owner.combo);
 	else if (self.owner.swordlevel == 1)
-		calc = 30 + ceil(self.owner.combo);
-	else if (self.owner.swordlevel == 2)
 		calc = 50 + ceil(self.owner.combo);
-	else
+	else if (self.owner.swordlevel == 2)
 		calc = 75 + ceil(self.owner.combo);
-	if (calc > 125) // cap max damage
-		calc = 125;
+	else
+		calc = 100 + ceil(self.owner.combo);
+	if (calc > 150) // cap max damage
+		calc = 150;
 
 	// Deal Damage
 	self.izunatarg.takedamage = DAMAGE_AIM; // reactivate damage on target
