@@ -6919,12 +6919,12 @@ void() player_die3	=[	$pain5,	player_die3 ]
 			
 				if (self.owner.button0)
 				{
-					if (self.deathmenu == 0)
+					if (!self.deathmenu)
 					{
 						self.health = ceil(self.max_health);
 						self.owner.health = ceil(self.owner.max_health);
 					
-						if (self.owner.pouch == FALSE && self.lip == 0)
+						if (!self.owner.pouch && !self.lip)
 						{
 							self.owner.gold = ceil(self.owner.gold / 1.25);
 							self.lip = 1;
@@ -6934,11 +6934,13 @@ void() player_die3	=[	$pain5,	player_die3 ]
 							self.owner.pouch = FALSE; // remove pouch if held
 							self.lip = 1;
 						}
-						
 						changelevel (mapname);
 					}
 					else // warp back to safety (village.bsp)...
 					{
+						self.health = ceil(self.max_health);
+						self.owner.health = ceil(self.owner.max_health);
+
 						self.owner.pouch = FALSE; // remove pouch if held
 						local string h;
 						h = ftos(2);

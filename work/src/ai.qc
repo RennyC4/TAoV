@@ -1677,7 +1677,7 @@ void(entity attacker) monster_pain =
 		self.angles_y = 180;
 
 	// Color flash on pain
-	if (self.block_finished < time)
+	if (self.block_finished < time || self.deadflag != DEAD_DEAD)
 		self.colormod = '3 1 1';
 
 	// Ignore air combo flag is on the monster
