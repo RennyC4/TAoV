@@ -5834,7 +5834,7 @@ void() player_jumpatk2	=[	$jumpatk2,	player_jumpatk2	]
 
 	testx = spawn();
 	testx.owner = self;
-	testx.drawonlytoclient = self.owner.owner; // reduce network traffic
+	testx.drawonlytoclient = testx.owner.owner; // reduce network traffic
 	testx.movetype = MOVETYPE_NOCLIP;
 	testx.solid = SOLID_NOT;
 	testx.think = hsmash_testzcheck;
@@ -6472,7 +6472,7 @@ void() player_twist    =[	$twist,	player_twist		]
 
 		testx = spawn();
 		testx.owner = self;
-		testx.drawonlytoclient = self.owner.owner; // reduce network traffic
+		testx.drawonlytoclient = testx.owner.owner; // reduce network traffic
 		testx.movetype = MOVETYPE_NOCLIP;
 		testx.solid = SOLID_NOT;
 		testx.think = twist_testxcheck;
@@ -9050,7 +9050,7 @@ void() player_gizuna2   =[	$izuna1,	player_bflip1	]
 
 	// Calculate dammage
 	local float calc;
-	if (self.owner.swordlevel == 0)
+	if (!self.owner.swordlevel)
 		calc = 25 + ceil(self.owner.combo);
 	else if (self.owner.swordlevel == 1)
 		calc = 50 + ceil(self.owner.combo);
