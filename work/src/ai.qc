@@ -1665,7 +1665,9 @@ void() wakeup =
 
 void(entity attacker) monster_pain =
 {
-	
+	if (self.classname == "player")
+		return; // Oddly this is needed to fix a bug where Vigil can turn (colormod) red when blocked in mid-air even if he's never called it
+
 	// Face player properly before physics are ran -
 	// This is intentionally inaccurate; allows the player to control the battlefield moreso by using angle checks instead of origin_x (left/right)
 	// whereas the opposite is true for monsters vs player
