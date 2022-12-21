@@ -795,6 +795,12 @@ void() PlayerPreThink =
 
 	if (self.char)
 	{
+		// Perma-fix for zombie vigil (health = 0)
+		if (!self.char.health)
+		{
+			Killed(self.char, world);
+			self.char.health = -1; // Don't loop
+		}
 		if (self.shadow_time > time)
 			Shadows(self.char);
 		if (self.softshadow_time > time)
