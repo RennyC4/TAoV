@@ -1504,10 +1504,18 @@ void() SetLevel =
 		NextLevelExp = self.owner.level + 18 * self.owner.level;
 		if (self.owner.experience >= NextLevelExp)
 		{
-			if (self.owner.level == 1 && players == 1)
+			if (players == 1)
 			{
-				setpause(1);
-				centerprint (self.owner, "/P^bLevel Up!^b\n\nKilling foes increases Vigil's strength & resolve\n\n===========================\n\n\n^1Enemies give varying amounts of experience points which strengthens Vigil, leveling up increases Vigil's maximum HP & MP!\n\n\n^3Press ATTACK or JUMP to resume ...");
+				if (self.owner.level == 1)
+				{
+					setpause(1);
+					centerprint (self.owner, "/P^bLevel Up!^b\n\nKilling foes increases Vigil's strength & resolve\n\n===========================\n\n\n^1Enemies give varying amounts of experience points which strengthens Vigil, leveling up increases Vigil's maximum HP & MP!\n\n\n^3Press ATTACK or JUMP to resume ...");
+				}
+				if (self.owner.level == 19)
+				{
+					setpause(1);
+					centerprint (self.owner, "/P^bFireball Level Up!^b\n\n===========================\n\n^1Vigil now shoots 2 fireballs for 1.5x more damage if both hit their target!\n\n\n^3Press ATTACK or JUMP to resume ...");
+				}				
 			}
 			sound (self, CHAN_AUTO, "misc/levelup.wav", 1, ATTN_NORM);
 			self.owner.level = self.owner.level + 1;

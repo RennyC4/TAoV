@@ -867,7 +867,18 @@ void() statue9 =
 	droptofloor();
 };
 
+
 void() ThrowRubble;
+void() statue10_remove_check =
+{
+	if (game_progress & IT_PROGRESS7)
+	{
+		remove(self);
+		return;
+	}
+	frameskip(1);
+};
+
 void() statue10_death =
 {
 	local float ox, oy, oz, i;
@@ -958,6 +969,8 @@ void() statue10 =
 		self.health = 333;
 		self.classname = "breakable";
 		self.th_die = statue10_death;
+		self.think = statue10_remove_check;
+		self.nextthink = time + 0.3;
 	}
 	self.netname = "solid";
 	self.movetype = MOVETYPE_NONE;

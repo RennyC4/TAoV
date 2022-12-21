@@ -5241,7 +5241,7 @@ void() swordstareffect =
 	makevectors(self.angles);
 
 	effect = spawn();
-	setorigin(effect, self.origin + v_forward * 34 + v_up*7);
+	setorigin(effect, self.origin + v_forward * 34 + v_up*12);
 	setmodel(effect, "progs/star2.spr"); // oriented
 	effect.solid = SOLID_NOT;
 	if (self.angles_y == 0)
@@ -8948,7 +8948,7 @@ void() player_gizuna1   =[	$izuna1,	player_gizuna1	]
 			self.owner.camerastyle = 0;
 		}
 		
-		// Hit ground, do damage
+		// Hit ground
 		if (self.onground && self.velocity_z <= 0)
 		{
 			self.effects = self.izunatarg.effects = EF_NODEPTHTEST;
@@ -9068,7 +9068,7 @@ void() player_gizuna2   =[	$izuna1,	player_bflip1	]
 	self.takedamage = DAMAGE_AIM; // reactivate damage on self
 	self.attack_type = 5; // Cut in half!
 	self.owner.screenflash_finished = time + 0.1; // hard hit -> screen flashes
-	FireMelee(calc,0,3,50,7,FALSE,1,TRUE,0,0); // silent sound / silent flash
+	FireMelee(calc,0,3,75,7,FALSE,1,TRUE,0,0); // silent sound / silent flash
 
 	self.owner.attack_finished = time;
 	self.grabbed = FALSE;
