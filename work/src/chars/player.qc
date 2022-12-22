@@ -1933,7 +1933,7 @@ void() player_think =
 					self.char.angles_y = 0;
 			}
 		}
-		else if (self.char.aircombo_count < 1 && self.button2_buffer == FALSE) // Slight mid-air friction
+		else if (self.char.aircombo_count < 1 && self.button2_buffer == FALSE && !self.walljump) // Slight mid-air friction
 		{
 			if (self.char.velocity_x != 0)
 			{
@@ -2178,7 +2178,10 @@ void() player_think =
 		{
 			if (self.char.attack_finished < time && self.walljump == FALSE && self.char.pain_finished < time)
 			{
-				self.FL_JMPPRESSED = TRUE; // clear flag
+				if (self.ledgegrab_finished > time) // Fixes double ledge-grabs (climbing) preventing double jump
+					self.ledgegrab_finished = time;
+				self.doublejump = FALSE;
+				self.FL_JMPPRESSED = TRUE; // set flag
 				self.ledgegrab = FALSE;
 				self.char.movetype = MOVETYPE_WALK;
 				self.char.running = TRUE; // Allow wall run after wall jump
