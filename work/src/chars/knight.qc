@@ -316,8 +316,7 @@ void() monster_knight =
 	self.th_grab = knight_grabbed1;
 	self.th_die = knight_die;
 	self.th_jump = knight_jump;
-	//self.experience = 18; // how much exp to give on death
-	self.experience = 99999;
+	self.experience = 18; // how much exp to give on death
 	self.maxgold = 100;
 
 	self.th_block = knight_block1;
