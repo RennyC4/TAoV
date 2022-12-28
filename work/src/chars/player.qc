@@ -5435,7 +5435,7 @@ void() player_chargeatk5	=[	$charge9,	player_chargeatk5	]
 
 	if (self.owner.mashattack == TRUE)
 	{
-		FireMelee(22,30,6,30,2,1,1,TRUE,0,0); // does not smack back
+		FireMelee(22,30,0,30,2,1,1,TRUE,0,0); // does not smack back
 		self.think = player_attacka17;
 		self.nextthink = time + 0.15;
 		self.owner.mashattack = FALSE;
