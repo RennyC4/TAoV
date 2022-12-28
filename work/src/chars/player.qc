@@ -5363,17 +5363,18 @@ void() player_chargeatk2	=[	$charge6,	player_chargeatk3	] {frameskip(0.05);};
 
 void() player_chargeatk3	=[	$charge7,	player_chargeatk3	]
 {
-	if (self.chargespincnt < 46)
+	//if (self.chargespincnt < 46)
+	if (self.chargespincnt < 75)
 	{
-		if (self.chargespincnt == 0 || self.chargespincnt == 20 || self.chargespincnt == 40)
+		if (self.chargespincnt == 10 || self.chargespincnt == 40 || self.chargespincnt == 67)
 			sound (self, CHAN_AUTO, "player/twoosh.wav", 1, ATTN_NORM);
 
-		if (self.chargespincnt == 3 || self.chargespincnt == 12 || self.chargespincnt == 25 || self.chargespincnt == 35)
+		if (self.chargespincnt == 5 || self.chargespincnt == 38 || self.chargespincnt == 70)
 		{
 			self.attack_type = 5;
-			FireMelee(9,0,0,60,5,0,1,FALSE,0,0); // Hit all around
+			FireMelee(14,0,0,60,5,0,1,FALSE,0,0); // Hit all around
 		}
-		self.angles_x = self.angles_x + 15; // spin Vigil
+		self.angles_x = self.angles_x + 10; // spin Vigil
 		self.chargespincnt = self.chargespincnt + 1;
 	}
 	else
@@ -5396,14 +5397,32 @@ void() player_chargeatk4	=[	$charge8,	player_chargeatk4	]
 		player_move();
 	}
 
-	if (self.onground == TRUE || self.flags & FL_ONGROUND)
+	if (self.onground)
 		player_chargeatk5();
+};
+
+void() chargeatk_grounded =
+{
+	local entity effect;
+	makevectors (self.angles);
+
+	effect = spawn();
+	setorigin(effect, self.origin + v_forward * 32);
+	setmodel(effect, "progs/grounded.mdl");
+	effect.solid = SOLID_NOT;
+	setsize (effect, '-21 -21 -16', '22 23 31');
+	effect.movetype = MOVETYPE_NOCLIP;
+	effect.effects = EF_ADDITIVE | EF_FULLBRIGHT | EF_NODEPTHTEST;
+	sound (effect, CHAN_AUTO, "player/jmpflor.wav", 1, ATTN_NORM);
+	effect.think = effect_think;
+	effect.nextthink = time;
 };
 
 void() player_chargeatk5	=[	$charge9,	player_chargeatk5	] 
 {
-	// Hard hit
-	self.attack_type = 5;
+	self.owner.shadow_time = time; // red shadow remove
+	chargeatk_grounded(); // effect
+	self.attack_type = 5; // hard hit
 	FireMelee(22,30,6,30,2,1,1,TRUE,0,0);
 	self.chargespincnt = 0;
 	if (self.perfectguard_buff < time)
@@ -5416,6 +5435,7 @@ void() player_chargeatk5	=[	$charge9,	player_chargeatk5	]
 
 	if (self.owner.mashattack == TRUE)
 	{
+		FireMelee(22,30,6,30,2,1,1,TRUE,0,0); // does not smack back
 		self.think = player_attacka17;
 		self.nextthink = time + 0.15;
 		self.owner.mashattack = FALSE;
@@ -5425,8 +5445,9 @@ void() player_chargeatk5	=[	$charge9,	player_chargeatk5	]
 	}
 	else
 	{
+		FireMelee(22,30,3,30,2,1,1,TRUE,0,0);
 		self.think = player_move;
-		self.nextthink = time + 0.18;
+		self.nextthink = time + 0.35;
 	}
 };
 

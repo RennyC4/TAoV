@@ -64,12 +64,19 @@ void() sparkeffect =
 // charging magic / headsmash effect
 void() effect_think =
 {
-	//droptofloor();
+	if (!self.frame)
+		self.scale = 1.15;
+	else
+		self.scale = 1;
+
+	self.angles_y = self.angles_y + 16;
+
+	droptofloor();
 	if (self.frame < 3)
 		self.frame = self.frame + 1;
 	else
 		remove(self);
-	frameskip (0.07);
+	frameskip (0.1);
 };
 
 void() perfectguard_fx_think =
