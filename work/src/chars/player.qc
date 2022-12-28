@@ -5423,7 +5423,6 @@ void() player_chargeatk5	=[	$charge9,	player_chargeatk5	]
 	self.owner.shadow_time = time; // red shadow remove
 	chargeatk_grounded(); // effect
 	self.attack_type = 5; // hard hit
-	FireMelee(22,30,6,30,2,1,1,TRUE,0,0);
 	self.chargespincnt = 0;
 	if (self.perfectguard_buff < time)
 		self.takedamage = DAMAGE_AIM; // I-Frames off
@@ -5433,9 +5432,9 @@ void() player_chargeatk5	=[	$charge9,	player_chargeatk5	]
 			freeze_finished = time + (CONST_BIGHITSLOW * frametime);
 	}
 
-	if (self.owner.mashattack == TRUE)
+	if (self.owner.mashattack)
 	{
-		FireMelee(22,30,0,30,2,1,1,TRUE,0,0); // does not smack back
+		FireMelee(11,30,0,30,2,1,1,TRUE,0,0); // does not smack back
 		self.think = player_attacka17;
 		self.nextthink = time + 0.15;
 		self.owner.mashattack = FALSE;
