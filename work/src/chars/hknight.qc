@@ -333,7 +333,7 @@ void() HellKnight_Lightning =
 
 	traceline (org, org + v_forward * 350, FALSE, self);
 
-	if (trace_ent.health > 0 && trace_ent.takedamage && trace_ent.classname == "player" && trace_ent.perfectguard_buff < time)
+	if (trace_ent.health > 0 && trace_ent.takedamage && trace_ent.classname == "player" && trace_ent.perfectguard_buff < time && trace_ent)
 	{
 		temp = spawn ();
 		temp.movetype = MOVETYPE_NONE;
@@ -356,7 +356,7 @@ void() HellKnight_Lightning =
 		setsize (temp, '0 0 0', '0 0 0');		
 		setorigin (temp, trace_ent.origin);
 		spawn_color_glow(0, 0, 5, 100, temp);
-		
+	
 		if (self.angles_y >= 90 && self.angles_y <= 270)  // Attacker facing right
 			trace_ent.angles_y = 0; // victim faces left
 		else

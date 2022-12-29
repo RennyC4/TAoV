@@ -1182,7 +1182,8 @@ void() PlayerPostThink =
 					self.char.aircombo_count = 0;
 					self.ledgegrab = FALSE;
 					self.walljump = FALSE;
-					self.char.flypain = FALSE;
+					// Don't remove flypain, stops players from moving vigil when knocked from land into water which is intended behavior
+					//self.char.flypain = FALSE;
 					self.wallrun = FALSE;
 					self.ledgegrab_finished = time;
 					self.attack_finished = time;

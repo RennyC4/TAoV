@@ -5952,7 +5952,7 @@
 // entity 76
 {
 "classname" "misc_model"
-"origin" "-792 -171 -620"
+"origin" "-792 -171 -624"
 "mdl" "progs/knight.mdl"
 "angle" "30"
 "frame" "95"
@@ -6982,7 +6982,7 @@
 // entity 198
 {
 "classname" "misc_model"
-"origin" "-864 -56 56"
+"origin" "-864 -56 48"
 "angle" "315"
 "frame" "95"
 "model" "progs/knight.mdl"
@@ -7457,7 +7457,7 @@
 // entity 234
 {
 "classname" "misc_model"
-"origin" "-2904 -120 -902"
+"origin" "-2904 -120 -906"
 "mdl" "progs/knight.mdl"
 "angle" "240"
 "frame" "95"

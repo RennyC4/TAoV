@@ -681,7 +681,7 @@ void() PlayerWaterPhysics =
 
 	if (self.button2)
 	{
-		if (!self.ledgegrab && self.inwater_finished < time && self.char.inwater_pain < 1) // Player actively swimming up
+		if (!self.ledgegrab && self.inwater_finished < time && self.char.inwater_pain < 1 && !self.char.flypain) // Player actively swimming up
 		{
 			if (self.char.velocity_z < 100)
 				self.char.velocity_z = self.char.velocity_z + 7 * (frametime * 100);
@@ -694,7 +694,7 @@ void() PlayerWaterPhysics =
 		if (self.char.velocity_z > -100)
 		{
 			if (!self.ledgegrab && !checkground(self.char))
-					self.char.velocity_z = self.char.velocity_z - 6 * (frametime * 100);
+				self.char.velocity_z = self.char.velocity_z - 6 * (frametime * 100);
 		}
 		else
 			self.char.velocity_z = 0;
@@ -889,6 +889,9 @@ void() shadows_think =
 .float nextshadow_time;
 void(entity own) Shadows =
 {
+	if (own.health < 1)
+		return;
+
 	if (self.nextshadow_time < time)
 	{
 		local entity shadows;
@@ -917,6 +920,9 @@ void(entity own) Shadows =
 .float nextsoftshadow_time;
 void(entity own) SoftShadows = // same as red shadows, but more transparent and uses Vigil's skin
 {
+	if (own.health < 1)
+		return;
+
 	if (self.nextsoftshadow_time < time)
 	{
 		local entity shadows;
@@ -3738,7 +3744,7 @@ void() player_fflip8	=[	$fflip8,	player_fflip8	]
 	self.inair = 1; // prevent head smash
 	self.flypain = FALSE;
 	self.pain_finished = self.fly_time = time; // allow blocking etc
-	if (self.onground == TRUE || checkground(self) || self.velocity_z > 0) // Fixes animation jump button press before onground is done
+	if (self.onground == TRUE || checkground(self) || self.velocity_z > 0 || self.swimming) // Fixes animation jump button press before onground is done
 		player_move();
 };
 
@@ -6228,7 +6234,7 @@ void() player_hit4	=[	$pain4,	player_hit4	]
 
 
 void() player_swim_recover    =[	$djump,	player_swim_recover ] 
-{
+{	
 	self.movetype = MOVETYPE_WALK;
 	if (self.swimming)
 		self.velocity_z = self.velocity_z / 1.05;
@@ -6266,8 +6272,7 @@ void() player_knockedup1    =[	$walled1,	player_knockedup1 ]
 		self.velocity_z = self.velocity_z / 1.05;
 		if (self.inwater_pain >= 150)
 		{
-			self.angles_x = 0;
-			player_swim_recover();
+			player_swim_recover(); // Don't reset angle_x to zero, this handles it
 			return;
 		}
 		self.inwater_pain = self.inwater_pain + 1;
@@ -6861,7 +6866,12 @@ void() player_die2	=[	$pain4,	player_die2	]
 
 void() player_die3	=[	$pain5,	player_die3 ] 
 {
-	self.deadflag = DEAD_DEAD; // Enforce
+	if (self.owner.shadow_time > time)
+		self.owner.shadow_time = time;
+	if (self.owner.softshadow_time > time)
+		self.owner.softshadow_time = time;
+
+	self.deadflag = DEAD_DEAD; // enforce
 	self.movetype = MOVETYPE_WALK;
 
 	model_tilt();

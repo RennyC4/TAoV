@@ -170,8 +170,8 @@ void() monster_bat =
 	self.experience = 18;
 	self.maxgold = 10;
 	self.flags |= FL_MONSTER;
-	self.dimension_hit = 1;
-	self.dimension_solid = 2;
+	self.dimension_hit = 0;
+	self.dimension_solid = 0;
 	
 	if (!self.speed)
 		self.speed = 85;
