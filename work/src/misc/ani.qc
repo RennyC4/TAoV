@@ -65,6 +65,8 @@ void() sparkeffect =
 void() effect_think =
 {
 	if (!self.frame)
+		self.scale = 1.25;
+	else if (self.frame)
 		self.scale = 1.15;
 	else
 		self.scale = 1;
