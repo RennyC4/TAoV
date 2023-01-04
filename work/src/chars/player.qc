@@ -99,6 +99,10 @@ void() swordstareffect2;
 void() swordstareffect3;
 void() swordstareffect4;
 
+//
+// Spawn Vol'Brand
+//
+
 void() volbrand_think =
 {
 	if (self.owner.classname != "player")
@@ -152,6 +156,36 @@ void(entity own) spawn_volbrand =
 	sword.nextthink = time;
 };
 
+//
+// Spawn Helmet
+//
+void() helm_think =
+{
+	if (self.owner.classname != "player")
+	{
+		remove(self);
+		return;
+	}
+	setorigin (self, self.owner.origin);
+	self.angles = self.owner.angles;
+	self.frame = self.owner.frame;
+	frameskip(0.01);
+};
+
+void(entity own) spawn_helmet =
+{
+	local entity helm;
+
+	helm = spawn();
+	helm.owner = own;
+	helm.classname = "helmet";
+	helm.movetype  = MOVETYPE_NOCLIP;
+	helm.solid     = SOLID_NOT;
+	setmodel (helm, "progs/plyrhelm.mdl");
+	helm.think = helm_think;
+	helm.nextthink = time;
+};
+
 void() OrbTransportThink =
 {
 	local vector v = self.angles * -1;
@@ -193,6 +227,7 @@ void() OrbTransportThink =
 		self.owner.camerastyle = 0;
 
 		spawn_volbrand(self);
+		spawn_helmet(self);
 
 		// become vigil
 		setmodel(self, "progs/plyr.mdl");
@@ -421,6 +456,7 @@ void() Setup_Vigil =
 	}
 
 	spawn_volbrand(dummy);
+	spawn_helmet(dummy);
 
 	setmodel(dummy, "progs/plyr.mdl");
 	setsize(dummy, VEC_HULL_MIN, VEC_HULL_MAX);
