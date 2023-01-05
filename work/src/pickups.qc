@@ -650,7 +650,7 @@ void() item_key =
 	droptofloor();
 };
 
-
+void(entity own) spawn_helmet;
 void() relic_touch =
 {
 	if (other.classname != "player" || other.health <= 0)
@@ -688,6 +688,17 @@ void() relic_touch =
 			centerprint (other.owner, "/P^bStalwart Perfect Guard Obtained!^b\n\n===========================\n\n^1Perfect Guarding a magic spell will absorb the mana cost and add it to Vigils mana pool\n\nPerfect Guard now lasts 5 seconds\n\n\n\n^3Press ATTACK or JUMP to resume ...");
 			if (relics != IT_RELIC8) // Auto-give regular perfect guard
 				relics = relics | IT_RELIC8;
+		}
+		else if (self.items & IT_RELIC12)
+		{
+			centerprint (other.owner, "/P^bHelmet Obtained!^b\n\n===========================\n\n^1Makes Vigil Look Cooler\n\n\nInsert text on what this Helmet does for Vigil\n\n\n^3Press ATTACK or JUMP to resume ...");
+
+			for (entity v = world; (v=nextent(v));) // put helmet on all players when relic is found
+			{
+				if (v.classname != "player")
+					continue;
+				spawn_helmet(v);
+			}
 		}
 	}
 	sound (self, CHAN_BODY, "misc/relic.wav", 1, ATTN_NORM);
@@ -764,6 +775,11 @@ void() relic_think =
 		remove(self);
 		return;
 	}	
+	if (self.cnt == 11 && relics & IT_RELIC12)
+	{
+		remove(self);
+		return;
+	}
 	frameskip(0.05);
 };
 
@@ -833,6 +849,11 @@ void() item_relic =
 		setmodel (self, "progs/relic8.mdl");
 		self.colormod = '2 2 1';
 	}
+	else if (self.cnt == 11) // Helmet
+	{
+		precache_model ("progs/relic10.mdl");
+		setmodel (self, "progs/relic10.mdl");
+	}
 	else
 	{
 		precache_model ("progs/filler.spr");
@@ -870,6 +891,8 @@ void() item_relic =
 		self.items = IT_RELIC10;
 	else if (self.cnt == 10)
 		self.items = IT_RELIC11;
+	else if (self.cnt == 11)
+		self.items = IT_RELIC12;
 
 	// Give off RT Light
 	spawn_color_glow(3, 0, 5, 50, self);

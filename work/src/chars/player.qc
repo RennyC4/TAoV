@@ -227,7 +227,8 @@ void() OrbTransportThink =
 		self.owner.camerastyle = 0;
 
 		spawn_volbrand(self);
-		spawn_helmet(self);
+		if (relics & IT_RELIC12)
+			spawn_helmet(self);
 
 		// become vigil
 		setmodel(self, "progs/plyr.mdl");
@@ -456,7 +457,8 @@ void() Setup_Vigil =
 	}
 
 	spawn_volbrand(dummy);
-	spawn_helmet(dummy);
+	if (relics & IT_RELIC12)
+		spawn_helmet(dummy);
 
 	setmodel(dummy, "progs/plyr.mdl");
 	setsize(dummy, VEC_HULL_MIN, VEC_HULL_MAX);

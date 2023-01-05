@@ -383,3 +383,9 @@
 "origin" "-484 4 -20"
 "cnt" "10"
 }
+// entity 31
+{
+"classname" "item_relic"
+"origin" "-112 -108 0"
+"cnt" "11"
+}
