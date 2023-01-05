@@ -169,6 +169,7 @@ void() helm_think =
 	setorigin (self, self.owner.origin);
 	self.angles = self.owner.angles;
 	self.frame = self.owner.frame;
+	self.colormod = self.owner.colormod;
 	frameskip(0.01);
 };
 
