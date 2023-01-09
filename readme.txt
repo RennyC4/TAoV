@@ -305,6 +305,8 @@ MTrop - Fixed taunt2.wav too much "sssss" on my voice
 
 Sock - Used his book.mdl
 
+Izuzf - Helmet model, xaGe & I modified it
+
 Spirit - Sunset skybox used in Wild Lands
 
 Mankrip - Update waterlevel on MOVETYPE_STEP entities
