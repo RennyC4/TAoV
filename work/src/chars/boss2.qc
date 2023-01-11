@@ -422,32 +422,55 @@ void() boss_die =
 
 void() boulder_thinker =
 {
-	if (self.mode == 1 || self.attack_finished < time)
+	local entity y, oself, effect;
+
+	y = searchradius(self.origin, 35);
+	while (y)
 	{
-		if (self.alpha > 0.1)
-			self.alpha = self.alpha - 0.1;
-		else
+		if (y.classname == "player" && y.takedamage)
 		{
+			ThrowRubble();
+			sound (self, CHAN_BODY, "misc/rocks.wav", 1, ATTN_NORM);
+
+			if (y.classname == "player")
+			{
+				if (!relics & IT_RELIC12)
+				{
+					FireMelee(8,0,8,35,0,0,1,FALSE,0,0);
+					y.velocity = '0 0 0';
+				}
+				else
+				{
+					// spawn a block sprite
+					effect = spawn();
+					setorigin(effect, y.origin + v_up * 24);
+					setmodel(effect, "progs/block.spr");
+					effect.angles_y = -90;
+					effect.angles_z = random()*360;
+					effect.effects = EF_NODEPTHTEST;
+					effect.movetype = MOVETYPE_NONE;
+					effect.think = fx_think;
+					effect.nextthink = time;
+					effect.solid = SOLID_NOT;
+					effect.scale = 2;
+
+					sound (self, CHAN_WEAPON, "player/block.wav", 1, ATTN_NORM);				
+				}
+			}
+
 			remove(self);
 			return;
 		}
+		y = y.chain; // cycle to next entity
 	}
-	else
+
+	if (!self.velocity)
 	{
-		self.flags = self.flags | FL_MONSTER; // Don't hit boss
-		FireMelee(8,0,8,35,0,0,1,FALSE,0,0);
-		if (self.flags & FL_ONGROUND || checkground(self))
-			self.mode = 1;
-	}
-	if (self.attackedname == "player")
-	{
-		self.mode = 1; // Only hit once
 		ThrowRubble();
-		sound (self, CHAN_BODY, "misc/rocks.wav", 1, ATTN_NORM);
 		remove(self);
 		return;
 	}
-	frameskip(0.1);
+	frameskip(0.01);
 };
 
 void() boulder_spawner_use =
@@ -472,9 +495,9 @@ void() boulder_spawner_think =
 {
 	local entity targ;
 
-	if (self.velocity_z == 0)
+	if (!self.velocity_z) // hit roof
 	{
- 		if (self.enemy) // move close
+ 		if (self.enemy) // chase target
 		{
 			if (self.origin_x < self.enemy.origin_x)
 				self.velocity_x = self.velocity_x + 50;
