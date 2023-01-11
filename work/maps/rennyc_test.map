@@ -447,3 +447,30 @@
 "origin" "-260 -156 76"
 "cnt" "1"
 }
+// entity 16
+{
+"classname" "item_relic"
+"origin" "-340 -60 76"
+"cnt" "11"
+}
+// entity 17
+{
+"classname" "misc_boulder"
+"origin" "-250 -170 306"
+"targetname" "boulder_ambush"
+"_phong" "1"
+}
+// entity 18
+{
+"classname" "trigger_once"
+"target" "boulder_ambush"
+// brush 0
+{
+( -320 -144 64 ) ( -320 -208 64 ) ( -320 -208 48 ) trigger 0 0 0 1 1
+( -320 -208 64 ) ( -192 -208 64 ) ( -192 -208 48 ) trigger 0 0 0 1 1
+( -192 -208 48 ) ( -192 -144 48 ) ( -320 -144 48 ) trigger 0 0 0 1 1
+( -320 -144 64 ) ( -192 -144 64 ) ( -192 -208 64 ) trigger 0 0 0 1 1
+( -192 -144 48 ) ( -192 -144 64 ) ( -320 -144 64 ) trigger 0 0 0 1 1
+( -192 -208 64 ) ( -192 -144 64 ) ( -192 -144 48 ) trigger 0 0 0 1 1
+}
+}

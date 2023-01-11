@@ -65,6 +65,10 @@ void() func_fall_think =
  
 void() fall_touch =
 {
+	if (self.spawnflags & 4 && (!relics & IT_RELIC12 || other.velocity_z < 1))
+		return;
+	if (self.spawnflags & 4 && other.origin_z > self.absmax_z - 28)
+		return;
 	if (!other.takedamage)
 		return;
 	if (other.classname != "player") // player activated only
@@ -128,6 +132,7 @@ spawnflags:
 	Default behavior allows anyone to activate func_fall on touch ONLY
 	1 - Player activated only
 	2 - Monster activated only
+	4 - Player touch by helmet smash (jump)
  
 Able to .target other entities, including other func_falls
 */
@@ -183,16 +188,7 @@ void() func_fall =
 };
 
 /*QUAKED func_destroy_map01 (0 .5 .8) ?
-Destroyable brush
-"health":
-Give the func_destroy brush a health value, barrels have 25
-health so you can estimate how much health your func_destroy
-should have around
-"cnt":
-0 (default) explode into wooden chunks
-1 explode into rock chunks
-2 explode into metal chunks
-3 explode into meaty chunks
+Destroyable special rock brush that sets a game progress flag
 
 - Sets a special flag to remove after PARM is passed -
 */
@@ -204,7 +200,6 @@ void() func_destroy_map01_think =
 		remove(self);
 		return;
 	}
-	//self.nextthink = self.ltime + 0.1;
 	frameskip (0.1);
 };
 
@@ -256,9 +251,12 @@ void() destroy_think =
 
 void() destroy_destroy = // how silly
 {
-	local vector h;
+	if (self.spawnflags & 2 && (!relics & IT_RELIC12 || other.velocity_z < 1))
+		return;
+	if (self.spawnflags & 2 && other.origin_z > self.absmax_z - 28)
+		return;
 
-	h = self.absmin + ((self.absmax - self.absmin) * 0.5);
+	local vector h = self.absmin + ((self.absmax - self.absmin) * 0.5);
 
 	if (self.target)
 		SUB_UseTargets();
@@ -303,8 +301,6 @@ void() destroy_destroy = // how silly
 	{
 		if (!(game_progress & IT_PROGRESS3)) // Rock smashed in Map01
 			game_progress = game_progress | IT_PROGRESS3; // Add it (True)
-			
-//		map01_rock_smashed = TRUE;
 	}
 
 	if (self.noise != "" && self.cnt != 5)
@@ -324,13 +320,16 @@ should have around
 1 explode into rock chunks
 2 explode into metal chunks
 3 explode into meaty chunks
+
+spawnflag 1 stops it from being damaged
+spawnflag 2 allows the entity to be smashed by Vigils helmet only
 */
 
 void() func_destroy =
 {
 	if (!self.health)
 		self.health = 1;
-	if (self.cnt == 0)
+	if (!self.cnt)
 	{
 		precache_model ("progs/wood1.mdl");
 		precache_model ("progs/wood2.mdl");
@@ -361,17 +360,25 @@ void() func_destroy =
 	if (self.noise)
 		precache_sound (self.noise);
 
-	self.netname = "solid";
-	self.classname = "breakable";
-	self.noblood = TRUE;
+	if (self.spawnflags & 2) // vigils helm smashes target only
+	{
+		self.takedamage = DAMAGE_NO;
+		self.touch = destroy_destroy;
+	}
+	else
+	{
+		self.netname = "solid";
+		self.classname = "breakable";
+		if (!self.spawnflags & 1)
+			self.takedamage = DAMAGE_YES;
+		else
+			self.takedamage = DAMAGE_NO;
+		if (!self.health)
+			self.takedamage = DAMAGE_NO;
+	}
 	self.solid = SOLID_BSP;
 	self.movetype = MOVETYPE_PUSH;
-	if (!self.spawnflags & 1)
-		self.takedamage = DAMAGE_YES;
-	else
-		self.takedamage = DAMAGE_NO;
-	if (self.health == 0)
-		self.takedamage = DAMAGE_NO;
+	self.noblood = TRUE;
 	self.th_die = destroy_destroy;
 	self.use = destroy_destroy;
 	self.ignoreaircombo = TRUE; // bugfix, don't allow air combos to lift object off ground

@@ -691,7 +691,7 @@ void() relic_touch =
 		}
 		else if (self.items & IT_RELIC12)
 		{
-			centerprint (other.owner, "/P^bHelmet Obtained!^b\n\n===========================\n\n^1Makes Vigil Look Cooler\n\n\nInsert text on what this Helmet does for Vigil\n\n\n^3Press ATTACK or JUMP to resume ...");
+			centerprint (other.owner, "/P^bHorned Helmet Obtained!^b\n\n===========================\n\n\nProtects Vigil from falling debris as well as allowing him to smash certain obstacles by jumping into them\n\n\n^3Press ATTACK or JUMP to resume ...");
 
 			for (entity v = world; (v=nextent(v));) // put helmet on all players when relic is found
 			{

@@ -472,20 +472,41 @@ void() chandelier_think =
 		{
 			if (head.takedamage && head.classname == "player" && head.health > 0 && self.cnt == FALSE && !head.flypain)
 			{
-				// spawn a hit sprite
-				effect = spawn();
-				setorigin(effect, head.origin);
-				setmodel(effect, "progs/jhit.spr");
-				effect.movetype = MOVETYPE_NOCLIP;
-				effect.think = fx_think;
-				effect.effects = EF_NODEPTHTEST;
-				effect.nextthink = time;
-				effect.solid = SOLID_NOT;
-						
-				sound (self, CHAN_WEAPON, "player/bigcut.wav", 1, ATTN_NORM);
-				head.knockback = 1; // knock Vigil down
-				T_Damage (head, self, self, 40, 0);
-				self.cnt = TRUE;
+				if (!relics & IT_RELIC12)
+				{
+					// spawn a hit sprite
+					effect = spawn();
+					setorigin(effect, head.origin);
+					setmodel(effect, "progs/jhit.spr");
+					effect.movetype = MOVETYPE_NOCLIP;
+					effect.think = fx_think;
+					effect.effects = EF_NODEPTHTEST;
+					effect.nextthink = time;
+					effect.solid = SOLID_NOT;
+							
+					sound (self, CHAN_WEAPON, "player/bigcut.wav", 1, ATTN_NORM);
+					head.knockback = 1; // knock Vigil down
+					T_Damage (head, self, self, 40, 0);
+					self.cnt = TRUE;
+				}
+				else // Hit helmet, block
+				{
+					// spawn a block sprite
+					effect = spawn();
+					setorigin(effect, head.origin + v_up * 24);
+					setmodel(effect, "progs/block.spr");
+					effect.angles_y = -90;
+					effect.angles_z = random()*360;
+					effect.effects = EF_NODEPTHTEST;
+					effect.movetype = MOVETYPE_NONE;
+					effect.think = fx_think;
+					effect.nextthink = time;
+					effect.solid = SOLID_NOT;
+					effect.scale = 2;
+					
+					sound (self, CHAN_WEAPON, "player/block.wav", 1, ATTN_NORM);
+					self.cnt = TRUE;
+				}
 			}
 			head = head.chain;
 		}
@@ -1805,7 +1826,7 @@ void() boulder_use_touch =
 
 void() boulder_think =
 {
-	local entity y, oself;
+	local entity y, oself, effect;
 
 	y = searchradius(self.origin, 35);
 	while (y)
@@ -1817,27 +1838,57 @@ void() boulder_think =
 			if (self.th_die && self.classname != "player")
 				self.th_die();
 			self = oself;
+
 			ThrowRubble();
 			ThrowRubble();
 			ThrowRubble();
 			ThrowRubble();
-			T_Damage (y, self, self, 8, 0);
-			y.velocity = '0 0 0';
+			sound (self, CHAN_BODY, "misc/rocks.wav", 1, ATTN_NORM);
+
+			if (y.classname == "player")
+			{
+				if (!relics & IT_RELIC12)
+				{
+					T_Damage (y, self, self, 8, 0);
+					y.velocity = '0 0 0';
+				}
+				else
+				{
+					// spawn a block sprite
+					effect = spawn();
+					setorigin(effect, y.origin + v_up * 24);
+					setmodel(effect, "progs/block.spr");
+					effect.angles_y = -90;
+					effect.angles_z = random()*360;
+					effect.effects = EF_NODEPTHTEST;
+					effect.movetype = MOVETYPE_NONE;
+					effect.think = fx_think;
+					effect.nextthink = time;
+					effect.solid = SOLID_NOT;
+					effect.scale = 2;
+
+					sound (self, CHAN_WEAPON, "player/block.wav", 1, ATTN_NORM);				
+				}
+			}
+			else
+				T_Damage (y, self, self, 8, 0);
+
 			remove(self);
 			return;
 		}
 		y = y.chain; // cycle to next entity
 	}
-	if (self.velocity == '0 0 0')
+
+	if (!self.velocity)
 	{
-			ThrowRubble();
-			ThrowRubble();
-			ThrowRubble();
-			ThrowRubble();
-			remove(self);
-			return;
+		ThrowRubble();
+		ThrowRubble();
+		ThrowRubble();
+		ThrowRubble();
+		remove(self);
+		return;
 	}
-	frameskip(0.1);
+	frameskip(0.01);
 };
 
 void() boulder_use =
@@ -1862,10 +1913,12 @@ void() misc_boulder =
 	precache_model ("progs/rubble2.mdl");
 	precache_model ("progs/rubble3.mdl");
 
+	precache_sound ("misc/rocks.wav");
+
 	self.movetype = MOVETYPE_NONE;
 	self.solid = SOLID_TRIGGER;
 	self.touch = boulder_use_touch;
 	self.use = boulder_use;
 	setmodel (self, "progs/boulder.mdl");
-	setsize (self, '-1 -1 -1', '0 0 0');
+	setsize (self, '-1 -1 -1', '1 1 1');
 };
