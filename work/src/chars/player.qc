@@ -97,7 +97,6 @@ void() player_dodgef1;
 void() swordstareffect;
 void() swordstareffect2;
 void() swordstareffect3;
-void() swordstareffect4;
 
 //
 // Spawn Vol'Brand
@@ -5231,7 +5230,7 @@ void() player_attacka16	=[	$attacka16,	player_attacka16	]
 	}
 	else if (self.attacka16_star_finished < time && self.owner.combo > 0)
 	{
-		swordstareffect4();
+		swordstareffect3();
 		sound (self, CHAN_WEAPON, "player/sword2.wav", 0.5, ATTN_NORM);
 		self.attacka16_star_finished = time + 0.5;
 	}
@@ -5268,21 +5267,20 @@ void() player_attacka19	=[	$attacka19,	player_attacka19	]
 
 void() swordstareffect_think =
 {
-	if (self.cnt < time)
+	self.alpha = self.alpha - 0.03;
+	self.colormod = '1 1 1' * self.alpha; // Allow transparency without additive
+	self.scale = self.scale + 0.025;
+	if (self.cnt < 50)
+		self.cnt = self.cnt + 1;
+	else
 	{
-		if (self.frame < 3)
-			self.frame = self.frame + 1;
-		else
-		{
-			remove(self);
-			return;
-		}
-		self.cnt = time + 0.1;
+		remove(self);
+		return;
 	}
 	frameskip(0.01);
 };
 
-void() swordstareffect =
+void() swordstareffect = // final stab
 {
 	local entity effect;
 
@@ -5290,53 +5288,45 @@ void() swordstareffect =
 
 	effect = spawn();
 	setorigin(effect, self.origin + v_forward * 34 + v_up*12);
-	setmodel(effect, "progs/star2.spr"); // oriented
+	setmodel(effect, "progs/star.spr"); // oriented
 	effect.solid = SOLID_NOT;
 	if (self.angles_y == 0)
 		effect.velocity_x = 80;
 	else
 		effect.velocity_x = -80;
 	effect.avelocity = '0 0 2000';
-	effect.effects = EF_ADDITIVE | EF_FULLBRIGHT;
-	effect.alpha = 0.9;
+	effect.effects = EF_FULLBRIGHT | EF_ADDITIVE;
+	effect.alpha = 1;
+	effect.scale = 1;
 	effect.owner = self;
 	effect.drawonlytoclient = self.owner.owner; // reduce network traffic
 	effect.angles_y = -90; // face screen
 	effect.movetype = MOVETYPE_NOCLIP;
 	effect.think = swordstareffect_think;
-	effect.nextthink = time + 0.1;
+	effect.nextthink = time;
 };
 
-void() swordstareffect3_think =
-{
-	if (self.frame < 3)
-		self.frame = self.frame + 1;
-	else
-	{
-		remove(self);
-		return;
-	}
-	frameskip(0.1);
-};
-
-void() swordstareffect3 =
+void() swordstareffect2 = // elemental beam
 {
 	local entity effect;
 
-	makevectors(self.angles);
-
 	effect = spawn();
-	setorigin(effect, self.origin + v_forward * 54 + v_up * 25);
-	setmodel(effect, "progs/star.spr"); // not oriented (angles don't matter)
-	effect.solid = SOLID_NOT;
 	effect.owner = self;
+	setorigin(effect, self.origin - v_up * 22 + v_right * 30);
+	setmodel(effect, "progs/star.spr");
+	effect.avelocity = '0 0 1000';
+	effect.effects = EF_FULLBRIGHT | EF_ADDITIVE;
+	effect.alpha = 1;
+	effect.scale = 1;
+	effect.solid = SOLID_NOT;
+	effect.angles_y = -90; // face screen
 	effect.drawonlytoclient = self.owner.owner; // reduce network traffic
 	effect.movetype = MOVETYPE_NOCLIP;
-	effect.think = swordstareffect3_think;
-	effect.nextthink = time + 0.1;
+	effect.think = swordstareffect_think;
+	effect.nextthink = time + 1;
 };
 
-void() swordstareffect4 =
+void() swordstareffect3 = // spin finisher (attack combo)
 {
 	local entity effect;
 
@@ -5344,13 +5334,18 @@ void() swordstareffect4 =
 
 	effect = spawn();
 	setorigin(effect, self.origin + v_forward * 54 + v_up * 5);
-	setmodel(effect, "progs/star.spr"); // not oriented (angles don't matter)
+	setmodel(effect, "progs/star.spr");
 	effect.solid = SOLID_NOT;
+	effect.avelocity = '0 0 1000';
+	effect.effects = EF_FULLBRIGHT | EF_ADDITIVE;
+	effect.alpha = 1;
+	effect.scale = 1;
 	effect.owner = self;
+	effect.angles_y = -90; // face screen
 	effect.drawonlytoclient = self.owner.owner; // reduce network traffic
 	effect.movetype = MOVETYPE_NOCLIP;
-	effect.think = swordstareffect3_think;
-	effect.nextthink = time + 0.1;
+	effect.think = swordstareffect_think;
+	effect.nextthink = time + 0.2;
 };
 
 // Vigil's air launcher
@@ -7414,21 +7409,6 @@ void() player_icefield4	=[	$magicc4,	player_move	]
 
 	IceField();
 	self.nextthink = time + 2;
-};
-
-void() swordstareffect2 =
-{
-	local entity effect;
-
-	effect = spawn();
-	effect.owner = self;
-	effect.drawonlytoclient = self.owner.owner; // reduce network traffic
-	setorigin(effect, self.origin - v_up * 22 + v_right * 30);
-	setmodel(effect, "progs/star.spr");
-	effect.solid = SOLID_NOT;
-	effect.movetype = MOVETYPE_NOCLIP;
-	effect.think = swordstareffect_think;
-	effect.nextthink = time + 0.1;
 };
 
 void() player_magicd1	=[	$magicd1,	player_magicd2	] 
