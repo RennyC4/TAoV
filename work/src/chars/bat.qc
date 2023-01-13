@@ -104,12 +104,15 @@ void() bat_use =
 	{
 		self.angles_y = 0;
 		self.velocity_x = self.speed;
+		self.lip = self.velocity_x; // store it
 	}
 	else
 	{
 		self.angles_y = 180;
 		self.velocity_x = self.speed * -1;
+		self.lip = self.velocity_x; // store it
 	}
+	self.velocity_x = self.lip;
 
 	self.think = bat_think;
 	self.nextthink = time;
@@ -159,7 +162,7 @@ void() monster_bat =
 
 	self.health = 1;
 	self.effects = EF_FULLBRIGHT;
-	self.movetype = MOVETYPE_NOCLIP;
+	self.movetype = MOVETYPE_FLY;
 	self.solid = SOLID_TRIGGER;
 	self.takedamage = DAMAGE_AIM;
 	self.classname = "bat";
