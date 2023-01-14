@@ -112,21 +112,18 @@ void()	hellknight_pain5	=[	$pain5,		hellknight_walk1	] {BlockCancel();monster_re
 
 void() hellknight_pain =
 {
-	local float r;
-	
 	//
 	// Enrage / Berserk
-	//
-	
-	r = random();
-	if (r <= 0.05 || self.spawnflags & 2)
+	//	
+	local float r = random();
+	if (r <= 0.035 || self.spawnflags & 2)
 	{
-		if (self.health < self.max_health / 2.5 && self.mode == 0)
+		if (self.health < self.max_health / 2.5 && !self.mode)
 		{
 			self.colormod = '3 1 1';
-			self.berserk_finished = time + 8;
+			self.berserk_finished = time + 5;
 			enrage();
-			self.mode = 1; // only enrage once
+			self.mode = TRUE; // can only enrage once
 		}
 	}
 	if (random() < 0.5)
