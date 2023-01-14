@@ -89,6 +89,11 @@ bind "f1" "help"
 bind "f9" "quit"
 viewsize "100"
 
+// Controller fixes:
+// unbind right thumb stick from camera
+joyadvaxisu ""
+joyadvaxisr ""
+
 // Aliases
 alias +block "+button3"
 alias -block "-button3"
