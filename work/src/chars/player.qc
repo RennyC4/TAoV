@@ -8485,9 +8485,9 @@ void() player_smashdown4    =[	$smash5,	player_smashdown5		]
 	{
 		if (freeze_finished < time) // don't interefere with level up/etc
 			freeze_finished = time + ((CONST_BIGHITSLOW + 1) * frametime);
+		sound (self, CHAN_AUTO, "player/sword2.wav", 0.5, ATTN_NORM);
+		swordstareffect4();
 	}
-	sound (self, CHAN_WEAPON, "player/sword2.wav", 0.5, ATTN_NORM);
-	swordstareffect4();
 	self.velocity_z = 150;
 	player_yell(1);
 	smashdown_move();
