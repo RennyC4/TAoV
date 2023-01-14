@@ -856,8 +856,8 @@ void() item_relic =
 	}
 	else
 	{
-		precache_model ("progs/filler.spr");
-		setmodel (self, "progs/filler.spr");
+		precache_model ("progs/star.spr");
+		setmodel (self, "progs/star.spr");
 	}
 
 	precache_sound ("misc/relic.wav");
