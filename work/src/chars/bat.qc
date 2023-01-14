@@ -54,7 +54,11 @@ void() bat_think =
 				// spawn a hit sprite
 				effect = spawn();
 				setorigin(effect, headdmg.origin);
-				setmodel(effect, "progs/jhit.spr");
+				setmodel(effect, "progs/hit.spr");
+				effect.alpha = 1;
+				effect.scale = 1;
+				effect.angles_z = random()*360;
+				effect.angles_y = -90; // face camera
 				effect.movetype = MOVETYPE_NOCLIP;
 				effect.think = fx_think;
 				effect.effects = EF_NODEPTHTEST;

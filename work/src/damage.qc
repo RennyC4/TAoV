@@ -826,13 +826,17 @@ void(float damg, float dist, float knokback, float rsize, float snd, float flsh,
 						// spawn a hit sprite
 						effect = spawn();
 						setorigin(effect, self.origin);
-						setmodel(effect, "progs/hit2.spr");
+						setmodel(effect, "progs/hit.spr");
 
 						effect.effects = EF_NODEPTHTEST;
 						effect.movetype = MOVETYPE_NOCLIP;
+						effect.alpha = 1;
+						effect.scale = 1;
+						effect.angles_z = random()*360;
+						effect.angles_y = -90; // face camera
 						effect.think = fx_think;
 						effect.nextthink = time;
-						effect.solid = SOLID_TRIGGER;
+						effect.solid = SOLID_NOT;
 
 						if (head.origin_x < self.origin_x)
 							head.angles_y = 0;
@@ -894,13 +898,14 @@ void(float damg, float dist, float knokback, float rsize, float snd, float flsh,
 						h = head.absmin + ((head.absmax - head.absmin) * 0.5);
 						setorigin(effect, h);
 					}
-					if (self.angles_y == 0)
-						setmodel(effect, "progs/hit2.spr");
-					else
-						setmodel(effect, "progs/hit.spr");
+					setmodel(effect, "progs/hit.spr");
 
 					effect.effects = EF_NODEPTHTEST;
 					effect.movetype = MOVETYPE_NOCLIP;
+					effect.alpha = 1;
+					effect.scale = 1;
+					effect.angles_z = random()*360;
+					effect.angles_y = -90; // face camera
 					effect.think = fx_think;
 					effect.nextthink = time;
 					effect.solid = SOLID_TRIGGER;
@@ -1050,6 +1055,7 @@ void(float damg, float dist, float knokback, float rsize, float snd, float flsh,
 						effect = spawn();
 						setorigin(effect, head.origin);
 						setmodel(effect, "progs/block.spr");
+						effect.classname = "blockfx";
 						effect.angles_y = -90;
 						effect.angles_z = random()*360;
 						effect.effects = EF_NODEPTHTEST;

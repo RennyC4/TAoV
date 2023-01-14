@@ -320,9 +320,12 @@ void() OrbTransportThinkUp =
 		sound (self, CHAN_VOICE, "player/fast.wav", 1, ATTN_NONE);
 		self.cnt2 = TRUE;
 	}
-	else if (self.cnt > 450)
+	else if (self.cnt > 435)
 	{
-		cvar_set("gamecfg", "99");
+		if (self.deadflag == DEAD_DEAD)
+			cvar_set("gamecfg", "2"); // warp vigil to village bar bed
+		else
+			cvar_set("gamecfg", "99"); // otherwise village church as normal
 
 		// Open "teleport" file for reading
 		float f = fopen("teleport.txt", FILE_READ);
@@ -330,6 +333,7 @@ void() OrbTransportThinkUp =
 			changelevel (line);
 		fclose(f);
 	}
+
 	self.cnt = self.cnt + 1;
 	frameskip(0.01);
 };
@@ -3992,7 +3996,11 @@ void() spinattack =
 					// spawn a hit sprite
 					effect = spawn();
 					setorigin(effect, head.origin + v_up*22);
-					setmodel(effect, "progs/jhit.spr");
+					setmodel(effect, "progs/hit.spr");
+					effect.alpha = 1;
+					effect.scale = 1;
+					effect.angles_z = random()*360;
+					effect.angles_y = -90; // face camera
 					effect.movetype = MOVETYPE_NOCLIP;
 					effect.think = fx_think;
 					effect.effects = EF_NODEPTHTEST;
@@ -4038,7 +4046,11 @@ void() spinattack =
 					// spawn a hit sprite
 					effect = spawn();
 					setorigin(effect, head.origin + v_up*22);
-					setmodel(effect, "progs/jhit.spr");
+					setmodel(effect, "progs/hit.spr");
+					effect.alpha = 1;
+					effect.scale = 1;
+					effect.angles_z = random()*360;
+					effect.angles_y = -90; // face camera
 					effect.movetype = MOVETYPE_NOCLIP;
 					effect.think = fx_think;
 					effect.effects = EF_NODEPTHTEST;
@@ -5740,7 +5752,11 @@ void() player_jumpatk2	=[	$jumpatk2,	player_jumpatk2	]
 						h = head.absmin + ((head.absmax - head.absmin) * 0.5);
 						setorigin(effect, h);
 					}
-					setmodel(effect, "progs/jhit.spr");
+					setmodel(effect, "progs/hit.spr");
+					effect.alpha = 1;
+					effect.scale = 1;
+					effect.angles_z = random()*360;
+					effect.angles_y = -90; // face camera
 					effect.movetype = MOVETYPE_NOCLIP;
 					effect.think = fx_think;
 					effect.effects = EF_NODEPTHTEST;
@@ -6948,11 +6964,14 @@ void() player_die3	=[	$pain5,	player_die3 ]
 		}
 		else // reached safety offer new option
 		{
-			if (self.deathmenu == 0)
-				centerprint (self.owner, "/PΗανε οφες\n………… …………\n\nYou have been vanquished ...\n\n\n           ^bΤςω Αηαιξ^b\n       Χαςπ το Σαζετω");
-			else
-				centerprint (self.owner, "/PΗανε οφες\n………… …………\n\nYou have been vanquished ...\n\n\n             Τςω Αηαιξ\n     ^bΧαςπ το Σαζετω^b");
-	
+			if (self.classname == "player")
+			{
+				if (self.deathmenu == 0)
+					centerprint (self.owner, "/PΗανε οφες\n………… …………\n\nYou have been vanquished ...\n\n\n           ^bΤςω Αηαιξ^b\n       Χαςπ το Σαζετω");
+				else
+					centerprint (self.owner, "/PΗανε οφες\n………… …………\n\nYou have been vanquished ...\n\n\n             Τςω Αηαιξ\n     ^bΧαςπ το Σαζετω^b");
+			}
+
 			// Fix to stop immediate accidental key presses on death
 			if (self.dead_lockkey_finished < time)
 			{
@@ -7003,16 +7022,44 @@ void() player_die3	=[	$pain5,	player_die3 ]
 						}
 						changelevel (mapname);
 					}
-					else // warp back to safety (village.bsp)...
+					else // warp to safety (village.bsp)...
 					{
+						centerprint (self.owner, "\n");
 						self.health = ceil(self.max_health);
 						self.owner.health = ceil(self.owner.max_health);
-
 						self.owner.pouch = FALSE; // remove pouch if held
-						local string h;
-						h = ftos(2);
-						cvar_set("gamecfg", h);
-						changelevel ("village");
+
+						// Become Orb
+						sound (self, CHAN_VOICE, "spells/charge.wav", 1, ATTN_NONE);
+						WriteByte (MSG_BROADCAST, SVC_TEMPENTITY);
+						WriteByte (MSG_BROADCAST, TE_TELEPORT);
+						WriteCoord (MSG_BROADCAST, self.origin_x);
+						WriteCoord (MSG_BROADCAST, self.origin_y);
+						WriteCoord (MSG_BROADCAST, self.origin_z);
+						setmodel(self, "progs/orb.mdl");
+						setsize(self, VEC_HULL_MIN, VEC_HULL_MAX);
+
+						self.classname = "tran_orb";		
+						self.colormod = '2.5 2.5 1';
+						self.alpha = 0.75;
+						self.effects = EF_ADDITIVE | EF_NODEPTHTEST | EF_DIMLIGHT;
+						self.movetype = MOVETYPE_NOCLIP;
+
+						self.velocity = '0 0 0';
+						self.cnt = 0;
+						self.cnt2 = 0;
+						self.pain_finished = time;
+						self.owner.campos_z = self.origin_z;
+						self.owner.campos_x = self.origin_x;
+						self.think = OrbTransportThinkUp;
+						self.nextthink = time;
+
+						float g = fopen("teleport.txt", FILE_WRITE);
+						if (g >= 0)
+						{
+							fputs(g, "village", "\n");
+							fclose(g);
+						}
 					}
 				}
 			}
@@ -7624,16 +7671,16 @@ void() divingswallow_hit =
 					// spawn a hit sprite
 					effect = spawn();
 					setorigin(effect, head.origin + v_up*22);
-					setmodel(effect, "progs/jhit.spr");
+					setmodel(effect, "progs/hit.spr");
+					effect.alpha = 1;
+					effect.scale = 1;
+					effect.angles_z = random()*360;
+					effect.angles_y = -90; // face camera
 					effect.movetype = MOVETYPE_NOCLIP;
 					effect.think = fx_think;
 					effect.effects = EF_NODEPTHTEST;
 					effect.nextthink = time;
 					effect.solid = SOLID_NOT;
-
-//					if (deathmatch == FALSE)
-//						T_Damage (head, self, self, 4, 0);
-//					else
 
 					T_Damage (head, self, self, 1, 0);
 					sound (self, CHAN_WEAPON, "player/kickhit.wav", 1, ATTN_NORM);

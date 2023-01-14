@@ -395,7 +395,7 @@ void() InitCamera =
 
 void() ClientKill = 
 {
-	if (self.char)
+	if (self.char.classname == "player")
 		T_Damage (self.char, self.char, self.char, 9999, 0);
 };
 

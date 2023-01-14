@@ -31,7 +31,11 @@ void() ethskull_2	=[	$idle1,	ethskull_2		]
 			// spawn a hit sprite
 			effect = spawn();
 			setorigin(effect, head.origin);
-			setmodel(effect, "progs/jhit.spr");
+			setmodel(effect, "progs/hit.spr");
+			effect.alpha = 1;
+			effect.scale = 1;
+			effect.angles_z = random()*360;
+			effect.angles_y = -90; // face camera
 			effect.movetype = MOVETYPE_NOCLIP;
 			effect.think = fx_think;
 			effect.effects = EF_NODEPTHTEST;

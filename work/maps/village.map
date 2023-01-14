@@ -8022,6 +8022,7 @@
 "origin" "-2304 1224 -3588"
 "angle" "120"
 "_phong" "1"
+"spawnflags" "1"
 }
 // entity 90
 {

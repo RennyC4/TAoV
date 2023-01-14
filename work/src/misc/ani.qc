@@ -102,18 +102,29 @@ void() perfectguard_fx_think =
 	frameskip(0.01);
 };
 
-// Blocking vfx
+// Strike / Blocking vfx
 void() fx_think =
 {
-	self.angles_z = self.angles_z + 20; // spin
-	if (self.frame < 3)
-		self.frame = self.frame + 1;
-	else
+	if (self.classname == "blockfx")
 	{
-		remove(self);
-		return;
+		self.angles_z = self.angles_z + 20; // spin
+		if (self.frame < 3)
+			self.frame = self.frame + 1;
+
+		else
+		{
+			remove(self);
+			return;
+		}
+		frameskip(0.07);
 	}
-	frameskip(0.07);
+	else // hit animation
+	{
+		self.alpha = self.alpha - 0.03;
+		self.colormod = '1 1 1' * self.alpha; // Allow transparency without additive
+		self.scale = self.scale + 0.05;
+		frameskip(0.01);
+	}
 };
 
 // fire sprite animation
