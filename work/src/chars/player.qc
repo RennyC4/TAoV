@@ -5360,6 +5360,32 @@ void() swordstareffect3 = // spin finisher (attack combo)
 	effect.nextthink = time + 0.2;
 };
 
+void() swordstareffect4 = // cyclone crush tennis smash
+{
+	local entity effect;
+
+	makevectors(self.angles);
+
+	effect = spawn();
+	setorigin(effect, self.origin - v_forward * 44 + v_up*8);
+	setmodel(effect, "progs/star.spr"); // oriented
+	effect.solid = SOLID_NOT;
+	if (self.angles_y == 0)
+		effect.velocity_x = 80;
+	else
+		effect.velocity_x = -80;
+	effect.avelocity = '0 0 2000';
+	effect.effects = EF_FULLBRIGHT | EF_ADDITIVE;
+	effect.alpha = 1;
+	effect.scale = 1;
+	effect.owner = self;
+	effect.drawonlytoclient = self.owner.owner; // reduce network traffic
+	effect.angles_y = -90; // face screen
+	effect.movetype = MOVETYPE_NOCLIP;
+	effect.think = swordstareffect_think;
+	effect.nextthink = time;
+};
+
 // Vigil's air launcher
 void() dashattack_forward = // push player forward during animation
 {
@@ -8453,7 +8479,19 @@ void() smashdown_move =
 void() player_smashdown1    =[	$smash2,	player_smashdown2		] {frameskip(0.05);self.takedamage = DAMAGE_NO;};
 void() player_smashdown2    =[	$smash3,	player_smashdown3		] {frameskip(0.05);};
 void() player_smashdown3    =[	$smash4,	player_smashdown4		] {frameskip(0.05);};
-void() player_smashdown4    =[	$smash5,	player_smashdown5		] {self.velocity_z = 150;player_yell(1);smashdown_move();frameskip(0.1);};
+void() player_smashdown4    =[	$smash5,	player_smashdown5		] 
+{
+	if (self.owner.bighit_freeze > time) // check if attack landed, needs to be called after FireMelee();
+	{
+		if (freeze_finished < time) // don't interefere with level up/etc
+			freeze_finished = time + ((CONST_BIGHITSLOW + 1) * frametime);
+	}
+	sound (self, CHAN_WEAPON, "player/sword2.wav", 0.5, ATTN_NORM);
+	swordstareffect4();
+	self.velocity_z = 150;
+	player_yell(1);
+	smashdown_move();
+};
 void() player_smashdown5    =[	$smash6,	player_smashdown6		] {smashdown_move();frameskip(0.1);};
 void() player_smashdown6    =[	$smash7,	player_smashdown7		] {smashdown_move();sound (self, CHAN_WEAPON, "player/sword3.wav", 1, ATTN_NORM);frameskip(0.05);};
 void() player_smashdown7    =[	$smash8,	player_smashdown8		] 
