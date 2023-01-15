@@ -311,6 +311,8 @@ Spirit - Sunset skybox used in Wild Lands
 
 Mankrip - Update waterlevel on MOVETYPE_STEP entities
 
+sinestesiaguy - New hit2 sprite
+
 Wazat - Helped with the armor pickup code so each player in multiplayer is able to
 grab it, a great balancing issue. Armor was removed but his code was then applied to
 gold & other pick ups. I also used his HP Bars from his Conquest mod. Miss you dude.
