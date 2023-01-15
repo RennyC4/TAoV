@@ -97,7 +97,7 @@ void() ArcherArrowThink =
 					effect.angles_y = -90;
 					effect.angles_z = random()*360;
 					effect.effects = EF_NODEPTHTEST;
-					effect.movetype = MOVETYPE_NONE;
+					effect.movetype = MOVETYPE_NOCLIP;
 					effect.think = fx_think;
 					effect.nextthink = time;
 					effect.solid = SOLID_NOT;
@@ -109,7 +109,7 @@ void() ArcherArrowThink =
 						head.purge_cooldown = time;
 						head.effects = EF_MUZZLEFLASH; // create light on melee impact
 						head.think = player_block;
-						head.nextthink = time + 0.1;
+						head.nextthink = time;
 					}
 					self.avelocity = '500 1000 0';
 					self.movetype = MOVETYPE_BOUNCE;

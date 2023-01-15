@@ -203,7 +203,6 @@ void() item_hpmaxup_touch =
 	else if (self.spawnflags & 32)
 			hp_max_ups = hp_max_ups | IT_HPMAXUP7; // Add it
 
-
 	freeze_finished = time + 10 * frametime; // slow-mo
 	
 	SUB_UseTargets(); // fire any activators
