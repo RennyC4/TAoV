@@ -66,7 +66,7 @@ void() medusa_think =
 			effect.effects = EF_NODEPTHTEST;
 			effect.nextthink = time;
 			effect.solid = SOLID_NOT;
-			FireMelee(13,0,1,15,5,0,TRUE,TRUE,0,0);
+			FireMelee(13,0,1,15,5,0,TRUE,TRUE,0,0,1);
 			self.combo_finished = time + 3; // Allow re-hit after time passed
 		}
 		headdmg = headdmg.chain;

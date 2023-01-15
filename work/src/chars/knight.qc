@@ -112,7 +112,7 @@ void()	knight_atk2	=[	$attackb4,		knight_atk3	] {BlockCancel();};
 void()	knight_atk3	=[	$attackb5,		knight_atk4	] {BlockCancel();};
 void()	knight_atk4	=[	$attackb6,		knight_atk5	] {BlockCancel();};
 void()	knight_atk5	=[	$attackb7,		knight_atk6	] {BlockCancel();};
-void()	knight_atk6	=[	$attackb8,		knight_atk7	] {BlockCancel();FireMelee(8,10,0,50,0,0,0,FALSE,0,0);};
+void()	knight_atk6	=[	$attackb8,		knight_atk7	] {BlockCancel();FireMelee(8,10,0,50,0,0,0,FALSE,0,0,0);};
 void()	knight_atk7	=[	$attackb9,		knight_atk8] {BlockCancel();};
 void()	knight_atk8 	=[	$attackb10,		knight_walk1] {BlockCancel();};
 
@@ -129,7 +129,7 @@ void()	knight_atkb8	=[	$runattack8,		knight_atkb9	]
 	ai_forward(6);
 	frameskip(0.08);
 	self.status_broken_finished = time + 8;
-	FireMelee(16,10,3,50,5,0,0,FALSE,0,0.1);
+	FireMelee(16,10,3,50,5,0,0,FALSE,0,0.1,0);
 };
 void()	knight_atkb9	=[	$runattack9,		knight_atkb10	] {BlockCancel();ai_forward(6);frameskip(0.08);};
 void()	knight_atkb10	=[	$runattack10,		knight_atkb11	] {BlockCancel();ai_forward(6);frameskip(0.08);};

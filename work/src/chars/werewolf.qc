@@ -180,14 +180,14 @@ void()	werewolf_atk	=[	$melee1,		werewolf_atk	]
 	if (self.walkframe == 4) // attack
 	{
 		self.status_broken_finished = time + 16;
-		FireMelee(21,35,3,45,5,1,1,FALSE,0,0.15);
+		FireMelee(21,35,3,45,5,1,1,FALSE,0,0.15,1);
 		sound (self, CHAN_WEAPON, "player/twoosh.wav", 1, ATTN_NORM);
 		sound (self, CHAN_VOICE, "werewolf/attack.wav", 1, ATTN_NORM);
 	}
 	if (self.walkframe == 8) // attack
 	{
 		self.status_broken_finished = time + 16;
-		FireMelee(21,35,3,45,5,1,1,FALSE,0,0.15);
+		FireMelee(21,35,3,45,5,1,1,FALSE,0,0.15,1);
 		sound (self, CHAN_WEAPON, "player/twoosh.wav", 1, ATTN_NORM);
 		sound (self, CHAN_VOICE, "werewolf/attack.wav", 1, ATTN_NORM);
 	}

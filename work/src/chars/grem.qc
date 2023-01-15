@@ -80,7 +80,7 @@ void() grem_run15	      =[	$run15,	grem_run1		] {ai_walk(10);frameskip(0.05);};
 
 void() grem_leap_attack =
 {
-	FireMelee(2,0,1,30,0,0,1,TRUE,-22,0);
+	FireMelee(2,0,1,30,0,0,1,TRUE,-22,0,1);
 	if (self.flags & FL_ONGROUND)
 		self.think = grem_run1;
 };
@@ -136,7 +136,7 @@ void() grem_atk7  	=[	$attk7,		grem_atk8	]
 {
 	monster_removeslide();
 	self.status_poison_finished = time + 10;
-	FireMelee(13,25,0,30,5,0,0,FALSE,0,0.1);
+	FireMelee(13,25,0,30,5,0,0,FALSE,0,0.1,1);
 };
 void() grem_atk8  	=[	$attk8,		grem_atk9	] {monster_removeslide();};
 void() grem_atk9  	=[	$attk9,		grem_atk10	] {monster_removeslide();};
@@ -150,7 +150,7 @@ void() grem_maul4  	=[	$maul4,		grem_maul5	]
 {
 	monster_removeslide();
 	self.status_poison_finished = time + 10;
-	FireMelee(8,25,0,30,5,0,0,FALSE,0,0.1);
+	FireMelee(8,25,0,30,5,0,0,FALSE,0,0.1,1);
 };
 void() grem_maul5  	=[	$maul5,		grem_maul6	] {monster_removeslide();};
 void() grem_maul6  	=[	$maul6,		grem_maul7	] {monster_removeslide();};
@@ -159,7 +159,7 @@ void() grem_maul8  	=[	$maul8,		grem_maul9	]
 {
 	monster_removeslide();
 	self.status_poison_finished = time + 10;
-	FireMelee(6,25,0,30,5,0,0,FALSE,0,0.1);
+	FireMelee(6,25,0,30,5,0,0,FALSE,0,0.1,1);
 };
 void() grem_maul9  	=[	$maul9,		grem_maul10	] {};
 void() grem_maul10  	=[	$maul10,		grem_maul11	] {monster_removeslide();};
@@ -178,7 +178,7 @@ void() grem_lunge8  	=[	$lunge8,		grem_lunge9	]
 {
 	monster_removeslide();
 	self.status_poison_finished = time + 10;
-	FireMelee(22,25,1,30,5,0,0,FALSE,0,0.1);
+	FireMelee(22,25,1,30,5,0,0,FALSE,0,0.1,1);
 };
 void() grem_lunge9  	=[	$lunge9,		grem_lunge10	] {monster_removeslide();};
 void() grem_lunge10  	=[	$lunge10,		grem_lunge11      ] {monster_removeslide();};

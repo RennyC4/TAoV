@@ -268,7 +268,7 @@ void()	raven_atk	=[	$atk1,		raven_atk	]
 		self.velocity_y = self.velocity_z = 0;
 		self.velocity_x = self.velocity_x / 4; // almost halt his x velocity
 		self.status_poison_finished = time + 3;
-		FireMelee(3,0,0,25,0,0,1,FALSE,0,0.13);
+		FireMelee(3,0,0,25,0,0,1,FALSE,0,0.13,1);
 		if (random() < 0.5)
 			sound (self, CHAN_WEAPON, "raven/melee.wav", 1, ATTN_NORM);
 		else

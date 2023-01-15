@@ -779,7 +779,7 @@ void(entity e) player_prop;
 void() player_block;
 void() player_blockbrk1;
 void(entity y) monster_pain;
-void(float damg, float dist, float knokback, float rsize, float snd, float flsh, float ignoreair, float unblockable, float up, float statusrand) FireMelee =
+void(float damg, float dist, float knokback, float rsize, float snd, float flsh, float ignoreair, float unblockable, float up, float statusrand, float sprite) FireMelee =
 {
 	local entity head, effect;
 	local vector dir, h;
@@ -826,7 +826,10 @@ void(float damg, float dist, float knokback, float rsize, float snd, float flsh,
 						// spawn a hit sprite
 						effect = spawn();
 						setorigin(effect, self.origin);
-						setmodel(effect, "progs/hit.spr");
+						if (!sprite)
+							setmodel(effect, "progs/hit.spr");
+						else
+							setmodel(effect, "progs/hit2.spr");
 
 						effect.effects = EF_NODEPTHTEST;
 						effect.movetype = MOVETYPE_NOCLIP;
@@ -898,7 +901,10 @@ void(float damg, float dist, float knokback, float rsize, float snd, float flsh,
 						h = head.absmin + ((head.absmax - head.absmin) * 0.5);
 						setorigin(effect, h);
 					}
-					setmodel(effect, "progs/hit.spr");
+					if (!sprite)
+						setmodel(effect, "progs/hit.spr");
+					else
+						setmodel(effect, "progs/hit2.spr");
 
 					effect.effects = EF_NODEPTHTEST;
 					effect.movetype = MOVETYPE_NOCLIP;

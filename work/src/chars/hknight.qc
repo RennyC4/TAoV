@@ -199,13 +199,13 @@ void() hellknight_attacka2 	=[	$char_a2,	hellknight_attacka3	] {BlockCancel();ai
 void() hellknight_attacka3 	=[	$char_a3,	hellknight_attacka4	] {BlockCancel();ai_forward(5);};
 void() hellknight_attacka4 	=[	$char_a4,	hellknight_attacka5	] {BlockCancel();ai_forward(5);};
 void() hellknight_attacka5 	=[	$char_a5,	hellknight_attacka6	] {BlockCancel();ai_forward(5);sound (self, CHAN_WEAPON, "hknight/swing.wav", 1, ATTN_NORM);};
-void() hellknight_attacka6 	=[	$char_a6,	hellknight_attacka7	] {BlockCancel();ai_forward(5);frameskip(0.07);FireMelee(6,15,0,40,5,0,0,FALSE,0,0);};
+void() hellknight_attacka6 	=[	$char_a6,	hellknight_attacka7	] {BlockCancel();ai_forward(5);frameskip(0.07);FireMelee(6,15,0,40,5,0,0,FALSE,0,0,0);};
 void() hellknight_attacka7 	=[	$char_a7,	hellknight_attacka8	] {BlockCancel();ai_forward(5);frameskip(0.07);};
 void() hellknight_attacka8 	=[	$char_a8,	hellknight_attacka9	] {BlockCancel();ai_forward(5);frameskip(0.07);};
 void() hellknight_attacka9 	=[	$char_a9,	hellknight_attacka10	] {BlockCancel();ai_forward(5);frameskip(0.07);};
 void() hellknight_attacka10 	=[	$char_a10,	hellknight_attacka11	] {BlockCancel();ai_forward(5);frameskip(0.07);sound (self, CHAN_WEAPON, "hknight/swing.wav", 1, ATTN_NORM);};
 void() hellknight_attacka11	=[	$char_a11,	hellknight_attacka12	] {BlockCancel();ai_forward(5);frameskip(0.07);};
-void() hellknight_attacka12 	=[	$char_a12,	hellknight_attacka13	] {BlockCancel();ai_forward(5);FireMelee(8,15,3,45,5,0,0,FALSE,0,0);};
+void() hellknight_attacka12 	=[	$char_a12,	hellknight_attacka13	] {BlockCancel();ai_forward(5);FireMelee(8,15,3,45,5,0,0,FALSE,0,0,0);};
 void() hellknight_attacka13 	=[	$char_a13,	hellknight_attacka14	] {BlockCancel();ai_forward(5);frameskip(0.07);};
 void() hellknight_attacka14 	=[	$char_a14,	hellknight_attacka15	] {BlockCancel();ai_forward(5);frameskip(0.07);};
 void() hellknight_attacka15 	=[	$char_a15,	hellknight_attacka16	] {BlockCancel();ai_forward(5);frameskip(0.07);};
@@ -215,16 +215,16 @@ void() hellknight_attackb1 	=[	$char_b1,	hellknight_attackb2	] {BlockCancel();ai
 void() hellknight_attackb2 	=[	$char_b2,	hellknight_attackb3	] {BlockCancel();ai_forward(5);frameskip(0.09);};
 void() hellknight_attackb3 	=[	$char_b3,	hellknight_attackb4	] {BlockCancel();ai_forward(5);frameskip(0.09);sound (self, CHAN_WEAPON, "hknight/swing.wav", 1, ATTN_NORM);};
 void() hellknight_attackb4 	=[	$char_b4,	hellknight_attackb5	] {BlockCancel();ai_forward(5);frameskip(0.09);};
-void() hellknight_attackb5 	=[	$char_b5,	hellknight_attackb6	] {BlockCancel();ai_forward(5);FireMelee(15,15,3,45,5,0,0,FALSE,0,0);};
+void() hellknight_attackb5 	=[	$char_b5,	hellknight_attackb6	] {BlockCancel();ai_forward(5);FireMelee(15,15,3,45,5,0,0,FALSE,0,0,0);};
 void() hellknight_attackb6 	=[	$char_b6,	hellknight_walk1	] {BlockCancel();ai_forward(5);frameskip(0.09);};
 
 void() hellknight_slice1 	=[	$slice1,	hellknight_slice2	] {BlockCancel();ai_forward(5);frameskip(0.2);};
 void() hellknight_slice2 	=[	$slice2,	hellknight_slice3	] {BlockCancel();ai_forward(5);frameskip(0.09);};
 void() hellknight_slice3 	=[	$slice3,	hellknight_slice4	] {BlockCancel();ai_forward(5);frameskip(0.09);};
 void() hellknight_slice4 	=[	$slice4,	hellknight_slice5	] {BlockCancel();ai_forward(5);frameskip(0.09);};
-void() hellknight_slice5 	=[	$slice5,	hellknight_slice6	] {BlockCancel();FireMelee(5,20,0,35,0,0,0,FALSE,0,0);sound (self, CHAN_WEAPON, "hknight/swing.wav", 1, ATTN_NORM);};
-void() hellknight_slice6 	=[	$slice6,	hellknight_slice7	] {BlockCancel();FireMelee(5,20,0,35,0,0,0,FALSE,0,0);};
-void() hellknight_slice7 	=[	$slice7,	hellknight_slice8	] {BlockCancel();FireMelee(5,20,0,35,0,0,0,FALSE,0,0);};
+void() hellknight_slice5 	=[	$slice5,	hellknight_slice6	] {BlockCancel();FireMelee(5,20,0,35,0,0,0,FALSE,0,0,0);sound (self, CHAN_WEAPON, "hknight/swing.wav", 1, ATTN_NORM);};
+void() hellknight_slice6 	=[	$slice6,	hellknight_slice7	] {BlockCancel();FireMelee(5,20,0,35,0,0,0,FALSE,0,0,0);};
+void() hellknight_slice7 	=[	$slice7,	hellknight_slice8	] {BlockCancel();FireMelee(5,20,0,35,0,0,0,FALSE,0,0,0);};
 void() hellknight_slice8 	=[	$slice8,	hellknight_slice9	] {BlockCancel();frameskip(0.05);};
 void() hellknight_slice9 	=[	$slice9,	hellknight_slice10	] {BlockCancel();frameskip(0.07);};
 void() hellknight_slice10 	=[	$slice10,	hellknight_walk1  	] {BlockCancel();frameskip(0.07);};
@@ -241,7 +241,7 @@ void() hellknight_smash8 	=[	$smash8,	hellknight_smash9	]
 	BlockCancel();
 	ai_forward(5);
 	self.status_broken_finished = time + 16;
-	FireMelee(18,15,3,45,5,0,0,FALSE,0,0.20);
+	FireMelee(18,15,3,45,5,0,0,FALSE,0,0.20,1);
 };
 void() hellknight_smash9 	=[	$smash9,	hellknight_smash10	] {BlockCancel();frameskip(0.07);};
 void() hellknight_smash10 	=[	$smash10,	hellknight_smash11	] {BlockCancel();frameskip(0.07);};

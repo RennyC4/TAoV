@@ -2620,13 +2620,13 @@ void() player_jumpframe =
 		{
 			self.frame = $jumpatkb1; //
 			if (self.attack_type == 6)
-				FireMelee(3,25,1,25,1,0,0,FALSE,24,0); // Keep firing, needs to only hit target 1 time however, handled in damage.qc
+				FireMelee(3,25,1,25,1,0,0,FALSE,24,0,1); // Keep firing, needs to only hit target 1 time however, handled in damage.qc
 		}
 		else if (self.aircombo_count == 2)
 		{
 			self.frame = $jumpatkb3;
 			if (self.attack_type == 7)
-				FireMelee(3,25,1,25,1,0,0,FALSE,24,0); // Keep firing, needs to only hit target 1 time however, handled in damage.qc
+				FireMelee(3,25,1,25,1,0,0,FALSE,24,0,1); // Keep firing, needs to only hit target 1 time however, handled in damage.qc
 		}
 		// 4 Is reserved ............
 		// Air uppercut slice
@@ -3685,7 +3685,7 @@ void() player_grabatk3	=[	$grabatk3,	player_grabatk4	] {frameskip(0.15);};
 void() player_grabatk4	=[	$grabatk4,	player_grab2	] 
 {
 	sound (self, CHAN_BODY, "player/motion2.wav", 1, ATTN_NORM);
-	FireMelee(12,10,0,30,3,0,1,TRUE,0,0);
+	FireMelee(12,10,0,30,3,0,1,TRUE,0,0,1);
 	// Cancel punch-combo on already dead enemy
 	if (self.enemy.health < 1)
 	{
@@ -3700,7 +3700,7 @@ void() player_grabatk4	=[	$grabatk4,	player_grab2	]
 // double punch
 void() player_grabatk5	=[	$grabatk5,	player_grabatk6	] {};
 void() player_grabatk6	=[	$grabatk6,	player_grabatk7	] {player_yell(0);frameskip(0.15);};
-void() player_grabatk7	=[	$grabatk7,	player_grabatk8	] {sound (self, CHAN_BODY, "player/motion2.wav", 1, ATTN_NORM);FireMelee(8,10,0,30,3,0,1,TRUE,0,0);frameskip(0.05);};
+void() player_grabatk7	=[	$grabatk7,	player_grabatk8	] {sound (self, CHAN_BODY, "player/motion2.wav", 1, ATTN_NORM);FireMelee(8,10,0,30,3,0,1,TRUE,0,0,1);frameskip(0.05);};
 void() player_grabatk8	=[	$grabatk5,	player_grabatk9	] 
 {
 	// Cancel second punch on already dead enemy
@@ -3714,7 +3714,7 @@ void() player_grabatk8	=[	$grabatk5,	player_grabatk9	]
 	}
 };
 void() player_grabatk9	=[	$grabatk6,	player_grabatk10 ] {frameskip(0.15);};
-void() player_grabatk10	=[	$grabatk7,	player_grab2	] {sound (self, CHAN_BODY, "player/motion2.wav", 1, ATTN_NORM);FireMelee(8,10,0,30,3,0,1,TRUE,0,0);frameskip(0.05);};
+void() player_grabatk10	=[	$grabatk7,	player_grab2	] {sound (self, CHAN_BODY, "player/motion2.wav", 1, ATTN_NORM);FireMelee(8,10,0,30,3,0,1,TRUE,0,0,1);frameskip(0.05);};
 
 // double round house kick
 void() player_grabatk11	=[	$grabatk8,	player_grabatk12	] 
@@ -3734,12 +3734,12 @@ void() player_grabatk13	=[	$grabatk10,	player_grabatk14	] {player_yell(0);};
 void() player_grabatk14	=[	$grabatk11,	player_grabatk15	] 
 {
 	sound (self, CHAN_BODY, "player/motion1.wav", 1, ATTN_NORM);
-	FireMelee(0,10,1,40,1,0,TRUE,TRUE,0,0);
+	FireMelee(0,10,1,40,1,0,TRUE,TRUE,0,0,1);
 };
 void() player_grabatk15	=[	$grabatk12,	player_grabatk16	] 
 {
 	sound (self, CHAN_BODY, "player/motion2.wav", 1, ATTN_NORM);
-	FireMelee(25,10,3,40,4,0,TRUE,TRUE,0,0);
+	FireMelee(25,10,3,40,4,0,TRUE,TRUE,0,0,1);
 	if (self.owner.bighit_freeze > time) // check if attack landed, needs to be called after FireMelee();
 	{
 		if (freeze_finished < time) // don't interefere with level up/etc
@@ -3945,7 +3945,7 @@ void() player_counter7	=[	$counter7,	player_counter8	]
 {
 	frameskip(0.05);
 	self.attack_type = 5; // Cut in half!
-	FireMelee(15,15,1,55,5,0,TRUE,TRUE,0,0);
+	FireMelee(15,15,1,55,5,0,TRUE,TRUE,0,0,0);
 	if (self.owner.bighit_freeze > time) // check if attack landed, needs to be called after FireMelee();
 	{
 		if (freeze_finished < time) // don't interefere with level up/etc
@@ -4221,7 +4221,7 @@ void() player_kick1	=[	$kick1,	player_kick2	]
 void() player_kick2	=[	$kick2,	player_kick3	] 
 {
 	LegShadow();
-	FireMelee(10,15,3,25,4,0,1,FALSE,0,0);
+	FireMelee(10,15,3,25,4,0,1,FALSE,0,0,1);
 	player_kickforward();
 	frameskip(0.15);
 };
@@ -4354,14 +4354,14 @@ void() player_runatk2	=[	$runatk2,	player_runatk3	]
 	player_yell(1);
 };
 void() player_runatk3	=[	$runatk3,	player_runatk4	] {runattack_forward();};
-void() player_runatk4	=[	$runatk4,	player_runatk5	] {runattack_forward();self.attack_type = 5;FireMelee(2,15,6,30,0,0,1,FALSE,0,0);};
-void() player_runatk5	=[	$runatk5,	player_runatk6 	] {runattack_forward();self.attack_type = 5;FireMelee(4,15,6,30,0,0,1,FALSE,0,0);};
-void() player_runatk6	=[	$runatk5,	player_runatk7 	] {runattack_forward();self.attack_type = 5;FireMelee(6,15,1,30,0,0,1,FALSE,0,0);};
+void() player_runatk4	=[	$runatk4,	player_runatk5	] {runattack_forward();self.attack_type = 5;FireMelee(2,15,6,30,0,0,1,FALSE,0,0,0);};
+void() player_runatk5	=[	$runatk5,	player_runatk6 	] {runattack_forward();self.attack_type = 5;FireMelee(4,15,6,30,0,0,1,FALSE,0,0,0);};
+void() player_runatk6	=[	$runatk5,	player_runatk7 	] {runattack_forward();self.attack_type = 5;FireMelee(6,15,1,30,0,0,1,FALSE,0,0,0);};
 void() player_runatk7	=[	$runatk5,	player_runatk8 	] 
 {
 	runattack_forward();
 	self.attack_type = 5;
-	FireMelee(8,15,3,30,5,1,1,FALSE,0,0);
+	FireMelee(8,15,3,30,5,1,1,FALSE,0,0,0);
 	if (self.owner.bighit_freeze > time) // check if attack landed, needs to be called after FireMelee();
 	{
 		if (freeze_finished < time) // don't interefere with level up/etc
@@ -4400,9 +4400,9 @@ void() player_waterslash3	=[	$slash3,	player_waterslash4	]
 {
 	// Do an additional check
 	if (pointcontents(self.origin) == CONTENT_WATER || pointcontents(self.origin) == CONTENT_LAVA || pointcontents(self.origin) == CONTENT_SLIME)
-		FireMelee(100,35,0,35,0,0,0,TRUE,0,0);
+		FireMelee(100,35,0,35,0,0,0,TRUE,0,0,0);
 	else
-		FireMelee(2,35,0,35,0,0,0,FALSE,0,0);
+		FireMelee(2,35,0,35,0,0,0,FALSE,0,0,0);
 
 	sound (self, CHAN_WEAPON, "player/sword4.wav", 1, ATTN_NORM);
 	frameskip(0.1);
@@ -4414,7 +4414,7 @@ void() player_waterslash7	=[	$slash7,	player_move			] {frameskip(0.1);};
 
 void() player_slash1	=[	$slash1,	player_slash2	] {frameskip(0.05);};
 void() player_slash2	=[	$slash2,	player_slash3	] {frameskip(0.035);};
-void() player_slash3	=[	$slash3,	player_slash4	] {FireMelee(2,35,0,35,0,0,0,FALSE,0,0);frameskip(0.035);sound (self, CHAN_WEAPON, "player/sword4.wav", 1, ATTN_NORM);};
+void() player_slash3	=[	$slash3,	player_slash4	] {FireMelee(2,35,0,35,0,0,0,FALSE,0,0,0);frameskip(0.035);sound (self, CHAN_WEAPON, "player/sword4.wav", 1, ATTN_NORM);};
 void() player_slash4	=[	$slash4,	player_slash5	] {frameskip(0.035);};
 void() player_slash5	=[	$slash5,	player_slash6	] {frameskip(0.035);};
 void() player_slash6	=[	$slash6,	player_slash7	] {frameskip(0.035);};
@@ -4546,15 +4546,15 @@ void() plyr_armstab =
 
 void() player_stabs1	=[	$stabs1,	player_stabs2	] {plyr_armstab();frameskip(0.02);};
 void() player_stabs2	=[	$stabs2,	player_stabs3	] {frameskip(0.02);};
-void() player_stabs3	=[	$stabs3,	player_stabs4	] {FireMelee(1,35,0,35,0,0,1,FALSE,0,0);sound (self, CHAN_WEAPON, "player/sword4.wav", 1, ATTN_NORM);};
+void() player_stabs3	=[	$stabs3,	player_stabs4	] {FireMelee(1,35,0,35,0,0,1,FALSE,0,0,0);sound (self, CHAN_WEAPON, "player/sword4.wav", 1, ATTN_NORM);};
 void() player_stabs4	=[	$stabs4,	player_stabs5	] {frameskip(0.02);};
-void() player_stabs5	=[	$stabs5,	player_stabs6	] {FireMelee(1,35,0,35,0,0,1,FALSE,0,0);frameskip(0.02);};
+void() player_stabs5	=[	$stabs5,	player_stabs6	] {FireMelee(1,35,0,35,0,0,1,FALSE,0,0,0);frameskip(0.02);};
 void() player_stabs6	=[	$stabs6,	player_stabs7	] {frameskip(0.02);};
-void() player_stabs7	=[	$stabs7,	player_stabs8	] {FireMelee(1,35,0,35,0,0,1,FALSE,0,0);sound (self, CHAN_WEAPON, "player/sword4.wav", 1, ATTN_NORM);};
+void() player_stabs7	=[	$stabs7,	player_stabs8	] {FireMelee(1,35,0,35,0,0,1,FALSE,0,0,0);sound (self, CHAN_WEAPON, "player/sword4.wav", 1, ATTN_NORM);};
 void() player_stabs8	=[	$stabs8,	player_stabs9	] {frameskip(0.02);};
-void() player_stabs9	=[	$stabs9,	player_stabs10	] {FireMelee(1,35,0,35,0,0,1,FALSE,0,0);frameskip(0.02);};
+void() player_stabs9	=[	$stabs9,	player_stabs10	] {FireMelee(1,35,0,35,0,0,1,FALSE,0,0,0);frameskip(0.02);};
 void() player_stabs10	=[	$stabs10,	player_stabs11	] {frameskip(0.02);};
-void() player_stabs11	=[	$stabs11,	player_stabs12	] {FireMelee(1,35,0,35,0,0,1,FALSE,0,0);sound (self, CHAN_WEAPON, "player/sword4.wav", 1, ATTN_NORM);};
+void() player_stabs11	=[	$stabs11,	player_stabs12	] {FireMelee(1,35,0,35,0,0,1,FALSE,0,0,0);sound (self, CHAN_WEAPON, "player/sword4.wav", 1, ATTN_NORM);};
 void() player_stabs12	=[	$stabs12,	player_stabs12	] 
 {
 	if (self.owner.mashattack == TRUE)
@@ -4590,9 +4590,9 @@ void() player_stabs12	=[	$stabs12,	player_stabs12	]
 	frameskip(0.02);
 };
 
-void() player_stabs1b	=[	$stabs1,	player_stabs2b	] {plyr_armstab();frameskip(0.02);FireMelee(1,35,0,35,0,0,1,FALSE,0,0);};
+void() player_stabs1b	=[	$stabs1,	player_stabs2b	] {plyr_armstab();frameskip(0.02);FireMelee(1,35,0,35,0,0,1,FALSE,0,0,0);};
 void() player_stabs2b	=[	$stabs2,	player_stabs3b	] {frameskip(0.02);};
-void() player_stabs3b	=[	$stabs3,	player_stabs4b	] {FireMelee(1,35,0,35,0,0,1,FALSE,0,0);sound (self, CHAN_WEAPON, "player/sword4.wav", 1, ATTN_NORM);};
+void() player_stabs3b	=[	$stabs3,	player_stabs4b	] {FireMelee(1,35,0,35,0,0,1,FALSE,0,0,0);sound (self, CHAN_WEAPON, "player/sword4.wav", 1, ATTN_NORM);};
 void() player_stabs4b	=[	$stabs4,	player_stabs5b	] {frameskip(0.02);};
 void() player_stabs5b	=[	$stabs5,	player_stabs5b	] 
 {
@@ -4628,9 +4628,9 @@ void() player_stabs5b	=[	$stabs5,	player_stabs5b	]
 	}
 	frameskip(0.02);
 };
-void() player_stabs6b	=[	$stabs6,	player_stabs7b	] {frameskip(0.02);FireMelee(1,35,0,35,0,0,1,FALSE,0,0);};
+void() player_stabs6b	=[	$stabs6,	player_stabs7b	] {frameskip(0.02);FireMelee(1,35,0,35,0,0,1,FALSE,0,0,0);};
 void() player_stabs7b	=[	$stabs7,	player_stabs8b	] {sound (self, CHAN_WEAPON, "player/sword4.wav", 1, ATTN_NORM);};
-void() player_stabs8b	=[	$stabs8,	player_stabs9b	] {frameskip(0.02);FireMelee(1,35,0,35,0,0,1,FALSE,0,0);};
+void() player_stabs8b	=[	$stabs8,	player_stabs9b	] {frameskip(0.02);FireMelee(1,35,0,35,0,0,1,FALSE,0,0,0);};
 void() player_stabs9b	=[	$stabs9,	player_stabs9b	] 
 {
 	if (self.owner.mashattack == TRUE)
@@ -4666,7 +4666,7 @@ void() player_stabs9b	=[	$stabs9,	player_stabs9b	]
 	frameskip(0.02);
 };
 void() player_stabs10b	=[	$stabs10,	player_stabs11b	] {frameskip(0.02);};
-void() player_stabs11b	=[	$stabs11,	player_stabs12b	] {FireMelee(1,35,0,35,0,0,1,FALSE,0,0);sound (self, CHAN_WEAPON, "player/sword4.wav", 1, ATTN_NORM);};
+void() player_stabs11b	=[	$stabs11,	player_stabs12b	] {FireMelee(1,35,0,35,0,0,1,FALSE,0,0,0);sound (self, CHAN_WEAPON, "player/sword4.wav", 1, ATTN_NORM);};
 void() player_stabs12b	=[	$stabs12,	player_stabs12b	] 
 {
 	if (self.owner.mashattack == TRUE)
@@ -4835,9 +4835,9 @@ void() player_fstab3	=[	$fstab3,	player_fstab3	]
 	if (self.fstab_cnt == 5) // Do it once
 	{
 		if (!deathmatch)
-			FireMelee(12,35,3,35,5,1,1,FALSE,0,0);
+			FireMelee(12,35,3,35,5,1,1,FALSE,0,0,0);
 		else
-			FireMelee(12,35,6,35,5,1,1,FALSE,0,0); // Don't guard break in deathmatch on first hit
+			FireMelee(12,35,6,35,5,1,1,FALSE,0,0,0); // Don't guard break in deathmatch on first hit
 		if (self.owner.bighit_freeze > time) // check if attack landed, needs to be called after FireMelee();
 		{
 			if (freeze_finished < time) // don't interefere with level up/etc
@@ -4849,7 +4849,7 @@ void() player_fstab3	=[	$fstab3,	player_fstab3	]
 
 	if (self.fstab_cnt >= 25) // and twice...
 	{
-		FireMelee(12,35,3,35,5,1,1,FALSE,0,0);
+		FireMelee(12,35,3,35,5,1,1,FALSE,0,0,0);
 		if (self.owner.bighit_freeze > time) // check if attack landed, needs to be called after FireMelee();
 		{
 			if (freeze_finished < time) // don't interefere with level up/etc
@@ -4963,7 +4963,7 @@ void() player_attacka3	=[	$attacka3,	player_attacka4	]
 
 	sound (self, CHAN_WEAPON, "player/sword.wav", 1, ATTN_NORM);
 	sound (self, CHAN_BODY, "player/skid.wav", 1, ATTN_NORM);
-	FireMelee(5,35,6,35,0,0,1,FALSE,0,0);
+	FireMelee(5,35,6,35,0,0,1,FALSE,0,0,0);
 
 	self.velocity_time = time + 0.1;
 	if (self.angles_y == 0)
@@ -5023,7 +5023,7 @@ void() player_attacka5	=[	$attacka5,	player_attacka6	]
 
 void() player_attacka6	=[	$attacka6,	player_attacka7	] 
 {
-	FireMelee(2,30,6,25,0,0,1,FALSE,0,0);
+	FireMelee(2,30,6,25,0,0,1,FALSE,0,0,0);
 
 	if (self.onground == TRUE) // Only add/set onground
 	{
@@ -5056,14 +5056,14 @@ void() player_attacka6	=[	$attacka6,	player_attacka7	]
 void() player_attacka7	=[	$attacka7,	player_attacka8	] 
 {
 	// Hit all around
-	FireMelee(1,0,4,60,0,0,1,FALSE,0,0);
+	FireMelee(1,0,4,60,0,0,1,FALSE,0,0,0);
 	frameskip(0.07);
 };
 
 void() player_attacka8	=[	$attacka8,	player_attacka9	] 
 {
 	// Hit all around
-	FireMelee(1,0,6,60,0,0,1,FALSE,0,0);
+	FireMelee(1,0,6,60,0,0,1,FALSE,0,0,0);
 	frameskip(0.07);
 };
 
@@ -5072,7 +5072,7 @@ void() player_attacka9  =[	$attacka9,	player_attacka9b ]
 	sound (self, CHAN_AUTO, "player/motion1.wav", 1, ATTN_NORM);
 	
 	player_yell(0);
-	FireMelee(5,30,6,25,0,0,1,FALSE,0,0);
+	FireMelee(5,30,6,25,0,0,1,FALSE,0,0,0);
 	frameskip(0.05);
 };
 
@@ -5178,7 +5178,7 @@ void() player_attacka13	=[	$attacka13,	player_attacka13	]
 	}
 	if (self.ftspin_count < 5)
 	{
-		FireMelee(1,0,0,65,0,0,1,FALSE,0,0);
+		FireMelee(1,0,0,65,0,0,1,FALSE,0,0,0);
 		self.angles_y = self.angles_y + 65;
 		self.ftspin_count = self.ftspin_count + 1;
 	}
@@ -5214,7 +5214,7 @@ void() player_attacka14	=[	$attacka14,	player_attacka15	]
 		self.attack_type = 5;
 		self.angles = self.oangles; // FIXME: Set angle before firing Melee
 		self.owner.shadow_time = time + 0.1; // red shadow
-		FireMelee(6,0,3,65,5,1,1,FALSE,0,0); // to prevent monster from getting hit the wrong way
+		FireMelee(6,0,3,65,5,1,1,FALSE,0,0,0); // to prevent monster from getting hit the wrong way
 		if (self.owner.bighit_freeze > time) // check if attack landed, needs to be called after FireMelee();
 		{
 			if (freeze_finished < time) // don't interefere with level up/etc
@@ -5269,7 +5269,7 @@ void() player_attacka17	=[	$attacka17,	player_attacka18	]
 void() player_attacka18	=[	$attacka18,	player_attacka19	] 
 {
 	sound (self, CHAN_WEAPON, "player/sword.wav", 1, ATTN_NORM);
-	FireMelee(5,30,0,25,0,0,1,FALSE,0,0);
+	FireMelee(5,30,0,25,0,0,1,FALSE,0,0,0);
 };
 void() player_attacka19	=[	$attacka19,	player_attacka19	] 
 {
@@ -5402,9 +5402,9 @@ void() dashattack_forward = // push player forward during animation
 void() player_dashatk1	=[	$dashatk1,	player_dashatk2	] {frameskip(0.1);dashattack_forward();};
 void() player_dashatk2	=[	$dashatk2,	player_dashatk3	] {frameskip(0.07);dashattack_forward();};
 void() player_dashatk3	=[	$dashatk3,	player_dashatk4	] {frameskip(0.07);dashattack_forward();sound (self, CHAN_WEAPON, "player/sword3.wav", 1, ATTN_NORM);};
-void() player_dashatk4	=[	$dashatk4,	player_dashatk5	] {frameskip(0.07);dashattack_forward();self.attack_type = 5;FireMelee(10,25,2,30,2,0,1,FALSE,0,0);};
-void() player_dashatk5	=[	$dashatk5,	player_dashatk6	] {frameskip(0.07);dashattack_forward();self.attack_type = 5;FireMelee(10,25,2,30,2,0,1,FALSE,0,0);};
-void() player_dashatk6	=[	$dashatk6,	player_move 	] {frameskip(0.2);self.attack_type = 5;FireMelee(10,25,2,30,2,0,1,FALSE,0,0);};
+void() player_dashatk4	=[	$dashatk4,	player_dashatk5	] {frameskip(0.07);dashattack_forward();self.attack_type = 5;FireMelee(10,25,2,30,2,0,1,FALSE,0,0,0);};
+void() player_dashatk5	=[	$dashatk5,	player_dashatk6	] {frameskip(0.07);dashattack_forward();self.attack_type = 5;FireMelee(10,25,2,30,2,0,1,FALSE,0,0,0);};
+void() player_dashatk6	=[	$dashatk6,	player_move 	] {frameskip(0.2);self.attack_type = 5;FireMelee(10,25,2,30,2,0,1,FALSE,0,0,0);};
 
 //*
 // charge up attack
@@ -5450,7 +5450,7 @@ void() player_chargeatk3	=[	$charge7,	player_chargeatk3	]
 		if (self.chargespincnt == 5 || self.chargespincnt == 38 || self.chargespincnt == 70)
 		{
 			self.attack_type = 5;
-			FireMelee(14,0,0,60,5,0,1,FALSE,0,0); // Hit all around
+			FireMelee(14,0,0,60,5,0,1,FALSE,0,0,0); // Hit all around
 		}
 		self.angles_x = self.angles_x + 10; // spin Vigil
 		self.chargespincnt = self.chargespincnt + 1;
@@ -5512,7 +5512,7 @@ void() player_chargeatk5	=[	$charge9,	player_chargeatk5	]
 
 	if (self.owner.mashattack)
 	{
-		FireMelee(11,30,0,30,2,1,1,TRUE,0,0); // does not smack back
+		FireMelee(11,30,0,30,2,1,1,TRUE,0,0,0); // does not smack back
 		self.think = player_attacka17;
 		self.nextthink = time + 0.15;
 		self.owner.mashattack = FALSE;
@@ -5522,7 +5522,7 @@ void() player_chargeatk5	=[	$charge9,	player_chargeatk5	]
 	}
 	else
 	{
-		FireMelee(22,30,3,30,2,1,1,TRUE,0,0);
+		FireMelee(22,30,3,30,2,1,1,TRUE,0,0,0);
 		self.think = player_move;
 		self.nextthink = time + 0.35;
 	}
@@ -5620,10 +5620,10 @@ void() jatkspecial =
 	self.velocity_z = self.velocity_z + 200;
 };
 
-void() player_jatkspecial1	=[	$jatkspc1,	player_jatkspecial2	] {jatkspecial();frameskip(0.06);FireMelee(3,15,0,35,0,0,1,FALSE,0,0);sound (self, CHAN_AUTO, "player/swrdspin.wav", 1, ATTN_NORM);};
-void() player_jatkspecial2	=[	$jatkspc2,	player_jatkspecial3	] {jatkspecial();frameskip(0.06);FireMelee(3,15,0,35,0,0,1,FALSE,0,0);}
-void() player_jatkspecial3	=[	$jatkspc3,	player_jatkspecial4	] {jatkspecial();frameskip(0.06);FireMelee(3,15,0,35,0,0,1,FALSE,0,0);};
-void() player_jatkspecial4	=[	$jatkspc4,	player_jatkspecial5	] {jatkspecial();frameskip(0.06);FireMelee(3,15,0,35,0,0,1,FALSE,0,0);};
+void() player_jatkspecial1	=[	$jatkspc1,	player_jatkspecial2	] {jatkspecial();frameskip(0.06);FireMelee(3,15,0,35,0,0,1,FALSE,0,0,0);sound (self, CHAN_AUTO, "player/swrdspin.wav", 1, ATTN_NORM);};
+void() player_jatkspecial2	=[	$jatkspc2,	player_jatkspecial3	] {jatkspecial();frameskip(0.06);FireMelee(3,15,0,35,0,0,1,FALSE,0,0,0);}
+void() player_jatkspecial3	=[	$jatkspc3,	player_jatkspecial4	] {jatkspecial();frameskip(0.06);FireMelee(3,15,0,35,0,0,1,FALSE,0,0,0);};
+void() player_jatkspecial4	=[	$jatkspc4,	player_jatkspecial5	] {jatkspecial();frameskip(0.06);FireMelee(3,15,0,35,0,0,1,FALSE,0,0,0);};
 void() player_jatkspecial5	=[	$jatkspc5,	player_jatkspecial6	] {jatkspecial();frameskip(0.06);};
 void() player_jatkspecial6	=[	$jatkspc6,	player_jatkspecial7	] {jatkspecial();frameskip(0.06);};
 void() player_jatkspecial7	=[	$jatkspc7,	player_jumpatk2		]
@@ -5999,7 +5999,7 @@ void() player_jumpatk4	=[	$pain2,	player_move	]
 
 void() airuppercut =
 {
-	FireMelee(7,8,0,40,5,0,0,FALSE,20,0);
+	FireMelee(7,8,0,40,5,0,0,FALSE,20,0,0);
 
 	if (self.owner.walljump == TRUE)
    		self.owner.walljump = FALSE;
@@ -6028,9 +6028,9 @@ void() player_airuppercut5	=[	$uppercut3,	player_airuppercut6	] {airuppercut();}
 void() player_airuppercut6	=[	$uppercut4,	player_airuppercut7	] {self.velocity_x = 0;}; 
 void() player_airuppercut7	=[	$uppercut5,	player_move			] {};
 
-void() player_jumpatkb1	=[	$jumpatkb1,	player_move 	] {if (self.onground) player_move();self.attack_type = 6;FireMelee(3,25,1,25,1,0,0,FALSE,24,0);sound (self, CHAN_AUTO, "player/motion1.wav", 1, ATTN_NORM);};
+void() player_jumpatkb1	=[	$jumpatkb1,	player_move 	] {if (self.onground) player_move();self.attack_type = 6;FireMelee(3,25,1,25,1,0,0,FALSE,24,0,1);sound (self, CHAN_AUTO, "player/motion1.wav", 1, ATTN_NORM);};
 void() player_jumpatkb2	=[	$jumpatkb2,	player_jumpatkb3] {if (self.onground) player_move();self.attack_type = 7;frameskip(0.08);};
-void() player_jumpatkb3	=[	$jumpatkb3,	player_move 	] {if (self.onground) player_move();FireMelee(3,25,1,25,1,0,0,FALSE,24,0);sound (self, CHAN_AUTO, "player/motion2.wav", 1, ATTN_NORM);};
+void() player_jumpatkb3	=[	$jumpatkb3,	player_move 	] {if (self.onground) player_move();FireMelee(3,25,1,25,1,0,0,FALSE,24,0,1);sound (self, CHAN_AUTO, "player/motion2.wav", 1, ATTN_NORM);};
 
 void() player_airkick1;
 void() player_jumpatkb4	=[	$jumpatkb4,	player_jumpatkb5 	] {if (self.onground) player_move();frameskip(0.1);};
@@ -6040,7 +6040,7 @@ void() player_jumpatkb7	=[	$jumpatkb7,	player_jumpatkb8 	] {if (self.onground) p
 void() player_jumpatkb8	=[	$jumpatkb8,	player_move		] 
 {
 	sound (self, CHAN_WEAPON, "player/sword.wav", 1, ATTN_NORM);
-	FireMelee(10,25,1,30,5,0,0,FALSE,24,0);
+	FireMelee(10,25,1,30,5,0,0,FALSE,24,0,0);
 
 	if (self.owner.bighit_freeze > time) // check if attack landed, needs to be called after FireMelee();
 	{
@@ -6067,7 +6067,7 @@ void() player_airkick6b;
 void() player_airkick1		=[	$airkick1,	player_airkick2 	] {frameskip(0.06);sound (self, CHAN_VOICE, "player/yell2.wav", 1, ATTN_NORM);};
 void() player_airkick2		=[	$airkick2,	player_airkick3 	] {frameskip(0.06);};
 void() player_airkick3		=[	$airkick3,	player_airkick4 	] {frameskip(0.07);sound (self, CHAN_AUTO, "player/motion1.wav", 1, ATTN_NORM);};
-void() player_airkick4		=[	$airkick4,	player_airkick5 	] {FireMelee(3,25,1,25,1,0,0,FALSE,24,0);frameskip(0.2);};
+void() player_airkick4		=[	$airkick4,	player_airkick5 	] {FireMelee(3,25,1,25,1,0,0,FALSE,24,0,1);frameskip(0.2);};
 void() player_airkick5		=[	$airkick5,	player_airkick6 	] {frameskip(0.08);};
 void() player_airkick6		=[	$airkick6,	player_airkick6 	] 
 {
@@ -6091,7 +6091,7 @@ void() player_airkick6b		=[	$airkick6,	player_airkick7 	] {frameskip(0.03);}
 
 void() player_airkick10b;
 void() player_airkick7		=[	$airkick7,	player_airkick8 	] {frameskip(0.1);sound (self, CHAN_VOICE, "player/yell2.wav", 1, ATTN_NORM);sound (self, CHAN_AUTO, "player/motion1.wav", 1, ATTN_NORM);};
-void() player_airkick8		=[	$airkick8,	player_airkick9 	] {FireMelee(3,25,1,25,1,0,0,FALSE,24,0);frameskip(0.2);};
+void() player_airkick8		=[	$airkick8,	player_airkick9 	] {FireMelee(3,25,1,25,1,0,0,FALSE,24,0,1);frameskip(0.2);};
 void() player_airkick9		=[	$airkick9,	player_airkick10 	] {frameskip(0.1);};
 void() player_airkick10		=[	$airkick10,	player_airkick10	] 
 {
@@ -6114,7 +6114,7 @@ void() player_airkick10		=[	$airkick10,	player_airkick10	]
 void() player_airkick10b		=[	$airkick10,	player_airkick11	] {frameskip(0.1);}
 
 void() player_airkick12b;
-void() player_airkick11		=[	$airkick11,	player_airkick12 	] {FireMelee(3,25,1,25,1,0,0,FALSE,24,0);sound (self, CHAN_VOICE, "player/yell2.wav", 1, ATTN_NORM);frameskip(0.2);sound (self, CHAN_AUTO, "player/motion1.wav", 1, ATTN_NORM);self.velocity_y = 0;};
+void() player_airkick11		=[	$airkick11,	player_airkick12 	] {FireMelee(3,25,1,25,1,0,0,FALSE,24,0,1);sound (self, CHAN_VOICE, "player/yell2.wav", 1, ATTN_NORM);frameskip(0.2);sound (self, CHAN_AUTO, "player/motion1.wav", 1, ATTN_NORM);self.velocity_y = 0;};
 void() player_airkick12		=[	$airkick12,	player_airkick12 	] 
 {
 	if (self.onground == TRUE || self.swimming)
@@ -6174,7 +6174,7 @@ void() player_airkick15		=[	$airkick15,	player_airkick16 	]
 	if (self.flags & FL_ONGROUND)
 		self.flags = self.flags - FL_ONGROUND;
 		
-	FireMelee(10,25,7,30,6,1,1,TRUE,24,0);
+	FireMelee(10,25,7,30,6,1,1,TRUE,24,0,1);
 
 	if (self.owner.bighit_freeze > time) // check if attack landed, needs to be called after FireMelee();
 	{
@@ -8033,9 +8033,9 @@ void() player_doublejump1	=[	$djump,	player_doublejump1	]
 		{
 			self.owner.aircombo_finished = time + 0.2;
 			if (!relics & IT_RELIC3)
-				FireMelee(1,0,0,50,0,0,TRUE,TRUE,25,0);
+				FireMelee(1,0,0,50,0,0,TRUE,TRUE,25,0,0);
 			else // Owning spin slash relic will allow in-air enemies to be combo'd
-				FireMelee(3,0,0,50,0,0,FALSE,TRUE,25,0);
+				FireMelee(3,0,0,50,0,0,FALSE,TRUE,25,0,0);
 		}
 	}
 	else if (self.walkframe > 6)
@@ -8438,7 +8438,7 @@ void() player_swordspin1   =[	$dfattack1,	player_swordspin2	] {player_swordspin_
 void() player_swordspin2   =[	$dfattack2,	player_swordspin3	] {frameskip(0.05);};
 void() player_swordspin3   =[	$dfattack3,	player_swordspin4	] 
 {player_yell(0);sound (self, CHAN_AUTO, "player/swrdspin.wav", 1, ATTN_NORM);self.owner.swordshadow_time = time + 1;frameskip(0.02);};
-void() player_swordspin4   =[	$dfattack4,	player_swordspin5	] {FireMelee(1,35,0,25,0,0,1,FALSE,0,0);frameskip(0.02);};
+void() player_swordspin4   =[	$dfattack4,	player_swordspin5	] {FireMelee(1,35,0,25,0,0,1,FALSE,0,0,0);frameskip(0.02);};
 void() player_swordspin5   =[	$dfattack5,	player_swordspin6	] {frameskip(0.02);};
 
 // Actual spinning (6 to 21 and back)
@@ -8456,11 +8456,11 @@ void() player_swordspin6   =[	$dfattack6,	player_swordspin7	]
 };
 void() player_swordspin7    =[	$dfattack6,		player_swordspin8		] {frameskip(0.02);};
 void() player_swordspin8    =[	$dfattack7,		player_swordspin9		] {frameskip(0.02);};
-void() player_swordspin9    =[	$dfattack8,		player_swordspin10		] {FireMelee(1,35,0,25,0,0,1,FALSE,0,0);frameskip(0.02);};
+void() player_swordspin9    =[	$dfattack8,		player_swordspin10		] {FireMelee(1,35,0,25,0,0,1,FALSE,0,0,0);frameskip(0.02);};
 void() player_swordspin10   =[	$dfattack9, 		player_swordspin11		] {frameskip(0.02);};
 void() player_swordspin11   =[	$dfattack10,		player_swordspin12		] {frameskip(0.02);};
 void() player_swordspin12   =[	$dfattack11,		player_swordspin13		] {frameskip(0.02);};
-void() player_swordspin13   =[	$dfattack12,		player_swordspin5		] {FireMelee(1,35,0,25,0,0,1,FALSE,0,0);frameskip(0.02);};
+void() player_swordspin13   =[	$dfattack12,		player_swordspin5		] {FireMelee(1,35,0,25,0,0,1,FALSE,0,0,0);frameskip(0.02);};
 
 // End, start "Tennis Smash"
 void() player_swordspin22   =[	$dfattack2,		player_swordspin23		] {frameskip(0.05);};
@@ -8500,7 +8500,7 @@ void() player_smashdown7    =[	$smash8,	player_smashdown8		]
 	self.owner.swordshadow_time = time + 0.05;
 	self.attack_type = 5;
 	self.sword_spincnt = 99; // screen shake in FireMelee
-	FireMelee(30,35,3,35,5,1,1,TRUE,0,0);
+	FireMelee(30,35,3,35,5,1,1,TRUE,0,0,0);
 	if (self.owner.bighit_freeze > time) // check if attack landed, needs to be called after FireMelee();
 	{
 		if (freeze_finished < time) // don't interefere with level up/etc
@@ -8525,7 +8525,7 @@ void() player_dodgea2	    =[	$dodgea2,	player_dodgea3		 	] {frameskip(0.05);play
 void() player_dodgea3	    =[	$dodgea3,	player_dodgea4		 	] {frameskip(0.05);};
 void() player_dodgea4	    =[	$dodgea4,	player_dodgea5		 	] {frameskip(0.05);dodgea1_move();};
 void() player_dodgea5	    =[	$dodgea5,	player_dodgea6		 	] {frameskip(0.05);dodgea1_move();};
-void() player_dodgea6	    =[	$dodgea6,	player_dodgea7		 	] {frameskip(0.05);dodgea1_move();FireMelee(0,0,1,30,1,0,TRUE,TRUE,0,0);};
+void() player_dodgea6	    =[	$dodgea6,	player_dodgea7		 	] {frameskip(0.05);dodgea1_move();FireMelee(0,0,1,30,1,0,TRUE,TRUE,0,0,1);};
 void() player_dodgea7	    =[	$dodgea7,	player_dodgea8		 	] {frameskip(0.05);dodgea1_move();};
 void() player_dodgea8	    =[	$dodgea8,	player_dodgea9		 	] 
 {
@@ -8865,7 +8865,7 @@ void() player_miniswordspin1   =[	$dfattack1,	player_miniswordspin2	] {player_sw
 void() player_miniswordspin2   =[	$dfattack2,	player_miniswordspin3	] {frameskip(0.05);};
 void() player_miniswordspin3   =[	$dfattack3,	player_miniswordspin4	] 
 {player_yell(0);sound (self, CHAN_AUTO, "player/swrdspin.wav", 1, ATTN_NORM);self.owner.swordshadow_time = time + 0.5;frameskip(0.02);};
-void() player_miniswordspin4   =[	$dfattack4,	player_miniswordspin5	] {FireMelee(1,35,4,25,0,0,1,TRUE,0,0);frameskip(0.02);};
+void() player_miniswordspin4   =[	$dfattack4,	player_miniswordspin5	] {FireMelee(1,35,4,25,0,0,1,TRUE,0,0,0);frameskip(0.02);};
 void() player_miniswordspin5   =[	$dfattack5,	player_miniswordspin6	] {frameskip(0.02);};
 
 // Actual spinning (6 to 21 and back)
@@ -8883,11 +8883,11 @@ void() player_miniswordspin6   =[	$dfattack6,	player_miniswordspin7	]
 };
 void() player_miniswordspin7    =[	$dfattack6,		player_miniswordspin8		] {frameskip(0.02);};
 void() player_miniswordspin8    =[	$dfattack7,		player_miniswordspin9		] {frameskip(0.02);};
-void() player_miniswordspin9    =[	$dfattack8,		player_miniswordspin10		] {FireMelee(1,35,4,25,0,0,1,TRUE,0,0);frameskip(0.02);};
+void() player_miniswordspin9    =[	$dfattack8,		player_miniswordspin10		] {FireMelee(1,35,4,25,0,0,1,TRUE,0,0,0);frameskip(0.02);};
 void() player_miniswordspin10   =[	$dfattack9, 	player_miniswordspin11		] {frameskip(0.02);};
 void() player_miniswordspin11   =[	$dfattack10,	player_miniswordspin12		] {frameskip(0.02);};
 void() player_miniswordspin12   =[	$dfattack11,	player_miniswordspin13		] {frameskip(0.02);};
-void() player_miniswordspin13   =[	$dfattack12,	player_miniswordspin5		] {FireMelee(1,35,4,25,0,0,1,TRUE,0,0);frameskip(0.02);};
+void() player_miniswordspin13   =[	$dfattack12,	player_miniswordspin5		] {FireMelee(1,35,4,25,0,0,1,TRUE,0,0,0);frameskip(0.02);};
 void() player_miniswordspin22   =[	$dfattack2,		player_move					] 
 {
 	if (self.angles_y == 0)
@@ -9205,7 +9205,7 @@ void() player_gizuna2   =[	$izuna1,	player_bflip1	]
 	self.takedamage = DAMAGE_AIM; // reactivate damage on self
 	self.attack_type = 5; // Cut in half!
 	self.owner.screenflash_finished = time + 0.1; // hard hit -> screen flashes
-	FireMelee(calc,0,3,75,7,FALSE,1,TRUE,0,0); // silent sound / silent flash
+	FireMelee(calc,0,3,75,7,FALSE,1,TRUE,0,0,1); // silent sound / silent flash
 
 	self.owner.attack_finished = time;
 	self.grabbed = FALSE;

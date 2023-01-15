@@ -115,13 +115,13 @@ void()	golem_atk	=[	$punch1,		golem_atk	]
 	if (self.walkframe == 6) // attack
 	{
 		self.status_broken_finished = time + 8;
-		FireMelee(12,18,3,45,5,1,1,FALSE,0,0.22);
+		FireMelee(12,18,3,45,5,1,1,FALSE,0,0.22,1);
 		sound (self, CHAN_WEAPON, "player/twoosh.wav", 1, ATTN_NORM);
 	}
 	if (self.walkframe == 18) // attack
 	{
 		self.status_broken_finished = time + 8;
-		FireMelee(12,18,3,45,5,1,1,FALSE,0,0.22);
+		FireMelee(12,18,3,45,5,1,1,FALSE,0,0.22,1);
 		sound (self, CHAN_WEAPON, "player/twoosh.wav", 1, ATTN_NORM);
 	}
 
@@ -217,7 +217,7 @@ void()	golem_atk2	=[	$combo1,		golem_atk2	]
 	if (self.walkframe == 17) // attack
 	{
 		self.status_broken_finished = time + 8;
-		FireMelee(18,15,3,50,5,1,1,FALSE,0,0.15);
+		FireMelee(18,15,3,50,5,1,1,FALSE,0,0.15,1);
 		sound (self, CHAN_WEAPON, "player/twoosh.wav", 1, ATTN_NORM);
 	}
 

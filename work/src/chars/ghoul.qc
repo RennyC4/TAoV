@@ -73,7 +73,7 @@ void() ghoul_hit3	=[	$hit3,	ghoul_hit4	]
 {
 	frameskip(0.05);
 	self.status_poison_finished = time + 8;
-	FireMelee(4,5,0,25,1,0,0,FALSE,0,0.5);
+	FireMelee(4,5,0,25,1,0,0,FALSE,0,0.5,1);
 	ai_forward(2);
 	monster_removeslide();
 };
@@ -112,7 +112,7 @@ void() ghoul_hit21	=[	$hit21,	ghoul_hit22	]
 {
 	frameskip(0.05);
 	self.status_poison_finished = time + 8;
-	FireMelee(4,5,0,25,1,0,0,FALSE,0,0.5);
+	FireMelee(4,5,0,25,1,0,0,FALSE,0,0.5,1);
 	ai_forward(2);
 	monster_removeslide();
 };

@@ -139,9 +139,9 @@ void()	merman_attack	=[	$melee1,	merman_attack	]
 	}
 
 	if (self.walkframe == 7)
-		FireMelee(8,10,0,35,0,0,0,FALSE,0,0);
+		FireMelee(8,10,0,35,0,0,0,FALSE,0,0,0);
 	if (self.walkframe == 17)
-		FireMelee(13,10,3,35,2,0,0,FALSE,0,0);
+		FireMelee(13,10,3,35,2,0,0,FALSE,0,0,1);
 
 	self.frame = $melee1 + self.walkframe;
 	self.walkframe = self.walkframe + 1;

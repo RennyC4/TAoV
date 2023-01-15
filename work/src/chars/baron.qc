@@ -189,8 +189,8 @@ void() baron_swing1 	=[	$swing1,	baron_swing2	]
 void() baron_swing2 	=[	$swing2,	baron_swing3	] {BlockCancel();frameskip(0.08);};
 void() baron_swing3 	=[	$swing3,	baron_swing4	] {BlockCancel();frameskip(0.08);};
 void() baron_swing4 	=[	$swing4,	baron_swing5	] {BlockCancel();sound (self, CHAN_WEAPON, "baron/sword.wav", 1, ATTN_NORM);frameskip(0.08);};
-void() baron_swing5 	=[	$swing5,	baron_swing6	] {BlockCancel();FireMelee(14,16,3,43,5,0,0,FALSE,0,0);frameskip(0.08);};
-void() baron_swing6 	=[	$swing6,	baron_run1  	] {BlockCancel();FireMelee(14,16,3,43,5,0,0,FALSE,0,0);frameskip(0.08);};
+void() baron_swing5 	=[	$swing5,	baron_swing6	] {BlockCancel();FireMelee(14,16,3,43,5,0,0,FALSE,0,0,0);frameskip(0.08);};
+void() baron_swing6 	=[	$swing6,	baron_run1  	] {BlockCancel();FireMelee(14,16,3,43,5,0,0,FALSE,0,0,0);frameskip(0.08);};
 
 void() baron_smash1 	=[	$smack1,	baron_smash2	] {frameskip(0.05);monster_removeslide();};
 void() baron_smash2 	=[	$smack2,	baron_smash3	] {frameskip(0.05);monster_removeslide();};

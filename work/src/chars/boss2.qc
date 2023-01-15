@@ -224,7 +224,7 @@ void() boss_rockdrop10 = [$shockc10, boss_idle1] {};
 
 void() Boss2Melee =
 {
-	FireMelee(40,0,3,100,5,0,1,FALSE,0,0);
+	FireMelee(40,0,3,100,5,0,1,FALSE,0,0,0);
 
 	// Damage boss from purge attacks
 	// '.char' refers to the Eternal Dragon itself as .owner is used for other means
@@ -436,7 +436,7 @@ void() boulder_thinker =
 			{
 				if (!relics & IT_RELIC12)
 				{
-					FireMelee(8,0,8,35,0,0,1,FALSE,0,0);
+					FireMelee(8,0,8,35,0,0,1,FALSE,0,0,1);
 					y.velocity = '0 0 0';
 				}
 				else

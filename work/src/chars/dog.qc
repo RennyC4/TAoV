@@ -57,7 +57,7 @@ void() dog_atta2	=[	$attack2,	dog_atta3	] {};
 void() dog_atta3	=[	$attack3,	dog_atta4	] {};
 void() dog_atta4	=[	$attack4,	dog_atta5	] {sound (self, CHAN_VOICE, "dog/bite.wav", 1, ATTN_NORM);};
 void() dog_atta5	=[	$attack5,	dog_atta6	] {};
-void() dog_atta6	=[	$attack6,	dog_atta7	] {FireMelee(5,45,0,25,0,0,0,FALSE,0,0);};
+void() dog_atta6	=[	$attack6,	dog_atta7	] {FireMelee(5,45,0,25,0,0,0,FALSE,0,0,0);};
 void() dog_atta7	=[	$attack7,	dog_atta8	] {};
 void() dog_atta8	=[	$attack8,	dog_walk1	] {};
 
@@ -77,17 +77,17 @@ void() dog_leap3	=[	$leap2,		dog_leap4	]
 		self.flags = self.flags - FL_ONGROUND;
 };
 
-void() dog_leap4	=[	$leap3,		dog_leap5	] {FireMelee(1,0,1,30,0,0,1,TRUE,-22,0);};
-void() dog_leap5	=[	$leap4,		dog_leap6	] {FireMelee(2,0,1,30,0,0,1,TRUE,-22,0);};
-void() dog_leap6	=[	$leap5,		dog_leap7	] {FireMelee(1,0,1,30,0,0,1,TRUE,-22,0);};
-void() dog_leap7	=[	$leap6,		dog_leap8	] {FireMelee(2,0,1,30,0,0,1,TRUE,-22,0);};
-void() dog_leap8	=[	$leap7,		dog_leap9	] {FireMelee(1,0,1,30,0,0,1,TRUE,-22,0);};
-void() dog_leap9	=[	$leap8,		dog_leap10	] {FireMelee(2,0,1,30,0,0,1,TRUE,-22,0);};
+void() dog_leap4	=[	$leap3,		dog_leap5	] {FireMelee(1,0,1,30,0,0,1,TRUE,-22,0,0);};
+void() dog_leap5	=[	$leap4,		dog_leap6	] {FireMelee(2,0,1,30,0,0,1,TRUE,-22,0,0);};
+void() dog_leap6	=[	$leap5,		dog_leap7	] {FireMelee(1,0,1,30,0,0,1,TRUE,-22,0,0);};
+void() dog_leap7	=[	$leap6,		dog_leap8	] {FireMelee(2,0,1,30,0,0,1,TRUE,-22,0,0);};
+void() dog_leap8	=[	$leap7,		dog_leap9	] {FireMelee(1,0,1,30,0,0,1,TRUE,-22,0,0);};
+void() dog_leap9	=[	$leap8,		dog_leap10	] {FireMelee(2,0,1,30,0,0,1,TRUE,-22,0,0);};
 void() dog_leap10	=[	$leap9,		dog_leap10	] 
 {
 	if (self.flags & FL_ONGROUND)
 		self.think = dog_walk1;
-	FireMelee(2,0,1,35,0,0,1,TRUE,0,0);
+	FireMelee(2,0,1,35,0,0,1,TRUE,0,0,0);
 };
 
 void() dog_pain1	=[	$pain1 ,	dog_pain2	] {monster_removeslide();};

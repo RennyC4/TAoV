@@ -135,7 +135,7 @@ void() gaunt_finger8 	=[	$hup8,	gaunt_finger9	] {frameskip(0.03);monster_removes
 
 void() gaunt_finger9 	=[	$finger1,	gaunt_finger10	] {monster_removeslide();};
 void() gaunt_finger10 	=[	$finger2,	gaunt_finger11	] {monster_removeslide();};
-void() gaunt_finger11	=[	$finger3,	gaunt_finger12	] {FireMelee(0,15,3,50,99,0,0,FALSE,0,0);monster_removeslide();sound (self, CHAN_AUTO, "misc/windpush.wav", 1, ATTN_NORM);};
+void() gaunt_finger11	=[	$finger3,	gaunt_finger12	] {FireMelee(0,15,3,50,99,0,0,FALSE,0,0,1);monster_removeslide();sound (self, CHAN_AUTO, "misc/windpush.wav", 1, ATTN_NORM);};
 
 void() gaunt_finger12	=[	$hup8,	gaunt_finger13	] {monster_removeslide();};
 void() gaunt_finger13	=[	$hup7,	gaunt_finger14	] {monster_removeslide();};

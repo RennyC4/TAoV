@@ -111,7 +111,7 @@ void()	knight2_atk2	=[	$attackb4,		knight2_atk3	] {knight2_yell();sound (self, C
 void()	knight2_atk3	=[	$attackb5,		knight2_atk4	] {BlockCancel();frameskip(0.07);};
 void()	knight2_atk4	=[	$attackb6,		knight2_atk5	] {BlockCancel();frameskip(0.07);};
 void()	knight2_atk5	=[	$attackb7,		knight2_atk6	] {BlockCancel();frameskip(0.07);};
-void()	knight2_atk6	=[	$attackb8,		knight2_atk7	] {BlockCancel();FireMelee(14,10,0,50,0,0,0,FALSE,0,0);frameskip(0.07);};
+void()	knight2_atk6	=[	$attackb8,		knight2_atk7	] {BlockCancel();FireMelee(14,10,0,50,0,0,0,FALSE,0,0,0);frameskip(0.07);};
 void()	knight2_atk7	=[	$attackb9,		knight2_atk8] {BlockCancel();frameskip(0.07);};
 void()	knight2_atk8 	=[	$attackb10,		knight2_walk1] {BlockCancel();frameskip(0.07);};
 
@@ -134,7 +134,7 @@ void()	knight2_atkb8	=[	$runattack8,		knight2_atkb9	]
 	ai_forward(6);
 	frameskip(0.05);
 	self.status_broken_finished = time + 16;
-	FireMelee(26,10,3,50,5,0,0,FALSE,0,0.2);
+	FireMelee(26,10,3,50,5,0,0,FALSE,0,0.2,0);
 };
 void()	knight2_atkb9	=[	$runattack9,		knight2_atkb10	] {BlockCancel();ai_forward(6);frameskip(0.05);};
 void()	knight2_atkb10	=[	$runattack10,		knight2_atkb11	] {BlockCancel();ai_forward(6);frameskip(0.05);};
