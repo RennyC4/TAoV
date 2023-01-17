@@ -364,7 +364,7 @@ void() HellKnight_Lightning =
 			if (trace_ent.block_finished < time) // hit target
 			{
 				trace_ent.knockback = 0;
-				T_Damage (trace_ent, self, self, 8, 0);
+				T_Damage (trace_ent, self, self, 6, 0);
 			}
 			else
 			{
