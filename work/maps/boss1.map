@@ -4,7 +4,7 @@
 {
 "classname" "worldspawn"
 "sounds" "1"
-"light" "0"
+"light" "33"
 "message" "Stained Glass Knight"
 "wad" "C:/Games/TAoV/work/wads/taov.wad;C:/Games/TAoV/work/wads/mapcols.wad;C:/Games/TAoV/work/wads/alice.wad"
 "_tb_def" "builtin:taov.fgd"
@@ -17,6 +17,7 @@
 "_sunlight_dirt" "1"
 "_lightmap_scale" "4"
 "_phong" "1"
+"_bounce" "1"
 // brush 0
 {
 ( 128 -512 -488 ) ( 128 -704 -488 ) ( 128 -704 -584 ) carpet1 [ 0 1 0 0 ] [ 0 0 -1 0 ] 0 1 1

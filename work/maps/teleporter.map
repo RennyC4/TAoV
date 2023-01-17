@@ -3,7 +3,6 @@
 // entity 0
 {
 "classname" "worldspawn"
-"mapversion" "220"
 "_tb_mod" "data"
 "wad" "C:/Games/TAoV/work/wads/hexen2.wad;C:/Games/TAoV/work/wads/QUAKE101.WAD;C:/Games/TAoV/work/wads/taov.wad;../wads/mapcols.wad"
 "message" "Transporter"
@@ -16,6 +15,7 @@
 "_lightmap_scale" "4"
 "_phong" "1"
 "_wateralpha" "0.25"
+"_bounce" "1"
 // brush 0
 {
 ( -100 184 16 ) ( -102 184 216 ) ( -102 -416 216 ) clip [ 0 -1 0 -8 ] [ 0 0 -1 0 ] 0 1 1

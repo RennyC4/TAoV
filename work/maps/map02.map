@@ -15,13 +15,14 @@
 "_tb_def" "builtin:taov.fgd"
 "_wateralpha" "0.3"
 "_telealpha" "0.8"
-"alpha" "0.25"
 "sky" "dragonvale"
 "_sunlight_penumbra" "8"
 "_lightmap_scale" "8"
 "_sunlight2" "20"
 "_phong" "1"
-"light" "66"
+"light" "33"
+"_bounce" "1"
+"_minlight_dirt" "1"
 // brush 0
 {
 ( -1216 65543 65535 ) ( -1216 -65527 65535 ) ( -1216 65543 -65535 ) skyik1 [ 0 1 0 -8 ] [ 0 0 -1 0 ] 0 1 1

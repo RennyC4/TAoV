@@ -12,11 +12,13 @@
 "_dirt" "1"
 "_dirtdepth" "128"
 "_dirtgain" "1"
-"_minlight_dirt" "-1"
+"_minlight_dirt" "1"
 "_dirtmode" "0"
 "_dirtscale" "1"
-"_lightmap_scale" "4"
+"_lightmap_scale" "8"
 "_phong" "1"
+"_bounce" "1"
+"light" "33"
 // brush 0
 {
 ( 0 64 64 ) ( 0 64 -64 ) ( -96 160 64 ) wizmet1_2 [ 0 1 0 0 ] [ 0 0 -1 0 ] 0 1 1

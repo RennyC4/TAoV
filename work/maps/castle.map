@@ -3,7 +3,6 @@
 // entity 0
 {
 "classname" "worldspawn"
-"mapversion" "220"
 "_tb_mod" "data"
 "wad" "C:/Games/TAoV/work/wads/alice.wad;C:/Games/TAoV/work/wads/apoc.wad;C:/Games/TAoV/work/wads/artworks.wad;C:/Games/TAoV/work/wads/chicosruin.wad;C:/Games/TAoV/work/wads/hexen2.wad;C:/Games/TAoV/work/wads/htic2.wad;C:/Games/TAoV/work/wads/kdmtex.wad;C:/Games/TAoV/work/wads/NATURE.wad;C:/Games/TAoV/work/wads/RuneResized.wad;C:/Games/TAoV/work/wads/mapcols.wad;C:/Games/TAoV/work/wads/fence_tex.wad;C:/Games/TAoV/work/wads/taov.wad"
 "wateralpha" "0.5"
@@ -20,6 +19,7 @@
 "light" "33"
 "_minlight_dirt" "1"
 "_phong" "1"
+"_bounce" "1"
 // brush 0
 {
 ( 144 8 0 ) ( 144 -88 0 ) ( 144 -88 -64 ) wbrick1_3 [ 0 1 0 0 ] [ 0 0 -1 0 ] 0 1 1

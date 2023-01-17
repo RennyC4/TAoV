@@ -4,7 +4,7 @@
 {
 "classname" "worldspawn"
 "sounds" "1"
-"light" "15"
+"light" "33"
 "message" "Wild Lands"
 "_sunlight" "90"
 "_sun_mangle" "35 -70"
@@ -23,6 +23,7 @@
 "_lightmap_scale" "8"
 "_sky" "sunset"
 "_phong" "1"
+"_bounce" "1"
 // brush 0
 {
 ( 3632 -432 -32 ) ( 3632 -464 -32 ) ( 3632 -464 -256 ) clip [ 0 1 0 0 ] [ 0 0 -1 0 ] 0 1 1
