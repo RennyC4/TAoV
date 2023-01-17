@@ -123,6 +123,11 @@ void() fx_think =
 		self.alpha = self.alpha - 0.03;
 		self.colormod = '1 1 1' * self.alpha; // Allow transparency without additive
 		self.scale = self.scale + 0.05;
+		if (self.alpha < 0.1)
+		{
+			remove(self);
+			return;
+		}
 		frameskip(0.01);
 	}
 };

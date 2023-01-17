@@ -476,13 +476,31 @@
 }
 // entity 19
 {
-"classname" "monster_archer"
-"origin" "-320 64 96"
-"awareness" "2"
+"classname" "item_relic"
+"origin" "-212 -92 84"
+"cnt" "7"
 }
 // entity 20
 {
-"classname" "item_relic"
-"origin" "-36 4 76"
-"cnt" "7"
+"classname" "monster_zombie"
+"origin" "-472 16 80"
+"awareness" "4"
+}
+// entity 21
+{
+"classname" "monster_zombie"
+"origin" "-448 16 80"
+"awareness" "4"
+}
+// entity 22
+{
+"classname" "monster_zombie"
+"origin" "-432 16 80"
+"awareness" "4"
+}
+// entity 23
+{
+"classname" "monster_zombie"
+"origin" "-408 16 80"
+"awareness" "4"
 }
