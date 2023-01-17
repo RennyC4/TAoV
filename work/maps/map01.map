@@ -2,7 +2,7 @@
 // Format: Valve
 // entity 0
 {
-"_sunlight" "0"
+"_sunlight" "1"
 "_sun_mangle" "90 -80 0"
 "message" "Wilderness"
 "wad" "C:/Games/TAoV/work/wads/taov.wad;C:/Games/TAoV/work/wads/mapcols.wad;C:/Games/TAoV/work/wads/alice.wad"
@@ -19,6 +19,8 @@
 "_sky" "bluecloud_"
 "_skyaxis" "1 1 1"
 "_skyrotate" "1"
+"_bounce" "1"
+"light" "33"
 // brush 0
 {
 ( -3200 8192 8192 ) ( -3200 -8192 8192 ) ( -3200 8192 -8192 ) skyik1 [ 0 -1 0 0 ] [ 0 0 1 0 ] 0 1 1
