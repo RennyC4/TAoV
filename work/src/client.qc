@@ -1187,6 +1187,7 @@ void() PlayerPostThink =
 					self.wallrun = FALSE;
 					self.ledgegrab_finished = time;
 					self.attack_finished = time;
+					self.char.tired_finished = time;
 					self.char.block_finished = time; // remove any left over block timers
 
 					self.inwater_finished = time + 0.6;
@@ -1254,6 +1255,7 @@ void() PlayerPostThink =
 			player_think(); // player.qc
 		
 		// For debugging status effects
+		//self.char.tired_finished = time + 3;
 		//self.status_poison_finished = time + 3;
 		//self.status_blind_finished = time + 3;
 		

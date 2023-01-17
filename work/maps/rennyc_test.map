@@ -474,3 +474,15 @@
 ( -192 -208 64 ) ( -192 -144 64 ) ( -192 -144 48 ) trigger 0 0 0 1 1
 }
 }
+// entity 19
+{
+"classname" "monster_zombie"
+"origin" "-320 64 96"
+"awareness" "2"
+}
+// entity 20
+{
+"classname" "item_relic"
+"origin" "-36 4 76"
+"cnt" "7"
+}

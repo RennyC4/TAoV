@@ -249,7 +249,7 @@ void() CheckImpulseButtons =
 	if (self.button3)
 	{
 		// Perfect Block
-		if (relics & IT_RELIC8 && self.char.pain_finished < time)
+		if (relics & IT_RELIC8 && self.char.pain_finished < time && self.char.tired_finished < time)
 		{
 			if (self.char.perfectblock_cooldown < time)
 				self.char.perfectblock = time + 0.135; // Perfect Guard success window
@@ -358,7 +358,7 @@ void() CheckImpulseButtons =
 	}
 	else
 	{
-		if (self.attack_finished < time && self.FL_BLKPRESSED && self.char.dodge_finished < time && !self.char.flypain && !self.char.lowceil && !self.char.ledgegrab && !self.char.swimming)
+		if (self.attack_finished < time && self.FL_BLKPRESSED && self.char.dodge_finished < time && !self.char.flypain && !self.char.lowceil && !self.char.ledgegrab && !self.char.swimming && self.char.tired_finished < time)
 		{
 			self.char.block_finished = time - 1; // Fixes blocking while in player hit frames
 			sound (self, CHAN_BODY, "player/motion1.wav", 1, ATTN_NORM);
@@ -378,7 +378,6 @@ void() CheckImpulseButtons =
 
 	if (cvar("developer") == 0)
 			return;
-
 	if (self.impulse == 6 && self.level < 99)
 	{
 		local entity coself;

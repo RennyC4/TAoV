@@ -723,7 +723,7 @@ void() PlayerWaterPhysics =
 
 	if (self.button2)
 	{
-		if (!self.ledgegrab && self.inwater_finished < time && self.char.inwater_pain < 1 && !self.char.flypain) // Player actively swimming up
+		if (!self.ledgegrab && self.inwater_finished < time && self.char.inwater_pain < 1 && !self.char.flypain && self.char.tired_finished < time) // Player actively swimming up
 		{
 			if (self.char.velocity_z < 100)
 				self.char.velocity_z = self.char.velocity_z + 7 * (frametime * 100);
