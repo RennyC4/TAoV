@@ -79,12 +79,12 @@ void()	baron_block1	=[	$draw5,	baron_block1	]
 		self.angles_y = 180;
 
 	// Needs Logic to break out his block without spamming messages
-	if (self.enemy.onground == TRUE && (self.enemy.owner.attack_finished < time || self.enemy.tired_finished > time))
+	if (self.enemy.onground && (self.enemy.owner.attack_finished < time || self.enemy.tired_finished > time))
 	{
-		if (random() < 0.25)
+		if (random() < 0.33)
 		{
 			self.think = baron_jump1;
-			frameskip(0.1);
+			self.nextthink = time;
 			return;
 		}
 		else if (random() < 0.50)
@@ -154,15 +154,9 @@ void() baron_sight5 	=[	$draw5,	baron_sight5  	]
 	local float r;
 	r = random();
 	if (r < 0.5)
-	{
 		baron_run1();
-		return;
-	}
 	else
-	{
 		baron_point1();
-		return;
-	}	
 };
 
 void() baron_hidesword1 	=[	$draw5,	baron_hidesword2	] {monster_removeslide();};
@@ -192,10 +186,10 @@ void() baron_swing4 	=[	$swing4,	baron_swing5	] {BlockCancel();sound (self, CHAN
 void() baron_swing5 	=[	$swing5,	baron_swing6	] {BlockCancel();FireMelee(14,16,3,43,5,0,0,FALSE,0,0,0);frameskip(0.08);};
 void() baron_swing6 	=[	$swing6,	baron_run1  	] {BlockCancel();FireMelee(14,16,3,43,5,0,0,FALSE,0,0,0);frameskip(0.08);};
 
-void() baron_smash1 	=[	$smack1,	baron_smash2	] {frameskip(0.05);monster_removeslide();};
-void() baron_smash2 	=[	$smack2,	baron_smash3	] {frameskip(0.05);monster_removeslide();};
-void() baron_smash3 	=[	$smack3,	baron_smash4	] {frameskip(0.05);monster_removeslide();};
-void() baron_smash4 	=[	$smack4,	baron_smash5	] {frameskip(0.05);monster_removeslide();};
+void() baron_smash1 	=[	$smack1,	baron_smash2	] {frameskip(0.05);monster_removeslide();BlockCancel();};
+void() baron_smash2 	=[	$smack2,	baron_smash3	] {frameskip(0.05);monster_removeslide();BlockCancel();};
+void() baron_smash3 	=[	$smack3,	baron_smash4	] {frameskip(0.05);monster_removeslide();BlockCancel();};
+void() baron_smash4 	=[	$smack4,	baron_smash5	] {frameskip(0.05);monster_removeslide();BlockCancel();};
 void() baron_smash5 	=[	$smack5,	baron_smash6	] {frameskip(0.05);monster_removeslide();};
 void() baron_smash6 	=[	$smack6,	baron_smash7	] {frameskip(0.15);monster_removeslide();};
 void() baron_smash7 	=[	$smack7,	baron_smash8	] {frameskip(0.05);monster_removeslide();};
@@ -231,7 +225,7 @@ void() baron_smash8 	=[	$smack8,	baron_smash9	]
 		head = head.chain;
 	}
 	sound (self, CHAN_WEAPON, "baron/smash.wav", 1, ATTN_NORM);
-	frameskip(1);
+	frameskip(0.8);
 };
 void() baron_smash9 	=[	$smack9,	baron_smash10	] {frameskip(0.05);monster_removeslide();};
 void() baron_smash10 	=[	$smack10,	baron_smash11	] {frameskip(0.05);monster_removeslide();};
@@ -397,11 +391,10 @@ void() monster_baron =
 	if (!self.ai_blockfreq) // frequency on how much the enemy blocks
 	{
 		if (difficulty < 2)
-			self.ai_blockfreq = 0.3; // 30% skill 1
+			self.ai_blockfreq = 0.4; // 40% skill 1
 		else
-			self.ai_blockfreq = 0.5; // 50% skill 2
+			self.ai_blockfreq = 0.6; // 60% skill 2
 	}
-
-	//spawn_shadow();
 	enemy_start();
+	//spawn_shadow();
 };
