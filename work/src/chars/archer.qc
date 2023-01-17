@@ -90,14 +90,14 @@ void() ArcherArrowThink =
 				}
 				else // Regular block
 				{
-					// spawn a block sprite
-					effect = spawn();
+					effect = spawn(); // spawn block sprite
 					setorigin(effect, head.origin);
 					setmodel(effect, "progs/block.spr");
+					effect.classname = "blockfx";
 					effect.angles_y = -90;
 					effect.angles_z = random()*360;
 					effect.effects = EF_NODEPTHTEST;
-					effect.movetype = MOVETYPE_NOCLIP;
+					effect.movetype = MOVETYPE_NONE;
 					effect.think = fx_think;
 					effect.nextthink = time;
 					effect.solid = SOLID_NOT;
@@ -108,8 +108,8 @@ void() ArcherArrowThink =
 					{
 						head.purge_cooldown = time;
 						head.effects = EF_MUZZLEFLASH; // create light on melee impact
-						head.think = player_block;
-						head.nextthink = time;
+						//head.think = player_block;
+						//head.nextthink = time;
 					}
 					self.avelocity = '500 1000 0';
 					self.movetype = MOVETYPE_BOUNCE;
@@ -123,7 +123,6 @@ void() ArcherArrowThink =
 						head.enemy = self.owner; // needed for counter attack to face the proper direction
 						head.counter_finished = time + 0.5;
 					}
-					return;
 				}
 			}
 			else // Perfect Block

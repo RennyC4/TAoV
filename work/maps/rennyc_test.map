@@ -476,7 +476,7 @@
 }
 // entity 19
 {
-"classname" "monster_zombie"
+"classname" "monster_archer"
 "origin" "-320 64 96"
 "awareness" "2"
 }
