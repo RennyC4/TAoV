@@ -485,6 +485,12 @@ void(float screenwidth, float screenheight) DrawComboDamageCounter =
 	local float dmg = getstatf(STAT_CURRENT_DAMAGE);
 	local float totaldmg = getstatf(STAT_TOTAL_DAMAGE);
 
+	// Cap it
+	if (dmg > 999)
+		dmg = 999;
+	if (totaldmg > 999)
+		totaldmg = 999;
+
 	// Combo counter position
 	local vector pos = [(screenwidth - stringwidth("", TRUE, '18 18 0'))/1.5, (screenheight - 18)/2.25];
 	local vector pos2 = [(screenwidth - stringwidth("", TRUE, '122 40.5 0'))/1.30, (screenheight - 18)/2.5];
