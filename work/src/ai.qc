@@ -632,6 +632,8 @@ void() BlockCancel =
 
 	monster_removeslide();
 
+	if (self.classname == "baron" && self.lip)
+		return;
 	if (self.aircombo_finished > time)
 		return;
 
@@ -639,7 +641,7 @@ void() BlockCancel =
 	
 	if (self.th_block && !self.enemy.swimming && self.berserk_finished < time)
 	{
-		if (!self.flags & FL_ONGROUND && self.enemy.onground == FALSE && difficulty > 0) // monster in-air blocking
+		if (!self.flags & FL_ONGROUND && !self.enemy.onground && difficulty > 0) // monster in-air blocking
 		{
 			if ((difficulty < 2 && random() < self.ai_blockfreq) || difficulty > 1)
 			{

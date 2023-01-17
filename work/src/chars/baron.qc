@@ -96,7 +96,7 @@ void()	baron_block1	=[	$draw5,	baron_block1	]
 	self.block_finished = time + 0.15;
 };
 
-void() baron_idle1	=[	$idle1,	baron_idle2		] {ai_stand();};
+void() baron_idle1	=[	$idle1,	baron_idle2		] {ai_stand();self.lip = FALSE;};
 void() baron_idle2	=[	$idle2,	baron_idle3		] {ai_stand();};
 void() baron_idle3	=[	$idle3,	baron_idle4		] {ai_stand();};
 void() baron_idle4	=[	$idle4,	baron_idle5		] {ai_stand();};
@@ -117,7 +117,7 @@ void() baron_idle18	=[	$idle18,	baron_idle19	] {ai_stand();};
 void() baron_idle19	=[	$idle19,	baron_idle20	] {ai_stand();};
 void() baron_idle20	=[	$idle20,	baron_idle1		] {ai_stand();};
 
-void() baron_run1 	=[	$run1,	baron_run2	] {ai_walk(20);self.takedamage = DAMAGE_AIM;};
+void() baron_run1 	=[	$run1,	baron_run2	] {ai_walk(20);self.takedamage = DAMAGE_AIM;self.lip = FALSE;};
 void() baron_run2 	=[	$run2,	baron_run3	] {ai_walk(20);};
 void() baron_run3 	=[	$run3,	baron_run4	] {ai_walk(20);};
 void() baron_run4 	=[	$run4,	baron_run5	] {ai_walk(20);};
@@ -134,7 +134,7 @@ void() baron_point1 	=[	$point1,	baron_point2	]
 
 	sound (self, CHAN_VOICE, "baron/sight.wav", 1, ATTN_NORM);
 };
-void() baron_point2 	=[	$point2,	baron_point3	] {monster_removeslide();};
+void() baron_point2 	=[	$point2,	baron_point3	] {monster_removeslide();self.lip = FALSE;};
 void() baron_point3 	=[	$point3,	baron_point4	] {monster_removeslide();};
 void() baron_point4 	=[	$point4,	baron_point5	] {monster_removeslide();};
 void() baron_point5 	=[	$point5,	baron_point6	] {monster_removeslide();};
@@ -145,7 +145,7 @@ void() baron_point9 	=[	$point9,	baron_point10	] {monster_removeslide();};
 void() baron_point10 	=[	$point10,	baron_point11	] {monster_removeslide();};
 void() baron_point11 	=[	$point11,	baron_run1  	] {monster_removeslide();};
 
-void() baron_sight1 	=[	$draw1,	baron_sight2	] {monster_removeslide();sound (self, CHAN_WEAPON, "baron/swordraw.wav", 1, ATTN_NORM);};
+void() baron_sight1 	=[	$draw1,	baron_sight2	] {monster_removeslide();sound (self, CHAN_WEAPON, "baron/swordraw.wav", 1, ATTN_NORM);self.lip = FALSE;};
 void() baron_sight2 	=[	$draw2,	baron_sight3	] {monster_removeslide();};
 void() baron_sight3 	=[	$draw3,	baron_sight4	] {monster_removeslide();};
 void() baron_sight4 	=[	$draw4,	baron_sight5	] {monster_removeslide();};
@@ -159,7 +159,7 @@ void() baron_sight5 	=[	$draw5,	baron_sight5  	]
 		baron_point1();
 };
 
-void() baron_hidesword1 	=[	$draw5,	baron_hidesword2	] {monster_removeslide();};
+void() baron_hidesword1 	=[	$draw5,	baron_hidesword2	] {monster_removeslide();self.lip = FALSE;};
 void() baron_hidesword2 	=[	$draw4,	baron_hidesword3	] {monster_removeslide();};
 void() baron_hidesword3 	=[	$draw3,	baron_hidesword4	] {monster_removeslide();};
 void() baron_hidesword4 	=[	$draw2,	baron_hidesword4	] 
@@ -176,6 +176,7 @@ void() baron_hidesword4 	=[	$draw2,	baron_hidesword4	]
 
 void() baron_swing1 	=[	$swing1,	baron_swing2	] 
 {
+	self.lip = TRUE; // Cannot be hit out of attack
 	BlockCancel();
 	local float b = random()*3 * 0.1;  // stagger first frame
 	frameskip(0.08 + b);
@@ -186,7 +187,13 @@ void() baron_swing4 	=[	$swing4,	baron_swing5	] {BlockCancel();sound (self, CHAN
 void() baron_swing5 	=[	$swing5,	baron_swing6	] {BlockCancel();FireMelee(14,16,3,43,5,0,0,FALSE,0,0,0);frameskip(0.08);};
 void() baron_swing6 	=[	$swing6,	baron_run1  	] {BlockCancel();FireMelee(14,16,3,43,5,0,0,FALSE,0,0,0);frameskip(0.08);};
 
-void() baron_smash1 	=[	$smack1,	baron_smash2	] {frameskip(0.05);monster_removeslide();BlockCancel();};
+void() baron_smash1 	=[	$smack1,	baron_smash2	] 
+{
+	self.lip = TRUE; // Cannot be hit out of attack
+	monster_removeslide();
+	BlockCancel();
+	frameskip(0.05);
+};
 void() baron_smash2 	=[	$smack2,	baron_smash3	] {frameskip(0.05);monster_removeslide();BlockCancel();};
 void() baron_smash3 	=[	$smack3,	baron_smash4	] {frameskip(0.05);monster_removeslide();BlockCancel();};
 void() baron_smash4 	=[	$smack4,	baron_smash5	] {frameskip(0.05);monster_removeslide();BlockCancel();};
@@ -234,6 +241,7 @@ void() baron_smash12 	=[	$smack12,	baron_run1  	] {frameskip(0.05);monster_remov
 
 void() baron_melee =
 {
+	self.lip = TRUE;
 	if (random() < 0.66)
 		baron_swing1();
 	else
@@ -251,11 +259,14 @@ void() baron_painb4 	=[	$painb4,	baron_run1		] {BlockCancel();monster_removeslid
 
 void() baron_pain =
 {
-	if (random() < 0.5)
-		baron_pain1();
-	else
-		baron_painb1();
-	sound (self, CHAN_VOICE, "baron/pain.wav", 1, ATTN_NORM);
+	if (!self.lip)
+	{
+		if (random() < 0.5)
+			baron_pain1();
+		else
+			baron_painb1();
+		sound (self, CHAN_VOICE, "baron/pain.wav", 1, ATTN_NORM);
+	}
 	monster_pain(self.enemy);
 };
 
@@ -275,6 +286,7 @@ void() baron_dieb6 	=[	$dieb6,	baron_dieb6	] {monster_death();};
 
 void() baron_die =
 {
+	self.lip = FALSE;
 	if (self.gaveexp != TRUE) // only give experience on first instance of death
 	{			  // otherwise player can keep knocking corpse for EXP
 		GiveExperience(self.experience);
