@@ -12453,8 +12453,8 @@
 {
 "classname" "misc_model"
 "origin" "3120 -352 -0"
-"mdl" "progs/vosword.mdl"
 "_phong" "1"
+"model" "progs/vosword.mdl"
 }
 // entity 153
 {
