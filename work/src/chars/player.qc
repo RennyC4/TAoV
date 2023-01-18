@@ -186,8 +186,45 @@ void(entity own) spawn_helmet =
 	helm.nextthink = time;
 };
 
+// Spawn pain rubble
+void() orb_particle_think =
+{
+	if (self.attack_finished < time)
+	{
+		particle(self.origin, '0 0 0', 192, 1);
+		remove(self);
+		return;
+	}
+	particle(self.origin, '0 0 0', 192, 3);	
+	frameskip(0.01);
+};
+
+void() orb_particle =
+{
+	local entity spark;
+
+	spark = spawn ();
+	spark.angles_y = random() * 360;
+	makevectors (spark.angles);
+	spark.velocity = v_forward * (50 + random()*100);
+	spark.velocity_z = ceil(350 + random()*150);
+	spark.owner = self;
+	spark.movetype = MOVETYPE_BOUNCE;
+	spark.solid = SOLID_NOT;
+	spark.classname = "spark";
+	setmodel (spark, string_null);
+	setsize (spark, '0 0 0', '0 0 0');
+	makevectors (self.angles);
+	setorigin (spark, self.origin);
+	spark.attack_finished = time + (3 + random()*3);
+
+	spark.think = orb_particle_think;
+	spark.nextthink = time;
+};
+
 void() OrbTransportThink =
 {
+	local float i;
 	local vector v = self.angles * -1;
 	self.scale = 1.5 + sin(time*32)*0.1; 
 	self.angles_y = self.angles_y + 3;
@@ -216,6 +253,18 @@ void() OrbTransportThink =
 		WriteCoord (MSG_BROADCAST, self.origin_x);
 		WriteCoord (MSG_BROADCAST, self.origin_y);
 		WriteCoord (MSG_BROADCAST, self.origin_z);
+
+		// particle spawn
+		if (!coop)
+		{
+			for (i = 0; i < 24; i = i+1)
+				orb_particle();
+		}
+		else // mp optimization
+		{
+			for (i = 0; i < 4; i = i+1)
+				orb_particle();
+		}
 
 		stuffcmd(self.owner, "wf\n");
 		sound (self, CHAN_BODY, string_null, 1, ATTN_NONE); // clear sound channel
