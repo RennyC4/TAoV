@@ -1066,10 +1066,9 @@ void(float damg, float dist, float knokback, float rsize, float snd, float flsh,
 						effect.angles_z = random()*360;
 						effect.effects = EF_NODEPTHTEST;
 						effect.movetype = MOVETYPE_NONE;
-						effect.think = fx_think;
-						effect.nextthink = time;
 						effect.solid = SOLID_NOT;
-						
+						effect.owner = head;
+
 						// Guard break vfx
 						if (head.perfectblock < time && head.perfectguard_buff < time && head.classname == "player" && !deathmatch)
 							effect.knockback = knokback; // For guard breaking
@@ -1078,21 +1077,23 @@ void(float damg, float dist, float knokback, float rsize, float snd, float flsh,
 						{
 							if (head.blockcount == 1)
 							{
-								effect.colormod = '4 1 1';
 								effect.scale = 1.25;
+								effect.frame = 1;
 							}
 							if (head.blockcount == 2)
 							{
-								effect.colormod = '6 1 1';
+								effect.frame = 2;
 								effect.scale = 1.5;
 							}
 							if (head.blockcount == 3 || effect.knockback == 2 || effect.knockback == 3 || effect.knockback == 5)
 							{
 								sound (effect, CHAN_AUTO, "player/gardcrsh.wav", 1, ATTN_NORM);
-								effect.colormod = '8 1 1';
+								effect.frame = 3;
 								effect.scale = 2;
 							}
 						}
+						effect.think = fx_think;
+						effect.nextthink = time + 0.1;
 					}
 					head.knockback = 0; // remove knockback on block
 

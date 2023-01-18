@@ -257,7 +257,7 @@ void() sgk_magic2	=[	69,	sgk_magic2	]
 			effect.angles_x = 90;
 			effect.angles_z = random()*360;
 			effect.colormod = '255 0 0';
-			effect.effects = EF_NODEPTHTEST;
+			effect.effects = EF_NODEPTHTEST | EF_ADDITIVE;
 			effect.movetype = MOVETYPE_NOCLIP;
 			effect.classname = "firebuster";
 			effect.health = 0; // can't be purged
@@ -268,7 +268,7 @@ void() sgk_magic2	=[	69,	sgk_magic2	]
 			setsize (effect, '0 0 0', '0 0 0');
 
 			effect.think = fire_buster_think;
-			effect.nextthink = time;
+			effect.nextthink = time + 0.1;
 		}
 		self.combo_finished = time + 0.75; // set lower to have these spawn faster (difficulty)
 	}

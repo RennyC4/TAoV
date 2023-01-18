@@ -99,8 +99,9 @@ void() ArcherArrowThink =
 					effect.effects = EF_NODEPTHTEST;
 					effect.movetype = MOVETYPE_NONE;
 					effect.think = fx_think;
-					effect.nextthink = time;
+					effect.nextthink = time + 0.1;
 					effect.solid = SOLID_NOT;
+					effect.owner = head;
 					sound (head, CHAN_BODY, "player/block.wav", 1, ATTN_NORM);
 
 					// block

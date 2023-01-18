@@ -548,7 +548,7 @@ void(entity plyr) PerfectGuard	=
 	// spawn a block sprite
 	effect = spawn();
 	setorigin(effect, plyr.origin);
-	setmodel(effect, "progs/block.spr");
+	setmodel(effect, "progs/pgblock.spr");
 	effect.angles_y = -90;
 	effect.angles_z = random()*360;
 	effect.avelocity = '0 0 1500';
@@ -5802,9 +5802,10 @@ void() player_jumpatk2	=[	$jumpatk2,	player_jumpatk2	]
 				effect.angles_z = random()*360;
 				effect.effects = EF_NODEPTHTEST;
 				effect.movetype = MOVETYPE_NOCLIP;
-				effect.think = fx_think;
-				effect.nextthink = time;
 				effect.solid = SOLID_NOT;
+				effect.owner = head;
+				effect.think = fx_think;
+				effect.nextthink = time + 0.1;
 
 				// block
 				if (head.classname == "player")

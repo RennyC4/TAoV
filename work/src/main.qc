@@ -185,6 +185,7 @@ void() worldspawn =
 		precache_model ("progs/hit2.spr");
 		precache_model ("progs/star.spr");
 		precache_model ("progs/block.spr");
+		precache_model ("progs/pgblock.spr");
 		precache_model ("progs/spells.spr");
 		precache_model ("progs/lsprite.spr");
 		precache_model ("progs/fire.spr");

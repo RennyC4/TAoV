@@ -449,10 +449,11 @@ void() boulder_thinker =
 					effect.angles_z = random()*360;
 					effect.effects = EF_NODEPTHTEST;
 					effect.movetype = MOVETYPE_NONE;
-					effect.think = fx_think;
-					effect.nextthink = time;
 					effect.solid = SOLID_NOT;
 					effect.scale = 2;
+					effect.owner = y;
+					effect.think = fx_think;
+					effect.nextthink = time + 0.1;
 
 					sound (self, CHAN_WEAPON, "player/block.wav", 1, ATTN_NORM);				
 				}

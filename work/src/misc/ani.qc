@@ -83,21 +83,13 @@ void() effect_think =
 
 void() perfectguard_fx_think =
 {
-	if (self.pain_finished < time)
+	if (self.cnt < 50)
+		self.cnt = self.cnt + 1;
+	else
 	{
-		if (self.frame < 3)
-			self.frame = self.frame + 1;
-		else
-		{
-			remove(self);
-			return;
-		}
-		if (self.frame == 2)
-			self.pain_finished = time + 0.4;
-		else
-			self.pain_finished = time + 0.05;
+		remove(self);
+		return;
 	}
-	self.alpha = self.alpha - 0.02;
 	self.scale = self.scale + 0.1;
 	frameskip(0.01);
 };
@@ -107,15 +99,24 @@ void() fx_think =
 {
 	if (self.classname == "blockfx")
 	{
-		self.angles_z = self.angles_z + 20; // spin
-		if (self.frame < 3)
-			self.frame = self.frame + 1;
+		if (!self.scale)
+			self.scale = 1;
+		if (!self.lip) // Sprite sprite randomly
+			self.lip = floor(1 + random()*2);
 
+		if (self.lip == 1)
+			self.angles_z = self.angles_z + 40; // spin speed
+		else
+			self.angles_z = self.angles_z - 40; // spin speed
+
+		if (self.cnt < 3)
+			self.cnt = self.cnt + 1;
 		else
 		{
 			remove(self);
 			return;
 		}
+		self.scale = self.scale + 0.1;
 		frameskip(0.07);
 	}
 	else // hit animation

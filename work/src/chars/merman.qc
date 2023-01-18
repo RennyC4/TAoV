@@ -193,9 +193,10 @@ void() MermanSpitThink =
 					effect.angles_z = random()*360;
 					effect.effects = EF_NODEPTHTEST;
 					effect.movetype = MOVETYPE_NONE;
-					effect.think = fx_think;
-					effect.nextthink = time;
 					effect.solid = SOLID_NOT;
+					effect.owner = head;
+					effect.think = fx_think;
+					effect.nextthink = time + 0.1;
 					sound (head, CHAN_BODY, "player/block.wav", 1, ATTN_NORM);
 
 					// block
