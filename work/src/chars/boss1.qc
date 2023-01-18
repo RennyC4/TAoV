@@ -252,7 +252,7 @@ void() sgk_magic2	=[	69,	sgk_magic2	]
 		{
 			effect = spawn();
 			setorigin(effect, self.enemy.origin);
-			setmodel(effect, "progs/block.spr");
+			setmodel(effect, "progs/target.spr");
 			effect.angles_y = -90;
 			effect.angles_x = 90;
 			effect.angles_z = random()*360;
@@ -268,7 +268,7 @@ void() sgk_magic2	=[	69,	sgk_magic2	]
 			setsize (effect, '0 0 0', '0 0 0');
 
 			effect.think = fire_buster_think;
-			effect.nextthink = time + 0.1;
+			effect.nextthink = time;
 		}
 		self.combo_finished = time + 0.75; // set lower to have these spawn faster (difficulty)
 	}
@@ -725,6 +725,7 @@ void() monster_boss1 =
 	precache_model ("progs/glasshrd.mdl");
 	precache_model ("progs/s_knight.mdl");
 	precache_model ("progs/firecolm.mdl");
+	precache_model ("progs/target.spr");
 	precache_sound ("knight/sword1.wav");
 	precache_sound ("sgk/pain.wav");
 	precache_sound ("misc/explode.wav");
