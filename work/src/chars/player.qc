@@ -211,6 +211,7 @@ void() orb_particle =
 	spark.owner = self;
 	spark.movetype = MOVETYPE_BOUNCE;
 	spark.solid = SOLID_NOT;
+	spark.hitcontentsmaski = CONTENTBITS_FLUID | CONTENTBIT_SOLID; // Stop splash sound
 	spark.classname = "spark";
 	setmodel (spark, string_null);
 	setsize (spark, '0 0 0', '0 0 0');
