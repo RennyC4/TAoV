@@ -89,10 +89,6 @@ void() boss_deaththink =
 	self.nextthink = time + 0.3;
 };
 
-//
-//	Boss
-//
-
 void() boss_face =
 {
 	local vector view;
@@ -120,6 +116,7 @@ void() boss_idle1 = [0, boss_idle1]
 	local float r;
 	local float rand_fb;
 
+	self.mode = 0;
 	if (self.enemy)
 	{
 		boss_face();
@@ -367,21 +364,18 @@ void() boss_fbeam6 = [$shockb6, boss_fbeam1] {frameskip(0.03);};
 
 void() boss_pain =
 {
+	self.lip = 16 + ceil(random()*27);
 	self.colormod = '3 1 1';
 	self.cnt2 = self.cnt2 + 1;
-	if (self.attack_finished > time)
+
+	sound (self, CHAN_VOICE, "boss1/pain.wav", 1, ATTN_NORM);
+	if (self.cnt2 > self.lip && !self.mode) // Get pissed, unleash fire beam
 	{
-		sound (self, CHAN_VOICE, "boss1/pain.wav", 1, ATTN_NORM);
-		self.mode = 0;
-		self.velocity = '0 0 0';
-	}
-	if ((self.enemy.owner.combo > 9 || self.cnt2 > 16) && self.mode != 1) // Get pissed, unleash fire beam
-	{
-		self.mode = 1;
 		self.cnt2 = 0;
+		self.mode = 1;
 		self.attack_finished = time;
-		
-		if (random() < 0.5)
+
+		if (random() < 0.6)
 		{
 			local entity effect;
 
@@ -403,10 +397,12 @@ void() boss_pain =
 		}
 		else
 		{
+			self.cnt2 = 0;
+			self.mode = 0;
 			boss_attack1();
 		}
 	}
-	// Help Vigil not fall off me
+	// Help Vigil not fall off me when struck
 	self.enemy.velocity_x = self.enemy.velocity_y = 0;
 };
 
@@ -567,14 +563,9 @@ void() boss_rise1	=[	$rise1, boss_rise2 ]
 	boss_face();
 
 	// spawn his boulder spawners
-	spawn_boulder_spawner();
-	spawn_boulder_spawner();
-	spawn_boulder_spawner();
-	spawn_boulder_spawner();
-	spawn_boulder_spawner();
-	spawn_boulder_spawner();
-	spawn_boulder_spawner();
-	spawn_boulder_spawner();
+	local float i;
+	for (i = 0; i < 8; i = i+1)
+		spawn_boulder_spawner();
 };
 void() boss_rise2	=[	$rise2, boss_rise3 ] {boss_face();};
 void() boss_rise3	=[	$rise3, boss_rise4 ] {boss_face();};
