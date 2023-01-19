@@ -3,6 +3,6 @@ progs/star.spr_0
 	sort 16
     {
 		map progs/star.spr_0
-		blendFunc GL_SRC_ALPHA GL_ONE
+		blendFunc blend
     }
 }
