@@ -1666,7 +1666,8 @@ void() candle2 =
 	precache_model ("progs/candle2.mdl");
 	setmodel (self, "progs/candle2.mdl");
 	setsize (self, '-3 -3 -10', '3 3 11');
-	droptofloor();
+	if (!self.spawnflags)
+		droptofloor();
 	self.frame = ceil(random()*12 - 1);
 	self.think = candle2_think;
 	self.nextthink = time;
