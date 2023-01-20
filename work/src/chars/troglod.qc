@@ -183,13 +183,13 @@ void() troglod_icefield7	=[	$castb7,	troglod_icefield8	] {};
 void() troglod_icefield8	=[	$castb3,	troglod_icefield9	] {};
 
 // Shoot ice field downward!
-void() troglod_icefield9	=[	$casta9,	troglod_icefield10	] {self.angles_x = -20;};
-void() troglod_icefield10	=[	$casta9,	troglod_icefield11	] {self.angles_x = -40;};
-void() troglod_icefield11	=[	$casta10,	troglod_icefield12	] {self.angles_x = -60;};
-void() troglod_icefield12	=[	$casta11,	troglod_icefield13	] {self.angles_x = -80;self.colormod = '1 1 10';IceField_Projectile();};
-void() troglod_icefield13	=[	$casta12,	troglod_icefield14	] {self.angles_x = -60;};
-void() troglod_icefield14	=[	$casta13,	troglod_icefield15	] {self.angles_x = -40;};
-void() troglod_icefield15	=[	$casta14,	troglod_icefield16	] {self.angles_x = -20;};
+void() troglod_icefield9	=[	$casta9,	troglod_icefield10	] {self.angles_x = 20;};
+void() troglod_icefield10	=[	$casta9,	troglod_icefield11	] {self.angles_x = 40;};
+void() troglod_icefield11	=[	$casta10,	troglod_icefield12	] {self.angles_x = 60;};
+void() troglod_icefield12	=[	$casta11,	troglod_icefield13	] {self.angles_x = 80;self.colormod = '1 1 10';IceField_Projectile();};
+void() troglod_icefield13	=[	$casta12,	troglod_icefield14	] {self.angles_x = 60;};
+void() troglod_icefield14	=[	$casta13,	troglod_icefield15	] {self.angles_x = 40;};
+void() troglod_icefield15	=[	$casta14,	troglod_icefield16	] {self.angles_x = 20;};
 void() troglod_icefield16	=[	$casta15,	troglod_run1	        ] {self.angles_x = 0;};
 
 void()  troglod_charge5;

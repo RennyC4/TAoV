@@ -8763,3 +8763,8 @@
 "spawnflags" "1"
 "cnt" "80"
 }
+// entity 258
+{
+"classname" "ambience_waterfall"
+"origin" "-376 120 -1208"
+}
