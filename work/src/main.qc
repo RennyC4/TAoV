@@ -543,7 +543,7 @@ void() StartFrame =
 
 	for (entity v = world; (v=nextent(v));)
 	{
-		if (!v.flags & FL_MONSTER && !v.classname == "player" && !v.classname == "guard" && !v.classname == "helmet ")
+		if (!v.flags & FL_MONSTER && !v.classname == "player" && !v.classname == "guard" && !v.classname == "helmet")
 			continue;
 
 		if (v.movetype == MOVETYPE_STEP || v.movetype == MOVETYPE_WALK) // Update waterlevel on MOVETYPE_STEP entities (credit to mankrip)
