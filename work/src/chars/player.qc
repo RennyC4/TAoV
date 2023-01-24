@@ -996,7 +996,7 @@ void(entity own) Shadows =
 		shadows.skin = 1; // shadow skin
 		shadows.alpha = 1;
 		shadows.drawonlytoclient = self; // reduce network traffic
-		shadows.effects = EF_ADDITIVE | EF_FULLBRIGHT;
+		shadows.effects = EF_ADDITIVE | EF_FULLBRIGHT | EF_NOSHADOW;
 		setmodel (shadows, "progs/plyr.mdl");
 
 		shadows.frame = shadows.owner.frame;
@@ -1027,7 +1027,7 @@ void(entity own) SoftShadows = // same as red shadows, but more transparent and 
 		shadows.skin = 0; // soft shadow skin
 		shadows.alpha = 0.5;
 		shadows.drawonlytoclient = self; // reduce network traffic
-		shadows.effects = EF_ADDITIVE | EF_FULLBRIGHT;
+		shadows.effects = EF_ADDITIVE | EF_FULLBRIGHT | EF_NOSHADOW;
 		setmodel (shadows, "progs/plyr.mdl");
 
 		shadows.frame = shadows.owner.frame;
@@ -5572,7 +5572,7 @@ void() player_chargeatk5	=[	$charge9,	player_chargeatk5	]
 	}
 	else
 	{
-		FireMelee(22,30,3,30,2,1,1,TRUE,0,0,0);
+		FireMelee(22,30,3,30,2,1,1,TRUE,0,0,1);
 		self.think = player_move;
 		self.nextthink = time + 0.35;
 	}
