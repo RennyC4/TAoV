@@ -132,6 +132,11 @@ Waterfall you can place, adjustable properties include
 */
 void() waterfall_think =
 {
+	if (self.skin == 4)
+	{
+		if (self.effects != EF_FULLBRIGHT)
+			self.effects = EF_FULLBRIGHT;
+	}
 	if (self.frame <= 24)
 		self.frame = self.frame + 1;
 	else
@@ -152,7 +157,7 @@ void() waterfall =
 	setorigin (self, self.origin);
 	self.frame = ceil(random()*25 - 1);
 	self.think = waterfall_think;
-	self.nextthink = time;
+	frameskip (0.1);
 };
 
 /*QUAKED fire (0 1 0) (-1 -1 -1) (1 1 1)
