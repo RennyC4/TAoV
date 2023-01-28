@@ -243,8 +243,11 @@ void() wraith_death12	=[	$death12,	wraith_death12		]
 
 void() WraithSwordTouch =
 {
-	if (other.solid == SOLID_BSP)
+	if (checkground(self) && !self.cnt)
+	{
 		sound (self, CHAN_BODY, "player/wallgrab.wav", 1, ATTN_NORM);
+		self.cnt = TRUE;
+	}
 };
 
 void() ThrowWraithSword =
@@ -260,6 +263,7 @@ void() ThrowWraithSword =
 	makevectors (esword.angles);
 	esword.velocity = v_forward * 100;
 	esword.velocity_z = 250;
+	esword.cnt = FALSE;
 	esword.touch = WraithSwordTouch;
 
 	if (esword.flags & FL_ONGROUND)

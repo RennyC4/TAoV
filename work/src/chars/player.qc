@@ -7719,7 +7719,7 @@ void() divingswallow_hit =
 						T_Damage (head, self, self, 8, 0);
 					
 					// Freeze timer is longer by default on swallow hit, so it's okay to overwrite other active freeze timers
-					freeze_finished = time + (6 * frametime);
+					freeze_finished = time + (5 * frametime);
 
 					if (deathmatch == FALSE)
 						self.owner.mana = self.owner.mana + 3;	
@@ -7748,7 +7748,7 @@ void() divingswallow_hit =
 					// spawn a hit sprite
 					effect = spawn();
 					setorigin(effect, head.origin + v_up*22);
-					setmodel(effect, "progs/hit.spr");
+					setmodel(effect, "progs/hit2.spr");
 					effect.alpha = 1;
 					effect.scale = 1;
 					effect.angles_z = random()*360;
@@ -7833,9 +7833,26 @@ void() player_walljumpkickslide   =[	$pain2,	player_walljumpkickslide 	]
 .float divingswallow_wallcheck_finished;
 void() player_walljumpkick1	=[	$jumpatkb1,	player_walljumpkick1	]
 {
-	if (pointcontents(self.origin) == CONTENT_WATER || pointcontents(self.origin) == CONTENT_SLIME || pointcontents(self.origin) == CONTENT_LAVA) // break out if underwater
+	//
+	// TraceBox: Check if Vigil hasn't hit any geometry
+	//
+	makevectors(self.angles);
+
+	local float test;
+	local vector source = self.origin;
+	local vector dest = self.origin + v_forward * 8;
+
+	tracebox (source, VEC_HULL_MIN, VEC_HULL_MAX, dest, 1, self);
+
+	if (trace_fraction == 1 || self.divingswallow_wallcheck_finished > time) // Hit nothing
+		test = FALSE;
+	else // break out, hit something
+		test = TRUE;
+
+	if (pointcontents(self.origin) == CONTENT_WATER || pointcontents(self.origin) == CONTENT_SLIME || pointcontents(self.origin) == CONTENT_LAVA || test) // break out conditions
 	{
-		self.think = player_move;
+		self.owner.backflip_finished = time + 0.7; // Perfect value! Player enters negative velocity by this itme...
+		self.think = player_bflip1;
 		self.nextthink = time;
 		return;
 	}
@@ -7855,7 +7872,7 @@ void() player_walljumpkick1	=[	$jumpatkb1,	player_walljumpkick1	]
 	self.owner.attack_finished = time + 0.2;
 	self.owner.shadow_time = time + 0.1;
 
-	if (self.onground == TRUE)
+	if (self.onground)
 	{
 		self.angles_x = 0;
 		player_walljumpkickslide();
@@ -8983,7 +9000,7 @@ void() player_gizuna1   =[	$izuna1,	player_gizuna1	]
 				if (!self.izuna_apex)
 				{
 					self.movetype = MOVETYPE_FLY;
-					freeze_finished = time + (3 * frametime);
+					freeze_finished = time + (2 * frametime);
 
 					self.velocity = '0 0 0';
 					self.velocity = v_forward * - 80;
@@ -9163,7 +9180,7 @@ void() player_gizuna1   =[	$izuna1,	player_gizuna1	]
 			// Clean up
 			//
 
-			freeze_finished = time + (3 * frametime);
+			freeze_finished = time + (2 * frametime);
 
 			self.izunatarg.izuna_exec_finished = time; // remove timer
 			self.izunatarg.grabbed = FALSE;

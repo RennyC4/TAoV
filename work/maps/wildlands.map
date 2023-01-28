@@ -9933,9 +9933,6 @@
 "angle" "90"
 "skin" "4"
 "scale" "5.7"
-"effects" "EF_FULLBRIGHT"
-"alpha" "0.8"
-"_phong" "1"
 }
 // entity 144
 {

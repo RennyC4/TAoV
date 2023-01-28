@@ -132,11 +132,6 @@ Waterfall you can place, adjustable properties include
 */
 void() waterfall_think =
 {
-	if (self.skin == 4)
-	{
-		if (self.effects != EF_FULLBRIGHT)
-			self.effects = EF_FULLBRIGHT;
-	}
 	if (self.frame <= 24)
 		self.frame = self.frame + 1;
 	else

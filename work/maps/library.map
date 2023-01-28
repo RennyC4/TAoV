@@ -5,7 +5,7 @@
 "classname" "worldspawn"
 "_tb_mod" "data"
 "wad" "C:/Games/TAoV/work/wads/alice.wad;C:/Games/TAoV/work/wads/apoc.wad;C:/Games/TAoV/work/wads/chicosruin.wad;C:/Games/TAoV/work/wads/kdmtex.wad;C:/Games/TAoV/work/wads/RuneResized.wad;C:/Games/TAoV/work/wads/hexen2.wad;C:/Games/TAoV/work/wads/QUAKE101.WAD;C:/Games/TAoV/work/wads/taov.wad;../wads/mapcols.wad"
-"message" "Long Library"
+"message" "Esoteric Library"
 "_bounce" "1"
 "_dirt" "1"
 "light" "33"
@@ -1913,9 +1913,9 @@
 }
 // brush 210
 {
-( 712 272 392 ) ( 736 272 392 ) ( 736 192 392 ) gbrk_sch3_20 [ 1 0 0 16 ] [ 0 -1 0 32 ] 0 1 1
 ( 712 272 392 ) ( 712 192 392 ) ( 712 192 384 ) gbrk_sch3_20 [ 0 -1.0000000000000002 0 -32 ] [ 0 0 -1.0000000000000002 70.207825 ] 0 1 0.86567026
 ( 736 256 384 ) ( 736 256 392 ) ( 864 256 392 ) gbrk_sch3_20 [ 1 0 0 120 ] [ 0 0 -1 70.207825 ] 0 1 0.86567026
+( 712 272 392 ) ( 736 272 392 ) ( 736 192 392 ) gbrk_sch3_20 [ 1 0 0 16 ] [ 0 -1 0 32 ] 0 1 1
 ( 736 256 384 ) ( 736 272 392 ) ( 712 272 392 ) gbrk_sch3_20 [ -1.0000000000000004 0 0 0 ] [ 0 -0.8944271909999162 -0.4472135954999582 88.70337 ] 0 1 1
 ( 736 192 392 ) ( 736 272 392 ) ( 736 256 384 ) gbrk_sch3_20 [ 0 1 0 32 ] [ 0 0 -1 72 ] 0 1 1
 }
