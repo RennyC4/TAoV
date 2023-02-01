@@ -54,18 +54,22 @@ void() medusa_think =
 		if (headdmg.takedamage && headdmg.classname == "player" && headdmg.health > 0 && self.combo_finished < time && headdmg.frame != 241 && !headdmg.owner.flags & FL_NOTARGET && !headdmg.flypain)
 		{
 			// spawn a hit sprite
-			effect = spawn();
-			setorigin(effect, headdmg.origin);
-			setmodel(effect, "progs/hit.spr");
-			effect.alpha = 1;
-			effect.scale = 1;
-			effect.angles_z = random()*360;
-			effect.angles_y = -90; // face camera
-			effect.movetype = MOVETYPE_NOCLIP;
-			effect.think = fx_think;
-			effect.effects = EF_NODEPTHTEST;
-			effect.nextthink = time;
-			effect.solid = SOLID_NOT;
+			if (max_hit_ents < 10)
+			{
+				effect = spawn();
+				setorigin(effect, headdmg.origin);
+				setmodel(effect, "progs/hit.spr");
+				effect.alpha = 1;
+				effect.scale = 1;
+				effect.angles_z = random()*360;
+				effect.angles_y = -90; // face camera
+				effect.movetype = MOVETYPE_NOCLIP;
+				effect.think = fx_think;
+				effect.effects = EF_NODEPTHTEST;
+				effect.nextthink = time;
+				effect.solid = SOLID_NOT;
+				max_hit_ents = max_hit_ents + 1;
+			}
 			FireMelee(13,0,1,15,5,0,TRUE,TRUE,0,0,1);
 			self.combo_finished = time + 3; // Allow re-hit after time passed
 		}

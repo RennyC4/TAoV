@@ -474,20 +474,23 @@ void() chandelier_think =
 			{
 				if (!relics & IT_RELIC12)
 				{
-					// spawn a hit sprite
-					effect = spawn();
-					setorigin(effect, head.origin);
-					setmodel(effect, "progs/hit.spr");
-					effect.alpha = 1;
-					effect.scale = 1;
-					effect.angles_z = random()*360;
-					effect.angles_y = -90; // face camera
-					effect.movetype = MOVETYPE_NOCLIP;
-					effect.think = fx_think;
-					effect.effects = EF_NODEPTHTEST;
-					effect.nextthink = time;
-					effect.solid = SOLID_NOT;
-							
+					if (max_hit_ents < 10)
+					{					
+						// spawn a hit sprite
+						effect = spawn();
+						setorigin(effect, head.origin);
+						setmodel(effect, "progs/hit.spr");
+						effect.alpha = 1;
+						effect.scale = 1;
+						effect.angles_z = random()*360;
+						effect.angles_y = -90; // face camera
+						effect.movetype = MOVETYPE_NOCLIP;
+						effect.think = fx_think;
+						effect.effects = EF_NODEPTHTEST;
+						effect.nextthink = time;
+						effect.solid = SOLID_NOT;
+						max_hit_ents = max_hit_ents + 1;
+					}		
 					sound (self, CHAN_WEAPON, "player/bigcut.wav", 1, ATTN_NORM);
 					head.knockback = 1; // knock Vigil down
 					T_Damage (head, self, self, 40, 0);
@@ -496,18 +499,22 @@ void() chandelier_think =
 				else // Hit helmet, block
 				{
 					// spawn a block sprite
-					effect = spawn();
-					setorigin(effect, head.origin + v_up * 24);
-					setmodel(effect, "progs/block.spr");
-					effect.angles_y = -90;
-					effect.angles_z = random()*360;
-					effect.effects = EF_NODEPTHTEST;
-					effect.movetype = MOVETYPE_NONE;
-					effect.solid = SOLID_NOT;
-					effect.scale = 2;
-					effect.owner = head;
-					effect.think = fx_think;
-					effect.nextthink = time + 0.1;
+					if (max_block_ents < 6)
+					{
+						effect = spawn();
+						setorigin(effect, head.origin + v_up * 24);
+						setmodel(effect, "progs/block.spr");
+						effect.angles_y = -90;
+						effect.angles_z = random()*360;
+						effect.effects = EF_NODEPTHTEST;
+						effect.movetype = MOVETYPE_NONE;
+						effect.solid = SOLID_NOT;
+						effect.scale = 2;
+						effect.owner = head;
+						effect.think = fx_think;
+						effect.nextthink = time + 0.1;
+						max_block_ents = max_block_ents + 1;
+					}
 					
 					sound (self, CHAN_WEAPON, "player/block.wav", 1, ATTN_NORM);
 					self.cnt = TRUE;
@@ -1861,18 +1868,22 @@ void() boulder_think =
 				else
 				{
 					// spawn a block sprite
-					effect = spawn();
-					setorigin(effect, y.origin + v_up * 24);
-					setmodel(effect, "progs/block.spr");
-					effect.angles_y = -90;
-					effect.angles_z = random()*360;
-					effect.effects = EF_NODEPTHTEST;
-					effect.movetype = MOVETYPE_NONE;
-					effect.solid = SOLID_NOT;
-					effect.scale = 2;
-					effect.owner = y;
-					effect.think = fx_think;
-					effect.nextthink = time + 0.1;
+					if (max_block_ents < 6)
+					{
+						effect = spawn();
+						setorigin(effect, y.origin + v_up * 24);
+						setmodel(effect, "progs/block.spr");
+						effect.angles_y = -90;
+						effect.angles_z = random()*360;
+						effect.effects = EF_NODEPTHTEST;
+						effect.movetype = MOVETYPE_NONE;
+						effect.solid = SOLID_NOT;
+						effect.scale = 2;
+						effect.owner = y;
+						effect.think = fx_think;
+						effect.nextthink = time + 0.1;
+						max_block_ents = max_block_ents + 1;
+					}
 
 					sound (self, CHAN_WEAPON, "player/block.wav", 1, ATTN_NORM);				
 				}

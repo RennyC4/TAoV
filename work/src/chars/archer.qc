@@ -90,18 +90,23 @@ void() ArcherArrowThink =
 				}
 				else // Regular block
 				{
-					effect = spawn(); // spawn block sprite
-					setorigin(effect, head.origin);
-					setmodel(effect, "progs/block.spr");
-					effect.classname = "blockfx";
-					effect.angles_y = -90;
-					effect.angles_z = random()*360;
-					effect.effects = EF_NODEPTHTEST;
-					effect.movetype = MOVETYPE_NONE;
-					effect.think = fx_think;
-					effect.nextthink = time + 0.1;
-					effect.solid = SOLID_NOT;
-					effect.owner = head;
+					// spawn a block sprite
+					if (max_block_ents < 6)
+					{
+						effect = spawn(); // spawn block sprite
+						setorigin(effect, head.origin);
+						setmodel(effect, "progs/block.spr");
+						effect.classname = "blockfx";
+						effect.angles_y = -90;
+						effect.angles_z = random()*360;
+						effect.effects = EF_NODEPTHTEST;
+						effect.movetype = MOVETYPE_NONE;
+						effect.think = fx_think;
+						effect.nextthink = time + 0.1;
+						effect.solid = SOLID_NOT;
+						effect.owner = head;
+						max_block_ents = max_block_ents + 1;
+					}
 					sound (head, CHAN_BODY, "player/block.wav", 1, ATTN_NORM);
 
 					// block

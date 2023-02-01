@@ -537,7 +537,6 @@ float() crandom =
 	return 2*(random() - 0.5);
 };
 
-float max_blood_ents;
 void() BloodSplatThink =
 {
 	if (pointcontents(self.origin) == CONTENT_WATER || pointcontents(self.origin) == CONTENT_SLIME || pointcontents(self.origin) == CONTENT_LAVA)
@@ -823,23 +822,27 @@ void(float damg, float dist, float knokback, float rsize, float snd, float flsh,
 						
 						player_prop(head); // spawn fading clone
 						
-						// spawn a hit sprite
-						effect = spawn();
-						setorigin(effect, self.origin);
-						if (!sprite)
-							setmodel(effect, "progs/hit.spr");
-						else
-							setmodel(effect, "progs/hit2.spr");
+						if (max_hit_ents < 10)
+						{
+							// spawn a hit sprite
+							effect = spawn();
+							setorigin(effect, self.origin);
+							if (!sprite)
+								setmodel(effect, "progs/hit.spr");
+							else
+								setmodel(effect, "progs/hit2.spr");
 
-						effect.effects = EF_NODEPTHTEST;
-						effect.movetype = MOVETYPE_NOCLIP;
-						effect.alpha = 1;
-						effect.scale = 1;
-						effect.angles_z = random()*360;
-						effect.angles_y = -90; // face camera
-						effect.think = fx_think;
-						effect.nextthink = time;
-						effect.solid = SOLID_NOT;
+							effect.effects = EF_NODEPTHTEST;
+							effect.movetype = MOVETYPE_NOCLIP;
+							effect.alpha = 1;
+							effect.scale = 1;
+							effect.angles_z = random()*360;
+							effect.angles_y = -90; // face camera
+							effect.think = fx_think;
+							effect.nextthink = time;
+							effect.solid = SOLID_NOT;
+							max_hit_ents = max_hit_ents + 1;
+						}
 
 						if (head.origin_x < self.origin_x)
 							head.angles_y = 0;
@@ -893,28 +896,32 @@ void(float damg, float dist, float knokback, float rsize, float snd, float flsh,
 					//
 
 					// spawn a hit sprite
-					effect = spawn();
-					if (head.solid != SOLID_BSP)
-						setorigin(effect, head.origin);
-					else
+					if (max_hit_ents < 10)
 					{
-						h = head.absmin + ((head.absmax - head.absmin) * 0.5);
-						setorigin(effect, h);
-					}
-					if (!sprite)
-						setmodel(effect, "progs/hit.spr");
-					else
-						setmodel(effect, "progs/hit2.spr");
+						effect = spawn();
+						if (head.solid != SOLID_BSP)
+							setorigin(effect, head.origin);
+						else
+						{
+							h = head.absmin + ((head.absmax - head.absmin) * 0.5);
+							setorigin(effect, h);
+						}
+						if (!sprite)
+							setmodel(effect, "progs/hit.spr");
+						else
+							setmodel(effect, "progs/hit2.spr");
 
-					effect.effects = EF_NODEPTHTEST;
-					effect.movetype = MOVETYPE_NOCLIP;
-					effect.alpha = 1;
-					effect.scale = 1;
-					effect.angles_z = random()*360;
-					effect.angles_y = -90; // face camera
-					effect.think = fx_think;
-					effect.nextthink = time;
-					effect.solid = SOLID_TRIGGER;
+						effect.effects = EF_NODEPTHTEST;
+						effect.movetype = MOVETYPE_NOCLIP;
+						effect.alpha = 1;
+						effect.scale = 1;
+						effect.angles_z = random()*360;
+						effect.angles_y = -90; // face camera
+						effect.solid = SOLID_NOT;
+						effect.think = fx_think;
+						effect.nextthink = time;
+						max_hit_ents = max_hit_ents + 1;
+					}
 
 					//
 					// Hit sounds
@@ -1058,42 +1065,46 @@ void(float damg, float dist, float knokback, float rsize, float snd, float flsh,
 					// spawn a block sprite, except on PG timing
 					if (head.perfectblock < time)
 					{
-						effect = spawn();
-						setorigin(effect, head.origin);
-						setmodel(effect, "progs/block.spr");
-						effect.classname = "blockfx";
-						effect.angles_y = -90;
-						effect.angles_z = random()*360;
-						effect.effects = EF_NODEPTHTEST;
-						effect.movetype = MOVETYPE_NONE;
-						effect.solid = SOLID_NOT;
-						effect.owner = head;
-
-						// Guard break vfx
-						if (head.perfectblock < time && head.perfectguard_buff < time && head.classname == "player" && !deathmatch)
-							effect.knockback = knokback; // For guard breaking
-						// block count updates below this
-						if (!deathmatch && head.blockcount > 0 || effect.knockback == 2 || effect.knockback == 3 || effect.knockback == 5)
+						if (max_block_ents < 6)
 						{
-							if (head.blockcount == 1)
+							effect = spawn();
+							setorigin(effect, head.origin);
+							setmodel(effect, "progs/block.spr");
+							effect.classname = "blockfx";
+							effect.angles_y = -90;
+							effect.angles_z = random()*360;
+							effect.effects = EF_NODEPTHTEST;
+							effect.movetype = MOVETYPE_NONE;
+							effect.solid = SOLID_NOT;
+							effect.owner = head;
+
+							// Guard break vfx
+							if (head.perfectblock < time && head.perfectguard_buff < time && head.classname == "player" && !deathmatch)
+								effect.knockback = knokback; // For guard breaking
+							// block count updates below this
+							if (!deathmatch && head.blockcount > 0 || effect.knockback == 2 || effect.knockback == 3 || effect.knockback == 5)
 							{
-								effect.scale = 1.25;
-								effect.frame = 1;
+								if (head.blockcount == 1)
+								{
+									effect.scale = 1.25;
+									effect.frame = 1;
+								}
+								if (head.blockcount == 2)
+								{
+									effect.frame = 2;
+									effect.scale = 1.5;
+								}
+								if (head.blockcount == 3 || effect.knockback == 2 || effect.knockback == 3 || effect.knockback == 5)
+								{
+									sound (effect, CHAN_AUTO, "player/gardcrsh.wav", 1, ATTN_NORM);
+									effect.frame = 3;
+									effect.scale = 2;
+								}
 							}
-							if (head.blockcount == 2)
-							{
-								effect.frame = 2;
-								effect.scale = 1.5;
-							}
-							if (head.blockcount == 3 || effect.knockback == 2 || effect.knockback == 3 || effect.knockback == 5)
-							{
-								sound (effect, CHAN_AUTO, "player/gardcrsh.wav", 1, ATTN_NORM);
-								effect.frame = 3;
-								effect.scale = 2;
-							}
+							effect.think = fx_think;
+							effect.nextthink = time + 0.1;
+							max_block_ents = max_block_ents + 1;
 						}
-						effect.think = fx_think;
-						effect.nextthink = time + 0.1;
 					}
 					head.knockback = 0; // remove knockback on block
 

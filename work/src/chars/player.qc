@@ -4044,18 +4044,22 @@ void() spinattack =
 				if (self.owner.mana >= 15)
 				{
 					// spawn a hit sprite
-					effect = spawn();
-					setorigin(effect, head.origin + v_up*22);
-					setmodel(effect, "progs/hit.spr");
-					effect.alpha = 1;
-					effect.scale = 1;
-					effect.angles_z = random()*360;
-					effect.angles_y = -90; // face camera
-					effect.movetype = MOVETYPE_NOCLIP;
-					effect.think = fx_think;
-					effect.effects = EF_NODEPTHTEST;
-					effect.nextthink = time;
-					effect.solid = SOLID_NOT;
+					if (max_hit_ents < 10)
+					{
+						effect = spawn();
+						setorigin(effect, head.origin + v_up*22);
+						setmodel(effect, "progs/hit.spr");
+						effect.alpha = 1;
+						effect.scale = 1;
+						effect.angles_z = random()*360;
+						effect.angles_y = -90; // face camera
+						effect.movetype = MOVETYPE_NOCLIP;
+						effect.think = fx_think;
+						effect.effects = EF_NODEPTHTEST;
+						effect.nextthink = time;
+						effect.solid = SOLID_NOT;
+						max_hit_ents = max_hit_ents + 1;
+					}
 					self.owner.camshake_finished = time + 0.2;
 					self.owner.combo = self.owner.combo + 1; // raise combo counter
 
@@ -4094,18 +4098,22 @@ void() spinattack =
 				else if (self.owner.mana > 0)
 				{
 					// spawn a hit sprite
-					effect = spawn();
-					setorigin(effect, head.origin + v_up*22);
-					setmodel(effect, "progs/hit.spr");
-					effect.alpha = 1;
-					effect.scale = 1;
-					effect.angles_z = random()*360;
-					effect.angles_y = -90; // face camera
-					effect.movetype = MOVETYPE_NOCLIP;
-					effect.think = fx_think;
-					effect.effects = EF_NODEPTHTEST;
-					effect.nextthink = time;
-					effect.solid = SOLID_NOT;
+					if (max_hit_ents < 10)
+					{
+						effect = spawn();
+						setorigin(effect, head.origin + v_up*22);
+						setmodel(effect, "progs/hit.spr");
+						effect.alpha = 1;
+						effect.scale = 1;
+						effect.angles_z = random()*360;
+						effect.angles_y = -90; // face camera
+						effect.movetype = MOVETYPE_NOCLIP;
+						effect.think = fx_think;
+						effect.effects = EF_NODEPTHTEST;
+						effect.nextthink = time;
+						effect.solid = SOLID_NOT;
+						max_hit_ents = max_hit_ents + 1;
+					}
 
 					self.owner.combo = self.owner.combo + 1; // raise combo counter
 
@@ -5820,24 +5828,28 @@ void() player_jumpatk2	=[	$jumpatk2,	player_jumpatk2	]
 				else
 				{
 					// spawn a hit sprite
-					effect = spawn();
-					if (head.solid != SOLID_BSP)
-						setorigin(effect, head.origin + v_up*22);
-					else
+					if (max_hit_ents < 10)
 					{
-						h = head.absmin + ((head.absmax - head.absmin) * 0.5);
-						setorigin(effect, h);
+						effect = spawn();
+						if (head.solid != SOLID_BSP)
+							setorigin(effect, head.origin + v_up*22);
+						else
+						{
+							h = head.absmin + ((head.absmax - head.absmin) * 0.5);
+							setorigin(effect, h);
+						}
+						setmodel(effect, "progs/hit.spr");
+						effect.alpha = 1;
+						effect.scale = 1;
+						effect.angles_z = random()*360;
+						effect.angles_y = -90; // face camera
+						effect.movetype = MOVETYPE_NOCLIP;
+						effect.think = fx_think;
+						effect.effects = EF_NODEPTHTEST;
+						effect.nextthink = time;
+						effect.solid = SOLID_NOT;
+						max_hit_ents = max_hit_ents + 1;
 					}
-					setmodel(effect, "progs/hit.spr");
-					effect.alpha = 1;
-					effect.scale = 1;
-					effect.angles_z = random()*360;
-					effect.angles_y = -90; // face camera
-					effect.movetype = MOVETYPE_NOCLIP;
-					effect.think = fx_think;
-					effect.effects = EF_NODEPTHTEST;
-					effect.nextthink = time;
-					effect.solid = SOLID_NOT;
 					sound (self, CHAN_AUTO, "player/jmphit.wav", 1, ATTN_NORM);
 				}
 				self.owner.camshake_finished = time + 0.2;
@@ -5845,17 +5857,21 @@ void() player_jumpatk2	=[	$jumpatk2,	player_jumpatk2	]
 			else if (self.aircombo_count != 6 || deathmatch == TRUE) // Only regular headsmash is blockable, both blockable in deathmatch
 			{
 				// spawn a block sprite
-				effect = spawn();
-				setorigin(effect, head.origin);
-				setmodel(effect, "progs/block.spr");
-				effect.angles_y = -90;
-				effect.angles_z = random()*360;
-				effect.effects = EF_NODEPTHTEST;
-				effect.movetype = MOVETYPE_NOCLIP;
-				effect.solid = SOLID_NOT;
-				effect.owner = head;
-				effect.think = fx_think;
-				effect.nextthink = time + 0.1;
+				if (max_block_ents < 6)
+				{
+					effect = spawn();
+					setorigin(effect, head.origin);
+					setmodel(effect, "progs/block.spr");
+					effect.angles_y = -90;
+					effect.angles_z = random()*360;
+					effect.effects = EF_NODEPTHTEST;
+					effect.movetype = MOVETYPE_NOCLIP;
+					effect.solid = SOLID_NOT;
+					effect.owner = head;
+					effect.think = fx_think;
+					effect.nextthink = time + 0.1;
+					max_block_ents = max_block_ents + 1;
+				}
 
 				// block
 				if (head.classname == "player")
@@ -7746,19 +7762,22 @@ void() divingswallow_hit =
 					}
 
 					// spawn a hit sprite
-					effect = spawn();
-					setorigin(effect, head.origin + v_up*22);
-					setmodel(effect, "progs/hit2.spr");
-					effect.alpha = 1;
-					effect.scale = 1;
-					effect.angles_z = random()*360;
-					effect.angles_y = -90; // face camera
-					effect.movetype = MOVETYPE_NOCLIP;
-					effect.think = fx_think;
-					effect.effects = EF_NODEPTHTEST;
-					effect.nextthink = time;
-					effect.solid = SOLID_NOT;
-
+					if (max_hit_ents < 10)
+					{
+						effect = spawn();
+						setorigin(effect, head.origin + v_up*22);
+						setmodel(effect, "progs/hit2.spr");
+						effect.alpha = 1;
+						effect.scale = 1;
+						effect.angles_z = random()*360;
+						effect.angles_y = -90; // face camera
+						effect.movetype = MOVETYPE_NOCLIP;
+						effect.think = fx_think;
+						effect.effects = EF_NODEPTHTEST;
+						effect.nextthink = time;
+						effect.solid = SOLID_NOT;
+						max_hit_ents = max_hit_ents + 1;
+					}
 					T_Damage (head, self, self, 1, 0);
 					sound (self, CHAN_WEAPON, "player/kickhit.wav", 1, ATTN_NORM);
 					if (deathmatch == FALSE)

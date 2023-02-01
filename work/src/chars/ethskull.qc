@@ -29,18 +29,22 @@ void() ethskull_2	=[	$idle1,	ethskull_2		]
 		if (head.takedamage == DAMAGE_AIM && head.classname == "player" && head.health > 0 && self.attack_finished < time)
 		{
 			// spawn a hit sprite
-			effect = spawn();
-			setorigin(effect, head.origin);
-			setmodel(effect, "progs/hit.spr");
-			effect.alpha = 1;
-			effect.scale = 1;
-			effect.angles_z = random()*360;
-			effect.angles_y = -90; // face camera
-			effect.movetype = MOVETYPE_NOCLIP;
-			effect.think = fx_think;
-			effect.effects = EF_NODEPTHTEST;
-			effect.nextthink = time;
-			effect.solid = SOLID_NOT;
+			if (max_hit_ents < 10)
+			{
+				effect = spawn();
+				setorigin(effect, head.origin);
+				setmodel(effect, "progs/hit.spr");
+				effect.alpha = 1;
+				effect.scale = 1;
+				effect.angles_z = random()*360;
+				effect.angles_y = -90; // face camera
+				effect.movetype = MOVETYPE_NOCLIP;
+				effect.think = fx_think;
+				effect.effects = EF_NODEPTHTEST;
+				effect.nextthink = time;
+				effect.solid = SOLID_NOT;
+				max_hit_ents = max_hit_ents + 1;
+			}
 
 			if (self.angles_y == 0)
 				self.velocity_x = -50;

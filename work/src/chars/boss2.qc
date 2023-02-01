@@ -438,19 +438,22 @@ void() boulder_thinker =
 				else
 				{
 					// spawn a block sprite
-					effect = spawn();
-					setorigin(effect, y.origin + v_up * 24);
-					setmodel(effect, "progs/block.spr");
-					effect.angles_y = -90;
-					effect.angles_z = random()*360;
-					effect.effects = EF_NODEPTHTEST;
-					effect.movetype = MOVETYPE_NONE;
-					effect.solid = SOLID_NOT;
-					effect.scale = 2;
-					effect.owner = y;
-					effect.think = fx_think;
-					effect.nextthink = time + 0.1;
-
+					if (max_block_ents < 6)
+					{
+						effect = spawn();
+						setorigin(effect, y.origin + v_up * 24);
+						setmodel(effect, "progs/block.spr");
+						effect.angles_y = -90;
+						effect.angles_z = random()*360;
+						effect.effects = EF_NODEPTHTEST;
+						effect.movetype = MOVETYPE_NONE;
+						effect.solid = SOLID_NOT;
+						effect.scale = 2;
+						effect.owner = y;
+						effect.think = fx_think;
+						effect.nextthink = time + 0.1;
+						max_block_ents = max_block_ents + 1;
+					}
 					sound (self, CHAN_WEAPON, "player/block.wav", 1, ATTN_NORM);				
 				}
 			}

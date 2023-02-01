@@ -394,11 +394,18 @@ void(vector o, vector d, float color, float count) particle = #48;// start a par
 // TAOV SPECIFIC DEFINES
 //======================================================
 
+// Globals
+
+float max_blood_ents; // 10 default max
+float max_hit_ents; // 10 default max
+float max_block_ents; // 6 default max
+
 .float sound_finished;
 
 //
 // These are Vigil specific and used to belong to the top of player.qc
 //
+
 .float rollforward_fstab2;
 .vector oangles; // old angles
 .float inwater_pain; // in water pain handler

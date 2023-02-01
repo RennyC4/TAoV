@@ -113,6 +113,8 @@ void() fx_think =
 			self.cnt = self.cnt + 1;
 		else
 		{
+			if (max_block_ents > 0)
+				max_block_ents = max_block_ents - 1;
 			remove(self);
 			return;
 		}
@@ -127,6 +129,8 @@ void() fx_think =
 		if (self.alpha < 0.1)
 		{
 			remove(self);
+			if (max_hit_ents > 0)
+				max_hit_ents = max_hit_ents - 1;
 			return;
 		}
 		frameskip(0.01);
