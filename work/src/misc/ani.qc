@@ -128,9 +128,9 @@ void() fx_think =
 		self.scale = self.scale + 0.05;
 		if (self.alpha < 0.1)
 		{
-			remove(self);
 			if (max_hit_ents > 0)
 				max_hit_ents = max_hit_ents - 1;
+			remove(self);
 			return;
 		}
 		frameskip(0.01);
