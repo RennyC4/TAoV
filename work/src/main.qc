@@ -952,15 +952,12 @@ as checkbottom is slow
 =============
 */
 
-float(entity e, optional float dist) checkground =
+float(entity e) checkground =
 {
 	local vector source, dest;
 
 	source = e.origin;
-	if (!dist)
-		dest = e.origin - v_up * 1;
-	else
-		dest = e.origin - v_up * dist;
+	dest = e.origin - v_up * 1;
 		
 	tracebox (source, e.mins, e.maxs, dest, TRUE, e);
 

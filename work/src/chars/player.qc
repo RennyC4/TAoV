@@ -3340,8 +3340,19 @@ void() player_fire =
 		}
 		return;
 	}
+
+	local vector source = self.char.origin;
+	local vector dest = self.char.origin - v_up * 8;
+	local float ground_attack_test;
 	
-	if (self.char.onground || self.char.flags & FL_ONGROUND || checkground(self.char, 8)) // 8qu dist check will still allow Vigil to do ground attacks
+	tracebox (source, self.char.mins, self.char.maxs, dest, TRUE, self.char);
+
+	if (trace_fraction == 1 || trace_ent.classname == "func_fall") // Hit nothing
+		ground_attack_test = FALSE;
+	else
+		ground_attack_test = TRUE;
+
+	if (self.char.onground || self.char.flags & FL_ONGROUND || (ground_attack_test && self.char.inair <= 16)) // 8qu dist check will still allow Vigil to do ground attacks
 	{   // Fix Vigil doing normal attacks during a grab
 		if (!self.char.grabbed)
 		{
