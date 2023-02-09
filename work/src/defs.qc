@@ -396,9 +396,11 @@ void(vector o, vector d, float color, float count) particle = #48;// start a par
 
 // Globals
 
-float max_blood_ents; // 10 default max
-float max_hit_ents; // 10 default max
-float max_block_ents; // 6 default max
+float max_blood_ents; // 10 max
+float max_hit_ents; // 10 max
+float max_block_ents; // 6 max
+float max_water_ripple_ents; // 12 max
+float max_water_splash_ents; // 12 max
 
 .float sound_finished;
 

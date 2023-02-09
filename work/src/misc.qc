@@ -23,6 +23,9 @@ void() watersplash_think =
 
 		if (trace_fraction == 1) // Hit nothing
 		{
+			if (max_water_splash_ents > 0)
+				max_water_splash_ents = max_water_splash_ents - 1;
+
 			remove(self);
 			return;
 		}
@@ -74,6 +77,9 @@ void() watersplash_think =
 	}
 	else
 	{
+		if (max_water_splash_ents > 0)
+			max_water_splash_ents = max_water_splash_ents - 1;
+
 		remove(self);
 		return;
 	}
@@ -96,6 +102,9 @@ void() ripple_think =
 
 	if (trace_fraction == 1) // Hit nothing
 	{
+		if (max_water_ripple_ents > 0)
+			max_water_ripple_ents = max_water_ripple_ents - 1;
+
 		remove(self);
 		return;
 	}
@@ -111,6 +120,9 @@ void() ripple_think =
 		self.scale = self.scale + 0.01;
 	else
 	{
+		if (max_water_ripple_ents > 0)
+			max_water_ripple_ents = max_water_ripple_ents - 1;
+
 		remove(self);
 		return;
 	}
@@ -129,7 +141,12 @@ void() ripple_think =
 
 void(entity own, float type, vector org) ripple_vfx =
 {
+	if (max_water_ripple_ents >= 12)
+		return;
+
 	local entity ripple;
+
+	max_water_ripple_ents = max_water_ripple_ents + 1;
 
 	ripple = spawn();
 	ripple.owner = own;

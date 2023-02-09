@@ -498,6 +498,9 @@ void() splash_particle_think =
 
 	if (self.attack_finished < time)
 	{
+		if (max_water_splash_ents > 0)
+			max_water_splash_ents = max_water_splash_ents - 1;
+
 		remove(self);
 		return;
 	}
@@ -506,7 +509,12 @@ void() splash_particle_think =
 
 void(entity own, float style, float type, optional vector org) watersplash_particle =
 {
+		if (max_water_splash_ents > 12)
+			return;
+		
 		local entity splash, particle;
+
+		max_water_splash_ents = max_water_splash_ents + 1; // spawns 2 ents, but we'll count these vfx as one-together
 
 		// Spawn particle
 		particle = spawn();

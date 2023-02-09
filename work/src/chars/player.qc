@@ -3341,9 +3341,9 @@ void() player_fire =
 		return;
 	}
 	
-	if (self.char.onground == TRUE || self.char.flags & FL_ONGROUND)
-	{   // Fix Vigil doing normal attacks during a grab (TESTME)
-		if (self.char.grabbed == FALSE)
+	if (self.char.onground || self.char.flags & FL_ONGROUND || checkground(self.char, 8)) // 8qu dist check will still allow Vigil to do ground attacks
+	{   // Fix Vigil doing normal attacks during a grab
+		if (!self.char.grabbed)
 		{
 			if (self.moveprog2 > 0 && (self.moveprog3 > 0 || self.moveprog4 > 0) && (game_progress & IT_PROGRESS2 || deathmatch == TRUE))
 			{
@@ -3528,7 +3528,7 @@ void() player_fire =
 	}
 	else if (self.pain_finished < time) // in air
 	{
-		if (self.wallgrab == FALSE)
+		if (!self.wallgrab)
 		{
 			if (self.keyflags & KEY_DOWN && self.char.inair > 15 && (self.char.frame != $airkick14 && self.char.frame != $airkick15 && self.char.frame != $airkick16))
 			{
@@ -3569,7 +3569,7 @@ void() player_fire =
 					self.char.runatk_speed = 0;
 					self.char.sword_spincnt = 0;
 					//
-					if (self.doublejump == TRUE)
+					if (self.doublejump)
 					{
 						if (self.char.velocity_z > 0)
 							self.char.velocity_z = 0;
@@ -3596,9 +3596,8 @@ void() player_fire =
 			if (self.backflip_finished < time)
 			{
 				if (self.char.aircombo_count < 3) // Don't yell during triple air kick
-				{
 					player_yell(0);
-				}
+
 				if (self.zoom_mode != 0 && self.camera_forcezoom_finished < time)
 						self.zoom_mode = 0; // No Zoom
 				if (self.char.aircombo_count == 0)

@@ -867,7 +867,7 @@ void() statue7 =
 };
 
 /*QUAKED statue8 (0 1 0) (-13 -11 -1) (22 12 56)
-A griffon statue, skins 0-4 change color
+A griffon statue
 */
 void() statue8 =
 {

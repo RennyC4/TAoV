@@ -546,7 +546,8 @@ void() StartFrame =
 		if (!v.flags & FL_MONSTER && !v.classname == "player" && !v.classname == "guard" && !v.classname == "helmet")
 			continue;
 
-		if (v.movetype == MOVETYPE_STEP || v.movetype == MOVETYPE_WALK) // Update waterlevel on MOVETYPE_STEP entities (credit to mankrip)
+		// Update waterlevel on MOVETYPE_STEP/WALK/FLY entities (credit to mankrip)
+		if (v.movetype == MOVETYPE_STEP || v.movetype == MOVETYPE_WALK || v.movetype == MOVETYPE_FLY || v.movetype == MOVETYPE_BOUNCE || v.movetype == MOVETYPE_TOSS)
 		{
 			vector point = v.origin;
 			local float contents;
@@ -628,7 +629,11 @@ void() StartFrame =
 					ripple_vfx(v, 2, v.origin + v_up * 32);
 					v.inwater_type = CONTENT_SLIME;
 				}
-				v.waterripple_finished = time + 0.2;
+				//v.waterripple_finished = time + 0.2;
+				if (v.velocity_x || v.velocity_y)
+                    v.waterripple_finished = time + 0.2;
+				else
+                    v.waterripple_finished = time + 0.5;
 			}
 		}
 		if (!v.waterlevel && v.splash_finished > time)
@@ -947,12 +952,15 @@ as checkbottom is slow
 =============
 */
 
-float(entity e) checkground =
+float(entity e, optional float dist) checkground =
 {
 	local vector source, dest;
 
 	source = e.origin;
-	dest = e.origin - v_up * 1;
+	if (!dist)
+		dest = e.origin - v_up * 1;
+	else
+		dest = e.origin - v_up * dist;
 		
 	tracebox (source, e.mins, e.maxs, dest, TRUE, e);
 

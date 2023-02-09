@@ -76,7 +76,7 @@ void() horror_die6	=[	$die6,	horror_die6 	] {monster_death();};
 void() horror_die =
 {
 	if (self.gaveexp != TRUE) // only give experience on first instance of death
-	{				  // otherwise player can keep knocking corpse for EXP
+	{				  		  // otherwise player can keep knocking corpse for EXP
 		sound (self, CHAN_BODY, "horror/death.wav", 1, ATTN_NORM);
 		self.movetype = MOVETYPE_TOSS;
 		self.avelocity = '300 300 0';

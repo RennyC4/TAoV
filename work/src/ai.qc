@@ -282,8 +282,10 @@ void() HuntTarget =
 {
 	if (self.enemy.owner.flags & FL_NOTARGET)
 		return;
-	if (self.movetype != MOVETYPE_NOCLIP)
-		self.movetype = MOVETYPE_STEP;
+
+//  ASDF
+//	if (self.movetype != MOVETYPE_NOCLIP)
+//		self.movetype = MOVETYPE_STEP;
 
 	self.show_hostile = time + 1;
 	self.goalentity = self.enemy;
@@ -298,14 +300,14 @@ void() HuntTarget =
 	{
 		self.monster_running = FALSE;
 		self.think = self.th_misc;
-		frameskip(0.01);
+		self.nextthink = time;
 		return;
 	}
 
 	if (self.classname == "ghost")
 	{
 		self.think = self.th_run;
-		frameskip(0.01);
+		self.nextthink = time;
 		return;
 	}
 
@@ -315,7 +317,7 @@ void() HuntTarget =
 		{
 			self.monster_running = TRUE;
 			self.think = self.th_run;
-			frameskip(0.01);
+			self.nextthink = time;
 			return;
 		}
 	}
@@ -525,7 +527,7 @@ void() ai_stand =
 		if (self.flags & FL_ONGROUND)
 			self.flags = self.flags - FL_ONGROUND;
 	}
-	
+
 	if (self.enemy.owner.flags & FL_NOTARGET)
 		return;
 
@@ -546,7 +548,7 @@ void() ai_stand =
 	walkmove(0, 0); // use triggers on standing
 	monster_removeslide();
 	close_check(); // don't allow player inside origin point
-	
+
 	if (!self.enemy)
 	{
 		FindTarget();
@@ -1879,16 +1881,26 @@ void() enemy_start =
 		self.flags = self.flags - (self.flags & FL_ONGROUND);
 	if (self.spawnflags & 8) // Monster stays in air until hit/woken up
 		self.movetype = MOVETYPE_FLY;
-	
+
 	if (pointcontents(self.origin) == CONTENT_WATER || pointcontents(self.origin) == CONTENT_SLIME || pointcontents(self.origin) == CONTENT_LAVA)
 	{
 		if (self.th_swim)
 			self.th_swim();
 		else
-			self.th_stand();
+		{
+			if (self.th_stand)
+				self.th_stand();
+			else
+				error("th_stand not set on monster entity\n");
+		}
 	}
 	else
-		self.th_stand();
+	{
+		if (self.th_stand)
+			self.th_stand();
+		else
+			error("th_stand not set on monster entity\n");
+	}
 
 	self.max_health = self.health; // Set max health for half-health trigger checks
 	self.view_ofs = '0 0 1';

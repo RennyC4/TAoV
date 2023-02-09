@@ -332,6 +332,14 @@
 ( -320 96 168 ) ( -320 96 352 ) ( -512 96 352 ) brickground 64 -24 0 1 1
 ( -320 -96 352 ) ( -320 96 352 ) ( -320 96 168 ) brickground 64 -24 0 1 1
 }
+// brush 36
+{
+( -320 0 112 ) ( -320 -16 112 ) ( -320 -16 48 ) brickground 0 0 0 1 1
+( -320 -16 112 ) ( -192 -16 48 ) ( -320 -16 48 ) brickground 48 0 0 1 1
+( -192 -16 48 ) ( -192 0 48 ) ( -320 0 48 ) brickground 48 0 0 1 1
+( -320 0 48 ) ( -192 0 48 ) ( -320 0 112 ) brickground 48 0 0 1 1
+( -320 0 112 ) ( -192 0 48 ) ( -192 -16 48 ) brickground 48 0 0 1 1
+}
 }
 // entity 1
 {
@@ -427,80 +435,5 @@
 {
 "classname" "monster_hydra"
 "origin" "144 -32 -48"
-"awareness" "4"
-}
-// entity 13
-{
-"classname" "statue10"
-"origin" "584 8 73"
-"angle" "180"
-"spawnflags" "1"
-}
-// entity 14
-{
-"classname" "item_relic"
-"origin" "-260 -156 76"
-}
-// entity 15
-{
-"classname" "item_relic"
-"origin" "-260 -156 76"
-"cnt" "1"
-}
-// entity 16
-{
-"classname" "item_relic"
-"origin" "-340 -60 76"
-"cnt" "11"
-}
-// entity 17
-{
-"classname" "misc_boulder"
-"origin" "-250 -170 306"
-"targetname" "boulder_ambush"
-"_phong" "1"
-}
-// entity 18
-{
-"classname" "trigger_once"
-"target" "boulder_ambush"
-// brush 0
-{
-( -320 -144 64 ) ( -320 -208 64 ) ( -320 -208 48 ) trigger 0 0 0 1 1
-( -320 -208 64 ) ( -192 -208 64 ) ( -192 -208 48 ) trigger 0 0 0 1 1
-( -192 -208 48 ) ( -192 -144 48 ) ( -320 -144 48 ) trigger 0 0 0 1 1
-( -320 -144 64 ) ( -192 -144 64 ) ( -192 -208 64 ) trigger 0 0 0 1 1
-( -192 -144 48 ) ( -192 -144 64 ) ( -320 -144 64 ) trigger 0 0 0 1 1
-( -192 -208 64 ) ( -192 -144 64 ) ( -192 -144 48 ) trigger 0 0 0 1 1
-}
-}
-// entity 19
-{
-"classname" "item_relic"
-"origin" "-212 -92 84"
-"cnt" "7"
-}
-// entity 20
-{
-"classname" "monster_zombie"
-"origin" "-472 16 80"
-"awareness" "4"
-}
-// entity 21
-{
-"classname" "monster_zombie"
-"origin" "-448 16 80"
-"awareness" "4"
-}
-// entity 22
-{
-"classname" "monster_zombie"
-"origin" "-432 16 80"
-"awareness" "4"
-}
-// entity 23
-{
-"classname" "monster_zombie"
-"origin" "-408 16 80"
 "awareness" "4"
 }
