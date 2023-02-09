@@ -803,6 +803,10 @@ void() PlayerPreThink =
 
 	if (self.char)
 	{
+		// Debugging for .enemy checking
+		if (self.char.enemy)
+			bprint ("Vigil Enemy: ", self.char.enemy.classname, "\n");
+	
 		// Perma-fix for zombie vigil (health = 0)
 		if (!self.char.health)
 		{
@@ -1057,7 +1061,11 @@ void() PlayerPreThink =
 				self.char.bigfall = TRUE;
 
 			if (self.displayname_finished < time && self.displayname != "")
+			{
 				self.displayname = "";
+				if (self.char.enemy.health < 1)
+					self.char.enemy = world; // Enemy is dead, clear Vigil's .enemy field
+			}
 			if (self.hflask_drink_finished > time)
 				HealthFlask();
 			if (self.char.perfectguard_buff < time && self.char.invunerability_finished < time &&self.char.alpha != 1)
@@ -1094,7 +1102,7 @@ void() PlayerPreThink =
 				cursor.classname = "cursor";
 				cursor.effects = EF_NODEPTHTEST;
 				cursor.movetype = MOVETYPE_NOCLIP;
-				cursor.solid = SOLID_TRIGGER;
+				cursor.solid = SOLID_NOT;
 				cursor.owner = self.char;
 				cursor.think = cursor_follow;
 				cursor.nextthink = time;

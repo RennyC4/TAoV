@@ -233,16 +233,13 @@ void() FireBallHomeIn =
 		bprint ("Fireball targetted camera: Switched to world\n");
 		self.enemy = world;
 	}
-
-	if (self.flags & FL_ONGROUND)
-		self.flags = self.flags - FL_ONGROUND;
 };
 
 void() FireBallThink =
 {
 	local entity head, effect;
 
-	if (self.owner.enemy)
+	if (self.owner.enemy.health > 0)
 		self.enemy = self.owner.enemy;
 
 	FireBall_HitBox();

@@ -367,6 +367,8 @@ void() FindTarget =
 			dprint (self.classname);
 			dprint (" has woken up to fight.\n");
 			self.enemy = monster.enemy; // target the player that woke me up
+			if (!monster.enemy)
+				monster.enemy = self;
 			self.think = HuntTarget;
 			self.nextthink = time + 0.1;
 			return;
@@ -390,6 +392,8 @@ void() FindTarget =
 						dprint (self.classname);
 						dprint (" has woken up to fight.\n");
 						self.enemy = player;
+						if (!player.enemy)
+							player.enemy = self;
 						self.think = HuntTarget;
 						self.nextthink = time + 0.1;
 						return;
@@ -404,6 +408,8 @@ void() FindTarget =
 					dprint (self.classname);
 					dprint (" has woken up to fight.\n");
 					self.enemy = player;
+					if (!player.enemy)
+						player.enemy = self;
 					self.think = HuntTarget;
 					self.nextthink = time + 0.1;
 					return;
@@ -417,6 +423,8 @@ void() FindTarget =
 					dprint (self.classname);
 					dprint (" has woken up to fight.\n");
 					self.enemy = player;
+					if (!player.enemy)
+						player.enemy = self;
 					self.think = HuntTarget;
 					self.nextthink = time + 0.1;
 					return;
@@ -438,6 +446,8 @@ void() FindTarget =
 				dprint (self.classname);
 				dprint (" has woken up to fight.\n");
 				self.enemy = player.char;
+				if (!player.char.enemy)
+					player.char.enemy = self;
 				self.think = HuntTarget;
 				self.nextthink = time + 0.1;
 				return;

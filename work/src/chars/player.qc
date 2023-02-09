@@ -7419,11 +7419,10 @@ void() player_block =
 };
 
 //*
-// magic spells
+// magic spells & their animations
 //*
 
-// Entity cycling is too expensive
-/*
+/* Entity cycling is too expensive, cut feature
 void() FireBall_Targ =
 {
 	self.fireball_targ = world;
@@ -7455,10 +7454,10 @@ void() FireBall_Targ =
 			self.fireball_targ = bestv;
 	}
 };
-*/
 
 // Entity cyling is too expensive
-//void() player_fireball1	=[	$magicb1,	player_fireball2	] {spawn_magicfog();self.effects = EF_MUZZLEFLASH;FireBall_Targ();};
+void() player_fireball1	=[	$magicb1,	player_fireball2	] {spawn_magicfog();self.effects = EF_MUZZLEFLASH;FireBall_Targ();};
+*/
 
 void() player_fireball1	=[	$magicb1,	player_fireball2	] {spawn_magicfog();self.effects = EF_MUZZLEFLASH;};
 void() player_fireball2	=[	$magicb2,	player_move	] 
@@ -7469,9 +7468,8 @@ void() player_fireball2	=[	$magicb2,	player_move	]
 		Fireball(25,21);
 	else // Launch 2 fireballs over level 20 for 1.5x damage
 	{
-		local float i;
-		for (i = 0; i < 2; i = i+1)
-			Fireball(19,21);
+		Fireball(19,24); // Up
+		Fireball(19,18); // Down
 	}
 
 	// Subtract mana for the spell accordingly
