@@ -59,15 +59,14 @@ Strafe sideways, but stay at aproximately the same range
 void(float dist) ai_strafe =
 {
 	local float	ofs;
-	
+
 	if (self.lefty)
 		ofs = 90;
 	else
 		ofs = -90;
-	
 	if (walkmove (self.ideal_yaw + ofs, dist))
 		return;
-		
+
 	self.lefty = 1 - self.lefty;
 
 	walkmove (self.ideal_yaw - ofs, dist);
@@ -367,7 +366,7 @@ void() FindTarget =
 			dprint (self.classname);
 			dprint (" has woken up to fight.\n");
 			self.enemy = monster.enemy; // target the player that woke me up
-			if (!monster.enemy)
+			if ((monster.enemy.health <= 0 && monster.enemy) || !monster.enemy)
 				monster.enemy = self;
 			self.think = HuntTarget;
 			self.nextthink = time + 0.1;
@@ -392,7 +391,7 @@ void() FindTarget =
 						dprint (self.classname);
 						dprint (" has woken up to fight.\n");
 						self.enemy = player;
-						if (!player.enemy)
+						if ((player.enemy.health <= 0 && player.enemy) || !player.enemy)
 							player.enemy = self;
 						self.think = HuntTarget;
 						self.nextthink = time + 0.1;
@@ -408,7 +407,7 @@ void() FindTarget =
 					dprint (self.classname);
 					dprint (" has woken up to fight.\n");
 					self.enemy = player;
-					if (!player.enemy)
+					if ((player.enemy.health <= 0 && player.enemy) || !player.enemy)
 						player.enemy = self;
 					self.think = HuntTarget;
 					self.nextthink = time + 0.1;
@@ -423,7 +422,7 @@ void() FindTarget =
 					dprint (self.classname);
 					dprint (" has woken up to fight.\n");
 					self.enemy = player;
-					if (!player.enemy)
+					if ((player.enemy.health <= 0 && player.enemy) || !player.enemy)
 						player.enemy = self;
 					self.think = HuntTarget;
 					self.nextthink = time + 0.1;
@@ -446,7 +445,7 @@ void() FindTarget =
 				dprint (self.classname);
 				dprint (" has woken up to fight.\n");
 				self.enemy = player.char;
-				if (!player.char.enemy)
+				if ((player.char.enemy.health <= 0 && player.char.enemy) || !player.char.enemy)
 					player.char.enemy = self;
 				self.think = HuntTarget;
 				self.nextthink = time + 0.1;
@@ -623,17 +622,7 @@ void() ai_stand =
 			return;
 		}
 
-		if (!self.enemy.flypain)
-			HuntTarget();
-		else
-		{
-			if (self.classname == "baron")
-			{
-				self.think = baron_hidesword1;
-				self.nextthink = time + 0.1;
-			}
-			self.ai_reattack = FALSE; // turn off reattack flag
-		}
+		HuntTarget();
 	}
 };
 
@@ -1136,7 +1125,8 @@ void(float dist) ai_fly =
 		if (self.classname == "horror" && self.enemy) // prevent fireball spam on Vigil wakeup
 			self.attack_finished = time + 3;
 
-		self.th_stand();
+		if (self.th_stand)
+			self.th_stand();
 		return;
 	}
 
@@ -1377,19 +1367,6 @@ void(float dist) ai_walk =
 		}
 	}
 
-	if (self.enemy.flypain)
-	{
-		if (pointcontents(self.origin) == CONTENT_WATER || pointcontents(self.origin) == CONTENT_SLIME || pointcontents(self.origin) == CONTENT_LAVA)
-		{
-			if (self.th_swim)
-				self.th_swim();
-			else
-				self.th_stand();
-		}
-		else
-			self.th_stand();
-	}
-
 	if (self.flags & FL_ONGROUND)
 	{
 		if (range(self, self.enemy) >= RANGE_FAR || (self.enemy.angles_y == self.angles_y || self.enemy.tired_finished > time || self.enemy.owner.hflask_drink_finished > time || self.enemy.headsmash_recovery_finished > time))
@@ -1600,12 +1577,6 @@ void(float dist) ai_swim =
 		}
 	}
 
-	if (self.enemy.flypain)
-	{
-		self.velocity = '0 0 0';
-		return;
-	}
-
 	CombatThink();
 	
 	if (!pointcontents(self.origin) == CONTENT_WATER)
@@ -1805,6 +1776,9 @@ void() monster_death =
 
 	if (self.deadflag == DEAD_DEAD)
 		return;
+
+	if (self.enemy.enemy == self) // Clear Vigil's enemy flag
+		self.enemy.enemy = world;
 
 	if (vlen(self.velocity) < 1 || self.flags & FL_ONGROUND || self.flags & FL_PARTIALGROUND || self.origin == self.oldorigin || checkground(self))
 	{

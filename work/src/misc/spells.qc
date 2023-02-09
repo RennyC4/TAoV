@@ -136,6 +136,10 @@ void() FireBall_HitBox =
 						T_Damage (head, self, self.owner, self.mode / 4, 0);
 					else // normal damage
 						T_Damage (head, self, self.owner, self.mode, 0);
+					if (head.origin_x < self.owner.origin_x) // Overwrite monster_pain angle_y turning
+						head.angles_y = 0;
+					else
+						head.angles_y = 180;
 				}
 				if (self.owner.classname == "player")
 				{
@@ -165,13 +169,6 @@ void() FireBall_HitBox =
 					PerfectGuard(head);
 					remove(self);
 					return;
-				}
-				if (head.ledgegrab == FALSE) // Bug fix
-				{
-					if (self.origin_x > head.origin_x) // Bug fix vigil needs to face the proper angles
-						head.angles_y = 0; // Block victim faces left
-					else
-						head.angles_y = 180; // Block victim faces right
 				}
 				head.purge_cooldown = time;
 			}
@@ -237,15 +234,31 @@ void() FireBallHomeIn =
 
 void() FireBallThink =
 {
-	local entity head, effect;
+	local entity effect, oself;
 
 	if (self.owner.enemy.health > 0)
 		self.enemy = self.owner.enemy;
 
 	FireBall_HitBox();
-
-	if (self.enemy && self.enemy.health > 0 && self.enemy.deadflag != DEAD_DEAD && self.enemy != self.owner && self.enemy.classname != "camera")
-		FireBallHomeIn();
+	if (self.owner.classname == "player")
+	{
+		if (!self.lip) // Run once, do a proper infront check from my owner
+		{
+			oself = self;
+			self = self.owner;
+			local float testchk = infront(self.enemy);
+			self = oself;
+			if (testchk)
+				self.lip = TRUE;
+		}
+		if (self.enemy && self.enemy.health > 0 && self.enemy.deadflag != DEAD_DEAD && self.enemy != self.owner && self.enemy.classname != "camera" && self.lip)
+			FireBallHomeIn();
+	}
+	else // not vigil casting
+	{
+		if (self.enemy && self.enemy.health > 0 && self.enemy.deadflag != DEAD_DEAD && self.enemy != self.owner && self.enemy.classname != "camera")
+			FireBallHomeIn();
+	}
 
 	if (self.attack_finished < time)
 	{
@@ -299,7 +312,7 @@ void(float damg, float hight) Fireball =
 	makevectors (self.angles);
 	missile.velocity = aim(self, 800);
 	missile.velocity = missile.velocity * 800;
-	missile.angles = vectoangles(missile.velocity);
+	//missile.angles = vectoangles(missile.velocity);
 	missile.avelocity = '600 300 150';
 	missile.mode = damg;
 	missile.touch = FireballWallTouch;

@@ -404,7 +404,7 @@ void(optional float csqcactive) ClientConnect =
 	local float i, j;
 
 	players = players + 1;
-	if (players > 4) // only 4 players
+	if (players > 8) // only 4 players
 		stuffcmd(self, "disconnect\n");
 	else
 	{
@@ -442,7 +442,7 @@ void() ClientDisconnect =
 void() cursor_follow =
 {
 	makevectors(self.angles);
-				
+
 	if (self.owner.perfectguard_buff < time)
 	{
 		setmodel (self, "progs/cursor2.spr");
@@ -453,6 +453,20 @@ void() cursor_follow =
 		setmodel (self, "progs/cursor3.spr");
 		setorigin (self, self.owner.origin + v_up*50);
 	}
+
+	// Multiplayer colour codes
+	if (!self.colormod)
+	{
+		if (self.owner.owner.playerid == 1)
+			self.colormod = '10 1 1'; // Red
+		if (self.owner.owner.playerid == 2)
+			self.colormod = '1 1 10'; // Blue
+		if (self.owner.owner.playerid == 4)
+			self.colormod = '1 10 1'; // Green
+		if (self.owner.owner.playerid == 8)
+			self.colormod = '10 10 1'; // Yellow
+	}
+
 	frameskip(0.01);
 };
 
@@ -803,9 +817,9 @@ void() PlayerPreThink =
 
 	if (self.char)
 	{
-		// Debugging for .enemy checking
-		if (self.char.enemy)
-			bprint ("Vigil Enemy: ", self.char.enemy.classname, "\n");
+		// Debugging for Vigil enemy field checking
+		//if (self.char.enemy != world)
+		//	bprint ("Vigil Enemy: ", self.char.enemy.classname, "\n");
 	
 		// Perma-fix for zombie vigil (health = 0)
 		if (!self.char.health)
@@ -1083,13 +1097,11 @@ void() PlayerPreThink =
 		// Vigil overhead cursor / perfect guard buff symbol
 		//
 
-		if (!visible(self.char) || self.char.perfectguard_buff > time)
+		if ((!visible(self.char) || self.char.perfectguard_buff > time) || coop)
 		{
-			if (self.charcursor == world)
+			if (!self.charcursor)
 			{
-				local entity cursor;
-
-				cursor = spawn();
+				local entity cursor = spawn();
 				if (self.char.perfectguard_buff < time)
 					setmodel (cursor, "progs/cursor2.spr");
 				else
@@ -1105,12 +1117,14 @@ void() PlayerPreThink =
 				cursor.solid = SOLID_NOT;
 				cursor.owner = self.char;
 				cursor.think = cursor_follow;
-				cursor.nextthink = time;
-				cursor.drawonlytoclient = self;
+				if (coop)
+					cursor.nextthink = time + 0.1;
+				else
+					cursor.nextthink = time;
 				self.charcursor = cursor; // binded
 			}
 		}
-		else if (self.charcursor != world)
+		else if (self.charcursor)
 		{
 			self.charcursor.solid = SOLID_NOT; // remove glow
 			remove(self.charcursor);
@@ -1444,7 +1458,7 @@ void() PutClientInServer =
 	self.min_zoom = -30;
 	self.max_zoom = 23;
 
-	if (players < 4)
+	if (players <= 8)
 		Setup_Vigil();
 
 	self.origin_zoom = self.origin;
@@ -1523,7 +1537,7 @@ void() SetLevel =
 		NextLevelExp = self.owner.level + 18 * self.owner.level;
 		if (self.owner.experience >= NextLevelExp)
 		{
-			if (players == 1)
+			if (!coop)
 			{
 				if (self.owner.level == 1)
 				{

@@ -142,6 +142,8 @@ void(entity targ, entity attacker) Killed =
 			SUB_UseTargets();
 		if (random() < 0.5) // 50% chance of gold drop
 			drop_gold();
+		if (attacker.enemy == self) // Clear up Vigils .enemy field
+			attacker.enemy = world;
 		self.killed = TRUE; // Run once
 	}
 
@@ -303,7 +305,7 @@ void(entity targ, entity inflictor, entity attacker, float damage, float statusr
 		targ.owner.status_blind_finished = attacker.status_blind_finished;
 		targ.owner.status_broken_finished = attacker.status_broken_finished;
 		targ.owner.broken_tick_finished = time + 1 + ceil(random()*2 + 1); // setup proper tic
-		/*
+		/* Debugging for applying status effects
 		if (cvar("developer") == 1)
 		{
 			local string s = ftos(statusrand);

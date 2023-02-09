@@ -411,4 +411,9 @@ void() CheckImpulseButtons =
 		local string d = ftos(hp_max_ups);
 		bprint ("HP Max Up Flag: ", d, "\n");
 	}
+	if (self.impulse == 9)
+	{
+		local string h = ftos(self.playerid);
+		bprint ("Player ID: ", h, "\n");
+	}
 };

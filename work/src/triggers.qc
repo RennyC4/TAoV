@@ -705,7 +705,8 @@ void() pit_touch =
 
 		other.telecam = TRUE;
 	}
-	// Monster hits trigger_hit
+
+	// Monster hits trigger_pit
 	if (other.flags & FL_MONSTER)
 	{
 		temp = self;
@@ -717,6 +718,8 @@ void() pit_touch =
 		{
 			oself = self;
 			self = other;
+			if (self.enemy.enemy == self) // Clear vigils enemy flag
+				self.enemy.enemy = world;
 			GiveExperience(self.experience);
 			self = oself;
 		}

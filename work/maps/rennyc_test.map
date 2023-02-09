@@ -332,14 +332,6 @@
 ( -320 96 168 ) ( -320 96 352 ) ( -512 96 352 ) brickground 64 -24 0 1 1
 ( -320 -96 352 ) ( -320 96 352 ) ( -320 96 168 ) brickground 64 -24 0 1 1
 }
-// brush 36
-{
-( -320 0 112 ) ( -320 -16 112 ) ( -320 -16 48 ) brickground 0 0 0 1 1
-( -320 -16 112 ) ( -192 -16 48 ) ( -320 -16 48 ) brickground 48 0 0 1 1
-( -192 -16 48 ) ( -192 0 48 ) ( -320 0 48 ) brickground 48 0 0 1 1
-( -320 0 48 ) ( -192 0 48 ) ( -320 0 112 ) brickground 48 0 0 1 1
-( -320 0 112 ) ( -192 0 48 ) ( -192 -16 48 ) brickground 48 0 0 1 1
-}
 }
 // entity 1
 {
@@ -435,5 +427,12 @@
 {
 "classname" "monster_hydra"
 "origin" "144 -32 -48"
+"awareness" "4"
+}
+// entity 13
+{
+"classname" "monster_gaunt"
+"origin" "-304 16 80"
+"angle" "180"
 "awareness" "4"
 }

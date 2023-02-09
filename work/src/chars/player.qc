@@ -3342,7 +3342,7 @@ void() player_fire =
 	}
 
 	local vector source = self.char.origin;
-	local vector dest = self.char.origin - v_up * 8;
+	local vector dest = self.char.origin - v_up * 12;
 	local float ground_attack_test;
 	
 	tracebox (source, self.char.mins, self.char.maxs, dest, TRUE, self.char);
@@ -3352,7 +3352,7 @@ void() player_fire =
 	else
 		ground_attack_test = TRUE;
 
-	if (self.char.onground || self.char.flags & FL_ONGROUND || (ground_attack_test && self.char.inair <= 16)) // 8qu dist check will still allow Vigil to do ground attacks
+	if (self.char.onground || self.char.flags & FL_ONGROUND || (ground_attack_test && self.char.inair <= 16)) // 12qu dist check will still allow Vigil to do ground attacks
 	{   // Fix Vigil doing normal attacks during a grab
 		if (!self.char.grabbed)
 		{
@@ -7468,8 +7468,8 @@ void() player_fireball2	=[	$magicb2,	player_move	]
 		Fireball(25,21);
 	else // Launch 2 fireballs over level 20 for 1.5x damage
 	{
-		Fireball(19,24); // Up
-		Fireball(19,18); // Down
+		Fireball(19,28); // Up
+		Fireball(19,21); // Down
 	}
 
 	// Subtract mana for the spell accordingly
