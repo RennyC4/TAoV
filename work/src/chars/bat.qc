@@ -56,7 +56,7 @@ void() bat_think =
 				{
 					effect = spawn();
 					setorigin(effect, headdmg.origin);
-					setmodel(effect, "progs/hit.spr");
+					setmodel(effect, "progs/hit2.spr");
 					effect.alpha = 1;
 					effect.scale = 1;
 					effect.angles_z = random()*360;

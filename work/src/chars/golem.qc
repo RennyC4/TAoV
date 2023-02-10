@@ -493,6 +493,7 @@ void() monster_golem =
 	precache_sound ("player/twoosh.wav");
 	precache_sound ("baron/smash.wav");
 	precache_sound ("misc/explode.wav");
+	precache_sound ("misc/rocks.wav"); // for izuna
 
 	precache_model ("progs/rubble1.mdl");
 	precache_model ("progs/rubble2.mdl");

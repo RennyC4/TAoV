@@ -498,6 +498,7 @@ void() bubble_remove;
 void() bubble_bob;
 .float air_finished;
 .float bubble_count;
+.float drownsound_finished;
 .float liquidsound_finished;
 void() PainSound;
 
@@ -861,8 +862,48 @@ void() PlayerPreThink =
 			self.smooth_x_camera = smoothcamera_x; // binded
 			smoothcamera_x.drawonlytoclient = self; // reduce network traffic
 		}
+
+		//
 		InitCamera(); // Main game camera
 		//
+
+		//
+		// Vigil overhead cursor / perfect guard buff symbol
+		//
+
+		if ((!visible(self.char) || self.char.perfectguard_buff > time) || coop)
+		{
+			if (!self.charcursor)
+			{
+				local entity cursor = spawn();
+				if (self.char.perfectguard_buff < time)
+					setmodel (cursor, "progs/cursor2.spr");
+				else
+				{
+					setmodel (cursor, "progs/cursor3.spr");
+					spawn_color_glow(1, 1, 0, 100, cursor); // spawn glow
+				}
+				setsize (cursor, '0 0 0', '0 0 0');
+				setorigin (cursor, self.char.origin + v_up*42);
+				cursor.classname = "cursor";
+				cursor.effects = EF_NODEPTHTEST;
+				cursor.movetype = MOVETYPE_NOCLIP;
+				cursor.solid = SOLID_NOT;
+				cursor.owner = self.char;
+				cursor.think = cursor_follow;
+				if (coop)
+					cursor.nextthink = time + 0.1;
+				else
+					cursor.nextthink = time;
+				self.charcursor = cursor; // binded
+			}
+		}
+		else if (self.charcursor)
+		{
+			self.charcursor.solid = SOLID_NOT; // remove glow
+			remove(self.charcursor);
+			self.charcursor = world;
+		}
 
 		if (self.char.classname == "player")
 		{
@@ -1093,44 +1134,6 @@ void() PlayerPreThink =
 				StatusEffects();
 		}
 
-		//
-		// Vigil overhead cursor / perfect guard buff symbol
-		//
-
-		if ((!visible(self.char) || self.char.perfectguard_buff > time) || coop)
-		{
-			if (!self.charcursor)
-			{
-				local entity cursor = spawn();
-				if (self.char.perfectguard_buff < time)
-					setmodel (cursor, "progs/cursor2.spr");
-				else
-				{
-					setmodel (cursor, "progs/cursor3.spr");
-					spawn_color_glow(1, 1, 0, 100, cursor); // spawn glow
-				}
-				setsize (cursor, '0 0 0', '0 0 0');
-				setorigin (cursor, self.char.origin + v_up*42);
-				cursor.classname = "cursor";
-				cursor.effects = EF_NODEPTHTEST;
-				cursor.movetype = MOVETYPE_NOCLIP;
-				cursor.solid = SOLID_NOT;
-				cursor.owner = self.char;
-				cursor.think = cursor_follow;
-				if (coop)
-					cursor.nextthink = time + 0.1;
-				else
-					cursor.nextthink = time;
-				self.charcursor = cursor; // binded
-			}
-		}
-		else if (self.charcursor)
-		{
-			self.charcursor.solid = SOLID_NOT; // remove glow
-			remove(self.charcursor);
-			self.charcursor = world;
-		}
-
 		if (self.char.health > 0)
 			self.health = self.char.health;
 		else
@@ -1255,10 +1258,10 @@ void() PlayerPostThink =
 				{
 					if (self.char.takedamage && self.char.invunerability_finished < time)
 					{
-						if (self.char.liquidsound_finished < time)
+						if (self.char.drownsound_finished < time)
 						{
 							sound (self.char, CHAN_VOICE, "player/drown.wav", 1, ATTN_NORM);
-							self.char.liquidsound_finished = time + 1;
+							self.char.drownsound_finished = time + 1;
 						}
 						self.char.health = self.char.health - 1;
 						if (self.char.health < 1)
@@ -1270,6 +1273,8 @@ void() PlayerPostThink =
 			}
 			else
 			{
+				if (self.char.drownsound_finished > time)
+					sound (self.char, CHAN_VOICE, "player/gasp.wav", 1, ATTN_NORM);
 				self.char.swimming = FALSE;
 				self.char.speed = 120; // Vigil's default speed is set here...
 			}

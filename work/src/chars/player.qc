@@ -6451,29 +6451,6 @@ void() player_knockedup1    =[	$walled1,	player_knockedup1 ]
 
 void() player_knockedfar1    =[	$walled1,	player_knockedfar1 ] 
 {
-	//
-	// Check for walls for Vigil to smack into
-	//
-
-	local vector v;
-
-	v = self.angles;	  //
-	v_x = 0;			  // Remove tilt on traceline!
-	v_x = v_x - 25;       // Remove tilt on traceline!
-	makevectors (v);	  //
-
-	traceline(self.origin, self.origin - v_forward * 24, FALSE, self);
-
-	if (trace_fraction < 1 && trace_ent.solid == SOLID_BSP && !self.swimming)
-	{
-		PainSound();
-		self.owner.camshake_finished = time + 0.2;
-		self.wallhit_count = 0;
-		self.takedamage = DAMAGE_NO;
-		player_walled2();
-		return;
-	}
-
 	if (self.velocity_z > 0)
 		self.angles_x = 45;
 	else
@@ -6481,13 +6458,49 @@ void() player_knockedfar1    =[	$walled1,	player_knockedfar1 ]
 		if (self.angles_x > -90)
 			self.angles_x = self.angles_x - 3;
 	}
-	if (self.onground == TRUE)
+
+	if (self.swimming) // sink slower when hit than in normal air
 	{
-		PainSound();
-		sound (self, CHAN_BODY, "player/jmpflor.wav", 1, ATTN_NORM);
-		self.angles_x = 0;
-		player_hit4();
-		return;
+		self.velocity_z = self.velocity_z / 1.05;
+		if (self.inwater_pain >= 150)
+		{
+			player_swim_recover(); // Don't reset angle_x to zero, this handles it
+			return;
+		}
+		self.inwater_pain = self.inwater_pain + 1;
+	}
+	else
+	{
+		//
+		// Check for walls for Vigil to smack into
+		//
+
+		local vector v;
+
+		v = self.angles;	  //
+		v_x = 0;			  // Remove tilt on traceline!
+		v_x = v_x - 25;       // Remove tilt on traceline!
+		makevectors (v);	  //
+
+		traceline(self.origin, self.origin - v_forward * 24, FALSE, self);
+
+		if (trace_fraction < 1 && trace_ent.solid == SOLID_BSP && !self.swimming)
+		{
+			PainSound();
+			self.owner.camshake_finished = time + 0.2;
+			self.wallhit_count = 0;
+			self.takedamage = DAMAGE_NO;
+			player_walled2();
+			return;
+		}
+
+		if (self.onground)
+		{
+			PainSound();
+			sound (self, CHAN_BODY, "player/jmpflor.wav", 1, ATTN_NORM);
+			self.angles_x = 0;
+			player_hit4();
+		}
 	}
 	frameskip(0.01);
 };
@@ -6708,7 +6721,6 @@ void() player_hit5	=[	$pain5,	player_hit6 	]
 	self.velocity_x = self.velocity_y = 0;
 	model_tilt();
 	self.owner.softshadow_time = time;
-	//frameskip (0.1);
 };
 
 void() player_hit6	=[	$pain5,	player_hit6 	]
@@ -6729,7 +6741,6 @@ void() player_hit6	=[	$pain5,	player_hit6 	]
 	}
 	else
 		player_getup1();
-	//self.nextthink = time + 0.1;
 };
 
 void() player_getupb1	=[	$getupb1,	player_getupb2	] {self.angles_z = self.angles_x = 0;};
@@ -9286,9 +9297,14 @@ void() player_gizuna2   =[	$izuna1,	player_bflip1	]
 	}
 	else
 	{
-		sound (self, CHAN_AUTO, "player/izunahit.wav", 1, ATTN_NORM);
-		if (!self.izunatarg.noblood)
-			sound (self, CHAN_AUTO, "player/broken.wav", 1, ATTN_NORM);
+		if (self.izunatarg.classname == "golem")
+			sound (self, CHAN_AUTO, "misc/rocks.wav", 1, ATTN_NORM);
+		else
+		{
+			if (!self.izunatarg.noblood || self.izunatarg.classname == "skeleton")
+				sound (self, CHAN_AUTO, "player/broken.wav", 1, ATTN_NORM);
+			sound (self, CHAN_AUTO, "player/izunahit.wav", 1, ATTN_NORM);
+		}
 	}
 
 	// Calculate dammage

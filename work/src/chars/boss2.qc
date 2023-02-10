@@ -109,7 +109,6 @@ float(entity targ) boss_range =
 
 void() boss_attack1;
 void() boss_rockdrop1;
-
 void() boss_idle1 = [0, boss_idle1]
 {
 	local vector view;
@@ -231,7 +230,7 @@ void() Boss2Melee =
 
 	if (calc > 0 && calc != self.char.health)
 		self.char.health = self.char.health - calc;
-	
+
 	if (self.char.health < 1)
 		Killed (self.char, self.enemy);
 

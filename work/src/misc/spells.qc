@@ -591,7 +591,7 @@ void() icefield_think =
 		}
 		self.attack_finished = time + 0.08;
 	}
-	if (self.pain_finished < time)
+	if (self.pain_finished < time || self.owner.health < 1)
 	{
 		if (self.frame > 0)
 		{

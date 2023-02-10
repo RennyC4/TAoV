@@ -211,6 +211,7 @@ void() worldspawn =
 		precache_sound ("misc/swim.wav");
 		precache_sound ("weapons/lhit.wav");
 		precache_sound ("archer/bowdraw.wav"); // also acts as a 'squeeze' sound
+		precache_sound ("player/gasp.wav");
 		precache_sound ("player/drown.wav");
 		precache_sound ("player/sheath.wav");
 		precache_sound ("player/izunahit.wav");
@@ -550,7 +551,7 @@ void() StartFrame =
 			continue;
 
 		// Update waterlevel on MOVETYPE_STEP/WALK/FLY entities (credit to mankrip)
-		if (v.movetype == MOVETYPE_STEP || v.movetype == MOVETYPE_WALK || v.movetype == MOVETYPE_FLY || v.movetype == MOVETYPE_BOUNCE || v.movetype == MOVETYPE_TOSS)
+		if (v.movetype == MOVETYPE_STEP || v.movetype == MOVETYPE_WALK || v.movetype == MOVETYPE_BOUNCE || v.movetype == MOVETYPE_TOSS)
 		{
 			vector point = v.origin;
 			local float contents;

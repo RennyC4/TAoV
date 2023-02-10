@@ -425,14 +425,14 @@
 }
 // entity 12
 {
-"classname" "monster_hydra"
-"origin" "144 -32 -48"
+"classname" "monster_skeleton"
+"origin" "-304 16 88"
+"angle" "180"
 "awareness" "4"
 }
 // entity 13
 {
-"classname" "monster_gaunt"
-"origin" "-304 16 80"
-"angle" "180"
+"classname" "monster_hydra"
+"origin" "144 -32 -48"
 "awareness" "4"
 }
