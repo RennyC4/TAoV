@@ -943,7 +943,9 @@ void(float damg, float dist, float knokback, float rsize, float snd, float flsh,
 						sound (self, CHAN_AUTO, "player/bigcut.wav", 1, ATTN_NORM);
 					else if (snd == 6)
 						sound (self, CHAN_AUTO, "player/hugekick.wav", 1, ATTN_NORM);
-					// over 6 is blank
+					else if (snd == 7)
+						sound (self, CHAN_AUTO, "player/izunahit.wav", 1, ATTN_NORM);
+					// over 7 is blank/silent
 
 					if (head.grabbed)
 						head.grabbed = FALSE;

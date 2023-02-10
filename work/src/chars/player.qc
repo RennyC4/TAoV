@@ -1775,7 +1775,9 @@ void() player_think =
 					player_yell(0); // yell
 
 					player_prop(self.char); // spawn fading clone
+					sound (self, CHAN_AUTO, "player/sheath.wav", 1, ATTN_NORM);
 					sound (self, CHAN_AUTO, "player/grab.wav", 1, ATTN_NORM);
+					sound (self, CHAN_AUTO, "archer/bowdraw.wav", 1, ATTN_NORM);
 
 					WriteByte (MSG_BROADCAST, SVC_TEMPENTITY);
 					WriteByte (MSG_BROADCAST, TE_TELEPORT);
@@ -1816,8 +1818,10 @@ void() player_think =
 
 					if (vel)
 					{
+						sound (self.char, CHAN_AUTO, "player/sheath.wav", 1, ATTN_NORM);
 						sound (self.char, CHAN_AUTO, "player/jump.wav", 1, ATTN_NORM);
 						sound (self.char, CHAN_AUTO, "player/grab.wav", 1, ATTN_NORM);
+						sound (self.char, CHAN_AUTO, "archer/bowdraw.wav", 1, ATTN_NORM);
 						self.char.velocity = '0 0 0';
 						self.char.velocity_z = 425; // normal player jump height
 						self.char.izunatarg.velocity_z = 425;
@@ -3505,7 +3509,9 @@ void() player_fire =
 				self.char.oangles = self.char.angles; // store original angle
 
 				player_yell(0);
+				sound (self, CHAN_AUTO, "player/sheath.wav", 1, ATTN_NORM);
 				sound (self, CHAN_AUTO, "player/grab.wav", 1, ATTN_NORM);
+				sound (self, CHAN_AUTO, "archer/bowdraw.wav", 1, ATTN_NORM);
 
 				self.char.think = player_gizuna1;
 				self.char.nextthink = time;
@@ -9279,8 +9285,11 @@ void() player_gizuna2   =[	$izuna1,	player_bflip1	]
 		sound (self, CHAN_AUTO, "player/izunah2o.wav", 1, ATTN_NORM);
 	}
 	else
-		sound (self, CHAN_AUTO, "player/hugekick.wav", 1, ATTN_NORM);
-
+	{
+		sound (self, CHAN_AUTO, "player/izunahit.wav", 1, ATTN_NORM);
+		if (!self.izunatarg.noblood)
+			sound (self, CHAN_AUTO, "player/broken.wav", 1, ATTN_NORM);
+	}
 
 	// Calculate dammage
 	local float calc;
@@ -9300,7 +9309,7 @@ void() player_gizuna2   =[	$izuna1,	player_bflip1	]
 	self.takedamage = DAMAGE_AIM; // reactivate damage on self
 	self.attack_type = 5; // Cut in half!
 	self.owner.screenflash_finished = time + 0.1; // hard hit -> screen flashes
-	FireMelee(calc,0,3,75,7,FALSE,1,TRUE,0,0,1); // silent sound / silent flash
+	FireMelee(calc,0,3,75,-1,FALSE,1,TRUE,0,0,1); // silent sound / silent flash
 
 	self.owner.attack_finished = time;
 	self.grabbed = FALSE;
