@@ -282,10 +282,6 @@ void() HuntTarget =
 	if (self.enemy.owner.flags & FL_NOTARGET)
 		return;
 
-//  ASDF
-//	if (self.movetype != MOVETYPE_NOCLIP)
-//		self.movetype = MOVETYPE_STEP;
-
 	self.show_hostile = time + 1;
 	self.goalentity = self.enemy;
 	self.ideal_yaw = vectoyaw(self.enemy.origin - self.origin);

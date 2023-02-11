@@ -458,15 +458,26 @@ void() cursor_follow =
 	if (!self.colormod)
 	{
 		if (self.owner.owner.playerid == 1)
-			self.colormod = '10 1 1'; // Red
+		{
+			if (self.colormod != '10 1 1') 
+				self.colormod = '10 1 1'; // Red
+		}
 		if (self.owner.owner.playerid == 2)
-			self.colormod = '1 1 10'; // Blue
+		{
+			if (self.colormod != '1 1 10') 
+				self.colormod = '1 1 10'; // Blue
+		}
 		if (self.owner.owner.playerid == 4)
-			self.colormod = '1 10 1'; // Green
+		{
+			if (self.colormod != '1 10 1') 
+				self.colormod = '1 10 1'; // Green
+		}
 		if (self.owner.owner.playerid == 8)
-			self.colormod = '10 10 1'; // Yellow
+		{
+			if (self.colormod != '10 10 1') 
+				self.colormod = '10 10 1'; // Yellow
+		}
 	}
-
 	frameskip(0.01);
 };
 
@@ -867,44 +878,6 @@ void() PlayerPreThink =
 		InitCamera(); // Main game camera
 		//
 
-		//
-		// Vigil overhead cursor / perfect guard buff symbol
-		//
-
-		if ((!visible(self.char) || self.char.perfectguard_buff > time) || coop)
-		{
-			if (!self.charcursor)
-			{
-				local entity cursor = spawn();
-				if (self.char.perfectguard_buff < time)
-					setmodel (cursor, "progs/cursor2.spr");
-				else
-				{
-					setmodel (cursor, "progs/cursor3.spr");
-					spawn_color_glow(1, 1, 0, 100, cursor); // spawn glow
-				}
-				setsize (cursor, '0 0 0', '0 0 0');
-				setorigin (cursor, self.char.origin + v_up*42);
-				cursor.classname = "cursor";
-				cursor.effects = EF_NODEPTHTEST;
-				cursor.movetype = MOVETYPE_NOCLIP;
-				cursor.solid = SOLID_NOT;
-				cursor.owner = self.char;
-				cursor.think = cursor_follow;
-				if (coop)
-					cursor.nextthink = time + 0.1;
-				else
-					cursor.nextthink = time;
-				self.charcursor = cursor; // binded
-			}
-		}
-		else if (self.charcursor)
-		{
-			self.charcursor.solid = SOLID_NOT; // remove glow
-			remove(self.charcursor);
-			self.charcursor = world;
-		}
-
 		if (self.char.classname == "player")
 		{
 			// Send Vigil's origin to CSQC for Blind status mainly
@@ -917,6 +890,45 @@ void() PlayerPreThink =
 			else
 				self.pain_finished = time - 1;
 
+			//
+			// Vigil overhead cursor / perfect guard buff symbol
+			//
+
+			if ((!visible(self.char) || self.char.perfectguard_buff > time) || coop)
+			{
+				if (!self.charcursor)
+				{
+					local entity cursor = spawn();
+					if (self.char.perfectguard_buff < time)
+						setmodel (cursor, "progs/cursor2.spr");
+					else
+					{
+						setmodel (cursor, "progs/cursor3.spr");
+						spawn_color_glow(1, 1, 0, 100, cursor); // spawn glow
+					}
+					setsize (cursor, '0 0 0', '0 0 0');
+					setorigin (cursor, self.char.origin + v_up*42);
+					cursor.classname = "cursor";
+					cursor.effects = EF_NODEPTHTEST;
+					cursor.movetype = MOVETYPE_NOCLIP;
+					cursor.solid = SOLID_NOT;
+					cursor.owner = self.char;
+					cursor.think = cursor_follow;
+					if (coop)
+						cursor.nextthink = time + 0.1;
+					else
+						cursor.nextthink = time;
+					self.charcursor = cursor; // binded
+				}
+			}
+			else if (self.charcursor)
+			{
+				self.charcursor.solid = SOLID_NOT; // remove glow
+				remove(self.charcursor);
+				self.charcursor = world;
+			}
+			//
+			
 			//
 			//	Full Mana visual indicator
 			//
