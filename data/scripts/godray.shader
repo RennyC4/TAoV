@@ -7,13 +7,13 @@ godray-moon
 	}
 	{
 		map $linear:textures/godray-moon.png
-		alphaGen const 0.125
+		alphaGen const 0.35
 		tcMod scroll -0.05 0
 		blendfunc blend
 	}
 	{
 		map $linear:textures/godray-moon.png
-		alphaGen const 0.125
+		alphaGen const 0.35
 		tcMod scroll 0.05 0
 		blendfunc blend
 	}

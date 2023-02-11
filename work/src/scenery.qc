@@ -127,7 +127,7 @@ void() fountain =
 Waterfall you can place, adjustable properties include
 .scale for size
 .alpha for transparency
-.effects (EF_FULLBRIGHT works great for lava)
+.effects for whatever reason
 .skin for texture on the waterfall.mdl
 */
 void() waterfall_think =
