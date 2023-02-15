@@ -104,7 +104,7 @@ void() swordstareffect3;
 
 void() volbrand_think =
 {
-	if (self.owner.classname != "player")
+	if (self.owner.classname != "player" || !self.owner)
 	{
 		remove(self);
 		return;
@@ -160,7 +160,7 @@ void(entity own) spawn_volbrand =
 //
 void() helm_think =
 {
-	if (self.owner.classname != "player")
+	if (self.owner.classname != "player" || !self.owner)
 	{
 		remove(self);
 		return;

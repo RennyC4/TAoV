@@ -592,8 +592,8 @@ void() trigger_counter =
 void() camstyle_touch =
 {
 	if (other.classname != "player")
-		return; // No special camera in static mode / deathmatch / coop
-	if (cvar("scratch3") == 1 && self.camerastyle == 4 || coop || deathmatch)
+		return; // No special camera in static mode / deathmatch
+	if (cvar("scratch3") == 1 && self.camerastyle == 4 || deathmatch)
 		return;
 
 	other.owner.camerastyle = self.camerastyle;

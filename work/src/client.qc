@@ -428,6 +428,8 @@ void() ClientDisconnect =
 {
 	players = players - 1;
 	self.classname = "disconnected";
+
+	// Clean up ents
 	if (self.char)
 	{
 		self.char.classname = "disconnected";
@@ -435,6 +437,11 @@ void() ClientDisconnect =
 	}
 	if (self.lock_view)
 		remove(self.lock_view);
+	if (self.charcursor)
+		remove(self.charcursor);
+	if (self.smooth_x_camera)
+		remove(self.smooth_x_camera);
+
 	bprint (self.netname);
 	bprint (" has left the realm.\n");
 };
@@ -746,8 +753,6 @@ void() PlayerWaterPhysics;
 
 void() PlayerPreThink = 
 {
-	local entity manashadow;
-
 	//
 	// Fixes bug for loading the proper music during save game load
 	//
@@ -867,6 +872,7 @@ void() PlayerPreThink =
 			setsize (smoothcamera_x, '0 0 0', '0 0 0');
 			setorigin (smoothcamera_x, self.char.origin);
 			smoothcamera_x.movetype = MOVETYPE_NOCLIP;
+			smoothcamera_x.classname = "smoothcamera_x";
 			smoothcamera_x.owner = self.char;
 			smoothcamera_x.think = smoothcamera_x_follow;
 			smoothcamera_x.nextthink = time;
@@ -874,277 +880,109 @@ void() PlayerPreThink =
 			smoothcamera_x.drawonlytoclient = self; // reduce network traffic
 		}
 
+		// Send Vigil's origin to CSQC (affects swimming/blind status debuff)
+		self.vigil_x = self.char.origin_x;
+		self.vigil_y = self.char.origin_y;
+		self.vigil_z = self.char.origin_z;
+
 		//
 		InitCamera(); // Main game camera
 		//
 
-		if (self.char.classname == "player")
+		if (self.char.pain_finished > time) // Send to CSQC
+			self.pain_finished = time = self.char.pain_finished;
+		else
+			self.pain_finished = time - 1;
+
+		//
+		// HACK: Quake/FTE engine will not check SOLID_TRIGGER entities for .push,
+		//		 causes issues where plats will go through Vigil and set his bbox to null
+		//
+		if (self.char.dodge_finished < time && !self.char.lowceil)
+			setsize(self.char, VEC_HULL_MIN, VEC_HULL_MAX);
+
+		if (cvar("developer") < 1 && !deathmatch && !coop) // Disable slow-mo during attract demo recording mode, deathmatch and coop
 		{
-			// Send Vigil's origin to CSQC for Blind status mainly
-			self.vigil_x = self.char.origin_x;
-			self.vigil_y = self.char.origin_y;
-			self.vigil_z = self.char.origin_z;
+			if (freeze_finished > time)
+			{
+				if (turbo_mode)
+					localcmd ("sv_gamespeed 0.25\n");
+				else
+					localcmd ("sv_gamespeed 0.1\n");
 
-			if (self.char.pain_finished > time) // Send to CSQC
-				self.pain_finished = time = self.char.pain_finished;
+				if (self.freeze_done != FALSE)
+					self.freeze_done = FALSE;
+			}
 			else
-				self.pain_finished = time - 1;
-
-			//
-			// Vigil overhead cursor / perfect guard buff symbol
-			//
-
-			if ((!visible(self.char) || self.char.perfectguard_buff > time) || coop)
 			{
-				if (!self.charcursor)
-				{
-					local entity cursor = spawn();
-					if (self.char.perfectguard_buff < time)
-						setmodel (cursor, "progs/cursor2.spr");
-					else
-					{
-						setmodel (cursor, "progs/cursor3.spr");
-						spawn_color_glow(1, 1, 0, 100, cursor); // spawn glow
-					}
-					setsize (cursor, '0 0 0', '0 0 0');
-					setorigin (cursor, self.char.origin + v_up*42);
-					cursor.classname = "cursor";
-					cursor.effects = EF_NODEPTHTEST;
-					cursor.movetype = MOVETYPE_NOCLIP;
-					cursor.solid = SOLID_NOT;
-					cursor.owner = self.char;
-					cursor.think = cursor_follow;
-					if (coop)
-						cursor.nextthink = time + 0.1;
-					else
-						cursor.nextthink = time;
-					self.charcursor = cursor; // binded
-				}
-			}
-			else if (self.charcursor)
-			{
-				self.charcursor.solid = SOLID_NOT; // remove glow
-				remove(self.charcursor);
-				self.charcursor = world;
-			}
-			//
-			
-			//
-			//	Full Mana visual indicator
-			//
-
-			if (self.mana >= self.max_mana)
-			{
-				if (!self.fullmana_display)
-				{
-					if (self.fullmana_display_timer < time)
-					{
-						manashadow = spawn();
-						manashadow.owner = self.char;
-						manashadow.classname = "manashadow";
-						manashadow.movetype = MOVETYPE_NOCLIP;
-						manashadow.solid = SOLID_NOT;
-						manashadow.scale = 1;
-						manashadow.alpha = 0.5;
-						manashadow.colormod = '0 255 255';
-						manashadow.drawonlytoclient = self; // reduce network traffic
-						manashadow.effects = EF_ADDITIVE | EF_FULLBRIGHT | EF_NODEPTHTEST;
-						manashadow.attack_finished = time + 0.35;
-						setmodel (manashadow, "progs/plyr.mdl");
-
-						manashadow.frame = self.char.frame;
-						manashadow.angles = self.char.angles;
-						setorigin(manashadow, self.char.origin);
-						self.fullmana_display_timer = time + 0.5; // cooldown
-						sound (self, CHAN_AUTO, "player/fullmp.wav", 1, ATTN_NORM);
-
-						manashadow.think = manashadows_think;
-						manashadow.nextthink = time;
-						
-					}
-					self.fullmana_display = TRUE; // Only do this once
-				}
-			}
-			else if (self.fullmana_display)
-				self.fullmana_display = FALSE;
-		
-			//
-			//	Spell Absorption visual indicator
-			//
-
-			if (self.absorb_finished > time && self.absorb_display_timer < time)
-			{
-				self.fullmana_display = FALSE; // Allow it to remind the player again
-				
-				manashadow = spawn();
-				manashadow.owner = self.char;
-				manashadow.classname = "manashadow";
-				manashadow.movetype = MOVETYPE_NOCLIP;
-				manashadow.solid = SOLID_NOT;
-				manashadow.scale = 1;
-				manashadow.alpha = 0.5;
-				manashadow.colormod = '218 0 218'; // purple
-				manashadow.drawonlytoclient = self; // reduce network traffic
-				manashadow.effects = EF_ADDITIVE | EF_FULLBRIGHT | EF_NODEPTHTEST;
-				manashadow.attack_finished = time + 0.35;
-				setmodel (manashadow, "progs/plyr.mdl");
-
-				manashadow.frame = self.char.frame;
-				manashadow.angles = self.char.angles;
-				setorigin(manashadow, self.char.origin);
-
-				manashadow.think = manashadows_think;
-				manashadow.nextthink = time;
-
-				self.absorb_display_timer = time + 3.5; // Display once as the display timer is normally 3 seconds
-				sound (self, CHAN_AUTO, "spells/absorb.wav", 1, ATTN_NORM);
-			}
-
-			//
-			// ColorMod Rainbow for HP Max Up bottles and slowly reverting Vigil's colormod to default when changed
-			//
-
-			if (self.char.rainbow_finished > time)
-			{
-				if (self.char.rainbow_stage == 0)
-				{
-					if (self.char.colormod_x < 2)
-						self.char.colormod_x = 1 + self.char.colormod_x + (0.075 * 100) * frametime;
-					else
-					{
-						self.char.rainbow_stage = 1;
-						self.char.colormod_x = 1;
-					}
-				}
-				else if (self.char.rainbow_stage == 1)
-				{
-					if (self.char.colormod_y < 2)
-						self.char.colormod_y = 1 + self.char.colormod_y + (0.075 * 100) * frametime;
-					else
-					{
-						self.char.rainbow_stage = 2;
-						self.char.colormod_y = 1;
-					}
-				}
-				else if (self.char.rainbow_stage == 2)
-				{
-					if (self.char.colormod_z < 2)
-						self.char.colormod_z = 1 + self.char.colormod_z + (0.075 * 100) * frametime;
-					else
-					{
-						self.char.rainbow_stage = 0;
-						self.char.colormod_y = 1;
-					}		
-				}
-			}
-			else if (self.char.colormod != '1 1 1' && self.char.perfectguard_buff < time) // perfect guard is off
-			{
-				if (self.char.colormod_x > 1)
-					self.char.colormod_x = self.char.colormod_x - (0.03 * 100) * frametime;
-				else
-					self.char.colormod_x = 1;
-
-				if (self.char.colormod_y > 1)
-					self.char.colormod_y = self.char.colormod_y - (0.03 * 100) * frametime;
-				else
-					self.char.colormod_y = 1;
-
-				if (self.char.colormod_z > 1)
-					self.char.colormod_z = self.char.colormod_z - (0.03 * 100) * frametime;
-				else
-					self.char.colormod_z = 1;
-			}
-			
-			//
-			// HACK: Quake/FTE engine will not check SOLID_TRIGGER entities for .push,
-			//		 causes issues where plats will go through Vigil and set his bbox to null
-			//
-			if (self.char.dodge_finished < time && !self.char.lowceil)
-				setsize(self.char, VEC_HULL_MIN, VEC_HULL_MAX);
-
-			if (cvar("developer") < 1 && !deathmatch && !coop) // Disable slow-mo during attract demo recording mode, deathmatch and coop
-			{
-				if (freeze_finished > time)
+				if (!self.freeze_done)
 				{
 					if (turbo_mode)
-						localcmd ("sv_gamespeed 0.25\n");
+						localcmd ("sv_gamespeed 1.25\n");
 					else
-						localcmd ("sv_gamespeed 0.1\n");
-
-					if (self.freeze_done != FALSE)
-						self.freeze_done = FALSE;
-				}
-				else
-				{
-					if (!self.freeze_done)
-					{
-						if (turbo_mode)
-							localcmd ("sv_gamespeed 1.25\n");
-						else
-							localcmd ("sv_gamespeed 1\n");
-						if (self.freeze_done != TRUE)
-							self.freeze_done = TRUE;
-					}
+						localcmd ("sv_gamespeed 1\n");
+					if (self.freeze_done != TRUE)
+						self.freeze_done = TRUE;
 				}
 			}
-
-			//
-			// Red screen tint, applies on near-death
-			//
-			
-			if (self.screentint_finished < time)
-			{
-				if (self.char.health <= (self.char.max_health / 4))
-				{
-					if (!self.neardeath_tint)
-					{
-						if (framecount > 10) // Don't play sound again on level load
-							sound (self, CHAN_AUTO, "player/lowhealth.wav", 1, ATTN_NORM);
-						stuffcmd (self, "v_cshift 255 0 0 25\n");
-						self.neardeath_tint = TRUE;
-					}
-					if (self.vcshift_ok)
-						stuffcmd (self, "v_cshift 255 0 0 25\n");
-				}
-				else
-				{
-					if (self.vcshift_ok)
-						stuffcmd (self, "v_cshift 0 0 0 0\n");
-					else
-					{
-						if (self.char.health > (self.char.max_health / 4) && self.neardeath_tint)
-							stuffcmd (self, "v_cshift 0 0 0 0\n");
-					}
-					self.neardeath_tint = FALSE;
-				}
-				self.vcshift_ok = FALSE;
-			}
-
-			//
-			// Vigil's brace for Impact after a large fall
-			//
-
-			if (self.char.inair > 84 && self.char.velocity_z < -549 && (self.char.aircombo_count != 5 && self.char.aircombo_count != 6))
-				self.char.bigfall = TRUE;
-
-			if (self.displayname_finished < time && self.displayname != "")
-			{
-				self.displayname = "";
-				if (self.char.enemy.health < 1)
-					self.char.enemy = world; // Enemy is dead, clear Vigil's .enemy field
-			}
-			if (self.hflask_drink_finished > time)
-				HealthFlask();
-			if (self.char.perfectguard_buff < time && self.char.invunerability_finished < time &&self.char.alpha != 1)
-				self.char.alpha = 1;
-
-			// Debug inair time
-			//local string f = ftos(self.char.inair);
-			//bprint ("In Air: ", f, "\n");
-
-			if (self.forcewalk_finished < time && (self.status_blind_finished > time || self.status_poison_finished > time || self.status_broken_finished > time))
-				StatusEffects();
 		}
+
+		//
+		// Near-death red screen tint
+		//
+		
+		if (self.screentint_finished < time)
+		{
+			if (self.char.health <= (self.char.max_health / 4))
+			{
+				if (!self.neardeath_tint)
+				{
+					if (framecount > 10) // Don't play sound again on level load
+						sound (self, CHAN_AUTO, "player/lowhealth.wav", 1, ATTN_NORM);
+					stuffcmd (self, "v_cshift 255 0 0 25\n");
+					self.neardeath_tint = TRUE;
+				}
+				if (self.vcshift_ok)
+					stuffcmd (self, "v_cshift 255 0 0 25\n");
+			}
+			else
+			{
+				if (self.vcshift_ok)
+					stuffcmd (self, "v_cshift 0 0 0 0\n");
+				else
+				{
+					if (self.char.health > (self.char.max_health / 4) && self.neardeath_tint)
+						stuffcmd (self, "v_cshift 0 0 0 0\n");
+				}
+				self.neardeath_tint = FALSE;
+			}
+			self.vcshift_ok = FALSE;
+		}
+
+		//
+		// Vigil's brace for Impact after a large fall
+		//
+
+		if (self.char.inair > 84 && self.char.velocity_z < -549 && (self.char.aircombo_count != 5 && self.char.aircombo_count != 6))
+			self.char.bigfall = TRUE;
+
+		if (self.displayname_finished < time && self.displayname != "")
+		{
+			self.displayname = "";
+			if (self.char.enemy.health < 1)
+				self.char.enemy = world; // Enemy is dead, clear Vigil's .enemy field
+		}
+		if (self.hflask_drink_finished > time)
+			HealthFlask();
+		if (self.char.perfectguard_buff < time && self.char.invunerability_finished < time && self.char.alpha != 1)
+			self.char.alpha = 1;
+
+		// Debug inair time
+		//local string f = ftos(self.char.inair);
+		//bprint ("In Air: ", f, "\n");
+
+		if (self.forcewalk_finished < time && (self.status_blind_finished > time || self.status_poison_finished > time || self.status_broken_finished > time))
+			StatusEffects();
 
 		if (self.char.health > 0)
 			self.health = self.char.health;
@@ -1212,9 +1050,10 @@ void() PlayerPostThink =
 		//
 		// Swimming Physics are applied
 		//
-
 		// We use pointcontents due to MOVETYPE_STEP changes on Vigil
 		// causing 'waterlevel' not to update, that only happens on MOVETYPE_WALK entities
+		//
+
 		if (self.char.classname == "player")
 		{
 			self.swimming = self.char.swimming;
@@ -1227,7 +1066,7 @@ void() PlayerPostThink =
 					self.char.aircombo_count = 0;
 					self.ledgegrab = FALSE;
 					self.walljump = FALSE;
-					// Don't remove flypain, stops players from moving vigil when knocked from land into water which is intended behavior
+					// Don't remove flypain, stops vigil from moving when knocked from land -> water which is intended behavior
 					//self.char.flypain = FALSE;
 					self.wallrun = FALSE;
 					self.ledgegrab_finished = time;
@@ -1297,10 +1136,198 @@ void() PlayerPostThink =
 		else if (!self.safezone && self.combo)
 			self.combo = 0; // combo should always be zero in village and safe zones
 
-		// now do the movement
+		// execute vigils main functions
 		if (self.char.classname == "player")
 			player_think(); // player.qc
-		
+
+		//
+		// Vigil overhead cursor / perfect guard buff symbol
+		//
+
+		local entity cursor;
+		if (!coop)
+		{
+			if (!visible(self.char) || self.char.perfectguard_buff > time)
+			{
+				if (!self.charcursor)
+				{
+					cursor = spawn();
+					if (self.char.perfectguard_buff < time)
+						setmodel (cursor, "progs/cursor2.spr");
+					else
+					{
+						setmodel (cursor, "progs/cursor3.spr");
+						spawn_color_glow(1, 1, 0, 100, cursor); // spawn glow
+					}
+					setsize (cursor, '0 0 0', '0 0 0');
+					setorigin (cursor, self.char.origin + v_up*42);
+					cursor.classname = "cursor";
+					cursor.effects = EF_NODEPTHTEST;
+					cursor.movetype = MOVETYPE_NOCLIP;
+					cursor.solid = SOLID_NOT;
+					cursor.owner = self.char;
+					cursor.think = cursor_follow;
+					cursor.nextthink = time;
+					self.charcursor = cursor; // binded
+				}
+			}
+			else if (self.charcursor)
+			{
+				self.charcursor.solid = SOLID_NOT; // remove glow
+				remove(self.charcursor);
+				self.charcursor = world;
+			}
+		}
+		else // coop cursor behavior
+		{
+			if (!self.charcursor)
+			{
+				cursor = spawn();
+				if (self.char.perfectguard_buff < time)
+					setmodel (cursor, "progs/cursor2.spr");
+				else
+				{
+					setmodel (cursor, "progs/cursor3.spr");
+					spawn_color_glow(1, 1, 0, 100, cursor); // spawn glow
+				}
+				setsize (cursor, '0 0 0', '0 0 0');
+				setorigin (cursor, self.char.origin + v_up*42);
+				cursor.classname = "cursor";
+				cursor.effects = EF_NODEPTHTEST;
+				cursor.movetype = MOVETYPE_NOCLIP;
+				cursor.solid = SOLID_NOT;
+				cursor.owner = self.char;
+				cursor.think = cursor_follow;
+				cursor.nextthink = time + 0.1;
+				self.charcursor = cursor; // binded
+			}
+		}
+
+		//
+		//	Full Mana visual indicator
+		//
+
+		if (self.mana >= self.max_mana)
+		{
+			if (!self.fullmana_display)
+			{
+				if (self.fullmana_display_timer < time)
+				{
+					local entity manashadow = spawn();
+					manashadow.owner = self.char;
+					manashadow.classname = "manashadow";
+					manashadow.movetype = MOVETYPE_NOCLIP;
+					manashadow.solid = SOLID_NOT;
+					manashadow.scale = 1;
+					manashadow.alpha = 0.5;
+					manashadow.colormod = '0 255 255';
+					manashadow.drawonlytoclient = self; // reduce network traffic
+					manashadow.effects = EF_ADDITIVE | EF_FULLBRIGHT | EF_NODEPTHTEST;
+					manashadow.attack_finished = time + 0.35;
+					setmodel (manashadow, "progs/plyr.mdl");
+
+					manashadow.frame = self.char.frame;
+					manashadow.angles = self.char.angles;
+					setorigin(manashadow, self.char.origin);
+					self.fullmana_display_timer = time + 0.5; // cooldown
+					sound (self, CHAN_AUTO, "player/fullmp.wav", 1, ATTN_NORM);
+
+					manashadow.think = manashadows_think;
+					manashadow.nextthink = time;
+				}
+				self.fullmana_display = TRUE; // Only do this once
+			}
+		}
+		else if (self.fullmana_display)
+			self.fullmana_display = FALSE;
+	
+		//
+		//	Spell Absorption visual indicator
+		//
+
+		if (self.absorb_finished > time && self.absorb_display_timer < time)
+		{
+			self.fullmana_display = FALSE; // Allow the VFX to replay
+			
+			manashadow = spawn();
+			manashadow.owner = self.char;
+			manashadow.classname = "manashadow";
+			manashadow.movetype = MOVETYPE_NOCLIP;
+			manashadow.solid = SOLID_NOT;
+			manashadow.scale = 1;
+			manashadow.alpha = 0.5;
+			manashadow.colormod = '218 0 218'; // purple
+			manashadow.drawonlytoclient = self; // reduce network traffic
+			manashadow.effects = EF_ADDITIVE | EF_FULLBRIGHT | EF_NODEPTHTEST;
+			manashadow.attack_finished = time + 0.35;
+			setmodel (manashadow, "progs/plyr.mdl");
+
+			manashadow.frame = self.char.frame;
+			manashadow.angles = self.char.angles;
+			setorigin(manashadow, self.char.origin);
+
+			manashadow.think = manashadows_think;
+			manashadow.nextthink = time;
+
+			self.absorb_display_timer = time + 3.5; // Display once as the display timer is normally 3 seconds
+			sound (self, CHAN_AUTO, "spells/absorb.wav", 1, ATTN_NORM);
+		}
+
+		//
+		// ColorMod Rainbow for HP Max Up bottles and slowly reverting Vigil's colormod to default when changed
+		//
+
+		if (self.char.rainbow_finished > time)
+		{
+			if (self.char.rainbow_stage == 0)
+			{
+				if (self.char.colormod_x < 2)
+					self.char.colormod_x = 1 + self.char.colormod_x + (0.075 * 100) * frametime;
+				else
+				{
+					self.char.rainbow_stage = 1;
+					self.char.colormod_x = 1;
+				}
+			}
+			else if (self.char.rainbow_stage == 1)
+			{
+				if (self.char.colormod_y < 2)
+					self.char.colormod_y = 1 + self.char.colormod_y + (0.075 * 100) * frametime;
+				else
+				{
+					self.char.rainbow_stage = 2;
+					self.char.colormod_y = 1;
+				}
+			}
+			else if (self.char.rainbow_stage == 2)
+			{
+				if (self.char.colormod_z < 2)
+					self.char.colormod_z = 1 + self.char.colormod_z + (0.075 * 100) * frametime;
+				else
+				{
+					self.char.rainbow_stage = 0;
+					self.char.colormod_y = 1;
+				}		
+			}
+		}
+		else if (self.char.colormod != '1 1 1' && self.char.perfectguard_buff < time) // perfect guard is off
+		{
+			if (self.char.colormod_x > 1)
+				self.char.colormod_x = self.char.colormod_x - (0.03 * 100) * frametime;
+			else
+				self.char.colormod_x = 1;
+
+			if (self.char.colormod_y > 1)
+				self.char.colormod_y = self.char.colormod_y - (0.03 * 100) * frametime;
+			else
+				self.char.colormod_y = 1;
+
+			if (self.char.colormod_z > 1)
+				self.char.colormod_z = self.char.colormod_z - (0.03 * 100) * frametime;
+			else
+				self.char.colormod_z = 1;
+		}
+
 		// For debugging status effects
 		//self.char.tired_finished = time + 3;
 		//self.status_poison_finished = time + 3;
@@ -1323,7 +1350,10 @@ void() PlayerPostThink =
 	if (cvar("scr_fov_mode") != 5)
 		stuffcmd (self, "scr_fov_mode 5\n");
 
+	//
 	//* title screen *
+	//
+
 	if (world.model == "maps/start.bsp")
 	{
 		if (self.button0 && framecount > 79 && !self.cnt)
@@ -1371,7 +1401,10 @@ void() PlayerPostThink =
 		}
 	}
 
-	//* graphical menu *
+	//
+	//* graphical main menu *
+	//
+
 	if (world.model == "maps/menu.bsp" || world.model == "maps/start.bsp")
 	{
 		self.angles_x = 0;
@@ -1381,7 +1414,10 @@ void() PlayerPostThink =
 			MenuCommands();
 	}
 
+	//
 	//* camera targetting code for intro.bsp *
+	//
+
 	local vector view;
 	if (world.model == "maps/intro.bsp")
 	{
@@ -1461,7 +1497,7 @@ void() PutClientInServer =
 
 	DecodeLevelParms();
 
-	// These two lines must stay
+	// These next two lines must stay
 	self.level = decode(parm4, 2); // level	
 	self.armorvalue = self.level; // Display level on HUD properly
 
