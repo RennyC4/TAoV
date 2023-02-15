@@ -764,39 +764,67 @@ void() lisa_chat =
 					{
 						if (!game_progress & IT_PROGRESS2)
 						{
-							setpause (1);
-							centerprint (self.enemy.owner, "/P^bYou've learned Cyclone Crush!^b\n\n===========================\n\n^1Perform this attack by pressing the DOWN, FORWARD + ATTACK button combination\n\n\n\n^3Press ATTACK or JUMP to resume ...\n");
+							if (bosses & IT_BOSS1) // SGK defeated
+							{
+								setpause (1);
+								centerprint (self.enemy.owner, "/P^bYou've learned Cyclone Crush!^b\n\n===========================\n\n^1Perform this attack by pressing the DOWN, FORWARD + ATTACK button combination\n\n\n\n^3Press ATTACK or JUMP to resume ...\n");
 
-							if (!game_progress & IT_PROGRESS2) // Cyclone Attack
-								game_progress = game_progress | IT_PROGRESS2; // Add it (True)
+								if (!game_progress & IT_PROGRESS2) // Cyclone Attack
+									game_progress = game_progress | IT_PROGRESS2; // Add it (True)
 
-							self.enemy.owner.display_price = 0;
-							self.chatrefresh_finished = time + 3; // remove centerprint off player
-							sound (self.enemy.owner, CHAN_AUTO, "misc/levelup2.wav", 1, ATTN_NORM);
-							self.enemy.owner.gold = self.enemy.owner.gold - aprice; // remove gold
-							self.mode = 0; // Not chatting anymore
-							self.cnt = 0; // reset default topic
-							self.enemy.owner.conversation = FALSE;
-							self.pain_finished = time + 1; // Won't talk to user again for a second
+								self.enemy.owner.display_price = 0;
+								self.chatrefresh_finished = time + 3; // remove centerprint off player
+								sound (self.enemy.owner, CHAN_AUTO, "misc/levelup2.wav", 1, ATTN_NORM);
+								self.enemy.owner.gold = self.enemy.owner.gold - aprice; // remove gold
+								self.mode = 0; // Not chatting anymore
+								self.cnt = 0; // reset default topic
+								self.enemy.owner.conversation = FALSE;
+								self.pain_finished = time + 1; // Won't talk to user again for a second
+							}
+							else
+							{
+								setpause (1);
+								centerprint (self.enemy.owner, "/P\n\nSorry Vigil, it appears you're not quite ready yet to learn this technique.\n\n\n\n^3Press ATTACK or JUMP to resume ...\n");
+								self.enemy.owner.display_price = 0;
+								self.chatrefresh_finished = time + 3; // remove centerprint off player
+								self.mode = 0; // Not chatting anymore
+								self.cnt = 0; // reset default topic
+								self.enemy.owner.conversation = FALSE;
+								self.pain_finished = time + 1; // Won't talk to user again for a second
+							}
 						}
 						else if (!game_progress & IT_PROGRESS4)
 						{
-							setpause (1);
-							centerprint (self.enemy.owner, "/P^bYou've learned Diving Swallow!^b\n\n===========================\n\n^1Perform this attack by using Vigil's Roundhouse kick against an enemy then quickly follow up with an ATTACK button press\n\n\n\n^3Press ATTACK or JUMP to resume ...\n");
+							if (bosses & IT_BOSS2) // Eternal Dragon defeated
+							{
+								setpause (1);
+								centerprint (self.enemy.owner, "/P^bYou've learned Diving Swallow!^b\n\n===========================\n\n^1Perform this attack by using Vigil's Roundhouse kick against an enemy then quickly follow up with an ATTACK button press\n\n\n\n^3Press ATTACK or JUMP to resume ...\n");
 
-							if (!game_progress & IT_PROGRESS4) // Diving Swallow Attack
-								game_progress = game_progress | IT_PROGRESS4; // Add it (True)
+								if (!game_progress & IT_PROGRESS4) // Diving Swallow Attack
+									game_progress = game_progress | IT_PROGRESS4; // Add it (True)
 
-							self.enemy.owner.display_price = 0;
-							self.chatrefresh_finished = time + 3; // remove centerprint off player
-							sound (self.enemy.owner, CHAN_AUTO, "misc/levelup2.wav", 1, ATTN_NORM);
-							self.enemy.owner.gold = self.enemy.owner.gold - aprice; // remove gold
-							self.mode = 0; // Not chatting anymore
-							self.cnt = 0; // reset default topic
-							self.enemy.owner.conversation = FALSE;
-							self.pain_finished = time + 1; // Won't talk to user again for a second
+								self.enemy.owner.display_price = 0;
+								self.chatrefresh_finished = time + 3; // remove centerprint off player
+								sound (self.enemy.owner, CHAN_AUTO, "misc/levelup2.wav", 1, ATTN_NORM);
+								self.enemy.owner.gold = self.enemy.owner.gold - aprice; // remove gold
+								self.mode = 0; // Not chatting anymore
+								self.cnt = 0; // reset default topic
+								self.enemy.owner.conversation = FALSE;
+								self.pain_finished = time + 1; // Won't talk to user again for a second
+							}
+							else
+							{
+								setpause (1);
+								centerprint (self.enemy.owner, "/P\n\nSorry Vigil, it appears you're not quite ready yet to learn this technique.\n\n\n\n^3Press ATTACK or JUMP to resume ...\n");
+								self.enemy.owner.display_price = 0;
+								self.chatrefresh_finished = time + 3; // remove centerprint off player
+								self.mode = 0; // Not chatting anymore
+								self.cnt = 0; // reset default topic
+								self.enemy.owner.conversation = FALSE;
+								self.pain_finished = time + 1; // Won't talk to user again for a second
+							}
 						}
-						else if (!game_progress & IT_PROGRESS6)
+						else if (!game_progress & IT_PROGRESS6) // TODO: Add Scroll Item / Small Quest
 						{
 							setpause (1);
 							centerprint (self.enemy.owner, "/P^bYou've learned Airzuna Drop!^b\n\n===========================\n\n^1Perform this attack by pressing DOWN, DOWN, UP + ATTACK button combination after grabbing an opponent or landing a strike whilst airborne, damage scales with strike meter\n\n\n\n^3Press ATTACK or JUMP to resume ...\n");
