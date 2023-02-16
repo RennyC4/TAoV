@@ -168,6 +168,8 @@ void() item_hpmaxup_touch =
 		return;
 	if (!other.owner)
 		return;
+	if (cvar("developer") == 2)
+		return;
 	
 	// Give max HP to ALL players
 	local entity y = find(world, classname, "player");
@@ -251,6 +253,8 @@ void() item_health_touch =
 	if (!other.owner)
 		return;
 	if (self.pain_finished > time)
+		return;
+	if (cvar("developer") == 2)
 		return;
 
 	self.pain_finished = time + 1; // pick up time
@@ -462,6 +466,8 @@ void() item_mana_touch =
 		return;
 	if (self.pain_finished > time)
 		return;
+	if (cvar("developer") == 2)
+		return;
 
 	self.pain_finished = time + 1; // pick up time
 
@@ -586,6 +592,8 @@ void() item_key_touch =
 {
 	if (other.classname != "player" || other.health <= 0)
 		return;
+	if (cvar("developer") == 2)
+		return;
 
 	sound (self, CHAN_ITEM, "misc/pickup.wav", 1, ATTN_NORM);
 
@@ -653,6 +661,8 @@ void(entity own) spawn_helmet;
 void() relic_touch =
 {
 	if (other.classname != "player" || other.health <= 0)
+		return;
+	if (cvar("developer") == 2)
 		return;
 
 	if (cvar("developer") != 3) // Demo / Attract recording mode
@@ -905,6 +915,8 @@ void() spellbook_touch =
 {
 	if (other.classname != "player" || other.health <= 0)
 		return;
+	if (cvar("developer") == 2)
+		return;
 
 	if (cvar("developer") != 3) // Demo / Attract recording mode
 	{
@@ -1062,6 +1074,8 @@ void() gold_touch =
 	if (other.classname != "player")
 		return;
 	if (!other.owner)
+		return;
+	if (cvar("developer") == 2)
 		return;
 
 	self.playerid = self.playerid + other.owner.playerid;
