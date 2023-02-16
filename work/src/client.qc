@@ -146,15 +146,15 @@ void() InitCamera =
 				// if we're still in the process of smoothing, we ignore the true view_y to avoid snapping
 				if (self.stylechange_time)
 				{
-					local float frac = (self.stylechange_time - time) / self.stylechange_length; 
-
-					if (frac > 0)
-						self.angles_y = view_y_bound + angle_diff(view_y_bound, self.stylechange_angle) * frac;
-					else
-					{
+//					local float frac = (self.stylechange_time - time) / self.stylechange_length; 
+//
+//					if (frac > 0)
+//						self.angles_y = view_y_bound + angle_diff(view_y_bound, self.stylechange_angle); //* frac;
+//					else
+//					{
 						self.angles_y = view_y_bound;
 						self.stylechange_time = 0;
-					}
+//					}
 				}
 				else
 				{
