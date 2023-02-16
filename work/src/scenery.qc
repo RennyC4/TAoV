@@ -288,11 +288,12 @@ void() waterdrop =
 
 void() particlesmoke =
 {
-	//particle(self.origin,'0 0 0',3,14);
 	if (self.attack_finished < time)
+	{
 		remove(self);
-
-	self.nextthink = time + 0.1;
+		return;
+	}
+	frameskip(0.1);
 };
 
 void() create_smoke =
@@ -307,8 +308,8 @@ void() create_smoke =
 
 	smoke.velocity_z = smoke.velocity_z + 50 + random()*100;
 	smoke.attack_finished = time + 0.2 + random()*0.6;
-	smoke.nextthink = time + 0.1;
 	smoke.think = particlesmoke;
+	smoke.nextthink = time + 0.1;
 
 	self.nextthink = time + 0.2;
 };

@@ -931,21 +931,6 @@ void() spellbook_think =
 {
 	local entity p;
 
-	// spawn a particle moving around - single player only
-	// to keep network traffic down
-	if (!deathmatch && !coop)
-	{
-		p = spawn();
-		p.movetype = MOVETYPE_NOCLIP;
-		p.solid = SOLID_NOT;
-		p.angles_x = random() * 360;
-		makevectors (p.angles);
-		p.velocity = v_forward * 75;
-		setmodel (p, "progs/null.spr");
-		setsize (p, '0 0 0', '0 0 0');
-		setorigin (p, self.origin);
-	}
-	
 	if (self.cnt == 0 && spells & IT_SPELL1)
 	{
 		remove(self);
