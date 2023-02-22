@@ -402,8 +402,7 @@ void() CheckImpulseButtons =
 		self = coself;
 	}
 	if (self.impulse == 7)
-		self.gold = 99999;
-	
+		self.gold = 999999999;
 	if (self.impulse == 8)
 	{
 		local string a = ftos(game_progress);

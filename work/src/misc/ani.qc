@@ -73,7 +73,6 @@ void() effect_think =
 
 	self.angles_y = self.angles_y + 16;
 
-	droptofloor();
 	if (self.frame < 3)
 		self.frame = self.frame + 1;
 	else

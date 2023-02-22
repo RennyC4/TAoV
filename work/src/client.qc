@@ -1149,7 +1149,7 @@ void() PlayerPostThink =
 		{
 			if (!visible(self.char) || self.char.perfectguard_buff > time)
 			{
-				if (!self.charcursor)
+				if (!self.charcursor && self.char.classname == "player")
 				{
 					cursor = spawn();
 					if (self.char.perfectguard_buff < time)

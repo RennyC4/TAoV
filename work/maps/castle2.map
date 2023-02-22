@@ -8114,3 +8114,9 @@
 "origin" "2592 -192 176"
 "_phong" "1"
 }
+// entity 329
+{
+"classname" "item_mana"
+"origin" "1834 -634 352"
+"cnt" "75"
+}

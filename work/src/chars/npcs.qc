@@ -784,7 +784,7 @@ void() lisa_chat =
 							else
 							{
 								setpause (1);
-								centerprint (self.enemy.owner, "/P\n\nSorry Vigil, it appears you're not quite ready yet to learn this technique.\n\n\n\n^3Press ATTACK or JUMP to resume ...\n");
+								centerprint (self.enemy.owner, "/P\n\nSorry Vigil, it appears you're not quite ready to learn this technique.\n\n\n\n^3Press ATTACK or JUMP to resume ...\n");
 								self.enemy.owner.display_price = 0;
 								self.chatrefresh_finished = time + 3; // remove centerprint off player
 								self.mode = 0; // Not chatting anymore
@@ -815,7 +815,7 @@ void() lisa_chat =
 							else
 							{
 								setpause (1);
-								centerprint (self.enemy.owner, "/P\n\nSorry Vigil, it appears you're not quite ready yet to learn this technique.\n\n\n\n^3Press ATTACK or JUMP to resume ...\n");
+								centerprint (self.enemy.owner, "/P\n\nSorry Vigil, it appears you're not quite ready to learn this technique.\n\n\n\n^3Press ATTACK or JUMP to resume ...\n");
 								self.enemy.owner.display_price = 0;
 								self.chatrefresh_finished = time + 3; // remove centerprint off player
 								self.mode = 0; // Not chatting anymore

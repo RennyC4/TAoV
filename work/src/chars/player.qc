@@ -327,6 +327,7 @@ void() OrbTransportThink =
 	frameskip(0.01);
 };
 
+.float orbshake_finished;
 void() OrbTransportThinkUp =
 {
 	local string line;
@@ -347,7 +348,7 @@ void() OrbTransportThinkUp =
 
 	if (self.cnt < 250)
 	{
-		if (self.pain_finished < time)
+		if (self.orbshake_finished < time)
 		{
 			if (self.frame < 6)
 				self.frame = self.frame + 1;
@@ -355,11 +356,11 @@ void() OrbTransportThinkUp =
 				self.frame = 0;
 
 			if (self.cnt < 50)
-				self.pain_finished = time + 0.1;
+				self.orbshake_finished = time + 0.1;
 			else if (self.cnt < 100)
-				self.pain_finished = time + 0.05;
+				self.orbshake_finished = time + 0.05;
 			else
-				self.pain_finished = time + 0.01;
+				self.orbshake_finished = time + 0.01;
 		}
 		self.angles_y = self.angles_y + 10;
 	}
@@ -3212,11 +3213,9 @@ void() player_gizuna1;
 .float voice_finished; // don't allow Vigil's voice to overlap
 void(float voice_type) player_yell =
 {
-	local float r, h;
 	local entity yeller;
-
-	h = random();
-	r = random();
+	local float h = random();
+	local float r = random();
 
 	if (self.classname != "player")
 	{
@@ -3226,12 +3225,15 @@ void(float voice_type) player_yell =
 				yeller = self.char;
 		}
 		else
-			objerror ("player_yell called by bad entity\n");
+			objerror ("player_yell called by wrong entity\n");
 	}
 	else
 		yeller = self;
 
-	if (voice_type == 0)
+	if (yeller.swimming) // Can't yell underwater
+		return;
+
+	if (!voice_type)
 	{
 		if (h < 0.4 && yeller.voice_finished < time)
 		{
@@ -7699,7 +7701,7 @@ void() divingswallow_hit =
 
 				if (self.aircombo_count == 8 && head == self.enemy) // for air diving swallow
 				{
-					if (head.noblood == FALSE)
+					if (!head.noblood)
 					{
 						ThrowBloodSplat(head.origin, head);
 						ThrowBloodSplat(head.origin, head);

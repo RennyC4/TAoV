@@ -248,7 +248,7 @@ void() FireBallThink =
 			self = self.owner;
 			local float testchk = infront(self.enemy);
 			self = oself;
-			if (testchk)
+			if (testchk || self.owner.enemy.movetype == MOVETYPE_NOCLIP)
 				self.lip = TRUE;
 		}
 		if (self.enemy && self.enemy.health > 0 && self.enemy.deadflag != DEAD_DEAD && self.enemy != self.owner && self.enemy.classname != "camera" && self.lip)

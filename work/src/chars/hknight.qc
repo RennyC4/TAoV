@@ -377,7 +377,7 @@ void() HellKnight_Lightning =
 				}
 			}
 		}
-		else // perfect guard
+		else if (trace_ent) // perfect guard
 		{
 			local entity temp2;
 			temp2 = spawn ();
