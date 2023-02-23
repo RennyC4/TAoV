@@ -403,14 +403,14 @@ void() dlight_pflags =
 	if (self.spawnflags & 1) // Castle light off
 	{
 		self.model = string_null;
-		self.light_lev = 1;
+		self.light_lev = 0;
 		self.pflags = PFLAGS_FULLDYNAMIC | PFLAGS_CORONA;
 	}
 	else if (self.spawnflags & 2) // Castle light on
 		self.pflags = PFLAGS_FULLDYNAMIC | PFLAGS_CORONA;
 	else // Give off RT Light
 		self.pflags = PFLAGS_FULLDYNAMIC;
-	if (!self.targetname)
+	if (!self.targetname && !self.style)
 		makestatic(self);
 };
 
