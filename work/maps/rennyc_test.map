@@ -467,3 +467,9 @@
 ( -192 16 64 ) ( -192 16 65 ) ( -192 17 64 ) trigger 16 0 0 1 1
 }
 }
+// entity 15
+{
+"classname" "monster_ghost3"
+"origin" "-432 0 104"
+"awareness" "4"
+}

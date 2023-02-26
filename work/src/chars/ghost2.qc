@@ -34,7 +34,9 @@ void() ghost2_think =
 				if (targ.owner.mana > 0)
 				{
 					targ.owner.mana = targ.owner.mana - 1;
-					self.health = self.health + 1;
+
+					if (self.health < self.max_health)
+						self.health = self.health + 1;
 				}
 
 				self.attack_finished = time + draindelay;
@@ -55,9 +57,15 @@ void() ghost2_think =
 	{
 		if (self.color_z > 0)
 			self.color_z = self.color_z - 0.05;
+		else
+			self.color_z = 0;
 	}
 	else if (self.color_z < 1)
+	{
 		self.color_z = self.color_z + 0.05;
+		if (self.color_z > 1)
+			self.color_z = 1;
+	}
 
 	// Cap it
 	if (self.color_z > 1)
