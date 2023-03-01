@@ -718,7 +718,7 @@ void() pit_touch =
 		{
 			oself = self;
 			self = other;
-			if (self.enemy.enemy == self) // Clear vigils enemy flag
+			if (self.enemy.enemy == self) // Clear Vigil's enemy flag
 				self.enemy.enemy = world;
 			GiveExperience(self.experience);
 			self = oself;

@@ -319,7 +319,7 @@ void(float damg, float hight) Fireball =
 	missile.attack_finished = time + 0.5;
 	missile.angles = self.angles;
 	// .touch should only work on BSP objects/walls
-	missile.dimension_hit = 0;
+	missile.dimension_hit = 1;
 	missile.dimension_solid = 0;
 
 	missile.light_lev = 40;
@@ -557,7 +557,7 @@ void() iced_think =
 		}
 		self.attack_finished = time + 0.1;
 	}
-	self.nextthink = time + 0.01;
+	frameskip(0.01);
 };
 
 void() iced_particle =
@@ -579,7 +579,8 @@ void() icefield_think =
 	local entity head, effect, effect2;
 	local float vis;
 
-	droptofloor();
+	if (!checkground(self))
+		droptofloor();
 
 	if (self.attack_finished < time) // grow size
 	{
@@ -617,6 +618,7 @@ void() icefield_think =
 			else
 				vis = FALSE;
 		}
+
 		if (self.owner != head && head.takedamage && head.iced_time < time && head.perfectguard_buff < time && vis
 		&& ((coop == TRUE && head.classname != "player" && self.owner.classname == "player" || self.owner.flags & FL_MONSTER) || (coop == FALSE))) // coop
 		{
@@ -647,7 +649,8 @@ void() icefield_think =
 						effect = spawn();
 						setorigin(effect, head.origin);
 						setmodel(effect, "progs/iced.mdl");
-						effect.movetype = MOVETYPE_NONE;
+						setsize (effect, '0 0 0', '0 0 0');
+						effect.movetype = MOVETYPE_NOCLIP;
 						effect.think = iced_think;
 						effect.nextthink = time;
 						effect.solid = SOLID_NOT;
@@ -662,6 +665,7 @@ void() icefield_think =
 						effect2 = spawn();
 						setorigin(effect2, head.origin + v_up * 16);
 						setmodel(effect2, "progs/null.spr");
+						setsize (effect2, '0 0 0', '0 0 0');
 						effect2.movetype = MOVETYPE_BOUNCE;
 						effect2.think = iced_particle;
 						effect2.nextthink = time;
@@ -687,7 +691,7 @@ void() icefield_think =
 							else
 								T_Damage (head, self, self.owner, 3, 0);
 						}
-						else
+						else // Deathmatch damage
 							T_Damage (head, self, self.owner, 1, 0);
 
 						if (self.owner.classname == "player")
@@ -745,9 +749,12 @@ void() IceField =
 	effect = spawn();
 	setorigin(effect, self.origin);
 	setmodel(effect, "progs/chargice.spr");
+	setsize(effect, '0 0 0', '0 0 0');
 	effect.owner = self;
-	effect.movetype = MOVETYPE_NONE;
+	effect.movetype = MOVETYPE_NOCLIP;
 	effect.classname = "IceFieldHitGroundSprite";
+	effect.dimension_hit = 0;
+	effect.dimension_solid = 0;
 	effect.solid = SOLID_NOT;
 	effect.scale = 1;
 	effect.frame = 5;
@@ -759,9 +766,7 @@ void() IceField =
 	sound (effect, CHAN_AUTO, "spells/flnch.wav", 1, ATTN_NORM);
 	sound (effect, CHAN_VOICE, "spells/iceyair.wav", 1, ATTN_NORM);
 
-	local entity missile;
-
-	missile = spawn ();
+	local entity missile = spawn ();
 
 	if (self.classname == "icefieldprojectile")
 		missile.owner = self.owner;
@@ -770,14 +775,14 @@ void() IceField =
 
 	missile.movetype = MOVETYPE_NOCLIP;
 	missile.solid = SOLID_NOT;
+	missile.dimension_hit = 0;
+	missile.dimension_solid = 0;
 	missile.classname = "icefield";
 	missile.alpha = 0.35;
 	missile.think = icefield_think;
 	missile.nextthink = time;
-	missile.pain_finished = time + 10; // time till disappear
+	missile.pain_finished = time + 10; // time till spells over
 	missile.effects = EF_NODEPTHTEST | EF_FULLBRIGHT | EF_ADDITIVE;
-	//missile.drawflags = 7; // override lighting
-	//missile.abslight = -255;
 
 	setmodel (missile, "progs/icef.mdl");
 	setsize (missile, '0 0 0', '0 0 0');

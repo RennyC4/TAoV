@@ -220,6 +220,7 @@ void() boss_rockdrop10 = [$shockc10, boss_idle1] {};
 
 void() Boss2Melee =
 {
+	makevectors(self.angles);
 	FireMelee(40,0,3,100,5,0,1,FALSE,0,0,0);
 
 	// Damage boss from purge attacks
@@ -262,7 +263,7 @@ void() boss_attack6 = [$attack6, boss_attack7]
 	h.classname = "Boss2Melee";
 	h.health = self.health; // store eternal dragon's health
 	h.solid = SOLID_NOT;
-	h.angles = '0 0 0';
+	h.angles = self.angles; // Fix for when FireMelee is ran
 	h.think = Boss2Melee;
 	h.nextthink = time;
 
@@ -300,7 +301,7 @@ void() boss_attack18 = [$attack18, boss_attack19]
 	h.classname = "Boss2Melee";
 	h.health = self.health; // store eternal dragon's health
 	h.solid = SOLID_NOT;
-	h.angles = '0 0 0';
+	h.angles = self.angles; // Fix for when FireMelee is ran
 	h.think = Boss2Melee;
 	h.nextthink = time;
 

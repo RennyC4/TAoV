@@ -1774,7 +1774,10 @@ void() monster_death =
 		return;
 
 	if (self.enemy.enemy == self) // Clear Vigil's enemy flag
+	{
 		self.enemy.enemy = world;
+		self.enemy.oldenemy = self; // Add to Vigil's oldenemy flag
+	}
 
 	if (vlen(self.velocity) < 1 || self.flags & FL_ONGROUND || self.flags & FL_PARTIALGROUND || self.origin == self.oldorigin || checkground(self))
 	{

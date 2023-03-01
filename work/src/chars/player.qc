@@ -1742,6 +1742,9 @@ void() player_think =
 	// In-Air Izuna Drop
 	//
 
+	if (!self.char.enemy && self.char.oldenemy) // Allow Vigil to Izuna already dead monsters inair
+		self.char.enemy = self.char.oldenemy;
+
 	if (self.char.inair > 16 && !self.char.onground && !self.char.izunatarg && self.char.enemy && self.char.frame != $izuna1 && self.char.pain_finished < time && game_progress & IT_PROGRESS6 && ((deathmatch && self.char.enemy.health > 0) || !deathmatch))
 	{
 			local float r = range(self.char, self.char.enemy);
@@ -2104,6 +2107,8 @@ void() player_think =
 	{
 		if (self.char.frame >= $kick1 && self.char.frame <= $kick5) // Vigil performed a mid air round house kick
 		{
+			if (!self.char.enemy && self.char.oldenemy) // Allow Vigil to Diving Swallow already dead monsters inair
+				self.char.enemy = self.char.oldenemy;
 			self.char.perform_divingswallow = TRUE;
 			self.noblock_finished = time + 999;
 		}
@@ -3294,7 +3299,7 @@ void() player_fire =
 		return;
 	}
 
-	if (self.wallrun == TRUE)
+	if (self.wallrun)
 	{
 		wallrun_divingswallow_init();
 		return;
@@ -4319,7 +4324,7 @@ void() player_kick5	=[	$kick5,	player_move 	]
 	player_kickforward();
 	frameskip(0.15);
 	player_kickforward();
-	if (self.perform_divingswallow == TRUE)
+	if (self.perform_divingswallow)
 	{
 		// Face enemy direction properly first
 		if (self.enemy)
@@ -6662,17 +6667,14 @@ void() player_twist    =[	$twist,	player_twist		]
 		self.angles_z = self.angles_z - 8; // spin Vigil underwater slower
 	}
 
+	//
+	// Test check if his X origin (left/right) moved
+	//
 	if (!self.swimming)
 	{
-		//
-		// Check if his X origin (left/right) moved
-		//
-
-		local entity testx;
-
 		makevectors(self.angles);
 
-		testx = spawn();
+		local entity testx = spawn();
 		testx.owner = self;
 		testx.drawonlytoclient = testx.owner.owner; // reduce network traffic
 		testx.movetype = MOVETYPE_NOCLIP;
@@ -7886,7 +7888,7 @@ void() player_walljumpkick1	=[	$jumpatkb1,	player_walljumpkick1	]
 
 	local float test;
 	local vector source = self.origin;
-	local vector dest = self.origin + v_forward * 8;
+	local vector dest = self.origin + v_forward * 8 + v_up * 4; // v_up 4 to prevent backflip off floor rare occurance
 
 	tracebox (source, VEC_HULL_MIN, VEC_HULL_MAX, dest, 1, self);
 
@@ -8180,6 +8182,9 @@ void() player_airdivings1 =
 	self.movetype = MOVETYPE_WALK;
 	self.takedamage = DAMAGE_NO; // iframes
 
+	if (!self.enemy && self.oldenemy) // Allow Vigil to Diving Swallow already dead monsters inair
+		self.enemy = self.oldenemy;
+
 	view = vectoangles(self.enemy.origin - self.origin);
 	bt = vlen(self.enemy.origin - self.origin);
 
@@ -8208,8 +8213,7 @@ void() player_airdivings1 =
 
 	// a noclip monster may of exited the level, so just get out of this...
 	// also make sure that vigil hasn't somehow gone passed his target or it hasn't died anyways, if so break out
-	if (!visible(self.enemy) || (self.origin_x > self.enemy.origin_x && self.angles_y == 0) || (self.origin_x < self.enemy.origin_x && self.angles_y == 180)
-	|| (self.enemy.deadflag == DEAD_DEAD || self.enemy == world) || self.waterlevel > 1 || self.swimming || test)
+	if (!visible(self.enemy) || (self.origin_x > self.enemy.origin_x && self.angles_y == 0) || (self.origin_x < self.enemy.origin_x && self.angles_y == 180) || self.enemy.deadflag == DEAD_DEAD || self.enemy == world || self.waterlevel > 1 || self.swimming || test)
 	{
 		self.owner.backflip_finished = time + 0.7; // Perfect value! Player enters negative velocity by this itme...
 		self.think = player_bflip1;

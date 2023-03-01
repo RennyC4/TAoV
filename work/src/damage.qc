@@ -21,7 +21,7 @@ void(entity attackerb) player_damage_physics =
 
 	if (self.flags & FL_ONGROUND)
 		self.flags = self.flags - FL_ONGROUND;
-			
+
 	// Vigil can be knocked out of the air easily if damage
 	// is taken as going into player_hit1/2(); look/act silly.
 	if (!deathmatch)
@@ -142,8 +142,11 @@ void(entity targ, entity attacker) Killed =
 			SUB_UseTargets();
 		if (random() < 0.5) // 50% chance of gold drop
 			drop_gold();
-		if (attacker.enemy == self) // Clear up Vigils .enemy field
+		if (attacker.enemy == self) // Clear Vigil's enemy flag
+		{
 			attacker.enemy = world;
+			attacker.oldenemy = self; // Add to Vigil's oldenemy flag
+		}
 		self.killed = TRUE; // Run once
 	}
 
@@ -631,44 +634,30 @@ void(vector org, entity own) ThrowBloodSplat =
 	}
 };
 
-void() ThrowBodyPart_HitFloor =
+void() ThrowBodyPartHitFloor_Think =
 {
-	// if the body part hangs on something, fade it out of the world
-	if (self.mode)
-	{
-		self.alpha = self.alpha - 0.05;
-		if (self.alpha < 0.1)
-		{
-			remove(self);
-			return;
-		}
-	}
-	if (vlen(self.velocity) < 1 || self.flags & FL_ONGROUND || self.flags & FL_PARTIALGROUND || self.origin == self.oldorigin)
+	if ((checkground(self) || self.origin == self.oldorigin) && !self.cnt)
 	{
 		sound (self, CHAN_BODY, "misc/hitgrond.wav", 1, ATTN_NORM);
 		self.angles_x = 0;
 		self.angles_z = 0;
 		self.avelocity = '0 0 0';
-		self.cnt = 0;
-		return;
+		self.cnt = TRUE; // Run once
 	}
 	self.oldorigin = self.origin;
 
-	if (self.cnt > 50)
-		self.mode = TRUE;
-	self.cnt = self.cnt + 1;
-	self.nextthink = time + 0.1;
+	if (self.flags & FL_ONGROUND) // Fix midair hang up
+		self.flags = self.flags - (self.flags & FL_ONGROUND);
+
+	frameskip(0.1);
 };
 
 void(string gibname) ThrowBodyPart =
 {
-	local entity head;
-	local float r;
-	r = random()*200;
+	local float r = random()*200;
 
-	head = spawn();
-
-	head.solid = SOLID_TRIGGER;
+	local entity head = spawn();
+	head.solid = SOLID_NOT;
 	head.movetype = MOVETYPE_TOSS;
 
 	head.angles_y = random() * 360;
@@ -677,13 +666,12 @@ void(string gibname) ThrowBodyPart =
 	head.owner = world;
 	head.velocity = v_forward * r;
 	head.velocity_z = 200 + random()*200;
-	//head.touch = ThrowBodyPart_Touch;
 
 	if (head.flags & FL_ONGROUND)
 		head.flags = head.flags - FL_ONGROUND;
 
-	head.think = ThrowBodyPart_HitFloor;
-	head.nextthink = time;
+	head.think = ThrowBodyPartHitFloor_Think;
+	head.nextthink = time + 0.1;
 
 	if (random() < 0.35)
 		head.avelocity = '250 100 100';
@@ -691,7 +679,6 @@ void(string gibname) ThrowBodyPart =
 		head.avelocity = '100 250 100';
 	else
 		head.avelocity = '100 100 250';
-
 
 	setmodel (head, gibname);
 	setorigin (head, self.origin);
