@@ -403,7 +403,7 @@ void() dlight_pflags =
 	if (self.spawnflags & 1) // Castle light off
 	{
 		self.model = string_null;
-		self.light_lev = 0;
+		self.light_lev = 1; // 0 = Full bright lights
 		self.pflags = PFLAGS_FULLDYNAMIC | PFLAGS_CORONA;
 	}
 	else if (self.spawnflags & 2) // Castle light on
