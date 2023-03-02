@@ -218,6 +218,12 @@ void() boss_rockdrop8 = [$shockc8, boss_rockdrop9] {};
 void() boss_rockdrop9 = [$shockc9, boss_rockdrop10] {boss_rockdrop();};
 void() boss_rockdrop10 = [$shockc10, boss_idle1] {};
 
+
+void() Boss2Melee_CleanRemove =
+{
+	remove(self);
+};
+
 void() Boss2Melee =
 {
 	makevectors(self.angles);
@@ -234,8 +240,8 @@ void() Boss2Melee =
 
 	if (self.char.health < 1)
 		Killed (self.char, self.enemy);
-
-	remove(self);
+	self.think = Boss2Melee_CleanRemove;
+	self.nextthink = time + 0.1;
 };
 
 void() boss_attack1 = [$attack1, boss_attack2] 

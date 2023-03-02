@@ -308,7 +308,8 @@ void(entity targ, entity inflictor, entity attacker, float damage, float statusr
 		targ.owner.status_blind_finished = attacker.status_blind_finished;
 		targ.owner.status_broken_finished = attacker.status_broken_finished;
 		targ.owner.broken_tick_finished = time + 1 + ceil(random()*2 + 1); // setup proper tic
-		/* Debugging for applying status effects
+
+		/* Uncomment for debugging status effect application on hit
 		if (cvar("developer") == 1)
 		{
 			local string s = ftos(statusrand);

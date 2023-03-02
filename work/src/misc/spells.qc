@@ -624,7 +624,7 @@ void() icefield_think =
 		{
 			if (self.owner.flags & FL_MONSTER && !head.flags & FL_MONSTER || !self.owner.flags & FL_MONSTER) // fix monsters pretending to hit each other
 			{
-				if (head.flags & FL_ONGROUND || head.onground == TRUE)
+				if (head.flags & FL_ONGROUND || head.onground)
 				{
 					if (head.perfectblock > time)
 					{
@@ -679,6 +679,7 @@ void() icefield_think =
 						effect.angles_x = effect.angles_y = effect.angles_z = random()*360;
 						head.knockback = 0;
 						head.damage_type = 3; // Ice based damage
+
 						if (!deathmatch)
 						{
 							if (head.classname == "player")
@@ -686,14 +687,15 @@ void() icefield_think =
 							if (head.flags & IT_BOSS2) // Eternal Dragon is weak to Ice
 							{
 								head.colormod = '0 2.5 5';
-								T_Damage (head, self, self.owner, 16, 0);
+								T_Damage (head, head, head, 16, 0); // BUGFIX: head,head,head is technically wrong but shouldn't matter in sp/coop
+																	// Fixes a bug with Eternal Dragon + T_Damage calls and Ice Field since it's a hack
 							}
 							else
 								T_Damage (head, self, self.owner, 3, 0);
 						}
 						else // Deathmatch damage
 							T_Damage (head, self, self.owner, 1, 0);
-
+					
 						if (self.owner.classname == "player")
 							self.owner.owner.combo = self.owner.owner.combo + 1; // raise combo counter
 
@@ -701,7 +703,7 @@ void() icefield_think =
 						if (head.owner && head.classname == "player")
 						{
 							head.owner.noblock_finished = time + 0.5; // don't allow block / spin attack on ice hit
-							head.owner.nospinatk_finished = time + 0.5; // don't allow block / spin attack on ice hit}
+							head.owner.nospinatk_finished = time + 0.5; // don't allow block / spin attack on ice hit
 						}
 					}
 				}
