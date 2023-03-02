@@ -384,6 +384,7 @@ spawnflag 1 starts the light OFF
 void() dlight_pflags_use =
 {
 	self.light_lev = self.cnt;
+	self.pflags = PFLAGS_FULLDYNAMIC | PFLAGS_CORONA;
 	sound (self, CHAN_AUTO, "misc/fireout.wav", 1, ATTN_NORM);
 };
 
@@ -403,8 +404,8 @@ void() dlight_pflags =
 	if (self.spawnflags & 1) // Castle light off
 	{
 		self.model = string_null;
-		self.light_lev = 1; // 0 = Full bright lights
-		self.pflags = PFLAGS_FULLDYNAMIC | PFLAGS_CORONA;
+		self.light_lev = 0; // clear pflags as well
+		self.pflags = 0;
 	}
 	else if (self.spawnflags & 2) // Castle light on
 		self.pflags = PFLAGS_FULLDYNAMIC | PFLAGS_CORONA;
