@@ -3924,7 +3924,8 @@ void() player_tired1	=[	$tired1,	player_tired1	]
 		self.walkframe = 0;
 	if (self.attack_finished < time)
 	{
-		sound (self, CHAN_VOICE, "player/breath.wav", 1, ATTN_NORM);
+		sound (self, CHAN_VOICE, "misc/null.wav", 1, ATTN_NORM);
+		sound (self, CHAN_AUTO, "player/breath.wav", 1, ATTN_NORM);
 		self.attack_finished = time + 1;
 	}
 
