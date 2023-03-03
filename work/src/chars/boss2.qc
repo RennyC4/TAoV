@@ -408,8 +408,6 @@ void() boss_pain =
 			boss_attack1();
 		}
 	}
-	// Help Vigil not fall off me when struck
-	self.enemy.velocity_x = self.enemy.velocity_y = 0;
 };
 
 void() boss_die =
@@ -653,7 +651,7 @@ void() monster_boss2 =
 	self.netname = "solid";
 	self.takedamage = DAMAGE_AIM;
 	self.solid = SOLID_NOT;
-	self.classname = "breakable"; // stay solid
+	self.classname = "boss2"; // stay solid
 	self.displayname = "Eternal Dragon"; // Tied to FireMelee in damage.qc
 	self.health = self.max_health = 1333;
 	self.deadflag = DEAD_NO;

@@ -687,8 +687,7 @@ void() icefield_think =
 							if (head.flags & IT_BOSS2) // Eternal Dragon is weak to Ice
 							{
 								head.colormod = '0 2.5 5';
-								T_Damage (head, head, head, 16, 0); // BUGFIX: head,head,head is technically wrong but shouldn't matter in sp/coop
-																	// Fixes a bug with Eternal Dragon + T_Damage calls and Ice Field since it's a hack
+								T_Damage (head, self, self.owner, 16, 0);
 							}
 							else
 								T_Damage (head, self, self.owner, 3, 0);

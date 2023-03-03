@@ -489,15 +489,17 @@ void(entity targ, entity inflictor, entity attacker, float damage, float statusr
 		player_damage_physics(attacker);
 		self.th_pain();
 	}
-
-	if (self.flags & FL_MONSTER)
+	else
 	{
-		if (self.th_pain && self.health > 0 && (self.invunerability_finished < time && self.berserk_finished < time))
+		if (self.flags & FL_MONSTER)
 		{
-			if (self.classname != "dragon")
-				self.th_pain();
-			else if (random() < 0.2) // dragon's only rarely enter pain frames
-				self.th_pain();
+			if (self.th_pain && self.health > 0 && (self.invunerability_finished < time && self.berserk_finished < time))
+			{
+				if (self.classname != "dragon")
+					self.th_pain();
+				else if (random() < 0.2) // dragon's only rarely enter pain frames
+					self.th_pain();
+			}
 		}
 	}
 
@@ -506,6 +508,7 @@ void(entity targ, entity inflictor, entity attacker, float damage, float statusr
 	//
 
 	self.knockback = 0; // clear physics stuff
+
 	if (attacker)
 	{
 		if (attacker.classname != "player") // manually cleared on player
