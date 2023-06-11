@@ -13,7 +13,7 @@ Available options:
 -O          - write to a different qc file
 */
 #pragma noref 1
-//#pragma flag enable logicops
+#pragma flag enable logicops
 #pragma warning error Q101 /*too many parms. The vanilla qcc didn't validate properly, hence why fteqcc normally treats it as a warning.*/
 #pragma warning error Q105 /*too few parms. The vanilla qcc didn't validate properly, hence why fteqcc normally treats it as a warning.*/
 #pragma warning error Q106 /*assignment to constant/lvalue. Define them as var if you want to initialise something.*/

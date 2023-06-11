@@ -1011,6 +1011,7 @@ void() statue10 =
 	self.movetype = MOVETYPE_NONE;
 	self.solid = SOLID_SLIDEBOX;
 	self.touch = onground_touch;
+	self.noblood = TRUE;
 	setsize(self, '-80 -52 -2', '58 42 67');
 	droptofloor();
 };
