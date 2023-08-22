@@ -1314,6 +1314,8 @@ Y angle of 270 is opposite facing the camera (North) in TAoV
 <Lardarse> ceil(random*4 + 1) is 2-5
 <Lardarse> ceil(random*4 - 1) is 0-3
 
+ceil(random*6 + 4) is 2-5
+
 // Attack types, game can determine what kind of attack the player launched and
 // what to do if a monster/player was hit by it!
 // 0 = Regular
