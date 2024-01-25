@@ -224,7 +224,7 @@ void() func_destroy_map01 =
 	self.solid = SOLID_BSP;
 	self.think = func_destroy_map01_think;
 	self.nextthink = self.ltime + 0.1;
-	self.movetype = MOVETYPE_PUSH;
+	self.movetype = MOVETYPE_NONE;
 	if (!self.spawnflags & 1)
 		self.takedamage = DAMAGE_YES;
 	else
