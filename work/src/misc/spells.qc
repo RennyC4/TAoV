@@ -557,6 +557,12 @@ void() iced_think =
 		}
 		self.attack_finished = time + 0.1;
 	}
+
+	self.alpha = 0.5 + sin(time*6)*0.05;
+	self.colormod_x = 1 + sin(time*8)*0.25; // glow pallet
+	self.colormod_y = 1 + sin(time*8)*0.25; // glow pallet
+	self.colormod_z = 2 + sin(time*8)*0.25; // glow pallet
+
 	frameskip(0.01);
 };
 
@@ -604,6 +610,13 @@ void() icefield_think =
 			remove(self);
 			return;
 		}
+	}
+	else // icefield glow logic
+	{
+		self.alpha = 0.5 + sin(time*6)*0.05;
+		self.colormod_x = 1 + sin(time*6)*0.15; // glow pallet
+		self.colormod_y = 1 + sin(time*6)*0.15; // glow pallet
+		self.colormod_z = 2 + sin(time*6)*0.15; // glow pallet
 	}
 
 	head = searchradius(self.origin, (self.cnt2 * 1.5));
@@ -784,6 +797,7 @@ void() IceField =
 	missile.nextthink = time;
 	missile.pain_finished = time + 10; // time till spells over
 	missile.effects = EF_NODEPTHTEST | EF_FULLBRIGHT | EF_ADDITIVE;
+	missile.pvsflags = PVSF_IGNOREPVS;
 
 	setmodel (missile, "progs/icef.mdl");
 	setsize (missile, '0 0 0', '0 0 0');
