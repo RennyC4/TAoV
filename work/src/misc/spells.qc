@@ -582,22 +582,23 @@ void() iced_particle =
 .float iced_time;
 void() icefield_think =
 {
-	local entity head, effect, effect2;
-	local float vis;
+	entity head, effect, effect2;
+	float vis;
+	self.avelocity = '0 200 0';
 
 	if (!checkground(self))
 		droptofloor();
 
-	if (self.attack_finished < time) // grow size
+	if (self.attack_finished < time)
 	{
-		if (self.frame < 17)
+		if (self.scale < 15)
 		{
-			self.frame = self.frame + 1;
-			self.scale = self.scale + 0.1;
+			self.scale = self.scale + 1;
 			self.cnt2 = self.cnt2 + 7; // damage radius grows with model
 		}
-		self.attack_finished = time + 0.08;
+		self.attack_finished = time + 0.04;
 	}
+
 	if (self.pain_finished < time || self.owner.health < 1)
 	{
 		if (self.frame > 0)
@@ -611,18 +612,16 @@ void() icefield_think =
 			return;
 		}
 	}
-	else // icefield glow logic
-	{
-		self.alpha = 0.5 + sin(time*6)*0.05;
-		self.colormod_x = 1 + sin(time*6)*0.15; // glow pallet
-		self.colormod_y = 1 + sin(time*6)*0.15; // glow pallet
-		self.colormod_z = 2 + sin(time*6)*0.15; // glow pallet
-	}
-
+	/*
+	self.alpha = 0.5 + sin(time*6)*0.05;
+	self.colormod_x = 1 + sin(time*6)*0.15; // glow pallet
+	self.colormod_y = 1 + sin(time*6)*0.15; // glow pallet
+	self.colormod_z = 2 + sin(time*6)*0.15; // glow pallet
+	*/
 	head = searchradius(self.origin, (self.cnt2 * 1.5));
 	while (head)
 	{
-		if (world.model == "maps/boss2.bsp") // Special exception for Eternal Dragon, visible can't see his origin
+		if (world.model == "maps/boss2.bsp") // HACK (or is it?): Special exception for Eternal Dragon, visible can't see his origin
 			vis = TRUE;
 		else
 		{
