@@ -3244,13 +3244,13 @@ void(float voice_type) player_yell =
 		if (h < 0.4 && yeller.voice_finished < time)
 		{
 			if (r < 0.25)
-				sound (yeller, CHAN_VOICE, "player/yell1.wav", 1, ATTN_NORM);
+				sound (yeller, CHAN_VOICE, "player/va_eng/yell1.wav", 1, ATTN_NORM);
 			else if (r < 0.5)
-				sound (yeller, CHAN_VOICE, "player/yell2.wav", 1, ATTN_NORM);
+				sound (yeller, CHAN_VOICE, "player/va_eng/yell2.wav", 1, ATTN_NORM);
 			else if (r < 0.75)
-				sound (yeller, CHAN_VOICE, "player/yell3.wav", 1, ATTN_NORM);
+				sound (yeller, CHAN_VOICE, "player/va_eng/yell3.wav", 1, ATTN_NORM);
 			else
-				sound (yeller, CHAN_VOICE, "player/yell4.wav", 1, ATTN_NORM);
+				sound (yeller, CHAN_VOICE, "player/va_eng/yell4.wav", 1, ATTN_NORM);
 			yeller.voice_finished = time + 0.8;
 		}
 	}
@@ -3259,15 +3259,15 @@ void(float voice_type) player_yell =
 		if (h < 0.2 && yeller.voice_finished < time)
 		{
 			if (r < 0.20)
-				sound (yeller, CHAN_VOICE, "player/taunt1.wav", 1, ATTN_NORM);
+				sound (yeller, CHAN_VOICE, "player/va_eng/taunt1.wav", 1, ATTN_NORM);
 			else if (r < 0.40)
-				sound (yeller, CHAN_VOICE, "player/taunt2.wav", 1, ATTN_NORM);
+				sound (yeller, CHAN_VOICE, "player/va_eng/taunt2.wav", 1, ATTN_NORM);
 			else if (r < 0.60)
-				sound (yeller, CHAN_VOICE, "player/taunt3.wav", 1, ATTN_NORM);
+				sound (yeller, CHAN_VOICE, "player/va_eng/taunt3.wav", 1, ATTN_NORM);
 			else if (r < 0.80)
-				sound (yeller, CHAN_VOICE, "player/taunt4.wav", 1, ATTN_NORM);
+				sound (yeller, CHAN_VOICE, "player/va_eng/taunt4.wav", 1, ATTN_NORM);
 			else
-				sound (yeller, CHAN_VOICE, "player/taunt5.wav", 1, ATTN_NORM);
+				sound (yeller, CHAN_VOICE, "player/va_eng/taunt5.wav", 1, ATTN_NORM);
 			yeller.voice_finished = time + 1;
 		}
 	}
@@ -4267,7 +4267,13 @@ void(float ver) spinatk_wind_spiral =
 	effect.nextthink = time;
 };
 
-void() player_spinatk1	=[	$spin1,	player_spinatk2	] {spinatk_wind_spiral(0);frameskip(0.08);sound (self, CHAN_VOICE, "player/spinatk.wav", 1, ATTN_NORM);spinattack_particle();};
+void() player_spinatk1	=[	$spin1,	player_spinatk2	] 
+{
+	spinatk_wind_spiral(0);
+	frameskip(0.08);
+	sound (self, CHAN_VOICE, "player/va_eng/spinatk.wav", 1, ATTN_NORM);
+	spinattack_particle();
+};
 void() player_spinatk2	=[	$spin2,	player_spinatk3	] {frameskip(0.08);spinattack();};
 void() player_spinatk3	=[	$spin3,	player_spinatk4	] {frameskip(0.08);};
 void() player_spinatk4	=[	$spin4,	player_spinatk5	] {frameskip(0.08);spinattack();spinattack_particle();};
@@ -6156,7 +6162,11 @@ void() player_jumpatkb8	=[	$jumpatkb8,	player_move		]
 };
 
 void() player_airkick6b;
-void() player_airkick1		=[	$airkick1,	player_airkick2 	] {frameskip(0.06);sound (self, CHAN_VOICE, "player/yell2.wav", 1, ATTN_NORM);};
+void() player_airkick1		=[	$airkick1,	player_airkick2 	]
+{
+	frameskip(0.06);
+	sound (self, CHAN_VOICE, "player/va_eng/yell2.wav", 1, ATTN_NORM);
+};
 void() player_airkick2		=[	$airkick2,	player_airkick3 	] {frameskip(0.06);};
 void() player_airkick3		=[	$airkick3,	player_airkick4 	] {frameskip(0.07);sound (self, CHAN_AUTO, "player/motion1.wav", 1, ATTN_NORM);};
 void() player_airkick4		=[	$airkick4,	player_airkick5 	] {FireMelee(3,25,1,25,1,0,0,FALSE,24,0,1);frameskip(0.2);};
@@ -6182,7 +6192,12 @@ void() player_airkick6		=[	$airkick6,	player_airkick6 	]
 void() player_airkick6b		=[	$airkick6,	player_airkick7 	] {frameskip(0.03);}
 
 void() player_airkick10b;
-void() player_airkick7		=[	$airkick7,	player_airkick8 	] {frameskip(0.1);sound (self, CHAN_VOICE, "player/yell2.wav", 1, ATTN_NORM);sound (self, CHAN_AUTO, "player/motion1.wav", 1, ATTN_NORM);};
+void() player_airkick7		=[	$airkick7,	player_airkick8 	]
+{
+	frameskip(0.1);
+	sound (self, CHAN_VOICE, "player/va_eng/yell2.wav", 1, ATTN_NORM);
+	sound (self, CHAN_AUTO, "player/motion1.wav", 1, ATTN_NORM);
+};
 void() player_airkick8		=[	$airkick8,	player_airkick9 	] {FireMelee(3,25,1,25,1,0,0,FALSE,24,0,1);frameskip(0.2);};
 void() player_airkick9		=[	$airkick9,	player_airkick10 	] {frameskip(0.1);};
 void() player_airkick10		=[	$airkick10,	player_airkick10	] 
@@ -6206,7 +6221,13 @@ void() player_airkick10		=[	$airkick10,	player_airkick10	]
 void() player_airkick10b		=[	$airkick10,	player_airkick11	] {frameskip(0.1);}
 
 void() player_airkick12b;
-void() player_airkick11		=[	$airkick11,	player_airkick12 	] {FireMelee(3,25,1,25,1,0,0,FALSE,24,0,1);sound (self, CHAN_VOICE, "player/yell2.wav", 1, ATTN_NORM);frameskip(0.2);sound (self, CHAN_AUTO, "player/motion1.wav", 1, ATTN_NORM);self.velocity_y = 0;};
+void() player_airkick11		=[	$airkick11,	player_airkick12 	] \
+{
+	FireMelee(3,25,1,25,1,0,0,FALSE,24,0,1);
+	sound (self, CHAN_VOICE, "player/va_eng/yell2.wav", 1, ATTN_NORM);
+	frameskip(0.2);sound (self, CHAN_AUTO, "player/motion1.wav", 1, ATTN_NORM);
+	self.velocity_y = 0;
+};
 void() player_airkick12		=[	$airkick12,	player_airkick12 	] 
 {
 	if (self.onground == TRUE || self.swimming)
@@ -6227,7 +6248,13 @@ void() player_airkick12		=[	$airkick12,	player_airkick12 	]
 };
 void() player_airkick12b	=[	$airkick12,	player_airkick13 	] {frameskip(0.05);}
 
-void() player_airkick13		=[	$airkick13,	player_airkick14 	] {frameskip(0.1);sound (self, CHAN_VOICE, "player/yell1.wav", 1, ATTN_NORM);sound (self, CHAN_AUTO, "player/sword.wav", 1, ATTN_NORM);self.velocity_y = 0;};
+void() player_airkick13		=[	$airkick13,	player_airkick14 	] 
+{
+	frameskip(0.1);
+	sound (self, CHAN_VOICE, "player/va_eng/yell1.wav", 1, ATTN_NORM);
+	sound (self, CHAN_AUTO, "player/sword.wav", 1, ATTN_NORM);
+	self.velocity_y = 0;
+};
 void() player_airkick14		=[	$airkick14,	player_airkick15 	] {frameskip(0.1);};
 
 void() player_airkick15		=[	$airkick15,	player_airkick16 	] 
@@ -6290,13 +6317,13 @@ void() PainSound =
 
 	self.noise = "";
 	if (rs == 1)
-		self.noise = "player/pain1.wav";
+		self.noise = "player/va_eng/pain1.wav";
 	else if (rs == 2)
-		self.noise = "player/pain2.wav";
+		self.noise = "player/va_eng/pain2.wav";
 	else if (rs == 3)
-		self.noise = "player/pain3.wav";
+		self.noise = "player/va_eng/pain3.wav";
 	else
-		self.noise = "player/pain4.wav";
+		self.noise = "player/va_eng/pain4.wav";
 
 	sound (self, CHAN_VOICE, self.noise, 1, ATTN_NORM);
 };
@@ -7245,7 +7272,7 @@ void() player_die =
 	self.flypain = TRUE;
 	self.owner.combo = 0; // reset combo counter
 
-	sound (self, CHAN_VOICE, "player/death.wav", 1, ATTN_NONE);
+	sound (self, CHAN_VOICE, "player/va_eng/death.wav", 1, ATTN_NONE);
 
 	self.dead_lockkey_finished = time + 999; // don't allow key presses until Vigil hit the ground on death
 	player_die1();

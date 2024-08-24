@@ -246,27 +246,34 @@ void() worldspawn =
 		precache_sound ("player/sword.wav");
 		precache_sound ("player/sword2.wav");
 		precache_sound ("player/sword3.wav");
-		precache_sound ("player/spinatk.wav");
 		precache_sound ("player/swordhit.wav");
 		precache_sound ("player/kickhit.wav");
 		precache_sound ("player/hit.wav");
 		precache_sound ("player/bighit.wav");
 		precache_sound ("player/wallgrab.wav");
-		precache_sound ("player/pain1.wav");
-		precache_sound ("player/pain2.wav");
-		precache_sound ("player/pain3.wav");
-		precache_sound ("player/pain4.wav");
-		precache_sound ("player/death.wav");
 		precache_sound ("player/jmphit.wav");
-		precache_sound ("player/yell1.wav");
-		precache_sound ("player/yell2.wav");
-		precache_sound ("player/yell3.wav");
-		precache_sound ("player/yell4.wav");
-		precache_sound ("player/taunt1.wav");
-		precache_sound ("player/taunt2.wav");
-		precache_sound ("player/taunt3.wav");
-		precache_sound ("player/taunt4.wav");
-		precache_sound ("player/taunt5.wav");
+	
+		// English VA
+		precache_sound ("player/va_eng/spinatk.wav");
+
+		precache_sound ("player/va_eng/taunt1.wav");
+		precache_sound ("player/va_eng/taunt2.wav");
+		precache_sound ("player/va_eng/taunt3.wav");
+		precache_sound ("player/va_eng/taunt4.wav");
+		precache_sound ("player/va_eng/taunt5.wav");
+
+		precache_sound ("player/va_eng/yell1.wav");
+		precache_sound ("player/va_eng/yell2.wav");
+		precache_sound ("player/va_eng/yell3.wav");
+		precache_sound ("player/va_eng/yell4.wav");
+
+		precache_sound ("player/va_eng/pain1.wav");
+		precache_sound ("player/va_eng/pain2.wav");
+		precache_sound ("player/va_eng/pain3.wav");
+		precache_sound ("player/va_eng/pain4.wav");
+		precache_sound ("player/va_eng/death.wav");
+		//
+		
 		precache_sound ("player/bigcut.wav");
 		precache_sound ("player/broken.wav");
 		precache_sound ("player/poison.wav");
