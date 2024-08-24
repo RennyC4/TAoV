@@ -1268,7 +1268,7 @@ void() invunerable_field_think =
 
 void() invunerable_field =
 {
-	local entity h = spawn();
+	entity h = spawn();
 	h.owner = self;
 	h.movetype = MOVETYPE_NOCLIP;
 	h.solid = SOLID_NOT;
@@ -1285,11 +1285,12 @@ void() Respawn_Dummy =
 	self.health = self.max_health;
 	self.takedamage = DAMAGE_AIM; // Give health, now allow him to take damage
 	self.owner.mana = 0;
-	self.deadflag = DEAD_NO;
+	self.deadflag = self.owner.deadflag = DEAD_NO;
 
 	self.attack_finished = time + 10;
 	self.flypain = TRUE; // stop AI from attacking while getting up
 	self.movetype = MOVETYPE_WALK;
+	self.solid = SOLID_SLIDEBOX; // Reset back so DM players can pickup items
 	self.angles_x = 0;
 	self.block_finished = time; // remove blocking (minor fix)
 
@@ -1298,7 +1299,7 @@ void() Respawn_Dummy =
 	else
 		self.think = player_getup1;
 
-	invunerable_field();
+	invunerable_field(); // spawn effect
 	self.invunerability_finished = time + 5;
 	self.nextthink = time + 0.1;
 };
@@ -6305,14 +6306,16 @@ void() player_hit5;
 
 void() player_hit1	=[	$pain1,	player_hit1	] 
 {
-	self.velocity = '0 0 0';
+	if (self.onground)
+		self.velocity = '0 0 0';
 	if (self.playerhitframe_finished < time)
 		player_move();
 };
 
 void() player_hit2	=[	$pain2,	player_hit2	] 
 {
-	self.velocity = '0 0 0';
+	if (self.onground)
+		self.velocity = '0 0 0';
 	if (self.playerhitframe_finished < time)
 		player_move();
 };
@@ -6755,7 +6758,7 @@ void() player_getupb4	=[	$getup5,	player_move	] {};
 
 void() player_pain =
 {
-	local float rs;
+	float rs;
 
 	makevectors(self.angles);
 
@@ -6829,9 +6832,9 @@ void() player_pain =
 	// Vigil's pain behavior works a bit differently in deathmatch
 	//
 
-	if (deathmatch == TRUE)
+	if (deathmatch)
 	{
-		if (self.knockback == 0)
+		if (!self.knockback)
 		{
 			if (random() < 0.5)
 			{
@@ -7065,7 +7068,7 @@ void() player_die3	=[	$pain5,	player_die3 ]
 		return;
 	}
 
-	if (deathmatch == FALSE)
+	if (!deathmatch)
 	{	
 		if (!(game_progress & IT_PROGRESS1)) // Reached Village bitwise
 		{

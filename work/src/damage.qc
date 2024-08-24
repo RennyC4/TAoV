@@ -128,9 +128,7 @@ Killed
 .float killed;
 void(entity targ, entity attacker) Killed =
 {
-	local entity oself;
-
-	oself = self;
+	entity oself = self;
 	self = targ;
 
 	self.enemy = attacker;
