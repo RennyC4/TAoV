@@ -253,7 +253,9 @@ void() worldspawn =
 		precache_sound ("player/wallgrab.wav");
 		precache_sound ("player/jmphit.wav");
 	
+		//
 		// English VA
+		//
 		precache_sound ("player/va_eng/spinatk.wav");
 
 		precache_sound ("player/va_eng/taunt1.wav");
@@ -272,8 +274,16 @@ void() worldspawn =
 		precache_sound ("player/va_eng/pain3.wav");
 		precache_sound ("player/va_eng/pain4.wav");
 		precache_sound ("player/va_eng/death.wav");
+
+		precache_sound ("player/va_eng/fireball.wav");
+		precache_sound ("player/va_eng/lightnstrm.wav");
+		precache_sound ("player/va_eng/icefield.wav");
+		precache_sound ("player/va_eng/ebeam.wav");
+
 		//
-		
+		//
+		//
+
 		precache_sound ("player/bigcut.wav");
 		precache_sound ("player/broken.wav");
 		precache_sound ("player/poison.wav");

@@ -3219,9 +3219,9 @@ void() player_gizuna1;
 .float voice_finished; // don't allow Vigil's voice to overlap
 void(float voice_type) player_yell =
 {
-	local entity yeller;
-	local float h = random();
-	local float r = random();
+	entity yeller;
+	float h = random();
+	float r = random();
 
 	if (self.classname != "player")
 	{
@@ -7514,6 +7514,9 @@ void() player_fireball1	=[	$magicb1,	player_fireball2	] {spawn_magicfog();self.e
 void() player_fireball1	=[	$magicb1,	player_fireball2	] {spawn_magicfog();self.effects = EF_MUZZLEFLASH;};
 void() player_fireball2	=[	$magicb2,	player_move	] 
 {
+	if (random() < 0.35)
+		sound (self, CHAN_AUTO, "player/va_eng/fireball.wav", 1, ATTN_NORM);
+	
 	self.angles_y = self.turn_y;
 	self.colormod = '3 2 1';
 	if (self.owner.level < 20)
@@ -7537,8 +7540,17 @@ void() player_lightning1	=[	$magica2,	player_lightning2	] {spawn_magicfog();};
 void() player_lightning2	=[	$magica3,	player_lightning3	] 
 {
 	// Subtract mana at first frame of the lightning spell
-	if (self.lcount == 0)
+	if (!self.lcount)
 	{
+		if (random() < 0.35) // spell shout + slowdown effect
+		{
+			if (freeze_finished < time) // don't interefere with level up/etc
+			{
+				freeze_finished = time + ((CONST_BIGHITSLOW + 7) * frametime);
+				sound (self, CHAN_AUTO, "player/va_eng/lightnstrm.wav", 1, ATTN_NORM);
+			}
+		}
+
 		sound (self, CHAN_AUTO, "spells/lightn.wav", 1, ATTN_NORM);
 		// Subtract mana for the spell accordingly
 		if (self.owner.mana >= 50)
@@ -7563,14 +7575,22 @@ void() player_lightning3	=[	$magica4,	player_lightning2	] {frameskip(0.05);};
 void() player_icefield2;
 void() player_icefield1	=[	$magicc1,	player_icefield1	] 
 {
-	local entity effect;
+	entity effect;
 
 	if (self.owner.zoom_mode != 2)
 		self.owner.zoom_mode = 2; // Zoom out
 
 	self.owner.attack_finished = time + 3.5;
-	if (self.icefield_count == 0)
+	if (!self.icefield_count)
 	{
+		if (random() < 0.35) // spell shout + slowdown effect
+		{
+			if (freeze_finished < time) // don't interefere with level up/etc
+			{
+				freeze_finished = time + ((CONST_BIGHITSLOW + 7) * frametime);
+				sound (self, CHAN_AUTO, "player/va_eng/icefield.wav", 1, ATTN_NORM);
+			}
+		}
 		spawn_magicfog();
 
 		makevectors (self.angles);
@@ -7588,6 +7608,7 @@ void() player_icefield1	=[	$magicc1,	player_icefield1	]
 		sound (effect, CHAN_AUTO, "spells/charge.wav", 1, ATTN_NORM);
 		self.colormod = '1 1 10'; // colormod change
 	}
+
 	if (self.icefield_count > 7)
 	{
 		player_icefield2();
@@ -7624,7 +7645,7 @@ void() player_magicd3	=[	$magicd3,	player_magicd4	] {};
 void() player_magicd4	=[	$magicd4,	player_magicd5	] {sound (self, CHAN_BODY, "player/wallgrab.wav", 1, ATTN_NORM);};
 void() player_magicd5	=[	$magicd5,	player_magicd6	] 
 {
-	local entity effect;
+	entity effect;
 
 	makevectors(self.angles);
 
@@ -7642,6 +7663,15 @@ void() player_magicd5	=[	$magicd5,	player_magicd6	]
 	swordstareffect2();
 	self.nextthink = time + 1;
 	self.colormod = '5 0 0';
+
+	if (random() < 0.50) // spell shout + slowdown effect
+	{
+		if (freeze_finished < time) // don't interefere with level up/etc
+		{
+			freeze_finished = time + ((CONST_BIGHITSLOW + 6) * frametime);
+			sound (self, CHAN_AUTO, "player/va_eng/ebeam.wav", 1, ATTN_NORM);
+		}
+	}
 };
 
 void() player_magicd6	=[	$magicd6,	player_magicd7 	] 
