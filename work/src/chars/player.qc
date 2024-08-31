@@ -4247,7 +4247,7 @@ void(float ver) spinatk_wind_spiral =
 	effect.drawflags = 7; // override lighting
 	effect.abslight = -100;
 	
-	if (!ver) // normal spin attack
+	if (ver == 0) // normal spin attack
 	{
 		setorigin (effect, self.origin - v_up * 30);
 		effect.angles_y = random()*360;
@@ -4257,7 +4257,7 @@ void(float ver) spinatk_wind_spiral =
 		effect.scale = 1;
 		effect.think = spinwindspiral_think;
 	}
-	else if (ver) // smaller spin attack (from foward attack)
+	else if (ver == 1) // smaller spin attack (from foward attack)
 	{
 		setorigin (effect, self.origin);
 		effect.angles_y = random()*360;
@@ -4278,7 +4278,7 @@ void(float ver) spinatk_wind_spiral =
 		effect.angles_z = 90;	
 		effect.think = spinwindspiral_think;	
 	}
-	else // spin slash attack
+	else if (ver == 3) // spin slash attack
 	{
 		setorigin (effect, self.origin);
 		effect.attack_finished = time + 0.25;
