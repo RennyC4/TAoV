@@ -631,7 +631,7 @@ void() icefield_think =
 				vis = FALSE;
 		}
 
-		if (self.owner != head && head.takedamage && head.iced_time < time && head.perfectguard_buff < time && vis
+		if (self.owner != head && head.takedamage && head.iced_time < time && head.perfectguard_buff < time && vis && head.deadflag != DEAD_DEAD
 		&& ((coop == TRUE && head.classname != "player" && self.owner.classname == "player" || self.owner.flags & FL_MONSTER) || (coop == FALSE))) // coop
 		{
 			if (self.owner.flags & FL_MONSTER && !head.flags & FL_MONSTER || !self.owner.flags & FL_MONSTER) // fix monsters pretending to hit each other

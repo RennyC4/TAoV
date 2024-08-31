@@ -1708,7 +1708,7 @@ void() player_think =
 	&& !self.ledgegrab && self.wallgrab == FALSE && self.char.deadflag != DEAD_DEAD && self.char.movetype != MOVETYPE_FLY
 	&& self.wallrun == FALSE && self.forcewalk_finished < time && self.char.fly_time < time && self.char.guardbreak_finished < time
 	&& self.char.dodge_finished < time && !self.char.swimming && self.char.health > 0 && self.nospinatk_finished < time &&
-	self.char.lowceil == FALSE && self.trigger_spincut_finished < time && !self.char.izunatarg)
+	self.char.lowceil == FALSE && self.trigger_spincut_finished < time && !self.char.izunatarg && self.combo_finished < time)
 	{
 		if (!self.char.flypain)
 		{
@@ -1769,8 +1769,7 @@ void() player_think =
 
 				oself = self;
 				self = self.char; // become vigil real fast
-				local float test_iz;
-				test_iz = visible(self.izunatarg);
+				float test_iz = visible(self.izunatarg);
 				self = oself; // revert self
 
 				if (test_iz && self.char.izunatarg != world) // checks passed
@@ -1805,6 +1804,7 @@ void() player_think =
 					self.char.izunatarg.grab_finished = time + 999;
 					self.char.izunatarg.oeffects = self.char.izunatarg.effects; // store effects
 					self.char.izunatarg.grabbed = TRUE;
+					self.char.izunatarg.nospinatk_finished = time + 999; // Disable spin attack on victim (Deathmatch)
 					self.char.izunatarg.takedamage = DAMAGE_NO; // Cannot be hit by others
 					if (self.char.izunatarg.th_grab)
 					{
@@ -4210,7 +4210,7 @@ void() spinattack =
 
 void() spinattack_particle = // white particles to spin around vigil
 {
-	local entity parti;
+	entity parti;
 
 	parti = spawn();
 	parti.owner = self;
@@ -4229,7 +4229,7 @@ void() spinattack_particle = // white particles to spin around vigil
 
 void(float ver) spinatk_wind_spiral =
 {
-	local entity effect;
+	entity effect;
 
 	makevectors (self.angles);
 
@@ -4247,7 +4247,7 @@ void(float ver) spinatk_wind_spiral =
 	effect.drawflags = 7; // override lighting
 	effect.abslight = -100;
 	
-	if (ver == 0) // normal spin attack
+	if (!ver) // normal spin attack
 	{
 		setorigin (effect, self.origin - v_up * 30);
 		effect.angles_y = random()*360;
@@ -4257,7 +4257,7 @@ void(float ver) spinatk_wind_spiral =
 		effect.scale = 1;
 		effect.think = spinwindspiral_think;
 	}
-	else if (ver == 1) // smaller spin attack (from foward attack)
+	else if (ver) // smaller spin attack (from foward attack)
 	{
 		setorigin (effect, self.origin);
 		effect.angles_y = random()*360;
@@ -4278,7 +4278,7 @@ void(float ver) spinatk_wind_spiral =
 		effect.angles_z = 90;	
 		effect.think = spinwindspiral_think;	
 	}
-	else if (ver == 3) // spin slash attack
+	else // spin slash attack
 	{
 		setorigin (effect, self.origin);
 		effect.attack_finished = time + 0.25;
@@ -4294,20 +4294,35 @@ void(float ver) spinatk_wind_spiral =
 
 void() player_spinatk1	=[	$spin1,	player_spinatk2	] 
 {
+	self.owner.noblock_finished = time + 1.3;
 	spinatk_wind_spiral(0);
 	frameskip(0.08);
 	sound (self, CHAN_VOICE, "player/va_eng/spinatk.wav", 1, ATTN_NORM);
 	spinattack_particle();
 };
-void() player_spinatk2	=[	$spin2,	player_spinatk3	] {frameskip(0.08);spinattack();};
+void() player_spinatk2	=[	$spin2,	player_spinatk3	] {frameskip(0.08);spinattack();sound (self, CHAN_AUTO, "player/sword4.wav", 1, ATTN_NORM);sound (self, CHAN_AUTO, "player/swrdspin.wav", 1, ATTN_NORM);};
 void() player_spinatk3	=[	$spin3,	player_spinatk4	] {frameskip(0.08);};
-void() player_spinatk4	=[	$spin4,	player_spinatk5	] {frameskip(0.08);spinattack();spinattack_particle();};
+void() player_spinatk4	=[	$spin4,	player_spinatk5	] {frameskip(0.08);spinattack();spinattack_particle();sound (self, CHAN_AUTO, "player/sword4.wav", 1, ATTN_NORM);};
 void() player_spinatk5	=[	$spin5,	player_spinatk6	] {frameskip(0.08);};
-void() player_spinatk6	=[	$spin6,	player_spinatk7	] {frameskip(0.08);spinattack();};
+void() player_spinatk6	=[	$spin6,	player_spinatk7	] {frameskip(0.08);spinattack();sound (self, CHAN_AUTO, "player/sword4.wav", 1, ATTN_NORM);sound (self, CHAN_AUTO, "player/swrdspin.wav", 1, ATTN_NORM);};
 void() player_spinatk7	=[	$spin7,	player_spinatk8	] {frameskip(0.08);spinattack_particle();};
-void() player_spinatk8	=[	$spin8,	player_spinatk9	] {frameskip(0.08);spinattack();};
+void() player_spinatk8	=[	$spin8,	player_spinatk9	] {frameskip(0.08);spinattack();sound (self, CHAN_AUTO, "player/sword4.wav", 1, ATTN_NORM);};
 void() player_spinatk9	=[	$spin9,	player_spinatk10	] {frameskip(0.08);};
-void() player_spinatk10	=[	$spin10,	player_move 	] {frameskip(0.08);spinattack();spinattack_particle();};
+void() player_spinatk10	=[	$spin10,	player_spinatk11 	]
+{
+	self.owner.combo_finished = time + 0.9; // Reactivate time
+	frameskip(0.08);
+	spinattack();
+	spinattack_particle();
+	sound (self, CHAN_AUTO, "player/sword3.wav", 1, ATTN_NORM);
+};
+void() player_spinatk11	=[	$counter10,	player_move 		] 
+{
+	if (!self.onground)
+		frameskip(0.01);
+	else
+		frameskip(0.6);
+};
 
 void() player_kickforward =
 {
@@ -4380,7 +4395,7 @@ void() player_kick5	=[	$kick5,	player_move 	]
 // Running Attack
 void() runattack_forward = // push player forward during animation
 {
-	local entity effect;
+	entity effect;
 
 	if (self.swimming)
 	{
@@ -4979,8 +4994,8 @@ void() player_fstab3	=[	$fstab3,	player_fstab3	]
 
 	self.owner.shadow_time = time + 0.1;
 
-	local vector source, dest;
-	local float test;
+	vector source, dest;
+	float test;
 
 	makevectors(self.angles);
 	source = self.origin;
@@ -5022,7 +5037,7 @@ void() player_fstab3	=[	$fstab3,	player_fstab3	]
 			test = 0; // pass
 		}
 		
-		if (test == 0)
+		if (!test)
 		{
 			self.velocity_x = 0 - (self.speed * 5.0 / 1.8);
 			droptofloor();
@@ -5056,7 +5071,7 @@ void() player_attacka2	=[	$attacka2,	player_attacka3	] {frameskip(0.05);};
 
 void() player_attacka3	=[	$attacka3,	player_attacka4	] 
 {
-	local entity effect;
+	entity effect;
 	
 	makevectors (self.angles);
 
@@ -5139,7 +5154,7 @@ void() player_attacka6	=[	$attacka6,	player_attacka7	]
 {
 	FireMelee(2,30,6,25,0,0,1,FALSE,0,0,0);
 
-	if (self.onground == TRUE) // Only add/set onground
+	if (self.onground) // Only add/set onground
 	{
 		local entity effect;
 	
@@ -5169,15 +5184,13 @@ void() player_attacka6	=[	$attacka6,	player_attacka7	]
 
 void() player_attacka7	=[	$attacka7,	player_attacka8	] 
 {
-	// Hit all around
-	FireMelee(1,0,4,60,0,0,1,FALSE,0,0,0);
+	FireMelee(1,0,4,60,0,0,1,FALSE,0,0,0); // Hit all around
 	frameskip(0.07);
 };
 
 void() player_attacka8	=[	$attacka8,	player_attacka9	] 
 {
-	// Hit all around
-	FireMelee(1,0,6,60,0,0,1,FALSE,0,0,0);
+	FireMelee(1,0,6,60,0,0,1,FALSE,0,0,0); // Hit all around
 	frameskip(0.07);
 };
 
@@ -5305,7 +5318,7 @@ void() player_attacka13	=[	$attacka13,	player_attacka13	]
 
 void() player_attacka14	=[	$attacka14,	player_attacka15	]
 {
-	if (self.owner.mashattack == TRUE)
+	if (self.owner.mashattack)
 	{
 		if (self.owner.keyflags & (KEY_LEFT | KEY_RIGHT))
 		{
@@ -5361,7 +5374,7 @@ void() player_attacka16	=[	$attacka16,	player_attacka16	]
 		self.attacka16_star_finished = time + 0.5;
 	}
 
-	local entity effect, oself;
+	entity effect, oself;
 	
 	makevectors (self.angles);
 

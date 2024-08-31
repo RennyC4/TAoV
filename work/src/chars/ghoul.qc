@@ -161,7 +161,7 @@ void() ghoul_die4	=[	$die4,	ghoul_die5	] {monster_death();walkmove((self.angles_
 void() ghoul_die5	=[	$die5,	ghoul_die6	] {monster_death();walkmove((self.angles_y+180), 7);monster_removeslide();};
 void() ghoul_die6	=[	$die6,	ghoul_die7	] {monster_death();walkmove((self.angles_y+180), 7);monster_removeslide();};
 void() ghoul_die7	=[	$die7,	ghoul_die8	] {monster_death();walkmove((self.angles_y+180), 7);monster_removeslide();};
-void() ghoul_die8	=[	$die8,	ghoul_die8	] {monster_death();};
+void() ghoul_die8	=[	$die8,	ghoul_die8	] {monster_death();self.solid = SOLID_NOT;};
 
 void()	ghoul_grabbed1	=[	$stand1,		ghoul_grabbed2	] {self.grab_finished = time + 1;monster_removeslide();};
 void()	ghoul_grabbed2	=[	$stand1,		ghoul_grabbed2	] 
@@ -186,6 +186,7 @@ void() ghoul_die =
 	}
 	if (self.knockback != 2 && self.knockback != 3)
 		self.velocity = '0 0 0';
+	self.deadflag = DEAD_DEAD;
 	ghoul_die1();
 };
 
