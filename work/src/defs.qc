@@ -396,6 +396,7 @@ void(vector o, vector d, float color, float count) particle = #48;// start a par
 
 // Globals
 
+float japanese; // japanese VA on/off
 float max_blood_ents; // 10 max
 float max_hit_ents; // 10 max
 float max_block_ents; // 6 max

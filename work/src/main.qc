@@ -281,6 +281,20 @@ void() worldspawn =
 		precache_sound ("player/va_eng/ebeam.wav");
 
 		//
+		// Japanese VA
+		//
+		precache_sound ("player/va_jap/taunt1.wav");
+		precache_sound ("player/va_jap/taunt2.wav");
+		precache_sound ("player/va_jap/taunt3.wav");
+		precache_sound ("player/va_jap/taunt4.wav");
+		precache_sound ("player/va_jap/taunt5.wav");
+
+		precache_sound ("player/va_jap/fireball.wav");
+		precache_sound ("player/va_jap/lightnstrm.wav");
+		precache_sound ("player/va_jap/icefield.wav");
+		precache_sound ("player/va_jap/ebeam.wav");
+		
+		//
 		//
 		//
 
@@ -347,6 +361,9 @@ void() worldspawn =
 	deathmatch = cvar("deathmatch");
 	coop = cvar("coop");
 	
+	registercvar("japanese", "0"); // Japanese voice acting on / off
+	japanese = cvar("japanese");
+
 	//CSQC Setup
 	CSEv_GrabCSQCValues();
 };

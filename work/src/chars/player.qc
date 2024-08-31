@@ -3259,15 +3259,40 @@ void(float voice_type) player_yell =
 		if (h < 0.2 && yeller.voice_finished < time)
 		{
 			if (r < 0.20)
-				sound (yeller, CHAN_VOICE, "player/va_eng/taunt1.wav", 1, ATTN_NORM);
+			{
+				if (!japanese)
+					sound (yeller, CHAN_VOICE, "player/va_eng/taunt1.wav", 1, ATTN_NORM);
+				else
+					sound (yeller, CHAN_VOICE, "player/va_jap/taunt1.wav", 1, ATTN_NORM);
+			}
 			else if (r < 0.40)
-				sound (yeller, CHAN_VOICE, "player/va_eng/taunt2.wav", 1, ATTN_NORM);
+			{
+				if (!japanese)
+					sound (yeller, CHAN_VOICE, "player/va_eng/taunt2.wav", 1, ATTN_NORM);
+				else
+					sound (yeller, CHAN_VOICE, "player/va_jap/taunt2.wav", 1, ATTN_NORM);
+			}
 			else if (r < 0.60)
-				sound (yeller, CHAN_VOICE, "player/va_eng/taunt3.wav", 1, ATTN_NORM);
+			{
+				if (!japanese)
+					sound (yeller, CHAN_VOICE, "player/va_eng/taunt3.wav", 1, ATTN_NORM);
+				else
+					sound (yeller, CHAN_VOICE, "player/va_jap/taunt3.wav", 1, ATTN_NORM);
+			}
 			else if (r < 0.80)
-				sound (yeller, CHAN_VOICE, "player/va_eng/taunt4.wav", 1, ATTN_NORM);
+			{
+				if (!japanese)
+					sound (yeller, CHAN_VOICE, "player/va_eng/taunt4.wav", 1, ATTN_NORM);
+				else
+					sound (yeller, CHAN_VOICE, "player/va_jap/taunt4.wav", 1, ATTN_NORM);
+			}
 			else
-				sound (yeller, CHAN_VOICE, "player/va_eng/taunt5.wav", 1, ATTN_NORM);
+			{
+				if (!japanese)
+					sound (yeller, CHAN_VOICE, "player/va_eng/taunt5.wav", 1, ATTN_NORM);
+				else
+					sound (yeller, CHAN_VOICE, "player/va_jap/taunt5.wav", 1, ATTN_NORM);
+			}
 			yeller.voice_finished = time + 1;
 		}
 	}
@@ -7514,8 +7539,13 @@ void() player_fireball1	=[	$magicb1,	player_fireball2	] {spawn_magicfog();self.e
 void() player_fireball1	=[	$magicb1,	player_fireball2	] {spawn_magicfog();self.effects = EF_MUZZLEFLASH;};
 void() player_fireball2	=[	$magicb2,	player_move	] 
 {
-	if (random() < 0.35)
-		sound (self, CHAN_AUTO, "player/va_eng/fireball.wav", 1, ATTN_NORM);
+	if (random() < 0.35) // spell shout
+	{
+		if (!japanese)
+			sound (self, CHAN_AUTO, "player/va_eng/fireball.wav", 1, ATTN_NORM);
+		else
+			sound (self, CHAN_AUTO, "player/va_jap/fireball.wav", 1, ATTN_NORM);
+	}
 	
 	self.angles_y = self.turn_y;
 	self.colormod = '3 2 1';
@@ -7547,7 +7577,10 @@ void() player_lightning2	=[	$magica3,	player_lightning3	]
 			if (freeze_finished < time) // don't interefere with level up/etc
 			{
 				freeze_finished = time + ((CONST_BIGHITSLOW + 7) * frametime);
-				sound (self, CHAN_AUTO, "player/va_eng/lightnstrm.wav", 1, ATTN_NORM);
+				if (!japanese)
+					sound (self, CHAN_AUTO, "player/va_eng/lightnstrm.wav", 1, ATTN_NORM);
+				else
+					sound (self, CHAN_AUTO, "player/va_jap/lightnstrm.wav", 1, ATTN_NORM);
 			}
 		}
 
@@ -7588,7 +7621,10 @@ void() player_icefield1	=[	$magicc1,	player_icefield1	]
 			if (freeze_finished < time) // don't interefere with level up/etc
 			{
 				freeze_finished = time + ((CONST_BIGHITSLOW + 7) * frametime);
-				sound (self, CHAN_AUTO, "player/va_eng/icefield.wav", 1, ATTN_NORM);
+				if (!japanese)
+					sound (self, CHAN_AUTO, "player/va_eng/icefield.wav", 1, ATTN_NORM);
+				else
+					sound (self, CHAN_AUTO, "player/va_jap/icefield.wav", 1, ATTN_NORM);
 			}
 		}
 		spawn_magicfog();
@@ -7669,7 +7705,10 @@ void() player_magicd5	=[	$magicd5,	player_magicd6	]
 		if (freeze_finished < time) // don't interefere with level up/etc
 		{
 			freeze_finished = time + ((CONST_BIGHITSLOW + 6) * frametime);
-			sound (self, CHAN_AUTO, "player/va_eng/ebeam.wav", 1, ATTN_NORM);
+			if (!japanese)
+				sound (self, CHAN_AUTO, "player/va_eng/ebeam.wav", 1, ATTN_NORM);
+			else
+				sound (self, CHAN_AUTO, "player/va_jap/ebeam.wav", 1, ATTN_NORM);
 		}
 	}
 };
