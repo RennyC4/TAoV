@@ -110,7 +110,7 @@ void(vector pos, float value, float threshhold) Hud_DrawLargeValue_Items =
 
 //Hud entry point!
 //showscores is set if +scores is held (check health yourself).
-void(vector virtsize, float showscores) CSQC_DrawHud = {};
+//void(vector virtsize, float showscores) CSQC_DrawHud = {};
 
 void(float apilevel, string enginename, float engineversion) CSQC_Init =
 {

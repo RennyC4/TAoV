@@ -2194,6 +2194,7 @@ const float DRAWFLAG_SCREEN = 4;
 const float DRAWFLAG_MIPMAP = 0x100; // only for R_BeginPolygon
 
 float framecount;
+float showscores;
 
 #define STAT_GOLD 32
 #define STAT_SWORD 33

@@ -162,7 +162,7 @@ void(entity targ, entity attacker) Killed =
 	if (deathmatch && targ.classname == "player" && attacker.classname == "player")
 	{
 		bprint (attacker.owner.netname);
-		bprint (" has slayen ");
+		bprint (" has defeated ");
 		bprint (targ.owner.netname);
 		bprint ("\n");
 		attacker.owner.frags = attacker.owner.frags + 1;
