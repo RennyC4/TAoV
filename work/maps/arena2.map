@@ -1060,158 +1060,153 @@
 }
 // entity 9
 {
-"classname" "music_track2"
-"origin" "1152 -192 -192"
+"classname" "flag"
+"angle" "90"
+"origin" "1040 -324 -128"
 }
 // entity 10
 {
 "classname" "flag"
 "angle" "90"
-"origin" "1040 -324 -128"
+"origin" "736 -324 -128"
 }
 // entity 11
 {
 "classname" "flag"
 "angle" "90"
-"origin" "736 -324 -128"
+"origin" "440 -324 -128"
 }
 // entity 12
 {
 "classname" "flag"
 "angle" "90"
-"origin" "440 -324 -128"
+"origin" "136 -324 -128"
 }
 // entity 13
 {
 "classname" "flag"
 "angle" "90"
-"origin" "136 -324 -128"
-}
-// entity 14
-{
-"classname" "flag"
-"angle" "90"
 "origin" "-164 -324 -128"
 }
-// entity 15
+// entity 14
 {
 "classname" "lionhead"
 "origin" "-352 -192 -44"
 }
-// entity 16
+// entity 15
 {
 "classname" "lightning"
 "origin" "1152 -224 80"
 }
-// entity 17
+// entity 16
 {
 "classname" "lightning"
 "origin" "976 -160 74"
 }
-// entity 18
+// entity 17
 {
 "classname" "lightning"
 "origin" "1072 -272 74"
 }
-// entity 19
+// entity 18
 {
 "classname" "lightning"
 "origin" "832 -208 74"
 }
-// entity 20
+// entity 19
 {
 "classname" "lightning"
 "origin" "624 -144 74"
 }
-// entity 21
+// entity 20
 {
 "classname" "lightning"
 "origin" "512 -224 74"
 }
-// entity 22
+// entity 21
 {
 "classname" "lightning"
 "origin" "336 -96 74"
 }
-// entity 23
+// entity 22
 {
 "classname" "lightning"
 "origin" "400 -288 74"
 }
-// entity 24
+// entity 23
 {
 "classname" "lightning"
 "origin" "224 -160 74"
 }
-// entity 25
+// entity 24
 {
 "classname" "lightning"
 "origin" "-304 -240 74"
 }
-// entity 26
+// entity 25
 {
 "classname" "lightning"
 "origin" "-224 -192 74"
 }
-// entity 27
+// entity 26
 {
 "classname" "lightning"
 "origin" "-64 -272 74"
 }
-// entity 28
+// entity 27
 {
 "classname" "lightning"
 "origin" "0 -176 74"
 }
-// entity 29
+// entity 28
 {
 "classname" "lightning"
 "origin" "304 -224 74"
 }
-// entity 30
+// entity 29
 {
 "classname" "ambience_thunder"
 "origin" "448 64 0"
 }
-// entity 31
+// entity 30
 {
 "classname" "barrel"
 "origin" "-312 -296 -256"
 }
-// entity 32
+// entity 31
 {
 "classname" "barrel"
 "origin" "-312 -256 -256"
 }
-// entity 33
+// entity 32
 {
 "classname" "barrel"
 "origin" "136 -136 -248"
 }
-// entity 34
+// entity 33
 {
 "classname" "barrel"
 "origin" "96 -136 -248"
 }
-// entity 35
+// entity 34
 {
 "classname" "barrel"
 "origin" "-112 -160 -256"
 }
-// entity 36
+// entity 35
 {
 "classname" "misc_model"
 "angle" "315"
 "model" "progs/knight.mdl"
 "origin" "784 -624 0"
 }
-// entity 37
+// entity 36
 {
 "classname" "item_health"
 "origin" "1136 -320 -160"
 "cnt" "25"
 }
-// entity 38
+// entity 37
 {
 "classname" "func_illusionary"
 // brush 0
@@ -1260,9 +1255,23 @@
 ( -356 -120 -292 ) ( -356 -128 -292 ) ( -356 -128 -128 ) stone3_1 [ 0 1 0 0 ] [ 0 0 -1 0 ] 0 1 1
 }
 }
-// entity 39
+// entity 38
 {
 "classname" "item_mana"
 "cnt" "50"
 "origin" "448 -288 -256"
+}
+// entity 39
+{
+"classname" "trigger_music"
+"music" "sound/music/track5.ogg"
+// brush 0
+{
+( 384 -72 -180 ) ( 384 -312 -180 ) ( 384 -312 -292 ) trigger [ 0 -1 0 -24 ] [ 0 0 -1 -36 ] 0 1 1
+( 384 -312 -180 ) ( 496 -312 -180 ) ( 496 -312 -292 ) trigger [ 1 0 0 32 ] [ 0 0 -1 -36 ] 0 1 1
+( 496 -312 -292 ) ( 496 -72 -292 ) ( 384 -72 -292 ) trigger [ -1 0 0 -32 ] [ 0 -1 0 -24 ] 0 1 1
+( 384 -72 -180 ) ( 496 -72 -180 ) ( 496 -312 -180 ) trigger [ 1 0 0 32 ] [ 0 -1 0 -24 ] 0 1 1
+( 496 -72 -292 ) ( 496 -72 -180 ) ( 384 -72 -180 ) trigger [ -1 0 0 -32 ] [ 0 0 -1 -36 ] 0 1 1
+( 496 -312 -180 ) ( 496 -72 -180 ) ( 496 -72 -292 ) trigger [ 0 1 0 24 ] [ 0 0 -1 -36 ] 0 1 1
+}
 }
