@@ -703,7 +703,7 @@ void() HealthFlask =
 {
 	// Break out conditions
 	if (self.attack_finished > time || self.char.pain_finished > time || self.char.block_finished > time || self.magicmenu == TRUE
-	|| self.flypain || !self.char.onground || self.char.idle_count == 0)
+	|| self.flypain || !self.char.onground)// || self.char.idle_count == 0)
 	{
 		self.hflask_drink_finished = time;
 		return;

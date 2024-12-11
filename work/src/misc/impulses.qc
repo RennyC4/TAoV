@@ -192,10 +192,12 @@ void() CheckImpulseButtons =
 			return;
 		if (self.char.deadflag == DEAD_DEAD)
 			return;
+		if (self.char.block_finished > time)
+			return;
 		if (self.char.izunatarg != world)
 			return;
-		if (self.keyflags & (KEY_UP | KEY_DOWN | KEY_LEFT | KEY_RIGHT))
-			return; // Fixes Vigil dancing when spamming flask key whilst moving
+//		if (self.keyflags & (KEY_UP | KEY_DOWN | KEY_LEFT | KEY_RIGHT))
+//			return; // Fixes Vigil dancing when spamming flask key whilst moving
 
 		if (self.char.block_finished > time)
 			self.char.block_finished = time;
@@ -214,20 +216,21 @@ void() CheckImpulseButtons =
 		}
 
 		// Get out of turning angles
-		if (self.char.angles_y == 45 || self.char.angles_y == -45)
-			self.char.angles_y = 0;
-		if (self.char.angles_y == 225 || self.char.angles_y == -225)
-			self.char.angles_y = 180;
+//		if (self.char.angles_y == 45 || self.char.angles_y == -45)
+//			self.char.angles_y = 0;
+//		if (self.char.angles_y == 225 || self.char.angles_y == -225)
+//			self.char.angles_y = 180;
 
-		self.dodge_finished = time;
-		self.attack_finished = time;
-		self.char.flypain = FALSE;
+//		self.dodge_finished = time;
+//		self.attack_finished = time;
+//		self.char.flypain = FALSE;
 		if (self.char.perfectguard_buff < time)
 			self.char.takedamage = DAMAGE_AIM;
 
 		// Start drinking
 		self.hflask_drink_finished = time + 9999;
 
+		// Feature never implemented: We don't need a drinking animation in TAoV
 		//self.char.think = player_drink;
 		//self.char.nextthink = time;
 	}
@@ -237,9 +240,9 @@ void() CheckImpulseButtons =
 		if (self.hflask_drink_finished < time)
 			return;
 		self.hflask_drink_finished = time;
-		self.dodge_finished = time;
-		self.attack_finished = time;
 		self.char.hflask_drink_finished = time;
+//		self.dodge_finished = time;
+//		self.attack_finished = time;
 	}
 
 	//

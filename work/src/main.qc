@@ -427,6 +427,7 @@ void() SetChangeParms =
 	parm8 = shrine_progress;
 	parm9 = self.mana;
 	parm10 = turbo_mode;	
+	//parm10 = 0; // for wellzish
 	parm11 = self.max_health;
 	parm12 = self.pouch;
 	parm14 = self.experience;
