@@ -348,7 +348,7 @@ void(entity targ, entity inflictor, entity attacker, float damage, float statusr
 	if (targ.classname == "player")
 	{
 		if (difficulty == 0) // easy difficulty savings
-			damage = damage / 1.25;
+			damage = damage / 1.5;
 
 		if (!targ.owner.flags & FL_GODMODE && targ.perfectguard_buff < time)
 		{

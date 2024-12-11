@@ -1355,20 +1355,20 @@ void() MenuCommands =
 							if (menu_difficulty == 1)
 							{
 								setpause(1);
-								centerprint (self, "/PDifficulty set to ^3Vigilant^7\n\nEnemies have 50% more health\nEnemies are smarter\nRemixed encounters and item placement");
+								centerprint (self, "/PDifficulty is now set to ^3Vigilant^7\n\nEnemies have 50% more health\nEnemies are smarter\nRemixed encounters and item placement");
 								localcmd ("skill 2\n");
 							}
 							else if (menu_difficulty == 2)
 							{
 								setpause(1);
-								centerprint (self, "/PDifficulty set to ^3Casual^7\n\nEnemies do 75% of normal damage\nHealth potions give 25% more");
+								centerprint (self, "/PDifficulty is now set to ^3Casual^7\n\nEnemies do 50% of normal damage\nHealth potions give 25% more");
 								localcmd ("skill 0\n");
 							}
 						}
 						else
 						{
 							setpause(1);
-							centerprint (self, "/PDifficulty set to ^3Normal^7 (default)");
+							centerprint (self, "/PDifficulty is now set to ^3Normal^7 (default)");
 							localcmd ("skill 1\n");
 							menu_difficulty = 0;
 						}
@@ -1380,14 +1380,14 @@ void() MenuCommands =
 							turbo_mode = TRUE;
 							menu_turbo = menu_turbo + 1;
 							setpause(1);
-							centerprint (self, "/PTurbo Mode set to ^3On^7\n\nIncreases game speed by 25%");
+							centerprint (self, "/PTurbo Mode is now set to ^3On^7\n\nIncreases game speed by 25%");
 						}
 						else
 						{
 							turbo_mode = FALSE;
 							menu_turbo = 0;
 							setpause(1);
-							centerprint (self, "/PTurbo Mode set to ^3Off^7 (default)");
+							centerprint (self, "/PTurbo Mode is now set to ^3Off^7 (default)");
 						}
 					}
 					if (h.owner.menu_choice == 2) // Seizure Effects Toggle
@@ -1397,14 +1397,14 @@ void() MenuCommands =
 							localcmd ("scratch1 1\n");
 							menu_seizurefx = menu_seizurefx + 1;
 							setpause(1);
-							centerprint (self, "/PSeizure Effects (screen flash) set to ^3Off^7");
+							centerprint (self, "/PSeizure Effects (screen flash) is now set to ^3Off^7");
 						}
 						else
 						{
 							localcmd ("scratch1 0\n");
 							menu_seizurefx = 0;
 							setpause(1);
-							centerprint (self, "/PSeizure Effects (screen flash) set to ^3On^7 (default)");
+							centerprint (self, "/PSeizure Effects (screen flash) is now set to ^3On^7 (default)");
 						}
 					}
 					if (h.owner.menu_choice == 3) // Volume
@@ -1415,19 +1415,19 @@ void() MenuCommands =
 							if (menu_volume == 1)
 							{
 								setpause(1);
-								centerprint (self, "/PSound volume set to ^3Loud^7");
+								centerprint (self, "/PSound volume is now set to ^3Loud^7");
 								stuffcmd (self, "volume 1\n");
 							}
 							if (menu_volume == 2)
 							{
 								setpause(1);
-								centerprint (self, "/PSound volume set to ^3Off^7");
+								centerprint (self, "/PSound volume is now set to ^3Off^7");
 								stuffcmd (self, "volume 0\n");
 							}
 							if (menu_volume == 3)
 							{
 								setpause(1);
-								centerprint (self, "/PSound volume set to ^3Soft^7");
+								centerprint (self, "/PSound volume is now set to ^3Soft^7");
 								stuffcmd (self, "volume 0.3\n");
 							}
 						}
@@ -1435,7 +1435,7 @@ void() MenuCommands =
 						{
 							menu_volume = 0;
 							setpause(1);
-							centerprint (self, "/PSound volume set to ^3Normal^7 (default)");
+							centerprint (self, "/PSound volume is now set to ^3Normal^7 (default)");
 							stuffcmd (self, "volume 0.5\n");
 						}
 					}
@@ -1446,14 +1446,14 @@ void() MenuCommands =
 							localcmd ("scratch2 1\n");
 							menu_ccounter = menu_ccounter + 1;
 							setpause(1);
-							centerprint (self, "/PCombo Counter HUD set to ^3Off^7");
+							centerprint (self, "/PCombo Counter HUD is now set to ^3Off^7");
 						}
 						else
 						{
 							localcmd ("scratch2 0\n");
 							menu_ccounter = 0;
 							setpause(1);
-							centerprint (self, "/PCombo Counter HUD set to ^3On^7 (default)");
+							centerprint (self, "/PCombo Counter HUD is now set to ^3On^7 (default)");
 						}
 					}
 					if (h.owner.menu_choice == 5) // Camera toggle
@@ -1463,14 +1463,14 @@ void() MenuCommands =
 							localcmd ("scratch3 1\n");
 							menu_camera = menu_camera + 1;
 							setpause(1);
-							centerprint (self, "/PCamera set to ^3Classic^7\n\nChanges the camera behavior to follow Vigil forward facing only");
+							centerprint (self, "/PCamera is now set to ^3Classic^7\n\nChanges the camera behavior to follow Vigil forward facing only");
 						}
 						else
 						{
 							localcmd ("scratch3 0\n");
 							menu_camera = 0;
 							setpause(1);
-							centerprint (self, "/PCamera set to ^3Dynamic^7 (default)\n\nChanges the camera behavior to follow Vigil with additional movement");
+							centerprint (self, "/PCamera is now set to ^3Dynamic^7 (default)\n\nChanges the camera behavior to follow Vigil with additional movement");
 						}
 					}
 
