@@ -1177,12 +1177,12 @@ void(float damg, float dist, float knokback, float rsize, float snd, float flsh,
 						if (head.knockback == 2 || head.knockback == 3 || head.knockback == 5) // Guard break + Chip damage
 						{
 							// Set the knockback, deal the damage, then have the player run his animation in proper order
-							local float chip_d = floor(damg / 4); // Guard breaks have chip damage
+							float chip_d = floor(damg / 4); // Guard breaks have chip damage
 							self.knockback = head.knockback = 0; // Knockback movement is done by $blockbrk1
 
 							T_Damage (head, self, self, chip_d, statusrand);
 
-							if (head.health > 0) // Don't override death routine
+							if (head.health > 0 && head.health > chip_d) // Don't override death routine
 								head.think = player_blockbrk1;
 							else
 								return; // needed otherwise death physics on chip-damage death get overwritten
